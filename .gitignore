@@ -1,3 +1,11 @@
+###> local/eight_realms_awakening ###
+.idea/
+.DS_Store
+eightrealms-awakening.crt
+eightrealms-awakening.key
+/public/uploads/character/*
+!/public/uploads/character/.gitkeep
+###< local/eight_realms_awakening ###
 
 ###> symfony/framework-bundle ###
 /.env.local

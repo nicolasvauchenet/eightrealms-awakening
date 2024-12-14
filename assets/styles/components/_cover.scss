@@ -1,0 +1,8 @@
+.app-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100dvw - 1rem);
+  height: calc(100dvh - 1rem);
+  object-fit: cover;
+}

@@ -1,10 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/default/_index.html.twig' %}
 
 {% block title %}Bienvenue{% endblock %}
 
 {% block body_class %}home{% endblock %}
 
-{% block body %}
-    <h1>Les Huit Royaumes</h1>
-    <h2>Chapitre I - L'Éveil</h2>
+{% block main %}
+    <a href="#" class="app-button cta">
+        <small>Nouveau Joueur</small>
+        Inscription
+    </a>
+    <a href="#" class="app-button">
+        <small>Déjà inscrit</small>
+        Connexion
+    </a>
 {% endblock %}

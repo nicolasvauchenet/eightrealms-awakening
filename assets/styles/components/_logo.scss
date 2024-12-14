@@ -1,0 +1,9 @@
+.app-logo {
+  @include displayFlex(center, center);
+  margin-bottom: 1.5rem;
+
+  img {
+    display: block;
+    height: 20dvh;
+  }
+}

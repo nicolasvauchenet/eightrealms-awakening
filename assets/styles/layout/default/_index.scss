@@ -1,0 +1,15 @@
+html {
+  body {
+    position: relative;
+    overflow: hidden;
+    @include displayFlex(space-between, center, null, column);
+    margin: 0 auto;
+    max-width: calc(600px - 1rem);
+    height: calc(100dvh - 1rem);
+    background-color: $black;
+    border: 0.5rem groove $secondary;
+
+    @import "./header";
+    @import "./main";
+  }
+}

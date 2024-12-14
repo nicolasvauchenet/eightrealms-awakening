@@ -1,0 +1,9 @@
+.app-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100dvw - 1rem);
+  height: calc(100dvh - 1rem);
+  background-color: rgba($black, 0.5);
+  @extend .appears;
+}

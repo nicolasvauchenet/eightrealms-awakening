@@ -1,0 +1,50 @@
+.app-card {
+  @include displayFlex(space-between, null, null, column);
+  text-align: center;
+  background-color: rgba($white, 0.5);
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+  & > a {
+    @include displayFlex(space-between, null, null, column);
+  }
+
+  .card-header {
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .card-body {
+    padding: 0.5rem;
+
+    .card-title {
+      font-size: 1.5rem;
+      color: $primary;
+    }
+
+    .card-subtitle {
+      margin-top: 0.5rem;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $primary;
+    }
+  }
+
+  .card-footer {
+    @include displayFlex(center);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    overflow: hidden;
+
+    a {
+      @include displayFlex(center, center);
+      flex: 1;
+      padding: 0.5rem;
+      color: $white;
+    }
+  }
+
+  @import "./character";
+}

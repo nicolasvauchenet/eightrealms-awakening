@@ -1,0 +1,19 @@
+<div class="app-card character">
+    <a href="#">
+        <div class="card-header">
+            <img src="{{ asset('img/core/character/pregenerated/' ~ character.picture) }}" alt="{{ character.name }}"/>
+        </div>
+        <div class="card-body">
+            <h3 class="card-title">{{ character.name }}</h3>
+            <h4 class="card-subtitle">{{ character.profession.name }} {{ character.race.name }}</h4>
+        </div>
+    </a>
+    <div class="card-footer">
+        <a href="#" class="bg-info">
+            {{ ux_icon('carbon:view-filled', {'class': 'app-icon'}) }}
+        </a>
+        <a href="#" class="bg-success">
+            {{ ux_icon('ep:select', {'class': 'app-icon'}) }}
+        </a>
+    </div>
+</div>

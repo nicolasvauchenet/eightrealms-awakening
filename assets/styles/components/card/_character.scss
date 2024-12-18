@@ -1,0 +1,13 @@
+&.character {
+  box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
+
+  .card-header {
+    @include displayFlex(center, flex-end);
+    border-bottom: 2px solid $primary;
+
+    img {
+      height: 24dvh;
+      object-fit: contain;
+    }
+  }
+}

@@ -4,6 +4,13 @@
   animation: appears 1.5s forwards;
 }
 
+/* SCROLL */
+.scrollable {
+  padding-right: 0.5rem;
+  max-height: 64dvh;
+  overflow-y: auto;
+}
+
 /* BACKGROUND COLORS */
 .bg-primary {
   background-color: rgba($primary, 0.75) !important;

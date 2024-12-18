@@ -4,8 +4,8 @@
   @include displayFlex(center, center, 1.5rem, column);
   flex: 1;
   width: 100%;
-  margin: 1.5rem 0;
-  padding: 0 1.5rem;
+  margin: 1rem 0;
+  padding: 0 1rem;
   text-align: center;
   @extend .appears;
   animation-delay: 1.5s;

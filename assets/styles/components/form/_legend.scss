@@ -1,0 +1,13 @@
+.form-legend {
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  font-family: $font-secondary;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: left;
+  color: $white;
+  background-color: $primary;
+  border: 0.25rem groove $secondary;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+}

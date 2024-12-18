@@ -1,4 +1,5 @@
 @import "utils/variables", "utils/mixins", "utils/extends", "utils/animations";
 @import "base/reset", "base/typography";
-@import "layout/default";
-@import "components/overlay", "components/cover", "components/logo", "components/button";
+@import "layout/default", "layout/form";
+@import "components/overlay", "components/cover", "components/logo", "components/button", "components/alert",
+"components/icon";

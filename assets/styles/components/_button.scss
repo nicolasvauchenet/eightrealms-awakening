@@ -19,6 +19,24 @@
     background-color: rgba($primary, 0.85);
   }
 
+  &.outline {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+  }
+
+  &.exit {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    @include displayFlex(center, center);
+    padding: 0.5rem;
+    width: auto;
+    background-color: rgba($danger, 0.85);
+    border: 2px solid $secondary;
+  }
+
   small {
     display: block;
     margin-bottom: 0.5rem;

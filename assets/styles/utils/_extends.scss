@@ -3,3 +3,77 @@
   opacity: 0;
   animation: appears 1.5s forwards;
 }
+
+/* BACKGROUND COLORS */
+.bg-primary {
+  background-color: rgba($primary, 0.75) !important;
+}
+
+.bg-secondary {
+  background-color: rgba($secondary, 0.75) !important;
+}
+
+.bg-third {
+  background-color: rgba($third, 0.75) !important;
+}
+
+.bg-fourth {
+  background-color: rgba($fourth, 0.75) !important;
+}
+
+.bg-info {
+  background-color: rgba($info, 0.75) !important;
+}
+
+.bg-success {
+  background-color: rgba($success, 0.75) !important;
+}
+
+.bg-warning {
+  background-color: rgba($warning, 0.75) !important;
+}
+
+.bg-danger {
+  background-color: rgba($danger, 0.75) !important;
+}
+
+/* TEXT COLORS */
+.text-black {
+  color: $black !important;
+}
+
+.text-white {
+  color: $white !important;
+}
+
+.text-primary {
+  color: $primary !important;
+}
+
+.text-secondary {
+  color: $secondary !important;
+}
+
+.text-third {
+  color: $third !important;
+}
+
+.text-fourth {
+  color: $fourth !important;
+}
+
+.text-info {
+  color: $info !important;
+}
+
+.text-success {
+  color: $success !important;
+}
+
+.text-warning {
+  color: $warning !important;
+}
+
+.text-danger {
+  color: $danger !important;
+}

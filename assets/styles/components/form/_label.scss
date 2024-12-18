@@ -1,0 +1,16 @@
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: $font-secondary;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: left;
+  color: $primary;
+
+  &.required {
+    &:after {
+      content: " *";
+      color: $danger;
+    }
+  }
+}

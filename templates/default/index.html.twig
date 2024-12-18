@@ -5,12 +5,46 @@
 {% block body_class %}home{% endblock %}
 
 {% block main %}
-    <a href="#" class="app-button cta">
-        <small>Nouveau Joueur</small>
-        Inscription
-    </a>
-    <a href="#" class="app-button">
-        <small>Déjà inscrit</small>
-        Connexion
-    </a>
+    {% if app.user %}
+        <a href="{{ path('app_profile') }}" class="app-button">
+            <small>{{ app.user.name }}</small>
+            Profil
+        </a>
+        {% if false %}
+            <a href="#" class="app-button">
+                <small>Nouveau</small>
+                Personnage
+            </a>
+        {% else %}
+            <a href="#" class="app-button">
+                <small>Nom du</small>
+                Personnage
+            </a>
+            {% if true %}
+                <a href="#" class="app-button cta">
+                    <small>Nouvelle</small>
+                    Partie
+                </a>
+            {% else %}
+                <a href="#" class="app-button cta">
+                    <small>Lieu actuel</small>
+                    Reprendre
+                </a>
+            {% endif %}
+        {% endif %}
+        <a href="{{ path('app_logout') }}"
+           class="app-button exit"
+           onclick="return window.confirm('Vous partez ?')">
+            {{ ux_icon('streamline:emergency-exit-solid', {'class': 'app-icon'}) }}
+        </a>
+    {% else %}
+        <a href="{{ path('app_register') }}" class="app-button cta">
+            <small>Nouveau Joueur</small>
+            Inscription
+        </a>
+        <a href="{{ path('app_login') }}" class="app-button">
+            <small>Déjà inscrit</small>
+            Connexion
+        </a>
+    {% endif %}
 {% endblock %}

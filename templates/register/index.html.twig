@@ -1,0 +1,46 @@
+{% extends '_layout/default/_index.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body_class %}sheet{% endblock %}
+
+{% block main %}
+    {{ form_start(form, {'attr': {'class': 'app-form'}}) }}
+    <fieldset class="form-fieldset">
+        <legend class="form-legend">Nouveau Joueur</legend>
+
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_help(form.name) }}
+            {{ form_errors(form.name) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_help(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.plainPassword) }}
+            {{ form_widget(form.plainPassword) }}
+            {{ form_help(form.plainPassword) }}
+            {{ form_errors(form.plainPassword) }}
+        </div>
+    </fieldset>
+
+    <fieldset class="form-fieldset controls">
+        <p>
+            <button class="form-submit cta" type="submit">Inscription</button>
+        </p>
+        <p>
+            <a href="{{ path('app_login') }}" class="app-button outline">
+                <small>Déjà inscrit ?</small>
+                Connexion
+            </a>
+        </p>
+    </fieldset>
+    {{ form_end(form) }}
+{% endblock %}

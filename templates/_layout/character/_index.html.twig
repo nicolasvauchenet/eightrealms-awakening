@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#<img src="{{ asset('img/core/cover.webp') }}" alt="Les Huit Royaumes" class="app-cover"/>#}
+
+    <div class="app-overlay"></div>
+
+    <a href="{{ previousUrl }}" class="app-close">
+        {{ ux_icon('zondicons:close-solid', {'class': 'app-icon'}) }}
+    </a>
+
+    <main class="app-main">
+        {% include '_layout/_alert.html.twig' %}
+
+        {% block main %}{% endblock %}
+    </main>
+{% endblock %}

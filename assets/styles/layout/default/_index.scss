@@ -32,6 +32,9 @@ html {
     margin: 0 auto;
     max-width: calc(600px - 1rem);
     height: calc(100dvh - 1rem);
+    font-family: $font-primary;
+    font-size: 1rem;
+    color: $black;
     background-color: $black;
     border: 0.5rem groove $secondary;
 
@@ -39,6 +42,7 @@ html {
     @import "./main";
 
     @import "../../pages/home";
-    @import "../../pages/_sheet";
+    @import "../../pages/sheet";
+    @import "../../pages/character";
   }
 }

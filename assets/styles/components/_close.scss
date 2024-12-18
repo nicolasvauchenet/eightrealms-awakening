@@ -1,0 +1,13 @@
+.app-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  color: $white;
+  text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+  .app-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+}

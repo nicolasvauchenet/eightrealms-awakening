@@ -1,0 +1,9 @@
+{% extends '_layout/character/_index.html.twig' %}
+
+{% block title %}{{ character.name }}{% endblock %}
+
+{% block body_class %}character sheet{% endblock %}
+
+{% block main %}
+    {{ component('Sheet', { character: character }) }}
+{% endblock %}

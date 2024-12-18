@@ -1,0 +1,23 @@
+<div class="sheet-footer">
+    <a href="#" data-target="details" data-content-switcher-target="link" data-action="click->content-switcher#switch">
+        {{ ux_icon('solar:user-id-bold', {'class': 'app-icon'}) }}
+    </a>
+    <a href="#"
+       data-target="inventory"
+       data-content-switcher-target="link"
+       data-action="click->content-switcher#switch">
+        {{ ux_icon('game-icons:light-backpack', {'class': 'app-icon'}) }}
+    </a>
+    <a href="#"
+       data-target="equipment"
+       data-content-switcher-target="link"
+       data-action="click->content-switcher#switch">
+        {{ ux_icon('game-icons:cape-armor', {'class': 'app-icon'}) }}
+    </a>
+    <a href="#" data-target="spells" data-content-switcher-target="link" data-action="click->content-switcher#switch">
+        {{ ux_icon('game-icons:spell-book', {'class': 'app-icon'}) }}
+    </a>
+    <a href="#" class="bg-primary" onclick="return window.confirm('Jouer avec {{ character.name }} ?')">
+        {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}
+    </a>
+</div>

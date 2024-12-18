@@ -1,0 +1,57 @@
+<div class="content details" data-content-switcher-target="content">
+    <h2>{{ this.character.profession.name }} {{ this.character.race.name }}</h2>
+
+    <div class="infos">
+        <div class="characteristics">
+            <div class="characteristic">
+                <div class="name">Force</div>
+                <div class="value">{{ character.strength }}</div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Dextérité</div>
+                <div class="value">{{ character.dexterity }}</div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Constitution</div>
+                <div class="value">{{ character.constitution }}</div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Intelligence</div>
+                <div class="value">{{ character.intelligence }}</div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Charisme</div>
+                <div class="value">{{ character.charisma }}</div>
+            </div>
+        </div>
+
+        <div class="attributes">
+            <div class="metrics">
+                <div class="metric">
+                    {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                    {{ character.health }}
+                </div>
+                <div class="metric">
+                    {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                    {{ character.mana }}
+                </div>
+                <div class="metric">
+                    {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                    +{{ character.defense }}
+                </div>
+                <div class="metric">
+                    {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                    +{{ character.damage }}
+                </div>
+            </div>
+            <div class="fortune">
+                {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                {{ character.fortune }}
+            </div>
+        </div>
+    </div>
+
+    <div class="description scrollable">
+        {{ character.description | raw }}
+    </div>
+</div>

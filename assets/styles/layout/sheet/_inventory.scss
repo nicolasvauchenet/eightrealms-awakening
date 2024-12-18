@@ -1,0 +1,61 @@
+&.inventory {
+  h3 {
+    margin-bottom: 1rem;
+  }
+
+  .list {
+    margin: 0 0.5rem 1rem 1rem;
+    font-family: $font-secondary;
+    font-weight: bold;
+    color: $primary;
+
+    &.scrollable {
+      max-height: 57.5dvh;
+      padding-right: 0.75rem;
+    }
+
+    h4 {
+      margin-bottom: 0.5rem;
+      font-style: italic;
+      text-align: right;
+      color: $third;
+    }
+
+    .app-card {
+      .card-header {
+        img {
+          margin-top: 2rem;
+          height: 7.5dvh;
+        }
+
+        .gauge {
+          margin: 0 0.25rem;
+          width: calc(100% - 0.5rem);
+        }
+
+        .bonus {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          @include displayFlex(center, center);
+          padding: 0.25rem 0.5rem;
+          font-size: 0.85rem;
+          background-color: rgba($white, 0.75);
+
+          .app-icon {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+      }
+
+      .card-body {
+        .card-title {
+          margin-bottom: 2px;
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+}

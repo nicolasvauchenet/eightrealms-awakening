@@ -13,6 +13,7 @@
 
 /* BACKGROUND COLORS */
 .bg-primary {
+  color: $white !important;
   background-color: rgba($primary, 0.75) !important;
 }
 
@@ -21,6 +22,7 @@
 }
 
 .bg-third {
+  color: $white !important;
   background-color: rgba($third, 0.75) !important;
 }
 

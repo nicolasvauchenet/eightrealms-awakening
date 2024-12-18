@@ -1,0 +1,17 @@
+<div class="app-sheet" data-controller="content-switcher" {{ attributes }}>
+    <div class="sheet-header">
+        <img src="{{ asset('img/core/character/pregenerated/' ~ this.character.picture) }}"
+             class="picture"
+             alt="{{ this.character.name }}"/>
+        <h1>{{ this.character.name }}</h1>
+    </div>
+
+    <div class="sheet-main">
+        {% include 'character/sheet/_details.html.twig' %}
+        {% include 'character/sheet/_inventory.html.twig' %}
+        {% include 'character/sheet/_equipment.html.twig' %}
+        {% include 'character/sheet/_spells.html.twig' %}
+    </div>
+
+    {% include 'character/sheet/_footer.html.twig' %}
+</div>

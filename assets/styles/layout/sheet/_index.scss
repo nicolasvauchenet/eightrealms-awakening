@@ -1,0 +1,13 @@
+.app-sheet {
+  &:has(.content.details.active) {
+    .sheet-header {
+      .picture {
+        height: 38dvh;
+      }
+    }
+  }
+
+  @import "./header";
+  @import "./main";
+  @import "./footer";
+}

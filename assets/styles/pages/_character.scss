@@ -1,0 +1,13 @@
+&.character {
+  .app-main {
+    margin: 0;
+    padding: 0;
+    animation-delay: 1s;
+
+    .app-sheet {
+      @include displayFlex(space-between, center, null, column);
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

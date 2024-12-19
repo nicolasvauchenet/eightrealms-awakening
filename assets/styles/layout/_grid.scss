@@ -8,4 +8,12 @@
   &.two {
     @include displayGrid(repeat(2, 1fr), 1rem);
   }
+
+  &.three {
+    @include displayGrid(repeat(3, 1fr), 0.5rem);
+
+    @include respondTo(md) {
+      grid-gap: 1rem;
+    }
+  }
 }

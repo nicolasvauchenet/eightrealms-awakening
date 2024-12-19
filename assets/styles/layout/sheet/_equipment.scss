@@ -60,6 +60,12 @@
         }
       }
 
+      a {
+        @include displayFlex(center, center, 0.25rem, column);
+        height: 100%;
+        width: 100%;
+      }
+
       img {
         height: 80%;
         object-fit: contain;
@@ -93,12 +99,20 @@
           }
         }
 
+        a {
+          @include displayFlex(center, center, 0.25rem, column);
+          height: 100%;
+          width: 100%;
+        }
+
         img {
-          width: 75%;
-          height: 70%;
+          width: 80%;
+          height: 84%;
           object-fit: contain;
 
           &.placeholder {
+            width: 70%;
+            height: 75%;
             opacity: 0.5;
           }
         }

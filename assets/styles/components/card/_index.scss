@@ -7,6 +7,7 @@
 
   & > a {
     @include displayFlex(space-between, null, null, column);
+    height: 100%;
   }
 
   .card-header {
@@ -25,7 +26,6 @@
     }
 
     .card-subtitle {
-      margin-top: 0.5rem;
       font-size: 1.25rem;
       font-weight: bold;
       color: $primary;

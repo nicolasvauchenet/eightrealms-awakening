@@ -2,7 +2,7 @@
     <h2>Inventaire</h2>
 
     <div class="list scrollable" data-loading="addClass(loading)">
-        <div class="app-grid two mb-1">
+        <div class="app-grid three mb-1">
             {% for characterItem in app_characterItemService.characterItems(character) %}
                 <div class="app-card inventory">
                     <div class="card-header" data-controller="tooltip">
@@ -10,7 +10,7 @@
                             <img src="{{ asset('img/core/item/' ~ characterItem.item.category.name ~ '/' ~ characterItem.item.picture) }}"
                                  alt="{{ characterItem.item.name }}"/>
                         </a>
-                        {# {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item} %} #}
+                        {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item} %}
                         {% if characterItem.health %}
                             <div class="gauge">
                                 <div class="gauge-fill" style="--value: {{ characterItem.health }}"></div>
@@ -40,9 +40,8 @@
                                         {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
                                         {{ characterItem.item.amount }}
                                     {% endif %}
-                                    {% if characterItem.item.type == 'Utile' %}
-                                        {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
-                                    {% endif %}
+                                {% elseif characterItem.item.type == 'Utile' %}
+                                    {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
                                 {% elseif characterItem.item.damage is defined %}
                                     {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
                                     {{ characterItem.item.damage }}
@@ -63,9 +62,11 @@
                                 {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
                             </button>
                         {% endif %}
-                        <a href="#" class="bg-info">
-                            {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon'}) }}
-                        </a>
+                        {% if false %}
+                            <a href="#" class="bg-info">
+                                {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon'}) }}
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

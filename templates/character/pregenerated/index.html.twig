@@ -5,7 +5,7 @@
 {% block body_class %}sheet{% endblock %}
 
 {% block main %}
-    <div class="app-grid scrollable">
+    <div class="app-grid two scrollable">
         {% for character in app_preGeneratedService.characters %}
             {% include 'character/pregenerated/_character.html.twig' %}
         {% endfor %}

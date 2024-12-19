@@ -1,0 +1,40 @@
+<div class="app-tooltip {{ info is defined ? 'info' : '' }}"
+     data-tooltip-target="tooltip"
+     data-action="click->tooltip#close">
+    <div class="tooltip-background" data-tooltip-target="background"></div>
+    <div class="tooltip-body">
+        <div class="tooltip-content scrollable">
+            {% if type == 'item' or type == 'spell' %}
+                <h3 class="tooltip-title">{{ content.name }}</h3>
+                <h4 class="tooltip-subtitle">
+                    {% if content.defense is defined %}
+                        {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                        {{ content.defense }}
+                    {% elseif content.target is defined and content.target is not null %}
+                        {% if content.target == 'health' %}
+                            {% if content.type == 'Offensif' %}
+                                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                                {{ content.amount }}
+                            {% elseif content.type == 'Défensif' %}
+                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                                {{ content.amount }}
+                            {% endif %}
+                        {% endif %}
+                        {% if content.target == 'mana' %}
+                            {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                            {{ content.amount }}
+                        {% endif %}
+                    {% elseif content.type == 'Utile' %}
+                        {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                    {% elseif content.damage is defined %}
+                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                        {{ content.damage }}
+                    {% endif %}
+                </h4>
+
+                {{ content.description | raw }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+

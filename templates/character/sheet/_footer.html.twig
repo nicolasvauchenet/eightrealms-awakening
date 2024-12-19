@@ -17,7 +17,17 @@
     <a href="#" data-target="spells" data-content-switcher-target="link" data-action="click->content-switcher#switch">
         {{ ux_icon('game-icons:spell-book', {'class': 'app-icon'}) }}
     </a>
-    <a href="#" class="bg-primary" onclick="return window.confirm('Jouer avec {{ character.name }} ?')">
-        {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}
-    </a>
+    {% if this.type == 'player' %}
+        <a href="#" data-target="quests"
+           data-content-switcher-target="link"
+           data-action="click->content-switcher#switch">
+            {{ ux_icon('game-icons:scroll-quill', {'class': 'app-icon'}) }}
+        </a>
+    {% else %}
+        <a href="{{ path('app_character_create', {'slug': character.slug}) }}"
+           class="bg-primary"
+           onclick="return window.confirm('Jouer avec {{ character.name }} ?')">
+            {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
 </div>

@@ -1,5 +1,8 @@
 <div class="content details" data-content-switcher-target="content">
     <h2>{{ this.character.profession.name }} {{ this.character.race.name }}</h2>
+    {% if this.type == 'player' %}
+        <h3>Niveau {{ character.level }} • {{ character.experience }} XP</h3>
+    {% endif %}
 
     <div class="infos">
         <div class="characteristics">

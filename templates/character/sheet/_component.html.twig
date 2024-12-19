@@ -1,8 +1,14 @@
 <div class="app-sheet" data-controller="content-switcher" {{ attributes }}>
     <div class="sheet-header">
-        <img src="{{ asset('img/core/character/pregenerated/' ~ this.character.picture) }}"
-             class="picture"
-             alt="{{ this.character.name }}"/>
+        {% if this.type == 'pregenerated' %}
+            <img src="{{ asset('img/core/character/pregenerated/' ~ this.character.picture) }}"
+                 class="picture"
+                 alt="{{ this.character.name }}"/>
+        {% else %}
+            <img src="{{ asset('uploads/character/' ~ this.character.picture) }}"
+                 class="picture"
+                 alt="{{ this.character.name }}"/>
+        {% endif %}
         <h1>{{ this.character.name }}</h1>
     </div>
 
@@ -11,6 +17,9 @@
         {% include 'character/sheet/_inventory.html.twig' %}
         {% include 'character/sheet/_equipment.html.twig' %}
         {% include 'character/sheet/_spells.html.twig' %}
+        {% if this.type == 'player' %}
+            {% include 'character/sheet/_quests.html.twig' %}
+        {% endif %}
     </div>
 
     {% include 'character/sheet/_footer.html.twig' %}

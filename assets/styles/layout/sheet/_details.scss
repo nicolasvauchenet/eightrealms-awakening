@@ -1,4 +1,9 @@
 &.details {
+  h3 {
+    margin-top: 0.5rem;
+    color: $primary;
+  }
+
   .infos {
     @include displayGrid(1fr 6.5rem, 0.5rem);
     padding: 1rem 0.5rem;

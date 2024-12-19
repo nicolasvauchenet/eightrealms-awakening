@@ -9,11 +9,13 @@
         </div>
     </a>
     <div class="card-footer">
-        <a href="{{ path('app_character_sheet', {'slug': character.slug, previousUrl: app.request.pathInfo}) }}"
+        <a href="{{ path('app_character_sheet', {'slug': character.slug, 'previousUrl': app.request.pathInfo, 'type': 'pregenerated'}) }}"
            class="bg-fourth">
             {{ ux_icon('carbon:view-filled', {'class': 'app-icon'}) }}
         </a>
-        <a href="#" class="bg-primary" onclick="return window.confirm('Jouer avec {{ character.name }} ?')">
+        <a href="{{ path('app_character_create', {'slug': character.slug}) }}"
+           class="bg-primary"
+           onclick="return window.confirm('Jouer avec {{ character.name }} ?')">
             {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}
         </a>
     </div>

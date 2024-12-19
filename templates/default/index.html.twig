@@ -10,14 +10,10 @@
             <small>{{ app.user.name }}</small>
             Profil
         </a>
-        {% if true %}
-            <a href="{{ path('app_character_pregenerated') }}" class="app-button cta">
-                <small>Nouveau</small>
-                Personnage
-            </a>
-        {% else %}
-            <a href="#" class="app-button">
-                <small>Nom du</small>
+        {% if app.user.player %}
+            <a href="{{ path('app_character_sheet', {'slug': app.user.player.slug, 'previousUrl': app.request.pathInfo}) }}"
+               class="app-button">
+                <small>{{ app.user.player.name }}</small>
                 Personnage
             </a>
             {% if true %}
@@ -31,6 +27,11 @@
                     Reprendre
                 </a>
             {% endif %}
+        {% else %}
+            <a href="{{ path('app_character_pregenerated') }}" class="app-button cta">
+                <small>Nouveau</small>
+                Personnage
+            </a>
         {% endif %}
         <a href="{{ path('app_logout') }}"
            class="app-button exit"

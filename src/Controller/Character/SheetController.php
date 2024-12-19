@@ -3,6 +3,7 @@
 namespace App\Controller\Character;
 
 use App\Entity\Character\Character;
+use App\Entity\Character\Player;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +16,11 @@ class SheetController extends AbstractController
     public function index(Request   $request,
                           Character $character): Response
     {
+        $type = $character instanceof Player ? 'player' : 'pregenerated';
+
         return $this->render('character/sheet/index.html.twig', [
             'character' => $character,
-            'previousUrl' => $request->get('previousUrl')]);
+            'previousUrl' => $request->get('previousUrl'),
+            'type' => $type]);
     }
 }

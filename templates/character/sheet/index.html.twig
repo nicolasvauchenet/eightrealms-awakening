@@ -5,5 +5,5 @@
 {% block body_class %}character sheet{% endblock %}
 
 {% block main %}
-    {{ component('Sheet', { character: character }) }}
+    {{ component('Sheet', { character: character, type: type }) }}
 {% endblock %}

@@ -15,5 +15,6 @@ class SheetComponent
     #[LiveProp(writable: true)]
     public Character $character;
 
-
+    #[LiveProp(writable: true)]
+    public string $type;
 }

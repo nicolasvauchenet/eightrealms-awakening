@@ -1,0 +1,14 @@
+.form-file {
+  @extend .form-control;
+
+  &:focus {
+    outline: none;
+    color: $white;
+    background-color: $secondary;
+    border-color: $primary;
+  }
+
+  &::file-selector-button {
+    display: none;
+  }
+}

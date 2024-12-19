@@ -4,4 +4,8 @@
   @include respondTo(md) {
     @include displayGrid(repeat(2, 1fr), 1rem);
   }
+
+  &.two {
+    @include displayGrid(repeat(2, 1fr), 1rem);
+  }
 }

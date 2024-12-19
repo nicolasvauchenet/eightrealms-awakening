@@ -4,6 +4,7 @@ namespace App\Service\Character;
 
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
+use App\Entity\Item\CharacterItem;
 use App\Entity\User;
 use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,8 +48,19 @@ class CreateService
             ->setRace($preGenerated->getRace())
             ->setProfession($preGenerated->getProfession())
             ->setOwner($owner);
+
         $pictureFileName = $this->fileUploaderService->copyFile('core/character/pregenerated', $preGenerated->getPicture(), 'character', $preGenerated->getSlug());
         $character->setPicture($pictureFileName);
+
+        foreach($preGenerated->getCharacterItems() as $preGeneratedItem) {
+            $characterItem = new CharacterItem();
+            $characterItem->setItem($preGeneratedItem->getItem())
+                ->setCharacter($character)
+                ->setEquipped(false)
+                ->setHealth($preGeneratedItem->getHealth())
+                ->setCharge($preGeneratedItem->getCharge());
+            $this->entityManager->persist($characterItem);
+        }
 
         $this->entityManager->persist($character);
         $this->entityManager->flush();

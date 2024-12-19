@@ -34,17 +34,24 @@
 
   .card-footer {
     @include displayFlex(center);
+    margin: 0 2px 0;
+    width: calc(100% - 2px);
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     overflow: hidden;
 
-    a {
+    a,
+    button {
       @include displayFlex(center, center);
       flex: 1;
-      padding: 0.5rem;
+      padding: 0.25rem 0.5rem;
       color: $white;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
     }
   }
 
   @import "./character";
+  @import "./inventory";
 }

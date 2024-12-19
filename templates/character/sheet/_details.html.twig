@@ -30,21 +30,21 @@
 
         <div class="attributes">
             <div class="metrics">
-                <div class="metric">
+                <div class="metric {% if app_characterItemService.characterBonus(character, 'health') > 0 %}text-success{% endif %}">
                     {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-                    {{ character.health }}
+                    {{ character.health + app_characterItemService.characterBonus(character, 'health') }}
                 </div>
-                <div class="metric">
+                <div class="metric {% if app_characterItemService.characterBonus(character, 'mana') > 0 %}text-success{% endif %}">
                     {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                    {{ character.mana }}
+                    {{ character.mana + app_characterItemService.characterBonus(character, 'mana') }}
                 </div>
                 <div class="metric">
                     {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
-                    +{{ character.defense }}
+                    +{{ app_characterItemService.characterBonus(character, 'defense') }}
                 </div>
                 <div class="metric">
                     {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                    +{{ character.damage }}
+                    +{{ app_characterItemService.characterBonus(character, 'damage') }}
                 </div>
             </div>
             <div class="fortune">

@@ -17,7 +17,9 @@
             {% include 'character/sheet/_details.html.twig' %}
             {% include 'character/sheet/_inventory.html.twig' %}
             {% include 'character/sheet/_equipment.html.twig' %}
-            {% include 'character/sheet/_spells.html.twig' %}
+            {% if character.profession.type == 'Magie' %}
+                {% include 'character/sheet/_spells.html.twig' %}
+            {% endif %}
             {% if this.type == 'player' %}
                 {% include 'character/sheet/_quests.html.twig' %}
             {% endif %}

@@ -26,7 +26,8 @@
                                 {% if characterItem.item.defense is defined %}
                                     {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
                                     {{ characterItem.item.defense }}
-                                {% elseif characterItem.item.target is defined and characterItem.item.target is not null %}
+                                {% endif %}
+                                {% if characterItem.item.target is defined and characterItem.item.target is not null %}
                                     {% if characterItem.item.target == 'health' %}
                                         {% if characterItem.item.type == 'Offensif' %}
                                             {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
@@ -40,9 +41,11 @@
                                         {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
                                         {{ characterItem.item.amount }}
                                     {% endif %}
-                                {% elseif characterItem.item.type == 'Utile' %}
+                                {% endif %}
+                                {% if characterItem.item.type == 'Utile' %}
                                     {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
-                                {% elseif characterItem.item.damage is defined %}
+                                {% endif %}
+                                {% if characterItem.item.damage is defined %}
                                     {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
                                     {{ characterItem.item.damage }}
                                 {% endif %}
@@ -52,22 +55,24 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ characterItem.item.name }}</h5>
                     </div>
-                    <div class="card-footer">
-                        {% if characterItem.equipped %}
-                            <button class="bg-warning" {{ live_action('equipItem', {'id': characterItem.id }) }}>
-                                {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
-                            </button>
-                        {% else %}
-                            <button class="bg-success" {{ live_action('equipItem', {'id': characterItem.id }) }}>
-                                {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
-                            </button>
-                        {% endif %}
-                        {% if false %}
-                            <a href="#" class="bg-info">
-                                {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon'}) }}
-                            </a>
-                        {% endif %}
-                    </div>
+                    {% if type == 'player' %}
+                        <div class="card-footer">
+                            {% if characterItem.equipped %}
+                                <button class="bg-warning" {{ live_action('equipItem', {'id': characterItem.id }) }}>
+                                    {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
+                                </button>
+                            {% else %}
+                                <button class="bg-success" {{ live_action('equipItem', {'id': characterItem.id }) }}>
+                                    {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
+                                </button>
+                            {% endif %}
+                            {% if false %}
+                                <a href="#" class="bg-info">
+                                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon'}) }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

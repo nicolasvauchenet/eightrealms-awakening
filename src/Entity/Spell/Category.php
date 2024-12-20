@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Entity\Item;
+namespace App\Entity\Spell;
 
-use App\Repository\Item\CategoryRepository;
+use App\Repository\Spell\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ORM\Table(name: '`item_category`')]
+#[ORM\Table(name: '`spell_category`')]
 class Category
 {
     #[ORM\Id]
@@ -28,14 +28,14 @@ class Category
     private ?int $position = null;
 
     /**
-     * @var Collection<int, Item>
+     * @var Collection<int, Spell>
      */
-    #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'category')]
-    private Collection $items;
+    #[ORM\OneToMany(targetEntity: Spell::class, mappedBy: 'category')]
+    private Collection $spells;
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
+        $this->spells = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,29 +80,29 @@ class Category
     }
 
     /**
-     * @return Collection<int, Item>
+     * @return Collection<int, Spell>
      */
-    public function getItems(): Collection
+    public function getSpells(): Collection
     {
-        return $this->items;
+        return $this->spells;
     }
 
-    public function addItem(Item $item): static
+    public function addSpell(Spell $spell): static
     {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->setCategory($this);
+        if (!$this->spells->contains($spell)) {
+            $this->spells->add($spell);
+            $spell->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeItem(Item $item): static
+    public function removeSpell(Spell $spell): static
     {
-        if ($this->items->removeElement($item)) {
+        if ($this->spells->removeElement($spell)) {
             // set the owning side to null (unless already changed)
-            if ($item->getCategory() === $this) {
-                $item->setCategory(null);
+            if ($spell->getCategory() === $this) {
+                $spell->setCategory(null);
             }
         }
 

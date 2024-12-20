@@ -14,9 +14,14 @@
        data-action="click->content-switcher#switch">
         {{ ux_icon('game-icons:cape-armor', {'class': 'app-icon'}) }}
     </a>
-    <a href="#" data-target="spells" data-content-switcher-target="link" data-action="click->content-switcher#switch">
-        {{ ux_icon('game-icons:spell-book', {'class': 'app-icon'}) }}
-    </a>
+    {% if character.profession.type == 'Magie' %}
+        <a href="#"
+           data-target="spells"
+           data-content-switcher-target="link"
+           data-action="click->content-switcher#switch">
+            {{ ux_icon('game-icons:spell-book', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
     {% if this.type == 'player' %}
         <a href="#" data-target="quests"
            data-content-switcher-target="link"

@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures\Item;
 
-use App\Entity\Item\Armor;
 use App\Entity\Item\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;

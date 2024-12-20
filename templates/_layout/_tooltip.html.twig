@@ -4,7 +4,7 @@
     <div class="tooltip-background" data-tooltip-target="background"></div>
     <div class="tooltip-body">
         <div class="tooltip-content scrollable">
-            {% if type == 'item' or type == 'spell' %}
+            {% if type == 'item' %}
                 <h3 class="tooltip-title">{{ content.name }}</h3>
                 <h4 class="tooltip-subtitle">
                     {% if content.defense is defined %}
@@ -33,6 +33,9 @@
                 </h4>
 
                 {{ content.description | raw }}
+            {% elseif type == 'spell' %}
+                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                ???
             {% endif %}
         </div>
     </div>

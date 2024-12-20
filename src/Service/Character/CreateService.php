@@ -5,6 +5,7 @@ namespace App\Service\Character;
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Item\CharacterItem;
+use App\Entity\Spell\CharacterSpell;
 use App\Entity\User;
 use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,10 +57,19 @@ class CreateService
             $characterItem = new CharacterItem();
             $characterItem->setItem($preGeneratedItem->getItem())
                 ->setCharacter($character)
-                ->setEquipped(false)
+                ->setEquipped($preGeneratedItem->isEquipped())
+                ->setSlot($preGeneratedItem->getSlot())
                 ->setHealth($preGeneratedItem->getHealth())
                 ->setCharge($preGeneratedItem->getCharge());
             $this->entityManager->persist($characterItem);
+        }
+
+        foreach($preGenerated->getCharacterSpells() as $preGeneratedSpell) {
+            $characterSpell = new CharacterSpell();
+            $characterSpell->setSpell($preGeneratedSpell->getSpell())
+                ->setCharacter($character)
+                ->setLevel(1);
+            $this->entityManager->persist($characterSpell);
         }
 
         $this->entityManager->persist($character);

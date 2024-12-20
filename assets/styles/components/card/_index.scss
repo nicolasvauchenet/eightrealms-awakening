@@ -23,12 +23,18 @@
     .card-title {
       font-size: 1.5rem;
       color: $primary;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
     }
 
     .card-subtitle {
       font-size: 1.25rem;
       font-weight: bold;
       color: $primary;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
     }
   }
 

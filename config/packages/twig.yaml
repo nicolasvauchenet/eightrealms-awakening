@@ -4,6 +4,7 @@ twig:
     app_locale: '%app_locale%'
     app_preGeneratedService: '@App\Service\Character\PreGeneratedService'
     app_characterItemService: '@App\Service\Item\CharacterItemService'
+    app_characterSpellService: '@App\Service\Spell\CharacterSpellService'
 
 when@test:
   twig:

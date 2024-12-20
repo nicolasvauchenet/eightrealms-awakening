@@ -4,10 +4,12 @@
   }
 
   .list {
-    margin: 0 0.5rem 1rem 1rem;
+    margin: 1rem 0.75rem 1rem 0.5rem;
+    padding-bottom: 0.25rem;
     font-family: $font-secondary;
     font-weight: bold;
     color: $primary;
+    @extend .appears;
 
     &.scrollable {
       max-height: 57.5dvh;
@@ -23,61 +25,28 @@
 
     .app-card {
       .card-header {
-        img {
-          margin-top: 2rem;
-          height: 7.5dvh;
-        }
+        .infos {
+          .bonus {
+            @include displayFlex(center, center);
 
-        .bonus {
-          position: absolute;
-          top: 0;
-          @include displayFlex(center, center);
-          padding: 0.25rem 0.5rem;
-          font-size: 0.85rem;
-
-          &:first-child {
-            left: 0;
-            right: 50%;
-            background-color: rgba($white, 0.75);
+            .attribute {
+              @include displayFlex(center, center, 0.25rem);
+              flex: 1;
+            }
           }
-
-          &:nth-child(2) {
-            left: 50%;
-            right: 0;
-            color: $white;
-            background-color: rgba($fourth, 0.75);
-          }
-
-          .app-icon {
-            width: 1rem;
-            height: 1rem;
-          }
-        }
-      }
-
-      .card-body {
-        @include displayFlex(space-between, null, 0.25rem, column);
-        flex: 1;
-
-        .card-title {
-          @include displayFlex(center, center);
-          flex: 1;
-          margin-bottom: 2px;
-          font-size: 0.85rem;
         }
       }
 
       .card-footer {
-        @include displayFlex(center, center);
-        margin-bottom: 2px;
-
         .attribute {
-          @include displayFlex(center, center);
+          @include displayFlex(center, center, 0.25rem);
           flex: 1;
-          padding: 0.25rem;
+          padding: 0.25rem 0.5rem;
           font-size: 0.85rem;
-          text-align: center;
+          color: $primary;
           background-color: rgba($white, 0.5);
+          border: none;
+          cursor: pointer;
 
           .app-icon {
             width: 1rem;

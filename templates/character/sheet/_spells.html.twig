@@ -1,3 +1,55 @@
 <div class="content spells" data-content-switcher-target="content">
     <h2>Sortilèges</h2>
+
+    <div class="list scrollable">
+        <div class="app-grid three mb-1">
+            {% for characterSpell in app_characterSpellService.characterSpells(character) %}
+                <div class="app-card inventory">
+                    <div class="card-header" data-controller="tooltip">
+                        <a href="#" data-action="click->tooltip#open">
+                            <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.picture) }}"
+                                 alt="{{ characterSpell.spell.name }}"/>
+                        </a>
+                        {% include '_layout/_tooltip.html.twig' with {'type': 'spell', 'content': characterSpell.spell} %}
+                        <div class="infos">
+                            <div class="bonus">
+                                <div class="attribute">
+                                    {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                                    {{ characterSpell.spell.manaCost }}
+                                </div>
+                                <div class="attribute text-success">
+                                    {{ characterSpell.level }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ characterSpell.spell.name }}</h5>
+                    </div>
+                    <div class="card-footer">
+                        {% if characterSpell.spell.target %}
+                            {% if characterSpell.spell.target == 'health' %}
+                                <div class="attribute">
+                                    {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                                    {{ characterSpell.spell.amount + characterSpell.amountBonus }}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {% if characterSpell.spell.duration %}
+                            <div class="attribute">
+                                {{ ux_icon('lsicon:time-two-filled', {'class': 'app-icon'}) }}
+                                {{ characterSpell.spell.duration + characterSpell.durationBonus }}
+                            </div>
+                        {% endif %}
+                        {% if characterSpell.spell.area %}
+                            <div class="attribute">
+                                {{ ux_icon('ph:map-pin-area-fill', {'class': 'app-icon'}) }}
+                                {{ characterSpell.spell.area + characterSpell.areaBonus }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>

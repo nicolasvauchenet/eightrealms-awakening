@@ -2,7 +2,10 @@
 
 namespace App\Entity\Screen;
 
+use App\Entity\Scene\Scene;
 use App\Repository\Screen\ScreenRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -23,6 +26,17 @@ abstract class Screen
     #[ORM\Column(length: 255)]
     #[Gedmo\Slug(fields: ['name'])]
     private ?string $slug = null;
+
+    /**
+     * @var Collection<int, Scene>
+     */
+    #[ORM\OneToMany(targetEntity: Scene::class, mappedBy: 'screen')]
+    private Collection $scenes;
+
+    public function __construct()
+    {
+        $this->scenes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -49,6 +63,36 @@ abstract class Screen
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Scene>
+     */
+    public function getScenes(): Collection
+    {
+        return $this->scenes;
+    }
+
+    public function addScene(Scene $scene): static
+    {
+        if (!$this->scenes->contains($scene)) {
+            $this->scenes->add($scene);
+            $scene->setScreen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScene(Scene $scene): static
+    {
+        if ($this->scenes->removeElement($scene)) {
+            // set the owning side to null (unless already changed)
+            if ($scene->getScreen() === $this) {
+                $scene->setScreen(null);
+            }
+        }
 
         return $this;
     }

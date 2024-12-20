@@ -71,7 +71,7 @@ class Npc extends Character
 
     public function addPlaceScreen(PlaceScreen $placeScreen): static
     {
-        if (!$this->placeScreens->contains($placeScreen)) {
+        if(!$this->placeScreens->contains($placeScreen)) {
             $this->placeScreens->add($placeScreen);
             $placeScreen->addNpc($this);
         }
@@ -81,7 +81,7 @@ class Npc extends Character
 
     public function removePlaceScreen(PlaceScreen $placeScreen): static
     {
-        if ($this->placeScreens->removeElement($placeScreen)) {
+        if($this->placeScreens->removeElement($placeScreen)) {
             $placeScreen->removeNpc($this);
         }
 
@@ -98,7 +98,7 @@ class Npc extends Character
 
     public function addDialogueScreen(DialogueScreen $dialogueScreen): static
     {
-        if (!$this->dialogueScreens->contains($dialogueScreen)) {
+        if(!$this->dialogueScreens->contains($dialogueScreen)) {
             $this->dialogueScreens->add($dialogueScreen);
             $dialogueScreen->setNpc($this);
         }
@@ -108,9 +108,9 @@ class Npc extends Character
 
     public function removeDialogueScreen(DialogueScreen $dialogueScreen): static
     {
-        if ($this->dialogueScreens->removeElement($dialogueScreen)) {
+        if($this->dialogueScreens->removeElement($dialogueScreen)) {
             // set the owning side to null (unless already changed)
-            if ($dialogueScreen->getNpc() === $this) {
+            if($dialogueScreen->getNpc() === $this) {
                 $dialogueScreen->setNpc(null);
             }
         }

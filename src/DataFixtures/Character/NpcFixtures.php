@@ -32,8 +32,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'profession' => 'profession_marchand',
                 'level' => 3,
                 'alive' => true,
-                /*'currentLocation' => 'Port Saint-Doux',*/
-                'reference' => 'pnj_sophie',
+                'reference' => 'npc_sophie_la_marchande',
             ],
             [
                 'name' => 'Robert Le Garde',
@@ -53,13 +52,12 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'profession' => 'profession_garde',
                 'level' => 5,
                 'alive' => true,
-                /*'currentLocation' => 'Port Saint-Doux',*/
-                'reference' => 'pnj_robert',
+                'reference' => 'npc_robert_le_garde',
             ],
             [
                 'name' => 'Bilo le Passant',
                 'picture' => 'bilo-le-passant.png',
-                'description' => "<p>Vous êtes face à un passant. Il est petit et semble être un semi-homme. Il vous regarde avec curiosité.</p>",
+                'description' => "<p>Vous êtes face à un simple passant. Il est petit et semble être un semi-homme. Il vous regarde avec curiosité.</p>",
                 'health' => 50,
                 'mana' => 10,
                 'damage' => 4,
@@ -73,8 +71,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'race' => 'race_halfelin',
                 'level' => 1,
                 'alive' => true,
-                /*'currentLocation' => 'Port Saint-Doux',*/
-                'reference' => 'pnj_bilo',
+                'reference' => 'npc_bilo_le_passant',
             ],
         ];
 

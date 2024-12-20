@@ -2,8 +2,11 @@
 
 namespace App\Entity\Scene;
 
+use App\Entity\Action\Action;
 use App\Entity\Screen\Screen;
 use App\Repository\Scene\SceneRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -38,6 +41,17 @@ abstract class Scene
     #[ORM\ManyToOne(inversedBy: 'scenes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Screen $screen = null;
+
+    /**
+     * @var Collection<int, Action>
+     */
+    #[ORM\OneToMany(targetEntity: Action::class, mappedBy: 'scene')]
+    private Collection $actions;
+
+    public function __construct()
+    {
+        $this->actions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -112,6 +126,36 @@ abstract class Scene
     public function setScreen(?Screen $screen): static
     {
         $this->screen = $screen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Action>
+     */
+    public function getActions(): Collection
+    {
+        return $this->actions;
+    }
+
+    public function addAction(Action $action): static
+    {
+        if (!$this->actions->contains($action)) {
+            $this->actions->add($action);
+            $action->setScene($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAction(Action $action): static
+    {
+        if ($this->actions->removeElement($action)) {
+            // set the owning side to null (unless already changed)
+            if ($action->getScene() === $this) {
+                $action->setScene(null);
+            }
+        }
 
         return $this;
     }

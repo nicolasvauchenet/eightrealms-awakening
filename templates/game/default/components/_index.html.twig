@@ -1,0 +1,9 @@
+<div {{ attributes }}>
+    <div class=" screen {{ this.currentScreenType }}" data-loading="addClass(loading)">
+        {% if this.currentScreenType == 'cinematicscreen' %}
+            {% include 'game/default/components/_cinematic/_index.html.twig' %}
+        {% elseif this.currentScreenType == 'placescreen' %}
+            {% include 'game/default/components/_place/_index.html.twig' %}
+        {% endif %}
+    </div>
+</div>

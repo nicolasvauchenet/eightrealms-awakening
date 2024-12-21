@@ -1,0 +1,13 @@
+.exit {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+  color: $danger;
+  filter: drop-shadow(1px 1px 1px rgba($black, 0.85));
+
+  .app-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+}

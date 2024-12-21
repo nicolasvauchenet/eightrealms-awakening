@@ -1,0 +1,8 @@
+.screen {
+  @include displayFlex(space-between, center, null, column);
+  width: 100%;
+  height: 100%;
+
+  @import "cinematic";
+  @import "place";
+}

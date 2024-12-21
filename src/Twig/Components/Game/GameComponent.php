@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Twig\Components\Game;
+
+use App\Entity\Character\Player;
+use App\Entity\Scene\Scene;
+use App\Entity\Screen\Screen;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
+use Symfony\UX\LiveComponent\Attribute\LiveArg;
+use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\PostMount;
+
+#[AsLiveComponent('Game', template: 'game/default/components/_index.html.twig')]
+class GameComponent
+{
+    use DefaultActionTrait;
+
+    private EntityManagerInterface $entityManager;
+
+    #[LiveProp(writable: true)]
+    public Player $character;
+
+    #[LiveProp(writable: true)]
+    public Screen $currentScreen;
+
+    #[LiveProp(writable: true)]
+    public Scene $currentScene;
+
+    public string $currentScreenType;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    #[PostMount]
+    public function postMount(): void
+    {
+        $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    #[LiveAction]
+    public function changeScreen(#[LiveArg] int $targetScreenId, #[LiveArg] int $targetSceneId): void
+    {
+        $this->currentScreen = $this->entityManager->getRepository(Screen::class)->find($targetScreenId);
+        $this->currentScene = $this->entityManager->getRepository(Scene::class)->find($targetSceneId);
+        $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+
+        $this->character->setCurrentPlace($this->currentScene->getPlace());
+        $this->entityManager->persist($this->character);
+        $this->entityManager->flush();
+    }
+}

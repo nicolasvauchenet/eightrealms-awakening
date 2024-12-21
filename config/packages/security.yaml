@@ -37,6 +37,7 @@ security:
     - { path: ^/administration, roles: ROLE_ADMIN }
     - { path: ^/profil, roles: ROLE_USER }
     - { path: ^/personnage, roles: ROLE_USER }
+    - { path: ^/jeu, roles: ROLE_USER }
 
   access_denied_url: /
 

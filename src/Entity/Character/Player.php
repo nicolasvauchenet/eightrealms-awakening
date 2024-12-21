@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Location\Place;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,6 +25,9 @@ class Player extends Character
     #[ORM\OneToOne(inversedBy: 'player', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
+
+    #[ORM\ManyToOne(inversedBy: 'players')]
+    private ?Place $currentPlace = null;
 
     public function getLevel(): ?int
     {
@@ -81,6 +85,18 @@ class Player extends Character
     public function setOwner(User $owner): static
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getCurrentPlace(): ?Place
+    {
+        return $this->currentPlace;
+    }
+
+    public function setCurrentPlace(?Place $currentPlace): static
+    {
+        $this->currentPlace = $currentPlace;
 
         return $this;
     }

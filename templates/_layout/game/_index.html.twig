@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="app-overlay"></div>
+
+    <main class="app-main">
+        {% include '_layout/_alert.html.twig' %}
+
+        {% block main %}{% endblock %}
+    </main>
+{% endblock %}

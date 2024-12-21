@@ -1,0 +1,9 @@
+{% extends '_layout/game/_index.html.twig' %}
+
+{% block title %}Jouer{% endblock %}
+
+{% block body_class %}game{% endblock %}
+
+{% block main %}
+    {{ component('Game', { character: app.user.player, currentScreen: currentScreen, currentScene: currentScene }) }}
+{% endblock %}

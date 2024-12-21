@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Location\Place;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\PlaceScreen;
 use App\Repository\Character\NpcRepository;

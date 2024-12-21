@@ -1,7 +1,7 @@
 <div class="content inventory" data-content-switcher-target="content">
     <h2>Inventaire</h2>
 
-    <div class="list scrollable" data-loading="addClass(loading)">
+    <div class="list scrollable">
         <div class="app-grid three mb-1">
             {% for characterItem in app_characterItemService.characterItems(character) %}
                 <div class="app-card inventory">

@@ -1,10 +1,10 @@
 .sheet-footer {
   /*@include displayGrid(repeat(5, 1fr));*/
   @include displayFlex(center, center);
-  position: fixed;
-  left: 0.25rem;
-  right: 0.25rem;
-  bottom: 0.5rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: $secondary;
 
   a {

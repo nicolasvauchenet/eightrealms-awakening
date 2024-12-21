@@ -1,0 +1,7 @@
+<img src="{{ asset('img/chapter1/location/' ~ this.currentScene.place.location.slug ~ '/place/' ~ this.currentScene.place.picture) }}"
+     alt="{{ this.currentScene.place.name }}"
+     class="app-cover"/>
+
+{% include 'game/default/components/_place/_header.html.twig' %}
+{% include 'game/default/components/_place/_main.html.twig' %}
+{% include 'game/default/components/_place/_footer.html.twig' %}

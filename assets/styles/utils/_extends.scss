@@ -4,6 +4,11 @@
   animation: appears 1.5s forwards;
 }
 
+.disappears {
+  opacity: 1;
+  animation: disappears 1.5s forwards;
+}
+
 /* SCROLL */
 .scrollable {
   padding-right: 0.5rem;

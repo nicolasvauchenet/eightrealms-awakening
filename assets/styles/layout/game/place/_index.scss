@@ -1,0 +1,11 @@
+&.placescreen {
+  @extend .appears;
+
+  .app-cover {
+    position: relative;
+  }
+
+  @import "./header";
+  @import "./main";
+  @import "./footer";
+}

@@ -5,6 +5,7 @@ namespace App\DataFixtures\Action;
 use App\Entity\Action\TransitionAction;
 use App\Entity\Scene\CinematicScene;
 use App\Entity\Scene\PlaceScene;
+use App\Entity\Screen\PlaceScreen;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -20,6 +21,8 @@ class TransitionActionFixtures extends Fixture implements OrderedFixtureInterfac
                 'sceneClass' => CinematicScene::class,
                 'targetScene' => 'scene_place_place_du_marche',
                 'targetSceneClass' => PlaceScene::class,
+                'targetScreen' => 'screen_place_place_du_marche',
+                'targetScreenClass' => PlaceScreen::class,
                 'reference' => 'action_transition_start',
             ],
         ];

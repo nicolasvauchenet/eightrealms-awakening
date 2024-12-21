@@ -9,6 +9,17 @@
   }
 }
 
+@keyframes disappears {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
 @keyframes pulse {
   0% {
     opacity: 0.6;

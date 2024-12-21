@@ -2,6 +2,9 @@
 
 namespace App\Entity\Location;
 
+use App\Entity\Character\Npc;
+use App\Entity\Character\Player;
+use App\Entity\Scene\PlaceScene;
 use App\Entity\Screen\PlaceScreen;
 use App\Repository\Location\PlaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -43,9 +46,23 @@ class Place
     #[ORM\OneToMany(targetEntity: PlaceScreen::class, mappedBy: 'place')]
     private Collection $placeScreens;
 
+    /**
+     * @var Collection<int, Player>
+     */
+    #[ORM\OneToMany(targetEntity: Player::class, mappedBy: 'currentPlace')]
+    private Collection $players;
+
+    /**
+     * @var Collection<int, PlaceScene>
+     */
+    #[ORM\OneToMany(targetEntity: PlaceScene::class, mappedBy: 'place')]
+    private Collection $placeScenes;
+
     public function __construct()
     {
         $this->placeScreens = new ArrayCollection();
+        $this->players = new ArrayCollection();
+        $this->placeScenes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,6 +166,66 @@ class Place
             // set the owning side to null (unless already changed)
             if ($placeScreen->getPlace() === $this) {
                 $placeScreen->setPlace(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Player>
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
+    }
+
+    public function addPlayer(Player $player): static
+    {
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+            $player->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(Player $player): static
+    {
+        if ($this->players->removeElement($player)) {
+            // set the owning side to null (unless already changed)
+            if ($player->getLocation() === $this) {
+                $player->setLocation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlaceScene>
+     */
+    public function getPlaceScenes(): Collection
+    {
+        return $this->placeScenes;
+    }
+
+    public function addPlaceScene(PlaceScene $placeScene): static
+    {
+        if (!$this->placeScenes->contains($placeScene)) {
+            $this->placeScenes->add($placeScene);
+            $placeScene->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlaceScene(PlaceScene $placeScene): static
+    {
+        if ($this->placeScenes->removeElement($placeScene)) {
+            // set the owning side to null (unless already changed)
+            if ($placeScene->getLocation() === $this) {
+                $placeScene->setLocation(null);
             }
         }
 

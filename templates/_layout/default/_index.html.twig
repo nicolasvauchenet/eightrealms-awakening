@@ -5,6 +5,14 @@
 
     <div class="app-overlay"></div>
 
+    {% if app.user %}
+        <a href="{{ path('app_logout') }}"
+           class="exit"
+           onclick="return window.confirm('Vous partez ?')">
+            {{ ux_icon('streamline:emergency-exit-solid', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
+
     {% include '_layout/default/_header.html.twig' %}
 
     <main class="app-main">

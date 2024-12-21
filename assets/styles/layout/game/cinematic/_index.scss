@@ -1,0 +1,7 @@
+&.cinematicscreen {
+  color: $white;
+
+  @import "./header";
+  @import "./main";
+  @import "./footer";
+}

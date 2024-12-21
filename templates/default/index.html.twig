@@ -16,15 +16,15 @@
                 <small>{{ app.user.player.name }}</small>
                 Personnage
             </a>
-            {% if true %}
-                <a href="#" class="app-button cta">
-                    <small>Nouvelle</small>
-                    Partie
+            {% if app.user.player.currentPlace %}
+                <a href="{{ path('app_game_home') }}" class="app-button cta">
+                    <small>{{ app.user.player.currentPlace.name }}</small>
+                    Reprendre
                 </a>
             {% else %}
-                <a href="#" class="app-button cta">
-                    <small>Lieu actuel</small>
-                    Reprendre
+                <a href="{{ path('app_game_home') }}" class="app-button cta">
+                    <small>Nouvelle</small>
+                    Partie
                 </a>
             {% endif %}
         {% else %}
@@ -33,11 +33,6 @@
                 Personnage
             </a>
         {% endif %}
-        <a href="{{ path('app_logout') }}"
-           class="app-button exit"
-           onclick="return window.confirm('Vous partez ?')">
-            {{ ux_icon('streamline:emergency-exit-solid', {'class': 'app-icon'}) }}
-        </a>
     {% else %}
         <a href="{{ path('app_register') }}" class="app-button cta">
             <small>Nouveau Joueur</small>

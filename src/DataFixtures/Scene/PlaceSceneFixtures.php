@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Scene;
 
+use App\Entity\Location\Place;
 use App\Entity\Scene\PlaceScene;
 use App\Entity\Screen\PlaceScreen;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -16,6 +17,7 @@ class PlaceSceneFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Place du Marché',
                 'position' => 1,
+                'place' => 'place_place_du_marche',
                 'screen' => 'screen_place_place_du_marche',
                 'reference' => 'scene_place_place_du_marche',
             ],
@@ -27,6 +29,7 @@ class PlaceSceneFixtures extends Fixture implements OrderedFixtureInterface
                 ->setPicture($data['picture'] ?? null)
                 ->setDescription($data['description'] ?? null)
                 ->setPosition($data['position'] ?? null)
+                ->setPlace($this->getReference($data['place'], Place::class))
                 ->setScreen($this->getReference($data['screen'], PlaceScreen::class));
             $manager->persist($scene);
             $this->addReference($data['reference'], $scene);

@@ -1,0 +1,8 @@
+<footer class="screen-footer">
+    {% for action in this.currentScene.actions %}
+        <button class="app-button cta"
+                {{ live_action('changeScreen', {'targetScreenId': action.targetScreen.id, 'targetSceneId': action.targetScene.id }) }}>
+            {{ action.label }}
+        </button>
+    {% endfor %}
+</footer>

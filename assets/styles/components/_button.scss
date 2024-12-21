@@ -13,6 +13,7 @@
   border: 0.25em groove $secondary;
   border-radius: 0.5rem;
   box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+  cursor: pointer;
 
   &.cta {
     font-size: 1.75rem;
@@ -24,17 +25,6 @@
     border: none;
     box-shadow: none;
     text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
-  }
-
-  &.exit {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    @include displayFlex(center, center);
-    padding: 0.5rem;
-    width: auto;
-    background-color: rgba($danger, 0.85);
-    border: 2px solid $secondary;
   }
 
   small {

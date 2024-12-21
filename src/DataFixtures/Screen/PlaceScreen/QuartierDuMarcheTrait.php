@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures\Screen\PlaceScreen;
 
-trait PortSaintDouxTrait
+trait QuartierDuMarcheTrait
 {
     const QUARTIER_DU_MARCHE = [
         'name' => 'Place du Marché',

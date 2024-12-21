@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures\Screen\DialogueScreen;
 
-trait PortSaintDouxTrait
+trait QuartierDuMarcheTrait
 {
     const SOPHIE_LA_MARCHANDE = [
         'name' => 'Sophie La Marchande',

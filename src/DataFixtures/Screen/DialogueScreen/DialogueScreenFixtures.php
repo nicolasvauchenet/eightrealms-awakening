@@ -10,7 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class DialogueScreenFixtures extends Fixture implements OrderedFixtureInterface
 {
-    use PortSaintDouxTrait;
+    use QuartierDuMarcheTrait;
 
     public function load(ObjectManager $manager): void
     {

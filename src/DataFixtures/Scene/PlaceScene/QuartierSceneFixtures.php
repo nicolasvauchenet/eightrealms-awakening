@@ -9,9 +9,9 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class PlaceSceneFixtures extends Fixture implements OrderedFixtureInterface
+class QuartierSceneFixtures extends Fixture implements OrderedFixtureInterface
 {
-    use PortSaintDouxTrait;
+    use PlaceDuMarcheTrait;
 
     public function load(ObjectManager $manager): void
     {

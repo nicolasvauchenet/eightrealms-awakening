@@ -16,11 +16,23 @@ trait BiloLePassantTrait
         'picture' => 'history.png',
         'scene' => 'scene_dialogue_bilo_le_passant',
         'sceneClass' => DialogueScene::class,
-        'targetScene' => 'scene_dialogue_bilo_le_passant',
+        'targetScene' => 'scene_dialogue_bilo_le_passant_history',
         'targetSceneClass' => DialogueScene::class,
         'targetScreen' => 'screen_dialogue_bilo_le_passant',
         'targetScreenClass' => DialogueScreen::class,
         'reference' => 'action_dialogue_bilo_le_passant_history',
+    ];
+
+    const BILO_LE_PASSANT_HISTORY_EXIT = [
+        'label' => 'Bilo Le Passant',
+        'picture' => 'exit.png',
+        'scene' => 'scene_dialogue_bilo_le_passant_history',
+        'sceneClass' => DialogueScene::class,
+        'targetScene' => 'scene_dialogue_bilo_le_passant',
+        'targetSceneClass' => DialogueScene::class,
+        'targetScreen' => 'screen_dialogue_bilo_le_passant',
+        'targetScreenClass' => DialogueScreen::class,
+        'reference' => 'action_dialogue_bilo_le_passant_history_exit',
     ];
 
     const BILO_LE_PASSANT_RUMORS = [
@@ -28,11 +40,80 @@ trait BiloLePassantTrait
         'picture' => 'rumors.png',
         'scene' => 'scene_dialogue_bilo_le_passant',
         'sceneClass' => DialogueScene::class,
-        'targetScene' => 'scene_dialogue_bilo_le_passant',
+        'targetScene' => 'scene_dialogue_bilo_le_passant_rumors',
         'targetSceneClass' => DialogueScene::class,
         'targetScreen' => 'screen_dialogue_bilo_le_passant',
         'targetScreenClass' => DialogueScreen::class,
         'reference' => 'action_dialogue_bilo_le_passant_rumors',
+    ];
+
+    const BILO_LE_PASSANT_RUMORS_2 = [
+        'label' => 'Où se trouve cet endroit ?',
+        'scene' => 'scene_dialogue_bilo_le_passant_rumors',
+        'sceneClass' => DialogueScene::class,
+        'targetScene' => 'scene_dialogue_bilo_le_passant_rumors_2',
+        'targetSceneClass' => DialogueScene::class,
+        'targetScreen' => 'screen_dialogue_bilo_le_passant',
+        'targetScreenClass' => DialogueScreen::class,
+        'reference' => 'action_dialogue_bilo_le_passant_rumors_2',
+    ];
+
+    const BILO_LE_PASSANT_RUMORS_2_ACCEPT = [
+        'label' => 'Je vais aller voir ça',
+        'scene' => 'scene_dialogue_bilo_le_passant_rumors_2',
+        'sceneClass' => DialogueScene::class,
+        'targetScene' => 'scene_dialogue_bilo_le_passant_rumors_2_accept',
+        'targetSceneClass' => DialogueScene::class,
+        'targetScreen' => 'screen_dialogue_bilo_le_passant',
+        'targetScreenClass' => DialogueScreen::class,
+        'reference' => 'action_dialogue_bilo_le_passant_rumors_2_accept',
+    ];
+
+    const BILO_LE_PASSANT_RUMORS_2_ACCEPT_EXIT = [
+        'label' => 'Bilo Le Passant',
+        'picture' => 'exit.png',
+        'scene' => 'scene_dialogue_bilo_le_passant_rumors_2_accept',
+        'sceneClass' => DialogueScene::class,
+        'targetScene' => 'scene_dialogue_bilo_le_passant',
+        'targetSceneClass' => DialogueScene::class,
+        'targetScreen' => 'screen_dialogue_bilo_le_passant',
+        'targetScreenClass' => DialogueScreen::class,
+        'reference' => 'action_dialogue_bilo_le_passant_rumors_2_accept_exit',
+    ];
+
+    const BILO_LE_PASSANT_RUMORS_2_DECLINE = [
+        'label' => "Ça ne m'intéresse pas",
+        'scene' => 'scene_dialogue_bilo_le_passant_rumors_2',
+        'sceneClass' => DialogueScene::class,
+        'targetScene' => 'scene_dialogue_bilo_le_passant_rumors_2_decline',
+        'targetSceneClass' => DialogueScene::class,
+        'targetScreen' => 'screen_dialogue_bilo_le_passant',
+        'targetScreenClass' => DialogueScreen::class,
+        'reference' => 'action_dialogue_bilo_le_passant_rumors_2_decline',
+    ];
+
+    const BILO_LE_PASSANT_RUMORS_2_DECLINE_EXIT = [
+        'label' => 'Bilo Le Passant',
+        'picture' => 'exit.png',
+        'scene' => 'scene_dialogue_bilo_le_passant_rumors_2_decline',
+        'sceneClass' => DialogueScene::class,
+        'targetScene' => 'scene_dialogue_bilo_le_passant',
+        'targetSceneClass' => DialogueScene::class,
+        'targetScreen' => 'screen_dialogue_bilo_le_passant',
+        'targetScreenClass' => DialogueScreen::class,
+        'reference' => 'action_dialogue_bilo_le_passant_rumors_2_decline_exit',
+    ];
+
+    const BILO_LE_PASSANT_RUMORS_EXIT = [
+        'label' => 'Bilo Le Passant',
+        'picture' => 'exit.png',
+        'scene' => 'scene_dialogue_bilo_le_passant_rumors',
+        'sceneClass' => DialogueScene::class,
+        'targetScene' => 'scene_dialogue_bilo_le_passant',
+        'targetSceneClass' => DialogueScene::class,
+        'targetScreen' => 'screen_dialogue_bilo_le_passant',
+        'targetScreenClass' => DialogueScreen::class,
+        'reference' => 'action_dialogue_bilo_le_passant_rumors_exit',
     ];
 
     const BILO_LE_PASSANT_STEAL = [

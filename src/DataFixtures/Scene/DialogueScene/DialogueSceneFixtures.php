@@ -11,7 +11,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class DialogueSceneFixtures extends Fixture implements OrderedFixtureInterface
 {
-    use PortSaintDouxTrait;
+    use QuartierDuMarcheTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -21,6 +21,11 @@ class DialogueSceneFixtures extends Fixture implements OrderedFixtureInterface
             self::ROBERT_LE_GARDE_START,
             self::ROBERT_LE_GARDE_HISTORY_RUMORS_START,
             self::BILO_LE_PASSANT_START,
+            self::BILO_LE_PASSANT_HISTORY_START,
+            self::BILO_LE_PASSANT_RUMORS_START,
+            self::BILO_LE_PASSANT_RUMORS_2,
+            self::BILO_LE_PASSANT_RUMORS_2_ACCEPT,
+            self::BILO_LE_PASSANT_RUMORS_2_DECLINE,
         ];
 
         foreach($scenes as $data) {

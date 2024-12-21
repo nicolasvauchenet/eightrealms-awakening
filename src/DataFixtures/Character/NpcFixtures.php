@@ -17,7 +17,6 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Sophie La Marchande',
                 'picture' => 'sophie-la-marchande.png',
-                'description' => "<p>Bonjour ! Quelle belle journée aujourd'hui ! Que puis-je faire pour vous ?</p>",
                 'health' => 100,
                 'mana' => 50,
                 'damage' => 4,
@@ -37,7 +36,6 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Robert Le Garde',
                 'picture' => 'robert-le-garde.png',
-                'description' => "<p>Vous êtes face à un garde de la ville. Il est en armure et son arme est prête à être dégainée. Il vous regarde avec méfiance.</p>",
                 'health' => 150,
                 'mana' => 0,
                 'damage' => 10,
@@ -57,7 +55,6 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Bilo le Passant',
                 'picture' => 'bilo-le-passant.png',
-                'description' => "<p>Vous êtes face à un simple passant. Il est petit et semble être un semi-homme. Il vous regarde avec curiosité.</p>",
                 'health' => 50,
                 'mana' => 10,
                 'damage' => 4,

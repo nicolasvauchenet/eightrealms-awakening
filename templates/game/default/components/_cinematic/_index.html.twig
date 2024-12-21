@@ -1,3 +1,11 @@
+{% if this.currentScene.picture %}
+    <img src="{{ asset('img/chapter1/location/port-saint-doux/' ~ this.currentScene.picture) }}"
+         alt="{{ this.currentScene.name }}"
+         class="app-cover"/>
+{% endif %}
+
+<div class="app-overlay"></div>
+
 {% include 'game/default/components/_cinematic/_header.html.twig' %}
 {% include 'game/default/components/_cinematic/_main.html.twig' %}
 {% include 'game/default/components/_cinematic/_footer.html.twig' %}

@@ -16,9 +16,11 @@ class DialogueSceneFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $scenes = [
-            self::SOPHIE_LA_MARCHANDE,
-            self::ROBERT_LE_GARDE,
-            self::BILO_LE_PASSANT,
+            self::SOPHIE_LA_MARCHANDE_START,
+            self::SOPHIE_LA_MARCHANDE_HISTORY_START,
+            self::ROBERT_LE_GARDE_START,
+            self::ROBERT_LE_GARDE_HISTORY_RUMORS_START,
+            self::BILO_LE_PASSANT_START,
         ];
 
         foreach($scenes as $data) {

@@ -25,6 +25,16 @@ class TransitionActionFixtures extends Fixture implements OrderedFixtureInterfac
                 'targetScreenClass' => PlaceScreen::class,
                 'reference' => 'action_transition_start',
             ],
+            [
+                'label' => 'Continuer',
+                'scene' => 'scene_cinematic_jail',
+                'sceneClass' => CinematicScene::class,
+                'targetScene' => 'scene_place_quartier_du_marche',
+                'targetSceneClass' => PlaceScene::class,
+                'targetScreen' => 'screen_place_quartier_du_marche',
+                'targetScreenClass' => PlaceScreen::class,
+                'reference' => 'action_transition_jail',
+            ],
         ];
 
         foreach($actions as $data) {

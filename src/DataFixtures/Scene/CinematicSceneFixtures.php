@@ -20,6 +20,14 @@ class CinematicSceneFixtures extends Fixture implements OrderedFixtureInterface
                 'screen' => 'screen_cinematic_introduction',
                 'reference' => 'scene_cinematic_introduction',
             ],
+            [
+                'name' => 'Prison',
+                'picture' => 'jail.webp',
+                'description' => "<p>Vous vous êtes fait prendre, et vous atterrissez dans les geôles de Port Saint-Doux.</p><p>Vous avez écopé d'une amende de 50 pièces d'or et votre réputation a diminué.</p><p>Vous êtes seul dans votre cellule, si on ne compte pas les rats pour de la compagnie, bien sûr.</p><p>Vous avez faim et soif, vous avez froid, vous êtes fatigué et sale. Votre peine d'une journée et une nuit vient de prendre fin. Vous avez hâte de sortir de cet endroit.</p>",
+                'position' => 1,
+                'screen' => 'screen_cinematic_jail',
+                'reference' => 'scene_cinematic_jail',
+            ],
         ];
 
         foreach($scenes as $data) {

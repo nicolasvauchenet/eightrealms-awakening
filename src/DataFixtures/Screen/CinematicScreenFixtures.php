@@ -16,6 +16,10 @@ class CinematicScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Introduction',
                 'reference' => 'screen_cinematic_introduction',
             ],
+            [
+                'name' => 'Prison',
+                'reference' => 'screen_cinematic_jail',
+            ],
         ];
 
         foreach($screens as $data) {

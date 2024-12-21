@@ -54,6 +54,7 @@ class GameComponent
         $this->currentScene = $this->entityManager->getRepository(Scene::class)->find($targetSceneId);
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
         $this->updateDescription();
+        $this->doActions();
     }
 
     private function updateCharacterPlace(): void
@@ -70,6 +71,24 @@ class GameComponent
             $this->updateCharacterPlace();
         } else if($this->currentScreenType === 'dialoguescreen') {
             $this->currentScreenDescription = $this->currentScene->getDescription() . $this->currentScene->getNpc()->getDescription();
+        }
+    }
+
+    private function doActions(): void
+    {
+        switch($this->currentScreenType) {
+            case 'cinematicscreen':
+                if($this->currentScene->getName() === 'Prison') {
+                    $this->character->setFortune($this->character->getFortune() - 50);
+                    if($this->character->getFortune() < 0) {
+                        $this->character->setFortune(0);
+                    }
+                    $this->entityManager->persist($this->character);
+                    $this->entityManager->flush();
+                }
+                break;
+            default:
+                break;
         }
     }
 }

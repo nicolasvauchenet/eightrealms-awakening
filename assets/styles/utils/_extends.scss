@@ -11,6 +11,11 @@
   overflow-y: auto;
 }
 
+/* VISIBILITY */
+.hidden {
+  display: none !important;
+}
+
 /* BACKGROUND COLORS */
 .bg-primary {
   color: $white !important;

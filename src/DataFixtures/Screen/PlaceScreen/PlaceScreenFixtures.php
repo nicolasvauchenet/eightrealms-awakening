@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures\Screen;
+namespace App\DataFixtures\Screen\PlaceScreen;
 
 use App\Entity\Character\Npc;
 use App\Entity\Location\Place;
@@ -11,19 +11,12 @@ use Doctrine\Persistence\ObjectManager;
 
 class PlaceScreenFixtures extends Fixture implements OrderedFixtureInterface
 {
+    use PortSaintDouxTrait;
+
     public function load(ObjectManager $manager): void
     {
         $screens = [
-            [
-                'name' => 'Place du Marché',
-                'place' => 'place_place_du_marche',
-                'npcs' => [
-                    'npc_sophie_la_marchande',
-                    'npc_robert_le_garde',
-                    'npc_bilo_le_passant',
-                ],
-                'reference' => 'screen_place_place_du_marche',
-            ],
+            self::QUARTIER_DU_MARCHE,
         ];
 
         foreach($screens as $data) {

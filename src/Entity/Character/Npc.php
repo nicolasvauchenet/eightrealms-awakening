@@ -3,6 +3,7 @@
 namespace App\Entity\Character;
 
 use App\Entity\Location\Place;
+use App\Entity\Scene\DialogueScene;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\PlaceScreen;
 use App\Repository\Character\NpcRepository;
@@ -31,11 +32,18 @@ class Npc extends Character
     #[ORM\OneToMany(targetEntity: DialogueScreen::class, mappedBy: 'npc')]
     private Collection $dialogueScreens;
 
+    /**
+     * @var Collection<int, DialogueScene>
+     */
+    #[ORM\OneToMany(targetEntity: DialogueScene::class, mappedBy: 'npc')]
+    private Collection $dialogueScenes;
+
     public function __construct()
     {
         parent::__construct();
         $this->placeScreens = new ArrayCollection();
         $this->dialogueScreens = new ArrayCollection();
+        $this->dialogueScenes = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -113,6 +121,36 @@ class Npc extends Character
             // set the owning side to null (unless already changed)
             if($dialogueScreen->getNpc() === $this) {
                 $dialogueScreen->setNpc(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DialogueScene>
+     */
+    public function getDialogueScenes(): Collection
+    {
+        return $this->dialogueScenes;
+    }
+
+    public function addDialogueScene(DialogueScene $dialogueScene): static
+    {
+        if (!$this->dialogueScenes->contains($dialogueScene)) {
+            $this->dialogueScenes->add($dialogueScene);
+            $dialogueScene->setNpc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDialogueScene(DialogueScene $dialogueScene): static
+    {
+        if ($this->dialogueScenes->removeElement($dialogueScene)) {
+            // set the owning side to null (unless already changed)
+            if ($dialogueScene->getNpc() === $this) {
+                $dialogueScene->setNpc(null);
             }
         }
 

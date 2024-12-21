@@ -3,6 +3,16 @@
   width: 100%;
   height: 100%;
 
+  .screen-footer {
+    .description {
+      p {
+        @extend .appears;
+        animation-delay: 2s;
+      }
+    }
+  }
+
   @import "cinematic";
   @import "place";
+  @import "dialogue";
 }

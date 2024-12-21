@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ActionRepository::class)]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
-#[ORM\DiscriminatorMap(['transition' => TransitionAction::class, 'dialogue' => DialogueAction::class, 'combat' => CombatAction::class, 'trade' => TradeAction::class, 'steal' => StealAction::class])]
+#[ORM\DiscriminatorMap(['transition' => TransitionAction::class, 'place' => PlaceAction::class, 'dialogue' => DialogueAction::class, 'combat' => CombatAction::class, 'trade' => TradeAction::class, 'steal' => StealAction::class])]
 abstract class Action
 {
     #[ORM\Id]
@@ -30,6 +30,9 @@ abstract class Action
 
     #[ORM\ManyToOne(inversedBy: 'actions')]
     private ?Screen $targetScreen = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
 
     public function getId(): ?int
     {
@@ -80,6 +83,18 @@ abstract class Action
     public function setTargetScreen(?Screen $targetScreen): static
     {
         $this->targetScreen = $targetScreen;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): static
+    {
+        $this->picture = $picture;
 
         return $this;
     }

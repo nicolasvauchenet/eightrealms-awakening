@@ -30,6 +30,7 @@ class GameComponent
     public Scene $currentScene;
 
     public string $currentScreenType;
+    public string $currentScreenDescription = '';
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -40,6 +41,7 @@ class GameComponent
     public function postMount(): void
     {
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+        $this->updateDescription();
     }
 
     /**
@@ -51,9 +53,23 @@ class GameComponent
         $this->currentScreen = $this->entityManager->getRepository(Screen::class)->find($targetScreenId);
         $this->currentScene = $this->entityManager->getRepository(Scene::class)->find($targetSceneId);
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+        $this->updateDescription();
+    }
 
+    private function updateCharacterPlace(): void
+    {
         $this->character->setCurrentPlace($this->currentScene->getPlace());
         $this->entityManager->persist($this->character);
         $this->entityManager->flush();
+    }
+
+    private function updateDescription(): void
+    {
+        if($this->currentScreenType === 'placescreen') {
+            $this->currentScreenDescription = $this->currentScene->getPlace()->getDescription();
+            $this->updateCharacterPlace();
+        } else if($this->currentScreenType === 'dialoguescreen') {
+            $this->currentScreenDescription = $this->currentScene->getDescription() . $this->currentScene->getNpc()->getDescription();
+        }
     }
 }

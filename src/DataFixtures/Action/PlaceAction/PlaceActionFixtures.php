@@ -1,35 +1,28 @@
 <?php
 
-namespace App\DataFixtures\Action;
+namespace App\DataFixtures\Action\PlaceAction;
 
-use App\Entity\Action\TransitionAction;
-use App\Entity\Scene\CinematicScene;
-use App\Entity\Scene\PlaceScene;
-use App\Entity\Screen\PlaceScreen;
+use App\Entity\Action\PlaceAction;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class TransitionActionFixtures extends Fixture implements OrderedFixtureInterface
+class PlaceActionFixtures extends Fixture implements OrderedFixtureInterface
 {
+    use QuartierDuMarcheTrait;
+
     public function load(ObjectManager $manager): void
     {
         $actions = [
-            [
-                'label' => 'Commencer',
-                'scene' => 'scene_cinematic_introduction',
-                'sceneClass' => CinematicScene::class,
-                'targetScene' => 'scene_place_quartier_du_marche',
-                'targetSceneClass' => PlaceScene::class,
-                'targetScreen' => 'screen_place_quartier_du_marche',
-                'targetScreenClass' => PlaceScreen::class,
-                'reference' => 'action_transition_start',
-            ],
+            self::SOPHIE_LA_MARCHANDE,
+            self::ROBERT_LE_GARDE,
+            self::BILO_LE_PASSANT,
         ];
 
         foreach($actions as $data) {
-            $action = new TransitionAction();
+            $action = new PlaceAction();
             $action->setLabel($data['label'])
+                ->setPicture($data['picture'] ?? null)
                 ->setScene($this->getReference($data['scene'], $data['sceneClass']))
                 ->setTargetScene(isset($data['targetScene']) ? $this->getReference($data['targetScene'], $data['targetSceneClass']) : null)
                 ->setTargetScreen(isset($data['targetScreen']) ? $this->getReference($data['targetScreen'], $data['targetScreenClass']) : null);
@@ -42,6 +35,6 @@ class TransitionActionFixtures extends Fixture implements OrderedFixtureInterfac
 
     public function getOrder(): int
     {
-        return 97;
+        return 98;
     }
 }

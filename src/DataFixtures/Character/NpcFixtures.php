@@ -17,7 +17,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Sophie La Marchande',
                 'picture' => 'sophie-la-marchande.png',
-                'description' => "<p>Vous êtes face à une marchande. Elle vous regarde avec un sourire bienveillant. Elle semble prête à vous aider si vous avez besoin de quelque chose.</p>",
+                'description' => "<p>Bonjour ! Quelle belle journée aujourd'hui ! Que puis-je faire pour vous ?</p>",
                 'health' => 100,
                 'mana' => 50,
                 'damage' => 4,

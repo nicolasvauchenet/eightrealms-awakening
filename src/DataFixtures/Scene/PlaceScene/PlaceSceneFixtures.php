@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures\Scene;
+namespace App\DataFixtures\Scene\PlaceScene;
 
 use App\Entity\Location\Place;
 use App\Entity\Scene\PlaceScene;
@@ -11,16 +11,12 @@ use Doctrine\Persistence\ObjectManager;
 
 class PlaceSceneFixtures extends Fixture implements OrderedFixtureInterface
 {
+    use PortSaintDouxTrait;
+
     public function load(ObjectManager $manager): void
     {
         $scenes = [
-            [
-                'name' => 'Place du Marché',
-                'position' => 1,
-                'place' => 'place_place_du_marche',
-                'screen' => 'screen_place_place_du_marche',
-                'reference' => 'scene_place_place_du_marche',
-            ],
+            self::QUARTIER_DU_MARCHE,
         ];
 
         foreach($scenes as $data) {
@@ -40,6 +36,6 @@ class PlaceSceneFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 23;
+        return 51;
     }
 }

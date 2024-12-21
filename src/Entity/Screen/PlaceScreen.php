@@ -24,6 +24,7 @@ class PlaceScreen extends Screen
 
     public function __construct()
     {
+        parent::__construct();
         $this->npcs = new ArrayCollection();
     }
 

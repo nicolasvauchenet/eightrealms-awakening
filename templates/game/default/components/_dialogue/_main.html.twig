@@ -1,0 +1,32 @@
+<main class="screen-main">
+    <div class="infos left">
+        <div class="info {% if app_characterItemService.characterBonus(this.character, 'health') > 0 %}text-primary{% endif %}">
+            {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+            {{ this.character.health + app_characterItemService.characterBonus(this.character, 'health') }}
+        </div>
+
+        {% if this.character.profession.type == 'Magie' %}
+            <div class="info {% if app_characterItemService.characterBonus(this.character, 'mana') > 0 %}text-primary{% endif %}">
+                {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                {{ this.character.mana + app_characterItemService.characterBonus(this.character, 'mana') }}
+            </div>
+        {% endif %}
+
+        <div class="info fortune">
+            {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+            {{ this.character.fortune }}
+        </div>
+    </div>
+
+    <div class="infos right">
+        <div class="info">
+            {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+            +{{ app_characterItemService.characterBonus(this.character, 'defense') }}
+        </div>
+
+        <div class="info">
+            {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+            +{{ app_characterItemService.characterBonus(this.character, 'damage') }}
+        </div>
+    </div>
+</main>

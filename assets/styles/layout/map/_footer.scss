@@ -1,0 +1,26 @@
+.map-footer {
+  @include displayFlex(center, center);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $secondary;
+
+  a {
+    @include displayFlex(center, center);
+    flex: 1;
+    padding: 0.5rem;
+    color: $primary;
+    box-shadow: inset 2px 2px 0.25rem rgba($black, 0.5);
+
+    &.active {
+      color: $third;
+      box-shadow: none;
+    }
+
+    .app-icon {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+}

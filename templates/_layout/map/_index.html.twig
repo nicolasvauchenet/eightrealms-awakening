@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="app-overlay"></div>
+
+    <a href="{{ previousUrl }}" class="app-close">
+        {{ ux_icon('zondicons:close-solid', {'class': 'app-icon'}) }}
+    </a>
+
+    <main class="app-main">
+        {% block main %}{% endblock %}
+    </main>
+{% endblock %}

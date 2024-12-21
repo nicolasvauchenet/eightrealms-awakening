@@ -2,9 +2,12 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Location\Location;
 use App\Entity\Location\Place;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
@@ -28,6 +31,25 @@ class Player extends Character
 
     #[ORM\ManyToOne(inversedBy: 'players')]
     private ?Place $currentPlace = null;
+
+    /**
+     * @var Collection<int, Location>
+     */
+    #[ORM\ManyToMany(targetEntity: Location::class, inversedBy: 'players')]
+    private Collection $visitedLocations;
+
+    /**
+     * @var Collection<int, Place>
+     */
+    #[ORM\ManyToMany(targetEntity: Place::class, inversedBy: 'visitedPlayers')]
+    private Collection $visitedPlaces;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->visitedLocations = new ArrayCollection();
+        $this->visitedPlaces = new ArrayCollection();
+    }
 
     public function getLevel(): ?int
     {
@@ -97,6 +119,54 @@ class Player extends Character
     public function setCurrentPlace(?Place $currentPlace): static
     {
         $this->currentPlace = $currentPlace;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Location>
+     */
+    public function getVisitedLocations(): Collection
+    {
+        return $this->visitedLocations;
+    }
+
+    public function addVisitedLocation(Location $visitedLocation): static
+    {
+        if (!$this->visitedLocations->contains($visitedLocation)) {
+            $this->visitedLocations->add($visitedLocation);
+        }
+
+        return $this;
+    }
+
+    public function removeVisitedLocation(Location $visitedLocation): static
+    {
+        $this->visitedLocations->removeElement($visitedLocation);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Place>
+     */
+    public function getVisitedPlaces(): Collection
+    {
+        return $this->visitedPlaces;
+    }
+
+    public function addVisitedPlace(Place $visitedPlace): static
+    {
+        if (!$this->visitedPlaces->contains($visitedPlace)) {
+            $this->visitedPlaces->add($visitedPlace);
+        }
+
+        return $this;
+    }
+
+    public function removeVisitedPlace(Place $visitedPlace): static
+    {
+        $this->visitedPlaces->removeElement($visitedPlace);
 
         return $this;
     }

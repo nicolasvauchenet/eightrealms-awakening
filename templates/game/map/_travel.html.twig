@@ -1,0 +1,23 @@
+<div class="content travel" data-content-switcher-target="content">
+    <h2>{{ location.name }}</h2>
+    <div class="app-grid two mb-2">
+        {% for place in location.places %}
+            <a href="#"
+               class="app-button outline {% if place not in app.user.player.visitedPlaces %}disabled{% endif %}">
+                {{ place.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <hr class="mb-2"/>
+
+    <h2>Royaume de l'Île du Nord</h2>
+    <div class="app-grid two">
+        {% for location in app_locationService.locations %}
+            <a href="#"
+               class="app-button outline {% if location not in app.user.player.visitedLocations %}disabled{% endif %}">
+                {{ location.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,16 @@
+&.travel {
+  padding: 1.5rem 1rem;
+
+  h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .app-grid {
+    grid-gap: 0;
+  }
+
+  .app-button {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}

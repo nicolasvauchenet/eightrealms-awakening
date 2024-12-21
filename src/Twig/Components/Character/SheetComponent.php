@@ -26,8 +26,8 @@ class SheetComponent
     #[LiveProp(writable: true)]
     public string $type;
 
-    public function __construct(CharacterItemService   $characterItemService,
-                                EntityManagerInterface $entityManager)
+    public function __construct(CharacterItemService $characterItemService,
+                                EntityManagerInterface   $entityManager)
     {
         $this->characterItemService = $characterItemService;
         $this->entityManager = $entityManager;

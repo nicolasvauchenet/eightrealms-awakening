@@ -2,6 +2,7 @@
 
 namespace App\Entity\Location;
 
+use App\Entity\Character\Player;
 use App\Repository\Location\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -35,9 +36,16 @@ class Location
     #[ORM\OneToMany(targetEntity: Place::class, mappedBy: 'location')]
     private Collection $places;
 
+    /**
+     * @var Collection<int, Player>
+     */
+    #[ORM\ManyToMany(targetEntity: Player::class, mappedBy: 'visitedLocations')]
+    private Collection $players;
+
     public function __construct()
     {
         $this->places = new ArrayCollection();
+        $this->players = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -103,9 +111,9 @@ class Location
 
     public function addPlace(Place $place): static
     {
-        if (!$this->places->contains($place)) {
+        if(!$this->places->contains($place)) {
             $this->places->add($place);
-            $place->setParentLocation($this);
+            $place->setLocation($this);
         }
 
         return $this;
@@ -113,11 +121,38 @@ class Location
 
     public function removePlace(Place $place): static
     {
-        if ($this->places->removeElement($place)) {
+        if($this->places->removeElement($place)) {
             // set the owning side to null (unless already changed)
-            if ($place->getParentLocation() === $this) {
-                $place->setParentLocation(null);
+            if($place->getLocation() === $this) {
+                $place->setLocation(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Player>
+     */
+    public function getPlayers(): Collection
+    {
+        return $this->players;
+    }
+
+    public function addPlayer(Player $player): static
+    {
+        if (!$this->players->contains($player)) {
+            $this->players->add($player);
+            $player->addVisitedLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayer(Player $player): static
+    {
+        if ($this->players->removeElement($player)) {
+            $player->removeVisitedLocation($this);
         }
 
         return $this;

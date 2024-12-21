@@ -58,11 +58,18 @@ class Place
     #[ORM\OneToMany(targetEntity: PlaceScene::class, mappedBy: 'place')]
     private Collection $placeScenes;
 
+    /**
+     * @var Collection<int, Player>
+     */
+    #[ORM\ManyToMany(targetEntity: Player::class, mappedBy: 'visitedPlaces')]
+    private Collection $visitedPlayers;
+
     public function __construct()
     {
         $this->placeScreens = new ArrayCollection();
         $this->players = new ArrayCollection();
         $this->placeScenes = new ArrayCollection();
+        $this->visitedPlayers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -227,6 +234,33 @@ class Place
             if ($placeScene->getLocation() === $this) {
                 $placeScene->setLocation(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Player>
+     */
+    public function getVisitedPlayers(): Collection
+    {
+        return $this->visitedPlayers;
+    }
+
+    public function addVisitedPlayer(Player $visitedPlayer): static
+    {
+        if (!$this->visitedPlayers->contains($visitedPlayer)) {
+            $this->visitedPlayers->add($visitedPlayer);
+            $visitedPlayer->addVisitedPlace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisitedPlayer(Player $visitedPlayer): static
+    {
+        if ($this->visitedPlayers->removeElement($visitedPlayer)) {
+            $visitedPlayer->removeVisitedPlace($this);
         }
 
         return $this;

@@ -59,7 +59,9 @@ class GameComponent
 
     private function updateCharacterPlace(): void
     {
-        $this->character->setCurrentPlace($this->currentScene->getPlace());
+        $this->character->setCurrentPlace($this->currentScene->getPlace())
+            ->addVisitedLocation($this->currentScene->getPlace()->getLocation())
+            ->addVisitedPlace($this->currentScene->getPlace());
         $this->entityManager->persist($this->character);
         $this->entityManager->flush();
     }

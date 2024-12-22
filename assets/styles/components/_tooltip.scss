@@ -50,9 +50,8 @@
     .tooltip-content {
       z-index: 9996;
       padding: 2.5rem 1.5rem 1.5rem;
-      /*margin-right: 1rem;
-      width: 66dvw;*/
-      width: 70dvw;
+      margin: 0 1rem;
+      max-width: calc(600px - 6rem);
       text-align: justify;
       background-color: $white;
       border: 0.5rem groove $secondary;
@@ -73,7 +72,7 @@
       .tooltip-subtitle {
         position: absolute;
         top: 0.5rem;
-        right: 0.5rem;
+        right: 1.5rem;
         @include displayFlex(center, center);
         margin: 0 !important;
         padding: 0.25rem 0.5rem;

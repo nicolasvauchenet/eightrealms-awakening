@@ -11,7 +11,8 @@
                         {% if content.defense is defined %}
                             {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
                             {{ content.defense }}
-                        {% elseif content.target is defined and content.target is not null %}
+                        {% endif %}
+                        {% if content.target is defined and content.target is not null %}
                             {% if content.target == 'health' %}
                                 {% if content.type == 'Offensif' %}
                                     {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
@@ -25,9 +26,11 @@
                                 {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
                                 {{ content.amount }}
                             {% endif %}
-                        {% elseif content.type == 'Utile' %}
+                        {% endif %}
+                        {% if content.type == 'Utile' %}
                             {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
-                        {% elseif content.damage is defined %}
+                        {% endif %}
+                        {% if content.damage is defined %}
                             {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
                             {{ content.damage }}
                         {% endif %}

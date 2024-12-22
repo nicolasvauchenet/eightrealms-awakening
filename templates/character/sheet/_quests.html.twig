@@ -1,4 +1,8 @@
 <div class="content quests" data-content-switcher-target="content">
     <h2>Journal de Quêtes</h2>
-
+    <h3>
+        Réputation locale
+        :
+        {{ app_characterLocationReputationService.totalReputation(app.user.player, app.user.player.currentPlace.location) }}
+    </h3>
 </div>

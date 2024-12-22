@@ -36,6 +36,9 @@ class Profession
     #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'profession')]
     private Collection $characters;
 
+    #[ORM\Column]
+    private ?int $baseReputation = null;
+
     public function __construct()
     {
         $this->characters = new ArrayCollection();
@@ -120,6 +123,18 @@ class Profession
                 $character->setProfession(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBaseReputation(): ?int
+    {
+        return $this->baseReputation;
+    }
+
+    public function setBaseReputation(int $baseReputation): static
+    {
+        $this->baseReputation = $baseReputation;
 
         return $this;
     }

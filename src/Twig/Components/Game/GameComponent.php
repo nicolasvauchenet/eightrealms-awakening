@@ -3,9 +3,11 @@
 namespace App\Twig\Components\Game;
 
 use App\Entity\Character\Player;
+use App\Entity\Location\Location;
 use App\Entity\Location\Place;
 use App\Entity\Scene\Scene;
 use App\Entity\Screen\Screen;
+use App\Service\Location\CharacterLocationReputationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -21,6 +23,7 @@ class GameComponent extends AbstractController
     use DefaultActionTrait;
 
     private EntityManagerInterface $entityManager;
+    private CharacterLocationReputationService $characterLocationReputationService;
 
     #[LiveProp(writable: true)]
     public Player $character;
@@ -40,9 +43,11 @@ class GameComponent extends AbstractController
     public string $currentScreenType;
     public string $currentScreenDescription = '';
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface             $entityManager,
+                                CharacterLocationReputationService $characterLocationReputationService)
     {
         $this->entityManager = $entityManager;
+        $this->characterLocationReputationService = $characterLocationReputationService;
     }
 
     #[PostMount]
@@ -91,7 +96,7 @@ class GameComponent extends AbstractController
         foreach($actionEffects as $effect => $value) {
             switch($effect) {
                 case 'decreaseFortune':
-                    $this->character->setFortune($this->character->getFortune() - $value);
+                    $this->character->setFortune($this->character->getFortune() - $value['amount'] * -1);
                     if($this->character->getFortune() < 0) {
                         $this->character->setFortune(0);
                     }
@@ -100,10 +105,22 @@ class GameComponent extends AbstractController
                     $this->characterUpdated = true;
                     break;
                 case 'addPlace':
-                    $this->character->addVisitedPlace($this->entityManager->getRepository(Place::class)->findOneBy(['slug' => $value]));
-                    $this->entityManager->persist($this->character);
-                    $this->entityManager->flush();
-                    $this->mapUpdated = true;
+                    if(!$this->character->getVisitedPlaces()->contains($this->entityManager->getRepository(Place::class)->findOneBy(['slug' => $value]))) {
+                        $this->character->addVisitedPlace($this->entityManager->getRepository(Place::class)->findOneBy(['slug' => $value]));
+                        $this->entityManager->persist($this->character);
+                        $this->entityManager->flush();
+                        $this->mapUpdated = true;
+                    }
+                    break;
+                case 'increaseLocationReputation':
+                    $location = $this->entityManager->getRepository(Location::class)->findOneBy(['slug' => $value['location']]);
+                    $this->characterLocationReputationService->modifyReputation($this->character, $location, $value['amount']);
+                    $this->characterUpdated = true;
+                    break;
+                case 'decreaseLocationReputation':
+                    $location = $this->entityManager->getRepository(Location::class)->findOneBy(['slug' => $value['location']]);
+                    $this->characterLocationReputationService->modifyReputation($this->character, $location, ($value['amount'] * -1));
+                    $this->characterUpdated = true;
                     break;
                 default:
                     break;

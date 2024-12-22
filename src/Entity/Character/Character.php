@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\CharacterLocationReputation;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Spell\CharacterSpell;
 use App\Repository\Character\CharacterRepository;
@@ -84,10 +85,17 @@ abstract class Character
     #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'character')]
     private Collection $characterSpells;
 
+    /**
+     * @var Collection<int, CharacterLocationReputation>
+     */
+    #[ORM\OneToMany(targetEntity: CharacterLocationReputation::class, mappedBy: 'character')]
+    private Collection $characterLocationReputations;
+
     public function __construct()
     {
         $this->characterItems = new ArrayCollection();
         $this->characterSpells = new ArrayCollection();
+        $this->characterLocationReputations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -341,6 +349,36 @@ abstract class Character
             // set the owning side to null (unless already changed)
             if ($characterSpell->getCharacter() === $this) {
                 $characterSpell->setCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterLocationReputation>
+     */
+    public function getCharacterLocationReputations(): Collection
+    {
+        return $this->characterLocationReputations;
+    }
+
+    public function addCharacterLocationReputation(CharacterLocationReputation $characterLocationReputation): static
+    {
+        if (!$this->characterLocationReputations->contains($characterLocationReputation)) {
+            $this->characterLocationReputations->add($characterLocationReputation);
+            $characterLocationReputation->setCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterLocationReputation(CharacterLocationReputation $characterLocationReputation): static
+    {
+        if ($this->characterLocationReputations->removeElement($characterLocationReputation)) {
+            // set the owning side to null (unless already changed)
+            if ($characterLocationReputation->getCharacter() === $this) {
+                $characterLocationReputation->setCharacter(null);
             }
         }
 

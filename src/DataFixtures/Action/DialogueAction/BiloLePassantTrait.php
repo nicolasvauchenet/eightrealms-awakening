@@ -81,6 +81,12 @@ trait BiloLePassantTrait
         'targetSceneClass' => DialogueScene::class,
         'targetScreen' => 'screen_dialogue_bilo_le_passant',
         'targetScreenClass' => DialogueScreen::class,
+        'actionEffects' => [
+            'increaseLocationReputation' => [
+                'amount' => '5',
+                'location' => 'port-saint-doux',
+            ],
+        ],
         'reference' => 'action_dialogue_bilo_le_passant_rumors_2_accept',
     ];
 
@@ -177,7 +183,13 @@ trait BiloLePassantTrait
         'targetScreen' => 'screen_cinematic_jail',
         'targetScreenClass' => CinematicScreen::class,
         'actionEffects' => [
-            'decreaseFortune' => '50',
+            'decreaseFortune' => [
+                'amount' => '50',
+            ],
+            'decreaseLocationReputation' => [
+                'amount' => '10',
+                'location' => 'port-saint-doux',
+            ],
         ],
         'reference' => 'action_dialogue_bilo_le_passant_steal',
     ];
@@ -192,7 +204,13 @@ trait BiloLePassantTrait
         'targetScreen' => 'screen_cinematic_jail',
         'targetScreenClass' => CinematicScreen::class,
         'actionEffects' => [
-            'decreaseFortune' => '50',
+            'decreaseFortune' => [
+                'amount' => '50',
+            ],
+            'decreaseLocationReputation' => [
+                'amount' => '10',
+                'location' => 'port-saint-doux',
+            ],
         ],
         'reference' => 'action_dialogue_bilo_le_passant_attack',
     ];

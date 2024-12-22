@@ -36,6 +36,9 @@ class Race
     #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'race')]
     private Collection $characters;
 
+    #[ORM\Column]
+    private ?int $baseReputation = null;
+
     public function __construct()
     {
         $this->characters = new ArrayCollection();
@@ -120,6 +123,18 @@ class Race
                 $character->setRace(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBaseReputation(): ?int
+    {
+        return $this->baseReputation;
+    }
+
+    public function setBaseReputation(int $baseReputation): static
+    {
+        $this->baseReputation = $baseReputation;
 
         return $this;
     }

@@ -69,7 +69,13 @@ trait SophieLaMarchandeTrait
         'targetScreen' => 'screen_cinematic_jail',
         'targetScreenClass' => CinematicScreen::class,
         'actionEffects' => [
-            'decreaseFortune' => '50',
+            'decreaseFortune' => [
+                'amount' => '50',
+            ],
+            'decreaseLocationReputation' => [
+                'amount' => '10',
+                'location' => 'port-saint-doux',
+            ],
         ],
         'reference' => 'action_dialogue_sophie_la_marchande_steal',
     ];

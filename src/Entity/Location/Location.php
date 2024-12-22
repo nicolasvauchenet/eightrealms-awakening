@@ -2,6 +2,7 @@
 
 namespace App\Entity\Location;
 
+use App\Entity\CharacterLocationReputation;
 use App\Entity\Character\Player;
 use App\Entity\Item\Misc;
 use App\Repository\Location\LocationRepository;
@@ -46,10 +47,17 @@ class Location
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Misc $map = null;
 
+    /**
+     * @var Collection<int, CharacterLocationReputation>
+     */
+    #[ORM\OneToMany(targetEntity: CharacterLocationReputation::class, mappedBy: 'location')]
+    private Collection $characterLocationReputations;
+
     public function __construct()
     {
         $this->places = new ArrayCollection();
         $this->players = new ArrayCollection();
+        $this->characterLocationReputations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -170,6 +178,36 @@ class Location
     public function setMap(?Misc $map): static
     {
         $this->map = $map;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterLocationReputation>
+     */
+    public function getCharacterLocationReputations(): Collection
+    {
+        return $this->characterLocationReputations;
+    }
+
+    public function addCharacterLocationReputation(CharacterLocationReputation $characterLocationReputation): static
+    {
+        if (!$this->characterLocationReputations->contains($characterLocationReputation)) {
+            $this->characterLocationReputations->add($characterLocationReputation);
+            $characterLocationReputation->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterLocationReputation(CharacterLocationReputation $characterLocationReputation): static
+    {
+        if ($this->characterLocationReputations->removeElement($characterLocationReputation)) {
+            // set the owning side to null (unless already changed)
+            if ($characterLocationReputation->getLocation() === $this) {
+                $characterLocationReputation->setLocation(null);
+            }
+        }
 
         return $this;
     }

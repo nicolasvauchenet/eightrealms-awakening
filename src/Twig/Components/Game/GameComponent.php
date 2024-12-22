@@ -5,9 +5,12 @@ namespace App\Twig\Components\Game;
 use App\Entity\Character\Player;
 use App\Entity\Location\Location;
 use App\Entity\Location\Place;
+use App\Entity\Quest\Quest;
+use App\Entity\Quest\QuestStep;
 use App\Entity\Scene\Scene;
 use App\Entity\Screen\Screen;
 use App\Service\Location\CharacterLocationReputationService;
+use App\Service\Quest\CharacterQuestService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -24,6 +27,7 @@ class GameComponent extends AbstractController
 
     private EntityManagerInterface $entityManager;
     private CharacterLocationReputationService $characterLocationReputationService;
+    private CharacterQuestService $characterQuestService;
 
     #[LiveProp(writable: true)]
     public Player $character;
@@ -44,10 +48,12 @@ class GameComponent extends AbstractController
     public string $currentScreenDescription = '';
 
     public function __construct(EntityManagerInterface             $entityManager,
-                                CharacterLocationReputationService $characterLocationReputationService)
+                                CharacterLocationReputationService $characterLocationReputationService,
+                                CharacterQuestService              $characterQuestService)
     {
         $this->entityManager = $entityManager;
         $this->characterLocationReputationService = $characterLocationReputationService;
+        $this->characterQuestService = $characterQuestService;
     }
 
     #[PostMount]
@@ -95,14 +101,12 @@ class GameComponent extends AbstractController
     {
         foreach($actionEffects as $effect => $value) {
             switch($effect) {
-                case 'decreaseFortune':
-                    $this->character->setFortune($this->character->getFortune() - $value['amount'] * -1);
-                    if($this->character->getFortune() < 0) {
-                        $this->character->setFortune(0);
-                    }
-                    $this->entityManager->persist($this->character);
-                    $this->entityManager->flush();
-                    $this->characterUpdated = true;
+                case 'startQuest':
+                    $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $value['quest']]);
+                    $step = $this->entityManager->getRepository(QuestStep::class)->findOneBy(['slug' => $value['step']]);
+                    $location = $this->entityManager->getRepository(Location::class)->findOneBy(['slug' => $value['location']]);
+                    $this->characterUpdated = !$this->characterQuestService->startQuest($this->character, $quest, $step, $location);
+
                     break;
                 case 'addPlace':
                     if(!$this->character->getVisitedPlaces()->contains($this->entityManager->getRepository(Place::class)->findOneBy(['slug' => $value]))) {
@@ -111,6 +115,15 @@ class GameComponent extends AbstractController
                         $this->entityManager->flush();
                         $this->mapUpdated = true;
                     }
+                    break;
+                case 'decreaseFortune':
+                    $this->character->setFortune($this->character->getFortune() - $value['amount'] * -1);
+                    if($this->character->getFortune() < 0) {
+                        $this->character->setFortune(0);
+                    }
+                    $this->entityManager->persist($this->character);
+                    $this->entityManager->flush();
+                    $this->characterUpdated = true;
                     break;
                 case 'increaseLocationReputation':
                     $location = $this->entityManager->getRepository(Location::class)->findOneBy(['slug' => $value['location']]);

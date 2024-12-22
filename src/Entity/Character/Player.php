@@ -4,6 +4,7 @@ namespace App\Entity\Character;
 
 use App\Entity\Location\Location;
 use App\Entity\Location\Place;
+use App\Entity\Quest\CharacterQuest;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -44,11 +45,18 @@ class Player extends Character
     #[ORM\ManyToMany(targetEntity: Place::class, inversedBy: 'visitedPlayers')]
     private Collection $visitedPlaces;
 
+    /**
+     * @var Collection<int, CharacterQuest>
+     */
+    #[ORM\OneToMany(targetEntity: CharacterQuest::class, mappedBy: 'character')]
+    private Collection $characterQuests;
+
     public function __construct()
     {
         parent::__construct();
         $this->visitedLocations = new ArrayCollection();
         $this->visitedPlaces = new ArrayCollection();
+        $this->characterQuests = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -167,6 +175,36 @@ class Player extends Character
     public function removeVisitedPlace(Place $visitedPlace): static
     {
         $this->visitedPlaces->removeElement($visitedPlace);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterQuest>
+     */
+    public function getCharacterQuests(): Collection
+    {
+        return $this->characterQuests;
+    }
+
+    public function addCharacterQuest(CharacterQuest $characterQuest): static
+    {
+        if (!$this->characterQuests->contains($characterQuest)) {
+            $this->characterQuests->add($characterQuest);
+            $characterQuest->setCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterQuest(CharacterQuest $characterQuest): static
+    {
+        if ($this->characterQuests->removeElement($characterQuest)) {
+            // set the owning side to null (unless already changed)
+            if ($characterQuest->getCharacter() === $this) {
+                $characterQuest->setCharacter(null);
+            }
+        }
 
         return $this;
     }

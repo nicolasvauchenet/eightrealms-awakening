@@ -20,6 +20,13 @@ trait BiloLePassantTrait
         'targetSceneClass' => DialogueScene::class,
         'targetScreen' => 'screen_dialogue_bilo_le_passant',
         'targetScreenClass' => DialogueScreen::class,
+        'actionEffects' => [
+            'startQuest' => [
+                'quest' => 'les-disparus-du-donjon',
+                'step' => 'dans-le-wai',
+                'location' => 'port-saint-doux',
+            ],
+        ],
         'reference' => 'action_dialogue_bilo_le_passant_history',
     ];
 
@@ -56,6 +63,9 @@ trait BiloLePassantTrait
         'targetSceneClass' => DialogueScene::class,
         'targetScreen' => 'screen_dialogue_bilo_le_passant',
         'targetScreenClass' => DialogueScreen::class,
+        'actionRequirements' => [
+            'hasNoQuest' => 'des-rats-sur-les-docks',
+        ],
         'reference' => 'action_dialogue_bilo_le_passant_rumors',
     ];
 
@@ -82,6 +92,11 @@ trait BiloLePassantTrait
         'targetScreen' => 'screen_dialogue_bilo_le_passant',
         'targetScreenClass' => DialogueScreen::class,
         'actionEffects' => [
+            'startQuest' => [
+                'quest' => 'des-rats-sur-les-docks',
+                'step' => 'deratisation',
+                'location' => 'port-saint-doux',
+            ],
             'increaseLocationReputation' => [
                 'amount' => '5',
                 'location' => 'port-saint-doux',

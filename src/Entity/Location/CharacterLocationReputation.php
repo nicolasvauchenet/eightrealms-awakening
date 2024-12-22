@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Location;
 
 use App\Entity\Character\Character;
-use App\Entity\Location\Location;
-use App\Repository\CharacterLocationReputationRepository;
+use App\Repository\Location\CharacterLocationReputationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CharacterLocationReputationRepository::class)]

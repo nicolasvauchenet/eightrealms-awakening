@@ -33,6 +33,6 @@ class DialogueScreenFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 23;
+        return 42;
     }
 }

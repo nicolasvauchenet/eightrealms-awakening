@@ -32,6 +32,16 @@ trait SophieLaMarchandeTrait
         'targetSceneClass' => DialogueScene::class,
         'targetScreen' => 'screen_dialogue_sophie_la_marchande',
         'targetScreenClass' => DialogueScreen::class,
+        'actionRequirements' => [
+            'reputation' => '0',
+        ],
+        'actionEffects' => [
+            'startQuest' => [
+                'quest' => 'les-disparus-du-donjon',
+                'step' => 'dans-le-wai',
+                'location' => 'port-saint-doux',
+            ],
+        ],
         'reference' => 'action_dialogue_sophie_la_marchande_history',
     ];
 

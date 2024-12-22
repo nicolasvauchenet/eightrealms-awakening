@@ -52,6 +52,6 @@ class TransitionActionFixtures extends Fixture implements OrderedFixtureInterfac
 
     public function getOrder(): int
     {
-        return 97;
+        return 60;
     }
 }

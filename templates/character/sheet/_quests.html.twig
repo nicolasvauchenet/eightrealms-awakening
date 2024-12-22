@@ -1,8 +1,49 @@
 <div class="content quests" data-content-switcher-target="content">
     <h2>Journal de Quêtes</h2>
-    <h3>
+
+    {% set characterReputation = app_characterLocationReputationService.totalReputation(app.user.player, app.user.player.currentPlace.location) %}
+    {% set characterPrimaryQuest = app_characterQuestService.characterPrimaryQuest(app.user.player) %}
+    {% set characterSecondaryQuests = app_characterQuestService.characterSecondaryQuests(app.user.player) %}
+
+    <h3 class="{% if characterReputation < 0 %}text-third{% endif %}">
         Réputation locale
         :
-        {{ app_characterLocationReputationService.totalReputation(app.user.player, app.user.player.currentPlace.location) }}
+        {{ characterReputation }}
     </h3>
+
+    {% if characterPrimaryQuest or characterSecondaryQuests > 0 %}
+        <div class="list scrollable">
+            {% if characterPrimaryQuest %}
+                <h4>Quête Principale</h4>
+                <div class="items">
+                    <div class="item">
+                        <h5>{{ characterPrimaryQuest.quest.name }}</h5>
+                        {{ characterPrimaryQuest.quest.description | raw }}
+
+                        {% set characterQuestSteps = app_characterQuestService.characterQuestSteps(app.user.player, characterPrimaryQuest.quest) %}
+                        {% for characterQuestStep in characterQuestSteps %}
+                            {{ characterQuestStep.questStep.description | raw }}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if characterSecondaryQuests %}
+                <h4>Quêtes Secondaires</h4>
+                <div class="items">
+                    {% for characterSecondaryQuest in characterSecondaryQuests %}
+                        <div class="item">
+                            <h5>{{ characterSecondaryQuest.quest.name }}</h5>
+                            {{ characterSecondaryQuest.quest.description | raw }}
+
+                            {% set characterQuestSteps = app_characterQuestService.characterQuestSteps(app.user.player, characterSecondaryQuest.quest) %}
+                            {% for characterQuestStep in characterQuestSteps %}
+                                {{ characterQuestStep.questStep.description | raw }}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
 </div>

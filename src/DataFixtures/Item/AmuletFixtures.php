@@ -35,6 +35,18 @@ class AmuletFixtures extends Fixture implements OrderedFixtureInterface
                 'amount' => 20,
                 'reference' => 'amulet_mana',
             ],
+            [
+                'category' => 'category_amulet',
+                'type' => 'Défensif',
+                'name' => 'Médaillon des Vents',
+                'description' => "<p>Un médaillon ancestral orné de symboles runiques liés aux esprits des vents. On raconte qu'il permet à son porteur d'invoquer une brise salvatrice en cas de danger, et qu'il pourrait être la clé pour pénétrer le Donjon de l’Âme.</p>",
+                'picture' => 'amulet.png',
+                'buyPrice' => 2000,
+                'target' => 'defense',
+                'amount' => 50,
+                'duration' => 3,
+                'reference' => 'amulet_medaillon_des_vents',
+            ],
         ];
 
         foreach($amulets as $data) {

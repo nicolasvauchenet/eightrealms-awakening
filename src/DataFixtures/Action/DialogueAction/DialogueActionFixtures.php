@@ -59,6 +59,7 @@ class DialogueActionFixtures extends Fixture implements OrderedFixtureInterface
             $action = new DialogueAction();
             $action->setLabel($data['label'])
                 ->setPicture($data['picture'] ?? null)
+                ->setActionRequirements($data['actionRequirements'] ?? null)
                 ->setActionEffects($data['actionEffects'] ?? null)
                 ->setScene($this->getReference($data['scene'], $data['sceneClass']))
                 ->setTargetScene(isset($data['targetScene']) ? $this->getReference($data['targetScene'], $data['targetSceneClass']) : null)
@@ -72,6 +73,6 @@ class DialogueActionFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 99;
+        return 62;
     }
 }

@@ -35,6 +35,6 @@ class PlaceActionFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 98;
+        return 61;
     }
 }

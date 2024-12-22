@@ -2,9 +2,9 @@
 
 namespace App\Entity\Location;
 
-use App\Entity\CharacterLocationReputation;
 use App\Entity\Character\Player;
 use App\Entity\Item\Misc;
+use App\Entity\Quest\CharacterQuest;
 use App\Repository\Location\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -53,11 +53,18 @@ class Location
     #[ORM\OneToMany(targetEntity: CharacterLocationReputation::class, mappedBy: 'location')]
     private Collection $characterLocationReputations;
 
+    /**
+     * @var Collection<int, CharacterQuest>
+     */
+    #[ORM\OneToMany(targetEntity: CharacterQuest::class, mappedBy: 'startLocation')]
+    private Collection $characterQuests;
+
     public function __construct()
     {
         $this->places = new ArrayCollection();
         $this->players = new ArrayCollection();
         $this->characterLocationReputations = new ArrayCollection();
+        $this->characterQuests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,6 +213,36 @@ class Location
             // set the owning side to null (unless already changed)
             if ($characterLocationReputation->getLocation() === $this) {
                 $characterLocationReputation->setLocation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterQuest>
+     */
+    public function getCharacterQuests(): Collection
+    {
+        return $this->characterQuests;
+    }
+
+    public function addCharacterQuest(CharacterQuest $characterQuest): static
+    {
+        if (!$this->characterQuests->contains($characterQuest)) {
+            $this->characterQuests->add($characterQuest);
+            $characterQuest->setStartLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterQuest(CharacterQuest $characterQuest): static
+    {
+        if ($this->characterQuests->removeElement($characterQuest)) {
+            // set the owning side to null (unless already changed)
+            if ($characterQuest->getStartLocation() === $this) {
+                $characterQuest->setStartLocation(null);
             }
         }
 

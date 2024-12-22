@@ -1,7 +1,28 @@
 <footer class="screen-footer">
     <div class="actions">
         {% for action in this.currentScene.actions %}
-            <button class="action {% if 'Voler' in action.label and this.character.profession.type != 'Furtivité' %}hidden{% endif %} {% if 'Attaquer' in action.label and (this.character.profession.type != 'Combat' and this.character.profession.type != 'Magie') %}hidden{% endif %}"
+            {% set hidden = false %}
+            {% if 'Voler' in action.label and this.character.profession.type != 'Furtivité' %}
+                {% set hidden = true %}
+            {% endif %}
+            {% if 'Attaquer' in action.label and (this.character.profession.type != 'Combat' and this.character.profession.type != 'Magie') %}
+                {% set hidden = true %}
+            {% endif %}
+            {% for requirement, value in action.actionRequirements %}
+                {% if requirement == 'hasNoQuest' %}
+                    {% for characterQuest in app_characterQuestService.characterSecondaryQuests(app.user.player) %}
+                        {% if characterQuest.quest.slug == value %}
+                            {% set hidden = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if requirement == 'reputation' %}
+                    {% if app_characterLocationReputationService.totalReputation(this.character, this.character.currentPlace.location) < value %}
+                        {% set hidden = true %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            <button class="action {% if hidden %}hidden{% endif %}"
                     title="{{ action.label }}"
                     {{ live_action('changeScreen', {'targetScreenId': action.targetScreen.id, 'targetSceneId': action.targetScene.id, 'actionEffects': action.actionEffects }) }}>
                 {% if action.picture %}

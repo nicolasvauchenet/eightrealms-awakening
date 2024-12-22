@@ -52,7 +52,7 @@ trait QuartierDuMarcheTrait
     const ROBERT_LE_GARDE_RUMORS_2 = [
         'name' => 'Robert Le Garde',
         'position' => 2,
-        'description' => "<p><em>Aux Docks de l'Ouest. C'est vers la mer. Ça s'appelle comme ça mais c'est au nord-est de la ville, me demandez pas pourquoi…</em></p>",
+        'description' => "<p><em>Aux Docks de l'Ouest. C'est vers la mer. Ça s'appelle comme ça mais c'est au nord-est de la ville. Me demandez pas pourquoi, j'en sais rien. Chus point géographiste. Chuis garde.</em></p>",
         'screen' => 'screen_dialogue_robert_le_garde',
         'npc' => 'npc_robert_le_garde',
         'reference' => 'scene_dialogue_robert_le_garde_rumors_2',

@@ -2,8 +2,9 @@
 
 namespace App\Entity\Character;
 
-use App\Entity\CharacterLocationReputation;
 use App\Entity\Item\CharacterItem;
+use App\Entity\Location\CharacterLocationReputation;
+use App\Entity\Quest\CharacterQuestStep;
 use App\Entity\Spell\CharacterSpell;
 use App\Repository\Character\CharacterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -91,11 +92,18 @@ abstract class Character
     #[ORM\OneToMany(targetEntity: CharacterLocationReputation::class, mappedBy: 'character')]
     private Collection $characterLocationReputations;
 
+    /**
+     * @var Collection<int, CharacterQuestStep>
+     */
+    #[ORM\OneToMany(targetEntity: CharacterQuestStep::class, mappedBy: 'character')]
+    private Collection $characterQuestSteps;
+
     public function __construct()
     {
         $this->characterItems = new ArrayCollection();
         $this->characterSpells = new ArrayCollection();
         $this->characterLocationReputations = new ArrayCollection();
+        $this->characterQuestSteps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -379,6 +387,36 @@ abstract class Character
             // set the owning side to null (unless already changed)
             if ($characterLocationReputation->getCharacter() === $this) {
                 $characterLocationReputation->setCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterQuestStep>
+     */
+    public function getCharacterQuestSteps(): Collection
+    {
+        return $this->characterQuestSteps;
+    }
+
+    public function addCharacterQuestStep(CharacterQuestStep $characterQuestStep): static
+    {
+        if (!$this->characterQuestSteps->contains($characterQuestStep)) {
+            $this->characterQuestSteps->add($characterQuestStep);
+            $characterQuestStep->setCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterQuestStep(CharacterQuestStep $characterQuestStep): static
+    {
+        if ($this->characterQuestSteps->removeElement($characterQuestStep)) {
+            // set the owning side to null (unless already changed)
+            if ($characterQuestStep->getCharacter() === $this) {
+                $characterQuestStep->setCharacter(null);
             }
         }
 

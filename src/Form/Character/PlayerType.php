@@ -51,6 +51,7 @@ class PlayerType extends AbstractType
                 'label' => 'Origine',
                 'class' => Location::class,
                 'choice_label' => 'name',
+                'placeholder' => 'Choisissez une origine',
                 'query_builder' => function($er) {
                     return $er->createQueryBuilder('l')
                         ->where('l.type NOT IN(:types)')

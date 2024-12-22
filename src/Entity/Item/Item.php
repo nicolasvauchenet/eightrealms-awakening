@@ -2,6 +2,8 @@
 
 namespace App\Entity\Item;
 
+use App\Entity\Quest\Quest;
+use App\Entity\Quest\QuestStep;
 use App\Repository\Item\ItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -52,9 +54,23 @@ abstract class Item
     #[ORM\OneToMany(targetEntity: CharacterItem::class, mappedBy: 'item')]
     private Collection $characterItems;
 
+    /**
+     * @var Collection<int, Quest>
+     */
+    #[ORM\ManyToMany(targetEntity: Quest::class, mappedBy: 'itemsReward')]
+    private Collection $quests;
+
+    /**
+     * @var Collection<int, QuestStep>
+     */
+    #[ORM\ManyToMany(targetEntity: QuestStep::class, mappedBy: 'itemsReward')]
+    private Collection $questSteps;
+
     public function __construct()
     {
         $this->characterItems = new ArrayCollection();
+        $this->quests = new ArrayCollection();
+        $this->questSteps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,6 +199,60 @@ abstract class Item
             if($characterItem->getItem() === $this) {
                 $characterItem->setItem(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quest>
+     */
+    public function getQuests(): Collection
+    {
+        return $this->quests;
+    }
+
+    public function addQuest(Quest $quest): static
+    {
+        if (!$this->quests->contains($quest)) {
+            $this->quests->add($quest);
+            $quest->addItemsReward($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuest(Quest $quest): static
+    {
+        if ($this->quests->removeElement($quest)) {
+            $quest->removeItemsReward($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuestStep>
+     */
+    public function getQuestSteps(): Collection
+    {
+        return $this->questSteps;
+    }
+
+    public function addQuestStep(QuestStep $questStep): static
+    {
+        if (!$this->questSteps->contains($questStep)) {
+            $this->questSteps->add($questStep);
+            $questStep->addItemsReward($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestStep(QuestStep $questStep): static
+    {
+        if ($this->questSteps->removeElement($questStep)) {
+            $questStep->removeItemsReward($this);
         }
 
         return $this;

@@ -25,6 +25,9 @@ abstract class Action
     private ?string $picture = null;
 
     #[ORM\Column(nullable: true)]
+    private ?array $actionRequirements = null;
+
+    #[ORM\Column(nullable: true)]
     private ?array $actionEffects = null;
 
     #[ORM\ManyToOne(inversedBy: 'actions')]
@@ -62,6 +65,18 @@ abstract class Action
     public function setPicture(?string $picture): static
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getActionRequirements(): ?array
+    {
+        return $this->actionRequirements;
+    }
+
+    public function setActionRequirements(?array $actionRequirements): static
+    {
+        $this->actionRequirements = $actionRequirements;
 
         return $this;
     }

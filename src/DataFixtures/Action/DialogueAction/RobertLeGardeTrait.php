@@ -56,6 +56,9 @@ trait RobertLeGardeTrait
         'targetSceneClass' => DialogueScene::class,
         'targetScreen' => 'screen_dialogue_robert_le_garde',
         'targetScreenClass' => DialogueScreen::class,
+        'actionRequirements' => [
+            'hasNoQuest' => 'bagarre-bizarre',
+        ],
         'reference' => 'action_dialogue_robert_le_garde_rumors',
     ];
 
@@ -82,6 +85,11 @@ trait RobertLeGardeTrait
         'targetScreen' => 'screen_dialogue_robert_le_garde',
         'targetScreenClass' => DialogueScreen::class,
         'actionEffects' => [
+            'startQuest' => [
+                'quest' => 'bagarre-bizarre',
+                'step' => 'interroger-les-temoins',
+                'location' => 'port-saint-doux',
+            ],
             'increaseLocationReputation' => [
                 'amount' => '5',
                 'location' => 'port-saint-doux',
@@ -175,7 +183,7 @@ trait RobertLeGardeTrait
 
     const ROBERT_LE_GARDE_ATTACK = [
         'label' => 'Insulter Robert',
-        'picture' => 'core/action/angry.png',
+        'picture' => 'core/action/attack.png',
         'scene' => 'scene_dialogue_robert_le_garde_history',
         'sceneClass' => DialogueScene::class,
         'targetScene' => 'scene_cinematic_jail',

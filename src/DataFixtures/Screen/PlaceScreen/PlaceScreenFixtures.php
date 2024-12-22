@@ -35,6 +35,6 @@ class PlaceScreenFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 22;
+        return 41;
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Service\Location;
 
 use App\Entity\Character\Character;
-use App\Entity\CharacterLocationReputation;
+use App\Entity\Location\CharacterLocationReputation;
 use App\Entity\Location\Location;
 use Doctrine\ORM\EntityManagerInterface;
 

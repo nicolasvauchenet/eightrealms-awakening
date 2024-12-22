@@ -89,7 +89,7 @@ class PreGeneratedFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Tharasha la Sauvage',
                 'picture' => 'tharasha-la-sauvage.png',
-                'description' => "<p>Originaire des Terres Brisées, Tharasha la Sauvage est une barbare redoutée, dont la force titanesque et l’instinct primitif terrifient ses ennemis. Élevée dans un clan nomade, elle a appris très jeune à survivre dans un environnement hostile. Sa hache massive et son cri de guerre sont ses armes redoutables.</p><p>Tharasha incarne la liberté brute, rejetant les règles des sociétés établies. Malgré son tempérament fougueux, elle protège férocement ses alliés et respecte la nature comme un guide spirituel. Ses récits de batailles et de victoires épiques inspirent crainte et admiration.</p>",
+                'description' => "<p>Originaire du village de Plouc, Tharasha la Sauvage est une barbare redoutée, dont la force titanesque et l’instinct primitif terrifient ses ennemis. Élevée dans un clan nomade, elle a appris très jeune à survivre dans un environnement hostile. Sa hache massive et son cri de guerre sont ses armes redoutables.</p><p>Tharasha incarne la liberté brute, rejetant les règles des sociétés établies. Malgré son tempérament fougueux, elle protège férocement ses alliés et respecte la nature comme un guide spirituel. Ses récits de batailles et de victoires épiques inspirent crainte et admiration.</p>",
                 'health' => 160,
                 'mana' => 10,
                 'damage' => 8,
@@ -143,7 +143,7 @@ class PreGeneratedFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Grymm le Bricoleur',
                 'picture' => 'grymm-le-bricoleur.png',
-                'description' => "<p>Inventeur excentrique originaire des Mines de Cuivre, Grymm le Bricoleur est un mécaniste de génie, créant des gadgets et des armes ingénieuses. Ses inventions farfelues et parfois imprévisibles lui ont valu une réputation mitigée, mais personne ne peut nier son talent exceptionnel.</p><p>Avec son armure articulée et son arsenal de gadgets mécaniques, Grymm utilise sa créativité pour résoudre des problèmes de manière inédite. Il est aussi pragmatique qu’amusant, apportant souvent une touche d’humour dans les situations les plus graves.</p>",
+                'description' => "<p>Inventeur excentrique originaire de Port Saint-Doux, Grymm le Bricoleur est un mécaniste de génie, créant des gadgets et des armes ingénieuses. Ses inventions farfelues et parfois imprévisibles lui ont valu une réputation mitigée, mais personne ne peut nier son talent exceptionnel.</p><p>Avec son armure articulée et son arsenal de gadgets mécaniques, Grymm utilise sa créativité pour résoudre des problèmes de manière inédite. Il est aussi pragmatique qu’amusant, apportant souvent une touche d’humour dans les situations les plus graves.</p>",
                 'health' => 90,
                 'mana' => 60,
                 'damage' => 4,

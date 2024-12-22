@@ -1,20 +1,22 @@
-<div class="content travel" data-content-switcher-target="content">
+<div class="content travel" data-content-switcher-map-target="content">
     <img src="{{ asset('img/chapter1/royaume-de-lile-du-nord.webp') }}"
          class="app-cover"
-         alt="Royaume de l'Île du Nord"/>
+         alt="{{ realmMap.name }}"/>
 
     <div class="links">
         <div class="title">
             <h1>Voyager</h1>
-            <h2>Royaume de l'Île du Nord</h2>
+            <h2>{{ realmMap.name }}</h2>
         </div>
 
         <div class="app-grid two">
             {% for location in app_locationService.locations %}
-                <a href="#"
-                   class="app-button outline {% if location not in app.user.player.visitedLocations %}invisible{% endif %}">
-                    {{ location.name }}
-                </a>
+                {% if location.type != 'Royaume' %}
+                    <a href="#"
+                       class="app-button outline {% if location not in app.user.player.visitedLocations %}invisible{% endif %}">
+                        {{ location.name }}
+                    </a>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

@@ -87,6 +87,6 @@ class PlaceFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 19;
+        return 20;
     }
 }

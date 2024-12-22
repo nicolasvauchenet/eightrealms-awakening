@@ -3,6 +3,8 @@
 namespace App\Controller\Character;
 
 use App\Entity\Character\Character;
+use App\Entity\Item\CharacterItem;
+use App\Entity\Item\Misc;
 use App\Entity\User;
 use App\Form\Character\PlayerType;
 use App\Service\Character\CreateService;
@@ -40,6 +42,16 @@ class CreateController extends AbstractController
                 }
                 $pictureFileName = $fileUploaderService->upload($pictureFile, 'character', strtolower($slugger->slug($character->getName())));
                 $character->setPicture($pictureFileName);
+            }
+
+            $character->addVisitedLocation($form->get('origin')->getData());
+            if($form->get('origin')->getData()->getName() === 'Port Saint-Doux') {
+                $map = $entityManager->getRepository(Misc::class)->findOneBy(['slug' => 'port-saint-doux']);
+                $characterItem = (new CharacterItem())
+                    ->setCharacter($character)
+                    ->setItem($map)
+                    ->setEquipped(false);
+                $entityManager->persist($characterItem);
             }
             $entityManager->persist($character);
             $entityManager->flush();

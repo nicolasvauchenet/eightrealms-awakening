@@ -6,6 +6,7 @@ use App\Entity\Character\PreGenerated;
 use App\Entity\Item\Amulet;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
+use App\Entity\Item\Misc;
 use App\Entity\Item\Potion;
 use App\Entity\Item\Ring;
 use App\Entity\Item\Scroll;
@@ -343,6 +344,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
 
     public function getOrder(): int
     {
-        return 14;
+        return 15;
     }
 }

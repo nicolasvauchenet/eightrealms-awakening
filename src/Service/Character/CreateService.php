@@ -5,7 +5,6 @@ namespace App\Service\Character;
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Item\CharacterItem;
-use App\Entity\Location\Place;
 use App\Entity\Spell\CharacterSpell;
 use App\Entity\User;
 use App\Service\FileUploaderService;

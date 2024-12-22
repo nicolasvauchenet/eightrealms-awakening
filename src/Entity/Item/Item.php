@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'category', type: 'string')]
-#[ORM\DiscriminatorMap(['amulet' => Amulet::class, 'armor' => Armor::class, 'potion' => Potion::class, 'ring' => Ring::class, 'scroll' => Scroll::class, "shield" => Shield::class, 'weapon' => Weapon::class])]
+#[ORM\DiscriminatorMap(['amulet' => Amulet::class, 'armor' => Armor::class, 'potion' => Potion::class, 'ring' => Ring::class, 'scroll' => Scroll::class, "shield" => Shield::class, 'weapon' => Weapon::class, 'misc' => Misc::class])]
 abstract class Item
 {
     #[ORM\Id]
@@ -168,7 +168,7 @@ abstract class Item
 
     public function addCharacterItem(CharacterItem $characterItem): static
     {
-        if (!$this->characterItems->contains($characterItem)) {
+        if(!$this->characterItems->contains($characterItem)) {
             $this->characterItems->add($characterItem);
             $characterItem->setItem($this);
         }
@@ -178,9 +178,9 @@ abstract class Item
 
     public function removeCharacterItem(CharacterItem $characterItem): static
     {
-        if ($this->characterItems->removeElement($characterItem)) {
+        if($this->characterItems->removeElement($characterItem)) {
             // set the owning side to null (unless already changed)
-            if ($characterItem->getItem() === $this) {
+            if($characterItem->getItem() === $this) {
                 $characterItem->setItem(null);
             }
         }

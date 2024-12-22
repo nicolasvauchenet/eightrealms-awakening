@@ -8,17 +8,22 @@
       width: 100%;
     }
 
+    &:has(.infos) {
+      img {
+        margin-top: 2rem;
+      }
+    }
+
     img {
-      margin-top: 2rem;
+      margin: 0.25rem;
       width: 100%;
       height: 7.5dvh;
       object-fit: contain;
-      border-bottom: 2px solid $primary;
     }
 
     .gauge {
-      margin: 0 0.25rem;
-      width: calc(100% - 0.5rem);
+      margin: 0 0.25rem 0 0.5rem;
+      width: calc(100% - 0.75rem);
     }
 
     .infos {

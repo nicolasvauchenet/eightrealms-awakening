@@ -4,6 +4,7 @@ namespace App\Entity\Location;
 
 use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
+use App\Entity\Item\Misc;
 use App\Entity\Scene\PlaceScene;
 use App\Entity\Screen\PlaceScreen;
 use App\Repository\Location\PlaceRepository;

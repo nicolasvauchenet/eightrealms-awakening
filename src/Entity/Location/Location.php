@@ -3,6 +3,7 @@
 namespace App\Entity\Location;
 
 use App\Entity\Character\Player;
+use App\Entity\Item\Misc;
 use App\Repository\Location\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -30,9 +31,6 @@ class Location
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $map = null;
-
     /**
      * @var Collection<int, Place>
      */
@@ -44,6 +42,9 @@ class Location
      */
     #[ORM\ManyToMany(targetEntity: Player::class, mappedBy: 'visitedLocations')]
     private Collection $players;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Misc $map = null;
 
     public function __construct()
     {
@@ -104,18 +105,6 @@ class Location
         return $this;
     }
 
-    public function getMap(): ?string
-    {
-        return $this->map;
-    }
-
-    public function setMap(?string $map): static
-    {
-        $this->map = $map;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Place>
      */
@@ -169,6 +158,18 @@ class Location
         if($this->players->removeElement($player)) {
             $player->removeVisitedLocation($this);
         }
+
+        return $this;
+    }
+
+    public function getMap(): ?Misc
+    {
+        return $this->map;
+    }
+
+    public function setMap(?Misc $map): static
+    {
+        $this->map = $map;
 
         return $this;
     }

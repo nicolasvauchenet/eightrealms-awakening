@@ -5,6 +5,7 @@ namespace App\Form\Character;
 use App\Entity\Character\Player;
 use App\Entity\Character\Profession;
 use App\Entity\Character\Race;
+use App\Entity\Location\Location;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -37,6 +38,25 @@ class PlayerType extends AbstractType
                 'label' => 'Profession',
                 'class' => Profession::class,
                 'choice_label' => 'name',
+                'label_attr' => [
+                    'class' => 'form-label',
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+            ])
+            ->add('origin', EntityType::class, [
+                'mapped' => false,
+                'required' => true,
+                'label' => 'Origine',
+                'class' => Location::class,
+                'choice_label' => 'name',
+                'query_builder' => function($er) {
+                    return $er->createQueryBuilder('l')
+                        ->where('l.type NOT IN(:types)')
+                        ->setParameter('types', ['Royaume', 'Donjon'])
+                        ->orderBy('l.name', 'ASC');
+                },
                 'label_attr' => [
                     'class' => 'form-label',
                 ],

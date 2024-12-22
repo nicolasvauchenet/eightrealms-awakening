@@ -1,5 +1,4 @@
 .sheet-footer {
-  /*@include displayGrid(repeat(5, 1fr));*/
   @include displayFlex(center, center);
   position: absolute;
   left: 0;

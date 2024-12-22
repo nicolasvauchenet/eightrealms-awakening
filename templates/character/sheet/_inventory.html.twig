@@ -7,8 +7,13 @@
                 <div class="app-card inventory">
                     <div class="card-header" data-controller="tooltip">
                         <a href="#" data-action="click->tooltip#open">
-                            <img src="{{ asset('img/core/item/' ~ characterItem.item.category.name ~ '/' ~ characterItem.item.picture) }}"
-                                 alt="{{ characterItem.item.name }}"/>
+                            {% if characterItem.item.type == 'map' %}
+                                <img src="{{ asset('img/core/item/misc/map.png') }}"
+                                     alt="{{ characterItem.item.name }}"/>
+                            {% else %}
+                                <img src="{{ asset('img/core/item/' ~ characterItem.item.category.name ~ '/' ~ characterItem.item.picture) }}"
+                                     alt="{{ characterItem.item.name }}"/>
+                            {% endif %}
                         </a>
                         {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item} %}
                         {% if characterItem.health %}
@@ -21,57 +26,61 @@
                                 <div class="gauge-fill bg-info" style="--value: {{ characterItem.charge }}"></div>
                             </div>
                         {% endif %}
-                        <div class="infos">
-                            <div class="bonus">
-                                {% if characterItem.item.defense is defined %}
-                                    {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
-                                    {{ characterItem.item.defense }}
-                                {% endif %}
-                                {% if characterItem.item.target is defined and characterItem.item.target is not null %}
-                                    {% if characterItem.item.target == 'health' %}
-                                        {% if characterItem.item.type == 'Offensif' %}
-                                            {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                                            {{ characterItem.item.amount }}
-                                        {% elseif characterItem.item.type == 'Défensif' %}
-                                            {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                        {% if characterItem.item.type != 'map' %}
+                            <div class="infos">
+                                <div class="bonus">
+                                    {% if characterItem.item.defense is defined %}
+                                        {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                                        {{ characterItem.item.defense }}
+                                    {% endif %}
+                                    {% if characterItem.item.target is defined and characterItem.item.target is not null %}
+                                        {% if characterItem.item.target == 'health' %}
+                                            {% if characterItem.item.type == 'Offensif' %}
+                                                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                                                {{ characterItem.item.amount }}
+                                            {% elseif characterItem.item.type == 'Défensif' %}
+                                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                                                {{ characterItem.item.amount }}
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if characterItem.item.target == 'mana' %}
+                                            {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
                                             {{ characterItem.item.amount }}
                                         {% endif %}
                                     {% endif %}
-                                    {% if characterItem.item.target == 'mana' %}
-                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                                        {{ characterItem.item.amount }}
+                                    {% if characterItem.item.type == 'Utile' %}
+                                        {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
                                     {% endif %}
-                                {% endif %}
-                                {% if characterItem.item.type == 'Utile' %}
-                                    {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
-                                {% endif %}
-                                {% if characterItem.item.damage is defined %}
-                                    {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                                    {{ characterItem.item.damage }}
-                                {% endif %}
+                                    {% if characterItem.item.damage is defined %}
+                                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                                        {{ characterItem.item.damage }}
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ characterItem.item.name }}</h5>
                     </div>
                     {% if type == 'player' %}
-                        <div class="card-footer">
-                            {% if characterItem.equipped %}
-                                <button class="bg-warning" {{ live_action('equipItem', {'id': characterItem.id }) }}>
-                                    {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
-                                </button>
-                            {% else %}
-                                <button class="bg-success" {{ live_action('equipItem', {'id': characterItem.id }) }}>
-                                    {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
-                                </button>
-                            {% endif %}
-                            {% if false %}
-                                <a href="#" class="bg-info">
-                                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon'}) }}
-                                </a>
-                            {% endif %}
-                        </div>
+                        {% if characterItem.item.type != 'map' %}
+                            <div class="card-footer">
+                                {% if characterItem.equipped %}
+                                    <button class="bg-warning" {{ live_action('equipItem', {'id': characterItem.id }) }}>
+                                        {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
+                                    </button>
+                                {% else %}
+                                    <button class="bg-success" {{ live_action('equipItem', {'id': characterItem.id }) }}>
+                                        {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
+                                    </button>
+                                {% endif %}
+                                {% if false %}
+                                    <a href="#" class="bg-info">
+                                        {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon'}) }}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
             {% endfor %}

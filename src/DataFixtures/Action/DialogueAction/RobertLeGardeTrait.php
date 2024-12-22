@@ -169,7 +169,7 @@ trait RobertLeGardeTrait
 
     const ROBERT_LE_GARDE_ATTACK = [
         'label' => 'Insulter Robert',
-        'picture' => 'core/action/attack.png',
+        'picture' => 'core/action/angry.png',
         'scene' => 'scene_dialogue_robert_le_garde_history',
         'sceneClass' => DialogueScene::class,
         'targetScene' => 'scene_cinematic_jail',

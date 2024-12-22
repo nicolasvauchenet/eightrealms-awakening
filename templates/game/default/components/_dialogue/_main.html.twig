@@ -28,5 +28,11 @@
             {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
             +{{ app_characterItemService.characterBonus(this.character, 'damage') }}
         </div>
+
+        {% set characterReputation = app_characterLocationReputationService.totalReputation(this.character, this.character.currentPlace.location) %}
+        <div class="info {{ characterReputation < 0 ? 'text-third' }}">
+            {{ ux_icon('mdi:head-heart-outline', {'class': 'app-icon text-primary'}) }}
+            {{ characterReputation > 0 ? '+' : '' }}{{ characterReputation }}
+        </div>
     </div>
 </main>

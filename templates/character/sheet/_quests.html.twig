@@ -8,7 +8,7 @@
     <h3 class="{% if characterReputation < 0 %}text-third{% endif %}">
         Réputation locale
         :
-        {{ characterReputation }}
+        {{ characterReputation > 0 ? '+' : '' }}{{ characterReputation }}
     </h3>
 
     {% if characterPrimaryQuest or characterSecondaryQuests > 0 %}

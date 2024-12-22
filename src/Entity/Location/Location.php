@@ -28,6 +28,9 @@ class Location
     private ?string $type = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $map = null;
 
     /**
@@ -89,6 +92,18 @@ class Location
         return $this;
     }
 
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): static
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
     public function getMap(): ?string
     {
         return $this->map;
@@ -141,7 +156,7 @@ class Location
 
     public function addPlayer(Player $player): static
     {
-        if (!$this->players->contains($player)) {
+        if(!$this->players->contains($player)) {
             $this->players->add($player);
             $player->addVisitedLocation($this);
         }
@@ -151,7 +166,7 @@ class Location
 
     public function removePlayer(Player $player): static
     {
-        if ($this->players->removeElement($player)) {
+        if($this->players->removeElement($player)) {
             $player->removeVisitedLocation($this);
         }
 

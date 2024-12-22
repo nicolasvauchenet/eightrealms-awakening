@@ -3,9 +3,11 @@
 namespace App\Twig\Components\Game;
 
 use App\Entity\Character\Player;
+use App\Entity\Location\Place;
 use App\Entity\Scene\Scene;
 use App\Entity\Screen\Screen;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
@@ -14,7 +16,7 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PostMount;
 
 #[AsLiveComponent('Game', template: 'game/default/components/_index.html.twig')]
-class GameComponent
+class GameComponent extends AbstractController
 {
     use DefaultActionTrait;
 
@@ -28,6 +30,12 @@ class GameComponent
 
     #[LiveProp(writable: true)]
     public Scene $currentScene;
+
+    #[LiveProp(writable: true)]
+    public bool $characterUpdated = false;
+
+    #[LiveProp(writable: true)]
+    public bool $mapUpdated = false;
 
     public string $currentScreenType;
     public string $currentScreenDescription = '';
@@ -48,13 +56,15 @@ class GameComponent
      * @throws \ReflectionException
      */
     #[LiveAction]
-    public function changeScreen(#[LiveArg] int $targetScreenId, #[LiveArg] int $targetSceneId): void
+    public function changeScreen(#[LiveArg] int $targetScreenId, #[LiveArg] int $targetSceneId, #[LiveArg] ?array $actionEffects): void
     {
         $this->currentScreen = $this->entityManager->getRepository(Screen::class)->find($targetScreenId);
         $this->currentScene = $this->entityManager->getRepository(Scene::class)->find($targetSceneId);
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
         $this->updateDescription();
-        $this->doActions();
+        if($actionEffects) {
+            $this->doActions($actionEffects);
+        }
     }
 
     private function updateCharacterPlace(): void
@@ -76,21 +86,28 @@ class GameComponent
         }
     }
 
-    private function doActions(): void
+    private function doActions(array $actionEffects): void
     {
-        switch($this->currentScreenType) {
-            case 'cinematicscreen':
-                if($this->currentScene->getName() === 'Prison') {
-                    $this->character->setFortune($this->character->getFortune() - 50);
+        foreach($actionEffects as $effect => $value) {
+            switch($effect) {
+                case 'decreaseFortune':
+                    $this->character->setFortune($this->character->getFortune() - $value);
                     if($this->character->getFortune() < 0) {
                         $this->character->setFortune(0);
                     }
                     $this->entityManager->persist($this->character);
                     $this->entityManager->flush();
-                }
-                break;
-            default:
-                break;
+                    $this->characterUpdated = true;
+                    break;
+                case 'addPlace':
+                    $this->character->addVisitedPlace($this->entityManager->getRepository(Place::class)->findOneBy(['slug' => $value]));
+                    $this->entityManager->persist($this->character);
+                    $this->entityManager->flush();
+                    $this->mapUpdated = true;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

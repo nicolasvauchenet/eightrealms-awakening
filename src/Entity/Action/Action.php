@@ -21,6 +21,12 @@ abstract class Action
     #[ORM\Column(length: 255)]
     private ?string $label = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $actionEffects = null;
+
     #[ORM\ManyToOne(inversedBy: 'actions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Scene $scene = null;
@@ -30,9 +36,6 @@ abstract class Action
 
     #[ORM\ManyToOne(inversedBy: 'actions')]
     private ?Screen $targetScreen = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $picture = null;
 
     public function getId(): ?int
     {
@@ -47,6 +50,30 @@ abstract class Action
     public function setLabel(string $label): static
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): static
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getActionEffects(): ?array
+    {
+        return $this->actionEffects;
+    }
+
+    public function setActionEffects(?array $actionEffects): static
+    {
+        $this->actionEffects = $actionEffects;
 
         return $this;
     }
@@ -83,18 +110,6 @@ abstract class Action
     public function setTargetScreen(?Screen $targetScreen): static
     {
         $this->targetScreen = $targetScreen;
-
-        return $this;
-    }
-
-    public function getPicture(): ?string
-    {
-        return $this->picture;
-    }
-
-    public function setPicture(?string $picture): static
-    {
-        $this->picture = $picture;
 
         return $this;
     }

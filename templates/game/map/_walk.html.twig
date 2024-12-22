@@ -1,0 +1,21 @@
+<div class="content walk" data-content-switcher-target="content">
+    <img src="{{ asset('img/chapter1/location/' ~ location.slug ~ '/' ~ location.picture) }}"
+         class="app-cover"
+         alt="{{ location.name }}"/>
+
+    <div class="links">
+        <div class="title">
+            <h1>Marcher</h1>
+            <h2>{{ location.name }}</h2>
+        </div>
+
+        <div class="app-grid two">
+            {% for place in location.places %}
+                <a href="#"
+                   class="app-button outline {% if place not in app.user.player.visitedPlaces %}invisible{% endif %}">
+                    {{ place.name }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

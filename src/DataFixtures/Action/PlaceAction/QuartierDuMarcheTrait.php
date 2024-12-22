@@ -10,7 +10,7 @@ trait QuartierDuMarcheTrait
 {
     const SOPHIE_LA_MARCHANDE = [
         'label' => 'Parler à Sophie La Marchande',
-        'picture' => 'npc/thumb-sophie-la-marchande.png',
+        'picture' => 'chapter1/npc/thumb_sophie-la-marchande.png',
         'scene' => 'scene_place_quartier_du_marche',
         'sceneClass' => PlaceScene::class,
         'targetScene' => 'scene_dialogue_sophie_la_marchande',
@@ -22,7 +22,7 @@ trait QuartierDuMarcheTrait
 
     const ROBERT_LE_GARDE = [
         'label' => 'Parler à Robert Le Garde',
-        'picture' => 'npc/thumb-robert-le-garde.png',
+        'picture' => 'chapter1/npc/thumb_robert-le-garde.png',
         'scene' => 'scene_place_quartier_du_marche',
         'sceneClass' => PlaceScene::class,
         'targetScene' => 'scene_dialogue_robert_le_garde',
@@ -34,7 +34,7 @@ trait QuartierDuMarcheTrait
 
     const BILO_LE_PASSANT = [
         'label' => 'Parler à Bilo Le Passant',
-        'picture' => 'npc/thumb-bilo-le-passant.png',
+        'picture' => 'chapter1/npc/thumb_bilo-le-passant.png',
         'scene' => 'scene_place_quartier_du_marche',
         'sceneClass' => PlaceScene::class,
         'targetScene' => 'scene_dialogue_bilo_le_passant',

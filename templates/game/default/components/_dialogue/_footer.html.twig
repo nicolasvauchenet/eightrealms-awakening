@@ -3,9 +3,9 @@
         {% for action in this.currentScene.actions %}
             <button class="action {% if 'Voler' in action.label and this.character.profession.type != 'Furtivité' %}hidden{% endif %} {% if 'Attaquer' in action.label and (this.character.profession.type != 'Combat' and this.character.profession.type != 'Magie') %}hidden{% endif %}"
                     title="{{ action.label }}"
-                    {{ live_action('changeScreen', {'targetScreenId': action.targetScreen.id, 'targetSceneId': action.targetScene.id }) }}>
+                    {{ live_action('changeScreen', {'targetScreenId': action.targetScreen.id, 'targetSceneId': action.targetScene.id, 'actionEffects': action.actionEffects }) }}>
                 {% if action.picture %}
-                    <img src="{{ asset('img/core/action/' ~ action.picture) }}" alt="{{ action.label }}"/>
+                    <img src="{{ asset('img/' ~ action.picture) }}" alt="{{ action.label }}"/>
                 {% else %}
                     {{ action.label }}
                 {% endif %}

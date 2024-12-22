@@ -15,37 +15,42 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Port Saint-Doux',
                 'type' => 'Ville',
-                'map' => 'port-saint-doux.png',
+                'picture' => 'port-saint-doux.webp',
+                'map' => 'map_port-saint-doux.png',
                 'reference' => 'location_port_saint_doux',
             ],
             [
                 'name' => 'Plouc',
                 'type' => 'Ville',
-                'map' => 'plouc.png',
+                'map' => 'map_plouc.png',
                 'reference' => 'location_plouc',
             ],
             [
                 'name' => 'Sables Chauds',
                 'type' => 'Plage',
-                'map' => 'sables-chauds.png',
+                'picture' => 'sables-chauds.png',
+                'map' => 'map_sables-chauds.png',
                 'reference' => 'location_sables-chauds',
             ],
             [
                 'name' => 'Bois du Pendu',
                 'type' => 'Bois',
-                'map' => 'bois-du-pendu.png',
+                'picture' => 'bois-du-pendu.png',
+                'map' => 'map_bois-du-pendu.png',
                 'reference' => 'location_bois-du-pendu',
             ],
             [
                 'name' => 'Monts Terribles',
                 'type' => 'Montagne',
-                'map' => 'monts-terribles.png',
+                'picture' => 'monts-terribles.png',
+                'map' => 'map_monts-terribles.png',
                 'reference' => 'location_monts-terribles',
             ],
             [
                 'name' => "Donjon de l'Âme",
                 'type' => 'Donjon',
-                'map' => 'donjon-de-lame.png',
+                'picture' => 'donjon-de-lame.png',
+                'map' => 'map_donjon-de-lame.png',
                 'reference' => 'location_donjon-de-lame',
             ],
         ];
@@ -54,6 +59,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
             $location = new Location();
             $location->setName($data['name'])
                 ->setType($data['type'])
+                ->setPicture($data['picture'] ?? null)
                 ->setMap($data['map'] ?? null);
             $manager->persist($location);
             $this->addReference($data['reference'], $location);

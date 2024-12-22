@@ -31,13 +31,49 @@ trait QuartierDuMarcheTrait
         'reference' => 'scene_dialogue_robert_le_garde',
     ];
 
-    const ROBERT_LE_GARDE_HISTORY_RUMORS_START = [
+    const ROBERT_LE_GARDE_HISTORY_START = [
         'name' => 'Robert Le Garde',
         'position' => 1,
         'description' => "<p><em>Bon. Là en ce moment, chus occupé. Chuis en service au cas où z'auriez point remarqué. Alors salut.</em></p>",
         'screen' => 'screen_dialogue_robert_le_garde',
         'npc' => 'npc_robert_le_garde',
-        'reference' => 'scene_dialogue_robert_le_garde_history_rumors',
+        'reference' => 'scene_dialogue_robert_le_garde_history',
+    ];
+
+    const ROBERT_LE_GARDE_RUMORS_START = [
+        'name' => 'Robert Le Garde',
+        'position' => 1,
+        'description' => "<p><em>Il y a eu une \"bagarre\" à la taverne de la Flûte Moisie… Je sais pas si vous avez entendu parler de ça… Mais je vous conseille de pas trop traîner par là-bas à la nuit tombée… Cet endroit peut être dangereux. Vous feriez mieux de rester là où c'est sûr.</em></p>",
+        'screen' => 'screen_dialogue_robert_le_garde',
+        'npc' => 'npc_robert_le_garde',
+        'reference' => 'scene_dialogue_robert_le_garde_rumors',
+    ];
+
+    const ROBERT_LE_GARDE_RUMORS_2 = [
+        'name' => 'Robert Le Garde',
+        'position' => 2,
+        'description' => "<p><em>Aux Docks de l'Ouest. C'est vers la mer. Ça s'appelle comme ça mais c'est au nord-est de la ville, me demandez pas pourquoi…</em></p>",
+        'screen' => 'screen_dialogue_robert_le_garde',
+        'npc' => 'npc_robert_le_garde',
+        'reference' => 'scene_dialogue_robert_le_garde_rumors_2',
+    ];
+
+    const ROBERT_LE_GARDE_RUMORS_2_ACCEPT = [
+        'name' => 'Robert Le Garde',
+        'position' => 3,
+        'description' => "<p><em>Qu'on aille pas dire que je vous avais pas prévenu… En même temps c'est bien et ça m'arrange. Mais si vous trouvez quoi que ce soit, je veux que vous veniez m'en parler avant de faire n'importe quoi&nbsp;! On est bien d'accord&nbsp;?</em></p>",
+        'screen' => 'screen_dialogue_robert_le_garde',
+        'npc' => 'npc_robert_le_garde',
+        'reference' => 'scene_dialogue_robert_le_garde_rumors_2_accept',
+    ];
+
+    const ROBERT_LE_GARDE_RUMORS_2_DECLINE = [
+        'name' => 'Robert Le Garde',
+        'position' => 4,
+        'description' => "<p><em>Hé ben, c'est point vos affaires de toute façon. Heureusement qu'y a encore des gardes dans c'te ville… Allez circulez&nbsp;!</em></p>",
+        'screen' => 'screen_dialogue_robert_le_garde',
+        'npc' => 'npc_robert_le_garde',
+        'reference' => 'scene_dialogue_robert_le_garde_rumors_2_decline',
     ];
 
     const BILO_LE_PASSANT_START = [
@@ -61,7 +97,7 @@ trait QuartierDuMarcheTrait
     const BILO_LE_PASSANT_RUMORS_START = [
         'name' => 'Bilo Le Passant',
         'position' => 1,
-        'description' => "<p><em>Vous avez entendu parler des rats qui envahissent les rues de Port&nbsp;? Il y en a partout&nbsp;! Et ils sortent même le jour maintenant… C’est inquiétant.</em></p>",
+        'description' => "<p><em>Vous avez entendu parler des rats qui envahissent les rues du Vieux Port&nbsp;? Il y en a partout&nbsp;! Et ils sortent même le jour maintenant… C’est inquiétant.</em></p>",
         'screen' => 'screen_dialogue_bilo_le_passant',
         'npc' => 'npc_bilo_le_passant',
         'reference' => 'scene_dialogue_bilo_le_passant_rumors',

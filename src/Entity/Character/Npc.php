@@ -52,6 +52,12 @@ class Npc extends Character
     #[ORM\OneToMany(targetEntity: TradeScene::class, mappedBy: 'npc')]
     private Collection $tradeScenes;
 
+    /**
+     * @var Collection<int, PlayerNpc>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'npc')]
+    private Collection $playerNpcs;
+
     public function __construct()
     {
         parent::__construct();
@@ -60,6 +66,7 @@ class Npc extends Character
         $this->dialogueScenes = new ArrayCollection();
         $this->tradeScreens = new ArrayCollection();
         $this->tradeScenes = new ArrayCollection();
+        $this->playerNpcs = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -227,6 +234,36 @@ class Npc extends Character
             // set the owning side to null (unless already changed)
             if ($tradeScene->getNpc() === $this) {
                 $tradeScene->setNpc(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerNpc>
+     */
+    public function getPlayerNpcs(): Collection
+    {
+        return $this->playerNpcs;
+    }
+
+    public function addPlayerNpc(PlayerNpc $playerNpc): static
+    {
+        if (!$this->playerNpcs->contains($playerNpc)) {
+            $this->playerNpcs->add($playerNpc);
+            $playerNpc->setNpc($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerNpc(PlayerNpc $playerNpc): static
+    {
+        if ($this->playerNpcs->removeElement($playerNpc)) {
+            // set the owning side to null (unless already changed)
+            if ($playerNpc->getNpc() === $this) {
+                $playerNpc->setNpc(null);
             }
         }
 

@@ -209,27 +209,6 @@ trait BiloLePassantTrait
         'reference' => 'action_dialogue_bilo_le_passant_steal',
     ];
 
-    const BILO_LE_PASSANT_ATTACK = [
-        'label' => 'Attaquer Bilo',
-        'picture' => 'core/action/attack.png',
-        'scene' => 'scene_dialogue_bilo_le_passant',
-        'sceneClass' => DialogueScene::class,
-        'targetScene' => 'scene_cinematic_jail',
-        'targetSceneClass' => CinematicScene::class,
-        'targetScreen' => 'screen_cinematic_jail',
-        'targetScreenClass' => CinematicScreen::class,
-        'actionEffects' => [
-            'decreaseFortune' => [
-                'amount' => '50',
-            ],
-            'decreaseLocationReputation' => [
-                'amount' => '10',
-                'location' => 'port-saint-doux',
-            ],
-        ],
-        'reference' => 'action_dialogue_bilo_le_passant_attack',
-    ];
-
     const BILO_LE_PASSANT_EXIT = [
         'label' => 'Revenir sur la place',
         'picture' => 'core/action/exit.png',

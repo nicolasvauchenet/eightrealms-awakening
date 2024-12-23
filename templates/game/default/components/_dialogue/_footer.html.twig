@@ -5,9 +5,6 @@
             {% if 'Voler' in action.label and this.character.profession.type != 'Furtivité' %}
                 {% set hidden = true %}
             {% endif %}
-            {% if 'Attaquer' in action.label and (this.character.profession.type != 'Combat' and this.character.profession.type != 'Magie') %}
-                {% set hidden = true %}
-            {% endif %}
             {% for requirement, value in action.actionRequirements %}
                 {% if requirement == 'hasNoQuest' %}
                     {% for characterQuest in app_characterQuestService.characterSecondaryQuests(app.user.player) %}
@@ -22,6 +19,7 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
+            
             <button class="action {% if hidden %}hidden{% endif %}"
                     title="{{ action.label }}"
                     {{ live_action('changeScreen', {'targetScreenId': action.targetScreen.id, 'targetSceneId': action.targetScene.id, 'actionEffects': action.actionEffects }) }}>

@@ -4,6 +4,7 @@ namespace App\Twig\Components\Game;
 
 use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
+use App\Entity\Character\PlayerNpc;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Item;
 use App\Entity\Item\Weapon;
@@ -43,6 +44,9 @@ class GameComponent extends AbstractController
     public Scene $currentScene;
 
     #[LiveProp(writable: true)]
+    public ?PlayerNpc $currentNpc = null;
+
+    #[LiveProp(writable: true)]
     public bool $characterUpdated = false;
 
     #[LiveProp(writable: true)]
@@ -64,6 +68,9 @@ class GameComponent extends AbstractController
     public function postMount(): void
     {
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+        if($this->currentScreenType === 'tradescreen') {
+            $this->meetNpc();
+        }
         $this->updateDescription();
     }
 
@@ -77,19 +84,28 @@ class GameComponent extends AbstractController
         $this->currentScene = $this->entityManager->getRepository(Scene::class)->find($targetSceneId);
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
         $this->updateDescription();
+
         if($actionEffects) {
             $this->doActions($actionEffects);
+        }
+
+        if($this->currentScreenType === 'tradescreen') {
+            $this->meetNpc();
         }
     }
 
     #[LiveAction]
-    public function buyItem(#[LiveArg] int $itemId, #[LiveArg] int $price, #[LiveArg] int $npcId): void
+    public function buyItem(#[LiveArg] int $itemId, #[LiveArg] int $price, #[LiveArg] int $playerNpcId): void
     {
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+
         $item = $this->entityManager->getRepository(Item::class)->find($itemId);
+
         if($this->character->getFortune() >= $price) {
-            $npc = $this->entityManager->getRepository(Npc::class)->find($npcId);
-            $npc->setFortune($npc->getFortune() + $price);
+            $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->find($playerNpcId);
+            $playerNpc->setFortune($playerNpc->getFortune() + $price);
+            $this->entityManager->persist($playerNpc);
+
             $this->character->setFortune($this->character->getFortune() - $price);
             $characterItem = (new CharacterItem())
                 ->setCharacter($this->character)
@@ -101,7 +117,9 @@ class GameComponent extends AbstractController
             }
             $this->entityManager->persist($characterItem);
             $this->entityManager->persist($this->character);
+
             $this->entityManager->flush();
+
             $this->currentScreenDescription = 'Vous avez acheté ' . $item->getName() . ' pour ' . $price . ' couronne' . ($price > 1 ? 's' : '') . '.';
         } else {
             $this->currentScreenDescription = "Vous n'avez pas assez de couronnes pour acheter cet objet.";
@@ -109,22 +127,28 @@ class GameComponent extends AbstractController
     }
 
     #[LiveAction]
-    public function sellItem(#[LiveArg] int $characterItemId, #[LiveArg] int $price, #[LiveArg] int $npcId): void
+    public function sellItem(#[LiveArg] int $characterItemId, #[LiveArg] int $price, #[LiveArg] int $playerNpcId): void
     {
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+
         $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
-        $npc = $this->entityManager->getRepository(Npc::class)->find($npcId);
-        if($npc->getFortune() >= $price) {
-            $npc->setFortune($npc->getFortune() - $price);
-            $this->entityManager->persist($npc);
+
+        $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->find($playerNpcId);
+
+        if($playerNpc->getFortune() >= $price) {
+            $playerNpc->setFortune($playerNpc->getFortune() - $price);
+            $this->entityManager->persist($playerNpc);
+
             $this->character->setFortune($this->character->getFortune() + $price)
                 ->removeCharacterItem($characterItem);
             $this->entityManager->remove($characterItem);
             $this->entityManager->persist($this->character);
+
             $this->entityManager->flush();
+
             $this->currentScreenDescription = 'Vous avez vendu ' . $characterItem->getItem()->getName() . ' pour ' . $price . ' couronne' . ($price > 1 ? 's' : '') . '.';
         } else {
-            $this->currentScreenDescription = $npc->getName() . "n'a pas assez de couronnes pour vous acheter cet objet.";
+            $this->currentScreenDescription = $playerNpc->getNpc()->getName() . "n'a pas assez de couronnes pour vous acheter cet objet.";
         }
     }
 
@@ -191,5 +215,23 @@ class GameComponent extends AbstractController
                     break;
             }
         }
+    }
+
+    private function meetNpc(): void
+    {
+        $npc = $this->currentScene->getNpc();
+        $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $npc]);
+        if(!$playerNpc) {
+            $playerNpc = (new PlayerNpc())
+                ->setPlayer($this->character)
+                ->setNpc($npc)
+                ->setFortune($npc->getFortune());
+            $this->entityManager->persist($playerNpc);
+            $this->character->addPlayerNpc($playerNpc);
+            $this->entityManager->persist($this->character);
+            $this->entityManager->flush();
+        }
+
+        $this->currentNpc = $playerNpc;
     }
 }

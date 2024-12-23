@@ -21,6 +21,12 @@ class Player extends Character
     private ?int $experience = null;
 
     #[ORM\Column]
+    private ?int $healthMax = null;
+
+    #[ORM\Column]
+    private ?int $manaMax = null;
+
+    #[ORM\Column]
     private ?bool $alive = null;
 
     #[ORM\Column(nullable: true)]
@@ -51,12 +57,19 @@ class Player extends Character
     #[ORM\OneToMany(targetEntity: CharacterQuest::class, mappedBy: 'character')]
     private Collection $characterQuests;
 
+    /**
+     * @var Collection<int, PlayerNpc>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'player')]
+    private Collection $playerNpcs;
+
     public function __construct()
     {
         parent::__construct();
         $this->visitedLocations = new ArrayCollection();
         $this->visitedPlaces = new ArrayCollection();
         $this->characterQuests = new ArrayCollection();
+        $this->playerNpcs = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -79,6 +92,30 @@ class Player extends Character
     public function setExperience(int $experience): static
     {
         $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getHealthMax(): ?int
+    {
+        return $this->healthMax;
+    }
+
+    public function setHealthMax(int $healthMax): static
+    {
+        $this->healthMax = $healthMax;
+
+        return $this;
+    }
+
+    public function getManaMax(): ?int
+    {
+        return $this->manaMax;
+    }
+
+    public function setManaMax(int $manaMax): static
+    {
+        $this->manaMax = $manaMax;
 
         return $this;
     }
@@ -141,7 +178,7 @@ class Player extends Character
 
     public function addVisitedLocation(Location $visitedLocation): static
     {
-        if (!$this->visitedLocations->contains($visitedLocation)) {
+        if(!$this->visitedLocations->contains($visitedLocation)) {
             $this->visitedLocations->add($visitedLocation);
         }
 
@@ -165,7 +202,7 @@ class Player extends Character
 
     public function addVisitedPlace(Place $visitedPlace): static
     {
-        if (!$this->visitedPlaces->contains($visitedPlace)) {
+        if(!$this->visitedPlaces->contains($visitedPlace)) {
             $this->visitedPlaces->add($visitedPlace);
         }
 
@@ -189,7 +226,7 @@ class Player extends Character
 
     public function addCharacterQuest(CharacterQuest $characterQuest): static
     {
-        if (!$this->characterQuests->contains($characterQuest)) {
+        if(!$this->characterQuests->contains($characterQuest)) {
             $this->characterQuests->add($characterQuest);
             $characterQuest->setCharacter($this);
         }
@@ -199,10 +236,40 @@ class Player extends Character
 
     public function removeCharacterQuest(CharacterQuest $characterQuest): static
     {
-        if ($this->characterQuests->removeElement($characterQuest)) {
+        if($this->characterQuests->removeElement($characterQuest)) {
             // set the owning side to null (unless already changed)
-            if ($characterQuest->getCharacter() === $this) {
+            if($characterQuest->getCharacter() === $this) {
                 $characterQuest->setCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerNpc>
+     */
+    public function getPlayerNpcs(): Collection
+    {
+        return $this->playerNpcs;
+    }
+
+    public function addPlayerNpc(PlayerNpc $playerNpc): static
+    {
+        if (!$this->playerNpcs->contains($playerNpc)) {
+            $this->playerNpcs->add($playerNpc);
+            $playerNpc->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerNpc(PlayerNpc $playerNpc): static
+    {
+        if ($this->playerNpcs->removeElement($playerNpc)) {
+            // set the owning side to null (unless already changed)
+            if ($playerNpc->getPlayer() === $this) {
+                $playerNpc->setPlayer(null);
             }
         }
 

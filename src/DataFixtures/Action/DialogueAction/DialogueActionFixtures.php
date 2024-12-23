@@ -51,7 +51,6 @@ class DialogueActionFixtures extends Fixture implements OrderedFixtureInterface
             self::BILO_LE_PASSANT_RUMORS_RETURN,
             self::BILO_LE_PASSANT_RUMORS_EXIT,
             self::BILO_LE_PASSANT_STEAL,
-            self::BILO_LE_PASSANT_ATTACK,
             self::BILO_LE_PASSANT_EXIT,
         ];
 

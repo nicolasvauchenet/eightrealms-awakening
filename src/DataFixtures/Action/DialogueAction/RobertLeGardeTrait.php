@@ -91,7 +91,7 @@ trait RobertLeGardeTrait
                 'location' => 'port-saint-doux',
             ],
             'increaseLocationReputation' => [
-                'amount' => '5',
+                'amount' => '1',
                 'location' => 'port-saint-doux',
             ],
         ],

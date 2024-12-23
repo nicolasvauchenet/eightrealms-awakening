@@ -46,7 +46,7 @@ class MiscFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'misc_gift_flowers',
             ],
             [
-                'category' => 'category_ring',
+                'category' => 'category_gift',
                 'name' => 'Anneau de cuivre',
                 'type' => 'gift',
                 'description' => "<p>Simple et modeste, cet anneau en cuivre est un bijou abordable au charme rustique.</p>",
@@ -56,7 +56,7 @@ class MiscFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'misc_ring_copper',
             ],
             [
-                'category' => 'category_ring',
+                'category' => 'category_gift',
                 'name' => "Anneau d'argent",
                 'type' => 'gift',
                 'description' => "<p>Raffiné et élégant, cet anneau en argent ajoute une touche de classe.</p>",
@@ -66,7 +66,7 @@ class MiscFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'misc_ring_silver',
             ],
             [
-                'category' => 'category_ring',
+                'category' => 'category_gift',
                 'name' => 'Anneau en or',
                 'type' => 'gift',
                 'description' => "<p>Symbole de richesse et de prestige, cet anneau en or brille d’élégance.</p>",

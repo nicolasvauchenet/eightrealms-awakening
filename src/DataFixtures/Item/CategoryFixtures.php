@@ -48,9 +48,9 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'category_potion',
             ],
             [
-                'name' => 'quest',
+                'name' => 'food',
                 'position' => 8,
-                'reference' => 'category_quest',
+                'reference' => 'category_food',
             ],
             [
                 'name' => 'map',
@@ -58,9 +58,9 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'category_map',
             ],
             [
-                'name' => 'food',
+                'name' => 'quest',
                 'position' => 10,
-                'reference' => 'category_food',
+                'reference' => 'category_quest',
             ],
             [
                 'name' => 'gift',

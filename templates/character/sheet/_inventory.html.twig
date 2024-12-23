@@ -25,45 +25,56 @@
                                      style="--value: {{ app_itemService.itemDurabilityFactor(characterItem) }}"></div>
                             </div>
                         {% endif %}
-                        {% if characterItem.item.type != 'map' %}
-                            <div class="infos">
-                                <div class="bonus">
-                                    {% if characterItem.item.defense is defined %}
-                                        {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
-                                        {{ characterItem.item.defense }}
-                                    {% endif %}
-                                    {% if characterItem.item.target is defined and characterItem.item.target is not null %}
-                                        {% if characterItem.item.target == 'health' %}
-                                            {% if characterItem.item.type == 'Offensif' %}
-                                                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                                                {{ characterItem.item.amount }}
-                                            {% elseif characterItem.item.type == 'Défensif' %}
-                                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-                                                {{ characterItem.item.amount }}
-                                            {% endif %}
-                                        {% endif %}
-                                        {% if characterItem.item.target == 'mana' %}
-                                            {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                        <div class="infos">
+                            <div class="bonus">
+                                {% if characterItem.item.defense is defined %}
+                                    {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                                    {{ characterItem.item.defense }}
+                                {% endif %}
+                                {% if characterItem.item.target is defined and characterItem.item.target is not null %}
+                                    {% if characterItem.item.target == 'health' %}
+                                        {% if characterItem.item.type == 'Offensif' %}
+                                            {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                                            {{ characterItem.item.amount }}
+                                        {% else %}
+                                            {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
                                             {{ characterItem.item.amount }}
                                         {% endif %}
                                     {% endif %}
-                                    {% if characterItem.item.type == 'Utile' %}
-                                        {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                                    {% if characterItem.item.target == 'mana' %}
+                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                                        {{ characterItem.item.amount }}
                                     {% endif %}
-                                    {% if characterItem.item.damage is defined %}
-                                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                                        {{ characterItem.item.damage }}
+                                    {% if characterItem.item.target == 'location' %}
+                                        {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
                                     {% endif %}
-                                </div>
+                                {% endif %}
+                                {% if characterItem.item.type == 'Utile' %}
+                                    {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                                {% endif %}
+                                {% if characterItem.item.type == 'map' %}
+                                    {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
+                                {% endif %}
+                                {% if characterItem.item.type == 'gift' %}
+                                    {{ ux_icon('el:gift', {'class': 'app-icon text-primary'}) }}
+                                {% endif %}
+                                {% if characterItem.item.damage is defined %}
+                                    {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                                    {{ characterItem.item.damage }}
+                                {% endif %}
                             </div>
-                        {% endif %}
+                        </div>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ characterItem.item.name }}</h5>
                     </div>
                     {% if type == 'player' %}
-                        {% if characterItem.item.type != 'map' %}
-                            <div class="card-footer">
+                        <div class="card-footer">
+                            {% if characterItem.item.type == 'food' %}
+                                <button class="bg-success">
+                                    {{ ux_icon('game-icons:eating', {'class': 'app-icon'}) }}
+                                </button>
+                            {% elseif characterItem.item.type != 'map' and characterItem.item.type != 'gift' %}
                                 {% if characterItem.equipped %}
                                     <button class="bg-warning" {{ live_action('equipItem', {'id': characterItem.id }) }}>
                                         {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
@@ -73,13 +84,12 @@
                                         {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
                                     </button>
                                 {% endif %}
-                                {% if false %}
-                                    <a href="#" class="bg-info">
-                                        {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon'}) }}
-                                    </a>
-                                {% endif %}
-                            </div>
-                        {% endif %}
+                            {% else %}
+                                <button class="bg-black disabled">
+                                    <a>&nbsp;</a>
+                                </button>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 </div>
             {% endfor %}

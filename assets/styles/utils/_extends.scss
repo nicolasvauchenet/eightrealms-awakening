@@ -44,6 +44,16 @@
 }
 
 /* BACKGROUND COLORS */
+.bg-black {
+  color: $white !important;
+  background-color: rgba($black, 0.75) !important;
+}
+
+.bg-white {
+  color: $primary !important;
+  background-color: rgba($white, 0.75) !important;
+}
+
 .bg-primary {
   color: $white !important;
   background-color: rgba($primary, 0.75) !important;

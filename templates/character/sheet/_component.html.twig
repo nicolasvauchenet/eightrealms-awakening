@@ -21,7 +21,9 @@
                 {% include 'character/sheet/_spells.html.twig' %}
             {% endif %}
             {% if this.type == 'player' %}
-                {% include 'character/sheet/_quests.html.twig' %}
+                {% if this.character.currentPlace %}
+                    {% include 'character/sheet/_quests.html.twig' %}
+                {% endif %}
             {% endif %}
         </div>
 

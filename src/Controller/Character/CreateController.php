@@ -45,6 +45,7 @@ class CreateController extends AbstractController
             }
 
             $character->addVisitedLocation($form->get('origin')->getData());
+
             if($form->get('origin')->getData()->getName() === 'Port Saint-Doux') {
                 $map = $entityManager->getRepository(Misc::class)->findOneBy(['slug' => 'port-saint-doux']);
                 $characterItem = (new CharacterItem())
@@ -53,6 +54,28 @@ class CreateController extends AbstractController
                     ->setEquipped(false);
                 $entityManager->persist($characterItem);
             }
+
+            $bread = $entityManager->getRepository(Misc::class)->findOneBy(['slug' => 'miche-de-pain']);
+            $characterItem = (new CharacterItem())
+                ->setCharacter($character)
+                ->setItem($bread)
+                ->setEquipped(false);
+            $entityManager->persist($characterItem);
+
+            $beer = $entityManager->getRepository(Misc::class)->findOneBy(['slug' => 'chope-de-biere']);
+            $characterItem = (new CharacterItem())
+                ->setCharacter($character)
+                ->setItem($beer)
+                ->setEquipped(false);
+            $entityManager->persist($characterItem);
+
+            $flowers = $entityManager->getRepository(Misc::class)->findOneBy(['slug' => 'bouquet-de-fleurs']);
+            $characterItem = (new CharacterItem())
+                ->setCharacter($character)
+                ->setItem($flowers)
+                ->setEquipped(false);
+            $entityManager->persist($characterItem);
+
             $entityManager->persist($character);
             $entityManager->flush();
 

@@ -6,66 +6,152 @@
         <div class="tooltip-content scrollable">
             {% if type == 'item' %}
                 <h3 class="tooltip-title">
-                    {% if content.type == 'map' %}
+                    {% if content.item.type == 'map' %}
                         Carte de
                     {% endif %}
-                    {{ content.name }}
+                    {{ content.item.name }}
                 </h3>
+
+                {% if content.item.charge is defined %}
+                    <h4 class="tooltip-subtitle left">
+                        <span>Charges : {{ content.item.charge }}</span>
+                    </h4>
+                {% endif %}
+
                 <h4 class="tooltip-subtitle">
-                    {% if content.defense is defined %}
-                        {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
-                        {{ content.defense }}
+                    {% if content.item.defense is defined %}
+                        <span>
+                            {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                            {{ content.item.defense }}
+                        </span>
                     {% endif %}
-                    {% if content.target is defined and content.target is not null %}
-                        {% if content.target == 'health' %}
-                            {% if content.type == 'Offensif' %}
-                                {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-primary'}) }}
-                                {{ content.amount }}
-                            {% elseif content.type == 'Défensif' %}
-                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-                                {{ content.amount }}
+                    {% if content.item.target is defined and content.item.target is not null %}
+                        {% if content.item.target == 'health' %}
+                            {% if content.item.type == 'Offensif' %}
+                                <span>
+                                    {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
+                                    {{ content.item.amount }}
+                                </span>
+                            {% elseif content.item.type == 'Défensif' %}
+                                <span>
+                                    {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                                    {{ content.item.amount }}
+                                </span>
                             {% endif %}
                         {% endif %}
-                        {% if content.target == 'mana' %}
-                            {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                            {{ content.amount }}
+                        {% if content.item.target == 'mana' %}
+                            <span>
+                                {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                                {{ content.item.amount }}
+                            </span>
                         {% endif %}
                     {% endif %}
-                    {% if content.type == 'Utile' %}
-                        {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                    {% if content.item.type == 'Utile' %}
+                        <span>
+                            {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                        </span>
                     {% endif %}
-                    {% if content.type == 'map' %}
-                        {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
+                    {% if content.item.type == 'map' %}
+                        <span>
+                            {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
+                        </span>
                     {% endif %}
-                    {% if content.type == 'food' %}
-                        {{ ux_icon('mdi:cutlery-variant', {'class': 'app-icon text-primary'}) }}
+                    {% if content.item.type == 'food' %}
+                        <span>
+                            {{ ux_icon('mdi:cutlery-variant', {'class': 'app-icon text-primary'}) }}
+                        </span>
                     {% endif %}
-                    {% if content.type == 'gift' %}
-                        {{ ux_icon('el:gift', {'class': 'app-icon text-primary'}) }}
+                    {% if content.item.type == 'gift' %}
+                        <span>
+                            {{ ux_icon('el:gift', {'class': 'app-icon text-primary'}) }}
+                        </span>
                     {% endif %}
-                    {% if content.damage is defined %}
-                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                        {{ content.damage }}
+                    {% if content.item.damage is defined %}
+                        <span>
+                            {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                            {{ content.item.damage }}
+                        </span>
                     {% endif %}
                 </h4>
 
                 <figure class="item-picture">
-                    {% if content.type == 'map' %}
+                    {% if content.item.type == 'map' %}
                         <img src="{{ asset('img/core/item/misc/map.png') }}"
-                             alt="{{ content.name }}"/>
-                    {% elseif content.type == 'gift' %}
-                        <img src="{{ asset('img/core/item/misc/' ~ content.picture) }}"
-                             alt="{{ content.name }}"/>
+                             alt="{{ content.item.name }}"/>
+                    {% elseif content.item.type == 'gift' %}
+                        <img src="{{ asset('img/core/item/misc/' ~ content.item.picture) }}"
+                             alt="{{ content.item.name }}"/>
                     {% else %}
-                        <img src="{{ asset('img/core/item/' ~ content.category.name ~ '/' ~ content.picture) }}"
-                             alt="{{ content.name }}"/>
+                        <img src="{{ asset('img/core/item/' ~ content.item.category.name ~ '/' ~ content.item.picture) }}"
+                             alt="{{ content.item.name }}"/>
                     {% endif %}
                 </figure>
 
-                {{ content.description | raw }}
+                {{ content.item.description | raw }}
             {% elseif type == 'spell' %}
-                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
-                ???
+                <h3 class="tooltip-title">{{ content.spell.name }}</h3>
+
+                <h4 class="tooltip-subtitle left">
+                    <span>
+                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                        {{ content.spell.manaCost }}
+                    </span>
+                    <span>
+                        {{ ux_icon('icon-park-outline:level', {'class': 'app-icon text-primary'}) }}
+                        {{ content.level }}
+                    </span>
+                </h4>
+
+                <h4 class="tooltip-subtitle right">
+                    {% if content.spell.target %}
+                        {% if content.spell.target == 'health' %}
+                            <span>
+                                {% if content.spell.category.name == 'Offensif' or content.spell.category.name == 'Invocation' %}
+                                    {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
+                                {% else %}
+                                    {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                                {% endif %}
+                                {{ content.spell.amount + content.amountBonus }}
+                            </span>
+                        {% elseif characterSpell.spell.target == 'defense' %}
+                            <span>
+                                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                                {{ content.spell.amount + content.amountBonus }}
+                            </span>
+                        {% elseif characterSpell.spell.target == 'visibility' %}
+                            <span>
+                                {{ ux_icon('ic:sharp-visibility-off', {'class': 'app-icon text-primary'}) }}
+                            </span>
+                        {% elseif characterSpell.spell.target == 'movement' %}
+                            <span>
+                                {{ ux_icon('simple-icons:adblock', {'class': 'app-icon text-primary'}) }}
+                            </span>
+                        {% else %}
+                            <span>
+                                {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                            </span>
+                        {% endif %}
+                    {% endif %}
+                    {% if content.spell.duration %}
+                        <span>
+                            {{ ux_icon('lsicon:time-two-filled', {'class': 'app-icon'}) }}
+                            {{ content.spell.duration + content.durationBonus }}
+                        </span>
+                    {% endif %}
+                    {% if content.spell.area %}
+                        <span>
+                            {{ ux_icon('ph:map-pin-area-fill', {'class': 'app-icon'}) }}
+                            {{ content.spell.area + content.areaBonus }}
+                        </span>
+                    {% endif %}
+                </h4>
+
+                <figure class="item-picture">
+                    <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.picture) }}"
+                         alt="{{ characterSpell.spell.name }}"/>
+                </figure>
+
+                {{ content.spell.description | raw }}
             {% endif %}
         </div>
     </div>

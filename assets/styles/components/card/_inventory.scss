@@ -44,6 +44,14 @@
         border-top-left-radius: 0.5rem;
         border-top-right-radius: 0.5rem;
 
+        &:has(span) {
+          gap: 1rem;
+
+          span {
+            @include displayFlex(center, center, 0.25rem);
+          }
+        }
+
         .app-icon {
           width: 1rem;
           height: 1rem;

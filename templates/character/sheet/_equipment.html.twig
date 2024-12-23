@@ -16,7 +16,7 @@
                              style="--value:{{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).armor) }}"></div>
                     </div>
                 </a>
-                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).armor.item} %}
+                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).armor} %}
             {% endif %}
         </div>
 
@@ -32,7 +32,7 @@
                              style="--value: {{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).righthand) }}"></div>
                     </div>
                 </a>
-                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).righthand.item} %}
+                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).righthand} %}
             {% endif %}
         </div>
 
@@ -48,7 +48,7 @@
                              style="--value: {{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).bow) }}"></div>
                     </div>
                 </a>
-                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).bow.item} %}
+                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).bow} %}
             {% endif %}
         </div>
 
@@ -61,7 +61,7 @@
                              class="equip"
                              alt="{{ app_characterItemService.equippedItems(character).ring.item.name }}"/>
                     </a>
-                    {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).ring.item} %}
+                    {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).ring} %}
                 {% endif %}
             </div>
             <div class="equipped-asset scroll" data-controller="tooltip">
@@ -72,7 +72,7 @@
                              class="equip"
                              alt="{{ app_characterItemService.equippedItems(character).scroll.item.name }}"/>
                     </a>
-                    {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).scroll.item} %}
+                    {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).scroll} %}
                 {% endif %}
             </div>
             <div class="equipped-asset potion" data-controller="tooltip">
@@ -83,7 +83,7 @@
                              class="equip"
                              alt="{{ app_characterItemService.equippedItems(character).potion.item.name }}"/>
                     </a>
-                    {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).potion.item} %}
+                    {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).potion} %}
                 {% endif %}
             </div>
         </div>
@@ -96,7 +96,7 @@
                          class="equip"
                          alt="{{ app_characterItemService.equippedItems(character).amulet.item.name }}"/>
                 </a>
-                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).amulet.item} %}
+                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).amulet} %}
             {% endif %}
         </div>
 
@@ -112,7 +112,7 @@
                              style="--value: {{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).lefthand) }}"></div>
                     </div>
                 </a>
-                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).lefthand.item} %}
+                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).lefthand} %}
             {% endif %}
         </div>
 
@@ -128,7 +128,7 @@
                              style="--value: {{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).shield) }}"></div>
                     </div>
                 </a>
-                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).shield.item} %}
+                {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).shield} %}
             {% endif %}
         </div>
     </div>

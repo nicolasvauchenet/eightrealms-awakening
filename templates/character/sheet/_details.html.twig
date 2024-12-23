@@ -1,7 +1,16 @@
 <div class="content details" data-content-switcher-target="content">
     <h2>{{ this.character.profession.name }} {{ this.character.race.name }}</h2>
     {% if this.type == 'player' %}
-        <h3>Niveau {{ character.level }} • {{ character.experience }} XP</h3>
+        <h3>
+            <span>
+                {{ ux_icon('icon-park-outline:level', {'class': 'app-icon text-primary'}) }}
+                {{ character.level }}
+            </span>
+            <span>
+                {{ ux_icon('healthicons:medium-level-outline', {'class': 'app-icon text-primary'}) }}
+                {{ character.experience }}
+            </span>
+        </h3>
     {% endif %}
 
     <div class="infos">

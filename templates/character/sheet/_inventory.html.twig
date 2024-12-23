@@ -18,7 +18,7 @@
                                      alt="{{ characterItem.item.name }}"/>
                             {% endif %}
                         </a>
-                        {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item} %}
+                        {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': characterItem} %}
                         {% if characterItem.health or characterItem.charge %}
                             <div class="gauge">
                                 <div class="gauge-fill"
@@ -28,39 +28,57 @@
                         <div class="infos">
                             <div class="bonus">
                                 {% if characterItem.item.defense is defined %}
-                                    {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
-                                    {{ characterItem.item.defense }}
+                                    <span>
+                                        {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                                        {{ characterItem.item.defense }}
+                                    </span>
                                 {% endif %}
                                 {% if characterItem.item.target is defined and characterItem.item.target is not null %}
                                     {% if characterItem.item.target == 'health' %}
                                         {% if characterItem.item.type == 'Offensif' %}
-                                            {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-primary'}) }}
-                                            {{ characterItem.item.amount }}
+                                            <span>
+                                                {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
+                                                {{ characterItem.item.amount }}
+                                            </span>
                                         {% else %}
-                                            {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-                                            {{ characterItem.item.amount }}
+                                            <span>
+                                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                                                {{ characterItem.item.amount }}
+                                            </span>
                                         {% endif %}
                                     {% endif %}
                                     {% if characterItem.item.target == 'mana' %}
-                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                                        {{ characterItem.item.amount }}
+                                        <span>
+                                            {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                                            {{ characterItem.item.amount }}
+                                        </span>
                                     {% endif %}
                                     {% if characterItem.item.target == 'location' %}
-                                        {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
+                                        <span>
+                                            {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
+                                        </span>
                                     {% endif %}
                                 {% endif %}
                                 {% if characterItem.item.type == 'Utile' %}
-                                    {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                                    <span>
+                                        {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                                    </span>
                                 {% endif %}
                                 {% if characterItem.item.type == 'map' %}
-                                    {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
+                                    <span>
+                                        {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
+                                    </span>
                                 {% endif %}
                                 {% if characterItem.item.type == 'gift' %}
-                                    {{ ux_icon('el:gift', {'class': 'app-icon text-primary'}) }}
+                                    <span>
+                                        {{ ux_icon('el:gift', {'class': 'app-icon text-primary'}) }}
+                                    </span>
                                 {% endif %}
                                 {% if characterItem.item.damage is defined %}
-                                    {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                                    {{ characterItem.item.damage }}
+                                    <span>
+                                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                                        {{ characterItem.item.damage }}
+                                    </span>
                                 {% endif %}
                             </div>
                         </div>

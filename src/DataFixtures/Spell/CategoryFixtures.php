@@ -27,6 +27,11 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
                 'position' => 3,
                 'reference' => 'category_utility',
             ],
+            [
+                'name' => 'Invocation',
+                'position' => 4,
+                'reference' => 'category_summoning',
+            ],
         ];
 
         foreach($categories as $data) {

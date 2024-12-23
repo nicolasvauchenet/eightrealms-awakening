@@ -1,7 +1,12 @@
 &.details {
   h3 {
+    @include displayFlex(space-evenly, center);
     margin-top: 0.5rem;
     color: $primary;
+
+    span {
+      @include displayFlex(center, center, 0.25rem);
+    }
   }
 
   .infos {

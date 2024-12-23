@@ -49,7 +49,7 @@
 
     .tooltip-content {
       z-index: 9996;
-      padding: 2.5rem 1.5rem 1.5rem;
+      padding: 3rem 1.5rem 1.5rem;
       margin: 0 1rem;
       max-width: calc(600px - 6rem);
       text-align: justify;
@@ -59,12 +59,12 @@
       box-shadow: 0.25rem 0.25rem 0.5rem rgba($black, 0.85);
 
       &.scrollable {
-        max-height: 40dvh;
+        max-height: 52dvh;
       }
 
       .tooltip-title {
+        margin-bottom: 0 !important;
         font-size: 1.25rem;
-        margin-bottom: 1rem;
         text-align: center;
         color: $primary;
         text-shadow: none !important;
@@ -74,7 +74,7 @@
         position: absolute;
         top: 0.5rem;
         right: 1.5rem;
-        @include displayFlex(center, center);
+        @include displayFlex(center, center, 0.25rem);
         margin: 0 !important;
         padding: 0.25rem 0.5rem;
         font-family: "Uncial Antiqua", system-ui;
@@ -85,12 +85,28 @@
         background-color: $secondary;
         border-bottom-left-radius: 0.5rem;
         box-shadow: -1px 1px 2px rgba($black, 0.5);
+
+        &:has(span) {
+          gap: 1rem;
+
+          span {
+            @include displayFlex(center, center, 0.25rem);
+          }
+        }
+
+        &.left {
+          left: 1.5rem;
+          right: initial;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0.5rem;
+        }
       }
 
       .item-picture {
         text-align: center;
 
-        img {
+        & > img {
+          margin-top: 0 !important;
           height: 23dvh !important;
         }
       }

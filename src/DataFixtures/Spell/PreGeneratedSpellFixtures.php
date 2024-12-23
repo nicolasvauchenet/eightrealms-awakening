@@ -18,57 +18,44 @@ class PreGeneratedSpellFixtures extends Fixture implements OrderedFixtureInterfa
             [
                 'character' => 'character_elandra',
                 'spell' => 'spell_fireball',
-                'level' => 3,
-                'amountBonus' => 10,
-                'areaBonus' => 3,
+                'level' => 1,
             ],
             [
                 'character' => 'character_elandra',
                 'spell' => 'spell_lightning',
-                'level' => 2,
-                'amountBonus' => 6,
-                'areaBonus' => 2,
+                'level' => 1,
             ],
             [
                 'character' => 'character_elandra',
                 'spell' => 'spell_invisibility',
-                'level' => 3,
-                'durationBonus' => 3,
+                'level' => 1,
             ],
             [
                 'character' => 'character_elandra',
                 'spell' => 'spell_shield',
-                'level' => 3,
-                'amountBonus' => 18,
-                'durationBonus' => 3,
+                'level' => 1,
             ],
 
             // Isilëa la Gardienne
             [
                 'character' => 'character_isilea',
                 'spell' => 'spell_heal',
-                'level' => 4,
-                'amountBonus' => 5,
+                'level' => 1,
             ],
             [
                 'character' => 'character_isilea',
                 'spell' => 'spell_ice_wall',
-                'level' => 3,
-                'durationBonus' => 3,
+                'level' => 1,
             ],
             [
                 'character' => 'character_isilea',
                 'spell' => 'spell_entangling_roots',
-                'level' => 2,
-                'durationBonus' => 2,
-                'areaBonus' => 2,
+                'level' => 1,
             ],
             [
                 'character' => 'character_isilea',
                 'spell' => 'spell_summon_wolf',
-                'level' => 3,
-                'amountBonus' => 5,
-                'durationBonus' => 3,
+                'level' => 1,
             ],
         ];
 

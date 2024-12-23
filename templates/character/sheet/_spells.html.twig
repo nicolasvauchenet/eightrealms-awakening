@@ -10,14 +10,15 @@
                             <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.picture) }}"
                                  alt="{{ characterSpell.spell.name }}"/>
                         </a>
-                        {% include 'character/sheet/_tooltip.html.twig' with {'type': 'spell', 'content': characterSpell.spell} %}
+                        {% include 'character/sheet/_tooltip.html.twig' with {'type': 'spell', 'content': characterSpell} %}
                         <div class="infos">
                             <div class="bonus">
                                 <div class="attribute">
                                     {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
                                     {{ characterSpell.spell.manaCost }}
                                 </div>
-                                <div class="attribute text-success">
+                                <div class="attribute">
+                                    {{ ux_icon('icon-park-outline:level', {'class': 'app-icon text-primary'}) }}
                                     {{ characterSpell.level }}
                                 </div>
                             </div>
@@ -30,8 +31,29 @@
                         {% if characterSpell.spell.target %}
                             {% if characterSpell.spell.target == 'health' %}
                                 <div class="attribute">
-                                    {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                                    {% if characterSpell.spell.category.name == 'Offensif' or characterSpell.spell.category.name == 'Invocation' %}
+                                        {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
+                                    {% else %}
+                                        {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                                    {% endif %}
                                     {{ characterSpell.spell.amount + characterSpell.amountBonus }}
+                                </div>
+                            {% elseif characterSpell.spell.target == 'defense' %}
+                                <div class="attribute">
+                                    {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                                    {{ characterSpell.spell.amount + characterSpell.amountBonus }}
+                                </div>
+                            {% elseif characterSpell.spell.target == 'visibility' %}
+                                <div class="attribute">
+                                    {{ ux_icon('ic:sharp-visibility-off', {'class': 'app-icon text-primary'}) }}
+                                </div>
+                            {% elseif characterSpell.spell.target == 'movement' %}
+                                <div class="attribute">
+                                    {{ ux_icon('simple-icons:adblock', {'class': 'app-icon text-primary'}) }}
+                                </div>
+                            {% else %}
+                                <div class="attribute">
+                                    {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
                                 </div>
                             {% endif %}
                         {% endif %}

@@ -77,7 +77,8 @@
           }
 
           .card-footer {
-            a {
+            a,
+            button {
               @include displayFlex(center, flex-start, 0.25rem);
               font-family: $font-primary;
               font-size: 1rem;

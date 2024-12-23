@@ -29,10 +29,12 @@
                                 {% endif %}
                             </div>
                             <div class="card-footer">
-                                <a href="#" class="bg-primary">
+                                <button
+                                        class="bg-primary"
+                                        {{ live_action('buyItem', {itemId: characterItem.item.id, price: app_itemService.itemBuyPrice(characterItem.item, this.character), npcId: this.currentScene.npc.id}) }}>
                                     {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
                                     {{ app_itemService.itemBuyPrice(characterItem.item, this.character) }}
-                                </a>
+                                </button>
                             </div>
                         </div>
                     {% endfor %}
@@ -77,10 +79,12 @@
                                     {% endif %}
                                 </div>
                                 <div class="card-footer">
-                                    <a href="#" class="bg-primary">
+                                    <button
+                                            class="bg-primary"
+                                            {{ live_action('sellItem', {characterItemId: characterItem.id, price: app_itemService.itemSellPrice(characterItem, this.character), npcId: this.currentScene.npc.id}) }}>
                                         {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
                                         {{ app_itemService.itemSellPrice(characterItem, this.character) }}
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         {% endif %}

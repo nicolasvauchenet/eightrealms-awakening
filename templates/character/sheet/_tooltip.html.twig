@@ -47,6 +47,9 @@
                     {% if content.type == 'map' %}
                         <img src="{{ asset('img/core/item/misc/map.png') }}"
                              alt="{{ content.name }}"/>
+                    {% elseif characterItem.item.type == 'gift' %}
+                        <img src="{{ asset('img/core/item/misc/' ~ characterItem.item.picture) }}"
+                             alt="{{ characterItem.item.name }}"/>
                     {% else %}
                         <img src="{{ asset('img/core/item/' ~ content.category.name ~ '/' ~ content.picture) }}"
                              alt="{{ content.name }}"/>

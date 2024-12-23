@@ -31,8 +31,6 @@ class ProfileController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', "Votre profil a été modifié !");
-
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 

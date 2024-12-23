@@ -26,6 +26,7 @@ class TradeSceneFixtures extends Fixture implements OrderedFixtureInterface
                 ->setDescription($data['description'] ?? null)
                 ->setPosition($data['position'] ?? null)
                 ->setScreen($this->getReference($data['screen'], TradeScreen::class))
+                ->setSellableItems($data['sellableItems'])
                 ->setNpc($this->getReference($data['npc'], Npc::class));
             $manager->persist($scene);
             $this->addReference($data['reference'], $scene);

@@ -56,8 +56,6 @@ class CreateController extends AbstractController
             $entityManager->persist($character);
             $entityManager->flush();
 
-            $this->addFlash('success', "Bienvenue dans les Huit Royaumes<br/>{$character->getName()} !");
-
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 

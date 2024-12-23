@@ -62,6 +62,11 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
                 'position' => 10,
                 'reference' => 'category_food',
             ],
+            [
+                'name' => 'gift',
+                'position' => 11,
+                'reference' => 'category_gift',
+            ],
         ];
 
         foreach($categories as $data) {

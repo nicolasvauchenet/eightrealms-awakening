@@ -37,12 +37,12 @@
       }
 
       & > .scrollable {
-        min-height: 51dvh;
-        max-height: 51dvh;
+        min-height: 49dvh;
+        max-height: 49dvh;
 
         @include respondTo(md) {
-          min-height: 55dvh;
-          max-height: 55dvh;
+          min-height: 53dvh;
+          max-height: 53dvh;
         }
 
         .app-grid {
@@ -97,6 +97,7 @@
 
       .fortune {
         @include displayFlex(center, center, 0.25rem);
+        margin-top: 1rem;
         text-shadow: 2px 2px 2px rgba($black, 0.85);
 
         .app-icon {

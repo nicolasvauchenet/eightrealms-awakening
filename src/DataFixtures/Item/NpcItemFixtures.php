@@ -17,6 +17,61 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
             // Sophie La Marchande
             [
                 'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_food_beer',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_food_wine',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_food_bread',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_food_cheese',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_food_chicken',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_food_fish',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_food_meat',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_gift_flowers',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_ring_copper',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_ring_silver',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
+                'item' => 'misc_ring_gold',
+                'class' => Misc::class,
+            ],
+            [
+                'character' => 'npc_sophie_la_marchande',
                 'item' => 'misc_map_port_saint_doux',
                 'class' => Misc::class,
             ],

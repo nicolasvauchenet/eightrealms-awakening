@@ -65,7 +65,7 @@
       .tooltip-title {
         font-size: 1.25rem;
         margin-bottom: 1rem;
-        text-align: left;
+        text-align: center;
         color: $primary;
         text-shadow: none !important;
       }
@@ -82,13 +82,22 @@
         font-weight: bold;
         font-style: italic;
         color: $primary !important;
-        background-color: rgba($secondary, 0.75);
+        background-color: $secondary;
         border-bottom-left-radius: 0.5rem;
         box-shadow: -1px 1px 2px rgba($black, 0.5);
       }
 
+      .item-picture {
+        text-align: center;
+
+        img {
+          height: 23dvh !important;
+        }
+      }
+
       p {
         font-family: $font-primary;
+        font-size: 1rem;
         font-weight: normal;
         word-break: break-word;
         overflow-wrap: break-word;

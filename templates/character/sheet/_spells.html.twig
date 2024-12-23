@@ -10,7 +10,7 @@
                             <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.picture) }}"
                                  alt="{{ characterSpell.spell.name }}"/>
                         </a>
-                        {% include '_layout/_tooltip.html.twig' with {'type': 'spell', 'content': characterSpell.spell} %}
+                        {% include 'character/sheet/_tooltip.html.twig' with {'type': 'spell', 'content': characterSpell.spell} %}
                         <div class="infos">
                             <div class="bonus">
                                 <div class="attribute">

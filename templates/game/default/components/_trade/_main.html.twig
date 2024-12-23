@@ -17,7 +17,7 @@
                                              alt="{{ characterItem.item.name }}"/>
                                     {% endif %}
                                 </a>
-                                {% include 'game/default/components/_trade/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item, 'action': 'Acheter', 'amount': app_itemService.itemBuyPrice(characterItem.item, this.character)} %}
+                                {% include 'game/default/components/_trade/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item} %}
                                 {% if characterItem.health or characterItem.charge %}
                                     <div class="gauge">
                                         <div class="gauge-fill"
@@ -62,7 +62,7 @@
                                              alt="{{ characterItem.item.name }}"/>
                                     {% endif %}
                                 </a>
-                                {% include 'game/default/components/_trade/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item, 'action': 'Vendre', 'amount': app_itemService.itemSellPrice(characterItem, this.character)} %}
+                                {% include 'game/default/components/_trade/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item} %}
                                 {% if characterItem.health or characterItem.charge %}
                                     <div class="gauge">
                                         <div class="gauge-fill"

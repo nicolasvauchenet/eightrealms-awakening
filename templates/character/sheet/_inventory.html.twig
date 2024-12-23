@@ -15,7 +15,7 @@
                                      alt="{{ characterItem.item.name }}"/>
                             {% endif %}
                         </a>
-                        {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item} %}
+                        {% include 'character/sheet/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item} %}
                         {% if characterItem.health or characterItem.charge %}
                             <div class="gauge">
                                 <div class="gauge-fill"

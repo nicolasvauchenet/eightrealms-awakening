@@ -5,7 +5,12 @@
     <div class="tooltip-body">
         <div class="tooltip-content scrollable">
             {% if type == 'item' %}
-                <h3 class="tooltip-title">{{ content.name }}</h3>
+                <h3 class="tooltip-title">
+                    {% if content.type == 'map' %}
+                        Carte de
+                    {% endif %}
+                    {{ content.name }}
+                </h3>
                 <h4 class="tooltip-subtitle">
                     {% if content.defense is defined %}
                         {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
@@ -38,19 +43,21 @@
                     {% endif %}
                 </h4>
 
+                <figure class="item-picture">
+                    {% if content.type == 'map' %}
+                        <img src="{{ asset('img/core/item/misc/map.png') }}"
+                             alt="{{ content.name }}"/>
+                    {% else %}
+                        <img src="{{ asset('img/core/item/' ~ content.category.name ~ '/' ~ content.picture) }}"
+                             alt="{{ content.name }}"/>
+                    {% endif %}
+                </figure>
+
                 {{ content.description | raw }}
             {% elseif type == 'spell' %}
                 {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
                 ???
             {% endif %}
-
-            <a href="#" class="app-button cta">
-                {{ action }}
-                <small>
-                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
-                    {{ amount }}
-                </small>
-            </a>
         </div>
     </div>
 </div>

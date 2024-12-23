@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: SceneRepository::class)]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
-#[ORM\DiscriminatorMap(['cinematic' => CinematicScene::class, 'place' => PlaceScene::class, 'dialogue' => DialogueScene::class, 'combat' => CombatScene::class])]
+#[ORM\DiscriminatorMap(['cinematic' => CinematicScene::class, 'place' => PlaceScene::class, 'dialogue' => DialogueScene::class, 'combat' => CombatScene::class, 'trade' => TradeScene::class])]
 abstract class Scene
 {
     #[ORM\Id]
@@ -140,7 +140,7 @@ abstract class Scene
 
     public function addAction(Action $action): static
     {
-        if (!$this->actions->contains($action)) {
+        if(!$this->actions->contains($action)) {
             $this->actions->add($action);
             $action->setScene($this);
         }
@@ -150,9 +150,9 @@ abstract class Scene
 
     public function removeAction(Action $action): static
     {
-        if ($this->actions->removeElement($action)) {
+        if($this->actions->removeElement($action)) {
             // set the owning side to null (unless already changed)
-            if ($action->getScene() === $this) {
+            if($action->getScene() === $this) {
                 $action->setScene(null);
             }
         }

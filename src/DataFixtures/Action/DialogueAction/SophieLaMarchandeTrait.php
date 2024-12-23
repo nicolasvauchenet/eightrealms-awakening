@@ -5,9 +5,11 @@ namespace App\DataFixtures\Action\DialogueAction;
 use App\Entity\Scene\CinematicScene;
 use App\Entity\Scene\DialogueScene;
 use App\Entity\Scene\PlaceScene;
+use App\Entity\Scene\TradeScene;
 use App\Entity\Screen\CinematicScreen;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\PlaceScreen;
+use App\Entity\Screen\TradeScreen;
 
 trait SophieLaMarchandeTrait
 {
@@ -16,10 +18,10 @@ trait SophieLaMarchandeTrait
         'picture' => 'core/action/trade.png',
         'scene' => 'scene_dialogue_sophie_la_marchande',
         'sceneClass' => DialogueScene::class,
-        'targetScene' => 'scene_dialogue_sophie_la_marchande',
-        'targetSceneClass' => DialogueScene::class,
-        'targetScreen' => 'screen_dialogue_sophie_la_marchande',
-        'targetScreenClass' => DialogueScreen::class,
+        'targetScene' => 'scene_trade_sophie_la_marchande',
+        'targetSceneClass' => TradeScene::class,
+        'targetScreen' => 'screen_trade_sophie_la_marchande',
+        'targetScreenClass' => TradeScreen::class,
         'reference' => 'action_dialogue_sophie_la_marchande_trade',
     ];
 

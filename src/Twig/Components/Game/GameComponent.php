@@ -94,6 +94,8 @@ class GameComponent extends AbstractController
             $this->updateCharacterPlace();
         } else if($this->currentScreenType === 'dialoguescreen') {
             $this->currentScreenDescription = $this->currentScene->getDescription() . $this->currentScene->getNpc()->getDescription();
+        } else if($this->currentScreenType === 'tradescreen') {
+            $this->currentScreenDescription = $this->currentScene->getDescription();
         }
     }
 

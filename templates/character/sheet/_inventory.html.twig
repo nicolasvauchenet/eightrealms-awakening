@@ -16,14 +16,10 @@
                             {% endif %}
                         </a>
                         {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item} %}
-                        {% if characterItem.health %}
+                        {% if characterItem.health or characterItem.charge %}
                             <div class="gauge">
-                                <div class="gauge-fill" style="--value: {{ characterItem.health }}"></div>
-                            </div>
-                        {% endif %}
-                        {% if characterItem.charge %}
-                            <div class="gauge">
-                                <div class="gauge-fill bg-info" style="--value: {{ characterItem.charge }}"></div>
+                                <div class="gauge-fill"
+                                     style="--value: {{ app_itemService.itemDurabilityFactor(characterItem) }}"></div>
                             </div>
                         {% endif %}
                         {% if characterItem.item.type != 'map' %}

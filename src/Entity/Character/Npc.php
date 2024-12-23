@@ -4,8 +4,10 @@ namespace App\Entity\Character;
 
 use App\Entity\Location\Place;
 use App\Entity\Scene\DialogueScene;
+use App\Entity\Scene\TradeScene;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\PlaceScreen;
+use App\Entity\Screen\TradeScreen;
 use App\Repository\Character\NpcRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -38,12 +40,26 @@ class Npc extends Character
     #[ORM\OneToMany(targetEntity: DialogueScene::class, mappedBy: 'npc')]
     private Collection $dialogueScenes;
 
+    /**
+     * @var Collection<int, TradeScreen>
+     */
+    #[ORM\OneToMany(targetEntity: TradeScreen::class, mappedBy: 'npc')]
+    private Collection $tradeScreens;
+
+    /**
+     * @var Collection<int, TradeScene>
+     */
+    #[ORM\OneToMany(targetEntity: TradeScene::class, mappedBy: 'npc')]
+    private Collection $tradeScenes;
+
     public function __construct()
     {
         parent::__construct();
         $this->placeScreens = new ArrayCollection();
         $this->dialogueScreens = new ArrayCollection();
         $this->dialogueScenes = new ArrayCollection();
+        $this->tradeScreens = new ArrayCollection();
+        $this->tradeScenes = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -151,6 +167,66 @@ class Npc extends Character
             // set the owning side to null (unless already changed)
             if ($dialogueScene->getNpc() === $this) {
                 $dialogueScene->setNpc(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TradeScreen>
+     */
+    public function getTradeScreens(): Collection
+    {
+        return $this->tradeScreens;
+    }
+
+    public function addTradeScreen(TradeScreen $tradeScreen): static
+    {
+        if (!$this->tradeScreens->contains($tradeScreen)) {
+            $this->tradeScreens->add($tradeScreen);
+            $tradeScreen->setNpc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTradeScreen(TradeScreen $tradeScreen): static
+    {
+        if ($this->tradeScreens->removeElement($tradeScreen)) {
+            // set the owning side to null (unless already changed)
+            if ($tradeScreen->getNpc() === $this) {
+                $tradeScreen->setNpc(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TradeScene>
+     */
+    public function getTradeScenes(): Collection
+    {
+        return $this->tradeScenes;
+    }
+
+    public function addTradeScene(TradeScene $tradeScene): static
+    {
+        if (!$this->tradeScenes->contains($tradeScene)) {
+            $this->tradeScenes->add($tradeScene);
+            $tradeScene->setNpc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTradeScene(TradeScene $tradeScene): static
+    {
+        if ($this->tradeScenes->removeElement($tradeScene)) {
+            // set the owning side to null (unless already changed)
+            if ($tradeScene->getNpc() === $this) {
+                $tradeScene->setNpc(null);
             }
         }
 

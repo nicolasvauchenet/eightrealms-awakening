@@ -13,7 +13,7 @@
                          alt="{{ app_characterItemService.equippedItems(character).armor.item.name }}"/>
                     <div class="gauge">
                         <div class="gauge-fill"
-                             style="--value: {{ app_characterItemService.equippedItems(character).armor.health }}"></div>
+                             style="--value:{{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).armor) }}"></div>
                     </div>
                 </a>
                 {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).armor.item} %}
@@ -29,7 +29,7 @@
                          alt="{{ app_characterItemService.equippedItems(character).righthand.item.name }}"/>
                     <div class="gauge">
                         <div class="gauge-fill"
-                             style="--value: {{ app_characterItemService.equippedItems(character).righthand.health }}"></div>
+                             style="--value: {{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).righthand) }}"></div>
                     </div>
                 </a>
                 {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).righthand.item} %}
@@ -45,7 +45,7 @@
                          alt="{{ app_characterItemService.equippedItems(character).bow.item.name }}"/>
                     <div class="gauge">
                         <div class="gauge-fill"
-                             style="--value: {{ app_characterItemService.equippedItems(character).bow.health }}"></div>
+                             style="--value: {{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).bow) }}"></div>
                     </div>
                 </a>
                 {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).bow.item} %}
@@ -109,7 +109,7 @@
                          alt="{{ app_characterItemService.equippedItems(character).lefthand.item.name }}"/>
                     <div class="gauge">
                         <div class="gauge-fill"
-                             style="--value: {{ app_characterItemService.equippedItems(character).lefthand.health }}"></div>
+                             style="--value: {{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).lefthand) }}"></div>
                     </div>
                 </a>
                 {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).lefthand.item} %}
@@ -125,7 +125,7 @@
                          alt="{{ app_characterItemService.equippedItems(character).shield.item.name }}"/>
                     <div class="gauge">
                         <div class="gauge-fill"
-                             style="--value: {{ app_characterItemService.equippedItems(character).shield.health }}"></div>
+                             style="--value: {{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).shield) }}"></div>
                     </div>
                 </a>
                 {% include '_layout/_tooltip.html.twig' with {'type': 'item', 'content': app_characterItemService.equippedItems(character).shield.item} %}

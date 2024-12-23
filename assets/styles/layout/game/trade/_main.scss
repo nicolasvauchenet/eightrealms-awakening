@@ -1,0 +1,108 @@
+.screen-main {
+  .infos {
+    position: absolute;
+    top: 5.5rem;
+
+    &.left {
+      left: 1rem;
+    }
+
+    &.right {
+      right: 1rem;
+    }
+
+    .info {
+      @include displayFlex(space-between, center, null, column);
+      padding: 0.25rem;
+      width: 38dvw;
+      font-family: $font-primary;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: $white;
+      background-color: rgba($secondary, 0.95);
+      border: 0.25rem groove $secondary;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0.25rem 0.25rem 0.5rem rgba($black, 0.85);
+
+      @include respondTo(md) {
+        width: 19.5dvh;
+      }
+
+      h3 {
+        margin-bottom: 1rem;
+        min-height: 2rem;
+        font-size: 1rem;
+        text-shadow: 2px 2px 2px rgba($black, 0.85);
+      }
+
+      & > .scrollable {
+        min-height: 51dvh;
+        max-height: 51dvh;
+
+        @include respondTo(md) {
+          min-height: 55dvh;
+          max-height: 55dvh;
+        }
+
+        .app-grid {
+          flex: 1;
+          align-items: flex-start;
+        }
+
+        .app-card {
+          .card-header {
+            position: relative;
+
+            .app-tooltip {
+              .tooltip-body {
+                .tooltip-content {
+                  .app-button {
+                    small {
+                      @include displayFlex(center, flex-start, 0.25rem);
+                      margin: 0.5rem 0 0;
+                      font-family: $font-primary;
+                    }
+                  }
+                }
+              }
+            }
+
+            .gauge {
+              position: absolute;
+              bottom: 0.25rem;
+              left: 0;
+              right: 0;
+            }
+          }
+
+          .card-footer {
+            a {
+              @include displayFlex(center, flex-start, 0.25rem);
+              font-family: $font-primary;
+              font-size: 1rem;
+
+              .app-icon {
+                width: 1rem;
+                height: 1rem;
+
+                &.text-warning {
+                  filter: drop-shadow(1px 1px 2px rgba($black, 0.85));
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .fortune {
+        @include displayFlex(center, center, 0.25rem);
+        text-shadow: 2px 2px 2px rgba($black, 0.85);
+
+        .app-icon {
+          filter: drop-shadow(1px 1px 2px rgba($black, 0.85));
+        }
+      }
+    }
+  }
+}

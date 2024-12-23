@@ -7,7 +7,7 @@ trait QuartierDuMarcheTrait
     const SOPHIE_LA_MARCHANDE_START = [
         'name' => 'Sophie La Marchande',
         'position' => 1,
-        'description' => "<p>Vous êtes face à une marchande. Elle vous regarde avec un sourire bienveillant. Elle semble prête à vous aider si vous avez besoin de quelque chose.</p><p><em>Bonjour&nbsp;! Quelle belle journée aujourd'hui&nbsp;! Que puis-je faire pour vous&nbsp;?</em></p>",
+        'description' => "<p>Vous êtes face à une marchande. Elle vous regarde avec un sourire bienveillant. Elle semble prête à vous aider si vous avez besoin de quelque chose.</p>",
         'screen' => 'screen_dialogue_sophie_la_marchande',
         'npc' => 'npc_sophie_la_marchande',
         'reference' => 'scene_dialogue_sophie_la_marchande',

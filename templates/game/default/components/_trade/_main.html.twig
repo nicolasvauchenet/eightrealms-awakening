@@ -1,0 +1,91 @@
+<main class="screen-main">
+    <div class="infos left">
+        <div class="info">
+            <h3>{{ this.currentScene.npc.name }}</h3>
+
+            <div class="scrollable">
+                <div class="app-grid two">
+                    {% for characterItem in this.currentScene.npc.characterItems %}
+                        <div class="app-card inventory">
+                            <div class="card-header" data-controller="tooltip">
+                                <a href="#" data-action="click->tooltip#open">
+                                    {% if characterItem.item.type == 'map' %}
+                                        <img src="{{ asset('img/core/item/misc/map.png') }}"
+                                             alt="{{ characterItem.item.name }}"/>
+                                    {% else %}
+                                        <img src="{{ asset('img/core/item/' ~ characterItem.item.category.name ~ '/' ~ characterItem.item.picture) }}"
+                                             alt="{{ characterItem.item.name }}"/>
+                                    {% endif %}
+                                </a>
+                                {% include 'game/default/components/_trade/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item, 'action': 'Acheter', 'amount': app_itemService.itemBuyPrice(characterItem.item, this.character)} %}
+                                {% if characterItem.health or characterItem.charge %}
+                                    <div class="gauge">
+                                        <div class="gauge-fill"
+                                             style="--value: {{ app_itemService.itemDurabilityFactor(characterItem) }}"></div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="bg-primary">
+                                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                                    {{ app_itemService.itemBuyPrice(characterItem.item, this.character) }}
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="fortune">
+                {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                {{ this.currentScene.npc.fortune }}
+            </div>
+        </div>
+    </div>
+
+    <div class="infos right">
+        <div class="info">
+            <h3>{{ app.user.player.name }}</h3>
+
+            <div class="scrollable">
+                <div class="app-grid two">
+                    {% for characterItem in app.user.player.characterItems %}
+                        {# {% if characterItem.item.type == 'misc' or characterItem.item.type == 'map' %} #}
+                        <div class="app-card inventory">
+                            <div class="card-header" data-controller="tooltip">
+                                <a href="#" data-action="click->tooltip#open">
+                                    {% if characterItem.item.type == 'map' %}
+                                        <img src="{{ asset('img/core/item/misc/map.png') }}"
+                                             alt="{{ characterItem.item.name }}"/>
+                                    {% else %}
+                                        <img src="{{ asset('img/core/item/' ~ characterItem.item.category.name ~ '/' ~ characterItem.item.picture) }}"
+                                             alt="{{ characterItem.item.name }}"/>
+                                    {% endif %}
+                                </a>
+                                {% include 'game/default/components/_trade/_tooltip.html.twig' with {'type': 'item', 'content': characterItem.item, 'action': 'Vendre', 'amount': app_itemService.itemSellPrice(characterItem, this.character)} %}
+                                {% if characterItem.health or characterItem.charge %}
+                                    <div class="gauge">
+                                        <div class="gauge-fill"
+                                             style="--value: {{ app_itemService.itemDurabilityFactor(characterItem) }}"></div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="bg-primary">
+                                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                                    {{ app_itemService.itemSellPrice(characterItem, this.character) }}
+                                </a>
+                            </div>
+                        </div>
+                        {# {% endif %} #}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="fortune">
+                {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                {{ app.user.player.fortune }}
+            </div>
+        </div>
+    </div>
+</main>

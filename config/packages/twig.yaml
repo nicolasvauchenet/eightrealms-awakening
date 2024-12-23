@@ -8,6 +8,7 @@ twig:
     app_characterLocationReputationService: '@App\Service\Location\CharacterLocationReputationService'
     app_characterQuestService: '@App\Service\Quest\CharacterQuestService'
     app_locationService: '@App\Service\Location\LocationService'
+    app_itemService: '@App\Service\Item\ItemService'
 
 when@test:
   twig:

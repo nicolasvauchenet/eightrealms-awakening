@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: ScreenRepository::class)]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
-#[ORM\DiscriminatorMap(['cinematic' => CinematicScreen::class, 'place' => PlaceScreen::class, 'dialogue' => DialogueScreen::class, 'combat' => CombatScreen::class])]
+#[ORM\DiscriminatorMap(['cinematic' => CinematicScreen::class, 'place' => PlaceScreen::class, 'dialogue' => DialogueScreen::class, 'combat' => CombatScreen::class, 'trade' => TradeScreen::class])]
 abstract class Screen
 {
     #[ORM\Id]

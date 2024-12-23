@@ -65,28 +65,31 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="card-body">
                         <h5 class="card-title">{{ characterItem.item.name }}</h5>
                     </div>
+
                     {% if type == 'player' %}
                         <div class="card-footer">
-                            {% if characterItem.item.type == 'food' %}
-                                <button class="bg-success">
-                                    {{ ux_icon('game-icons:eating', {'class': 'app-icon'}) }}
-                                </button>
-                            {% elseif characterItem.item.type != 'map' and characterItem.item.type != 'gift' %}
+                            {% if characterItem.item.type != 'map' and characterItem.item.type != 'gift' and characterItem.item.type != 'food' %}
                                 {% if characterItem.equipped %}
-                                    <button class="bg-warning" {{ live_action('equipItem', {'id': characterItem.id }) }}>
+                                    <button class="bg-warning" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
                                         {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
                                     </button>
                                 {% else %}
-                                    <button class="bg-success" {{ live_action('equipItem', {'id': characterItem.id }) }}>
+                                    <button class="bg-success" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
                                         {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
                                     </button>
                                 {% endif %}
-                            {% else %}
+                            {% elseif characterItem.item.type == 'map' or characterItem.item.type == 'gift' %}
                                 <button class="bg-black disabled">
                                     <a>&nbsp;</a>
+                                </button>
+                            {% endif %}
+                            {% if characterItem.item.type == 'food' or characterItem.item.category.name == 'potion' %}
+                                <button class="bg-info" {{ live_action('useItem', {'characterItemId': characterItem.id }) }}>
+                                    {{ ux_icon('entypo:hand', {'class': 'app-icon'}) }}
                                 </button>
                             {% endif %}
                         </div>

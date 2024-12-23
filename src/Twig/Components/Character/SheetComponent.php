@@ -17,8 +17,8 @@ class SheetComponent
 {
     use DefaultActionTrait;
 
-    private CharacterItemService $characterItemService;
     private EntityManagerInterface $entityManager;
+    private CharacterItemService $characterItemService;
 
     #[LiveProp(writable: true)]
     public Character $character;
@@ -26,17 +26,17 @@ class SheetComponent
     #[LiveProp(writable: true)]
     public string $type;
 
-    public function __construct(CharacterItemService $characterItemService,
-                                EntityManagerInterface   $entityManager)
+    public function __construct(EntityManagerInterface $entityManager,
+                                CharacterItemService   $characterItemService)
     {
-        $this->characterItemService = $characterItemService;
         $this->entityManager = $entityManager;
+        $this->characterItemService = $characterItemService;
     }
 
     #[LiveAction]
-    public function equipItem(#[LiveArg] int $id): void
+    public function equipItem(#[LiveArg] int $characterItemId): void
     {
-        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($id);
+        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
         if($characterItem->isEquipped()) {
             $characterItem->setSlot(null);
             $characterItem->setEquipped(false);
@@ -116,6 +116,36 @@ class SheetComponent
             $characterItem->setEquipped(true);
         }
         $this->entityManager->persist($characterItem);
+        $this->entityManager->flush();
+    }
+
+    #[LiveAction]
+    public function useItem(#[LiveArg] int $characterItemId): void
+    {
+        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
+        if($characterItem->getItem()->getType() === 'Défensif' || $characterItem->getItem()->getType() === 'food') {
+            switch($characterItem->getItem()->getTarget()) {
+                case 'health':
+                    $this->character->setHealth($this->character->getHealth() + $characterItem->getItem()->getAmount());
+                    if($this->character->getHealthMax() < $this->character->getHealth()) {
+                        $this->character->setHealth($this->character->getHealthMax());
+                    }
+                    break;
+                case 'mana':
+                    $this->character->setMana($this->character->getMana() + $characterItem->getItem()->getAmount());
+                    if($this->character->getManaMax() < $this->character->getMana()) {
+                        $this->character->setMana($this->character->getManaMax());
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            $this->character->removeCharacterItem($characterItem);
+            $this->entityManager->remove($characterItem);
+        }
+
+        $this->entityManager->persist($this->character);
         $this->entityManager->flush();
     }
 }

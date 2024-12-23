@@ -3,18 +3,60 @@
 namespace App\Service\Item;
 
 use App\Entity\Character\Player;
+use App\Entity\Character\PlayerNpc;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Item;
 use App\Entity\Item\Weapon;
 use App\Service\Location\CharacterLocationReputationService;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ItemService
 {
+    private EntityManagerInterface $entityManager;
     private CharacterLocationReputationService $characterLocationReputationService;
 
-    public function __construct(CharacterLocationReputationService $characterLocationReputationService)
+    public function __construct(EntityManagerInterface             $entityManager,
+                                CharacterLocationReputationService $characterLocationReputationService)
     {
+        $this->entityManager = $entityManager;
         $this->characterLocationReputationService = $characterLocationReputationService;
+    }
+
+    public function buyItem(Item $item, PlayerNpc $playerNpc, int $price, Player $character): Player
+    {
+        $playerNpc->setFortune($playerNpc->getFortune() + $price);
+        $this->entityManager->persist($playerNpc);
+
+        $character->setFortune($character->getFortune() - $price);
+        $characterItem = (new CharacterItem())
+            ->setCharacter($character)
+            ->setItem($item)
+            ->setEquipped(false)
+            ->setHealth($item->getHealth());
+        if($item instanceof Weapon) {
+            $characterItem->setCharge($item->getCharge());
+        }
+        $this->entityManager->persist($characterItem);
+        $this->entityManager->persist($character);
+
+        $this->entityManager->flush();
+
+        return $character;
+    }
+
+    public function sellItem(CharacterItem $characterItem, PlayerNpc $playerNpc, int $price, Player $character): Player
+    {
+        $playerNpc->setFortune($playerNpc->getFortune() - $price);
+        $this->entityManager->persist($playerNpc);
+
+        $character->setFortune($character->getFortune() + $price)
+            ->removeCharacterItem($characterItem);
+        $this->entityManager->remove($characterItem);
+        $this->entityManager->persist($character);
+
+        $this->entityManager->flush();
+
+        return $character;
     }
 
     public function getItemBuyPrice(Item $item, Player $character): int

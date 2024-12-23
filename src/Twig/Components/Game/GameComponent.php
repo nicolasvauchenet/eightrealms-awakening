@@ -2,18 +2,17 @@
 
 namespace App\Twig\Components\Game;
 
-use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerNpc;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Item;
-use App\Entity\Item\Weapon;
 use App\Entity\Location\Location;
 use App\Entity\Location\Place;
 use App\Entity\Quest\Quest;
 use App\Entity\Quest\QuestStep;
 use App\Entity\Scene\Scene;
 use App\Entity\Screen\Screen;
+use App\Service\Item\ItemService;
 use App\Service\Location\CharacterLocationReputationService;
 use App\Service\Quest\CharacterQuestService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,6 +32,7 @@ class GameComponent extends AbstractController
     private EntityManagerInterface $entityManager;
     private CharacterLocationReputationService $characterLocationReputationService;
     private CharacterQuestService $characterQuestService;
+    private ItemService $itemService;
 
     #[LiveProp(writable: true)]
     public Player $character;
@@ -57,11 +57,13 @@ class GameComponent extends AbstractController
 
     public function __construct(EntityManagerInterface             $entityManager,
                                 CharacterLocationReputationService $characterLocationReputationService,
-                                CharacterQuestService              $characterQuestService)
+                                CharacterQuestService              $characterQuestService,
+                                ItemService                        $itemService)
     {
         $this->entityManager = $entityManager;
         $this->characterLocationReputationService = $characterLocationReputationService;
         $this->characterQuestService = $characterQuestService;
+        $this->itemService = $itemService;
     }
 
     #[PostMount]
@@ -99,27 +101,10 @@ class GameComponent extends AbstractController
     {
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
 
-        $item = $this->entityManager->getRepository(Item::class)->find($itemId);
-
         if($this->character->getFortune() >= $price) {
+            $item = $this->entityManager->getRepository(Item::class)->find($itemId);
             $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->find($playerNpcId);
-            $playerNpc->setFortune($playerNpc->getFortune() + $price);
-            $this->entityManager->persist($playerNpc);
-
-            $this->character->setFortune($this->character->getFortune() - $price);
-            $characterItem = (new CharacterItem())
-                ->setCharacter($this->character)
-                ->setItem($item)
-                ->setEquipped(false)
-                ->setHealth($item->getHealth());
-            if($item instanceof Weapon) {
-                $characterItem->setCharge($item->getCharge());
-            }
-            $this->entityManager->persist($characterItem);
-            $this->entityManager->persist($this->character);
-
-            $this->entityManager->flush();
-
+            $this->character = $this->itemService->buyItem($item, $playerNpc, $price, $this->character);
             $this->currentScreenDescription = 'Vous avez acheté ' . $item->getName() . ' pour ' . $price . ' couronne' . ($price > 1 ? 's' : '') . '.';
         } else {
             $this->currentScreenDescription = "Vous n'avez pas assez de couronnes pour acheter cet objet.";
@@ -131,21 +116,10 @@ class GameComponent extends AbstractController
     {
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
 
-        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
-
         $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->find($playerNpcId);
-
         if($playerNpc->getFortune() >= $price) {
-            $playerNpc->setFortune($playerNpc->getFortune() - $price);
-            $this->entityManager->persist($playerNpc);
-
-            $this->character->setFortune($this->character->getFortune() + $price)
-                ->removeCharacterItem($characterItem);
-            $this->entityManager->remove($characterItem);
-            $this->entityManager->persist($this->character);
-
-            $this->entityManager->flush();
-
+            $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
+            $this->character = $this->itemService->sellItem($characterItem, $playerNpc, $price, $this->character);
             $this->currentScreenDescription = 'Vous avez vendu ' . $characterItem->getItem()->getName() . ' pour ' . $price . ' couronne' . ($price > 1 ? 's' : '') . '.';
         } else {
             $this->currentScreenDescription = $playerNpc->getNpc()->getName() . "n'a pas assez de couronnes pour vous acheter cet objet.";

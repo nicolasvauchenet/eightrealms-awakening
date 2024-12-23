@@ -3,6 +3,7 @@
 namespace App\Service\Item;
 
 use App\Entity\Character\Character;
+use App\Entity\Item\CharacterItem;
 use App\Repository\Item\CharacterItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -107,5 +108,12 @@ class CharacterItemService
         }
 
         return $itemsBySlot;
+    }
+
+    public function useItem(CharacterItem $characterItem, Character $character): Character
+    {
+
+
+        return $character;
     }
 }

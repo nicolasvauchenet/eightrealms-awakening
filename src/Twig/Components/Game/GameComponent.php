@@ -15,7 +15,9 @@ use App\Entity\Screen\Screen;
 use App\Service\Item\ItemService;
 use App\Service\Location\CharacterLocationReputationService;
 use App\Service\Quest\CharacterQuestService;
+use App\Service\Steal\StealService;
 use Doctrine\ORM\EntityManagerInterface;
+use Random\RandomException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -33,6 +35,7 @@ class GameComponent extends AbstractController
     private CharacterLocationReputationService $characterLocationReputationService;
     private CharacterQuestService $characterQuestService;
     private ItemService $itemService;
+    private StealService $stealService;
 
     #[LiveProp(writable: true)]
     public Player $character;
@@ -58,21 +61,21 @@ class GameComponent extends AbstractController
     public function __construct(EntityManagerInterface             $entityManager,
                                 CharacterLocationReputationService $characterLocationReputationService,
                                 CharacterQuestService              $characterQuestService,
-                                ItemService                        $itemService)
+                                ItemService                        $itemService,
+                                StealService                       $stealService)
     {
         $this->entityManager = $entityManager;
         $this->characterLocationReputationService = $characterLocationReputationService;
         $this->characterQuestService = $characterQuestService;
         $this->itemService = $itemService;
+        $this->stealService = $stealService;
     }
 
     #[PostMount]
     public function postMount(): void
     {
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
-        if($this->currentScreenType === 'tradescreen') {
-            $this->meetNpc();
-        }
+        $this->meetNpc();
         $this->updateDescription();
     }
 
@@ -90,10 +93,7 @@ class GameComponent extends AbstractController
         if($actionEffects) {
             $this->doActions($actionEffects);
         }
-
-        if($this->currentScreenType === 'tradescreen') {
-            $this->meetNpc();
-        }
+        $this->meetNpc();
     }
 
     #[LiveAction]
@@ -123,6 +123,32 @@ class GameComponent extends AbstractController
             $this->currentScreenDescription = 'Vous avez vendu ' . $characterItem->getItem()->getName() . ' pour ' . $price . ' couronne' . ($price > 1 ? 's' : '') . '.';
         } else {
             $this->currentScreenDescription = $playerNpc->getNpc()->getName() . "n'a pas assez de couronnes pour vous acheter cet objet.";
+        }
+    }
+
+    /**
+     * @throws RandomException
+     * @throws \ReflectionException
+     */
+    #[LiveAction]
+    public function steal(#[LiveArg] int $targetScreenId, #[LiveArg] int $targetSceneId, #[LiveArg] array $actionRequirements, #[LiveArg] array $actionEffects): void
+    {
+        $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+        $this->meetNpc();
+        $return = $this->stealService->steal($this->currentNpc, $this->character, $actionRequirements['difficulty']);
+
+        if($return['success'] === true) {
+            if($return['stolenCrowns'] > 0) {
+                $description = 'Vous avez volé ' . $return['stolenCrowns'] . ' couronne' . ($return['stolenCrowns'] > 1 ? 's' : '') . ' à ' . $this->currentNpc->getNpc()->getName() . '.';
+                $this->changeScreen($targetScreenId, $targetSceneId, ['updateDescription' => $description, 'updateCharacter' => true]);
+            } else {
+                $description = $this->currentNpc->getNpc()->getName() . " n'a plus de couronnes à voler.";
+                $this->changeScreen($targetScreenId, $targetSceneId, ['updateDescription' => $description]);
+            }
+        } else if($return['success'] === false) {
+            $screen = $this->entityManager->getRepository(Screen::class)->findOneBy(['slug' => $actionEffects['changeScreen']['targetScreen']]);
+            $scene = $this->entityManager->getRepository(Scene::class)->findOneBy(['slug' => $actionEffects['changeScreen']['targetScene']]);
+            $this->changeScreen($screen->getId(), $scene->getId(), $actionEffects);
         }
     }
 
@@ -167,7 +193,7 @@ class GameComponent extends AbstractController
                     }
                     break;
                 case 'decreaseFortune':
-                    $this->character->setFortune($this->character->getFortune() - $value['amount'] * -1);
+                    $this->character->setFortune($this->character->getFortune() - $value['amount']);
                     if($this->character->getFortune() < 0) {
                         $this->character->setFortune(0);
                     }
@@ -185,6 +211,12 @@ class GameComponent extends AbstractController
                     $this->characterLocationReputationService->modifyReputation($this->character, $location, ($value['amount'] * -1));
                     $this->characterUpdated = true;
                     break;
+                case 'updateDescription':
+                    $this->currentScreenDescription = $value;
+                    break;
+                case 'updateCharacter':
+                    $this->characterUpdated = $value;
+                    break;
                 default:
                     break;
             }
@@ -193,19 +225,23 @@ class GameComponent extends AbstractController
 
     private function meetNpc(): void
     {
-        $npc = $this->currentScene->getNpc();
-        $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $npc]);
-        if(!$playerNpc) {
-            $playerNpc = (new PlayerNpc())
-                ->setPlayer($this->character)
-                ->setNpc($npc)
-                ->setFortune($npc->getFortune());
-            $this->entityManager->persist($playerNpc);
-            $this->character->addPlayerNpc($playerNpc);
-            $this->entityManager->persist($this->character);
-            $this->entityManager->flush();
-        }
+        if(in_array($this->currentScreenType, ['dialoguescreen', 'tradescreen'])) {
+            $npc = $this->currentScene->getNpc();
+            if($npc) {
+                $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $npc]);
+                if(!$playerNpc) {
+                    $playerNpc = (new PlayerNpc())
+                        ->setPlayer($this->character)
+                        ->setNpc($npc)
+                        ->setFortune($npc->getFortune());
+                    $this->entityManager->persist($playerNpc);
+                    $this->character->addPlayerNpc($playerNpc);
+                    $this->entityManager->persist($this->character);
+                    $this->entityManager->flush();
+                }
 
-        $this->currentNpc = $playerNpc;
+                $this->currentNpc = $playerNpc;
+            }
+        }
     }
 }

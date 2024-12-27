@@ -46,6 +46,7 @@ abstract class Scene
      * @var Collection<int, Action>
      */
     #[ORM\OneToMany(targetEntity: Action::class, mappedBy: 'scene')]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $actions;
 
     public function __construct()

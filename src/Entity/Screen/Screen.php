@@ -38,6 +38,7 @@ abstract class Screen
      * @var Collection<int, Action>
      */
     #[ORM\OneToMany(targetEntity: Action::class, mappedBy: 'targetScreen')]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $actions;
 
     public function __construct()
@@ -85,7 +86,7 @@ abstract class Screen
 
     public function addScene(Scene $scene): static
     {
-        if (!$this->scenes->contains($scene)) {
+        if(!$this->scenes->contains($scene)) {
             $this->scenes->add($scene);
             $scene->setScreen($this);
         }
@@ -95,9 +96,9 @@ abstract class Screen
 
     public function removeScene(Scene $scene): static
     {
-        if ($this->scenes->removeElement($scene)) {
+        if($this->scenes->removeElement($scene)) {
             // set the owning side to null (unless already changed)
-            if ($scene->getScreen() === $this) {
+            if($scene->getScreen() === $this) {
                 $scene->setScreen(null);
             }
         }
@@ -115,7 +116,7 @@ abstract class Screen
 
     public function addAction(Action $action): static
     {
-        if (!$this->actions->contains($action)) {
+        if(!$this->actions->contains($action)) {
             $this->actions->add($action);
             $action->setTargetScreen($this);
         }
@@ -125,9 +126,9 @@ abstract class Screen
 
     public function removeAction(Action $action): static
     {
-        if ($this->actions->removeElement($action)) {
+        if($this->actions->removeElement($action)) {
             // set the owning side to null (unless already changed)
-            if ($action->getTargetScreen() === $this) {
+            if($action->getTargetScreen() === $this) {
                 $action->setTargetScreen(null);
             }
         }

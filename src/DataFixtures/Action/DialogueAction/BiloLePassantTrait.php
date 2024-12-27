@@ -2,10 +2,8 @@
 
 namespace App\DataFixtures\Action\DialogueAction;
 
-use App\Entity\Scene\CinematicScene;
 use App\Entity\Scene\DialogueScene;
 use App\Entity\Scene\PlaceScene;
-use App\Entity\Screen\CinematicScreen;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\PlaceScreen;
 
@@ -193,10 +191,13 @@ trait BiloLePassantTrait
         'picture' => 'core/action/steal.png',
         'scene' => 'scene_dialogue_bilo_le_passant',
         'sceneClass' => DialogueScene::class,
-        'targetScene' => 'scene_cinematic_jail',
-        'targetSceneClass' => CinematicScene::class,
-        'targetScreen' => 'screen_cinematic_jail',
-        'targetScreenClass' => CinematicScreen::class,
+        'targetScene' => 'scene_place_quartier_du_marche',
+        'targetSceneClass' => PlaceScene::class,
+        'targetScreen' => 'screen_place_quartier_du_marche',
+        'targetScreenClass' => PlaceScreen::class,
+        'actionRequirements' => [
+            'difficulty' => 10,
+        ],
         'actionEffects' => [
             'decreaseFortune' => [
                 'amount' => '50',
@@ -204,6 +205,10 @@ trait BiloLePassantTrait
             'decreaseLocationReputation' => [
                 'amount' => '10',
                 'location' => 'port-saint-doux',
+            ],
+            'changeScreen' => [
+                'targetScene' => 'prison',
+                'targetScreen' => 'prison',
             ],
         ],
         'reference' => 'action_dialogue_bilo_le_passant_steal',

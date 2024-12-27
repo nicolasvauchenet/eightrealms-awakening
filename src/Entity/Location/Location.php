@@ -36,6 +36,7 @@ class Location
      * @var Collection<int, Place>
      */
     #[ORM\OneToMany(targetEntity: Place::class, mappedBy: 'location')]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $places;
 
     /**
@@ -199,7 +200,7 @@ class Location
 
     public function addCharacterLocationReputation(CharacterLocationReputation $characterLocationReputation): static
     {
-        if (!$this->characterLocationReputations->contains($characterLocationReputation)) {
+        if(!$this->characterLocationReputations->contains($characterLocationReputation)) {
             $this->characterLocationReputations->add($characterLocationReputation);
             $characterLocationReputation->setLocation($this);
         }
@@ -209,9 +210,9 @@ class Location
 
     public function removeCharacterLocationReputation(CharacterLocationReputation $characterLocationReputation): static
     {
-        if ($this->characterLocationReputations->removeElement($characterLocationReputation)) {
+        if($this->characterLocationReputations->removeElement($characterLocationReputation)) {
             // set the owning side to null (unless already changed)
-            if ($characterLocationReputation->getLocation() === $this) {
+            if($characterLocationReputation->getLocation() === $this) {
                 $characterLocationReputation->setLocation(null);
             }
         }
@@ -229,7 +230,7 @@ class Location
 
     public function addCharacterQuest(CharacterQuest $characterQuest): static
     {
-        if (!$this->characterQuests->contains($characterQuest)) {
+        if(!$this->characterQuests->contains($characterQuest)) {
             $this->characterQuests->add($characterQuest);
             $characterQuest->setStartLocation($this);
         }
@@ -239,9 +240,9 @@ class Location
 
     public function removeCharacterQuest(CharacterQuest $characterQuest): static
     {
-        if ($this->characterQuests->removeElement($characterQuest)) {
+        if($this->characterQuests->removeElement($characterQuest)) {
             // set the owning side to null (unless already changed)
-            if ($characterQuest->getStartLocation() === $this) {
+            if($characterQuest->getStartLocation() === $this) {
                 $characterQuest->setStartLocation(null);
             }
         }

@@ -3,21 +3,21 @@
 namespace App\Entity\Character;
 
 use App\Entity\Scene\Scene;
-use App\Repository\Character\PlayerNpcRepository;
+use App\Repository\Character\PlayerCreatureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PlayerNpcRepository::class)]
-class PlayerNpc
+#[ORM\Entity(repositoryClass: PlayerCreatureRepository::class)]
+class PlayerCreature
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column]
     private ?int $health = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column]
     private ?int $mana = null;
 
     #[ORM\Column(nullable: true)]
@@ -27,20 +27,17 @@ class PlayerNpc
     private ?int $xpReward = null;
 
     #[ORM\Column]
-    private ?int $fortune = null;
-
-    #[ORM\Column]
     private ?bool $alive = null;
 
-    #[ORM\ManyToOne(inversedBy: 'playerNpcs')]
+    #[ORM\ManyToOne(inversedBy: 'playerCreatures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Player $player = null;
 
-    #[ORM\ManyToOne(inversedBy: 'playerNpcs')]
+    #[ORM\ManyToOne(inversedBy: 'playerCreatures')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Npc $npc = null;
+    private ?Creature $creature = null;
 
-    #[ORM\ManyToOne(inversedBy: 'playerNpcs')]
+    #[ORM\ManyToOne(inversedBy: 'playerCreatures')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Scene $scene = null;
 
@@ -54,7 +51,7 @@ class PlayerNpc
         return $this->health;
     }
 
-    public function setHealth(?int $health): static
+    public function setHealth(int $health): static
     {
         $this->health = $health;
 
@@ -66,7 +63,7 @@ class PlayerNpc
         return $this->mana;
     }
 
-    public function setMana(?int $mana): static
+    public function setMana(int $mana): static
     {
         $this->mana = $mana;
 
@@ -97,18 +94,6 @@ class PlayerNpc
         return $this;
     }
 
-    public function getFortune(): ?int
-    {
-        return $this->fortune;
-    }
-
-    public function setFortune(int $fortune): static
-    {
-        $this->fortune = $fortune;
-
-        return $this;
-    }
-
     public function isAlive(): ?bool
     {
         return $this->alive;
@@ -133,14 +118,14 @@ class PlayerNpc
         return $this;
     }
 
-    public function getNpc(): ?Npc
+    public function getCreature(): ?Creature
     {
-        return $this->npc;
+        return $this->creature;
     }
 
-    public function setNpc(?Npc $npc): static
+    public function setCreature(?Creature $creature): static
     {
-        $this->npc = $npc;
+        $this->creature = $creature;
 
         return $this;
     }

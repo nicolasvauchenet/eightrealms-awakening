@@ -30,7 +30,6 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'race' => 'race_humain',
                 'profession' => 'profession_marchand',
                 'level' => 3,
-                'alive' => true,
                 'reference' => 'npc_sophie_la_marchande',
             ],
             [
@@ -49,7 +48,6 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'race' => 'race_humain',
                 'profession' => 'profession_garde',
                 'level' => 5,
-                'alive' => true,
                 'reference' => 'npc_robert_le_garde',
             ],
             [
@@ -67,7 +65,6 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'charisma' => 10,
                 'race' => 'race_halfelin',
                 'level' => 1,
-                'alive' => true,
                 'reference' => 'npc_bilo_le_passant',
             ],
         ];
@@ -88,8 +85,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 ->setIntelligence($data['intelligence'])
                 ->setCharisma($data['charisma'])
                 ->setRace($this->getReference($data['race'], Race::class))
-                ->setLevel($data['level'])
-                ->setAlive($data['alive']);
+                ->setLevel($data['level']);
             if(isset($data['profession'])) {
                 $character->setProfession($this->getReference($data['profession'], Profession::class));
             }

@@ -63,6 +63,12 @@ class Player extends Character
     #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'player')]
     private Collection $playerNpcs;
 
+    /**
+     * @var Collection<int, PlayerCreature>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerCreature::class, mappedBy: 'player')]
+    private Collection $playerCreatures;
+
     public function __construct()
     {
         parent::__construct();
@@ -70,6 +76,7 @@ class Player extends Character
         $this->visitedPlaces = new ArrayCollection();
         $this->characterQuests = new ArrayCollection();
         $this->playerNpcs = new ArrayCollection();
+        $this->playerCreatures = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -256,7 +263,7 @@ class Player extends Character
 
     public function addPlayerNpc(PlayerNpc $playerNpc): static
     {
-        if (!$this->playerNpcs->contains($playerNpc)) {
+        if(!$this->playerNpcs->contains($playerNpc)) {
             $this->playerNpcs->add($playerNpc);
             $playerNpc->setPlayer($this);
         }
@@ -266,10 +273,40 @@ class Player extends Character
 
     public function removePlayerNpc(PlayerNpc $playerNpc): static
     {
-        if ($this->playerNpcs->removeElement($playerNpc)) {
+        if($this->playerNpcs->removeElement($playerNpc)) {
             // set the owning side to null (unless already changed)
-            if ($playerNpc->getPlayer() === $this) {
+            if($playerNpc->getPlayer() === $this) {
                 $playerNpc->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerCreature>
+     */
+    public function getPlayerCreatures(): Collection
+    {
+        return $this->playerCreatures;
+    }
+
+    public function addPlayerCreature(PlayerCreature $playerCreature): static
+    {
+        if(!$this->playerCreatures->contains($playerCreature)) {
+            $this->playerCreatures->add($playerCreature);
+            $playerCreature->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerCreature(PlayerCreature $playerCreature): static
+    {
+        if($this->playerCreatures->removeElement($playerCreature)) {
+            // set the owning side to null (unless already changed)
+            if($playerCreature->getPlayer() === $this) {
+                $playerCreature->setPlayer(null);
             }
         }
 

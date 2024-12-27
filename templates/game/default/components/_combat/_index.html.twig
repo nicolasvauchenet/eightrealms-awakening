@@ -1,0 +1,7 @@
+<img src="{{ asset('img/chapter1/location/' ~ this.character.currentPlace.location.slug ~ '/scene/' ~ this.currentScene.picture) }}"
+     alt="{{ this.currentScene.name }}"
+     class="app-cover"/>
+
+{% include 'game/default/components/_combat/_header.html.twig' %}
+{% include 'game/default/components/_combat/_main.html.twig' %}
+{% include 'game/default/components/_combat/_footer.html.twig' %}

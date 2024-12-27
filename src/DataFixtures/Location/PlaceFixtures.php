@@ -41,17 +41,17 @@ class PlaceFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => "Docks de l'Ouest",
                 'type' => 'Place',
                 'picture' => 'docks-de-louest.webp',
-                'description' => "<p></p>",
+                'description' => "<p>Les Docks de l'Ouest de Port Saint-Doux sont le cœur vibrant du port, où pêcheurs, marchands et passants animent la scène parmi les quais neufs et les bateaux amarrés. On y trouve la taverne de la Flûte Moisie, un lieu bruyant et chaleureux, idéal pour se détendre, boire une bière et observer l'agitation des docks.</p>",
                 'location' => 'location_port_saint_doux',
-                'reference' => 'place_docks-de-louest',
+                'reference' => 'place_docks_de_louest',
             ],
             [
                 'name' => 'Anciens Docks',
                 'type' => 'Place',
                 'picture' => 'anciens-docks.webp',
-                'description' => "<p></p>",
+                'description' => "<p>Les anciens docks sont quasiment abandonnés. Les rats y ont élu domicile et se faufilent entre les planches de bois à la recherche de nourriture. Les marchands ont déserté les lieux, laissant derrière eux des caisses vides et des tonneaux éventrés. Les gardes, eux, n'ont pas l'habitude de s'aventurer dans ce quartier mal famé. Les passants évitent soigneusement de s'y aventurer, préférant emprunter les ruelles plus sûres de la ville.</p>",
                 'location' => 'location_port_saint_doux',
-                'reference' => 'place_anciens-docks',
+                'reference' => 'place_anciens_docks',
             ],
             [
                 'name' => 'Quartier des Ploucs',
@@ -67,7 +67,7 @@ class PlaceFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'nouvelle-ville.webp',
                 'description' => "<p></p>",
                 'location' => 'location_port_saint_doux',
-                'reference' => 'place_nouvelle-ville',
+                'reference' => 'place_nouvelle_ville',
             ],
         ];
 

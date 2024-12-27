@@ -9,14 +9,16 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class QuartierSceneFixtures extends Fixture implements OrderedFixtureInterface
+class PlaceSceneFixtures extends Fixture implements OrderedFixtureInterface
 {
     use PlaceDuMarcheTrait;
+    use AnciensDocksTrait;
 
     public function load(ObjectManager $manager): void
     {
         $scenes = [
             self::QUARTIER_DU_MARCHE,
+            self::ANCIENS_DOCKS,
         ];
 
         foreach($scenes as $data) {

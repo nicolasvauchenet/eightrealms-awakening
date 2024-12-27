@@ -1,12 +1,14 @@
 .gauge {
   position: relative;
   overflow: hidden;
+  display: block;
   width: 100%;
   height: 0.5rem;
   background-color: #cccccc;
   border-radius: 10px;
 
   .gauge-fill {
+    display: block;
     height: 100%;
     background-color: $success;
     width: calc(var(--value) * 100%);

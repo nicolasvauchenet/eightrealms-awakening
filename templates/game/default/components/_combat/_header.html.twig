@@ -1,0 +1,20 @@
+<header class="screen-header">
+    <div class="controls">
+        <a href="#" class="control invisible">
+            {{ ux_icon('solar:map-bold', {'class': 'app-icon'}) }}
+        </a>
+    </div>
+
+    <div class="title">
+        <h1>Combat</h1>
+        <h2>{{ this.currentScene.name }}</h2>
+    </div>
+
+    <div class="controls">
+        <a href="{{ path('app_home') }}"
+           class="control bg-third"
+           onclick="return window.confirm('Quitter la partie ?')">
+            {{ ux_icon('streamline:emergency-exit-solid', {'class': 'app-icon'}) }}
+        </a>
+    </div>
+</header>

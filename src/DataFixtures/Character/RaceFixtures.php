@@ -12,6 +12,7 @@ class RaceFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $races = [
+            // Playable
             [
                 'name' => 'Humain',
                 'description' => "Les Humains sont polyvalents et adaptables, capables de s'épanouir dans presque toutes les conditions. Bien qu'ils n'excellent dans aucun domaine particulier, leur détermination et leur ingéniosité leur permettent de rivaliser avec les races les plus puissantes. Leur diversité culturelle et sociale en fait une race incroyablement variée, avec des héros, des érudits, des marchands et des guerriers.",
@@ -53,6 +54,14 @@ class RaceFixtures extends Fixture implements OrderedFixtureInterface
                 'playable' => true,
                 'baseReputation' => 1,
                 'reference' => 'race_gnome',
+            ],
+            // Non playable
+            [
+                'name' => 'Rat',
+                'description' => "",
+                'playable' => false,
+                'baseReputation' => 1,
+                'reference' => 'race_rat',
             ],
         ];
 

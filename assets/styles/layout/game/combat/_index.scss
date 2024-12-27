@@ -1,0 +1,12 @@
+&.combatscreen {
+  @extend .appears;
+
+  .app-cover {
+    position: relative;
+    @extend .appears;
+  }
+
+  @import "./header";
+  @import "./main";
+  @import "./footer";
+}

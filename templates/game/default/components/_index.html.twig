@@ -8,6 +8,8 @@
             {% include 'game/default/components/_dialogue/_index.html.twig' %}
         {% elseif this.currentScreenType == 'tradescreen' %}
             {% include 'game/default/components/_trade/_index.html.twig' %}
+        {% elseif this.currentScreenType == 'combatscreen' %}
+            {% include 'game/default/components/_combat/_index.html.twig' %}
         {% endif %}
     </div>
 </div>

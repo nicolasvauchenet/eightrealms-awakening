@@ -12,19 +12,23 @@ use Doctrine\Persistence\ObjectManager;
 class PlaceScreenFixtures extends Fixture implements OrderedFixtureInterface
 {
     use QuartierDuMarcheTrait;
+    use AnciensDocksTrait;
 
     public function load(ObjectManager $manager): void
     {
         $screens = [
             self::QUARTIER_DU_MARCHE,
+            self::ANCIENS_DOCKS,
         ];
 
         foreach($screens as $data) {
             $screen = new PlaceScreen();
             $screen->setName($data['name'])
                 ->setPlace($this->getReference($data['place'], Place::class));
-            foreach($data['npcs'] as $npc) {
-                $screen->addNpc($this->getReference($npc, Npc::class));
+            if(isset($data['npcs'])) {
+                foreach($data['npcs'] as $npc) {
+                    $screen->addNpc($this->getReference($npc, Npc::class));
+                }
             }
             $manager->persist($screen);
             $this->addReference($data['reference'], $screen);

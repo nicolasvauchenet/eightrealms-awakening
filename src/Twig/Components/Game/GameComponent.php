@@ -3,6 +3,7 @@
 namespace App\Twig\Components\Game;
 
 use App\Entity\Character\Player;
+use App\Entity\Character\PlayerCreature;
 use App\Entity\Character\PlayerNpc;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Item;
@@ -76,6 +77,8 @@ class GameComponent extends AbstractController
     {
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
         $this->meetNpc();
+        $this->meetNpcs();
+        $this->meetCreatures();
         $this->updateDescription();
     }
 
@@ -94,6 +97,8 @@ class GameComponent extends AbstractController
             $this->doActions($actionEffects);
         }
         $this->meetNpc();
+        $this->meetNpcs();
+        $this->meetCreatures();
     }
 
     #[LiveAction]
@@ -168,7 +173,7 @@ class GameComponent extends AbstractController
             $this->updateCharacterPlace();
         } else if($this->currentScreenType === 'dialoguescreen') {
             $this->currentScreenDescription = $this->currentScene->getDescription() . $this->currentScene->getNpc()->getDescription();
-        } else if($this->currentScreenType === 'tradescreen') {
+        } else if($this->currentScreenType === 'tradescreen' or $this->currentScreenType === 'combatscreen') {
             $this->currentScreenDescription = $this->currentScene->getDescription();
         }
     }
@@ -233,7 +238,9 @@ class GameComponent extends AbstractController
                     $playerNpc = (new PlayerNpc())
                         ->setPlayer($this->character)
                         ->setNpc($npc)
-                        ->setFortune($npc->getFortune());
+                        ->setScene($this->currentScene)
+                        ->setFortune($npc->getFortune())
+                        ->setAlive(true);
                     $this->entityManager->persist($playerNpc);
                     $this->character->addPlayerNpc($playerNpc);
                     $this->entityManager->persist($this->character);
@@ -242,6 +249,56 @@ class GameComponent extends AbstractController
 
                 $this->currentNpc = $playerNpc;
             }
+        }
+    }
+
+    private function meetNpcs(): void
+    {
+        if($this->currentScreenType === 'combatscreen') {
+            $playerNpcScene = $this->entityManager->getRepository(PlayerNpc::class)->findBy(['player' => $this->character, 'scene' => $this->currentScene]);
+            if(sizeof($playerNpcScene) === 0) {
+                foreach($this->currentScene->getCombatSceneNpcs() as $combatSceneNpc) {
+                    $playerNpc = (new PlayerNpc())
+                        ->setPlayer($this->character)
+                        ->setNpc($combatSceneNpc->getNpc())
+                        ->setScene($this->currentScene)
+                        ->setHealth($combatSceneNpc->getNpc()->getHealth())
+                        ->setMana($combatSceneNpc->getNpc()->getMana())
+                        ->setCrownReward($combatSceneNpc->getCrownReward())
+                        ->setXpReward($combatSceneNpc->getXpReward())
+                        ->setAlive(true);
+                    $this->entityManager->persist($playerNpc);
+                    $this->character->addPlayerCreature($playerNpc);
+                    $this->entityManager->persist($this->character);
+                    $this->entityManager->flush();
+                }
+            }
+
+        }
+    }
+
+    private function meetCreatures(): void
+    {
+        if($this->currentScreenType === 'combatscreen') {
+            $playerCreatureScene = $this->entityManager->getRepository(PlayerCreature::class)->findBy(['player' => $this->character, 'scene' => $this->currentScene]);
+            if(sizeof($playerCreatureScene) === 0) {
+                foreach($this->currentScene->getCombatSceneCreatures() as $combatSceneCreature) {
+                    $playerCreature = (new PlayerCreature())
+                        ->setPlayer($this->character)
+                        ->setCreature($combatSceneCreature->getCreature())
+                        ->setScene($this->currentScene)
+                        ->setHealth($combatSceneCreature->getCreature()->getHealth())
+                        ->setMana($combatSceneCreature->getCreature()->getMana())
+                        ->setCrownReward($combatSceneCreature->getCrownReward())
+                        ->setXpReward($combatSceneCreature->getXpReward())
+                        ->setAlive(true);
+                    $this->entityManager->persist($playerCreature);
+                    $this->character->addPlayerCreature($playerCreature);
+                    $this->entityManager->persist($this->character);
+                    $this->entityManager->flush();
+                }
+            }
+
         }
     }
 }

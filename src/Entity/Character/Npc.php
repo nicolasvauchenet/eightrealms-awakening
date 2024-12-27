@@ -3,8 +3,11 @@
 namespace App\Entity\Character;
 
 use App\Entity\Location\Place;
+use App\Entity\Scene\CombatScene;
+use App\Entity\Scene\CombatSceneNpc;
 use App\Entity\Scene\DialogueScene;
 use App\Entity\Scene\TradeScene;
+use App\Entity\Screen\CombatScreen;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\PlaceScreen;
 use App\Entity\Screen\TradeScreen;
@@ -18,9 +21,6 @@ class Npc extends Character
 {
     #[ORM\Column]
     private ?int $level = null;
-
-    #[ORM\Column]
-    private ?bool $alive = null;
 
     /**
      * @var Collection<int, PlaceScreen>
@@ -58,6 +58,24 @@ class Npc extends Character
     #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'npc')]
     private Collection $playerNpcs;
 
+    /**
+     * @var Collection<int, CombatScreen>
+     */
+    #[ORM\ManyToMany(targetEntity: CombatScreen::class, mappedBy: 'npcs')]
+    private Collection $combatScreens;
+
+    /**
+     * @var Collection<int, CombatScene>
+     */
+    #[ORM\ManyToMany(targetEntity: CombatScene::class, mappedBy: 'npcs')]
+    private Collection $combatScenes;
+
+    /**
+     * @var Collection<int, CombatSceneNpc>
+     */
+    #[ORM\OneToMany(targetEntity: CombatSceneNpc::class, mappedBy: 'npc')]
+    private Collection $combatSceneNpcs;
+
     public function __construct()
     {
         parent::__construct();
@@ -67,6 +85,9 @@ class Npc extends Character
         $this->tradeScreens = new ArrayCollection();
         $this->tradeScenes = new ArrayCollection();
         $this->playerNpcs = new ArrayCollection();
+        $this->combatScreens = new ArrayCollection();
+        $this->combatScenes = new ArrayCollection();
+        $this->combatSceneNpcs = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -77,18 +98,6 @@ class Npc extends Character
     public function setLevel(int $level): static
     {
         $this->level = $level;
-
-        return $this;
-    }
-
-    public function isAlive(): ?bool
-    {
-        return $this->alive;
-    }
-
-    public function setAlive(bool $alive): static
-    {
-        $this->alive = $alive;
 
         return $this;
     }
@@ -264,6 +273,90 @@ class Npc extends Character
             // set the owning side to null (unless already changed)
             if ($playerNpc->getNpc() === $this) {
                 $playerNpc->setNpc(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CombatScreen>
+     */
+    public function getCombatScreens(): Collection
+    {
+        return $this->combatScreens;
+    }
+
+    public function addCombatScreen(CombatScreen $combatScreen): static
+    {
+        if (!$this->combatScreens->contains($combatScreen)) {
+            $this->combatScreens->add($combatScreen);
+            $combatScreen->addNpc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCombatScreen(CombatScreen $combatScreen): static
+    {
+        if ($this->combatScreens->removeElement($combatScreen)) {
+            $combatScreen->removeNpc($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CombatScene>
+     */
+    public function getCombatScenes(): Collection
+    {
+        return $this->combatScenes;
+    }
+
+    public function addCombatScene(CombatScene $combatScene): static
+    {
+        if (!$this->combatScenes->contains($combatScene)) {
+            $this->combatScenes->add($combatScene);
+            $combatScene->addNpc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCombatScene(CombatScene $combatScene): static
+    {
+        if ($this->combatScenes->removeElement($combatScene)) {
+            $combatScene->removeNpc($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CombatSceneNpc>
+     */
+    public function getCombatSceneNpcs(): Collection
+    {
+        return $this->combatSceneNpcs;
+    }
+
+    public function addCombatSceneNpc(CombatSceneNpc $combatSceneNpc): static
+    {
+        if (!$this->combatSceneNpcs->contains($combatSceneNpc)) {
+            $this->combatSceneNpcs->add($combatSceneNpc);
+            $combatSceneNpc->setNpc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCombatSceneNpc(CombatSceneNpc $combatSceneNpc): static
+    {
+        if ($this->combatSceneNpcs->removeElement($combatSceneNpc)) {
+            // set the owning side to null (unless already changed)
+            if ($combatSceneNpc->getNpc() === $this) {
+                $combatSceneNpc->setNpc(null);
             }
         }
 

@@ -3,6 +3,7 @@
 namespace App\Entity\Scene;
 
 use App\Entity\Action\Action;
+use App\Entity\Character\PlayerNpc;
 use App\Entity\Screen\Screen;
 use App\Repository\Scene\SceneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -49,9 +50,30 @@ abstract class Scene
     #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $actions;
 
+    /**
+     * @var Collection<int, CombatSceneCreature>
+     */
+    #[ORM\OneToMany(targetEntity: CombatSceneCreature::class, mappedBy: 'scene')]
+    private Collection $combatSceneCreatures;
+
+    /**
+     * @var Collection<int, CombatSceneNpc>
+     */
+    #[ORM\OneToMany(targetEntity: CombatSceneNpc::class, mappedBy: 'scene')]
+    private Collection $combatSceneNpcs;
+
+    /**
+     * @var Collection<int, PlayerNpc>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'scene')]
+    private Collection $playerNpcs;
+
     public function __construct()
     {
         $this->actions = new ArrayCollection();
+        $this->combatSceneCreatures = new ArrayCollection();
+        $this->combatSceneNpcs = new ArrayCollection();
+        $this->playerNpcs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,6 +177,96 @@ abstract class Scene
             // set the owning side to null (unless already changed)
             if($action->getScene() === $this) {
                 $action->setScene(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CombatSceneCreature>
+     */
+    public function getCombatSceneCreatures(): Collection
+    {
+        return $this->combatSceneCreatures;
+    }
+
+    public function addCombatSceneCreature(CombatSceneCreature $combatSceneCreature): static
+    {
+        if (!$this->combatSceneCreatures->contains($combatSceneCreature)) {
+            $this->combatSceneCreatures->add($combatSceneCreature);
+            $combatSceneCreature->setScene($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCombatSceneCreature(CombatSceneCreature $combatSceneCreature): static
+    {
+        if ($this->combatSceneCreatures->removeElement($combatSceneCreature)) {
+            // set the owning side to null (unless already changed)
+            if ($combatSceneCreature->getScene() === $this) {
+                $combatSceneCreature->setScene(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CombatSceneNpc>
+     */
+    public function getCombatSceneNpcs(): Collection
+    {
+        return $this->combatSceneNpcs;
+    }
+
+    public function addCombatSceneNpc(CombatSceneNpc $combatSceneNpc): static
+    {
+        if (!$this->combatSceneNpcs->contains($combatSceneNpc)) {
+            $this->combatSceneNpcs->add($combatSceneNpc);
+            $combatSceneNpc->setScene($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCombatSceneNpc(CombatSceneNpc $combatSceneNpc): static
+    {
+        if ($this->combatSceneNpcs->removeElement($combatSceneNpc)) {
+            // set the owning side to null (unless already changed)
+            if ($combatSceneNpc->getScene() === $this) {
+                $combatSceneNpc->setScene(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerNpc>
+     */
+    public function getPlayerNpcs(): Collection
+    {
+        return $this->playerNpcs;
+    }
+
+    public function addPlayerNpc(PlayerNpc $playerNpc): static
+    {
+        if (!$this->playerNpcs->contains($playerNpc)) {
+            $this->playerNpcs->add($playerNpc);
+            $playerNpc->setScene($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerNpc(PlayerNpc $playerNpc): static
+    {
+        if ($this->playerNpcs->removeElement($playerNpc)) {
+            // set the owning side to null (unless already changed)
+            if ($playerNpc->getScene() === $this) {
+                $playerNpc->setScene(null);
             }
         }
 

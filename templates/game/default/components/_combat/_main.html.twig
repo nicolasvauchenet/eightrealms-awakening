@@ -1,0 +1,87 @@
+<main class="screen-main">
+    <div class="infos left">
+        <div class="info {% if app_characterItemService.characterBonus(this.character, 'health') > 0 %}text-primary{% endif %}">
+            {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+            {{ this.character.health + app_characterItemService.characterBonus(this.character, 'health') }}
+        </div>
+
+        {% if this.character.profession.type == 'Magie' %}
+            <div class="info {% if app_characterItemService.characterBonus(this.character, 'mana') > 0 %}text-primary{% endif %}">
+                {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                {{ this.character.mana + app_characterItemService.characterBonus(this.character, 'mana') }}
+            </div>
+        {% endif %}
+
+        <div class="info">
+            {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+            +{{ app_characterItemService.characterBonus(this.character, 'defense') }}
+        </div>
+
+        <div class="info">
+            {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+            +{{ app_characterItemService.characterBonus(this.character, 'damage') }}
+        </div>
+    </div>
+
+    <div class="infos right">
+        {% if app_characterItemService.equippedItems(character).armor %}
+            <div class="info">
+                <img src="{{ asset('img/core/item/armor/' ~ app_characterItemService.equippedItems(character).armor.item.picture) }}"
+                     class="equip"
+                     alt="{{ app_characterItemService.equippedItems(character).armor.item.name }}"/>
+                <div class="gauge">
+                    <div class="gauge-fill"
+                         style="--value:{{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).armor) }}"></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if app_characterItemService.equippedItems(character).shield %}
+            <div class="info">
+                <img src="{{ asset('img/core/item/shield/' ~ app_characterItemService.equippedItems(character).shield.item.picture) }}"
+                     class="equip"
+                     alt="{{ app_characterItemService.equippedItems(character).shield.item.name }}"/>
+                <div class="gauge">
+                    <div class="gauge-fill"
+                         style="--value:{{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).shield) }}"></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if app_characterItemService.equippedItems(character).bow %}
+            <div class="info">
+                <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(character).bow.item.picture) }}"
+                     class="equip"
+                     alt="{{ app_characterItemService.equippedItems(character).bow.item.name }}"/>
+                <div class="gauge">
+                    <div class="gauge-fill"
+                         style="--value:{{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).bow) }}"></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if app_characterItemService.equippedItems(character).righthand %}
+            <div class="info">
+                <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(character).righthand.item.picture) }}"
+                     class="equip"
+                     alt="{{ app_characterItemService.equippedItems(character).righthand.item.name }}"/>
+                <div class="gauge">
+                    <div class="gauge-fill"
+                         style="--value:{{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).righthand) }}"></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if app_characterItemService.equippedItems(character).lefthand %}
+            <div class="info">
+                <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(character).lefthand.item.picture) }}"
+                     class="equip"
+                     alt="{{ app_characterItemService.equippedItems(character).lefthand.item.name }}"/>
+                <div class="gauge">
+                    <div class="gauge-fill"
+                         style="--value:{{ app_itemService.itemDurabilityFactor(app_characterItemService.equippedItems(character).lefthand) }}"></div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</main>

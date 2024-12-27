@@ -9,6 +9,7 @@ twig:
     app_characterQuestService: '@App\Service\Quest\CharacterQuestService'
     app_locationService: '@App\Service\Location\LocationService'
     app_itemService: '@App\Service\Item\ItemService'
+    app_combatSceneService: '@App\Service\Combat\CombatSceneService'
 
 when@test:
   twig:

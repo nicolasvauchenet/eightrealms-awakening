@@ -11,7 +11,7 @@
 
         <div class="app-grid two">
             {% for place in location.places %}
-                <a href="#"
+                <a href="{{ path('app_game_walk', {'slug': place.slug}) }}"
                    class="app-button outline {% if place not in app.user.player.visitedPlaces %}invisible{% endif %}">
                     {{ place.name }}
                 </a>

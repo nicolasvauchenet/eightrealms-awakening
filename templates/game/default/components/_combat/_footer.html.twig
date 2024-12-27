@@ -1,0 +1,55 @@
+<footer class="screen-footer">
+    <div class="actions">
+        {% for playerNpc in app_combatSceneService.sceneNpcs(this.currentScene, this.character) %}
+            <button class="action"
+                    title="Attaquer {{ playerNpc.npc.name }}">
+                <img src="{{ asset('img/chapter1/npc/thumb_' ~ playerCreature.creature.picture) }}"
+                     alt="{{ playerNpc.npc.name }}"/>
+                <span class="gauge">
+                    <span class="gauge-fill"
+                          style="--value:{{ playerNpc.health / playerNpc.npc.health }}"></span>
+                </span>
+            </button>
+        {% endfor %}
+        {% for playerCreature in app_combatSceneService.sceneCreatures(this.currentScene, this.character) %}
+            <button class="action"
+                    title="Attaquer {{ playerCreature.creature.name }}">
+                <img src="{{ asset('img/core/creature/' ~ playerCreature.creature.picture) }}"
+                     alt="{{ playerCreature.creature.name }}"/>
+                <span class="gauge">
+                    <span class="gauge-fill"
+                          style="--value:{{ playerCreature.health / playerCreature.creature.health }}"></span>
+                </span>
+            </button>
+        {% endfor %}
+        {% if app_characterItemService.equippedItems(character).potion %}
+            <button class="action"
+                    title="Boire {{ app_characterItemService.equippedItems(character).potion.item.name }}">
+                <img src="{{ asset('img/core/item/potion/' ~ app_characterItemService.equippedItems(character).potion.item.picture) }}"
+                     alt="{{ app_characterItemService.equippedItems(character).potion.item.name }}"/>
+            </button>
+        {% endif %}
+        {% if app_characterItemService.equippedItems(character).scroll %}
+            <button class="action"
+                    title="Utiliser {{ app_characterItemService.equippedItems(character).scroll.item.name }}">
+                <img src="{{ asset('img/core/item/scroll/' ~ app_characterItemService.equippedItems(character).scroll.item.picture) }}"
+                     alt="{{ app_characterItemService.equippedItems(character).scroll.item.name }}"/>
+            </button>
+        {% endif %}
+        {% for action in this.currentScene.actions %}
+            <button class="action"
+                    title="{{ action.label }}"
+                    {{ live_action('changeScreen', {'targetScreenId': action.targetScreen.id, 'targetSceneId': action.targetScene.id, 'actionEffects': action.actionEffects }) }}>
+                {% if action.picture %}
+                    <img src="{{ asset('img/' ~ action.picture) }}" alt="{{ action.label }}"/>
+                {% else %}
+                    {{ action.label }}
+                {% endif %}
+            </button>
+        {% endfor %}
+    </div>
+
+    <div class="description scrollable">
+        {{ this.currentScreenDescription | raw }}
+    </div>
+</footer>

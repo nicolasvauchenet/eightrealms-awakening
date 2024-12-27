@@ -1,0 +1,73 @@
+<div class="app-tooltip {{ info is defined ? 'info' : '' }}"
+     data-tooltip-target="tooltip"
+     data-action="click->tooltip#close">
+    <div class="tooltip-background" data-tooltip-target="background"></div>
+    <div class="tooltip-body">
+        <div class="tooltip-content scrollable">
+            {% if type == 'item' %}
+                <h3 class="tooltip-title">
+                    {% if content.type == 'map' %}
+                        Carte de
+                    {% endif %}
+                    {{ content.name }}
+                </h3>
+                <h4 class="tooltip-subtitle">
+                    {% if content.defense is defined %}
+                        {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                        {{ content.defense }}
+                    {% endif %}
+                    {% if content.target is defined and content.target is not null %}
+                        {% if content.target == 'health' %}
+                            {% if content.type == 'Offensif' %}
+                                {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-primary'}) }}
+                                {{ content.amount }}
+                            {% elseif content.type == 'Défensif' %}
+                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                                {{ content.amount }}
+                            {% endif %}
+                        {% endif %}
+                        {% if content.target == 'mana' %}
+                            {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                            {{ content.amount }}
+                        {% endif %}
+                    {% endif %}
+                    {% if content.type == 'Utile' %}
+                        {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                    {% endif %}
+                    {% if content.type == 'map' %}
+                        {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
+                    {% endif %}
+                    {% if content.type == 'food' %}
+                        {{ ux_icon('mdi:cutlery-variant', {'class': 'app-icon text-primary'}) }}
+                    {% endif %}
+                    {% if content.type == 'gift' %}
+                        {{ ux_icon('el:gift', {'class': 'app-icon text-primary'}) }}
+                    {% endif %}
+                    {% if content.damage is defined %}
+                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                        {{ content.damage }}
+                    {% endif %}
+                </h4>
+
+                <figure class="item-picture">
+                    {% if content.type == 'map' %}
+                        <img src="{{ asset('img/core/item/misc/map.png') }}"
+                             alt="{{ content.name }}"/>
+                    {% elseif content.type == 'gift' %}
+                        <img src="{{ asset('img/core/item/misc/' ~ content.picture) }}"
+                             alt="{{ content.name }}"/>
+                    {% else %}
+                        <img src="{{ asset('img/core/item/' ~ content.category.name ~ '/' ~ content.picture) }}"
+                             alt="{{ content.name }}"/>
+                    {% endif %}
+                </figure>
+
+                {{ content.description | raw }}
+            {% elseif type == 'spell' %}
+                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                ???
+            {% endif %}
+        </div>
+    </div>
+</div>
+

@@ -194,9 +194,9 @@ class GameComponent extends AbstractController
                     break;
                 case 'decreaseFortune':
                     $this->character->setFortune($this->character->getFortune() - $value['amount']);
-                    if($this->character->getFortune() < 0) {
+                    /*if($this->character->getFortune() < 0) {
                         $this->character->setFortune(0);
-                    }
+                    }*/
                     $this->entityManager->persist($this->character);
                     $this->entityManager->flush();
                     $this->characterUpdated = true;

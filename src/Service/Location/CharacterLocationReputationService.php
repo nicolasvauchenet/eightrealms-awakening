@@ -49,10 +49,13 @@ class CharacterLocationReputationService
             $rep->setCharacter($character);
             $rep->setLocation($location);
             $rep->setValue(0);
-            $this->entityManager->persist($rep);
         }
 
         $rep->setValue($rep->getValue() + $delta);
+        if($rep->getValue() < -99) {
+            $rep->setValue(-99);
+        }
+        $this->entityManager->persist($rep);
         $this->entityManager->flush();
     }
 }

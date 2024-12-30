@@ -13,7 +13,7 @@
             {% for location in app_locationService.locations %}
                 {% if location.type != 'Royaume' %}
                     <a href="#"
-                       class="app-button outline {% if location not in app.user.player.visitedLocations %}invisible{% endif %}">
+                       class="app-button outline {% if location not in app.user.player.visitedLocations %}invisible{% endif %} {% if location == app.user.player.currentPlace.location %}disabled{% endif %}">
                         {{ location.name }}
                     </a>
                 {% endif %}

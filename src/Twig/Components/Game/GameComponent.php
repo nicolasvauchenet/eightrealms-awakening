@@ -239,7 +239,11 @@ class GameComponent extends AbstractController
                         ->setPlayer($this->character)
                         ->setNpc($npc)
                         ->setScene($this->currentScene)
+                        ->setHealth($npc->getHealth())
+                        ->setMana($npc->getMana())
                         ->setFortune($npc->getFortune())
+                        ->setCrownReward($npc->getFortune())
+                        ->setXpReward($npc->getLevel() * 100)
                         ->setAlive(true);
                     $this->entityManager->persist($playerNpc);
                     $this->character->addPlayerNpc($playerNpc);

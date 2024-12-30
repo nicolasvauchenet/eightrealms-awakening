@@ -32,7 +32,7 @@
                                     {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
                                     {{ content.item.amount }}
                                 </span>
-                            {% elseif content.item.type == 'Défensif' %}
+                            {% elseif content.item.type == 'Défensif' or content.item.type == 'food' %}
                                 <span>
                                     {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
                                     {{ content.item.amount }}
@@ -54,11 +54,6 @@
                     {% if content.item.type == 'map' %}
                         <span>
                             {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
-                        </span>
-                    {% endif %}
-                    {% if content.item.type == 'food' %}
-                        <span>
-                            {{ ux_icon('mdi:cutlery-variant', {'class': 'app-icon text-primary'}) }}
                         </span>
                     {% endif %}
                     {% if content.item.type == 'gift' %}

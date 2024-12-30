@@ -21,7 +21,7 @@
                             {% if content.type == 'Offensif' %}
                                 {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-primary'}) }}
                                 {{ content.amount }}
-                            {% elseif content.type == 'Défensif' %}
+                            {% elseif content.type == 'Défensif' or content.type == 'food' %}
                                 {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
                                 {{ content.amount }}
                             {% endif %}
@@ -36,9 +36,6 @@
                     {% endif %}
                     {% if content.type == 'map' %}
                         {{ ux_icon('gis:world-map', {'class': 'app-icon text-primary'}) }}
-                    {% endif %}
-                    {% if content.type == 'food' %}
-                        {{ ux_icon('mdi:cutlery-variant', {'class': 'app-icon text-primary'}) }}
                     {% endif %}
                     {% if content.type == 'gift' %}
                         {{ ux_icon('el:gift', {'class': 'app-icon text-primary'}) }}

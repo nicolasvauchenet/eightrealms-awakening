@@ -12,7 +12,7 @@
                     {{ content.item.name }}
                 </h3>
 
-                {% if content.item.charge is defined %}
+                {% if content.charge is defined and content.charge %}
                     <h4 class="tooltip-subtitle left">
                         <span>Charges : {{ content.item.charge }}</span>
                     </h4>
@@ -20,10 +20,17 @@
 
                 <h4 class="tooltip-subtitle">
                     {% if content.item.defense is defined %}
-                        <span>
-                            {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
-                            {{ content.item.defense }}
-                        </span>
+                        {% if app_characterItemService.calculateEffectiveDefense(content) == 0 %}
+                            <span class="text-third">
+                                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-third'}) }}
+                                {{ app_characterItemService.calculateEffectiveDefense(content) }}
+                            </span>
+                        {% else %}
+                            <span>
+                                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                                {{ app_characterItemService.calculateEffectiveDefense(content) }}
+                            </span>
+                        {% endif %}
                     {% endif %}
                     {% if content.item.target is defined and content.item.target is not null %}
                         {% if content.item.target == 'health' %}
@@ -62,10 +69,17 @@
                         </span>
                     {% endif %}
                     {% if content.item.damage is defined %}
-                        <span>
-                            {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                            {{ content.item.damage }}
-                        </span>
+                        {% if app_characterItemService.calculateEffectiveDamage(content) == 0 %}
+                            <span class="text-third">
+                                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-third'}) }}
+                                {{ app_characterItemService.calculateEffectiveDamage(content) }}
+                            </span>
+                        {% else %}
+                            <span>
+                                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                                {{ app_characterItemService.calculateEffectiveDamage(content) }}
+                            </span>
+                        {% endif %}
                     {% endif %}
                 </h4>
 

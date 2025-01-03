@@ -13,6 +13,8 @@ use App\Entity\Quest\Quest;
 use App\Entity\Quest\QuestStep;
 use App\Entity\Scene\Scene;
 use App\Entity\Screen\Screen;
+use App\Service\Combat\CombatService;
+use App\Service\Item\CharacterItemService;
 use App\Service\Item\ItemService;
 use App\Service\Location\CharacterLocationReputationService;
 use App\Service\Quest\CharacterQuestService;
@@ -37,6 +39,8 @@ class GameComponent extends AbstractController
     private CharacterQuestService $characterQuestService;
     private ItemService $itemService;
     private StealService $stealService;
+    private CharacterItemService $characterItemService;
+    private CombatService $combatService;
 
     #[LiveProp(writable: true)]
     public Player $character;
@@ -63,13 +67,17 @@ class GameComponent extends AbstractController
                                 CharacterLocationReputationService $characterLocationReputationService,
                                 CharacterQuestService              $characterQuestService,
                                 ItemService                        $itemService,
-                                StealService                       $stealService)
+                                StealService                       $stealService,
+                                CharacterItemService               $characterItemService,
+                                CombatService                      $combatService)
     {
         $this->entityManager = $entityManager;
         $this->characterLocationReputationService = $characterLocationReputationService;
         $this->characterQuestService = $characterQuestService;
         $this->itemService = $itemService;
         $this->stealService = $stealService;
+        $this->characterItemService = $characterItemService;
+        $this->combatService = $combatService;
     }
 
     #[PostMount]
@@ -155,6 +163,15 @@ class GameComponent extends AbstractController
             $scene = $this->entityManager->getRepository(Scene::class)->findOneBy(['slug' => $actionEffects['changeScreen']['targetScene']]);
             $this->changeScreen($screen->getId(), $scene->getId(), $actionEffects);
         }
+    }
+
+    #[LiveAction]
+    public function attack(#[LiveArg] int $playerCreatureId): void
+    {
+        $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+        $playerCreature = $this->entityManager->getRepository(PlayerCreature::class)->find($playerCreatureId);
+
+        $this->currentScreenDescription = $this->combatService->resolveCombatRound($this->character, $playerCreature);
     }
 
     private function updateCharacterPlace(): void

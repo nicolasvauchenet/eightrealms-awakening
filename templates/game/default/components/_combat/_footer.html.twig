@@ -12,8 +12,9 @@
             </button>
         {% endfor %}
         {% for playerCreature in app_combatSceneService.sceneCreatures(this.currentScene, this.character) %}
-            <button class="action"
-                    title="Attaquer {{ playerCreature.creature.name }}">
+            <button class="action {% if not playerCreature.alive %}inactive{% endif %}"
+                    title="Attaquer {{ playerCreature.creature.name }}"
+                    {{ live_action('attack', {playerCreatureId: playerCreature.id}) }}>
                 <img src="{{ asset('img/core/creature/' ~ playerCreature.creature.picture) }}"
                      alt="{{ playerCreature.creature.name }}"/>
                 <span class="gauge">

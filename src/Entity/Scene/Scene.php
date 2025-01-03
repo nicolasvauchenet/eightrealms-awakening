@@ -54,18 +54,21 @@ abstract class Scene
      * @var Collection<int, CombatSceneCreature>
      */
     #[ORM\OneToMany(targetEntity: CombatSceneCreature::class, mappedBy: 'scene')]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $combatSceneCreatures;
 
     /**
      * @var Collection<int, CombatSceneNpc>
      */
     #[ORM\OneToMany(targetEntity: CombatSceneNpc::class, mappedBy: 'scene')]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $combatSceneNpcs;
 
     /**
      * @var Collection<int, PlayerNpc>
      */
     #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'scene')]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerNpcs;
 
     public function __construct()
@@ -193,7 +196,7 @@ abstract class Scene
 
     public function addCombatSceneCreature(CombatSceneCreature $combatSceneCreature): static
     {
-        if (!$this->combatSceneCreatures->contains($combatSceneCreature)) {
+        if(!$this->combatSceneCreatures->contains($combatSceneCreature)) {
             $this->combatSceneCreatures->add($combatSceneCreature);
             $combatSceneCreature->setScene($this);
         }
@@ -203,9 +206,9 @@ abstract class Scene
 
     public function removeCombatSceneCreature(CombatSceneCreature $combatSceneCreature): static
     {
-        if ($this->combatSceneCreatures->removeElement($combatSceneCreature)) {
+        if($this->combatSceneCreatures->removeElement($combatSceneCreature)) {
             // set the owning side to null (unless already changed)
-            if ($combatSceneCreature->getScene() === $this) {
+            if($combatSceneCreature->getScene() === $this) {
                 $combatSceneCreature->setScene(null);
             }
         }
@@ -223,7 +226,7 @@ abstract class Scene
 
     public function addCombatSceneNpc(CombatSceneNpc $combatSceneNpc): static
     {
-        if (!$this->combatSceneNpcs->contains($combatSceneNpc)) {
+        if(!$this->combatSceneNpcs->contains($combatSceneNpc)) {
             $this->combatSceneNpcs->add($combatSceneNpc);
             $combatSceneNpc->setScene($this);
         }
@@ -233,9 +236,9 @@ abstract class Scene
 
     public function removeCombatSceneNpc(CombatSceneNpc $combatSceneNpc): static
     {
-        if ($this->combatSceneNpcs->removeElement($combatSceneNpc)) {
+        if($this->combatSceneNpcs->removeElement($combatSceneNpc)) {
             // set the owning side to null (unless already changed)
-            if ($combatSceneNpc->getScene() === $this) {
+            if($combatSceneNpc->getScene() === $this) {
                 $combatSceneNpc->setScene(null);
             }
         }
@@ -253,7 +256,7 @@ abstract class Scene
 
     public function addPlayerNpc(PlayerNpc $playerNpc): static
     {
-        if (!$this->playerNpcs->contains($playerNpc)) {
+        if(!$this->playerNpcs->contains($playerNpc)) {
             $this->playerNpcs->add($playerNpc);
             $playerNpc->setScene($this);
         }
@@ -263,9 +266,9 @@ abstract class Scene
 
     public function removePlayerNpc(PlayerNpc $playerNpc): static
     {
-        if ($this->playerNpcs->removeElement($playerNpc)) {
+        if($this->playerNpcs->removeElement($playerNpc)) {
             // set the owning side to null (unless already changed)
-            if ($playerNpc->getScene() === $this) {
+            if($playerNpc->getScene() === $this) {
                 $playerNpc->setScene(null);
             }
         }

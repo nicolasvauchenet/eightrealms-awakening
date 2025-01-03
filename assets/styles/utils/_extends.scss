@@ -26,6 +26,11 @@
   opacity: 0.5;
 }
 
+.inactive {
+  pointer-events: none;
+  opacity: 0.75;
+}
+
 /* MARGINS */
 .mb-0 {
   margin-bottom: 0 !important;

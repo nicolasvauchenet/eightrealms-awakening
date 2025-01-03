@@ -64,6 +64,14 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'isEquipped' => false,
                 'class' => Potion::class,
             ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'magical_firewand',
+                'isEquipped' => false,
+                'health' => 20,
+                'charge' => 10,
+                'class' => Weapon::class,
+            ],
 
             // Elandra la Sage
             [

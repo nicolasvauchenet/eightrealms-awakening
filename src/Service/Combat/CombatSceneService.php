@@ -21,11 +21,11 @@ class CombatSceneService
 
     public function getSceneNpcs(Scene $scene, Player $player): array
     {
-        return $this->playerNpcRepository->findBy(['scene' => $scene, 'player' => $player]);
+        return $this->playerNpcRepository->findBy(['scene' => $scene, 'player' => $player], ['id' => 'ASC']);
     }
 
     public function getSceneCreatures(Scene $scene, Player $player): array
     {
-        return $this->playerCreatureRepository->findBy(['scene' => $scene, 'player' => $player]);
+        return $this->playerCreatureRepository->findBy(['scene' => $scene, 'player' => $player], ['id' => 'ASC']);
     }
 }

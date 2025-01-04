@@ -167,6 +167,7 @@ class GameComponent extends AbstractController
 
     /**
      * @throws RandomException
+     * @throws \ReflectionException
      */
     #[LiveAction]
     public function attack(#[LiveArg] int $playerCreatureId): void
@@ -174,16 +175,54 @@ class GameComponent extends AbstractController
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
         $playerCreature = $this->entityManager->getRepository(PlayerCreature::class)->find($playerCreatureId);
 
+        // Récupérer la liste des PlayerCreature associées à la scène (pour le multi-attaque éventuel)
         $combatSceneCreatures = $this->currentScene->getCombatSceneCreatures();
         foreach($combatSceneCreatures as $csc) {
-            $sceneCreatures = $this->entityManager->getRepository(PlayerCreature::class)->findBy(['player' => $this->character, 'creature' => $csc->getCreature()]);
+            // On récupère le PlayerCreature correspondant
+            $pcs = $this->entityManager
+                ->getRepository(PlayerCreature::class)
+                ->findBy(['player' => $this->character, 'creature' => $csc->getCreature()]);
+            $sceneCreatures = $pcs;
         }
 
-        $this->currentScreenDescription = $this->combatService->resolveCombatRound(
+        // On lance le tour de combat
+        $message = $this->combatService->resolveCombatRound(
             $this->character,
             $playerCreature,
             $sceneCreatures
         );
+
+        // On stocke le message (logs de combat)
+        $this->currentScreenDescription = $message;
+
+        // Juste après avoir résolu le combat, on vérifie si le joueur est mort
+        if(!$this->character->isAlive()) {
+            // TODO: Gérer la logique d'échec (récompenses "négatives" ou malus ?)
+            // On redirige vers l'écran CinematicScreen de défaite
+            $defeatScreen = $this->entityManager->getRepository(Screen::class)->findOneBy(['slug' => 'defaite']);
+            $defeatScene = $this->entityManager->getRepository(Scene::class)->findOneBy(['slug' => 'defaite']);
+            $this->changeScreen($defeatScreen->getId(), $defeatScene->getId(), []);
+
+            return;
+        }
+
+        // Sinon, on regarde si TOUTES les PlayerCreature de la scène sont mortes
+        $allDead = true;
+        foreach($sceneCreatures as $pc) {
+            if($pc->isAlive()) {
+                $allDead = false;
+                break;
+            }
+        }
+        if($allDead) {
+            // TODO: Gérer la logique de récompenses de victoire
+            // (ex. gain d’XP, loot, mise à jour de la quête, etc.)
+
+            // On redirige vers l'écran CinematicScreen de victoire
+            $victoryScreen = $this->entityManager->getRepository(Screen::class)->findOneBy(['slug' => 'victoire']);
+            $victoryScene = $this->entityManager->getRepository(Scene::class)->findOneBy(['slug' => 'victoire']);
+            $this->changeScreen($victoryScreen->getId(), $victoryScene->getId(), []);
+        }
     }
 
     #[LiveAction]

@@ -28,6 +28,22 @@ class CinematicSceneFixtures extends Fixture implements OrderedFixtureInterface
                 'screen' => 'screen_cinematic_jail',
                 'reference' => 'scene_cinematic_jail',
             ],
+            [
+                'name' => 'Victoire',
+                'picture' => 'victory.webp',
+                'description' => "<h1>Victoire&nbsp;!</h1><p>Vous sortez vainqueur de ce combat acharné et glorieux. Profitez de votre récompense et remettez-vous vite, car d'autres défis vous attendent&nbsp;!</p>",
+                'position' => 1,
+                'screen' => 'screen_cinematic_combat_anciens_docks_rats_victory',
+                'reference' => 'scene_cinematic_combat_anciens_docks_rats_victory',
+            ],
+            [
+                'name' => 'Échec',
+                'picture' => 'defeat.webp',
+                'description' => "<h1>Défaite&nbsp;!</h1><p>Vous avez été vaincu. Relevez-vous et entraînez-vous pour être plus fort la prochaine fois&nbsp;!</p>",
+                'position' => 1,
+                'screen' => 'screen_cinematic_combat_anciens_docks_rats_defeat',
+                'reference' => 'scene_cinematic_combat_anciens_docks_rats_defeat',
+            ],
         ];
 
         foreach($scenes as $data) {

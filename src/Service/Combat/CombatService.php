@@ -120,13 +120,13 @@ class CombatService
         // 4) Calcul du succès ou échec de l’attaque
         //    On applique un -2 sur le jet => plus facile (ou +2 sur la stat, c’est équivalent)
         $attackRoll = random_int(1, 20);
-        $attackOk = (($attackRoll - 2) <= $attackStat);
+        $attackOk = ($attackRoll <= ($attackStat + 5));
 
         // 5) Défense de la créature
         //    (ex. on compare à la Dextérité de la créature ou autre stat)
         $defenseRoll = random_int(1, 20);
         // Par exemple, tu lui mets aussi un +2 ou pas.
-        $defenseOk = ($defenseRoll <= $playerCreature->getCreature()->getDexterity());
+        $defenseOk = (($defenseRoll + 2) <= $playerCreature->getCreature()->getDexterity());
 
         $attackHits = $attackOk && !$defenseOk;
 

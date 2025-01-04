@@ -165,13 +165,25 @@ class GameComponent extends AbstractController
         }
     }
 
+    /**
+     * @throws RandomException
+     */
     #[LiveAction]
     public function attack(#[LiveArg] int $playerCreatureId): void
     {
         $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
         $playerCreature = $this->entityManager->getRepository(PlayerCreature::class)->find($playerCreatureId);
 
-        $this->currentScreenDescription = $this->combatService->resolveCombatRound($this->character, $playerCreature);
+        $combatSceneCreatures = $this->currentScene->getCombatSceneCreatures();
+        foreach($combatSceneCreatures as $csc) {
+            $sceneCreatures = $this->entityManager->getRepository(PlayerCreature::class)->findBy(['player' => $this->character, 'creature' => $csc->getCreature()]);
+        }
+
+        $this->currentScreenDescription = $this->combatService->resolveCombatRound(
+            $this->character,
+            $playerCreature,
+            $sceneCreatures
+        );
     }
 
     private function updateCharacterPlace(): void

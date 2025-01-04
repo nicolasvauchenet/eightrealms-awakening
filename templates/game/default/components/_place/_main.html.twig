@@ -24,19 +24,15 @@
             +{{ app_characterItemService.characterBonus(this.character, 'defense') }}
         </div>
 
-        {% if app_characterItemService.characterBonus(this.character, 'magical') > 0 %}
-            <div class="info">
+        <div class="info">
+            {% if app_characterItemService.characterBonus(this.character, 'magical') %}
                 {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
                 +{{ app_characterItemService.characterBonus(this.character, 'magical') }}
-            </div>
-        {% endif %}
-
-        {% if app_characterItemService.characterBonus(this.character, 'damage') > 0 %}
-            <div class="info">
+            {% else %}
                 {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
                 +{{ app_characterItemService.characterBonus(this.character, 'damage') }}
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
 
         {% set characterReputation = app_characterLocationReputationService.totalReputation(this.character, this.character.currentPlace.location) %}
         <div class="info {{ characterReputation < 0 ? 'text-third' }}">

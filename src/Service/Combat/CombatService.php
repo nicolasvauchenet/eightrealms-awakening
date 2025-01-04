@@ -29,23 +29,32 @@ class CombatService
      * 2) Si la créature survit, elle contre-attaque
      *
      * Renvoie une chaîne (ou un tableau) décrivant ce qui s'est passé.
+     * @throws RandomException
      */
     public function resolveCombatRound(
         Player         $player,
-        PlayerCreature $playerCreature
+        PlayerCreature $playerCreature,
+        array          $sceneCreatures
     ): string
     {
         $messages = [];
 
-        // ==== 1) Attaque du joueur sur la créature ====
+        // 1) Attaque du joueur sur la créature
         $messages[] = $this->playerAttacksCreature($player, $playerCreature);
 
-        // Si la créature est toujours en vie, elle attaque à son tour
+        // Si la cible est vivante, elle attaque
         if($playerCreature->isAlive()) {
             $messages[] = $this->creatureAttacksPlayer($playerCreature, $player);
         }
 
-        // On peut flush() à la fin du tour
+        // Ensuite, les autres créatures attaquent
+        foreach($sceneCreatures as $pc) {
+            // On s’assure de ne pas ré-attaquer $playerCreature
+            if($pc !== $playerCreature && $pc->isAlive()) {
+                $messages[] = $this->creatureAttacksPlayer($pc, $player);
+            }
+        }
+
         $this->entityManager->flush();
 
         return implode('<br/>', array_filter($messages));
@@ -57,10 +66,13 @@ class CombatService
      */
     public function playerAttacksCreature(Player $player, PlayerCreature $playerCreature): string
     {
-        // 1) Calcul du succès ou échec de l'attaque
-        //    => on ajoute +2 pour rendre les attaques moins souvent ratées
+        // 1) Calcul du succès ou échec de l'attaque (avec +2 “facilitateur”)
         $attackRoll = random_int(1, 20);
-        $attackOk = (($attackRoll + 2) <= $player->getStrength());
+        if($player->getProfession()->getType() === 'Magie') {
+            $attackOk = (($attackRoll + 2) <= $player->getIntelligence());
+        } else {
+            $attackOk = (($attackRoll + 2) <= $player->getStrength());
+        }
 
         // Défense de la créature
         $defenseRoll = random_int(1, 20);
@@ -68,31 +80,72 @@ class CombatService
 
         $attackHits = $attackOk && !$defenseOk;
 
+        // 2) Déterminer l’arme équipée (main droite ou gauche)
+        $equipped = $this->characterItemService->getEquippedItems($player);
+        /** @var CharacterItem|null $weaponItem */
+        $weaponItem = $equipped['righthand'] ?? $equipped['lefthand'] ?? null;
+
+        // Variables pour gérer l’arme magique
+        $isMagical = false;
+        $charge = 0;
+        $weaponDamage = 0;
+        $rawDamage = 0;
+
+        if($weaponItem) {
+            $weapon = $weaponItem->getItem();
+            // Vérifier si c’est une arme magique via "charge"
+            if(method_exists($weapon, 'getCharge') && $weapon->getCharge() !== null) {
+                $isMagical = true;
+                $charge = $weaponItem->getCharge() ?? 0;
+            }
+
+            if($isMagical && $charge > 0) {
+                // Attaque magique => on utilise "amount" de l’arme comme dégâts
+                $weaponDamage = $weapon->getAmount() ?? 0;
+                $rawDamage = $weaponDamage; // pas de 1D6 aléatoire dans cet exemple
+            } else {
+                // Arme non-magique OU charge épuisée => on prend "damage"
+                $weaponDamage = method_exists($weapon, 'getDamage')
+                    ? ($weapon->getDamage() ?? 0)
+                    : 0;
+                $rawDamage = random_int(1, 6) + $weaponDamage + $player->getDamage();
+            }
+        }
+
+        // ►►► IMPORTANT : décrémenter la charge si c’est une arme magique et charge>0,
+        // même si l’attaque finit par être un échec
+        if($weaponItem && $isMagical && $charge > 0) {
+            // On réduit la charge de 1
+            $weaponItem->setCharge(max(0, $charge - 1));
+            $this->entityManager->persist($weaponItem);
+        }
+
+        // Si l’attaque rate, on s’arrête là,
+        // mais la charge a déjà été consommée si c’était magique
         if(!$attackHits) {
             return 'Vous ratez votre attaque.';
         }
 
-        // 2) Dégâts bruts : 1D6 + bonus du joueur
-        $rawDamage = random_int(1, 6) + $player->getDamage();
-
-        // 3) Défense de la cible
+        // 5) Calcul de la défense de la cible
         $defense = $playerCreature->getCreature()->getDefense();
 
-        // 4) Dégâts effectifs
+        // 6) Dégâts effectifs
         $damage = $rawDamage - $defense;
-        $damage = max(0, $damage); // Pas de dégâts négatifs
+        $damage = max(0, $damage);
 
-        // 5) Appliquer dégâts à la créature
+        // 7) Appliquer les dégâts à la créature
         $this->applyDamageToCreature($damage, $playerCreature);
 
-        // 6) Usure de l'arme si c’est une arme physique
-        //    => "Absorbed" = la part non infligée
+        // 8) Gérer la dégradation physique (si l’arme est non-magique ou charge épuisée)
+        //    => “absorbed” = la part non-infligée
         $absorbed = $rawDamage - $damage;
-        if($absorbed > 0) {
-            $this->degradeWeaponIfPhysical($player, $absorbed);
+        if($weaponItem && (!$isMagical || $charge <= 0)) {
+            if($absorbed > 0) {
+                $this->degradeWeaponIfPhysical($player, $absorbed);
+            }
         }
 
-        // 7) Message
+        // 9) Générer le message final
         if(!$playerCreature->isAlive()) {
             return sprintf(
                 'Vous touchez et infligez %d points de dégâts. %s est vaincu !',
@@ -199,28 +252,36 @@ class CombatService
     private function distributeDamageOnShieldArmor(int $damage, Player $player, string &$absorbedMessage = ''): int
     {
         $equippedItems = $this->characterItemService->getEquippedItems($player);
-        /** @var CharacterItem|null $shieldItem */
         $shieldItem = $equippedItems['shield'] ?? null;
-        /** @var CharacterItem|null $armorItem */
         $armorItem = $equippedItems['armor'] ?? null;
 
         $remaining = $damage;
         $absorbedMessage = '';
 
-        // 1) Bouclier
+        // ----- 1) BOUCLIER -----
         if($shieldItem) {
-            $shieldHealth = $shieldItem->getHealth();
-            $absorbed = min($shieldHealth, $remaining);
+            // Défense effective (tenant compte de l’usure)
+            $shieldDefense = $this->characterItemService->calculateEffectiveDefense($shieldItem);
+            // ex. une baseDefense=2, partiellement usée => shieldDefense=1 ou 2
 
-            if($absorbed > 0) {
-                // On réduit l'usure par 2
+            if($shieldDefense > 0 && $remaining > 0) {
+                $absorbed = min($shieldDefense, $remaining);
+                // On décrémente la durabilité en fonction de la partie absorbée
+                $shieldHealth = $shieldItem->getHealth() ?? 0;
                 $damageToShield = (int)floor($absorbed / 2);
 
-                // Bouclier perd X points de "vie"
-                $shieldItem->setHealth($shieldHealth - $damageToShield);
-                $this->entityManager->persist($shieldItem);
+                // On ne dépasse pas la durabilité
+                $damageToShield = min($damageToShield, $shieldHealth);
 
+                // Applique la perte de durabilité
+                if($damageToShield > 0) {
+                    $shieldItem->setHealth($shieldHealth - $damageToShield);
+                    $this->entityManager->persist($shieldItem);
+                }
+                // On retire les dégâts absorbés du “remaining”
                 $remaining -= $absorbed;
+
+                // Log
                 $absorbedMessage .= sprintf(
                     'Votre bouclier a absorbé %d dégâts (perd %d durabilité). ',
                     $absorbed,
@@ -229,19 +290,31 @@ class CombatService
             }
         }
 
-        // 2) Armure
+        // ----- 2) ARMURE -----
         if($remaining > 0 && $armorItem) {
-            $armorHealth = $armorItem->getHealth();
-            $absorbed = min($armorHealth, $remaining);
+            // Défense effective
+            $armorDefense = $this->characterItemService->calculateEffectiveDefense($armorItem);
+            if($armorDefense > 0) {
+                $absorbed = min($armorDefense, $remaining);
+                $armorHealth = $armorItem->getHealth() ?? 0;
 
-            if($absorbed > 0) {
-                // On réduit aussi l'usure par 2
+                // Avant : $damageToArmor = (int) floor($absorbed / 2);
                 $damageToArmor = (int)floor($absorbed / 2);
 
-                $armorItem->setHealth($armorHealth - $damageToArmor);
-                $this->entityManager->persist($armorItem);
+                // Si l’armure a absorbé >0 dégâts, on veut au moins perdre 1 durabilité
+                if($damageToArmor < 1 && $absorbed > 0) {
+                    $damageToArmor = 1;
+                }
 
+                // On ne dépasse pas la durabilité
+                $damageToArmor = min($damageToArmor, $armorHealth);
+
+                if($damageToArmor > 0) {
+                    $armorItem->setHealth($armorHealth - $damageToArmor);
+                    $this->entityManager->persist($armorItem);
+                }
                 $remaining -= $absorbed;
+
                 $absorbedMessage .= sprintf(
                     'Votre armure a absorbé %d dégâts (perd %d durabilité). ',
                     $absorbed,
@@ -250,7 +323,6 @@ class CombatService
             }
         }
 
-        // 3) On renvoie les dégâts restants
         return $remaining;
     }
 
@@ -282,8 +354,8 @@ class CombatService
         // Arme physique => on la dégrade
         $currentDurability = $weaponItem->getHealth() ?? 0;
         if($currentDurability > 0) {
-            // Diviser par 2 pour un usage moins punitif
-            $damageToWeapon = (int)floor($absorbed / 2);
+            // Diviser par 4 pour un usage moins punitif
+            $damageToWeapon = (int)floor($absorbed / 4);
             $damageToWeapon = min($damageToWeapon, $currentDurability);
 
             $weaponItem->setHealth($currentDurability - $damageToWeapon);

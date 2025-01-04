@@ -18,8 +18,13 @@
         </div>
 
         <div class="info">
-            {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-            +{{ app_characterItemService.characterBonus(this.character, 'damage') }}
+            {% if app_characterItemService.characterBonus(this.character, 'magical') %}
+                {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
+                +{{ app_characterItemService.characterBonus(this.character, 'magical') }}
+            {% else %}
+                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                +{{ app_characterItemService.characterBonus(this.character, 'damage') }}
+            {% endif %}
         </div>
     </div>
 

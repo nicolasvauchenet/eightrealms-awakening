@@ -125,50 +125,40 @@ class ItemService
     public function getItemDurabilityFactor(CharacterItem $characterItem): float
     {
         $item = $characterItem->getItem();
-
-        // Récupération de la durabilité/charge actuelles
-        $currentHealth = $characterItem->getHealth() ?? 0;
-        $currentCharge = $characterItem->getCharge() ?? 0;
-
-        // Récupération de la durabilité/charge maximales
-        $maxHealth = $item->getHealth() ?? 0;
-        $maxCharge = 0;
         if($item instanceof Weapon) {
-            // Pour les armes, on peut envisager un champ getCharge()
-            // (ex. baguettes, arcs magiques, etc.)
-            $maxCharge = $item->getCharge() ?? 0;
+            if($this->isMagicalWeapon($characterItem)) {
+                $current = $characterItem->getCharge();
+                $maximum = $item->getCharge();
+            } else {
+                $current = $characterItem->getHealth();
+                $maximum = $item->getHealth();
+            }
+        } else {
+            $current = $characterItem->getHealth();
+            $maximum = $item->getHealth();
         }
 
-        // On prend la plus grande des deux valeurs (health / charge)
-        $current = max($currentHealth, $currentCharge);
-        $maximum = max($maxHealth, $maxCharge);
-
-        // Si pas de notion de durabilité (max=0), ratio = 1 (plein)
         if($maximum <= 0) {
             return 1.0;
         }
 
-        // Si la durabilité actuelle est 0 => ratio = 0
         if($current <= 0) {
             return 0.0;
         }
 
-        // Calcul du pourcentage
         $percent = ($current / $maximum) * 100;
-
-        // Paliers (exemple) :
-        //   - ≥ 51% : ratio=1.0  (plein)
-        //   - ≥ 21% : ratio=0.5
-        //   - ≥ 1%  : ratio=0.25
-        //   - 0%    : ratio=0.0
-        if($percent >= 51) {
-            $ratio = 1.0;
-        } else if($percent >= 21) {
-            $ratio = 0.5;
-        } else if($percent >= 1) {
-            $ratio = 0.25;
+        if($this->isMagicalWeapon($characterItem)) {
+            $ratio = $percent / 100;
         } else {
-            $ratio = 0.0;
+            if($percent >= 51) {
+                $ratio = 1.0;
+            } else if($percent >= 21) {
+                $ratio = 0.5;
+            } else if($percent >= 1) {
+                $ratio = 0.25;
+            } else {
+                $ratio = 0.0;
+            }
         }
 
         return $ratio;

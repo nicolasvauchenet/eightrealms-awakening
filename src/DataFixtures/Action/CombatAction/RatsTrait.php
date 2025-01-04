@@ -33,7 +33,10 @@ trait RatsTrait
         'targetScreen' => 'screen_combat_anciens_docks_rats',
         'targetScreenClass' => CombatScreen::class,
         'actionEffects' => [
-
+            'decreaseHealth' => [
+                'amount' => '5',
+            ],
+            'updateDescription' => 'Vous ne pouvez pas fuir le combat ! Vous devez combattre les rats pour vous en sortir. Vous avez perdu 5 points de vie.',
         ],
         'reference' => 'action_combat_anciens_docks_rats_flee',
     ];

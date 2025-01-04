@@ -253,6 +253,15 @@ class GameComponent extends AbstractController
                     $this->characterLocationReputationService->modifyReputation($this->character, $location, ($value['amount'] * -1));
                     $this->characterUpdated = true;
                     break;
+                case 'decreaseHealth':
+                    $this->character->setHealth($this->character->getHealth() - $value['amount']);
+                    if($this->character->getHealth() < 0) {
+                        $this->character->setHealth(0);
+                    }
+                    $this->entityManager->persist($this->character);
+                    $this->entityManager->flush();
+                    $this->characterUpdated = true;
+                    break;
                 case 'updateDescription':
                     $this->currentScreenDescription = $value;
                     break;

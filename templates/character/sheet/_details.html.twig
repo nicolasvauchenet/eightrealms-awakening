@@ -52,8 +52,13 @@
                     +{{ app_characterItemService.characterBonus(character, 'defense') }}
                 </div>
                 <div class="metric">
-                    {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                    +{{ app_characterItemService.characterBonus(character, 'damage') }}
+                    {% if app_characterItemService.characterBonus(character, 'magical') %}
+                        {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
+                        +{{ app_characterItemService.characterBonus(character, 'magical') }}
+                    {% else %}
+                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                        +{{ app_characterItemService.characterBonus(character, 'damage') }}
+                    {% endif %}
                 </div>
             </div>
             <div class="fortune">

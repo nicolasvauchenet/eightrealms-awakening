@@ -173,4 +173,25 @@ class ItemService
 
         return $ratio;
     }
+
+    /**
+     * Détermine si l'arme (CharacterItem) est considérée "magique".
+     * Ex.: si l'entité Weapon a un champ "charge" non null,
+     *      ou un booléen "isMagical", etc.
+     */
+    public function isMagicalWeapon(CharacterItem $weaponCI): bool
+    {
+        $item = $weaponCI->getItem();
+        if(!$item instanceof Weapon) {
+            return false;
+        }
+
+        // Par exemple, on considère "magique" si "charge" n'est pas null
+        // ou si un champ "isMagical() === true" existe.
+        if(method_exists($item, 'getCharge') && $item->getCharge() !== null) {
+            return true;
+        }
+
+        return false;
+    }
 }

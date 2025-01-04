@@ -12,9 +12,9 @@
                     {{ content.item.name }}
                 </h3>
 
-                {% if content.charge is defined and content.charge %}
+                {% if content.charge is defined and content.charge is not null %}
                     <h4 class="tooltip-subtitle left">
-                        <span>Charges : {{ content.item.charge }}</span>
+                        <span>Charges : {{ content.charge }}</span>
                     </h4>
                 {% endif %}
 

@@ -5,6 +5,7 @@ namespace App\Twig\Components\Character;
 use App\Entity\Character\Character;
 use App\Entity\Item\CharacterItem;
 use App\Service\Item\CharacterItemService;
+use App\Service\Item\ItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -25,24 +26,36 @@ class SheetComponent
 
     #[LiveProp(writable: true)]
     public string $type;
+    private ItemService $itemService;
 
     public function __construct(EntityManagerInterface $entityManager,
-                                CharacterItemService   $characterItemService)
+                                CharacterItemService   $characterItemService, ItemService $itemService)
     {
         $this->entityManager = $entityManager;
         $this->characterItemService = $characterItemService;
+        $this->itemService = $itemService;
     }
 
     #[LiveAction]
     public function equipItem(#[LiveArg] int $characterItemId): void
     {
         $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
+        if(!$characterItem) {
+            return;
+        }
+
+        $isMagical = $this->itemService->isMagicalWeapon($characterItem);
+
+        if($isMagical && $this->character->getProfession()->getType() !== 'Magie') {
+            return;
+        }
+
         if($characterItem->isEquipped()) {
             $characterItem->setSlot(null);
             $characterItem->setEquipped(false);
         } else {
             $categoryName = $characterItem->getItem()->getCategory()->getName();
-            $equippedItems = $this->characterItemService->getEquippedItems($characterItem->getCharacter());
+            $equippedItems = $this->characterItemService->getEquippedItems($this->character);
 
             switch($categoryName) {
                 case 'armor':
@@ -115,6 +128,7 @@ class SheetComponent
             }
             $characterItem->setEquipped(true);
         }
+
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();
     }

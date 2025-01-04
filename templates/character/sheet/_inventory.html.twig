@@ -110,9 +110,15 @@
                                         {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
                                     </button>
                                 {% else %}
-                                    <button class="bg-success" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
-                                        {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
-                                    </button>
+                                    {% if app_characterItemService.canEquipWeapon(this.character, characterItem) %}
+                                        <button class="bg-success" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
+                                            {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
+                                        </button>
+                                    {% else %}
+                                        <button class="bg-black disabled">
+                                            <a>&nbsp;</a>
+                                        </button>
+                                    {% endif %}
                                 {% endif %}
                             {% elseif characterItem.item.type == 'map' or characterItem.item.type == 'gift' %}
                                 <button class="bg-black disabled">

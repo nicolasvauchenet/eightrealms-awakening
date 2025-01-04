@@ -4,6 +4,7 @@ namespace App\Entity\Scene;
 
 use App\Entity\Action\Action;
 use App\Entity\Character\PlayerNpc;
+use App\Entity\Quest\QuestStep;
 use App\Entity\Screen\Screen;
 use App\Repository\Scene\SceneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -70,6 +71,9 @@ abstract class Scene
     #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'scene')]
     #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerNpcs;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?QuestStep $questStep = null;
 
     public function __construct()
     {
@@ -272,6 +276,18 @@ abstract class Scene
                 $playerNpc->setScene(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getQuestStep(): ?QuestStep
+    {
+        return $this->questStep;
+    }
+
+    public function setQuestStep(?QuestStep $questStep): static
+    {
+        $this->questStep = $questStep;
 
         return $this;
     }

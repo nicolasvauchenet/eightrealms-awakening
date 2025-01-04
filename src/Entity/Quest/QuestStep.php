@@ -37,6 +37,9 @@ class QuestStep
     #[ORM\Column(nullable: true)]
     private ?int $crownReward = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $xpReward = null;
+
     #[ORM\ManyToOne(inversedBy: 'questSteps')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Quest $quest = null;
@@ -136,6 +139,18 @@ class QuestStep
         return $this;
     }
 
+    public function getXpReward(): ?int
+    {
+        return $this->xpReward;
+    }
+
+    public function setXpReward(?int $xpReward): static
+    {
+        $this->xpReward = $xpReward;
+
+        return $this;
+    }
+
     public function getQuest(): ?Quest
     {
         return $this->quest;
@@ -182,7 +197,7 @@ class QuestStep
 
     public function addCharacterQuestStep(CharacterQuestStep $characterQuestStep): static
     {
-        if (!$this->characterQuestSteps->contains($characterQuestStep)) {
+        if(!$this->characterQuestSteps->contains($characterQuestStep)) {
             $this->characterQuestSteps->add($characterQuestStep);
             $characterQuestStep->setQuestStep($this);
         }
@@ -192,9 +207,9 @@ class QuestStep
 
     public function removeCharacterQuestStep(CharacterQuestStep $characterQuestStep): static
     {
-        if ($this->characterQuestSteps->removeElement($characterQuestStep)) {
+        if($this->characterQuestSteps->removeElement($characterQuestStep)) {
             // set the owning side to null (unless already changed)
-            if ($characterQuestStep->getQuestStep() === $this) {
+            if($characterQuestStep->getQuestStep() === $this) {
                 $characterQuestStep->setQuestStep(null);
             }
         }

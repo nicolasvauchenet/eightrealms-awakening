@@ -1,15 +1,25 @@
 <footer class="screen-footer">
     <div class="actions">
         {% for action in this.currentScene.actions %}
-            <button class="action"
-                    title="{{ action.label }}"
-                    {{ live_action('changeScreen', {'targetScreenId': action.targetScreen.id, 'targetSceneId': action.targetScene.id }) }}>
-                {% if action.picture %}
-                    <img src="{{ asset('img/' ~ action.picture) }}" alt="{{ action.label }}"/>
-                {% else %}
-                    {{ action.label }}
-                {% endif %}
-            </button>
+            {% set questSlug = action.actionRequirements['questActive'] ?? null %}
+            {% if questSlug %}
+                {% set questIsActive = app_characterQuestService.isQuestActive(this.character, questSlug) %}
+            {% endif %}
+
+            {% if not questSlug or (questSlug and questIsActive) %}
+                <button class="action"
+                        title="{{ action.label }}"
+                        {{ live_action('changeScreen', {
+                            'targetScreenId': action.targetScreen.id,
+                            'targetSceneId': action.targetScene.id
+                        }) }}>
+                    {% if action.picture %}
+                        <img src="{{ asset('img/' ~ action.picture) }}" alt="{{ action.label }}"/>
+                    {% else %}
+                        {{ action.label }}
+                    {% endif %}
+                </button>
+            {% endif %}
         {% endfor %}
     </div>
 

@@ -4,6 +4,7 @@ namespace App\DataFixtures\Scene\CombatScene;
 
 use App\Entity\Character\Creature;
 use App\Entity\Character\Npc;
+use App\Entity\Quest\QuestStep;
 use App\Entity\Scene\CombatScene;
 use App\Entity\Scene\CombatSceneCreature;
 use App\Entity\Scene\CombatSceneNpc;
@@ -28,7 +29,8 @@ class CombatSceneFixtures extends Fixture implements OrderedFixtureInterface
                 ->setPicture($data['picture'] ?? null)
                 ->setDescription($data['description'] ?? null)
                 ->setPosition($data['position'] ?? null)
-                ->setScreen($this->getReference($data['screen'], CombatScreen::class));
+                ->setScreen($this->getReference($data['screen'], CombatScreen::class))
+                ->setQuestStep(isset($data['questStep']) ? $this->getReference($data['questStep'], QuestStep::class) : null);
             if(isset($data['npcs'])) {
                 foreach($data['npcs'] as $npc) {
                     $combatSceneNpc = (new CombatSceneNpc())

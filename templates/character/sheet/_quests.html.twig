@@ -32,7 +32,7 @@
                 <h4>Quêtes Secondaires</h4>
                 <div class="items">
                     {% for characterSecondaryQuest in characterSecondaryQuests %}
-                        <div class="item">
+                        <div class="item {% if characterSecondaryQuest.status == 'completed' %}completed{% endif %}">
                             <h5>{{ characterSecondaryQuest.quest.name }}</h5>
                             {{ characterSecondaryQuest.quest.description | raw }}
 

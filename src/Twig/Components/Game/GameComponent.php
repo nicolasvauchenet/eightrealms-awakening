@@ -197,7 +197,6 @@ class GameComponent extends AbstractController
 
         // Juste après avoir résolu le combat, on vérifie si le joueur est mort
         if(!$this->character->isAlive()) {
-            // TODO: Gérer la logique d'échec (récompenses "négatives" ou malus ?)
             // On redirige vers l'écran CinematicScreen de défaite
             $defeatScreen = $this->entityManager->getRepository(Screen::class)->findOneBy(['slug' => 'defaite']);
             $defeatScene = $this->entityManager->getRepository(Scene::class)->findOneBy(['slug' => 'defaite']);
@@ -215,13 +214,23 @@ class GameComponent extends AbstractController
             }
         }
         if($allDead) {
-            // TODO: Gérer la logique de récompenses de victoire
-            // (ex. gain d’XP, loot, mise à jour de la quête, etc.)
+            // Gain des créatures
+            foreach($sceneCreatures as $pc) {
+                $this->character->setFortune($this->character->getFortune() + $pc->getCrownReward());
+                $this->character->setExperience($this->character->getExperience() + $pc->getXpReward());
+                $this->entityManager->persist($this->character);
+                $this->entityManager->flush();
+            }
+
+            // Gestion de l'étape de quête
+            if($this->currentScene->getQuestStep()) {
+                $this->characterQuestService->completeQuestStep($this->character, $this->currentScene->getQuestStep());
+            }
 
             // On redirige vers l'écran CinematicScreen de victoire
             $victoryScreen = $this->entityManager->getRepository(Screen::class)->findOneBy(['slug' => 'victoire']);
             $victoryScene = $this->entityManager->getRepository(Scene::class)->findOneBy(['slug' => 'victoire']);
-            $this->changeScreen($victoryScreen->getId(), $victoryScene->getId(), []);
+            $this->changeScreen($victoryScreen->getId(), $victoryScene->getId(), ['updateCharacter' => true]);
         }
     }
 

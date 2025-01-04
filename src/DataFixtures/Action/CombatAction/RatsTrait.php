@@ -17,8 +17,8 @@ trait RatsTrait
         'targetSceneClass' => CombatScene::class,
         'targetScreen' => 'screen_combat_anciens_docks_rats',
         'targetScreenClass' => CombatScreen::class,
-        'actionEffects' => [
-
+        'actionRequirements' => [
+            'questActive' => 'des-rats-sur-les-docks',
         ],
         'reference' => 'action_combat_anciens_docks_rats_combat',
     ];

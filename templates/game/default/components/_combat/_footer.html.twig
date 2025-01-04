@@ -32,11 +32,13 @@
             </button>
         {% endif %}
         {% if app_characterItemService.equippedItems(character).scroll %}
-            <button class="action"
-                    title="Utiliser {{ app_characterItemService.equippedItems(character).scroll.item.name }}">
-                <img src="{{ asset('img/core/item/scroll/' ~ app_characterItemService.equippedItems(character).scroll.item.picture) }}"
-                     alt="{{ app_characterItemService.equippedItems(character).scroll.item.name }}"/>
-            </button>
+            {% if app_characterItemService.equippedItems(character).scroll.item.type == 'Offensif' or app_characterItemService.equippedItems(character).scroll.item.type == 'Défensif' %}
+                <button class="action"
+                        title="Utiliser {{ app_characterItemService.equippedItems(character).scroll.item.name }}">
+                    <img src="{{ asset('img/core/item/scroll/' ~ app_characterItemService.equippedItems(character).scroll.item.picture) }}"
+                         alt="{{ app_characterItemService.equippedItems(character).scroll.item.name }}"/>
+                </button>
+            {% endif %}
         {% endif %}
         {% for action in this.currentScene.actions %}
             <button class="action"

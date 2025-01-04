@@ -30,4 +30,18 @@ class CharacterQuestStepRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findCompletedQuestSteps(Player $player, Quest $quest): array
+    {
+        return $this->createQueryBuilder('cqs')
+            ->join('cqs.questStep', 'qs')
+            ->where('cqs.character = :player')
+            ->andWhere('qs.quest = :quest')
+            ->andWhere('cqs.status = :status')
+            ->setParameter('player', $player)
+            ->setParameter('quest', $quest)
+            ->setParameter('status', 'completed')
+            ->getQuery()
+            ->getResult();
+    }
 }

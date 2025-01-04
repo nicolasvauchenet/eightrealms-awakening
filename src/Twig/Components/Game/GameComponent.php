@@ -186,6 +186,14 @@ class GameComponent extends AbstractController
         );
     }
 
+    #[LiveAction]
+    public function useItem(#[LiveArg] int $characterItemId): void
+    {
+        $this->currentScreenType = strtolower((new \ReflectionClass($this->currentScreen))->getShortName());
+        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
+        $this->currentScreenDescription = $this->characterItemService->useItem($characterItem, $this->character);
+    }
+
     private function updateCharacterPlace(): void
     {
         $this->character->setCurrentPlace($this->currentScene->getPlace())

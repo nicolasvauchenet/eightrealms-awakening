@@ -7,15 +7,19 @@ use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Weapon;
 use App\Repository\Item\CharacterItemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CharacterItemService
 {
+    private EntityManagerInterface $entityManager;
     private CharacterItemRepository $characterItemRepository;
     private ItemService $itemService;
 
-    public function __construct(CharacterItemRepository $characterItemRepository,
+    public function __construct(EntityManagerInterface  $entityManager,
+                                CharacterItemRepository $characterItemRepository,
                                 ItemService             $itemService)
     {
+        $this->entityManager = $entityManager;
         $this->characterItemRepository = $characterItemRepository;
         $this->itemService = $itemService;
     }
@@ -267,9 +271,35 @@ class CharacterItemService
     /**
      * Ex d'utilisation: consommer/utiliser un objet (potion)
      */
-    public function useItem(CharacterItem $characterItem, Character $character): Character
+    public function useItem(CharacterItem $characterItem, Character $character): string
     {
-        // ...
-        return $character;
+        $item = $characterItem->getItem();
+        $target = $item->getTarget();
+        $amount = $item->getAmount();
+
+        switch($target) {
+            case 'health':
+                $character->setHealth($character->getHealth() + $amount);
+                if($character->getHealth() > $character->getHealthMax()) {
+                    $character->setHealth($character->getHealthMax());
+                }
+                break;
+            case 'mana':
+                $character->setMana($character->getMana() + $amount);
+                if($character->getMana() > $character->getManaMax()) {
+                    $character->setMana($character->getManaMax());
+                }
+                break;
+            default:
+                // rien
+                break;
+        }
+
+        $character->removeCharacterItem($characterItem);
+        $this->entityManager->remove($characterItem);
+        $this->entityManager->persist($character);
+        $this->entityManager->flush();
+
+        return sprintf('Vous avez utilisé %s.', $item->getName());
     }
 }

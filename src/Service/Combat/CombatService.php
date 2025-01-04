@@ -64,88 +64,126 @@ class CombatService
      * Le Player attaque la créature.
      * @throws RandomException
      */
+    /**
+     * Le Player attaque la créature.
+     * @throws RandomException
+     */
     public function playerAttacksCreature(Player $player, PlayerCreature $playerCreature): string
     {
-        // 1) Calcul du succès ou échec de l'attaque (avec +2 “facilitateur”)
-        $attackRoll = random_int(1, 20);
-        if($player->getProfession()->getType() === 'Magie') {
-            $attackOk = (($attackRoll + 2) <= $player->getIntelligence());
-        } else {
-            $attackOk = (($attackRoll + 2) <= $player->getStrength());
-        }
-
-        // Défense de la créature
-        $defenseRoll = random_int(1, 20);
-        $defenseOk = ($defenseRoll <= $playerCreature->getCreature()->getStrength());
-
-        $attackHits = $attackOk && !$defenseOk;
-
-        // 2) Déterminer l’arme équipée (main droite ou gauche)
+        // 1) Récupérer l’arme équipée (main droite/gauche/bow)
         $equipped = $this->characterItemService->getEquippedItems($player);
         /** @var CharacterItem|null $weaponItem */
-        $weaponItem = $equipped['righthand'] ?? $equipped['lefthand'] ?? null;
+        $weaponItem = $equipped['righthand'] ?? $equipped['lefthand'] ?? $equipped['bow'] ?? null;
 
-        // Variables pour gérer l’arme magique
+        // Variables pour différencier arc / arme magique / arme physique
+        $isArc = false;
         $isMagical = false;
-        $charge = 0;
+        $hasCharge = false;
         $weaponDamage = 0;
         $rawDamage = 0;
 
+        // Par défaut, on suppose qu'on utilisera la Force
+        // On déterminera la stat exact un peu plus bas
+        $attackStat = $player->getStrength();
+
+        // 2) Analyser l’arme équipée
         if($weaponItem) {
             $weapon = $weaponItem->getItem();
-            // Vérifier si c’est une arme magique via "charge"
-            if(method_exists($weapon, 'getCharge') && $weapon->getCharge() !== null) {
-                $isMagical = true;
-                $charge = $weaponItem->getCharge() ?? 0;
+
+            // a) Détecter si c’est un arc (type='Distance' ou comme tu veux)
+            if(method_exists($weapon, 'getType') && $weapon->getType() === 'Distance') {
+                $isArc = true;
             }
 
-            if($isMagical && $charge > 0) {
-                // Attaque magique => on utilise "amount" de l’arme comme dégâts
-                $weaponDamage = $weapon->getAmount() ?? 0;
-                $rawDamage = $weaponDamage; // pas de 1D6 aléatoire dans cet exemple
-            } else {
-                // Arme non-magique OU charge épuisée => on prend "damage"
-                $weaponDamage = method_exists($weapon, 'getDamage')
-                    ? ($weapon->getDamage() ?? 0)
-                    : 0;
-                $rawDamage = random_int(1, 6) + $weaponDamage + $player->getDamage();
+            // b) Détecter si c’est une arme magique (ex. via getCharge())
+            if(method_exists($weapon, 'getCharge') && $weapon->getCharge() !== null) {
+                $isMagical = true;
+                // On regarde la charge sur le CharacterItem
+                $charge = $weaponItem->getCharge() ?? 0;
+                $hasCharge = ($charge > 0);
             }
         }
 
-        // ►►► IMPORTANT : décrémenter la charge si c’est une arme magique et charge>0,
-        // même si l’attaque finit par être un échec
-        if($weaponItem && $isMagical && $charge > 0) {
-            // On réduit la charge de 1
-            $weaponItem->setCharge(max(0, $charge - 1));
+        // 3) Choisir la caractéristique d’attaque selon l’arme
+        //    Arc => Dextérité
+        //    Arme magique avec charge => Intelligence
+        //    Sinon => Force
+        if($isArc) {
+            $attackStat = $player->getDexterity();
+        } else if($isMagical && $hasCharge) {
+            $attackStat = $player->getIntelligence();
+        } else {
+            // Arme physique ou magique sans charge => Force
+            $attackStat = $player->getStrength();
+        }
+
+        // 4) Calcul du succès ou échec de l’attaque
+        //    On applique un -2 sur le jet => plus facile (ou +2 sur la stat, c’est équivalent)
+        $attackRoll = random_int(1, 20);
+        $attackOk = (($attackRoll - 2) <= $attackStat);
+
+        // 5) Défense de la créature
+        //    (ex. on compare à la Dextérité de la créature ou autre stat)
+        $defenseRoll = random_int(1, 20);
+        // Par exemple, tu lui mets aussi un +2 ou pas.
+        $defenseOk = ($defenseRoll <= $playerCreature->getCreature()->getDexterity());
+
+        $attackHits = $attackOk && !$defenseOk;
+
+        // 6) Si c’est une arme magique + charge>0, on consomme 1 charge
+        //    même si l’attaque finit par rater
+        if($weaponItem && $isMagical && $hasCharge) {
+            $currentCharge = $weaponItem->getCharge() ?? 0;
+            $weaponItem->setCharge(max(0, $currentCharge - 1));
             $this->entityManager->persist($weaponItem);
         }
 
-        // Si l’attaque rate, on s’arrête là,
-        // mais la charge a déjà été consommée si c’était magique
+        // 7) Si l’attaque rate, on s’arrête
         if(!$attackHits) {
             return 'Vous ratez votre attaque.';
         }
 
-        // 5) Calcul de la défense de la cible
-        $defense = $playerCreature->getCreature()->getDefense();
+        // ==============================
+        // 8) Calcul des dégâts
+        // ==============================
+        if($weaponItem) {
+            $weapon = $weaponItem->getItem();
 
-        // 6) Dégâts effectifs
-        $damage = $rawDamage - $defense;
-        $damage = max(0, $damage);
+            if($isMagical && $hasCharge) {
+                // Attaque magique => on prend "amount" pour les dégâts
+                // (ex.: baguette de feu => getAmount()=10)
+                $weaponDamage = $weapon->getAmount() ?? 0;
+                // on ne rajoute pas 1D6 ici, c’est un choix
+                $rawDamage = $weaponDamage;
+            } else {
+                // Arme non-magique OU charge épuisée
+                // => 1D6 + weapon->getDamage() + bonus perso
+                $baseDamage = method_exists($weapon, 'getDamage')
+                    ? ($weapon->getDamage() ?? 0)
+                    : 0;
+                $rawDamage = random_int(1, 6) + $baseDamage + $player->getDamage();
+            }
+        } else {
+            // Pas d’arme => au poing ? Par ex. 1D6
+            $rawDamage = random_int(1, 6) + $player->getDamage();
+        }
 
-        // 7) Appliquer les dégâts à la créature
+        // 9) On soustrait la défense de la cible
+        $defenseVal = $playerCreature->getCreature()->getDefense();
+        $damage = max(0, $rawDamage - $defenseVal);
+
+        // 10) On applique les dégâts à la créature
         $this->applyDamageToCreature($damage, $playerCreature);
 
-        // 8) Gérer la dégradation physique (si l’arme est non-magique ou charge épuisée)
-        //    => “absorbed” = la part non-infligée
-        $absorbed = $rawDamage - $damage;
-        if($weaponItem && (!$isMagical || $charge <= 0)) {
+        // 11) Gérer la dégradation si arme physique (ou magique sans charge)
+        if($weaponItem && (!$isMagical || !$hasCharge)) {
+            $absorbed = $rawDamage - $damage; // la part non-infligée
             if($absorbed > 0) {
                 $this->degradeWeaponIfPhysical($player, $absorbed);
             }
         }
 
-        // 9) Générer le message final
+        // 12) Message final
         if(!$playerCreature->isAlive()) {
             return sprintf(
                 'Vous touchez et infligez %d points de dégâts. %s est vaincu !',
@@ -168,14 +206,11 @@ class CombatService
      */
     public function creatureAttacksPlayer(PlayerCreature $playerCreature, Player $player): string
     {
-        // Si tu veux aussi favoriser la créature, tu peux ajouter +2 ici.
         $attackRoll = random_int(1, 20);
-        $attackOk = ($attackRoll <= $playerCreature->getCreature()->getStrength());
+        $attackOk = (($attackRoll - 2) <= $playerCreature->getCreature()->getStrength());
 
         $defenseRoll = random_int(1, 20);
-        // On peut aussi buff ou non la défense du joueur :
-        $defenseOk = (($defenseRoll + 2) <= $player->getStrength());
-        // ou pas, selon l'équilibrage voulu
+        $defenseOk = (($defenseRoll - 2) <= $player->getDexterity());
 
         $attackHits = $attackOk && !$defenseOk;
 
@@ -208,11 +243,9 @@ class CombatService
                     $this->entityManager->persist($player);
 
                     return sprintf(
-                        '%s vous attaque et inflige %d dégâts. %sIl vous reste %d PV.',
+                        '%s vous attaque et inflige %d dégâts.',
                         $playerCreature->getCreature()->getName(),
-                        $remainingDamage,
-                        $absorbedMessage ? $absorbedMessage . ' ' : '',
-                        $newHP
+                        $remainingDamage
                     );
                 }
             } else {

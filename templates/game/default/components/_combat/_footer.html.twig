@@ -25,7 +25,8 @@
         {% endfor %}
         {% if app_characterItemService.equippedItems(character).potion %}
             <button class="action"
-                    title="Boire {{ app_characterItemService.equippedItems(character).potion.item.name }}">
+                    title="Boire {{ app_characterItemService.equippedItems(character).potion.item.name }}"
+                    {{ live_action('useItem', {characterItemId: app_characterItemService.equippedItems(character).potion.id}) }}>
                 <img src="{{ asset('img/core/item/potion/' ~ app_characterItemService.equippedItems(character).potion.item.picture) }}"
                      alt="{{ app_characterItemService.equippedItems(character).potion.item.name }}"/>
             </button>

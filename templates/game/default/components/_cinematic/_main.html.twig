@@ -1,3 +1,8 @@
 <main class="screen-main">
-    {{ this.currentScene.description | raw }}
+    <div class="description">
+        {{ this.currentScene.description | raw }}
+    </div>
+    <div class="description">
+        {{ this.currentScreenDescription | raw }}
+    </div>
 </main>

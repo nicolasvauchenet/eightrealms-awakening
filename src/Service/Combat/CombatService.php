@@ -49,7 +49,7 @@ class CombatService
 
         // Ensuite, les autres créatures attaquent
         foreach($sceneCreatures as $pc) {
-            // On s’assure de ne pas ré-attaquer $playerCreature
+            // On s’assure de ne pas ré-attaquer avec $playerCreature
             if($pc !== $playerCreature && $pc->isAlive()) {
                 $messages[] = $this->creatureAttacksPlayer($pc, $player);
             }
@@ -186,6 +186,11 @@ class CombatService
 
         // 12) Message final
         if(!$playerCreature->isAlive()) {
+            // Gain de la créature
+            $player->setFortune($player->getFortune() + $playerCreature->getCrownReward())
+                ->setExperience($player->getExperience() + $playerCreature->getXpReward());
+            $this->entityManager->persist($player);
+
             return sprintf(
                 'Vous touchez et infligez %d points de dégâts. %s est vaincu !',
                 $damage,

@@ -214,23 +214,20 @@ class GameComponent extends AbstractController
             }
         }
         if($allDead) {
-            // Gain des créatures
-            foreach($sceneCreatures as $pc) {
-                $this->character->setFortune($this->character->getFortune() + $pc->getCrownReward());
-                $this->character->setExperience($this->character->getExperience() + $pc->getXpReward());
-                $this->entityManager->persist($this->character);
-                $this->entityManager->flush();
-            }
-
             // Gestion de l'étape de quête
+            $actionEffects = [];
             if($this->currentScene->getQuestStep()) {
-                $this->characterQuestService->completeQuestStep($this->character, $this->currentScene->getQuestStep());
+                $actionEffects['completeQuest'] = [
+                    'quest' => $this->currentScene->getQuestStep()->getQuest()->getSlug(),
+                    'step' => $this->currentScene->getQuestStep()->getSlug(),
+                    'location' => $this->character->getCurrentPlace()->getLocation()->getSlug(),
+                ];
             }
 
             // On redirige vers l'écran CinematicScreen de victoire
             $victoryScreen = $this->entityManager->getRepository(Screen::class)->findOneBy(['slug' => 'victoire']);
             $victoryScene = $this->entityManager->getRepository(Scene::class)->findOneBy(['slug' => 'victoire']);
-            $this->changeScreen($victoryScreen->getId(), $victoryScene->getId(), ['updateCharacter' => true]);
+            $this->changeScreen($victoryScreen->getId(), $victoryScene->getId(), $actionEffects);
         }
     }
 
@@ -272,7 +269,13 @@ class GameComponent extends AbstractController
                     $step = $this->entityManager->getRepository(QuestStep::class)->findOneBy(['slug' => $value['step']]);
                     $location = $this->entityManager->getRepository(Location::class)->findOneBy(['slug' => $value['location']]);
                     $this->characterUpdated = !$this->characterQuestService->startQuest($this->character, $quest, $step, $location);
-
+                    break;
+                case 'completeQuest':
+                    $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $value['quest']]);
+                    $step = $this->entityManager->getRepository(QuestStep::class)->findOneBy(['slug' => $value['step']]);
+                    $location = $this->entityManager->getRepository(Location::class)->findOneBy(['slug' => $value['location']]);
+                    $this->currentScreenDescription = $this->characterQuestService->completeQuestStep($this->character, $quest, $step, $location);
+                    $this->characterUpdated = true;
                     break;
                 case 'addPlace':
                     if(!$this->character->getVisitedPlaces()->contains($this->entityManager->getRepository(Place::class)->findOneBy(['slug' => $value]))) {

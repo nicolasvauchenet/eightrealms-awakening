@@ -32,7 +32,7 @@ final class RegisterController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', "Bienvenue, {$user->getName()}&nbsp;!");
+            $this->addFlash('success', "Bienvenue dans les Huit Royaumes, {$user->getName()}&nbsp;!");
 
             return $security->login($user, 'form_login', 'main');
         }

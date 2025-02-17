@@ -35,8 +35,15 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-  # - { path: ^/admin, roles: ROLE_ADMIN }
-  # - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/inscription, roles: PUBLIC_ACCESS }
+    - { path: ^/connexion, roles: PUBLIC_ACCESS }
+    - { path: ^/compte-joueur, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/nouveau-personnage, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/personnage, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/jeu, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/administration, roles: ROLE_ADMIN }
+
+  access_denied_url: /
 
 when@test:
   security:

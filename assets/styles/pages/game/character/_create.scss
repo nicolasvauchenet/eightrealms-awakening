@@ -1,4 +1,4 @@
-&.front-office {
+&.create {
   position: relative;
   overflow: hidden;
   @include displayFlex(space-between, center, null, column);
@@ -9,9 +9,6 @@
   background-color: $black;
   border: 0.5rem groove $secondary;
 
-  @import "./header";
-  @import "./main";
-
-  @import "./home";
-  @import "./form";
+  @import "../../front-office/header";
+  @import "../../front-office/main";
 }

@@ -1,0 +1,15 @@
+.app-main {
+  @include displayFlex(space-between, center, null, column);
+  width: 100%;
+  flex: 1;
+
+  .app-section {
+    @include displayFlex(center, center, null, column);
+    width: 100%;
+    flex: 1;
+
+    p {
+      margin-bottom: 3rem;
+    }
+  }
+}

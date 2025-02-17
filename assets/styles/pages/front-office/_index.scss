@@ -1,0 +1,12 @@
+&.front-office {
+  overflow: hidden;
+  @include displayFlex(space-between, center, null, column);
+  margin: 0 auto;
+  max-width: calc(600px - 1rem);
+  height: calc(100dvh - 1rem);
+  font-family: $font-primary;
+  font-size: 1rem;
+  color: $white;
+  background-color: $black;
+  border: 0.5rem groove $secondary;
+}

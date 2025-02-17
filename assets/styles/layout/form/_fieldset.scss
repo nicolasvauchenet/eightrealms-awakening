@@ -1,0 +1,11 @@
+.form-fieldset {
+  box-sizing: border-box;
+  padding: 1.5rem 1rem;
+  margin-bottom: 3rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @import "./group";
+}

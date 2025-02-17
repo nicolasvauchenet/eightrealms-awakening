@@ -1,0 +1,23 @@
+&.form {
+  .app-section {
+    @include displayFlex(space-between, center, null, column);
+
+    .app-form {
+      @include displayFlex(center, center, null, column);
+      flex: 1;
+
+      .form-fieldset {
+        width: 100%;
+        background-color: $secondary;
+        border-radius: 0.5rem;
+        box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
+
+        .form-group {
+          .form-label {
+            text-shadow: 1px 1px 2px rgba($black, 0.85);
+          }
+        }
+      }
+    }
+  }
+}

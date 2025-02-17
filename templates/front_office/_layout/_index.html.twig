@@ -4,6 +4,16 @@
     <img src="{{ asset('img/core/cover.webp') }}" alt="Les Huit Royaumes"/>
     <div class="app-overlay"></div>
 
+    {% include '_alert.html.twig' %}
+
+    {% if app.user %}
+        <a href="{{ path('app_logout') }}"
+           class="app-button exit"
+           onclick="return window.confirm('Vous partez ?')">
+            {{ ux_icon('streamline:emergency-exit-solid', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
+
     {% include 'front_office/_layout/_header.html.twig' %}
 
     <main class="app-main">

@@ -6,18 +6,34 @@
 
 {% block main %}
     <section class="app-section">
-        <p>
-            <a href="#" class="app-button">
-                <small>Nouveau Joueur</small>
-                Créer mon Compte
-            </a>
-        </p>
+        {% if app.user %}
+            <p>
+                <a href="#" class="app-button outline">
+                    <small>{{ app.user.name }}</small>
+                    Mon Compte
+                </a>
+            </p>
 
-        <p>
-            <a href="#" class="app-button cta">
-                <small>Déjà inscrit</small>
-                Connexion
-            </a>
-        </p>
+            <p>
+                <a href="#" class="app-button cta">
+                    <small>Nouveau</small>
+                    Personnage
+                </a>
+            </p>
+        {% else %}
+            <p>
+                <a href="#" class="app-button">
+                    <small>Nouveau Joueur</small>
+                    Inscription
+                </a>
+            </p>
+
+            <p>
+                <a href="{{ path('app_login') }}" class="app-button cta">
+                    <small>Déjà inscrit</small>
+                    Connexion
+                </a>
+            </p>
+        {% endif %}
     </section>
 {% endblock %}

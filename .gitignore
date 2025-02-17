@@ -1,3 +1,9 @@
+###> eightrealms/local-development ###
+.DS_Store
+.idea/
+eightrealms.crt
+eightrealms.key
+###< eightrealms/local-development ###
 
 ###> symfony/framework-bundle ###
 /.env.local

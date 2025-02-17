@@ -2,8 +2,6 @@
   position: relative;
   overflow: hidden;
   @include displayFlex(space-between, center, null, column);
-  margin: 0 auto;
-  max-width: calc(600px - 1rem);
   height: calc(100dvh - 1rem);
   font-family: $font-primary;
   font-size: 1rem;
@@ -12,12 +10,13 @@
   border: 0.5rem groove $secondary;
 
   & > img {
-    position: absolute;
+    position: fixed;
     z-index: -1;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: calc(100dvh - 1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(600px - 1rem);
+    height: 100dvh;
     object-fit: cover;
   }
 
@@ -36,15 +35,11 @@
       }
     }
 
-    h1,
-    .app-slogan {
-      text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
-    }
-
     .app-slogan {
       font-family: $font-secondary;
       font-size: 1.5rem;
       font-weight: bold;
+      text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
     }
   }
 

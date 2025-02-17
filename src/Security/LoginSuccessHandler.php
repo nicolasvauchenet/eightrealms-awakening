@@ -10,16 +10,20 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
 {
-    private RouterInterface $router;
-
-    public function __construct(RouterInterface $router)
+    public function __construct(private readonly RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): RedirectResponse
     {
-        $request->getSession()->getFlashBag()->add('success', "Bon retour dans les Huit Royaumes, {$token->getUser()->getName()}&nbsp;!");
+        $user = $token->getUser();
+        $roles = $token->getRoleNames();
+
+        if(in_array('ROLE_ADMIN', $roles, true)) {
+            return new RedirectResponse($this->router->generate('app_back_office_home'));
+        }
+
+        $request->getSession()->getFlashBag()->add('success', "Bon retour dans les Huit Royaumes, {$user->getName()}&nbsp;!");
 
         return new RedirectResponse($this->router->generate('app_front_office_home'));
     }

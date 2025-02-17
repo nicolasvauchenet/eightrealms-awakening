@@ -5,4 +5,12 @@
 
     <h1>Les Huit Royaumes</h1>
     <p class="app-slogan">Chapitre I&nbsp;:&nbsp;L'Éveil</p>
+
+    {% if app.user %}
+        <a href="{{ path('app_logout') }}"
+           class="app-button exit"
+           onclick="return window.confirm('Quitter les Huit Royaumes ?')">
+            {{ ux_icon('streamline:emergency-exit-solid', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
 </header>

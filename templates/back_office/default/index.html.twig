@@ -1,11 +1,17 @@
 {% extends 'back_office/_layout/_index.html.twig' %}
 
-{% block title %}Bienvenue à toi, Administrateur{% endblock %}
+{% block title %}Administration du Jeu{% endblock %}
 
 {% block body_class %}back-office home{% endblock %}
 
 {% block main %}
     <section class="app-section">
-        <h1>Accueil Back Office</h1>
+        <h2>Accueil Back Office</h2>
+
+        {% for i in 1..50 %}
+            <p>&nbsp;</p>
+        {% endfor %}
+
+        <p>Fin</p>
     </section>
 {% endblock %}

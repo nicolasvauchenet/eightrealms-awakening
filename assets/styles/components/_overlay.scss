@@ -1,9 +1,10 @@
 .app-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: -1;
-  width: 100%;
-  height: calc(100dvh - 1rem);
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(600px - 1rem);
+  height: 100dvh;
   background-color: rgba($black, 0.5);
 }

@@ -3,13 +3,16 @@ h2,
 h3 {
   font-family: $font-secondary;
   font-weight: bold;
+  text-align: center;
 }
 
 h1 {
   margin-bottom: 0.5rem;
   font-size: 2rem;
+  text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
 }
 
 h2 {
   font-size: 1.5rem;
+  text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
 }

@@ -33,10 +33,10 @@
   }
 
   &.exit {
-    position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
-    z-index: 10;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
     display: inline;
     padding: 0;
     width: auto;

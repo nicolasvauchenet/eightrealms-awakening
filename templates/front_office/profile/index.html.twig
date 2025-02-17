@@ -1,0 +1,39 @@
+{% extends 'front_office/_layout/_index.html.twig' %}
+
+{% block title %}Compte Joueur{% endblock %}
+
+{% block body_class %}front-office form profile{% endblock %}
+
+{% block main %}
+    <section class="app-section">
+        <h2>Compte Joueur</h2>
+
+        {{ form_start(form, {'attr': {'class': 'app-form'}}) }}
+        <fieldset class="form-fieldset">
+            <div class="form-group">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                {{ form_help(form.name) }}
+                {{ form_errors(form.name) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+                {{ form_help(form.email) }}
+                {{ form_errors(form.email) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.plainPassword) }}
+                {{ form_widget(form.plainPassword) }}
+                {{ form_help(form.plainPassword) }}
+                {{ form_errors(form.plainPassword) }}
+            </div>
+        </fieldset>
+
+        {{ form_widget(form._token) }}
+        <button class="app-button cta" type="submit">Sauvegarder</button>
+        {{ form_end(form) }}
+    </section>
+{% endblock %}

@@ -8,7 +8,7 @@
     <section class="app-section">
         {% if app.user %}
             <p>
-                <a href="#" class="app-button outline">
+                <a href="{{ path('app_front_office_profile') }}" class="app-button outline">
                     <small>{{ app.user.name }}</small>
                     Mon Compte
                 </a>

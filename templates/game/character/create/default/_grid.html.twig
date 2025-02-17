@@ -1,0 +1,28 @@
+<div class="app-grid two">
+    {% for character in characters %}
+        <div class="app-card character">
+            <a href="#">
+                <div class="card-header">
+                    <img src="{{ asset('img/core/character/' ~ character.picture) }}" alt="{{ character.name }}" class="card-image"/>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">{{ character.name }}</h3>
+                    <h4 class="card-subtitle">{{ character.profession.name }}&nbsp;{{ character.race.name }}</h4>
+                </div>
+            </a>
+
+            <div class="card-footer">
+                <a href="#"
+                   class="bg-fourth">
+                    {{ ux_icon('carbon:view-filled', {'class': 'app-icon'}) }}
+                </a>
+                <a href="#"
+                   class="bg-primary"
+                   onclick="return window.confirm('Jouer avec {{ character.name }} ?')">
+                    {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>

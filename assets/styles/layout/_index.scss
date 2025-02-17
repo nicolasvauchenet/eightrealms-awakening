@@ -3,16 +3,17 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: $secondary;
-  box-shadow: inset 2px 2px 0.25rem rgba($black, 0.5);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: $third;
+  border-radius: 0.25rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: $third;
+  border-radius: 0.25rem;
 }
 
 html {

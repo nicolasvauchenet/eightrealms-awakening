@@ -31,6 +31,8 @@ html {
     color: $white;
     background-color: $black;
 
+    @import "./main";
+
     @import "../pages/front-office";
     @import "../pages/back-office";
   }

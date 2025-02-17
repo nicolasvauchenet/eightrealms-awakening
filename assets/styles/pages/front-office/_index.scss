@@ -1,4 +1,5 @@
 &.front-office {
+  position: relative;
   overflow: hidden;
   @include displayFlex(space-between, center, null, column);
   margin: 0 auto;
@@ -9,4 +10,59 @@
   color: $white;
   background-color: $black;
   border: 0.5rem groove $secondary;
+
+  & > img {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100dvh - 1rem);
+    object-fit: cover;
+  }
+
+  .app-header {
+    padding: 0.5rem;
+    width: calc(100% - 1rem);
+    text-align: center;
+
+    .app-logo {
+      margin-bottom: 1.5rem;
+      display: inline-block;
+
+      img {
+        display: inline-block;
+        height: 4rem;
+      }
+    }
+
+    h1,
+    .app-slogan {
+      text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+    }
+
+    .app-slogan {
+      font-family: $font-secondary;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  }
+
+  .app-main {
+    @include displayFlex(space-between, center, null, column);
+    width: 100%;
+    flex: 1;
+
+    .app-section {
+      @include displayFlex(center, center, null, column);
+      width: 100%;
+      flex: 1;
+
+      p {
+        margin-bottom: 3rem;
+      }
+    }
+  }
+
+  @import "./home";
 }

@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <img src="{{ asset('img/core/cover.webp') }}" alt="Les Huit Royaumes"/>
+    <div class="app-overlay"></div>
+
+    {% include 'front_office/_layout/_header.html.twig' %}
+
     <main class="app-main">
         {% block main %}{% endblock %}
     </main>

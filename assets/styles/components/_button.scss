@@ -1,0 +1,26 @@
+.app-button {
+  @include displayFlex(center, center, 0.5rem, column);
+  box-sizing: border-box;
+  padding: 0.5rem;
+  width: 100%;
+  font-family: $font-secondary;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: $white;
+  background-color: $fourth;
+  border: 0.5rem groove $secondary;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+  &.cta {
+    font-size: 2rem;
+    background-color: $primary;
+  }
+
+  small {
+    font-family: $font-primary;
+    text-transform: uppercase;
+  }
+}

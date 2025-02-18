@@ -1,0 +1,11 @@
+{% extends 'game/_layout/_sheet/_index.html.twig' %}
+
+{% block title %}Détails d'un Personnage{% endblock %}
+
+{% block body_class %}game character sheet{% endblock %}
+
+{% block main %}
+    <section class="app-section">
+        {{ component('PreGeneratedSheet', { character: character }) }}
+    </section>
+{% endblock %}

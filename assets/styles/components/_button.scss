@@ -52,6 +52,26 @@
     }
   }
 
+  &.back {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+    display: inline;
+    padding: 0;
+    width: auto;
+    color: $white;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    filter: drop-shadow(1px 1px 1px rgba($black, 0.85));
+
+    .app-icon {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
   small {
     display: block;
     margin-bottom: 0.5rem;

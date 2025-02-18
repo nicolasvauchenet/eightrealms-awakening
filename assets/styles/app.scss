@@ -1,5 +1,5 @@
-@import "utils/variables", "utils/mixins", "utils/extends";
+@import "utils/variables", "utils/mixins", "utils/extends", "utils/animations";
 @import "base/reset", "base/typography";
 @import "layout", "layout/form", "layout/grid";
 @import "components/wallpaper", "components/overlay", "components/button", "components/alert", "components/card",
-"components/icon";
+"components/icon", "components/loading";

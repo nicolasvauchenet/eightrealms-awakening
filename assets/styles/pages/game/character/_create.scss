@@ -1,14 +1,4 @@
 &.create {
-  position: relative;
-  overflow: hidden;
-  @include displayFlex(space-between, center, null, column);
-  height: calc(100dvh - 1rem);
-  font-family: $font-primary;
-  font-size: 1rem;
-  color: $white;
-  background-color: $black;
-  border: 0.5rem groove $secondary;
-
   @import "../../front-office/header";
   @import "./main";
 }

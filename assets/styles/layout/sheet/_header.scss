@@ -1,0 +1,19 @@
+.sheet-header {
+  width: 100%;
+
+  .sheet-picture {
+    display: block;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    height: 20dvh;
+    object-fit: contain;
+    border-bottom: 2px solid $primary;
+    transition: height 0.3s;
+  }
+
+  .sheet-title {
+    font-size: 1.75rem;
+    color: $primary;
+    text-shadow: 1px 1px 2px rgba($white, 0.5);
+  }
+}

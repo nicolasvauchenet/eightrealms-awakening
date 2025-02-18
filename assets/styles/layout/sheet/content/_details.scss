@@ -1,0 +1,89 @@
+&.details {
+  .infos {
+    @include displayGrid(1fr 8rem, 0.5rem);
+    margin-bottom: 0.5rem;
+    font-family: $font-secondary;
+    font-weight: bold;
+    color: $primary;
+
+    .characteristics {
+      .characteristic {
+        @include displayGrid(1fr 3rem, 0.5rem);
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .name,
+        .value {
+          padding: 0.5rem;
+          background-color: rgba($white, 0.25);
+          border-radius: 0.5rem;
+          box-shadow: inset 1px 1px 2px rgba($black, 0.85);
+        }
+
+        .name {
+          text-align: left;
+        }
+
+        .value {
+          text-align: center;
+        }
+      }
+    }
+
+    .attributes {
+      @include displayFlex(space-between, center, null, column);
+      padding: 0.5rem;
+      text-align: center;
+      background-color: rgba($white, 0.25);
+      border-radius: 0.5rem;
+      box-shadow: inset 1px 1px 2px rgba($black, 0.85);
+
+      .metrics {
+        @include displayGrid(repeat(2, 1fr), 0.75rem);
+
+        .metric {
+          margin-bottom: 0.5rem;
+          font-size: 0.85rem;
+          text-align: center;
+
+          .app-icon {
+            display: block;
+            margin: 0 auto 0.25rem;
+            width: 2.75rem;
+            height: 2.75rem;
+          }
+        }
+      }
+
+      .fortune {
+        .app-icon {
+          display: block;
+          margin: 0 auto;
+          width: 3rem;
+          height: 3rem;
+          filter: drop-shadow(1px 1px 2px rgba($black, 0.85));
+        }
+      }
+    }
+  }
+
+  .description {
+    overflow-y: auto;
+    max-height: 14dvh;
+    padding: 0.25rem;
+    font-size: 1.25rem;
+    text-align: justify;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    color: $primary;
+
+    p {
+      margin-bottom: 0.5rem;
+    }
+  }
+}

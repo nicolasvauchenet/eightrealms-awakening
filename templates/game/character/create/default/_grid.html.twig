@@ -1,7 +1,7 @@
 <div class="app-grid two">
     {% for character in characters %}
         <div class="app-card character">
-            <a href="#">
+            <a href="{{ path('app_game_character_sheet_pregenerated', {'slug': character.slug}) }}">
                 <div class="card-header">
                     <img src="{{ asset('img/core/character/' ~ character.picture) }}" alt="{{ character.name }}" class="card-image"/>
                 </div>
@@ -13,7 +13,7 @@
             </a>
 
             <div class="card-footer">
-                <a href="#"
+                <a href="{{ path('app_game_character_sheet_pregenerated', {'slug': character.slug}) }}"
                    class="bg-fourth">
                     {{ ux_icon('carbon:view-filled', {'class': 'app-icon'}) }}
                 </a>

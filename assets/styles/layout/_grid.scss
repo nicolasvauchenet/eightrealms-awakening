@@ -1,4 +1,7 @@
 .app-grid {
+  box-sizing: border-box;
+  width: 100%;
+
   &.two {
     @include displayGrid(repeat(2, 1fr), 1rem);
   }

@@ -1,0 +1,17 @@
+.app-sheet {
+  @include displayFlex(space-between, center, null, column);
+  width: 100%;
+  flex: 1;
+
+  &:has(.sheet-content.details.active) {
+    .sheet-header {
+      .sheet-picture {
+        height: 36dvh;
+      }
+    }
+  }
+
+  @import "./header";
+  @import "./main";
+  @import "./footer";
+}

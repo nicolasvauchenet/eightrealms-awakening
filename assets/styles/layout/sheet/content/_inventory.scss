@@ -3,6 +3,10 @@
     overflow-y: auto;
     max-height: 59dvh;
 
+    @include respondTo('md') {
+      max-height: 60dvh;
+    }
+
     .name {
       margin: 0 0.25rem 0.5rem 0;
       padding: 0.5rem;
@@ -17,6 +21,10 @@
     .app-grid {
       margin-bottom: 1rem;
       padding-right: 0.5rem;
+
+      @include respondTo('md') {
+        grid-template-columns: repeat(4, 1fr);
+      }
 
       &:last-child {
         margin-bottom: 0;

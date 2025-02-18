@@ -13,53 +13,69 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
     {
         $categories = [
             [
-                'name' => 'Armures',
+                'name' => 'Armure',
                 'position' => 1,
+                'folder' => 'armor',
                 'reference' => 'category_armor',
             ],
             [
-                'name' => 'Boucliers',
+                'name' => 'Bouclier',
                 'position' => 2,
+                'folder' => 'shield',
                 'reference' => 'category_shield',
             ],
             [
-                'name' => 'Armes',
+                'name' => 'Arme',
                 'position' => 3,
+                'folder' => 'weapon',
                 'reference' => 'category_weapon',
             ],
             [
-                'name' => 'Anneaux',
+                'name' => 'Arme Magique',
                 'position' => 4,
+                'folder' => 'weapon',
+                'reference' => 'category_magical',
+            ],
+            [
+                'name' => 'Anneau',
+                'position' => 5,
+                'folder' => 'ring',
                 'reference' => 'category_ring',
             ],
             [
-                'name' => 'Amulettes',
-                'position' => 5,
+                'name' => 'Amulette',
+                'position' => 6,
+                'folder' => 'amulet',
                 'reference' => 'category_amulet',
             ],
             [
-                'name' => 'Parchemins',
-                'position' => 6,
+                'name' => 'Parchemin',
+                'position' => 7,
+                'folder' => 'scroll',
                 'reference' => 'category_scroll',
             ],
             [
-                'name' => 'Potions',
-                'position' => 7,
+                'name' => 'Potion',
+                'position' => 8,
+                'folder' => 'potion',
                 'reference' => 'category_potion',
             ],
             [
                 'name' => 'Nourriture',
-                'position' => 8,
+                'position' => 9,
+                'folder' => 'food',
                 'reference' => 'category_food',
             ],
             [
-                'name' => 'Cartes',
-                'position' => 9,
+                'name' => 'Carte',
+                'position' => 10,
+                'folder' => 'map',
                 'reference' => 'category_map',
             ],
             [
-                'name' => 'Cadeaux',
+                'name' => 'Cadeau',
                 'position' => 11,
+                'folder' => 'gift',
                 'reference' => 'category_gift',
             ],
         ];
@@ -67,7 +83,8 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
         foreach($categories as $data) {
             $category = new Category();
             $category->setName($data['name'])
-                ->setPosition($data['position']);
+                ->setPosition($data['position'])
+                ->setFolder($data['folder']);
             $manager->persist($category);
             $this->addReference($data['reference'], $category);
         }

@@ -6,7 +6,10 @@ use App\Entity\Character\PreGenerated;
 use App\Entity\Item\Amulet;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
+use App\Entity\Item\Food;
+use App\Entity\Item\Gift;
 use App\Entity\Item\Magical;
+use App\Entity\Item\Map;
 use App\Entity\Item\Potion;
 use App\Entity\Item\Ring;
 use App\Entity\Item\Scroll;
@@ -67,10 +70,91 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             ],
             [
                 'character' => 'character_aldrin',
+                'item' => 'food_meat',
+                'isEquipped' => false,
+                'class' => Food::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'map_port_saint_doux',
+                'isEquipped' => false,
+                'class' => Map::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'gift_flowers',
+                'isEquipped' => false,
+                'class' => Gift::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'weapon_shortbow',
+                'isEquipped' => false,
+                'health' => 30,
+                'class' => Weapon::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'ring_knight',
+                'isEquipped' => true,
+                'slot' => 'ring',
+                'class' => Ring::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'ring_health',
+                'isEquipped' => false,
+                'class' => Ring::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'ring_night_vision',
+                'isEquipped' => false,
+                'class' => Ring::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'scroll_fireball',
+                'isEquipped' => false,
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'scroll_barrier',
+                'isEquipped' => true,
+                'slot' => 'scroll',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'scroll_lockpick',
+                'isEquipped' => false,
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'potion_mana',
+                'isEquipped' => false,
+                'class' => Potion::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'potion_invisibility',
+                'isEquipped' => false,
+                'class' => Potion::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'amulet_protection',
+                'isEquipped' => true,
+                'slot' => 'amulet',
+                'class' => Amulet::class,
+            ],
+            [
+                'character' => 'character_aldrin',
                 'item' => 'magical_firewand',
                 'isEquipped' => false,
-                'health' => 20,
-                'charge' => 10,
+                'charge' => 20,
                 'class' => Magical::class,
             ],
 
@@ -79,7 +163,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_elandra',
                 'item' => 'magical_firestick',
                 'isEquipped' => true,
-                'health' => 30,
                 'charge' => 20,
                 'slot' => 'righthand',
                 'class' => Magical::class,
@@ -232,7 +315,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_isilea',
                 'item' => 'magical_healstick',
                 'isEquipped' => true,
-                'health' => 30,
                 'charge' => 20,
                 'slot' => 'righthand',
                 'class' => Magical::class,
@@ -296,7 +378,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_grymm',
                 'item' => 'weapon_gunstorm',
                 'isEquipped' => true,
-                'health' => 50,
                 'slot' => 'righthand',
                 'class' => Weapon::class,
             ],

@@ -4,8 +4,14 @@
   }
 
   .card-header {
+    &:has(.card-attributes) {
+      .card-image {
+        margin-top: 2.5rem;
+      }
+    }
+
     .card-image {
-      margin-top: 2.5rem;
+      margin-top: 0.5rem;
       height: 7.5dvh;
       object-fit: contain;
     }
@@ -15,7 +21,7 @@
       top: 0;
       left: 0;
       right: 0;
-      @include displayFlex(center, center, 0.25rem);
+      @include displayFlex(center, center);
       padding: 0.25rem;
       font-size: 1.5rem;
       font-weight: bold;
@@ -25,7 +31,7 @@
       border-top-right-radius: 0.5rem;
 
       .app-icon {
-        height: 1.15rem;
+        height: 1.25rem;
       }
     }
   }

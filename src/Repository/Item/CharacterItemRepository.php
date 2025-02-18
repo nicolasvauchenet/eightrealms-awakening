@@ -2,6 +2,7 @@
 
 namespace App\Repository\Item;
 
+use App\Entity\Character\Character;
 use App\Entity\Item\CharacterItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +17,28 @@ class CharacterItemRepository extends ServiceEntityRepository
         parent::__construct($registry, CharacterItem::class);
     }
 
-//    /**
-//     * @return CharacterItem[] Returns an array of CharacterItem objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return array Returns items grouped by category
+     */
+    public function findCharacterItemsByCategories(Character $character): array
+    {
+        $characterItems = $this->createQueryBuilder('ci')
+            ->leftJoin('ci.item', 'i')
+            ->leftJoin('i.category', 'c')
+            ->addSelect('i', 'c')
+            ->andWhere('ci.character = :character')
+            ->setParameter('character', $character)
+            ->orderBy('c.position', 'ASC')
+            ->addOrderBy('ci.equipped', 'DESC')
+            ->getQuery()
+            ->getResult();
 
-//    public function findOneBySomeField($value): ?CharacterItem
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $grouped = [];
+        foreach($characterItems as $characterItem) {
+            $categoryName = $characterItem->getItem()->getCategory()->getName();
+            $grouped[$categoryName][] = $characterItem;
+        }
+
+        return $grouped;
+    }
 }

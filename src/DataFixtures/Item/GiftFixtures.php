@@ -20,7 +20,7 @@ class GiftFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'flowers.png',
                 'type' => 'gift',
                 'price' => 10,
-                'reference' => 'misc_gift_flowers',
+                'reference' => 'gift_flowers',
             ],
             [
                 'category' => 'category_gift',
@@ -29,7 +29,7 @@ class GiftFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'ring_copper.png',
                 'type' => 'gift',
                 'price' => 10,
-                'reference' => 'misc_ring_copper',
+                'reference' => 'ring_copper',
             ],
             [
                 'category' => 'category_gift',
@@ -38,7 +38,7 @@ class GiftFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'ring_silver.png',
                 'type' => 'gift',
                 'price' => 100,
-                'reference' => 'misc_ring_silver',
+                'reference' => 'ring_silver',
             ],
             [
                 'category' => 'category_gift',
@@ -47,7 +47,7 @@ class GiftFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'ring_gold.png',
                 'type' => 'gift',
                 'price' => 200,
-                'reference' => 'misc_ring_gold',
+                'reference' => 'ring_gold',
             ],
         ];
 

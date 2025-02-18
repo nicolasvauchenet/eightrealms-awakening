@@ -49,7 +49,7 @@
 
     .tooltip-content {
       z-index: 9996;
-      padding: 1.5rem;
+      padding: 1rem;
       margin: 0 0.75rem 0 0.5rem;
       max-width: calc(600px - 6rem);
       text-align: justify;
@@ -57,33 +57,58 @@
       border: 0.5rem groove $secondary;
       border-radius: 0.5rem;
       box-shadow: 0.25rem 0.25rem 0.5rem rgba($black, 0.85);
+      @extend .appears;
 
-      .tooltip-title {
+      &:has(.tooltip-attribute) {
+        padding-top: 3rem;
+      }
+
+      .tooltip-title,
+      .tooltip-subtitle {
         margin-bottom: 0.5rem;
-        font-size: 1.25rem;
         text-align: center;
         color: $primary;
         text-shadow: none !important;
       }
 
+      .tooltip-title {
+        font-size: 1.25rem;
+      }
+
       .tooltip-subtitle {
+        font-family: $font-primary;
+        font-size: 1.15rem;
+      }
+
+      .tooltip-attributes {
         position: absolute;
         top: 0.5rem;
-        right: 1.5rem;
+        right: 1.25rem;
         @include displayFlex(center, center, 0.25rem);
-        margin: 0 !important;
-        padding: 0.25rem 0.5rem;
-        font-family: "Uncial Antiqua", system-ui;
-        font-size: 1rem !important;
-        font-weight: bold;
-        font-style: italic;
-        color: $primary !important;
         background-color: $secondary;
         border-bottom-left-radius: 0.5rem;
         box-shadow: -1px 1px 2px rgba($black, 0.5);
+
+        &.left {
+          left: 1rem;
+          right: initial;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0.5rem;
+        }
+
+        .tooltip-attribute {
+          @include displayFlex(center, center, 2px);
+          padding: 0.25rem 0.5rem;
+          font-family: $font-secondary;
+          font-size: 1rem;
+          font-weight: bold;
+          font-style: italic;
+          color: $primary;
+        }
       }
 
       .tooltip-picture {
+        margin-bottom: 0.5rem;
         text-align: center;
 
         .tooltip-image {
@@ -92,14 +117,25 @@
         }
       }
 
-      p {
-        font-family: $font-primary;
-        font-size: 1rem;
-        font-weight: normal;
-        word-break: break-word;
-        overflow-wrap: break-word;
-        hyphens: auto;
-        color: $black;
+      .gauge {
+        margin: 0 2rem 1rem;
+        width: calc(100% - 4rem);
+      }
+
+      .tooltip-description {
+        overflow-y: auto;
+        padding-right: 0.5rem;
+        max-height: 42dvh;
+
+        p {
+          font-family: $font-primary;
+          font-size: 1.25rem;
+          font-weight: normal;
+          word-break: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
+          color: $black;
+        }
       }
     }
   }

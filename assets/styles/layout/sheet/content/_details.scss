@@ -74,13 +74,17 @@
   .description {
     overflow-y: auto;
     max-height: 14dvh;
-    padding: 0.25rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem;
     font-size: 1.25rem;
     text-align: justify;
     word-break: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
     color: $primary;
+
+    @include respondTo('md') {
+      max-height: 17dvh;
+    }
 
     p {
       margin-bottom: 0.5rem;

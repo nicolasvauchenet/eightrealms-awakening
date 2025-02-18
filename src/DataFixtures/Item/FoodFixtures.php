@@ -25,7 +25,7 @@ class FoodFixtures extends Fixture implements OrderedFixtureInterface
                 'amount' => 1,
                 'duration' => 5,
                 'price' => 5,
-                'reference' => 'misc_food_wine',
+                'reference' => 'food_wine',
             ],
             [
                 'category' => 'category_food',
@@ -38,7 +38,7 @@ class FoodFixtures extends Fixture implements OrderedFixtureInterface
                 'amount' => 1,
                 'duration' => 2,
                 'price' => 2,
-                'reference' => 'misc_food_beer',
+                'reference' => 'food_beer',
             ],
 
             // Sans effet
@@ -51,7 +51,7 @@ class FoodFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'health',
                 'amount' => 3,
                 'price' => 2,
-                'reference' => 'misc_food_bread',
+                'reference' => 'food_bread',
             ],
             [
                 'category' => 'category_food',
@@ -62,7 +62,7 @@ class FoodFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'health',
                 'amount' => 3,
                 'price' => 3,
-                'reference' => 'misc_food_cheese',
+                'reference' => 'food_cheese',
             ],
             [
                 'category' => 'category_food',
@@ -73,7 +73,7 @@ class FoodFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'health',
                 'amount' => 5,
                 'price' => 3,
-                'reference' => 'misc_food_chicken',
+                'reference' => 'food_chicken',
             ],
             [
                 'category' => 'category_food',
@@ -84,7 +84,7 @@ class FoodFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'health',
                 'amount' => 7,
                 'price' => 4,
-                'reference' => 'misc_food_fish',
+                'reference' => 'food_fish',
             ],
             [
                 'category' => 'category_food',
@@ -95,7 +95,7 @@ class FoodFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'health',
                 'amount' => 8,
                 'price' => 5,
-                'reference' => 'misc_food_meat',
+                'reference' => 'food_meat',
             ],
         ];
 

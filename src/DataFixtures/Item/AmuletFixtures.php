@@ -22,7 +22,7 @@ class AmuletFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Défensif',
                 'target' => 'health',
                 'amount' => 20,
-                'price' => 200,
+                'price' => 500,
                 'reference' => 'amulet_health',
             ],
             [
@@ -33,7 +33,7 @@ class AmuletFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Défensif',
                 'target' => 'mana',
                 'amount' => 20,
-                'price' => 200,
+                'price' => 500,
                 'reference' => 'amulet_mana',
             ],
             [
@@ -43,8 +43,8 @@ class AmuletFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'amulet.png',
                 'type' => 'Défensif',
                 'target' => 'defense',
-                'amount' => 10,
-                'price' => 200,
+                'amount' => 5,
+                'price' => 500,
                 'reference' => 'amulet_protection',
             ],
             [
@@ -54,7 +54,7 @@ class AmuletFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'amulet.png',
                 'type' => 'Défensif',
                 'target' => 'defense',
-                'amount' => 50,
+                'amount' => 20,
                 'price' => 2000,
                 'reference' => 'amulet_medaillon_des_vents',
             ],

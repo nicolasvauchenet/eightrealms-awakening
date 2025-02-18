@@ -32,6 +32,9 @@ class Category
     #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'category', orphanRemoval: true)]
     private Collection $items;
 
+    #[ORM\Column(length: 255)]
+    private ?string $folder = null;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -104,6 +107,18 @@ class Category
                 $item->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFolder(): ?string
+    {
+        return $this->folder;
+    }
+
+    public function setFolder(string $folder): static
+    {
+        $this->folder = $folder;
 
         return $this;
     }

@@ -23,7 +23,7 @@ class ScrollFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'health',
                 'amount' => 50,
                 'area' => 3,
-                'price' => 300,
+                'price' => 500,
                 'reference' => 'scroll_fireball',
             ],
 
@@ -36,7 +36,7 @@ class ScrollFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Défensif',
                 'target' => 'health',
                 'amount' => 50,
-                'price' => 300,
+                'price' => 500,
                 'reference' => 'scroll_heal',
             ],
             [
@@ -46,8 +46,8 @@ class ScrollFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'scroll.png',
                 'type' => 'Défensif',
                 'target' => 'defense',
-                'amount' => 30,
-                'price' => 300,
+                'amount' => 10,
+                'price' => 800,
                 'reference' => 'scroll_barrier',
             ],
 

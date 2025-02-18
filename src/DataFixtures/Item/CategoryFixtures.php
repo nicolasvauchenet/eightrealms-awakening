@@ -58,11 +58,6 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'category_map',
             ],
             [
-                'name' => 'Objets de Quête',
-                'position' => 10,
-                'reference' => 'category_quest',
-            ],
-            [
                 'name' => 'Cadeaux',
                 'position' => 11,
                 'reference' => 'category_gift',

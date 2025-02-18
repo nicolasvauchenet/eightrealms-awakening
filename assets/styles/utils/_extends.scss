@@ -100,3 +100,9 @@
 .text-danger {
   color: $danger !important;
 }
+
+/* ANIMATIONS */
+.appears {
+  opacity: 0;
+  animation: appears 1.5s forwards;
+}

@@ -12,6 +12,8 @@
   border: 0.25em groove $secondary;
   border-radius: 0.5rem;
   box-shadow: 0.25rem 0.25rem 0.75rem rgba($black, 0.85);
+  @extend .appears;
+  animation-delay: 0.5s;
 
   &.info {
     color: $white;

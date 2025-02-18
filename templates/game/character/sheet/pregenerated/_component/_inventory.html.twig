@@ -1,3 +1,31 @@
 <div class="sheet-content inventory {% if this.activeContent == 'inventory' %}active{% endif %}">
     <h3 class="sheet-subtitle">Inventaire</h3>
+
+    <div class="categories">
+        {% for category in app_ItemCategoryService.categories %}
+            <h4 class="name">{{ category.name }}</h4>
+
+            <div class="app-grid three">
+                {% for i in 1..3 %}
+                    <div class="app-card item" data-controller="tooltip">
+                        <a href="#" data-action="click->tooltip#open">
+                            <div class="card-header">
+                                <img src="{{ asset('img/core/item/weapon/sword_long.png') }}" alt="Item Test" class="card-image"/>
+
+                                <div class="card-attributes">
+                                    {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                                    +0
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <h3 class="card-title">Épée Longue #{{ i }}</h3>
+                            </div>
+                        </a>
+                        {% include 'game/_layout/_sheet/_tooltip.html.twig' with {'type': 'item', 'content': i} %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
 </div>

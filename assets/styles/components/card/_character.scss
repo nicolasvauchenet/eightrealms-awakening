@@ -4,7 +4,7 @@
   .card-header {
     @include displayFlex(center, flex-end);
 
-    img {
+    .card-image {
       height: 16dvh;
       object-fit: contain;
       border-bottom: 2px solid $primary;
@@ -20,7 +20,7 @@
     }
 
     .card-subtitle {
-      font-size: 1.15rem;
+      font-size: 0.85rem;
     }
   }
 }

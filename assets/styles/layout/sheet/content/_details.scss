@@ -45,6 +45,22 @@
       .metrics {
         @include displayGrid(repeat(2, 1fr), 0.75rem);
 
+        &.app-grid {
+          grid-gap: 0.25rem;
+
+          &.three {
+            @include displayGrid(repeat(3, 1fr), 0.25rem);
+
+            .metric {
+              font-size: 0.85rem;
+
+              .app-icon {
+                height: 2rem;
+              }
+            }
+          }
+        }
+
         .metric {
           margin-bottom: 0.5rem;
           font-size: 1rem;
@@ -53,7 +69,6 @@
           .app-icon {
             display: block;
             margin: 0 auto 0.25rem;
-            width: 2.75rem;
             height: 2.75rem;
           }
         }
@@ -92,4 +107,5 @@
       margin-bottom: 0.5rem;
     }
   }
+
 }

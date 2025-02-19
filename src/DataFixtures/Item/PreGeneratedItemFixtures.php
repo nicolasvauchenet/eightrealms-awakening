@@ -89,8 +89,9 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             [
                 'character' => 'character_aldrin',
                 'item' => 'weapon_shortbow',
-                'isEquipped' => false,
+                'isEquipped' => true,
                 'health' => 30,
+                'slot' => 'bow',
                 'class' => Weapon::class,
             ],
             [
@@ -153,8 +154,9 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             [
                 'character' => 'character_aldrin',
                 'item' => 'magical_firewand',
-                'isEquipped' => false,
+                'isEquipped' => true,
                 'charge' => 20,
+                'slot' => 'lefthand',
                 'class' => Magical::class,
             ],
 

@@ -20,8 +20,8 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'description' => "<p>Léger et rudimentaire, cet écu est fabriqué à partir de planches de bois renforcées par des clous et une fine bordure en métal. Bien qu’il offre une protection minimale, il reste un choix abordable pour les débutants ou ceux qui ne peuvent pas porter d’équipement plus lourd. Sa légèreté permet une grande mobilité, mais il est moins efficace contre les attaques puissantes.</p>",
                 'picture' => 'shield_wood.png',
                 'type' => 'Léger',
-                'defense' => 1,
-                'price' => 10,
+                'defense' => 2,
+                'price' => 50,
                 'reference' => 'shield_wooden',
             ],
             [
@@ -31,7 +31,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'shield_iron.png',
                 'type' => 'Lourd',
                 'defense' => 3,
-                'price' => 100,
+                'price' => 150,
                 'reference' => 'shield_iron',
             ],
             [
@@ -41,7 +41,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'shield_steel.png',
                 'type' => 'Léger',
                 'defense' => 5,
-                'price' => 200,
+                'price' => 250,
                 'reference' => 'shield_steel',
             ],
 
@@ -54,7 +54,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Magique',
                 'defense' => 3,
                 'target' => 'health',
-                'amount' => 5,
+                'amount' => 10,
                 'price' => 1000,
                 'reference' => 'shield_iron_health',
             ],

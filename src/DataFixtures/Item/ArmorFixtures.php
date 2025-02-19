@@ -41,7 +41,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'armor_leather.png',
                 'type' => 'Légère',
                 'defense' => 2,
-                'price' => 100,
+                'price' => 150,
                 'reference' => 'armor_leather',
             ],
             [
@@ -84,8 +84,8 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Magique',
                 'defense' => 1,
                 'target' => 'mana',
-                'amount' => 5,
-                'price' => 100,
+                'amount' => 10,
+                'price' => 1000,
                 'reference' => 'armor_mage_apprentice',
             ],
             [
@@ -96,7 +96,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Magique',
                 'defense' => 4,
                 'target' => 'health',
-                'amount' => 5,
+                'amount' => 20,
                 'price' => 2000,
                 'reference' => 'armor_iron_health',
             ],

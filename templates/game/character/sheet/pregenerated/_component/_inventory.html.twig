@@ -2,12 +2,12 @@
     <h3 class="sheet-subtitle">Inventaire</h3>
 
     <div class="categories">
-        {% for category, characterItems in app_CharacterItemService.characterItems(this.character) %}
+        {% for category, characterItems in app_characterItemService.characterItems(this.character) %}
             <h4 class="name">{{ category }}</h4>
 
             <div class="app-grid three">
                 {% for characterItem in characterItems %}
-                    <div class="app-card item" data-controller="tooltip">
+                    <div class="app-card item {% if characterItem.equipped %}equipped{% endif %}" data-controller="tooltip">
                         <a href="#" data-action="click->tooltip#open">
                             <div class="card-header">
                                 {% if characterItem.item.category.slug != 'carte' and characterItem.item.category.slug != 'cadeau' %}

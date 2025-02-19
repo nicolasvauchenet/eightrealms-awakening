@@ -1,18 +1,139 @@
 <div class="sheet-content equipment {% if this.activeContent == 'equipment' %}active{% endif %}">
     <h3 class="sheet-subtitle">Équipement</h3>
 
-    <div class="app-grid three">
-        {% for category, characterItems in app_CharacterItemService.characterItems(this.character) %}
-            {% for characterItem in characterItems %}
-                {% if characterItem.equipped %}
-                    <div class="app-card item">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ characterItem.item.name }}</h4>
-                            <p class="card-subtitle">{{ characterItem.item.category.slug }}</p>
-                        </div>
+    <div class="equipped">
+        <img src="{{ asset('img/core/equipment/equipment.png') }}" alt="Équipement"/>
+
+        <div class="equipped-item armor" data-controller="tooltip">
+            <img src="{{ asset('img/core/equipment/armor.png') }}" class="placeholder" alt="Armure"/>
+            {% set characterItem = app_characterItemService.equippedItems(character).armor %}
+            {% if characterItem %}
+                <a href="#" data-action="click->tooltip#open">
+                    <img src="{{ asset('img/core/item/armor/' ~ characterItem.item.picture) }}"
+                         class="equip"
+                         alt="{{ characterItem.item.name }}"/>
+                    <div class="gauge">
+                        <div class="gauge-fill success" style="--value: 1"></div>
                     </div>
+                </a>
+                {% include 'game/_layout/_sheet/_tooltip.html.twig' with {characterItem: characterItem} %}
+            {% endif %}
+        </div>
+
+        <div class="equipped-item righthand" data-controller="tooltip">
+            <img src="{{ asset('img/core/equipment/sword.png') }}" class="placeholder" alt="Main droite"/>
+            {% set characterItem = app_characterItemService.equippedItems(character).righthand %}
+            {% if characterItem %}
+                <a href="#" data-action="click->tooltip#open">
+                    <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"
+                         class="equip"
+                         alt="{{ characterItem.item.name }}"/>
+                    <div class="gauge">
+                        <div class="gauge-fill {% if characterItem.item.category.slug == 'arme-magique' %}info{% else %}success{% endif %}" style="--value: 1"></div>
+                    </div>
+                </a>
+                {% include 'game/_layout/_sheet/_tooltip.html.twig' with {characterItem: characterItem} %}
+            {% endif %}
+        </div>
+
+        <div class="equipped-item bow" data-controller="tooltip">
+            <img src="{{ asset('img/core/equipment/bow.png') }}" class="placeholder" alt="Arc"/>
+            {% set characterItem = app_characterItemService.equippedItems(character).bow %}
+            {% if characterItem %}
+                <a href="#" data-action="click->tooltip#open">
+                    <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"
+                         class="equip"
+                         alt="{{ characterItem.item.name }}"/>
+                    <div class="gauge">
+                        <div class="gauge-fill success" style="--value: 1"></div>
+                    </div>
+                </a>
+                {% include 'game/_layout/_sheet/_tooltip.html.twig' with {characterItem: characterItem} %}
+            {% endif %}
+        </div>
+
+        <div class="equipped-assets">
+            <div class="equipped-asset ring" data-controller="tooltip">
+                <img src="{{ asset('img/core/equipment/ring.png') }}" class="placeholder" alt="Anneau"/>
+                {% set characterItem = app_characterItemService.equippedItems(character).ring %}
+                {% if characterItem %}
+                    <a href="#" data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/ring/' ~ characterItem.item.picture) }}"
+                             class="equip"
+                             alt="{{ characterItem.item.name }}"/>
+                    </a>
+                    {% include 'game/_layout/_sheet/_tooltip.html.twig' with {characterItem: characterItem} %}
                 {% endif %}
-            {% endfor %}
-        {% endfor %}
+            </div>
+            <div class="equipped-asset scroll" data-controller="tooltip">
+                <img src="{{ asset('img/core/equipment/scroll.png') }}" class="placeholder" alt="Parchemin"/>
+                {% set characterItem = app_characterItemService.equippedItems(character).scroll %}
+                {% if characterItem %}
+                    <a href="#" data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/scroll/' ~ characterItem.item.picture) }}"
+                             class="equip"
+                             alt="{{ characterItem.item.name }}"/>
+                    </a>
+                    {% include 'game/_layout/_sheet/_tooltip.html.twig' with {characterItem: characterItem} %}
+                {% endif %}
+            </div>
+            <div class="equipped-asset potion" data-controller="tooltip">
+                <img src="{{ asset('img/core/equipment/potion.png') }}" class="placeholder" alt="Potion"/>
+                {% set characterItem = app_characterItemService.equippedItems(character).potion %}
+                {% if characterItem %}
+                    <a href="#" data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/potion/' ~ characterItem.item.picture) }}"
+                             class="equip"
+                             alt="{{ characterItem.item.name }}"/>
+                    </a>
+                    {% include 'game/_layout/_sheet/_tooltip.html.twig' with {characterItem: characterItem} %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="equipped-item amulet" data-controller="tooltip">
+            <img src="{{ asset('img/core/equipment/amulet.png') }}" class="placeholder" alt="Amulette"/>
+            {% set characterItem = app_characterItemService.equippedItems(character).amulet %}
+            {% if characterItem %}
+                <a href="#" data-action="click->tooltip#open">
+                    <img src="{{ asset('img/core/item/amulet/' ~ characterItem.item.picture) }}"
+                         class="equip"
+                         alt="{{ characterItem.item.name }}"/>
+                </a>
+                {% include 'game/_layout/_sheet/_tooltip.html.twig' with {characterItem: characterItem} %}
+            {% endif %}
+        </div>
+
+        <div class="equipped-item lefthand" data-controller="tooltip">
+            <img src="{{ asset('img/core/equipment/sword.png') }}" class="placeholder" alt="Main gauche"/>
+            {% set characterItem = app_characterItemService.equippedItems(character).lefthand %}
+            {% if characterItem %}
+                <a href="#" data-action="click->tooltip#open">
+                    <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"
+                         class="equip"
+                         alt="{{ characterItem.item.name }}"/>
+                    <div class="gauge">
+                        <div class="gauge-fill {% if characterItem.item.category.slug == 'arme-magique' %}info{% else %}success{% endif %}" style="--value: 1"></div>
+                    </div>
+                </a>
+                {% include 'game/_layout/_sheet/_tooltip.html.twig' with {characterItem: characterItem} %}
+            {% endif %}
+        </div>
+
+        <div class="equipped-item shield" data-controller="tooltip">
+            <img src="{{ asset('img/core/equipment/shield.png') }}" class="placeholder" alt="Bouclier"/>
+            {% set characterItem = app_characterItemService.equippedItems(character).shield %}
+            {% if characterItem %}
+                <a href="#" data-action="click->tooltip#open">
+                    <img src="{{ asset('img/core/item/shield/' ~ characterItem.item.picture) }}"
+                         class="equip"
+                         alt="{{ characterItem.item.name }}"/>
+                    <div class="gauge">
+                        <div class="gauge-fill success" style="--value: 1"></div>
+                    </div>
+                </a>
+                {% include 'game/_layout/_sheet/_tooltip.html.twig' with {characterItem: characterItem} %}
+            {% endif %}
+        </div>
     </div>
 </div>

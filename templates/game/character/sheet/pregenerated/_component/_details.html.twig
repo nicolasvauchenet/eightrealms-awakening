@@ -31,36 +31,38 @@
 
         <div class="attributes">
             <div class="metrics">
-                {% set bonus = app_CharacterBonusService.characterBonus(this.character, 'health') %}
+                {% set bonus = app_characterBonusService.characterBonus(this.character, 'health') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
                     {{ this.character.healthMax + bonus['amount'] }}
                 </div>
 
-                {% set bonus = app_CharacterBonusService.characterBonus(this.character, 'mana') %}
+                {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
                     {{ this.character.manaMax + bonus['amount'] }}
                 </div>
+            </div>
 
-                {% set bonus = app_CharacterBonusService.characterBonus(this.character, 'defense') %}
+            {% set weapons = app_characterItemService.equippedWeapons(this.character) %}
+            {% set magicalWeapons = app_characterItemService.equippedWeapons(this.character, true) %}
+            <div class="metrics {% if weapons is not empty and magicalWeapons is not empty %}app-grid three{% endif %}">
+                {% set bonus = app_characterBonusService.characterBonus(this.character, 'defense') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
                     +{{ bonus['amount'] }}
                 </div>
 
-                {% set bonus = app_CharacterBonusService.characterBonus(this.character, 'damage') %}
-                {% set weapons = app_CharacterItemService.equippedWeapons(this.character) %}
                 {% if weapons is not empty %}
+                    {% set bonus = app_characterBonusService.characterBonus(this.character, 'damage') %}
                     <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                         {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
                         +{{ bonus['amount'] }}
                     </div>
                 {% endif %}
 
-                {% set bonus = app_CharacterBonusService.characterBonus(this.character, 'magicalDamage') %}
-                {% set weapons = app_CharacterItemService.equippedWeapons(this.character, true) %}
-                {% if weapons is not empty %}
+                {% if magicalWeapons is not empty %}
+                    {% set bonus = app_characterBonusService.characterBonus(this.character, 'magicalDamage') %}
                     <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                         {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
                         +{{ bonus['amount'] }}

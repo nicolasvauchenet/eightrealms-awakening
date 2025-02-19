@@ -42,6 +42,17 @@ class CharacterItemRepository extends ServiceEntityRepository
         return $grouped;
     }
 
+    public function findEquippedItems(Character $character): array
+    {
+        return $this->createQueryBuilder('ci')
+            ->andWhere('ci.equipped = true')
+            ->andWhere('ci.character = :character')
+            ->setParameter('character', $character)
+            ->orderBy('ci.item', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findEquippedWeapons(Character $character, ?bool $isMagical = false): array
     {
         $query = $this->createQueryBuilder('ci')

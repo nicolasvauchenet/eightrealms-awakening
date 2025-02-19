@@ -1,4 +1,10 @@
 &.item {
+  border: 2px solid transparent;
+
+  &.equipped {
+    border-color: $success;
+  }
+
   & > a {
     position: relative;
   }

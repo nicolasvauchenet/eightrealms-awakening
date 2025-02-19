@@ -11,7 +11,7 @@ class Weapon extends Item
     #[ORM\Column]
     private ?int $damage = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $range = null;
 
     #[ORM\Column(length: 255, nullable: true)]

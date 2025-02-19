@@ -58,6 +58,18 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'price' => 1000,
                 'reference' => 'shield_iron_health',
             ],
+            [
+                'category' => 'category_shield',
+                'name' => 'Bouclier en fer de défense',
+                'description' => "<p>Ce bouclier en fer est imprégné de magie, lui permettant de renforcer la défense de son porteur. En plus d’offrir une défense solide, il renforce la robustesse de son utilisateur, lui permettant de tenir plus longtemps sur le champ de bataille.</p>",
+                'picture' => 'shield_iron.png',
+                'type' => 'Magique',
+                'defense' => 3,
+                'target' => 'defense',
+                'amount' => 5,
+                'price' => 1000,
+                'reference' => 'shield_iron_defense',
+            ],
         ];
 
         foreach($shields as $data) {

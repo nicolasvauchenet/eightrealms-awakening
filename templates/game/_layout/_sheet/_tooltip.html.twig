@@ -8,77 +8,133 @@
                 {% if characterItem.charge is defined or characterItem.item.area is defined or characterItem.item.duration is defined or characterItem.item.range is defined %}
                     <div class="tooltip-attributes left">
                         {% if characterItem.charge is defined and characterItem.charge is not null %}
-                            <div class="tooltip-attribute">
-                                {{ ux_icon('material-symbols-light:charger-rounded', {'class': 'app-icon text-fourth'}) }}
+                            <div class="tooltip-attribute text-fourth">
+                                {{ ux_icon('material-symbols-light:charger-rounded', {'class': 'app-icon'}) }}
                                 {{ characterItem.charge }}
                             </div>
                         {% endif %}
                         {% if characterItem.item.area is defined and characterItem.item.area is not null %}
-                            <div class="tooltip-attribute">
-                                {{ ux_icon('ph:map-pin-area-fill', {'class': 'app-icon text-primary'}) }}
+                            <div class="tooltip-attribute text-primary">
+                                {{ ux_icon('ph:map-pin-area-fill', {'class': 'app-icon'}) }}
                                 {{ characterItem.item.area }}
                             </div>
                         {% endif %}
                         {% if characterItem.item.duration is defined and characterItem.item.duration is not null %}
-                            <div class="tooltip-attribute">
-                                {{ ux_icon('lsicon:time-two-filled', {'class': 'app-icon text-primary'}) }}
+                            <div class="tooltip-attribute text-primary">
+                                {{ ux_icon('lsicon:time-two-filled', {'class': 'app-icon'}) }}
                                 {{ characterItem.item.duration }}
                             </div>
                         {% endif %}
                         {% if characterItem.item.range is defined and characterItem.item.range is not null %}
-                            <div class="tooltip-attribute">
-                                {{ ux_icon('material-symbols:social-distance-rounded', {'class': 'app-icon text-primary'}) }}
+                            <div class="tooltip-attribute text-primary">
+                                {{ ux_icon('material-symbols:social-distance-rounded', {'class': 'app-icon'}) }}
                                 {{ characterItem.item.range }}
                             </div>
                         {% endif %}
                     </div>
                 {% endif %}
 
-                <div class="tooltip-attributes">
+                <div class="tooltip-attributes right">
                     {% if characterItem.item.category.slug != 'carte' and characterItem.item.category.slug != 'cadeau' %}
-                        <div class="tooltip-attribute">
-                            {% if characterItem.item.category.slug == 'armure' or characterItem.item.category.slug == 'bouclier' %}
-                                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                        {% if characterItem.item.category.slug == 'armure' or characterItem.item.category.slug == 'bouclier' %}
+                            <div class="tooltip-attribute text-primary">
+                                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
                                 +{{ characterItem.item.defense }}
-                            {% elseif characterItem.item.category.slug == 'arme' %}
-                                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                            </div>
+                        {% elseif characterItem.item.category.slug == 'arme' %}
+                            <div class="tooltip-attribute text-primary">
+                                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon'}) }}
                                 +{{ characterItem.item.damage }}
-                            {% elseif characterItem.item.category.slug == 'arme-magique' %}
-                                {% if characterItem.item.type == 'Offensif' %}
-                                    {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
-                                {% elseif characterItem.item.type == 'Défensif' %}
-                                    {% if characterItem.item.target == 'health' %}
-                                        {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-                                    {% elseif characterItem.item.target == 'mana' %}
-                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                                    {% endif %}
-                                {% endif %}
-                                +{{ characterItem.item.amount }}
-                            {% elseif characterItem.item.category.slug == 'potion' or characterItem.item.category.slug == 'parchemin' or characterItem.item.category.slug == 'anneau' or characterItem.item.category.slug == 'amulette' %}
-                                {% if characterItem.item.type == 'Défensif' %}
-                                    {% if characterItem.item.target == 'health' %}
-                                        {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-                                    {% elseif characterItem.item.target == 'mana' %}
-                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                                    {% elseif characterItem.item.target == 'defense' %}
-                                        {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
-                                    {% endif %}
+                            </div>
+                        {% elseif characterItem.item.category.slug == 'arme-magique' %}
+                            {% if characterItem.item.type == 'Offensif' %}
+                                <div class="tooltip-attribute text-third">
+                                    {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon'}) }}
                                     +{{ characterItem.item.amount }}
-                                {% elseif characterItem.item.type == 'Offensif' %}
-                                    {% if characterItem.item.target == 'health' %}
-                                        {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
-                                    {% elseif characterItem.item.target == 'damage' %}
-                                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                                    {% endif %}
-                                    +{{ characterItem.item.amount }}
-                                {% elseif characterItem.item.type == 'Utile' %}
-                                    {{ ux_icon('entypo:tools', {'class': 'app-icon text-primary'}) }}
+                                </div>
+                            {% elseif characterItem.item.type == 'Défensif' %}
+                                {% if characterItem.item.target == 'health' %}
+                                    <div class="tooltip-attribute text-third">
+                                        {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                        +{{ characterItem.item.amount }}
+                                    </div>
+                                {% elseif characterItem.item.target == 'mana' %}
+                                    <div class="tooltip-attribute text-fourth">
+                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                        +{{ characterItem.item.amount }}
+                                    </div>
                                 {% endif %}
-                            {% elseif characterItem.item.category.slug == 'nourriture' %}
-                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-                                +{{ characterItem.item.amount }}
                             {% endif %}
-                        </div>
+                        {% elseif characterItem.item.category.slug == 'potion' or characterItem.item.category.slug == 'parchemin' or characterItem.item.category.slug == 'anneau' or characterItem.item.category.slug == 'amulette' %}
+                            {% if characterItem.item.type == 'Défensif' %}
+                                {% if characterItem.item.target == 'health' %}
+                                    <div class="tooltip-attribute text-third">
+                                        {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                        +{{ characterItem.item.amount }}
+                                    </div>
+                                {% elseif characterItem.item.target == 'mana' %}
+                                    <div class="tooltip-attribute text-fourth">
+                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                        +{{ characterItem.item.amount }}
+                                    </div>
+                                {% elseif characterItem.item.target == 'defense' %}
+                                    <div class="tooltip-attribute text-primary">
+                                        {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
+                                        +{{ characterItem.item.amount }}
+                                    </div>
+                                {% endif %}
+                            {% elseif characterItem.item.type == 'Offensif' %}
+                                {% if characterItem.item.target == 'health' %}
+                                    <div class="tooltip-attribute text-third">
+                                        {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon'}) }}
+                                        +{{ characterItem.item.amount }}
+                                    </div>
+                                {% elseif characterItem.item.target == 'damage' %}
+                                    <div class="tooltip-attribute text-primary">
+                                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon'}) }}
+                                        +{{ characterItem.item.amount }}
+                                    </div>
+                                {% endif %}
+                            {% elseif characterItem.item.type == 'Utile' %}
+                                <div class="tooltip-attribute text-primary">
+                                    {{ ux_icon('entypo:tools', {'class': 'app-icon'}) }}
+                                </div>
+                            {% endif %}
+                        {% elseif characterItem.item.category.slug == 'nourriture' %}
+                            <div class="tooltip-attribute text-third">
+                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                +{{ characterItem.item.amount }}
+                            </div>
+                        {% endif %}
+                        {% if (characterItem.item.category.slug == 'armure' or characterItem.item.category.slug == 'bouclier' or characterItem.item.category.slug == 'arme') and characterItem.item.target is defined %}
+                            {% if characterItem.item.target is defined and characterItem.item.target is not null %}
+                                {% if characterItem.item.category.slug == 'armure' or characterItem.item.category.slug == 'bouclier' %}
+                                    {% if characterItem.item.target == 'health' %}
+                                        <div class="tooltip-attribute text-third">
+                                            {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                            +{{ characterItem.item.amount }}
+                                        </div>
+                                    {% elseif characterItem.item.target == 'mana' %}
+                                        <div class="tooltip-attribute text-fourth">
+                                            {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                            +{{ characterItem.item.amount }}
+                                        </div>
+                                    {% elseif characterItem.item.target == 'defense' %}
+                                        <div class="tooltip-attribute text-fourth">
+                                            {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
+                                            +{{ characterItem.item.amount }}
+                                        </div>
+                                    {% endif %}
+                                {% elseif characterItem.item.category.slug == 'arme' %}
+                                    {% if characterItem.item.target == 'damage' %}
+                                        <div class="tooltip-attribute text-third">
+                                            {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon'}) }}
+                                            +{{ characterItem.item.amount }}
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
                     {% endif %}
                 </div>
 

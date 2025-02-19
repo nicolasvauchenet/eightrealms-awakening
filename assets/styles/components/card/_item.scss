@@ -21,17 +21,22 @@
       top: 0;
       left: 0;
       right: 0;
-      @include displayFlex(center, center);
+      @include displayFlex(center, center, 0.5rem);
       padding: 0.25rem;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: $primary;
       background-color: rgba($white, 0.85);
       border-top-left-radius: 0.5rem;
       border-top-right-radius: 0.5rem;
 
-      .app-icon {
-        height: 1.25rem;
+      .card-attribute {
+        @include displayFlex(center, center);
+        flex: 1;
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: $primary;
+
+        .app-icon {
+          height: 1.25rem;
+        }
       }
     }
   }

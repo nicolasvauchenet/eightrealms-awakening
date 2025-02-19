@@ -43,7 +43,7 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             ],
             [
                 'character' => 'character_aldrin',
-                'item' => 'shield_iron_health',
+                'item' => 'shield_iron_defense',
                 'isEquipped' => true,
                 'health' => 50,
                 'slot' => 'shield',
@@ -169,7 +169,7 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             ],
             [
                 'character' => 'character_elandra',
-                'item' => 'armor_mage',
+                'item' => 'armor_mage_apprentice',
                 'quantity' => 1,
                 'isEquipped' => true,
                 'health' => 10,

@@ -12,6 +12,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+        // Classique
         $shields = [
             [
                 'category' => 'category_shield',
@@ -43,6 +44,20 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'price' => 200,
                 'reference' => 'shield_steel',
             ],
+
+            // Enchanté
+            [
+                'category' => 'category_shield',
+                'name' => 'Bouclier en fer de santé',
+                'description' => "<p>Ce bouclier en fer est imprégné de magie curative, lui permettant de renforcer la santé de son porteur. En plus d’offrir une défense solide, il renforce la vitalité de son utilisateur, lui permettant de tenir plus longtemps sur le champ de bataille.</p>",
+                'picture' => 'shield_iron.png',
+                'type' => 'Magique',
+                'defense' => 3,
+                'target' => 'health',
+                'amount' => 5,
+                'price' => 1000,
+                'reference' => 'shield_iron_health',
+            ],
         ];
 
         foreach($shields as $data) {
@@ -53,6 +68,9 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 ->setPicture($data['picture'])
                 ->setType($data['type'])
                 ->setDefense($data['defense'])
+                ->setTarget($data['target'] ?? null)
+                ->setEffect($data['effect'] ?? null)
+                ->setAmount($data['amount'] ?? null)
                 ->setPrice($data['price']);
             $manager->persist($shield);
             $this->addReference($data['reference'], $shield);

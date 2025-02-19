@@ -32,8 +32,8 @@ class PotionFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'potion_health.png',
                 'type' => 'Défensif',
                 'target' => 'health',
-                'amount' => 50,
-                'price' => 100,
+                'amount' => 30,
+                'price' => 150,
                 'reference' => 'potion_healing',
             ],
             [
@@ -54,8 +54,8 @@ class PotionFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'potion_mana.png',
                 'type' => 'Défensif',
                 'target' => 'mana',
-                'amount' => 50,
-                'price' => 100,
+                'amount' => 30,
+                'price' => 150,
                 'reference' => 'potion_mana',
             ],
 

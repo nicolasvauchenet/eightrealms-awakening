@@ -27,7 +27,7 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             // Aldrin le Brave
             [
                 'character' => 'character_aldrin',
-                'item' => 'weapon_longsword',
+                'item' => 'weapon_longsword_storm',
                 'isEquipped' => true,
                 'health' => 30,
                 'slot' => 'righthand',
@@ -35,7 +35,7 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             ],
             [
                 'character' => 'character_aldrin',
-                'item' => 'armor_iron',
+                'item' => 'armor_iron_health',
                 'isEquipped' => true,
                 'health' => 50,
                 'slot' => 'armor',
@@ -43,7 +43,7 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             ],
             [
                 'character' => 'character_aldrin',
-                'item' => 'shield_iron',
+                'item' => 'shield_iron_health',
                 'isEquipped' => true,
                 'health' => 50,
                 'slot' => 'shield',
@@ -206,7 +206,7 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             // Eryndor le Vigilant
             [
                 'character' => 'character_eryndor',
-                'item' => 'weapon_longbow',
+                'item' => 'weapon_longbow_storm',
                 'isEquipped' => true,
                 'health' => 20,
                 'slot' => 'bow',

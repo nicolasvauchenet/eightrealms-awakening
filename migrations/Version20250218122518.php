@@ -20,7 +20,7 @@ final class Version20250218122518 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE armor (id INT NOT NULL, defense INT NOT NULL, price INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE armor (id INT NOT NULL, defense INT NOT NULL, target VARCHAR(255) DEFAULT NULL, effect VARCHAR(255) DEFAULT NULL, amount INT DEFAULT NULL, price INT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('ALTER TABLE armor ADD CONSTRAINT FK_BF27FEFCBF396750 FOREIGN KEY (id) REFERENCES item (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 

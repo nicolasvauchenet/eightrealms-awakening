@@ -13,6 +13,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $armors = [
+            // Classique
             [
                 'category' => 'category_armor',
                 'name' => 'Robe de mage',
@@ -73,6 +74,20 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'price' => 400,
                 'reference' => 'armor_plates',
             ],
+
+            // Enchantée
+            [
+                'category' => 'category_armor',
+                'name' => 'Armure de fer de santé',
+                'description' => "<p>Forgée par un maître armurier, cette armure de fer est enchantée pour renforcer la santé de son porteur. Elle offre une protection solide tout en régénérant lentement les blessures de son utilisateur, lui permettant de rester en pleine forme pendant les combats prolongés.</p>",
+                'picture' => 'armor_iron.png',
+                'type' => 'Magique',
+                'defense' => 4,
+                'target' => 'health',
+                'amount' => 5,
+                'price' => 2000,
+                'reference' => 'armor_iron_health',
+            ],
         ];
 
         foreach($armors as $data) {
@@ -83,6 +98,9 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 ->setPicture($data['picture'])
                 ->setType($data['type'])
                 ->setDefense($data['defense'])
+                ->setTarget($data['target'] ?? null)
+                ->setEffect($data['effect'] ?? null)
+                ->setAmount($data['amount'] ?? null)
                 ->setPrice($data['price']);
             $manager->persist($armor);
             $this->addReference($data['reference'], $armor);

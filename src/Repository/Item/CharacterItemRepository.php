@@ -41,4 +41,26 @@ class CharacterItemRepository extends ServiceEntityRepository
 
         return $grouped;
     }
+
+    public function findEquippedWeapons(Character $character, ?bool $isMagical = false): array
+    {
+        $query = $this->createQueryBuilder('ci')
+            ->leftJoin('ci.item', 'i')
+            ->leftJoin('i.category', 'c')
+            ->addSelect('i')
+            ->andWhere('ci.character = :character')
+            ->andWhere('ci.equipped = true')
+            ->andWhere('ci.slot IN (:slots)')
+            ->andWhere('c.slug = :slug')
+            ->setParameter('character', $character)
+            ->setParameter('slots', ['lefthand', 'righthand', 'bow']);
+
+        if($isMagical) {
+            $query->setParameter('slug', 'arme-magique');
+        } else {
+            $query->setParameter('slug', 'arme');
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

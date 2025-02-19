@@ -93,14 +93,44 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'price' => 100,
                 'reference' => 'weapon_longbow',
             ],
+
+            // Enchantée
+            [
+                'category' => 'category_weapon',
+                'name' => 'Épée longue de foudre',
+                'description' => "<p>Forgée dans un alliage de métal et de magie, cette épée est capable de canaliser l’énergie électrique pour infliger des dégâts dévastateurs. Son apparence imposante et son pouvoir destructeur en font une arme redoutée des mages de combat et des guerriers magiques.</p>",
+                'picture' => 'sword_long.png',
+                'type' => 'Magique',
+                'damage' => 8,
+                'range' => 2,
+                'target' => 'damage',
+                'amount' => 5,
+                'price' => 1000,
+                'reference' => 'weapon_longsword_storm',
+            ],
+            [
+                'category' => 'category_weapon',
+                'name' => 'Arc long de foudre',
+                'description' => "<p>Cet arc magique est capable de lancer des éclairs à grande distance, infligeant des dégâts électriques à ses cibles. Idéal pour les mages de combat et les archers magiques, il offre une portée supérieure et une puissance dévastatrice. Un choix incontournable pour ceux qui maîtrisent la magie élémentaire.</p>",
+                'picture' => 'bow_long.png',
+                'type' => 'Magique',
+                'damage' => 8,
+                'range' => 4,
+                'target' => 'damage',
+                'amount' => 5,
+                'price' => 1000,
+                'reference' => 'weapon_longbow_storm',
+            ],
             [
                 'category' => 'category_weapon',
                 'name' => 'Pistolet de foudre',
                 'description' => "<p>Cette arme magique, en forme de pistolet, canalise l’énergie électrique pour lancer de petits éclairs. Redoutable à distance, elle est prisée des mages de combat et des ingénieurs pour son style moderne et ses capacités destructrices. Son rayon d’action en fait une arme unique dans les affrontements stratégiques.</p>",
                 'picture' => 'gun.png',
                 'type' => 'Distance',
-                'damage' => 8,
+                'damage' => 5,
                 'range' => 4,
+                'target' => 'damage',
+                'amount' => 5,
                 'price' => 200,
                 'reference' => 'weapon_gunstorm',
             ],
@@ -114,6 +144,9 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 ->setPicture($data['picture'])
                 ->setType($data['type'])
                 ->setDamage($data['damage'])
+                ->setTarget($data['target'] ?? null)
+                ->setEffect($data['effect'] ?? null)
+                ->setAmount($data['amount'] ?? null)
                 ->setRange($data['range'])
                 ->setPrice($data['price']);
             $manager->persist($weapon);

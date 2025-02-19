@@ -6,7 +6,7 @@ use App\Entity\Character\Character;
 use App\Entity\Item\CharacterItem;
 use Doctrine\ORM\EntityManagerInterface;
 
-class CharacterItemService
+readonly class CharacterItemService
 {
     public function __construct(private EntityManagerInterface $manager)
     {
@@ -15,5 +15,10 @@ class CharacterItemService
     public function getCharacterItems(Character $character): array
     {
         return $this->manager->getRepository(CharacterItem::class)->findCharacterItemsByCategories($character);
+    }
+
+    public function getEquippedWeapons(Character $character, ?bool $isMagical = false): array
+    {
+        return $this->manager->getRepository(CharacterItem::class)->findEquippedWeapons($character, $isMagical);
     }
 }

@@ -1,3 +1,18 @@
 <div class="sheet-content equipment {% if this.activeContent == 'equipment' %}active{% endif %}">
     <h3 class="sheet-subtitle">Équipement</h3>
+
+    <div class="app-grid three">
+        {% for category, characterItems in app_CharacterItemService.characterItems(this.character) %}
+            {% for characterItem in characterItems %}
+                {% if characterItem.equipped %}
+                    <div class="app-card item">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ characterItem.item.name }}</h4>
+                            <p class="card-subtitle">{{ characterItem.item.category.slug }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
 </div>

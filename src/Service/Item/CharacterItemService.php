@@ -3,24 +3,23 @@
 namespace App\Service\Item;
 
 use App\Entity\Character\Character;
-use App\Entity\Item\CharacterItem;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\Item\CharacterItemRepository;
 
 readonly class CharacterItemService
 {
-    public function __construct(private EntityManagerInterface $manager, private EntityManagerInterface $entityManager)
+    public function __construct(private CharacterItemRepository $characterItemRepository)
     {
     }
 
     public function getCharacterItems(Character $character): array
     {
-        return $this->manager->getRepository(CharacterItem::class)->findCharacterItemsByCategories($character);
+        return $this->characterItemRepository->findCharacterItemsByCategories($character);
     }
 
     public function getEquippedItems(Character $character): array
     {
         $slots = ['armor', 'righthand', 'lefthand', 'bow', 'shield', 'ring', 'potion', 'scroll', 'amulet'];
-        $equippedItems = $this->entityManager->getRepository(CharacterItem::class)->findEquippedItems($character);
+        $equippedItems = $this->characterItemRepository->findEquippedItems($character);
         $itemsBySlot = array_fill_keys($slots, null);
 
         foreach($equippedItems as $item) {
@@ -34,6 +33,6 @@ readonly class CharacterItemService
 
     public function getEquippedWeapons(Character $character, ?bool $isMagical = false): array
     {
-        return $this->manager->getRepository(CharacterItem::class)->findEquippedWeapons($character, $isMagical);
+        return $this->characterItemRepository->findEquippedWeapons($character, $isMagical);
     }
 }

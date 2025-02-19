@@ -52,7 +52,6 @@
       padding: 1rem;
       margin: 0 0.75rem 0 0.5rem;
       max-width: calc(600px - 6rem);
-      text-align: justify;
       background-color: $white;
       border: 0.5rem groove $secondary;
       border-radius: 0.5rem;
@@ -131,14 +130,15 @@
       }
 
       .tooltip-description {
-        overflow-y: auto;
+        /*overflow-y: auto;*/
         padding-right: 0.5rem;
-        max-height: 42dvh;
+        /*max-height: 42dvh;*/
 
         p {
           font-family: $font-primary;
           font-size: 1.25rem;
           font-weight: normal;
+          text-align: justify;
           word-break: break-word;
           overflow-wrap: break-word;
           hyphens: auto;

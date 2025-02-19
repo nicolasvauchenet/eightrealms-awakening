@@ -1,0 +1,87 @@
+<div class="app-tooltip"
+     data-tooltip-target="tooltip"
+     data-action="click->tooltip#close">
+    <div class="tooltip-background" data-tooltip-target="background"></div>
+    <div class="tooltip-body">
+        <div class="tooltip-content">
+            <div class="tooltip-header">
+                <div class="tooltip-attributes left">
+                    <div class="tooltip-attribute text-fourth">
+                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                        {{ characterSpell.spell.mana + characterSpell.mana }}
+                    </div>
+                    <div class="tooltip-attribute level text-primary">
+                        {{ ux_icon('icon-park-solid:level', {'class': 'app-icon'}) }}
+                        {{ characterSpell.level }}
+                    </div>
+                    {% if characterSpell.spell.area is defined and characterSpell.spell.area is not null %}
+                        <div class="tooltip-attribute text-primary">
+                            {{ ux_icon('ph:map-pin-area-fill', {'class': 'app-icon'}) }}
+                            {{ characterSpell.spell.area + characterSpell.area }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="tooltip-attributes right">
+                    {% if characterSpell.spell.type == 'Offensif' %}
+                        <div class="tooltip-attribute text-third">
+                            {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon'}) }}
+                            +{{ characterSpell.spell.amount + characterSpell.amount }}
+                        </div>
+                    {% elseif characterSpell.spell.type == 'Défensif' %}
+                        {% if characterSpell.spell.target == 'health' %}
+                            <div class="tooltip-attribute text-third">
+                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                +{{ characterSpell.spell.amount + characterSpell.amount }}
+                            </div>
+                        {% elseif characterSpell.spell.target == 'mana' %}
+                            <div class="tooltip-attribute text-fourth">
+                                {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                +{{ characterSpell.spell.amount + characterSpell.amount }}
+                            </div>
+                        {% elseif characterSpell.spell.target == 'defense' %}
+                            <div class="tooltip-attribute text-primary">
+                                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
+                                +{{ characterSpell.spell.amount + characterSpell.amount }}
+                            </div>
+                        {% endif %}
+                        {% if characterSpell.spell.duration is defined and characterSpell.spell.duration is not null %}
+                            <div class="tooltip-attribute text-primary">
+                                {{ ux_icon('lsicon:time-two-filled', {'class': 'app-icon'}) }}
+                                {{ characterSpell.spell.duration + characterSpell.duration }}
+                            </div>
+                        {% endif %}
+                    {% elseif characterSpell.spell.type == 'Utile' %}
+                        {% if characterSpell.spell.effect is not null %}
+                            {% if characterSpell.spell.duration is defined and characterSpell.spell.duration is not null %}
+                                <div class="tooltip-attribute text-primary">
+                                    {{ ux_icon('lsicon:time-two-filled', {'class': 'app-icon'}) }}
+                                    {{ characterSpell.spell.duration + characterSpell.duration }}
+                                </div>
+                            {% else %}
+                                <div class="tooltip-attribute text-primary">
+                                    {{ ux_icon('entypo:tools', {'class': 'app-icon'}) }}
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="tooltip-attribute text-primary">
+                                {{ ux_icon('entypo:tools', {'class': 'app-icon'}) }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <h3 class="tooltip-title">{{ characterSpell.spell.name }}</h3>
+                <h4 class="tooltip-subtitle">{{ characterSpell.spell.category.name }}</h4>
+
+                <figure class="tooltip-picture">
+                    <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.category.picture) }}" alt="{{ characterSpell.spell.name }}" class="tooltip-image"/>
+                </figure>
+            </div>
+
+            <div class="tooltip-description">
+                {{ characterSpell.spell.description | raw }}
+            </div>
+        </div>
+    </div>
+</div>

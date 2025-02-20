@@ -47,13 +47,24 @@ class PlayerComponent
             return;
         }
 
+        $categoryName = $characterItem->getItem()->getCategory()->getSlug();
+        $equippedItems = $this->characterItemService->getEquippedItems($this->character);
+
         if($characterItem->isEquipped()) {
+            switch($categoryName) {
+                case 'arme':
+                case 'arme-magique':
+                    if($characterItem === $equippedItems['righthand'] && isset($equippedItems['lefthand'])) {
+                        $equippedItems['lefthand']->setSlot('righthand');
+                    }
+                    break;
+                default:
+                    break;
+            }
             $characterItem->setSlot(null);
             $characterItem->setEquipped(false);
         } else {
-            $categoryName = $characterItem->getItem()->getCategory()->getSlug();
             $categoryCode = $characterItem->getItem()->getCategory()->getFolder();
-            $equippedItems = $this->characterItemService->getEquippedItems($this->character);
 
             switch($categoryName) {
                 case 'armure':

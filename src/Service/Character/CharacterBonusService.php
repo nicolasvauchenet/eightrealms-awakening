@@ -47,7 +47,9 @@ readonly class CharacterBonusService
 
             if(!in_array($categorySlug, ['arme-magique', 'potion', 'parchemin']) && $itemTarget === $bonusType) {
                 $bonus['amount'] += $itemAmount;
-                $bonus['extra'] = true;
+                if($categorySlug !== 'arme') {
+                    $bonus['extra'] = true;
+                }
             }
         }
 

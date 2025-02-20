@@ -11,8 +11,7 @@ use App\Repository\Item\CharacterItemRepository;
 
 readonly class CharacterItemService
 {
-    public function __construct(private CharacterItemRepository $characterItemRepository,
-                                private ItemService             $itemService)
+    public function __construct(private CharacterItemRepository $characterItemRepository)
     {
     }
 

@@ -120,7 +120,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Pistolet de foudre',
                 'description' => "<p>Cette arme magique, en forme de pistolet, canalise l’énergie électrique pour lancer de petits éclairs. Redoutable à distance, elle est prisée des mages de combat et des ingénieurs pour son style moderne et ses capacités destructrices. Son rayon d’action en fait une arme unique dans les affrontements stratégiques.</p>",
                 'picture' => 'gun.png',
-                'type' => 'Arme de jet enchantée',
+                'type' => 'Arme de poing enchantée',
                 'damage' => 5,
                 'range' => 8,
                 'target' => 'damage',

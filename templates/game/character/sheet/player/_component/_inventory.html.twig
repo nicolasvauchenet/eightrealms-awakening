@@ -119,28 +119,29 @@
                             <div class="card-body">
                                 <h3 class="card-title">{{ characterItem.item.name }}</h3>
                             </div>
-
-                            <div class="card-footer">
-                                {% if characterItem.item.category.slug != 'carte' and characterItem.item.category.slug != 'cadeau' and characterItem.item.category.slug != 'nourriture' %}
-                                    {% if characterItem.equipped %}
-                                        <button class="bg-warning" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
-                                            {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
-                                        </button>
-                                    {% else %}
-                                        {% if app_characterItemService.canEquipItem(this.character, characterItem) %}
-                                            <button class="bg-success" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
-                                                {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
-                                            </button>
-                                        {% endif %}
-                                    {% endif %}
-                                {% elseif characterItem.item.category.slug == 'nourriture' %}
-                                    <button class="bg-success">
-                                        {{ ux_icon('emojione-monotone:fork-and-knife', {'class': 'app-icon'}) }}
-                                    </button>
-                                {% endif %}
-                            </div>
                         </a>
+
                         {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+
+                        <div class="card-footer">
+                            {% if characterItem.item.category.slug != 'carte' and characterItem.item.category.slug != 'cadeau' and characterItem.item.category.slug != 'nourriture' %}
+                                {% if characterItem.equipped %}
+                                    <button class="bg-warning" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
+                                        {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
+                                    </button>
+                                {% else %}
+                                    {% if app_characterItemService.canEquipItem(this.character, characterItem) %}
+                                        <button class="bg-success" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
+                                            {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
+                                        </button>
+                                    {% endif %}
+                                {% endif %}
+                            {% elseif characterItem.item.category.slug == 'nourriture' %}
+                                <button class="bg-success">
+                                    {{ ux_icon('emojione-monotone:fork-and-knife', {'class': 'app-icon'}) }}
+                                </button>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
             </div>

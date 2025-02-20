@@ -1,0 +1,9 @@
+.app-level {
+  @include displayFlex(space-between, center, null, column);
+  width: 100%;
+  flex: 1;
+
+  @import "./header";
+  @import "./main";
+  @import "./footer";
+}

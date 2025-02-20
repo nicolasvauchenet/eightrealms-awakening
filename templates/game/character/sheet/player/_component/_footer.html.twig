@@ -25,4 +25,12 @@
             {{ ux_icon('game-icons:spell-book', {'class': 'app-icon'}) }}
         </a>
     {% endif %}
+    {% if true %}
+        <a href="#"
+           class="{% if this.activeContent == 'quests' %}active{% endif %}"
+                {{ live_action('setActiveContent', {'content': 'quests'}) }}
+           onclick="return false">
+            {{ ux_icon('game-icons:scroll-quill', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
 </div>

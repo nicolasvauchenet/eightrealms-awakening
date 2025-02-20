@@ -63,6 +63,7 @@ class PlayerComponent
                     $characterItem->setSlot('armor');
                     break;
                 case 'arme':
+                case 'arme-magique':
                     if(in_array($characterItem->getItem()->getType(), ['Arme de jet', 'Arme de jet enchantée'])) {
                         if(isset($equippedItems['righthand'])) {
                             $equippedItems['righthand']->setEquipped(false)->setSlot(null);

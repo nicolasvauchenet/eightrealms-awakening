@@ -1,0 +1,16 @@
+{% extends 'game/_layout/_character/_sheet/_index.html.twig' %}
+
+{% block title %}Niveau Supérieur{% endblock %}
+
+{% block body_class %}game character level{% endblock %}
+
+{% block main %}
+    <a href="{{ path('app_game_character_sheet_player') }}"
+       class="app-button back">
+        {{ ux_icon('zondicons:close-solid', {'class': 'app-icon'}) }}
+    </a>
+
+    <section class="app-section">
+        <h2>{{ character.name }} peut passer au niveau {{ app_characterLevelService.levelForXP(character.experience) }}&nbsp;!</h2>
+    </section>
+{% endblock %}

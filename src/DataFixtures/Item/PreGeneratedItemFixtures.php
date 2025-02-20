@@ -467,8 +467,9 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             [
                 'character' => 'character_grymm',
                 'item' => 'magical_firewand',
-                'isEquipped' => false,
+                'isEquipped' => true,
                 'charge' => 20,
+                'slot' => 'lefthand',
                 'class' => Magical::class,
             ],
             [

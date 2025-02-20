@@ -44,37 +44,25 @@
                 </div>
             </div>
 
-            {% set weapons = app_characterItemService.equippedWeapons(this.character) %}
-            {% set magicalWeapons = app_characterItemService.equippedWeapons(this.character, true) %}
-            <div class="metrics {% if weapons is not empty and magicalWeapons is not empty %}app-grid three{% endif %}">
+            <div class="metrics">
                 {% set bonus = app_characterBonusService.characterBonus(this.character, 'defense') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
                     +{{ bonus['amount'] }}
                 </div>
 
-                {% if weapons is not empty %}
-                    {% set bonus = app_characterBonusService.characterBonus(this.character, 'damage') %}
-                    <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                {% set bonus = app_characterBonusService.characterBonus(this.character, 'damage') %}
+                {% set magicalBonus = app_characterBonusService.characterBonus(this.character, 'magicalDamage') %}
+                <div class="metric {% if bonus['extra'] or magicalBonus['extra'] %}text-success{% endif %}">
+                    {% set weapons = app_characterItemService.equippedWeapons(this.character) %}
+                    {% set magicalWeapons = app_characterItemService.equippedWeapons(this.character, true) %}
+                    {% if weapons is not empty %}
                         {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                        +{{ bonus['amount'] }}
-                    </div>
-                {% endif %}
-
-                {% if magicalWeapons is not empty %}
-                    {% set bonus = app_characterBonusService.characterBonus(this.character, 'magicalDamage') %}
-                    <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                    {% else %}
                         {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
-                        +{{ bonus['amount'] }}
-                    </div>
-                {% endif %}
-
-                {% if weapons is empty and magicalWeapons is empty %}
-                    <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
-                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                        +0
-                    </div>
-                {% endif %}
+                    {% endif %}
+                    +{{ bonus['amount'] + magicalBonus['amount'] }}
+                </div>
             </div>
 
             <div class="fortune">

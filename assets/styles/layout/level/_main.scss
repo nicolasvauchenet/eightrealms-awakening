@@ -1,17 +1,17 @@
-.sheet-main {
+.level-main {
   box-sizing: border-box;
   padding: 0.5rem;
   width: 100%;
   flex: 1;
 
-  .sheet-subtitle {
+  .level-subtitle {
     margin-bottom: 0.75rem;
     font-size: 1.25rem;
     color: $primary;
     text-shadow: 1px 1px 2px rgba($white, 0.5);
   }
 
-  .sheet-content {
+  .level-content {
     width: 100%;
     flex: 1;
     display: none;

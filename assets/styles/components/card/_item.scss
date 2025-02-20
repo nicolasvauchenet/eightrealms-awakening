@@ -1,12 +1,22 @@
 &.item {
-  border: 3px double $white;
-
   &.equipped {
-    border: 3px solid $success;
-  }
+    box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
 
-  &.faded {
-    border-color: rgba($white, 0.5);
+    .card-header {
+      .card-attributes {
+        box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
+      }
+    }
+
+    .card-footer {
+      button {
+        &:first-child {
+          margin-left: 3.4px;
+          margin-bottom: 0.75px;
+          border-bottom-left-radius: 0.5rem;
+        }
+      }
+    }
   }
 
   & > a {

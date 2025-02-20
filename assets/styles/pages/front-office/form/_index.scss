@@ -1,23 +1,40 @@
 &.form {
-  .app-section {
-    @include displayFlex(space-between, center, null, column);
+  .app-main {
+    .app-section {
+      @include displayFlex(space-between, center, null, column);
 
-    .app-form {
-      @include displayFlex(center, center, null, column);
-      flex: 1;
+      .app-form {
+        @include displayFlex(center, center, null, column);
+        flex: 1;
 
-      .form-fieldset {
-        width: 100%;
-        background-color: $secondary;
-        border-radius: 0.5rem;
-        box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
+        .form-fieldset {
+          width: 100%;
+          background-color: $secondary;
+          border-radius: 0.5rem;
+          border: 0.25rem groove $white;
+          box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
 
-        .form-group {
-          .form-label {
+          .form-legend {
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+            color: $white;
+            background-color: $fourth;
+            border: 0.25rem groove $white;
+            border-radius: 0.5rem;
             text-shadow: 1px 1px 2px rgba($black, 0.85);
+            box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+          }
+
+          .form-group {
+            .form-label {
+              color: $primary;
+              text-shadow: 1px 1px 2px rgba($white, 0.25);
+            }
           }
         }
       }
     }
   }
+
+  @import "./profile";
 }

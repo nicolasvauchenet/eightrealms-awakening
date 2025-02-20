@@ -6,10 +6,10 @@
 
 {% block main %}
     <section class="app-section">
-        <h2>Connexion</h2>
-
         <form class="app-form" method="post">
             <fieldset class="form-fieldset">
+                <legend class="form-legend">Vos identifiants</legend>
+
                 <div class="form-group">
                     <label class="form-label required" for="username">Votre e-mail</label>
                     <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus/>

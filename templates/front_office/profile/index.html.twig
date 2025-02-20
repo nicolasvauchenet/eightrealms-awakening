@@ -6,10 +6,10 @@
 
 {% block main %}
     <section class="app-section">
-        <h2>Compte Joueur</h2>
-
         {{ form_start(form, {'attr': {'class': 'app-form'}}) }}
         <fieldset class="form-fieldset">
+            <legend class="form-legend">Compte Joueur</legend>
+
             <div class="form-group">
                 {{ form_label(form.name) }}
                 {{ form_widget(form.name) }}
@@ -34,6 +34,16 @@
 
         {{ form_widget(form._token) }}
         <button class="app-button cta" type="submit">Sauvegarder</button>
+
+        {% if app.user.character %}
+            <p>
+                <a href="{{ path('app_game_character_delete') }}"
+                   class="app-button bg-danger"
+                   onclick="return window.confirm('Voulez-vous vraiment supprimer votre personnage ?');">
+                    <small>Supprimer mon Personnage</small>
+                </a>
+            </p>
+        {% endif %}
         {{ form_end(form) }}
     </section>
 {% endblock %}

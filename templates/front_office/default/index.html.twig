@@ -14,12 +14,21 @@
                 </a>
             </p>
 
-            <p>
-                <a href="{{ path('app_game_character_create_home') }}" class="app-button cta">
-                    <small>Nouveau</small>
-                    Personnage
-                </a>
-            </p>
+            {% if app.user.character %}
+                <p>
+                    <a href="#" class="app-button">
+                        <small>{{ app.user.character.name }}</small>
+                        Personnage
+                    </a>
+                </p>
+            {% else %}
+                <p>
+                    <a href="{{ path('app_game_character_create_home') }}" class="app-button cta">
+                        <small>Nouveau</small>
+                        Personnage
+                    </a>
+                </p>
+            {% endif %}
         {% else %}
             <p>
                 <a href="{{ path('app_front_office_register') }}" class="app-button">

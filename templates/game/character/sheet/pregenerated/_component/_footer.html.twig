@@ -25,9 +25,9 @@
             {{ ux_icon('game-icons:spell-book', {'class': 'app-icon'}) }}
         </a>
     {% endif %}
-    <a href="#"
+    <a href="{{ path('app_game_character_create_customize', {'slug': this.character.slug}) }}"
        class="bg-primary"
-       onclick="return window.confirm('Jouer avec {{ character.name }} ?')">
+       onclick="return window.confirm('Jouer avec {{ this.character.name }} ?')">
         {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}
     </a>
 </div>

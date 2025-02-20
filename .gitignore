@@ -3,6 +3,8 @@
 .idea/
 eightrealms.crt
 eightrealms.key
+/public/uploads/character/*
+!/public/uploads/character/.gitkeep
 ###< eightrealms/local-development ###
 
 ###> symfony/framework-bundle ###

@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
-#[ORM\DiscriminatorMap(['pregenerated' => PreGenerated::class])]
+#[ORM\DiscriminatorMap(['pregenerated' => PreGenerated::class, 'player' => Player::class])]
 abstract class Character
 {
     #[ORM\Id]

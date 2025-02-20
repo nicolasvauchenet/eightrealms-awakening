@@ -1,0 +1,50 @@
+&.form {
+  .app-main {
+    width: 100%;
+    height: 100%;
+    background-color: $secondary;
+
+    .app-section {
+      padding: 0;
+
+      @include respondTo(md) {
+        padding: 1rem 0;
+      }
+
+      & > header {
+        width: 100%;
+        margin-bottom: 1rem;
+
+        img {
+          display: block;
+          margin-bottom: 0.5rem;
+          width: 100%;
+          height: 28dvh;
+          object-fit: contain;
+          border-bottom: 2px solid $primary;
+
+          @include respondTo(md) {
+            height: 33dvh;
+          }
+        }
+      }
+    }
+  }
+
+  .app-form {
+    margin: 0 0.5rem;
+    width: calc(100% - 1rem);
+
+    @include respondTo(md) {
+      margin: 0 1.5rem;
+      width: calc(100% - 3rem);
+    }
+
+    .form-fieldset {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+    }
+  }
+
+  @import "../../front-office/form";
+}

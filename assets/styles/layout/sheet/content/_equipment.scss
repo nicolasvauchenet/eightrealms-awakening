@@ -6,7 +6,7 @@
     text-align: center;
 
     & > img {
-      height: 100%;
+      height: calc(100% - 0.5rem);
       opacity: 0.35;
     }
 
@@ -14,7 +14,7 @@
       position: absolute;
       @include displayFlex(center, center, null, column);
       padding: 0.5rem;
-      width: 16dvh;
+      width: 15dvh;
       height: 14dvh;
       box-sizing: border-box;
       background-color: rgba($white, 0.5);
@@ -79,7 +79,7 @@
     .equipped-assets {
       position: absolute;
       @include displayFlex(center, center);
-      width: 16dvh;
+      width: 15dvh;
       top: 0.75rem;
       right: 0.75rem;
       @include displayGrid(repeat(3, 1fr), 0.25rem);

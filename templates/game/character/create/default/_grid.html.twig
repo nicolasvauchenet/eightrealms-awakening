@@ -17,7 +17,7 @@
                    class="bg-fourth">
                     {{ ux_icon('carbon:view-filled', {'class': 'app-icon'}) }}
                 </a>
-                <a href="#"
+                <a href="{{ path('app_game_character_create_customize', {'slug': character.slug}) }}"
                    class="bg-primary"
                    onclick="return window.confirm('Jouer avec {{ character.name }} ?')">
                     {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}

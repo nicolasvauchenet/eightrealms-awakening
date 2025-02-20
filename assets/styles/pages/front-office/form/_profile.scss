@@ -1,0 +1,21 @@
+&.profile {
+  .app-main {
+    .app-section {
+      .app-form {
+        .form-fieldset {
+          margin-bottom: 1.5rem;
+        }
+
+        .app-button {
+          &.bg-danger {
+            margin-top: 1.5rem;
+
+            small {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

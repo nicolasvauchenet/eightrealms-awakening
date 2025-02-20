@@ -6,10 +6,10 @@
 
 {% block main %}
     <section class="app-section">
-        <h2>Inscription</h2>
-
         {{ form_start(form, {'attr': {'class': 'app-form'}}) }}
         <fieldset class="form-fieldset">
+            <legend class="form-legend">Nouveau Joueur</legend>
+
             <div class="form-group">
                 {{ form_label(form.name) }}
                 {{ form_widget(form.name) }}

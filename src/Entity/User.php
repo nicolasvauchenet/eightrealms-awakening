@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Character\Player;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -49,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $connectedAt = null;
+
+    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist'])]
+    private ?Player $character = null;
 
     public function getId(): ?int
     {
@@ -180,6 +184,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConnectedAt(?\DateTimeImmutable $connectedAt): static
     {
         $this->connectedAt = $connectedAt;
+
+        return $this;
+    }
+
+    public function getCharacter(): ?Player
+    {
+        return $this->character;
+    }
+
+    public function setCharacter(Player $character): static
+    {
+        // set the owning side of the relation if necessary
+        if($character->getOwner() !== $this) {
+            $character->setOwner($this);
+        }
+
+        $this->character = $character;
 
         return $this;
     }

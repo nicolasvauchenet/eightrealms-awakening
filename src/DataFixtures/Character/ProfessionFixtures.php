@@ -84,13 +84,13 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Marchand',
                 'description' => "Le Marchand est un commerçant itinérant, vendant des biens et des services aux aventuriers.",
-                'type' => 'trade',
+                'type' => 'pnj',
                 'reference' => 'profession_marchand',
             ],
             [
                 'name' => 'Garde',
                 'description' => "Le Garde est un protecteur de la paix, veillant sur la sécurité des citoyens.",
-                'type' => 'fight',
+                'type' => 'pnj',
                 'reference' => 'profession_garde',
             ],
         ];

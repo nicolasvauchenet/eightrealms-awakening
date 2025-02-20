@@ -47,6 +47,7 @@ class ScrollFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Défensif',
                 'target' => 'defense',
                 'amount' => 10,
+                'duration' => 3,
                 'price' => 800,
                 'reference' => 'scroll_barrier',
             ],

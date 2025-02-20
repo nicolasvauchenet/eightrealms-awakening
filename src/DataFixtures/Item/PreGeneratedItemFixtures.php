@@ -7,7 +7,6 @@ use App\Entity\Item\Amulet;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Food;
-use App\Entity\Item\Gift;
 use App\Entity\Item\Magical;
 use App\Entity\Item\Map;
 use App\Entity\Item\Potion;
@@ -82,16 +81,9 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             ],
             [
                 'character' => 'character_aldrin',
-                'item' => 'gift_flowers',
-                'isEquipped' => false,
-                'class' => Gift::class,
-            ],
-            [
-                'character' => 'character_aldrin',
                 'item' => 'weapon_shortbow',
-                'isEquipped' => true,
+                'isEquipped' => false,
                 'health' => 30,
-                'slot' => 'bow',
                 'class' => Weapon::class,
             ],
             [
@@ -154,9 +146,8 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             [
                 'character' => 'character_aldrin',
                 'item' => 'magical_firewand',
-                'isEquipped' => true,
+                'isEquipped' => false,
                 'charge' => 20,
-                'slot' => 'lefthand',
                 'class' => Magical::class,
             ],
 
@@ -204,6 +195,13 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'slot' => 'amulet',
                 'class' => Amulet::class,
             ],
+            [
+                'character' => 'character_elandra',
+                'item' => 'armor_iron',
+                'isEquipped' => false,
+                'health' => 50,
+                'class' => Armor::class,
+            ],
 
             // Eryndor le Vigilant
             [
@@ -247,6 +245,20 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'isEquipped' => true,
                 'slot' => 'amulet',
                 'class' => Amulet::class,
+            ],
+            [
+                'character' => 'character_eryndor',
+                'item' => 'armor_iron',
+                'isEquipped' => false,
+                'health' => 50,
+                'class' => Armor::class,
+            ],
+            [
+                'character' => 'character_eryndor',
+                'item' => 'magical_firewand',
+                'isEquipped' => false,
+                'charge' => 20,
+                'class' => Magical::class,
             ],
 
             // Lyra l’Agile
@@ -293,6 +305,20 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'slot' => 'ring',
                 'class' => Ring::class,
             ],
+            [
+                'character' => 'character_lyra',
+                'item' => 'armor_iron',
+                'isEquipped' => false,
+                'health' => 50,
+                'class' => Armor::class,
+            ],
+            [
+                'character' => 'character_lyra',
+                'item' => 'magical_firewand',
+                'isEquipped' => false,
+                'charge' => 20,
+                'class' => Magical::class,
+            ],
 
             // Tharasha la Sauvage
             [
@@ -310,6 +336,13 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'health' => 50,
                 'slot' => 'armor',
                 'class' => Armor::class,
+            ],
+            [
+                'character' => 'character_tharasha',
+                'item' => 'magical_firewand',
+                'isEquipped' => false,
+                'charge' => 20,
+                'class' => Magical::class,
             ],
 
             // Isilëa la Gardienne
@@ -356,6 +389,13 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'slot' => 'ring',
                 'class' => Ring::class,
             ],
+            [
+                'character' => 'character_isilea',
+                'item' => 'armor_iron',
+                'isEquipped' => false,
+                'health' => 50,
+                'class' => Armor::class,
+            ],
 
             // Thorin le Féroce
             [
@@ -373,6 +413,13 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'health' => 90,
                 'slot' => 'armor',
                 'class' => Armor::class,
+            ],
+            [
+                'character' => 'character_thorin',
+                'item' => 'magical_firewand',
+                'isEquipped' => false,
+                'charge' => 20,
+                'class' => Magical::class,
             ],
 
             // Grymm le Bricoleur
@@ -416,6 +463,20 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'isEquipped' => true,
                 'slot' => 'ring',
                 'class' => Ring::class,
+            ],
+            [
+                'character' => 'character_grymm',
+                'item' => 'magical_firewand',
+                'isEquipped' => false,
+                'charge' => 20,
+                'class' => Magical::class,
+            ],
+            [
+                'character' => 'character_grymm',
+                'item' => 'armor_iron',
+                'isEquipped' => false,
+                'health' => 50,
+                'class' => Armor::class,
             ],
         ];
 

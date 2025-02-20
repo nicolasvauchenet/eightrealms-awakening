@@ -140,11 +140,18 @@
 
                 <h3 class="tooltip-title">{{ characterItem.item.name }}</h3>
                 <h4 class="tooltip-subtitle">
-                    {{ characterItem.item.category.name }}
                     {% if characterItem.item.category.slug in ['armure', 'bouclier', 'arme'] %}
-                        {{ characterItem.item.type | lower }}
+                        {{ characterItem.item.type }}
                     {% endif %}
                 </h4>
+
+                {% if not app_characterItemService.canEquipItem(this.character, characterItem) %}
+                    <h4 class="text-danger">{{ this.character.name}} ne peut pas utiliser cet objet</h4>
+                {% endif %}
+
+                {% if characterItem.item.category.slug == 'nourriture' and characterItem.item.effect is defined and characterItem.item.effect is not null %}
+                    <h4 class="text-warning">{{ characterItem.item.effect }}</h4>
+                {% endif %}
 
                 <figure class="tooltip-picture">
                     <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}" alt="{{ characterItem.item.name }}" class="tooltip-image"/>

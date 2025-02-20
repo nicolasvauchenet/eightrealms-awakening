@@ -33,7 +33,7 @@ class PlayerType extends AbstractType
                 ],
             ])
             ->add('profession', EntityType::class, [
-                'required' => false,
+                'required' => true,
                 'label' => 'Profession',
                 'class' => Profession::class,
                 'choice_label' => 'name',

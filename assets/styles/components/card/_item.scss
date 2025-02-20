@@ -1,8 +1,9 @@
 &.item {
-  border: 2px solid transparent;
+  overflow: hidden;
+  border: 2px solid $black;
 
   &.equipped {
-    border-color: $success;
+    border-color: $third;
   }
 
   & > a {
@@ -12,7 +13,7 @@
   .card-header {
     &:has(.card-attributes) {
       .card-image {
-        margin-top: 2.5rem;
+        margin-top: 2rem;
       }
     }
 

@@ -3,11 +3,16 @@
 namespace App\Service\Item;
 
 use App\Entity\Character\Character;
+use App\Entity\Item\Armor;
+use App\Entity\Item\CharacterItem;
+use App\Entity\Item\Magical;
+use App\Entity\Item\Shield;
 use App\Repository\Item\CharacterItemRepository;
 
 readonly class CharacterItemService
 {
-    public function __construct(private CharacterItemRepository $characterItemRepository)
+    public function __construct(private CharacterItemRepository $characterItemRepository,
+                                private ItemService             $itemService)
     {
     }
 
@@ -34,5 +39,18 @@ readonly class CharacterItemService
     public function getEquippedWeapons(Character $character, ?bool $isMagical = false): array
     {
         return $this->characterItemRepository->findEquippedWeapons($character, $isMagical);
+    }
+
+    public function canEquipItem(Character $character, CharacterItem $characterItem): bool
+    {
+        if($characterItem->getItem() instanceof Magical) {
+            return ($character->getProfession()->getType() === 'magic' || in_array($character->getProfession()->getSlug(), ['mecaniste', 'moine']));
+        } else if($characterItem->getItem() instanceof Armor || $characterItem->getItem() instanceof Shield) {
+            if(in_array($characterItem->getItem()->getType(), ['Armure lourde', 'Armure lourde enchantée', 'Bouclier lourd', 'Bouclier lourd enchanté'])) {
+                return ($character->getProfession()->getType() !== 'magic' && !in_array($character->getProfession()->getSlug(), ['archer', 'voleur', 'rodeur']));
+            }
+        }
+
+        return true;
     }
 }

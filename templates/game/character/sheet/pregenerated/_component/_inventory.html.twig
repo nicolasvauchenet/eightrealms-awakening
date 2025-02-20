@@ -7,7 +7,7 @@
 
             <div class="app-grid three">
                 {% for characterItem in characterItems %}
-                    <div class="app-card item {% if characterItem.equipped %}equipped{% endif %}" data-controller="tooltip">
+                    <div class="app-card item {% if characterItem.equipped %}equipped{% endif %} {% if not app_characterItemService.canEquipItem(this.character, characterItem) %}faded{% endif %}" data-controller="tooltip">
                         <a href="#" data-action="click->tooltip#open">
                             <div class="card-header">
                                 {% if characterItem.item.category.slug != 'carte' and characterItem.item.category.slug != 'cadeau' %}

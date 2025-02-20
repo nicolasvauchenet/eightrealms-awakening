@@ -7,7 +7,7 @@
 
             <div class="app-grid three">
                 {% for characterSpell in characterSpells %}
-                    <div class="app-card spell" data-controller="tooltip">
+                    <div class="app-card spell {% if (characterSpell.mana + characterSpell.spell.mana) > this.character.mana %}faded{% endif %}" data-controller="tooltip">
                         <a href="#" data-action="click->tooltip#open">
                             <div class="card-header">
                                 <div class="card-attributes">

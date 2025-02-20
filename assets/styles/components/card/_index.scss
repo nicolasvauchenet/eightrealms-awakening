@@ -1,9 +1,30 @@
 .app-card {
+  overflow: hidden;
   @include displayFlex(space-between, null, null, column);
   text-align: center;
   background-color: rgba($white, 0.5);
   border-radius: 0.5rem;
   box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+  &.faded {
+    .card-header {
+      .card-attributes,
+      .card-image,
+      .gauge {
+        opacity: 0.5;
+      }
+
+      .card-image {
+        filter: grayscale(1);
+      }
+    }
+
+    .card-body {
+      .card-title {
+        color: rgba($black, 0.5);
+      }
+    }
+  }
 
   & > a {
     @include displayFlex(space-between, null, null, column);

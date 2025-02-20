@@ -11,7 +11,7 @@
                         {{ characterSpell.spell.mana + characterSpell.mana }}
                     </div>
                     <div class="tooltip-attribute level text-primary">
-                        {{ ux_icon('icon-park-solid:level', {'class': 'app-icon'}) }}
+                        {{ ux_icon('material-symbols:diamond', {'class': 'app-icon'}) }}
                         {{ characterSpell.level }}
                     </div>
                     {% if characterSpell.spell.area is defined and characterSpell.spell.area is not null %}
@@ -73,6 +73,10 @@
 
                 <h3 class="tooltip-title">{{ characterSpell.spell.name }}</h3>
                 <h4 class="tooltip-subtitle">{{ characterSpell.spell.category.name }}</h4>
+
+                {% if (characterSpell.mana + characterSpell.spell.mana) > this.character.mana %}
+                    <h4 class="text-danger">{{ this.character.name }} n'a pas assez de mana pour lancer ce sortilège</h4>
+                {% endif %}
 
                 <figure class="tooltip-picture">
                     <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.category.picture) }}" alt="{{ characterSpell.spell.name }}" class="tooltip-image"/>

@@ -21,6 +21,22 @@
                         Personnage
                     </a>
                 </p>
+
+                {% if false %}
+                    <p>
+                        <a href="#" class="app-button cta">
+                            <small>Reprendre</small>
+                            Lieu Actuel
+                        </a>
+                    </p>
+                {% else %}
+                    <p>
+                        <a href="#" class="app-button cta">
+                            <small>Nouvelle</small>
+                            Aventure
+                        </a>
+                    </p>
+                {% endif %}
             {% else %}
                 <p>
                     <a href="{{ path('app_game_character_create_home') }}" class="app-button cta">

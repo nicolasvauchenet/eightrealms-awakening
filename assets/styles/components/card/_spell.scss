@@ -1,4 +1,6 @@
 &.spell {
+  border: 3px double $white;
+
   & > a {
     position: relative;
   }

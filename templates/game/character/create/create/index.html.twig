@@ -46,7 +46,7 @@
 
             <div class="form-group">
                 {{ form_label(form.description) }}
-                {{ form_widget(form.description, {'value': form.description.vars.value | striptags}) }}
+                {{ form_widget(form.description) }}
                 {{ form_help(form.description) }}
                 {{ form_errors(form.description) }}
             </div>

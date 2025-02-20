@@ -1,0 +1,83 @@
+<div class="sheet-content details {% if this.activeContent == 'details' %}active{% endif %}">
+    <h3 class="sheet-subtitle">{{ this.character.profession.name }}&nbsp;{{ this.character.race.name }}</h3>
+
+    <div class="infos">
+        <div class="characteristics">
+            <div class="characteristic">
+                <div class="name">Force</div>
+                <div class="value">{{ this.character.strength }}</div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Dextérité</div>
+                <div class="value">{{ this.character.dexterity }}</div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Constitution</div>
+                <div class="value">{{ this.character.constitution }}</div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Sagesse</div>
+                <div class="value">{{ this.character.wisdom }}</div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Intelligence</div>
+                <div class="value">{{ this.character.intelligence }}</div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Charisme</div>
+                <div class="value">{{ this.character.charisma }}</div>
+            </div>
+        </div>
+
+        <div class="attributes">
+            <div class="metrics">
+                {% set bonus = app_characterBonusService.characterBonus(this.character, 'health') %}
+                <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                    {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                    {{ this.character.healthMax + bonus['amount'] }}
+                </div>
+
+                {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
+                <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                    {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                    {{ this.character.manaMax + bonus['amount'] }}
+                </div>
+            </div>
+
+            {% set weapons = app_characterItemService.equippedWeapons(this.character) %}
+            {% set magicalWeapons = app_characterItemService.equippedWeapons(this.character, true) %}
+            <div class="metrics {% if weapons is not empty and magicalWeapons is not empty %}app-grid three{% endif %}">
+                {% set bonus = app_characterBonusService.characterBonus(this.character, 'defense') %}
+                <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                    {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+                    +{{ bonus['amount'] }}
+                </div>
+
+                {% if weapons is not empty %}
+                    {% set bonus = app_characterBonusService.characterBonus(this.character, 'damage') %}
+                    <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                        +{{ bonus['amount'] }}
+                    </div>
+                {% endif %}
+
+                {% if magicalWeapons is not empty %}
+                    {% set bonus = app_characterBonusService.characterBonus(this.character, 'magicalDamage') %}
+                    <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                        {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
+                        +{{ bonus['amount'] }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="fortune">
+                {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                {{ this.character.fortune }}
+            </div>
+        </div>
+    </div>
+
+    <div class="description">
+        {{ this.character.description | raw }}
+    </div>
+</div>

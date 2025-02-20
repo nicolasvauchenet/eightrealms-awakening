@@ -1,0 +1,16 @@
+<div {{ attributes }}>
+    <div class="app-sheet" data-loading="addClass(loading)">
+        {% include 'game/character/sheet/player/_component/_header.html.twig' %}
+
+        <main class="sheet-main">
+            {% include 'game/character/sheet/player/_component/_details.html.twig' %}
+            {% include 'game/character/sheet/player/_component/_inventory.html.twig' %}
+            {% include 'game/character/sheet/player/_component/_equipment.html.twig' %}
+            {% if character.profession.type == 'magic' %}
+                {% include 'game/character/sheet/player/_component/_spells.html.twig' %}
+            {% endif %}
+        </main>
+
+        {% include 'game/character/sheet/player/_component/_footer.html.twig' %}
+    </div>
+</div>

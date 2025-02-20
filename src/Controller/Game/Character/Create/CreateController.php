@@ -28,13 +28,17 @@ final class CreateController extends AbstractController
                           SluggerInterface       $slugger,
                           Character              $preGenerated): Response
     {
+        if($this->getUser()->getCharacter()) {
+            return $this->redirectToRoute('app_front_office_home');
+        }
+
         $character = (new Player())
             ->setOwner($entityManager->getRepository(User::class)->find($this->getUser()->getId()))
             ->setRace($preGenerated->getRace())
             ->setProfession($preGenerated->getProfession())
             ->setName($preGenerated->getName())
+            ->setDescription(strip_tags($preGenerated->getDescription()))
             ->setPicture($preGenerated->getPicture())
-            ->setDescription($preGenerated->getDescription())
             ->setStrength($preGenerated->getStrength())
             ->setDexterity($preGenerated->getDexterity())
             ->setConstitution($preGenerated->getConstitution())
@@ -50,6 +54,7 @@ final class CreateController extends AbstractController
             ->setExperience(0);
 
         $characterPicture = $character->getPicture();
+        $characterDescription = strip_tags($character->getDescription());
 
         $form = $this->createForm(PlayerType::class, $character);
         $form->handleRequest($request);
@@ -109,6 +114,12 @@ final class CreateController extends AbstractController
                     ->setArea($characterSpell->getArea())
                     ->setDuration($characterSpell->getDuration());
                 $entityManager->persist($newCharacterSpell);
+            }
+
+            if($form->get('description')->getData() === $characterDescription) {
+                $character->setDescription("<p>{$character->getName()}, {$character->getProfession()->getName()} {$character->getRace()->getName()}, commence son aventure à Port-Saint-Doux, capitale des Huit Royaumes.</p>");
+            } else {
+                $character->setDescription('<p>' . $form->get('description')->getData() . '</p>');
             }
 
             $entityManager->persist($character);

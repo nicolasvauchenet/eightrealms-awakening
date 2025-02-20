@@ -1,0 +1,153 @@
+<div class="sheet-content inventory {% if this.activeContent == 'inventory' %}active{% endif %}">
+    <h3 class="sheet-subtitle">Inventaire</h3>
+
+    <div class="categories">
+        {% for category, characterItems in app_characterItemService.characterItems(this.character) %}
+            <h4 class="name">{{ category }}</h4>
+
+            <div class="app-grid three">
+                {% for characterItem in characterItems %}
+                    <div class="app-card item {% if characterItem.equipped %}equipped{% endif %}" data-controller="tooltip">
+                        <a href="#" data-action="click->tooltip#open">
+                            <div class="card-header">
+                                {% if characterItem.item.category.slug != 'carte' and characterItem.item.category.slug != 'cadeau' %}
+                                    <div class="card-attributes">
+                                        {% if characterItem.item.category.slug == 'armure' or characterItem.item.category.slug == 'bouclier' %}
+                                            {% if characterItem.item.target == 'health' %}
+                                                <div class="card-attribute text-third">
+                                                    {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                                    +{{ characterItem.item.amount }}
+                                                </div>
+                                            {% elseif characterItem.item.target == 'mana' %}
+                                                <div class="card-attribute text-fourth">
+                                                    {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                                    +{{ characterItem.item.amount }}
+                                                </div>
+                                            {% elseif characterItem.item.target == 'defense' %}
+                                                <div class="card-attribute text-fourth">
+                                                    {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
+                                                    +{{ characterItem.item.amount }}
+                                                </div>
+                                            {% endif %}
+                                            <div class="card-attribute text-primary">
+                                                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
+                                                +{{ characterItem.item.defense }}
+                                            </div>
+                                        {% elseif characterItem.item.category.slug == 'arme' %}
+                                            {% if characterItem.item.target == 'damage' %}
+                                                <div class="card-attribute text-third">
+                                                    {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon'}) }}
+                                                    +{{ characterItem.item.amount }}
+                                                </div>
+                                            {% endif %}
+                                            <div class="card-attribute text-primary">
+                                                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon'}) }}
+                                                +{{ characterItem.item.damage }}
+                                            </div>
+                                        {% elseif characterItem.item.category.slug == 'arme-magique' %}
+                                            {% if characterItem.item.type == 'Offensif' %}
+                                                <div class="card-attribute text-third">
+                                                    {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon'}) }}
+                                                    +{{ characterItem.item.amount }}
+                                                </div>
+                                            {% elseif characterItem.item.type == 'Défensif' %}
+                                                {% if characterItem.item.target == 'health' %}
+                                                    <div class="card-attribute text-third">
+                                                        {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                                        +{{ characterItem.item.amount }}
+                                                    </div>
+                                                {% elseif characterItem.item.target == 'mana' %}
+                                                    <div class="card-attribute text-fourth">
+                                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                                        +{{ characterItem.item.amount }}
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% elseif characterItem.item.category.slug == 'potion' or characterItem.item.category.slug == 'parchemin' or characterItem.item.category.slug == 'anneau' or characterItem.item.category.slug == 'amulette' %}
+                                            {% if characterItem.item.type == 'Défensif' %}
+                                                {% if characterItem.item.target == 'health' %}
+                                                    <div class="card-attribute text-third">
+                                                        {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                                        +{{ characterItem.item.amount }}
+                                                    </div>
+                                                {% elseif characterItem.item.target == 'mana' %}
+                                                    <div class="card-attribute text-fourth">
+                                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                                        +{{ characterItem.item.amount }}
+                                                    </div>
+                                                {% elseif characterItem.item.target == 'defense' %}
+                                                    <div class="card-attribute text-primary">
+                                                        {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
+                                                        +{{ characterItem.item.amount }}
+                                                    </div>
+                                                {% endif %}
+                                            {% elseif characterItem.item.type == 'Offensif' %}
+                                                {% if characterItem.item.target == 'health' %}
+                                                    <div class="card-attribute text-third">
+                                                        {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon'}) }}
+                                                        +{{ characterItem.item.amount }}
+                                                    </div>
+                                                {% elseif characterItem.item.target == 'damage' %}
+                                                    <div class="card-attribute text-primary">
+                                                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon'}) }}
+                                                        +{{ characterItem.item.amount }}
+                                                    </div>
+                                                {% endif %}
+                                            {% elseif characterItem.item.type == 'Utile' %}
+                                                <div class="card-attribute text-primary">
+                                                    {{ ux_icon('entypo:tools', {'class': 'app-icon'}) }}
+                                                </div>
+                                            {% endif %}
+                                        {% elseif characterItem.item.category.slug == 'nourriture' %}
+                                            <div class="card-attribute text-third">
+                                                {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                                +{{ characterItem.item.amount }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}" alt="{{ characterItem.item.name }}" class="card-image"/>
+
+                                {% if characterItem.health or characterItem.charge %}
+                                    <div class="gauge">
+                                        <div class="gauge-fill {% if characterItem.health %}success{% elseif characterItem.charge %}info{% endif %}" style="--value: 1"></div>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="card-body">
+                                <h3 class="card-title">{{ characterItem.item.name }}</h3>
+                            </div>
+                        </a>
+                        {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <h4 class="name">Objets de quête</h4>
+
+        <div class="app-grid three">
+            <div class="app-card item" data-controller="tooltip">
+                <a href="#" data-action="click->tooltip#open">
+                    <div class="card-header">
+                        <img src="{{ asset('img/core/item/amulet/amulet.png') }}" alt="Item Test" class="card-image"/>
+
+                        <div class="card-attributes">
+                            <div class="card-attribute text-primary">
+                                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
+                                +20
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <h3 class="card-title">Médaillon des vents</h3>
+                    </div>
+                </a>
+                {# {% include 'game/_layout/_sheet/_tooltip.html.twig' with {'type': 'item', 'content': i} %} #}
+            </div>
+        </div>
+    </div>
+</div>

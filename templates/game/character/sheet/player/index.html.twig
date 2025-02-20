@@ -1,16 +1,16 @@
 {% extends 'game/_layout/_character/_sheet/_index.html.twig' %}
 
-{% block title %}Détails du Personnage{% endblock %}
+{% block title %}Mon Personnage{% endblock %}
 
 {% block body_class %}game character sheet{% endblock %}
 
 {% block main %}
-    <a href="{{ path('app_game_character_create_home') }}"
+    <a href="{{ path('app_front_office_home') }}"
        class="app-button back">
         {{ ux_icon('zondicons:close-solid', {'class': 'app-icon'}) }}
     </a>
 
     <section class="app-section">
-        {{ component('PreGeneratedSheet', { character: character }) }}
+        {{ component('PlayerSheet', { character: character }) }}
     </section>
 {% endblock %}

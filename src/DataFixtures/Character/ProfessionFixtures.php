@@ -15,37 +15,37 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
             // Classes de combat physique
             [
                 'name' => 'Guerrier',
-                'description' => "Le Guerrier est un maître des armes lourdes et du combat rapproché.",
+                'description' => "<p>Le Guerrier est un maître des armes lourdes et du combat rapproché.</p>",
                 'type' => 'fight',
                 'reference' => 'profession_guerrier',
             ],
             [
                 'name' => 'Barbare',
-                'description' => "Le Barbare est un combattant sauvage, privilégiant la force brute et le combat féroce.",
+                'description' => "<p>Le Barbare est un combattant sauvage, privilégiant la force brute et le combat féroce.</p>",
                 'type' => 'fight',
                 'reference' => 'profession_barbare',
             ],
             [
                 'name' => 'Chevalier',
-                'description' => "Le Chevalier est un protecteur lourdement armé, incarnant la loyauté et l'honneur.",
+                'description' => "<p>Le Chevalier est un protecteur lourdement armé, incarnant la loyauté et l'honneur.</p>",
                 'type' => 'fight',
                 'reference' => 'profession_chevalier',
             ],
             [
                 'name' => 'Archer',
-                'description' => "L'Archer est un expert des arcs et des armes de jet, maîtrisant le combat à distance.",
+                'description' => "<p>L'Archer est un expert des arcs et des armes de jet, maîtrisant le combat à distance.</p>",
                 'type' => 'fight',
                 'reference' => 'profession_archer',
             ],
             [
                 'name' => 'Rôdeur',
-                'description' => "Le Rôdeur est un combattant agile et polyvalent, souvent associé à la nature.",
+                'description' => "<p>Le Rôdeur est un combattant agile et polyvalent, souvent associé à la nature.</p>",
                 'type' => 'fight',
                 'reference' => 'profession_rodeur',
             ],
             [
                 'name' => 'Moine',
-                'description' => "Le Moine est un spécialiste des arts martiaux, combinant agilité et discipline spirituelle.",
+                'description' => "<p>Le Moine est un spécialiste des arts martiaux, combinant agilité et discipline spirituelle.</p>",
                 'type' => 'fight',
                 'reference' => 'profession_moine',
             ],
@@ -53,13 +53,13 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
             // Classes magiques
             [
                 'name' => 'Mage',
-                'description' => "Le Mage est un maître des sorts destructeurs et des arcanes.",
+                'description' => "<p>Le Mage est un maître des sorts destructeurs et des arcanes.</p>",
                 'type' => 'magic',
                 'reference' => 'profession_mage',
             ],
             [
                 'name' => 'Druide',
-                'description' => "Le Druide protège la nature et contrôle les éléments avec des pouvoirs mystiques.",
+                'description' => "<p>Le Druide protège la nature et contrôle les éléments avec des pouvoirs mystiques.</p>",
                 'type' => 'magic',
                 'reference' => 'profession_druide',
             ],
@@ -67,7 +67,7 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
             // Classes furtives
             [
                 'name' => 'Voleur',
-                'description' => "Le Voleur est un maître de la discrétion, de la subtilité et des attaques sournoises.",
+                'description' => "<p>Le Voleur est un maître de la discrétion, de la subtilité et des attaques sournoises.</p>",
                 'type' => 'stealth',
                 'reference' => 'profession_voleur',
             ],
@@ -75,7 +75,7 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
             // Classes spécialisées
             [
                 'name' => 'Mécaniste',
-                'description' => "Le Mécaniste est un inventeur ingénieux, utilisant des gadgets et des mécanismes en combat.",
+                'description' => "<p>Le Mécaniste est un inventeur ingénieux, utilisant des gadgets et des mécanismes en combat.</p>",
                 'type' => 'specialized',
                 'reference' => 'profession_mecaniste',
             ],
@@ -83,15 +83,21 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
             // Classes PNJ
             [
                 'name' => 'Marchand',
-                'description' => "Le Marchand est un commerçant itinérant, vendant des biens et des services aux aventuriers.",
+                'description' => "<p>Le Marchand est un commerçant itinérant, vendant des biens et des services aux aventuriers.</p>",
                 'type' => 'pnj',
                 'reference' => 'profession_marchand',
             ],
             [
                 'name' => 'Garde',
-                'description' => "Le Garde est un protecteur de la paix, veillant sur la sécurité des citoyens.",
+                'description' => "<p>Le Garde est un protecteur de la paix, veillant sur la sécurité des citoyens.</p>",
                 'type' => 'pnj',
                 'reference' => 'profession_garde',
+            ],
+            [
+                'name' => 'Passant',
+                'description' => "<p>Le Passant est un voyageur anonyme, croisant la route des aventuriers.</p>",
+                'type' => 'pnj',
+                'reference' => 'profession_passant',
             ],
         ];
 

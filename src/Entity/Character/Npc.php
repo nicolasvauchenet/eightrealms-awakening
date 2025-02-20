@@ -2,29 +2,21 @@
 
 namespace App\Entity\Character;
 
-use App\Entity\User;
-use App\Repository\Character\PlayerRepository;
+use App\Repository\Character\NpcRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PlayerRepository::class)]
-class Player extends Character
+#[ORM\Entity(repositoryClass: NpcRepository::class)]
+class Npc extends Character
 {
     #[ORM\Column]
     private ?int $level = null;
 
-    #[ORM\Column]
-    private ?int $experience = null;
-
-    #[ORM\OneToOne(inversedBy: 'character', cascade: ['persist'])]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    private ?User $owner = null;
-
     /**
      * @var Collection<int, PlayerNpc>
      */
-    #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'player', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'npc', orphanRemoval: true)]
     private Collection $playerNpcs;
 
     public function __construct()
@@ -45,30 +37,6 @@ class Player extends Character
         return $this;
     }
 
-    public function getExperience(): ?int
-    {
-        return $this->experience;
-    }
-
-    public function setExperience(int $experience): static
-    {
-        $this->experience = $experience;
-
-        return $this;
-    }
-
-    public function getOwner(): ?User
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(User $owner): static
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, PlayerNpc>
      */
@@ -81,7 +49,7 @@ class Player extends Character
     {
         if (!$this->playerNpcs->contains($playerNpc)) {
             $this->playerNpcs->add($playerNpc);
-            $playerNpc->setPlayer($this);
+            $playerNpc->setNpc($this);
         }
 
         return $this;
@@ -91,8 +59,8 @@ class Player extends Character
     {
         if ($this->playerNpcs->removeElement($playerNpc)) {
             // set the owning side to null (unless already changed)
-            if ($playerNpc->getPlayer() === $this) {
-                $playerNpc->setPlayer(null);
+            if ($playerNpc->getNpc() === $this) {
+                $playerNpc->setNpc(null);
             }
         }
 

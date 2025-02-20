@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
-#[ORM\DiscriminatorMap(['pregenerated' => PreGenerated::class, 'player' => Player::class])]
+#[ORM\DiscriminatorMap(['pregenerated' => PreGenerated::class, 'player' => Player::class, 'npc' => Npc::class])]
 abstract class Character
 {
     #[ORM\Id]
@@ -313,7 +313,7 @@ abstract class Character
 
     public function addCharacterItem(CharacterItem $characterItem): static
     {
-        if (!$this->characterItems->contains($characterItem)) {
+        if(!$this->characterItems->contains($characterItem)) {
             $this->characterItems->add($characterItem);
             $characterItem->setCharacter($this);
         }
@@ -323,9 +323,9 @@ abstract class Character
 
     public function removeCharacterItem(CharacterItem $characterItem): static
     {
-        if ($this->characterItems->removeElement($characterItem)) {
+        if($this->characterItems->removeElement($characterItem)) {
             // set the owning side to null (unless already changed)
-            if ($characterItem->getCharacter() === $this) {
+            if($characterItem->getCharacter() === $this) {
                 $characterItem->setCharacter(null);
             }
         }
@@ -343,7 +343,7 @@ abstract class Character
 
     public function addCharacterSpell(CharacterSpell $characterSpell): static
     {
-        if (!$this->characterSpells->contains($characterSpell)) {
+        if(!$this->characterSpells->contains($characterSpell)) {
             $this->characterSpells->add($characterSpell);
             $characterSpell->setCharacter($this);
         }
@@ -353,9 +353,9 @@ abstract class Character
 
     public function removeCharacterSpell(CharacterSpell $characterSpell): static
     {
-        if ($this->characterSpells->removeElement($characterSpell)) {
+        if($this->characterSpells->removeElement($characterSpell)) {
             // set the owning side to null (unless already changed)
-            if ($characterSpell->getCharacter() === $this) {
+            if($characterSpell->getCharacter() === $this) {
                 $characterSpell->setCharacter(null);
             }
         }

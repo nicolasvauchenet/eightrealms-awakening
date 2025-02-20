@@ -136,9 +136,10 @@
                                         </button>
                                     {% endif %}
                                 {% endif %}
-                            {% elseif characterItem.item.category.slug == 'nourriture' %}
-                                <button class="bg-success">
-                                    {{ ux_icon('emojione-monotone:fork-and-knife', {'class': 'app-icon'}) }}
+                            {% endif %}
+                            {% if characterItem.item.category.slug == 'nourriture' or characterItem.item.category.slug == 'potion' %}
+                                <button class="bg-info" {{ live_action('useItem', {'characterItemId': characterItem.id }) }}>
+                                    {{ ux_icon('ic:baseline-back-hand', {'class': 'app-icon lower'}) }}
                                 </button>
                             {% endif %}
                         </div>

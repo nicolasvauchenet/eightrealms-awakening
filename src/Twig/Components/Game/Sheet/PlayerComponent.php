@@ -125,4 +125,34 @@ class PlayerComponent
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();
     }
+
+    #[LiveAction]
+    public function useItem(#[LiveArg] int $characterItemId): void
+    {
+        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
+        if(in_array($characterItem->getItem()->getCategory()->getSlug(), ['potion', 'nourriture'])) {
+            switch($characterItem->getItem()->getTarget()) {
+                case 'health':
+                    $this->character->setHealth($this->character->getHealth() + $characterItem->getItem()->getAmount());
+                    if($this->character->getHealthMax() < $this->character->getHealth()) {
+                        $this->character->setHealth($this->character->getHealthMax());
+                    }
+                    break;
+                case 'mana':
+                    $this->character->setMana($this->character->getMana() + $characterItem->getItem()->getAmount());
+                    if($this->character->getManaMax() < $this->character->getMana()) {
+                        $this->character->setMana($this->character->getManaMax());
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            $this->character->removeCharacterItem($characterItem);
+            $this->entityManager->remove($characterItem);
+        }
+
+        $this->entityManager->persist($this->character);
+        $this->entityManager->flush();
+    }
 }

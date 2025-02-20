@@ -137,7 +137,7 @@
                                     {% endif %}
                                 {% endif %}
                             {% endif %}
-                            {% if characterItem.item.category.slug == 'nourriture' or characterItem.item.category.slug == 'potion' %}
+                            {% if characterItem.item.category.slug == 'nourriture' or (characterItem.item.category.slug == 'potion' and characterItem.item.type != 'Utile') %}
                                 <button class="bg-info" {{ live_action('useItem', {'characterItemId': characterItem.id }) }}>
                                     {{ ux_icon('ic:baseline-back-hand', {'class': 'app-icon lower'}) }}
                                 </button>

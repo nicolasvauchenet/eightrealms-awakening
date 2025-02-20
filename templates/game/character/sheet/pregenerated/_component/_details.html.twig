@@ -68,6 +68,13 @@
                         +{{ bonus['amount'] }}
                     </div>
                 {% endif %}
+
+                {% if weapons is empty and magicalWeapons is empty %}
+                    <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                        +0
+                    </div>
+                {% endif %}
             </div>
 
             <div class="fortune">

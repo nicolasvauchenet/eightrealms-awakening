@@ -4,6 +4,7 @@ namespace App\Entity\Character;
 
 use App\Entity\Location\Location;
 use App\Entity\Location\PlayerLocation;
+use App\Entity\Quest\PlayerQuest;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -44,12 +45,19 @@ class Player extends Character
     #[ORM\OneToMany(targetEntity: PlayerCreature::class, mappedBy: 'player', orphanRemoval: true)]
     private Collection $playerCreatures;
 
+    /**
+     * @var Collection<int, PlayerQuest>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerQuest::class, mappedBy: 'player', orphanRemoval: true)]
+    private Collection $playerQuests;
+
     public function __construct()
     {
         parent::__construct();
         $this->playerNpcs = new ArrayCollection();
         $this->playerLocations = new ArrayCollection();
         $this->playerCreatures = new ArrayCollection();
+        $this->playerQuests = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -184,6 +192,36 @@ class Player extends Character
             // set the owning side to null (unless already changed)
             if ($playerCreature->getPlayer() === $this) {
                 $playerCreature->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerQuest>
+     */
+    public function getPlayerQuests(): Collection
+    {
+        return $this->playerQuests;
+    }
+
+    public function addPlayerQuest(PlayerQuest $playerQuest): static
+    {
+        if (!$this->playerQuests->contains($playerQuest)) {
+            $this->playerQuests->add($playerQuest);
+            $playerQuest->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerQuest(PlayerQuest $playerQuest): static
+    {
+        if ($this->playerQuests->removeElement($playerQuest)) {
+            // set the owning side to null (unless already changed)
+            if ($playerQuest->getPlayer() === $this) {
+                $playerQuest->setPlayer(null);
             }
         }
 

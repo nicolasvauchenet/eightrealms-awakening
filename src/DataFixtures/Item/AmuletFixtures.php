@@ -47,6 +47,8 @@ class AmuletFixtures extends Fixture implements OrderedFixtureInterface
                 'price' => 500,
                 'reference' => 'amulet_protection',
             ],
+
+            // Quête
             [
                 'category' => 'category_amulet',
                 'name' => 'Médaillon des Vents',

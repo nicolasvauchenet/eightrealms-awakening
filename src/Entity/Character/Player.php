@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Location\Location;
 use App\Entity\PlayerLocation;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
@@ -21,6 +22,9 @@ class Player extends Character
     #[ORM\OneToOne(inversedBy: 'character', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $owner = null;
+
+    #[ORM\ManyToOne]
+    private ?Location $location = null;
 
     /**
      * @var Collection<int, PlayerNpc>
@@ -77,6 +81,18 @@ class Player extends Character
         return $this;
     }
 
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): static
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, PlayerNpc>
      */
@@ -87,7 +103,7 @@ class Player extends Character
 
     public function addPlayerNpc(PlayerNpc $playerNpc): static
     {
-        if (!$this->playerNpcs->contains($playerNpc)) {
+        if(!$this->playerNpcs->contains($playerNpc)) {
             $this->playerNpcs->add($playerNpc);
             $playerNpc->setPlayer($this);
         }
@@ -97,9 +113,9 @@ class Player extends Character
 
     public function removePlayerNpc(PlayerNpc $playerNpc): static
     {
-        if ($this->playerNpcs->removeElement($playerNpc)) {
+        if($this->playerNpcs->removeElement($playerNpc)) {
             // set the owning side to null (unless already changed)
-            if ($playerNpc->getPlayer() === $this) {
+            if($playerNpc->getPlayer() === $this) {
                 $playerNpc->setPlayer(null);
             }
         }
@@ -117,7 +133,7 @@ class Player extends Character
 
     public function addPlayerLocation(PlayerLocation $playerLocation): static
     {
-        if (!$this->playerLocations->contains($playerLocation)) {
+        if(!$this->playerLocations->contains($playerLocation)) {
             $this->playerLocations->add($playerLocation);
             $playerLocation->setPlayer($this);
         }
@@ -127,9 +143,9 @@ class Player extends Character
 
     public function removePlayerLocation(PlayerLocation $playerLocation): static
     {
-        if ($this->playerLocations->removeElement($playerLocation)) {
+        if($this->playerLocations->removeElement($playerLocation)) {
             // set the owning side to null (unless already changed)
-            if ($playerLocation->getPlayer() === $this) {
+            if($playerLocation->getPlayer() === $this) {
                 $playerLocation->setPlayer(null);
             }
         }

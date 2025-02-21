@@ -1,49 +1,50 @@
 &.back-office {
-  overflow: hidden;
-  @include displayFlex(flex-start, center, null, column);
-  height: 100dvh;
+  min-height: 100dvh;
+  max-width: none;
+  background-color: $black;
 
   .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     @include displayFlex(space-between, center, 0.5rem);
     padding: 0.5rem 3.5rem 0.5rem 0.5rem;
-    width: calc(100% - 4rem);
     text-align: center;
     background-color: $secondary;
 
-    .app-logo {
-      margin-bottom: 0.5rem;
-      display: inline-block;
+    .pagetitle {
+      @include displayFlex(center, center, 0.5rem);
 
-      img {
+      .app-logo {
+        margin-bottom: 0.5rem;
         display: inline-block;
-        height: 4rem;
-      }
-    }
 
-    .app-sitename {
-      flex: 1;
-
-      h1,
-      .app-slogan {
-        text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+        img {
+          display: inline-block;
+          height: 5rem;
+        }
       }
 
-      h1 {
-        font-size: 1.5rem;
-      }
+      .app-sitename {
+        h1,
+        .app-slogan {
+          text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+        }
 
-      .app-slogan {
-        font-family: $font-secondary;
-        font-size: 1.25rem;
-        font-weight: bold;
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        .app-slogan {
+          font-family: $font-secondary;
+          font-size: 1.25rem;
+          font-weight: bold;
+        }
       }
     }
   }
 
   .app-main {
-    overflow-y: auto;
-    width: 100%;
-    flex: 1;
-    background-color: $secondary;
+    background-color: $black;
   }
 }

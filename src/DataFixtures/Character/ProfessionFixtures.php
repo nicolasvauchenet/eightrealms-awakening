@@ -99,6 +99,18 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'pnj',
                 'reference' => 'profession_passant',
             ],
+            [
+                'name' => 'Forgeron',
+                'description' => "<p>Le Forgeron est un artisan spécialisé dans la fabrication d'armes et d'armures.</p>",
+                'type' => 'pnj',
+                'reference' => 'profession_forgeron',
+            ],
+            [
+                'name' => 'Prêtre',
+                'description' => "<p>Le Prêtre est un serviteur des dieux, dispensant des bénédictions et des miracles.</p>",
+                'type' => 'pnj',
+                'reference' => 'profession_pretre',
+            ],
         ];
 
         foreach($professions as $data) {

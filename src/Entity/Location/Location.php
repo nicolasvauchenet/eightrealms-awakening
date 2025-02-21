@@ -2,6 +2,7 @@
 
 namespace App\Entity\Location;
 
+use App\Entity\Character\Npc;
 use App\Repository\Location\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -43,9 +44,16 @@ class Location
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent', cascade: ['persist', 'remove'])]
     private Collection $children;
 
+    /**
+     * @var Collection<int, Npc>
+     */
+    #[ORM\OneToMany(targetEntity: Npc::class, mappedBy: 'location')]
+    private Collection $npcs;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->npcs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +168,36 @@ class Location
         if($this->children->removeElement($child)) {
             if($child->getParent() === $this) {
                 $child->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Npc>
+     */
+    public function getNpcs(): Collection
+    {
+        return $this->npcs;
+    }
+
+    public function addNpc(Npc $npc): static
+    {
+        if (!$this->npcs->contains($npc)) {
+            $this->npcs->add($npc);
+            $npc->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNpc(Npc $npc): static
+    {
+        if ($this->npcs->removeElement($npc)) {
+            // set the owning side to null (unless already changed)
+            if ($npc->getLocation() === $this) {
+                $npc->setLocation(null);
             }
         }
 

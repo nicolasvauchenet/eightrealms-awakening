@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Location\Location;
 use App\Repository\Character\NpcRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,6 +19,10 @@ class Npc extends Character
      */
     #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'npc', orphanRemoval: true)]
     private Collection $playerNpcs;
+
+    #[ORM\ManyToOne(inversedBy: 'npcs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Location $location = null;
 
     public function __construct()
     {
@@ -63,6 +68,18 @@ class Npc extends Character
                 $playerNpc->setNpc(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): static
+    {
+        $this->location = $location;
 
         return $this;
     }

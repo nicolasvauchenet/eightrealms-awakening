@@ -78,8 +78,10 @@
                     {% set magicalWeapons = app_characterItemService.equippedWeapons(this.character, true) %}
                     {% if weapons is not empty %}
                         {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
-                    {% else %}
+                    {% elseif magicalWeapons is not empty %}
                         {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
+                    {% else %}
+                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
                     {% endif %}
                     +{{ bonus['amount'] + magicalBonus['amount'] }}
                 </div>

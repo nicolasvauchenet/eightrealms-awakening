@@ -1,7 +1,7 @@
 <div {{ attributes }}>
     {% if this.activeScreenType == 'cinematic' %}
-        {% include 'game/default/_component/_cinematic.html.twig' %}
+        {% include 'game/default/_component/_cinematic/_index.html.twig' %}
     {% elseif this.activeScreenType == 'location' %}
-        {% include 'game/default/_component/_location.html.twig' %}
+        {% include 'game/default/_component/_location/_index.html.twig' %}
     {% endif %}
 </div>

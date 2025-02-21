@@ -150,6 +150,12 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'charge' => 20,
                 'class' => Magical::class,
             ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'map_royaume_de_lile_du_nord',
+                'isEquipped' => false,
+                'class' => Map::class,
+            ],
 
             // Elandra la Sage
             [

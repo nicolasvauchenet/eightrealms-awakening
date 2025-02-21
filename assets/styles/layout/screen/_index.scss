@@ -26,20 +26,13 @@
     animation-delay: 0.75s;
   }
 
-  .screen-header {
-    width: 100%;
-    text-align: center;
-  }
-
   .screen-main {
     flex: 1;
     width: 100%;
   }
 
-  .screen-footer{
-    width: 100%;
-    text-align: center;
-  }
+  @import "./header";
+  @import "./footer";
 
   @import "./cinematic";
   @import "./location";

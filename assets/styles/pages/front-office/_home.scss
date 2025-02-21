@@ -6,4 +6,16 @@
       }
     }
   }
+
+  .app-main {
+    .app-section {
+      p {
+        margin-bottom: 3rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }

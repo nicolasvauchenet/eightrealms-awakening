@@ -5,8 +5,7 @@
 {% block body_class %}game character sheet{% endblock %}
 
 {% block main %}
-    <a href="{{ path('app_front_office_home') }}"
-       class="app-button back">
+    <a href="/{{ back }}" class="app-button back">
         {{ ux_icon('zondicons:close-solid', {'class': 'app-icon'}) }}
     </a>
 

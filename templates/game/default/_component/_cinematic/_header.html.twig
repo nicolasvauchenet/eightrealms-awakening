@@ -1,0 +1,10 @@
+<header class="screen-header">
+    <a href="{{ path('app_front_office_home') }}"
+       class="app-button exit"
+       onclick="return window.confirm('Quitter l\'aventure en cours ?')">
+        {{ ux_icon('streamline:emergency-exit-solid', {'class': 'app-icon'}) }}
+    </a>
+
+    <img src="{{ asset('img/core/logo.png') }}" class="screen-logo" alt="Les Huit Royaumes - chapitre 1 : L'Éveil"/>
+    <h1 class="screen-title">{{ this.activeScreen.name }}</h1>
+</header>

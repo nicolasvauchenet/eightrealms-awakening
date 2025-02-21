@@ -6,12 +6,18 @@
           margin-bottom: 1.5rem;
         }
 
-        .app-button {
-          &.bg-danger {
-            margin-top: 1.5rem;
+        & > p {
+          margin: 1rem 0 0;
 
-            small {
-              margin: 0;
+          &:last-child {
+            margin: 0;
+          }
+
+          .app-button {
+            &.text-danger {
+              small {
+                margin: 0;
+              }
             }
           }
         }

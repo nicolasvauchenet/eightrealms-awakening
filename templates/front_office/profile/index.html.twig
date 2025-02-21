@@ -38,11 +38,21 @@
         {% if app.user.character %}
             <p>
                 <a href="{{ path('app_game_character_delete') }}"
-                   class="app-button bg-danger"
+                   class="app-button outline text-danger"
                    onclick="return window.confirm('Voulez-vous vraiment supprimer votre personnage ?');">
-                    <small>Supprimer mon Personnage</small>
+                    <small>Supprimer votre Personnage</small>
                 </a>
             </p>
+
+            {% if app.user.character.location %}
+                <p>
+                    <a href="{{ path('app_game_delete') }}"
+                       class="app-button outline text-danger"
+                       onclick="return window.confirm('Voulez-vous vraiment recommencer l\'aventure au début ?');">
+                        <small>Recommencer l'aventure</small>
+                    </a>
+                </p>
+            {% endif %}
         {% endif %}
         {{ form_end(form) }}
     </section>

@@ -1,0 +1,45 @@
+<div class="screen-headerinfos">
+    <div class="left">
+        {% set bonus = app_characterBonusService.characterBonus(this.character, 'health') %}
+        <div class="screen-info {% if bonus['extra'] %}text-success{% endif %}">
+            {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+            {{ this.character.health + bonus['amount'] }}
+        </div>
+
+        {% if this.character.profession.type == 'magic' %}
+            {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
+            <div class="screen-info {% if bonus['extra'] %}text-success{% endif %}">
+                {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                {{ this.character.mana + bonus['amount'] }}
+            </div>
+        {% endif %}
+
+        <div class="screen-info">
+            {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+            {{ this.character.fortune }}
+        </div>
+    </div>
+
+    <div class="right">
+        {% set bonus = app_characterBonusService.characterBonus(this.character, 'defense') %}
+        <div class="screen-info {% if bonus['extra'] %}text-success{% endif %}">
+            +{{ bonus['amount'] }}
+            {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+        </div>
+
+        {% set bonus = app_characterBonusService.characterBonus(this.character, 'damage') %}
+        {% set magicalBonus = app_characterBonusService.characterBonus(this.character, 'magicalDamage') %}
+        <div class="screen-info {% if bonus['extra'] or magicalBonus['extra'] %}text-success{% endif %}">
+            +{{ bonus['amount'] + magicalBonus['amount'] }}
+            {% set weapons = app_characterItemService.equippedWeapons(this.character) %}
+            {% set magicalWeapons = app_characterItemService.equippedWeapons(this.character, true) %}
+            {% if weapons is not empty %}
+                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+            {% elseif magicalWeapons is not empty %}
+                {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-third'}) }}
+            {% else %}
+                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+            {% endif %}
+        </div>
+    </div>
+</div>

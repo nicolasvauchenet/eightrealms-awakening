@@ -1,10 +1,13 @@
 .app-card {
-  overflow: hidden;
   @include displayFlex(space-between, null, null, column);
   text-align: center;
   background-color: rgba($white, 0.5);
   border-radius: 0.5rem;
   box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+  @include respondTo(xs) {
+    overflow: hidden;
+  }
 
   &.faded {
     .card-header {

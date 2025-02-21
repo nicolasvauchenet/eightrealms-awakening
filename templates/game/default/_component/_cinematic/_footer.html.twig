@@ -1,0 +1,6 @@
+<footer class="screen-footer">
+    {% for action in this.activeScreen.actions %}
+        <button class="app-button cta"
+                {{ live_action('doAction', {'actionId': action.id}) }}>{{ action.name }}</button>
+    {% endfor %}
+</footer>

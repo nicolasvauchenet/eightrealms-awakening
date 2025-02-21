@@ -20,3 +20,16 @@
     opacity: 1;
   }
 }
+
+@keyframes blink {
+  0% {
+    background-color: $white;
+  }
+  50% {
+    color: $white;
+    background-color: $success;
+  }
+  100% {
+    background-color: $white;
+  }
+}

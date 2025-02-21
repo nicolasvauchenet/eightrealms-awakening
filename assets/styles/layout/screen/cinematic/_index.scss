@@ -1,0 +1,8 @@
+&.cinematic {
+  .app-overlay {
+    background-color: rgba($black, 0.75);
+  }
+
+  @import "./header";
+  @import "./main";
+}

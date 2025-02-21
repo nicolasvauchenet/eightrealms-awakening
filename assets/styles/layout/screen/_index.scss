@@ -1,0 +1,46 @@
+.app-screen {
+  position: relative;
+  box-sizing: border-box;
+  @include displayFlex(space-between, center, null, column);
+  flex: 1;
+  padding: 1rem;
+  width: 100%;
+  @extend .appears;
+  animation-delay: 1s;
+
+  .app-wallpaper,
+  .app-overlay {
+    position: absolute;
+    width: 100%;
+    height: calc(100dvh - 1rem);
+  }
+
+  .app-wallpaper {
+    @extend .appears;
+    animation-delay: 0.5s;
+  }
+
+  .app-overlay {
+    background-color: rgba($black, 0.25);
+    @extend .appears;
+    animation-delay: 0.75s;
+  }
+
+  .screen-header {
+    width: 100%;
+    text-align: center;
+  }
+
+  .screen-main {
+    flex: 1;
+    width: 100%;
+  }
+
+  .screen-footer{
+    width: 100%;
+    text-align: center;
+  }
+
+  @import "./cinematic";
+  @import "./location";
+}

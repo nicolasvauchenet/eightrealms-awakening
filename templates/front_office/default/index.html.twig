@@ -22,16 +22,16 @@
                     </a>
                 </p>
 
-                {% if false %}
+                {% if app.user.character.location %}
                     <p>
-                        <a href="#" class="app-button cta">
+                        <a href="{{ path('app_game_home') }}" class="app-button cta">
                             <small>Reprendre</small>
-                            Lieu Actuel
+                            {{ app.user.character.location.name }}
                         </a>
                     </p>
                 {% else %}
                     <p>
-                        <a href="#" class="app-button cta">
+                        <a href="{{ path('app_game_home') }}" class="app-button cta">
                             <small>Nouvelle</small>
                             Aventure
                         </a>

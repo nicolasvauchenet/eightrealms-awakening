@@ -1,0 +1,38 @@
+<div class="app-screen location" data-loading="addClass(loading)">
+    <img src="{{ asset('img/chapter1/location/' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
+
+    <header class="screen-header">
+        <div class="screen-headerbox">
+            <div class="screen-actions">
+                <a href="#"
+                   class="screen-control blink">
+                    {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
+                </a>
+
+                <a href="#"
+                   class="screen-control">
+                    {{ ux_icon('solar:map-bold', {'class': 'app-icon'}) }}
+                </a>
+            </div>
+
+            <h2 class="screen-title">
+                <small>{{ this.activeScreen.location.parent.name }}</small>
+                {{ this.activeScreen.location.name }}
+            </h2>
+
+            <a href="{{ path('app_front_office_home') }}"
+               class="screen-control bg-danger"
+               onclick="return window.confirm('Quitter l\'aventure en cours ?')">
+                {{ ux_icon('streamline:emergency-exit-solid', {'class': 'app-icon'}) }}
+            </a>
+        </div>
+    </header>
+
+    <main class="screen-main">
+        Main
+    </main>
+
+    <footer class="screen-footer">
+        Footer
+    </footer>
+</div>

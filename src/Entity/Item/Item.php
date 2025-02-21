@@ -11,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'category', type: 'string')]
 #[ORM\DiscriminatorMap(['armor' => Armor::class, 'shield' => Shield::class, 'weapon' => Weapon::class, 'magical' => Magical::class, 'ring' => Ring::class, 'amulet' => Amulet::class, 'scroll' => Scroll::class, 'potion' => Potion::class, 'food' => Food::class, 'map' => Map::class, 'gift' => Gift::class])]
-class Item
+abstract class Item
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

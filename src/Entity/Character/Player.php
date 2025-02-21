@@ -3,7 +3,7 @@
 namespace App\Entity\Character;
 
 use App\Entity\Location\Location;
-use App\Entity\PlayerLocation;
+use App\Entity\Location\PlayerLocation;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -38,11 +38,18 @@ class Player extends Character
     #[ORM\OneToMany(targetEntity: PlayerLocation::class, mappedBy: 'player', orphanRemoval: true)]
     private Collection $playerLocations;
 
+    /**
+     * @var Collection<int, PlayerCreature>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerCreature::class, mappedBy: 'player', orphanRemoval: true)]
+    private Collection $playerCreatures;
+
     public function __construct()
     {
         parent::__construct();
         $this->playerNpcs = new ArrayCollection();
         $this->playerLocations = new ArrayCollection();
+        $this->playerCreatures = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -147,6 +154,36 @@ class Player extends Character
             // set the owning side to null (unless already changed)
             if($playerLocation->getPlayer() === $this) {
                 $playerLocation->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerCreature>
+     */
+    public function getPlayerCreatures(): Collection
+    {
+        return $this->playerCreatures;
+    }
+
+    public function addPlayerCreature(PlayerCreature $playerCreature): static
+    {
+        if (!$this->playerCreatures->contains($playerCreature)) {
+            $this->playerCreatures->add($playerCreature);
+            $playerCreature->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerCreature(PlayerCreature $playerCreature): static
+    {
+        if ($this->playerCreatures->removeElement($playerCreature)) {
+            // set the owning side to null (unless already changed)
+            if ($playerCreature->getPlayer() === $this) {
+                $playerCreature->setPlayer(null);
             }
         }
 

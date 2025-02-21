@@ -50,10 +50,17 @@ class Location
     #[ORM\OneToMany(targetEntity: Npc::class, mappedBy: 'location')]
     private Collection $npcs;
 
+    /**
+     * @var Collection<int, CreatureLocation>
+     */
+    #[ORM\OneToMany(targetEntity: CreatureLocation::class, mappedBy: 'location', orphanRemoval: true)]
+    private Collection $creatureLocations;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->npcs = new ArrayCollection();
+        $this->creatureLocations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,6 +205,36 @@ class Location
             // set the owning side to null (unless already changed)
             if ($npc->getLocation() === $this) {
                 $npc->setLocation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CreatureLocation>
+     */
+    public function getCreatureLocations(): Collection
+    {
+        return $this->creatureLocations;
+    }
+
+    public function addCreatureLocation(CreatureLocation $creatureLocation): static
+    {
+        if (!$this->creatureLocations->contains($creatureLocation)) {
+            $this->creatureLocations->add($creatureLocation);
+            $creatureLocation->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreatureLocation(CreatureLocation $creatureLocation): static
+    {
+        if ($this->creatureLocations->removeElement($creatureLocation)) {
+            // set the owning side to null (unless already changed)
+            if ($creatureLocation->getLocation() === $this) {
+                $creatureLocation->setLocation(null);
             }
         }
 

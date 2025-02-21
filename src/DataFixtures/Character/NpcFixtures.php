@@ -34,7 +34,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'level' => 1,
                 'race' => 'race_humain',
                 'profession' => 'profession_marchand',
-                'location' => 'location_zone_place_du_marche',
+                'location' => 'location_zone_quartier_du_marche',
                 'reference' => 'npc_sophie_la_marchande',
             ],
             [
@@ -55,7 +55,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'level' => 5,
                 'race' => 'race_humain',
                 'profession' => 'profession_garde',
-                'location' => 'location_zone_place_du_marche',
+                'location' => 'location_zone_quartier_du_marche',
                 'reference' => 'npc_robert_le_garde',
             ],
             [
@@ -76,7 +76,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'level' => 1,
                 'race' => 'race_halfelin',
                 'profession' => 'profession_passant',
-                'location' => 'location_zone_place_du_marche',
+                'location' => 'location_zone_quartier_du_marche',
                 'reference' => 'npc_bilo_le_passant',
             ],
             [

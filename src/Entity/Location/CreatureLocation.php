@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Location;
 
-use App\Entity\Character\Player;
-use App\Entity\Location\Location;
-use App\Repository\PlayerLocationRepository;
+use App\Entity\Character\Creature;
+use App\Repository\Location\CreatureLocationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PlayerLocationRepository::class)]
-class PlayerLocation
+#[ORM\Entity(repositoryClass: CreatureLocationRepository::class)]
+class CreatureLocation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'playerLocations')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Player $player = null;
-
     #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Creature $creature = null;
+
+    #[ORM\ManyToOne(inversedBy: 'creatureLocations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 
@@ -28,14 +27,14 @@ class PlayerLocation
         return $this->id;
     }
 
-    public function getPlayer(): ?Player
+    public function getCreature(): ?Creature
     {
-        return $this->player;
+        return $this->creature;
     }
 
-    public function setPlayer(?Player $player): static
+    public function setCreature(?Creature $creature): static
     {
-        $this->player = $player;
+        $this->creature = $creature;
 
         return $this;
     }

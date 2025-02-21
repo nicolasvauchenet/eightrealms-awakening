@@ -97,6 +97,19 @@ class FoodFixtures extends Fixture implements OrderedFixtureInterface
                 'price' => 5,
                 'reference' => 'food_meat',
             ],
+
+            // Récolte
+            [
+                'category' => 'category_food',
+                'name' => 'Viande de rat',
+                'description' => "<p>De la viande de rat fraîche, à cuire pour un repas simple mais nourrissant.</p>",
+                'picture' => 'food_meat.png',
+                'type' => 'food',
+                'target' => 'health',
+                'amount' => 5,
+                'price' => 3,
+                'reference' => 'food_rat',
+            ],
         ];
 
         foreach($foods as $data) {

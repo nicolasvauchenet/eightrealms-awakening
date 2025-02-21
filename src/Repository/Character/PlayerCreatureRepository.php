@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Character;
 
-use App\Entity\PlayerLocation;
+use App\Entity\Character\PlayerCreature;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PlayerLocation>
+ * @extends ServiceEntityRepository<PlayerCreature>
  */
-class PlayerLocationRepository extends ServiceEntityRepository
+class PlayerCreatureRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PlayerLocation::class);
+        parent::__construct($registry, PlayerCreature::class);
     }
 
 //    /**
-//     * @return PlayerLocation[] Returns an array of PlayerLocation objects
+//     * @return PlayerCreature[] Returns an array of PlayerCreature objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -31,7 +31,7 @@ class PlayerLocationRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?PlayerLocation
+//    public function findOneBySomeField($value): ?PlayerCreature
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

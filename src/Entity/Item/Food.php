@@ -6,6 +6,7 @@ use App\Repository\Item\FoodRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FoodRepository::class)]
+#[ORM\Table(name: '`item_food`')]
 class Food extends Item
 {
     #[ORM\Column(length: 255, nullable: true)]

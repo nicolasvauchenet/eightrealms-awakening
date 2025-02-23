@@ -7,6 +7,7 @@ use App\Repository\Screen\LocationScreenRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocationScreenRepository::class)]
+#[ORM\Table(name: '`screen_location`')]
 class LocationScreen extends Screen
 {
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

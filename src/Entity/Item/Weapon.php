@@ -6,6 +6,7 @@ use App\Repository\Item\WeaponRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WeaponRepository::class)]
+#[ORM\Table(name: '`item_weapon`')]
 class Weapon extends Item
 {
     #[ORM\Column]

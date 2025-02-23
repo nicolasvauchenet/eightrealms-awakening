@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ORM\Table(name: '`item_category`')]
+#[ORM\Table(name: '`category_item`')]
 class Category
 {
     #[ORM\Id]

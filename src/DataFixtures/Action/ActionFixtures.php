@@ -16,7 +16,7 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
             // Transition
             [
                 'name' => 'Commencer',
-                'type' => 'text',
+                'type' => 'transition',
                 'effects' => [
                     'changeLocation' => 'quartier-du-marche',
                 ],

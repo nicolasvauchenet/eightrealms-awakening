@@ -3,6 +3,7 @@
 namespace App\Twig\Components\Game;
 
 use App\Entity\Action\Action;
+use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Location\PlayerLocation;
 use App\Entity\Screen\LocationScreen;
@@ -63,52 +64,62 @@ class GameComponent
     }
 
     #[LiveAction]
-    public function doAction(#[LiveArg] int $actionId): void
+    public function doAction(#[LiveArg] int $id, #[LiveArg] ?string $type = null): void
     {
-        $action = $this->entityManager->getRepository(Action::class)->find($actionId);
+        if($type) {
+            switch($type) {
+                case 'interaction':
+                    dd('interaction');
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            $action = $this->entityManager->getRepository(Action::class)->find($id);
 
-        foreach($action->getEffects() as $effect => $data) {
-            if($effect === 'changeLocation') {
-                $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['slug' => $data]);
-                $location = $screen->getLocation();
+            foreach($action->getEffects() as $effect => $data) {
+                if($effect === 'changeLocation') {
+                    $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['slug' => $data]);
+                    $location = $screen->getLocation();
 
-                if($location !== $this->character->getLocation()) {
-                    $this->characterLocationsUpdated = true;
-                    $this->character->setLocation($location);
+                    if($location !== $this->character->getLocation()) {
+                        $this->characterLocationsUpdated = true;
+                        $this->character->setLocation($location);
 
-                    $playerLocationExists = false;
-                    foreach($this->character->getPlayerLocations() as $playerLocation) {
-                        if($playerLocation === $location) {
-                            $playerLocationExists = true;
+                        $playerLocationExists = false;
+                        foreach($this->character->getPlayerLocations() as $playerLocation) {
+                            if($playerLocation === $location) {
+                                $playerLocationExists = true;
+                            }
                         }
-                    }
-                    if(!$playerLocationExists) {
-                        $playerLocation = (new PlayerLocation())
-                            ->setPlayer($this->character)
-                            ->setLocation($location);
-                        $this->entityManager->persist($playerLocation);
+                        if(!$playerLocationExists) {
+                            $playerLocation = (new PlayerLocation())
+                                ->setPlayer($this->character)
+                                ->setLocation($location);
+                            $this->entityManager->persist($playerLocation);
 
-                        if($location->getType() === 'zone') {
-                            $playerParentLocationExists = false;
-                            foreach($this->character->getPlayerLocations() as $playerLocation) {
-                                if($playerLocation === $location->getParent()) {
-                                    $playerParentLocationExists = true;
+                            if($location->getType() === 'zone') {
+                                $playerParentLocationExists = false;
+                                foreach($this->character->getPlayerLocations() as $playerLocation) {
+                                    if($playerLocation === $location->getParent()) {
+                                        $playerParentLocationExists = true;
+                                    }
+                                }
+                                if(!$playerParentLocationExists) {
+                                    $playerParentLocation = (new PlayerLocation())
+                                        ->setPlayer($this->character)
+                                        ->setLocation($location->getParent());
+                                    $this->entityManager->persist($playerParentLocation);
                                 }
                             }
-                            if(!$playerParentLocationExists) {
-                                $playerParentLocation = (new PlayerLocation())
-                                    ->setPlayer($this->character)
-                                    ->setLocation($location->getParent());
-                                $this->entityManager->persist($playerParentLocation);
-                            }
                         }
                     }
+
+                    $this->entityManager->persist($this->character);
+                    $this->entityManager->flush();
+
+                    $this->setActiveScreen($screen->getSlug());
                 }
-
-                $this->entityManager->persist($this->character);
-                $this->entityManager->flush();
-
-                $this->setActiveScreen($screen->getSlug());
             }
         }
     }

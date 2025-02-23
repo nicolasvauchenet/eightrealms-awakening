@@ -6,6 +6,7 @@ use App\Repository\Item\ArmorRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArmorRepository::class)]
+#[ORM\Table(name: '`item_armor`')]
 class Armor extends Item
 {
     #[ORM\Column]

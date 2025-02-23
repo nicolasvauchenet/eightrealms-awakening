@@ -6,6 +6,7 @@ use App\Repository\Item\PotionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PotionRepository::class)]
+#[ORM\Table(name: '`item_potion`')]
 class Potion extends Item
 {
     #[ORM\Column(length: 255, nullable: true)]

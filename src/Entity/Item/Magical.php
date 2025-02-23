@@ -6,6 +6,7 @@ use App\Repository\Item\MagicalRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MagicalRepository::class)]
+#[ORM\Table(name: '`item_magical`')]
 class Magical extends Item
 {
     #[ORM\Column(length: 255, nullable: true)]

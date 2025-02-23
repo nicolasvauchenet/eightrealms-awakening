@@ -12,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: ScreenRepository::class)]
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
-#[ORM\DiscriminatorMap(['cinematic' => CinematicScreen::class, 'location' => LocationScreen::class, 'dialogue' => DialogueScreen::class, 'trade' => TradeScreen::class, 'combat' => CombatScreen::class])]
+#[ORM\DiscriminatorMap(['cinematic' => CinematicScreen::class, 'location' => LocationScreen::class, 'interaction' => InteractionScreen::class, 'dialogue' => DialogueScreen::class, 'trade' => TradeScreen::class, 'combat' => CombatScreen::class])]
 abstract class Screen
 {
     #[ORM\Id]
@@ -77,7 +77,7 @@ abstract class Screen
 
     public function addAction(Action $action): static
     {
-        if (!$this->actions->contains($action)) {
+        if(!$this->actions->contains($action)) {
             $this->actions->add($action);
             $action->setScreen($this);
         }
@@ -87,9 +87,9 @@ abstract class Screen
 
     public function removeAction(Action $action): static
     {
-        if ($this->actions->removeElement($action)) {
+        if($this->actions->removeElement($action)) {
             // set the owning side to null (unless already changed)
-            if ($action->getScreen() === $this) {
+            if($action->getScreen() === $this) {
                 $action->setScreen(null);
             }
         }

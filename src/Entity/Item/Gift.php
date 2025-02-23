@@ -6,6 +6,7 @@ use App\Repository\Item\GiftRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GiftRepository::class)]
+#[ORM\Table(name: '`item_gift`')]
 class Gift extends Item
 {
     #[ORM\Column]

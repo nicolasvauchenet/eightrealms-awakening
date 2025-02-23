@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CinematicScreenRepository::class)]
+#[ORM\Table(name: '`screen_cinematic`')]
 class CinematicScreen extends Screen
 {
     #[ORM\Column(length: 255, nullable: true)]

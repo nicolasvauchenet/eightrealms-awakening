@@ -19,5 +19,10 @@
 
   .app-grid {
     @extend .appears;
+
+    .app-button {
+      font-size: 1.25rem;
+      line-height: 2rem;
+    }
   }
 }

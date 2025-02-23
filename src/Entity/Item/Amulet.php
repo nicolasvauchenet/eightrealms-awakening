@@ -6,6 +6,7 @@ use App\Repository\Item\AmuletRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AmuletRepository::class)]
+#[ORM\Table(name: '`item_amulet`')]
 class Amulet extends Item
 {
     #[ORM\Column(length: 255, nullable: true)]

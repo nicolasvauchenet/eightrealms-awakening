@@ -6,6 +6,7 @@ use App\Repository\Item\MapRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MapRepository::class)]
+#[ORM\Table(name: '`item_map`')]
 class Map extends Item
 {
     #[ORM\Column(length: 255)]

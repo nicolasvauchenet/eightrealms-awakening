@@ -6,6 +6,7 @@ use App\Repository\Item\ShieldRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ShieldRepository::class)]
+#[ORM\Table(name: '`item_shield`')]
 class Shield extends Item
 {
     #[ORM\Column]

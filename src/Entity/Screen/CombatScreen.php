@@ -11,18 +11,37 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CombatScreenRepository::class)]
+#[ORM\Table(name: '`screen_combat`')]
 class CombatScreen extends Screen
 {
     /**
      * @var Collection<int, Npc>
      */
     #[ORM\ManyToMany(targetEntity: Npc::class)]
+    #[ORM\JoinTable(
+        name: 'screen_combat_npc',
+        joinColumns: [
+            new ORM\JoinColumn(name: 'screen_combat_id', referencedColumnName: 'id')
+        ],
+        inverseJoinColumns: [
+            new ORM\JoinColumn(name: 'npc_id', referencedColumnName: 'id')
+        ]
+    )]
     private Collection $npcs;
 
     /**
      * @var Collection<int, Creature>
      */
     #[ORM\ManyToMany(targetEntity: Creature::class)]
+    #[ORM\JoinTable(
+        name: 'screen_combat_creature',
+        joinColumns: [
+            new ORM\JoinColumn(name: 'screen_combat_id', referencedColumnName: 'id')
+        ],
+        inverseJoinColumns: [
+            new ORM\JoinColumn(name: 'creature_id', referencedColumnName: 'id')
+        ]
+    )]
     private Collection $creatures;
 
     #[ORM\ManyToOne]

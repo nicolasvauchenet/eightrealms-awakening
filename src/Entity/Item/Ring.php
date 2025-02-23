@@ -6,6 +6,7 @@ use App\Repository\Item\RingRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RingRepository::class)]
+#[ORM\Table(name: '`item_ring`')]
 class Ring extends Item
 {
     #[ORM\Column(length: 255, nullable: true)]

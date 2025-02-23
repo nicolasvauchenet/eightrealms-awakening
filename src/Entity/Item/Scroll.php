@@ -6,6 +6,7 @@ use App\Repository\Item\ScrollRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ScrollRepository::class)]
+#[ORM\Table(name: '`item_scroll`')]
 class Scroll extends Item
 {
     #[ORM\Column(length: 255, nullable: true)]

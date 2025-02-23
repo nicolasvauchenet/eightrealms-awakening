@@ -3,6 +3,7 @@
 namespace App\Entity\Character;
 
 use App\Entity\Location\Location;
+use App\Entity\Screen\InteractionScreen;
 use App\Repository\Character\NpcRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -52,7 +53,7 @@ class Npc extends Character
 
     public function addPlayerNpc(PlayerNpc $playerNpc): static
     {
-        if (!$this->playerNpcs->contains($playerNpc)) {
+        if(!$this->playerNpcs->contains($playerNpc)) {
             $this->playerNpcs->add($playerNpc);
             $playerNpc->setNpc($this);
         }
@@ -62,9 +63,9 @@ class Npc extends Character
 
     public function removePlayerNpc(PlayerNpc $playerNpc): static
     {
-        if ($this->playerNpcs->removeElement($playerNpc)) {
+        if($this->playerNpcs->removeElement($playerNpc)) {
             // set the owning side to null (unless already changed)
-            if ($playerNpc->getNpc() === $this) {
+            if($playerNpc->getNpc() === $this) {
                 $playerNpc->setNpc(null);
             }
         }

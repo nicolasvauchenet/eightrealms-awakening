@@ -1,8 +1,8 @@
 {% extends 'game/_layout/_character/_sheet/_index.html.twig' %}
 
-{% block title %}Mon Personnage{% endblock %}
+{% block title %}La Carte{% endblock %}
 
-{% block body_class %}game character sheet{% endblock %}
+{% block body_class %}game map{% endblock %}
 
 {% block main %}
     <a href="/{{ back }}" class="app-button back">
@@ -10,6 +10,6 @@
     </a>
 
     <section class="app-section">
-        {{ component('PlayerSheet', { character: app.user.character }) }}
+        {{ component('Map', { character: app.user.character }) }}
     </section>
 {% endblock %}

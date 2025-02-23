@@ -4,7 +4,6 @@ namespace App\Twig\Components\Game\Sheet;
 
 use App\Entity\Character\Player;
 use App\Entity\Item\CharacterItem;
-use App\Entity\Item\Magical;
 use App\Service\Item\CharacterItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;

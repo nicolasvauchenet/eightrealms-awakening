@@ -4,6 +4,7 @@ namespace App\Twig\Components\Game;
 
 use App\Entity\Action\Action;
 use App\Entity\Character\Player;
+use App\Entity\Location\PlayerLocation;
 use App\Entity\Screen\LocationScreen;
 use App\Entity\Screen\Screen;
 use Doctrine\ORM\EntityManagerInterface;
@@ -74,6 +75,34 @@ class GameComponent
                 if($location !== $this->character->getLocation()) {
                     $this->characterLocationsUpdated = true;
                     $this->character->setLocation($location);
+
+                    $playerLocationExists = false;
+                    foreach($this->character->getPlayerLocations() as $playerLocation) {
+                        if($playerLocation === $location) {
+                            $playerLocationExists = true;
+                        }
+                    }
+                    if(!$playerLocationExists) {
+                        $playerLocation = (new PlayerLocation())
+                            ->setPlayer($this->character)
+                            ->setLocation($location);
+                        $this->entityManager->persist($playerLocation);
+
+                        if($location->getType() === 'zone') {
+                            $playerParentLocationExists = false;
+                            foreach($this->character->getPlayerLocations() as $playerLocation) {
+                                if($playerLocation === $location->getParent()) {
+                                    $playerParentLocationExists = true;
+                                }
+                            }
+                            if(!$playerParentLocationExists) {
+                                $playerParentLocation = (new PlayerLocation())
+                                    ->setPlayer($this->character)
+                                    ->setLocation($location->getParent());
+                                $this->entityManager->persist($playerParentLocation);
+                            }
+                        }
+                    }
                 }
 
                 $this->entityManager->persist($this->character);

@@ -8,10 +8,15 @@
   box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
 
   p {
+    margin-bottom: 0.5rem;
     line-height: 1.25rem;
     text-align: justify;
     word-break: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }

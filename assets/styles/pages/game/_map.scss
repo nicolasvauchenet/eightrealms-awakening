@@ -1,0 +1,24 @@
+&.map {
+  .app-main {
+    @include displayFlex(center, center, null, column);
+    width: 100%;
+    flex: 1;
+    background-color: $secondary;
+
+    .app-section {
+      @include displayFlex(center, center, null, column);
+      flex: 1;
+      padding: 0;
+      width: 100%;
+
+      & > div {
+        @include displayFlex(center, center, null, column);
+        flex: 1;
+        padding: 0;
+        width: 100%;
+      }
+
+      @import "../../layout/map";
+    }
+  }
+}

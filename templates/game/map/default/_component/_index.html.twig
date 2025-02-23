@@ -1,0 +1,14 @@
+<div {{ attributes }}>
+    <div class="app-map" data-loading="addClass(loading)">
+        {% include 'game/map/default/_component/_header.html.twig' %}
+
+        <main class="map-main">
+            {% include 'game/map/default/_component/_realm.html.twig' %}
+            {% include 'game/map/default/_component/_location.html.twig' %}
+            {% include 'game/map/default/_component/_walk.html.twig' %}
+            {% include 'game/map/default/_component/_travel.html.twig' %}
+        </main>
+
+        {% include 'game/map/default/_component/_footer.html.twig' %}
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="map-content walk {% if this.activeContent == 'walk' %}active{% endif %}">
+    <img src="{{ asset('img/chapter1/location/' ~ this.location.picture) }}" class="app-wallpaper" alt="{{ this.location.name }}"/>
+    <div class="app-overlay"></div>
+
+    <h2 class="map-subtitle">
+        <small>Se déplacer</small>
+        {{ this.location.name }}
+    </h2>
+
+    <div class="app-grid two">
+        {% for playerLocation in this.character.playerLocations %}
+            {% if playerLocation.location.type == 'zone' %}
+                <button class="app-button outline {% if playerLocation.location == this.character.location %}disabled{% endif %}">
+                    {{ playerLocation.location.name }}
+                </button>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

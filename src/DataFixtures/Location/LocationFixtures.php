@@ -16,8 +16,8 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => "Royaume de l'Île du Nord",
                 'type' => 'realm',
-                'picture' => 'royaume-de-l-ile-du-nord.webp',
-                'map' => 'map_royaume_de_l-ile_du_nord.png',
+                'picture' => 'royaume-de-lile-du-nord.webp',
+                'map' => 'map-royaume-de-lile-du-nord.png',
                 'description' => "<p>L'Île du Nord est un royaume prospère, dirigé par le roi Alaric. Les terres fertiles et les mines d'or font la richesse de ce petit royaume, qui attire commerçants et aventuriers en quête de fortune. Les habitants, fiers de leur patrie, sont réputés pour leur hospitalité et leur sens de l'honneur.</p>",
                 'reference' => 'location_realm_royaume_de_l_ile_du_nord',
             ],
@@ -27,7 +27,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Port Saint-Doux',
                 'type' => 'location',
                 'picture' => 'port-saint-doux.webp',
-                'map' => 'map_port_saint_doux.png',
+                'map' => 'map-port-saint-doux.png',
                 'description' => "<p>Port Saint-Doux est la capitale de l'Île du Nord, un port prospère où se croisent marchands, aventuriers et marins en quête de fortune. La ville est dirigée par le maire, un homme autoritaire mais juste, qui veille à maintenir l'ordre et la sécurité dans les rues animées de la cité.</p>",
                 'parent' => 'location_realm_royaume_de_l_ile_du_nord',
                 'reference' => 'location_port_saint_doux',
@@ -53,7 +53,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => "Docks de l'Ouest",
                 'type' => 'zone',
-                'picture' => 'docks-de-l-ouest.webp',
+                'picture' => 'docks-de-louest.webp',
                 'description' => "<p>Les Docks de l'Ouest de Port Saint-Doux sont le cœur vibrant du port, où pêcheurs, marchands et passants animent la scène parmi les quais neufs et les bateaux amarrés. On y trouve la taverne de la Flûte Moisie, un lieu bruyant et chaleureux, idéal pour se détendre, boire une bière et observer l'agitation des docks.</p>",
                 'parent' => 'location_port_saint_doux',
                 'reference' => 'location_zone_docks_de_l_ouest',

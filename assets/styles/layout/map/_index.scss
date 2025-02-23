@@ -1,0 +1,25 @@
+.app-map {
+  @include displayFlex(space-between, center, null, column);
+  width: 100%;
+  flex: 1;
+
+  .app-wallpaper,
+  .app-overlay {
+    position: absolute;
+    width: 100%;
+    height: calc(100dvh - 1rem);
+  }
+
+  .app-wallpaper {
+    @extend .appears;
+  }
+
+  .app-overlay {
+    background-color: rgba($black, 0.75);
+    @extend .appears;
+  }
+
+  @import "./header";
+  @import "./main";
+  @import "./footer";
+}

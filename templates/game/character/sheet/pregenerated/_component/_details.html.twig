@@ -5,27 +5,27 @@
         <div class="characteristics">
             <div class="characteristic">
                 <div class="name">Force</div>
-                <div class="value">{{ this.character.strength }}</div>
+                <div class="value">{{ this.character.strength + this.character.race.bonusStats['strength'] }}</div>
             </div>
             <div class="characteristic">
                 <div class="name">Dextérité</div>
-                <div class="value">{{ this.character.dexterity }}</div>
+                <div class="value">{{ this.character.dexterity + this.character.race.bonusStats['dexterity'] }}</div>
             </div>
             <div class="characteristic">
                 <div class="name">Constitution</div>
-                <div class="value">{{ this.character.constitution }}</div>
+                <div class="value">{{ this.character.constitution + this.character.race.bonusStats['constitution'] }}</div>
             </div>
             <div class="characteristic">
                 <div class="name">Sagesse</div>
-                <div class="value">{{ this.character.wisdom }}</div>
+                <div class="value">{{ this.character.wisdom + this.character.race.bonusStats['wisdom'] }}</div>
             </div>
             <div class="characteristic">
                 <div class="name">Intelligence</div>
-                <div class="value">{{ this.character.intelligence }}</div>
+                <div class="value">{{ this.character.intelligence + this.character.race.bonusStats['intelligence'] }}</div>
             </div>
             <div class="characteristic">
                 <div class="name">Charisme</div>
-                <div class="value">{{ this.character.charisma }}</div>
+                <div class="value">{{ this.character.charisma + this.character.race.bonusStats['charisma'] }}</div>
             </div>
         </div>
 
@@ -34,13 +34,13 @@
                 {% set bonus = app_characterBonusService.characterBonus(this.character, 'health') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-                    {{ this.character.healthMax + bonus['amount'] }}
+                    {{ bonus['amount'] + ((this.character.constitution + this.character.race.bonusStats['constitution']) * 10) }}
                 </div>
 
                 {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                    {{ this.character.manaMax + bonus['amount'] }}
+                    {{ bonus['amount'] + ((this.character.intelligence + this.character.race.bonusStats['intelligence']) * 10) }}
                 </div>
             </div>
 

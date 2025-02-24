@@ -28,6 +28,9 @@ class Profession
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $attitude = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class Profession
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getAttitude(): ?string
+    {
+        return $this->attitude;
+    }
+
+    public function setAttitude(string $attitude): static
+    {
+        $this->attitude = $attitude;
 
         return $this;
     }

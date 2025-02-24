@@ -34,6 +34,9 @@ class Race
     #[ORM\Column]
     private ?bool $playable = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $attitude = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +110,18 @@ class Race
     public function setPlayable(bool $playable): static
     {
         $this->playable = $playable;
+
+        return $this;
+    }
+
+    public function getAttitude(): ?string
+    {
+        return $this->attitude;
+    }
+
+    public function setAttitude(string $attitude): static
+    {
+        $this->attitude = $attitude;
 
         return $this;
     }

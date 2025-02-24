@@ -7,9 +7,9 @@
     </div>
 
     <div class="right">
-        {% set reputation = this.playerNpc.reputation %}
+        {% set reputation = app_characterReputationService.reputation(this.character, this.activeScreen.npc) %}
         <div class="screen-info {% if reputation < 0 %}text-third{% else %}text-primary{% endif %}">
-            {{ reputation }}
+            {{ reputation > 0 ? '+' ~ reputation : reputation }}
             {{ ux_icon('mdi:head-heart-outline', {'class': 'app-icon'}) }}
         </div>
     </div>

@@ -1,7 +1,7 @@
 <div class="screen-headerbox">
     <div class="screen-actions">
         <a href="{{ path('app_game_character_sheet_player') }}"
-           class="screen-control {% if this.characterUpdated %}blink{% endif %}">
+           class="screen-control {% if this.characterUpdated %}blink {% if app_characterLevelService.canLevelUp(this.character) %}text-third{% endif %}{% endif %}">
             {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
         </a>
 

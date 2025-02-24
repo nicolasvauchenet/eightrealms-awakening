@@ -33,3 +33,15 @@
     background-color: $white;
   }
 }
+
+@keyframes text-blink {
+  0% {
+    color: inherit;
+  }
+  50% {
+    color: $success;
+  }
+  100% {
+    color: inherit;
+  }
+}

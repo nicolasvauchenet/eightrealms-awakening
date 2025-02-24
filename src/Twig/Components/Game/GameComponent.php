@@ -107,25 +107,20 @@ class GameComponent
                     break;
                 case 'steal':
                     $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $id]);
-                    $baseDifficulty = 14;
+                    $baseDifficulty = 15;
 
-                    $repMalus = $this->characterReputationService->getReputation($this->character, $this->playerNpc->getNpc()) < 0 ? $this->characterReputationService->getReputation($this->character, $this->playerNpc->getNpc()) : 0;
-                    $totalMalus = $repMalus;
-                    $finalDifficulty = $baseDifficulty + $totalMalus;
-
-                    $dexScore = $this->character->getDexterity();
-                    $dexBonus = (int)floor(($dexScore - 10) / 2);
-                    $level = $this->character->getLevel();
-                    $levelBonus = (int)floor($level / 2);
-
-                    $d20 = random_int(1, 20);
-                    $stealRoll = $d20 + $dexBonus + $levelBonus;
+                    $repMalus = $this->playerNpc->getReputation() < 0 ? $this->playerNpc->getReputation() * -1 : 0;
+                    $levelBonus = (int)floor($this->character->getLevel() / 3);
+                    $dexterityBonus = (int)floor(($this->character->getDexterity() - 10) / 2);
+                    $totalMalus = $baseDifficulty + $repMalus - $levelBonus - $dexterityBonus;
 
                     $maxCrowns = (int)floor($this->playerNpc->getFortune() * 0.25);
                     $maxCrowns = max($maxCrowns, 1);
                     $stolenCrowns = random_int(1, $maxCrowns);
 
-                    if($stealRoll >= $finalDifficulty) {
+                    $roll = random_int(1, 20);
+
+                    if($roll >= $totalMalus) {
                         if($stolenCrowns <= $this->playerNpc->getFortune()) {
                             $this->character->setFortune($this->character->getFortune() + $stolenCrowns);
                             $this->character->setExperience($this->character->getExperience() + $stolenCrowns);
@@ -146,6 +141,9 @@ class GameComponent
                         if($this->character->getFortune() < 0) {
                             $this->character->setFortune(0);
                             $this->character->setExperience($this->character->getExperience() - $stolenCrowns);
+                            if($this->character->getExperience() < 0) {
+                                $this->character->setExperience(0);
+                            }
                             $this->description .= "<p>Vous n'avez pas assez de couronnes pour payer l'amende, alors vous avez perdu {$stolenCrowns} point" . ($stolenCrowns > 1 ? 's' : '') . " d'expérience, et votre réputation a diminué auprès des personnes présentes.</p>";
                         } else {
                             $this->description .= "<p>Vous avez écopé d'une amende de 50 couronnes, et votre réputation a diminué auprès des personnes présentes.</p>";

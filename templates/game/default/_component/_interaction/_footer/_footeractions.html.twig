@@ -12,9 +12,11 @@
     {% endif %}
 
     {% if this.character.profession.slug in ['voleur'] and this.playerNpc.npc.profession.slug not in ['garde', 'pretre'] and this.playerNpc.fortune > 0 %}
-        <button class="screen-action" title="Voler" {{ live_action('doAction', {'id': this.playerNpc.npc.id, 'type': 'steal'}) }}>
-            <img src="{{ asset('img/core/action/steal.png') }}" alt="Voler {{ this.playerNpc.npc.name }}"/>
-        </button>
+        {% if this.character.fortune > 0 or this.character.experience > 0 %}
+            <button class="screen-action" title="Voler" {{ live_action('doAction', {'id': this.playerNpc.npc.id, 'type': 'steal'}) }}>
+                <img src="{{ asset('img/core/action/steal.png') }}" alt="Voler {{ this.playerNpc.npc.name }}"/>
+            </button>
+        {% endif %}
     {% endif %}
 
     <button class="screen-action" title="Partir" {{ live_action('doAction', {'type': 'exit'}) }}>

@@ -113,3 +113,11 @@
   opacity: 0;
   animation: appears 1.5s forwards;
 }
+
+.blink {
+  animation: blink 1.5s infinite;
+}
+
+.text-blink {
+  animation: text-blink 1.5s infinite;
+}

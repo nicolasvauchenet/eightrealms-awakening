@@ -21,7 +21,7 @@ class CinematicScreenFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'En prison…',
                 'picture' => 'jail.webp',
-                'description' => "<p>Vous vous êtes fait arrêter, et vous atterrissez dans les geôles de Port Saint-Doux.</p><p>Vous avez écopé d'une amende et votre réputation a diminué.</p><p>Vous êtes seul dans votre cellule, si on ne compte pas les rats pour de la compagnie, bien sûr.</p><p>Vous avez faim et soif, vous avez froid, vous êtes fatigué et sale. Votre peine vient de prendre fin. Vous avez hâte de sortir de cet endroit.</p>",
+                'description' => "<p>Vous vous êtes fait arrêter, et vous atterrissez dans les geôles de Port Saint-Doux.</p><p>Vous êtes seul dans votre cellule, si on ne compte pas les rats pour de la compagnie, bien sûr.</p><p>Vous avez faim et soif, vous avez froid, vous êtes fatigué et sale. Votre peine vient de prendre fin. Vous avez hâte de sortir de cet endroit.</p>",
                 'reference' => 'screen_cinematic_jail',
             ],
             [

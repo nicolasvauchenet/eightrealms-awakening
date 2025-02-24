@@ -40,7 +40,7 @@
                 {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                    {{ bonus['amount'] + ((this.character.intelligence + this.character.race.bonusStats['intelligence']) * 10) }}
+                    {{ bonus['amount'] + ((this.character.intelligence + this.character.race.bonusStats['intelligence']) * 5) }}
                 </div>
             </div>
 

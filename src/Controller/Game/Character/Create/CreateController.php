@@ -47,8 +47,8 @@ final class CreateController extends AbstractController
             ->setCharisma($preGenerated->getCharisma() + $preGenerated->getRace()->getBonusStats()['charisma'])
             ->setHealthMax(($preGenerated->getConstitution() + $preGenerated->getRace()->getBonusStats()['constitution']) * 10)
             ->setHealth(($preGenerated->getConstitution() + $preGenerated->getRace()->getBonusStats()['constitution']) * 10)
-            ->setManaMax(($preGenerated->getIntelligence() + $preGenerated->getRace()->getBonusStats()['intelligence']) * 10)
-            ->setMana(($preGenerated->getIntelligence() + $preGenerated->getRace()->getBonusStats()['intelligence']) * 10)
+            ->setManaMax(($preGenerated->getIntelligence() + $preGenerated->getRace()->getBonusStats()['intelligence']) * 5)
+            ->setMana(($preGenerated->getIntelligence() + $preGenerated->getRace()->getBonusStats()['intelligence']) * 5)
             ->setFortune($preGenerated->getFortune())
             ->setLevel(1)
             ->setExperience(0);

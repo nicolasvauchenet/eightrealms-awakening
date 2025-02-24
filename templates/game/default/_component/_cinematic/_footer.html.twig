@@ -1,7 +1,13 @@
 <footer class="screen-footer">
-    {% for action in this.activeScreen.actions %}
-        <button class="app-button cta" {{ live_action('doAction', {'id': action.id}) }}>
-            {{ action.name }}
+    {% if this.previousScreen %}
+        <button class="app-button cta" {{ live_action('doAction', {'id': this.previousScreen.id, 'type': 'changeScreen'}) }}>
+            Continuer
         </button>
-    {% endfor %}
+    {% else %}
+        {% for action in this.activeScreen.actions %}
+            <button class="app-button cta" {{ live_action('doAction', {'id': action.id}) }}>
+                {{ action.name }}
+            </button>
+        {% endfor %}
+    {% endif %}
 </footer>

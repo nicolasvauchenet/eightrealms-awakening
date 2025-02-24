@@ -1,0 +1,16 @@
+<div class="screen-headerinfos">
+    <div class="left">
+        <div class="screen-info">
+            {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+            {{ this.character.fortune }}
+        </div>
+    </div>
+
+    <div class="right">
+        {% set reputation = app_characterReputationService.reputation(this.character, this.activeScreen.npc) %}
+        <div class="screen-info {% if reputation < 0 %}text-third{% else %}text-primary{% endif %}">
+            {{ reputation > 0 ? '+' ~ reputation : reputation }}
+            {{ ux_icon('mdi:head-heart-outline', {'class': 'app-icon'}) }}
+        </div>
+    </div>
+</div>

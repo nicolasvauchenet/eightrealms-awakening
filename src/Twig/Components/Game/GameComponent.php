@@ -7,9 +7,12 @@ use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerNpc;
 use App\Entity\Location\PlayerLocation;
+use App\Entity\Screen\CinematicScreen;
 use App\Entity\Screen\InteractionScreen;
 use App\Entity\Screen\LocationScreen;
 use App\Entity\Screen\Screen;
+use App\Entity\Screen\TradeScreen;
+use App\Service\Character\CharacterReputationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -25,6 +28,8 @@ class GameComponent
 
     public ?Screen $activeScreen = null;
 
+    public ?Screen $previousScreen = null;
+
     private string $activeScreenSlug = 'laventure-commence';
 
     public ?string $activeScreenType = 'cinematic';
@@ -35,10 +40,13 @@ class GameComponent
 
     public bool $characterLocationsUpdated = false;
 
+    public ?string $description = null;
+
     #[LiveProp(writable: true)]
     public Player $character;
 
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface     $entityManager,
+                                private readonly CharacterReputationService $characterReputationService)
     {
     }
 
@@ -88,7 +96,7 @@ class GameComponent
                             ->setHealth($npc->getHealthMax())
                             ->setMana($npc->getManaMax())
                             ->setFortune($npc->getFortune())
-                            ->setReputation(0);
+                            ->setReputation($this->characterReputationService->getReputation($this->character, $npc));
                         $this->entityManager->persist($playerNpc);
                         $this->entityManager->flush();
                     }
@@ -97,8 +105,86 @@ class GameComponent
                     $screen = $this->entityManager->getRepository(InteractionScreen::class)->findOneBy(['npc' => $npc]);
                     $this->changeScreen($screen->getSlug());
                     break;
+                case 'steal':
+                    $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $id]);
+                    $baseDifficulty = 14;
+
+                    $repMalus = $this->characterReputationService->getReputation($this->character, $this->playerNpc->getNpc()) < 0 ? $this->characterReputationService->getReputation($this->character, $this->playerNpc->getNpc()) : 0;
+                    $totalMalus = $repMalus;
+                    $finalDifficulty = $baseDifficulty + $totalMalus;
+
+                    $dexScore = $this->character->getDexterity();
+                    $dexBonus = (int)floor(($dexScore - 10) / 2);
+                    $level = $this->character->getLevel();
+                    $levelBonus = (int)floor($level / 2);
+
+                    $d20 = random_int(1, 20);
+                    $stealRoll = $d20 + $dexBonus + $levelBonus;
+
+                    $maxCrowns = (int)floor($this->playerNpc->getFortune() * 0.25);
+                    $maxCrowns = max($maxCrowns, 1);
+                    $stolenCrowns = random_int(1, $maxCrowns);
+
+                    if($stealRoll >= $finalDifficulty) {
+                        if($stolenCrowns <= $this->playerNpc->getFortune()) {
+                            $this->character->setFortune($this->character->getFortune() + $stolenCrowns);
+                            $this->character->setExperience($this->character->getExperience() + $stolenCrowns);
+                            $this->playerNpc->setFortune($this->playerNpc->getFortune() - $stolenCrowns);
+                            $this->entityManager->persist($this->character);
+                            $this->entityManager->persist($this->playerNpc);
+                            $this->entityManager->flush();
+
+                            $this->characterUpdated = true;
+                            $this->description = "<p>Vous avez volé {$stolenCrowns} couronne" . ($stolenCrowns > 1 ? 's' : '') . " à {$this->playerNpc->getNpc()->getName()}, et gagné $stolenCrowns point" . ($stolenCrowns > 1 ? 's' : '') . " d'expérience.</p>";
+                        } else {
+                            $this->description = "<p>Vous avez tenté de voler {$this->playerNpc->getNpc()->getName()} mais il n'avait rien sur lui.</p>";
+                        }
+                        $screen = $this->entityManager->getRepository(InteractionScreen::class)->findOneBy(['npc' => $this->playerNpc->getNpc()]);
+                    } else {
+                        $this->description = "<p>Vous avez tenté de voler {$this->playerNpc->getNpc()->getName()} mais vous avez échoué.</p>";
+                        $this->character->setFortune($this->character->getFortune() - 50);
+                        if($this->character->getFortune() < 0) {
+                            $this->character->setFortune(0);
+                            $this->character->setExperience($this->character->getExperience() - $stolenCrowns);
+                            $this->description .= "<p>Vous n'avez pas assez de couronnes pour payer l'amende, alors vous avez perdu {$stolenCrowns} point" . ($stolenCrowns > 1 ? 's' : '') . " d'expérience, et votre réputation a diminué auprès des personnes présentes.</p>";
+                        } else {
+                            $this->description .= "<p>Vous avez écopé d'une amende de 50 couronnes, et votre réputation a diminué auprès des personnes présentes.</p>";
+                        }
+                        $this->entityManager->persist($this->character);
+                        $this->entityManager->flush();
+
+                        $this->previousScreen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $this->character->getLocation()]);
+                        foreach($this->previousScreen->getLocation()->getNpcs() as $npc) {
+                            $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $npc]);
+                            if($playerNpc) {
+                                $playerNpc->setReputation($playerNpc->getReputation() - 2);
+                            } else {
+                                $playerNpc = (new PlayerNpc())
+                                    ->setPlayer($this->character)
+                                    ->setNpc($npc)
+                                    ->setHealth($npc->getHealthMax())
+                                    ->setMana($npc->getManaMax())
+                                    ->setFortune($npc->getFortune())
+                                    ->setReputation($this->characterReputationService->getReputation($this->character, $npc) - 2);
+                            }
+                            $this->entityManager->persist($playerNpc);
+                            $this->entityManager->flush();
+                        }
+                        $screen = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy(['slug' => 'en-prison']);
+                    }
+                    $this->changeScreen($screen->getSlug());
+                    break;
+                case 'trade':
+                    $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $id]);
+                    $screen = $this->entityManager->getRepository(TradeScreen::class)->findOneBy(['npc' => $this->playerNpc->getNpc()]);
+                    $this->setActiveScreen($screen->getSlug());
+                    break;
                 case 'exit':
                     $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $this->character->getLocation()]);
+                    $this->setActiveScreen($screen->getSlug());
+                    break;
+                case 'changeScreen':
+                    $screen = $this->entityManager->getRepository(LocationScreen::class)->find($id);
                     $this->setActiveScreen($screen->getSlug());
                     break;
                 default:

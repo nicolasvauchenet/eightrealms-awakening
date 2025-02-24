@@ -120,6 +120,13 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'profession_forgeron',
             ],
             [
+                'name' => 'Arcaniste',
+                'description' => "<p>L'Arcaniste est un expert des arcanes, étudiant les mystères de la magie et des sorts.</p>",
+                'type' => 'pnj',
+                'attitude' => 'amical',
+                'reference' => 'profession_arcaniste',
+            ],
+            [
                 'name' => 'Prêtre',
                 'description' => "<p>Le Prêtre est un serviteur des dieux, dispensant des bénédictions et des miracles.</p>",
                 'type' => 'pnj',

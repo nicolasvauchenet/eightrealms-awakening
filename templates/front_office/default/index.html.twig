@@ -16,7 +16,7 @@
 
             {% if app.user.character %}
                 <p>
-                    <a href="{{ path('app_game_character_sheet_player') }}" class="app-button">
+                    <a href="{{ path('app_game_character_sheet_player', {'back' : 'accueil'}) }}" class="app-button">
                         <small>{{ app.user.character.name }}</small>
                         Personnage
                     </a>

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Screen;
 
+use App\Entity\Character\Npc;
 use App\Entity\Screen\DialogueScreen;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -13,18 +14,36 @@ class DialogueScreenFixtures extends Fixture implements OrderedFixtureInterface
     {
         $screens = [
             [
-                'name' => 'Discuter avec un PNJ',
-                'reference' => 'screen_dialogue',
+                'name' => 'Discuter avec Sophie la Marchande',
+                'npc' => 'npc_sophie_la_marchande',
+                'reference' => 'screen_dialogue_sophie_la_marchande',
             ],
             [
-                'name' => "Écouter les ragots d'un PNJ",
-                'reference' => 'screen_dialogue_rumors',
+                'name' => 'Discuter avec Robert le Garde',
+                'npc' => 'npc_robert_le_garde',
+                'reference' => 'screen_dialogue_robert_le_garde',
+            ],
+            [
+                'name' => 'Discuter avec Bilo le Passant',
+                'npc' => 'npc_bilo_le_passant',
+                'reference' => 'screen_dialogue_bilo_le_passant',
+            ],
+            [
+                'name' => "Écouter les ragots de Robert le Garde",
+                'npc' => 'npc_robert_le_garde',
+                'reference' => 'screen_dialogue_rumors_robert_le_garde',
+            ],
+            [
+                'name' => "Écouter les ragots de Bilo le Passant",
+                'npc' => 'npc_bilo_le_passant',
+                'reference' => 'screen_dialogue_rumors_bilo_le_passant',
             ],
         ];
 
         foreach($screens as $data) {
             $screen = new DialogueScreen();
-            $screen->setName($data['name']);
+            $screen->setName($data['name'])
+                ->setNpc($this->getReference($data['npc'], Npc::class));
             $manager->persist($screen);
             $this->addReference($data['reference'], $screen);
         }

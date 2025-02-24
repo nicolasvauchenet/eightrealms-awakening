@@ -84,6 +84,14 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                 'parent' => 'location_zone_vieille_ville',
                 'reference' => 'location_building_forge_de_port_saint_doux',
             ],
+            [
+                'name' => 'Arcanes de Port Saint-Doux',
+                'type' => 'building',
+                'picture' => 'arcanes.webp',
+                'description' => "<p>Les arcanes de Port Saint-Doux sont un lieu mystérieux, où les arcanistes étudient les secrets de la magie. Les étagères croulent sous les grimoires et les fioles d'élixirs, tandis que les apprentis s'entraînent à lancer des sorts. L'Arcaniste a toujours l'air affairé, et qu'il s'adresse à vous ou pas, il a un souvent sourire malicieux aux lèvres…</p>",
+                'parent' => 'location_zone_vieille_ville',
+                'reference' => 'location_building_arcanes_de_port_saint_doux',
+            ],
         ];
 
         foreach($locations as $data) {

@@ -7,9 +7,15 @@
     </div>
 
     <div class="right">
-        {% set reputation = app_characterReputationService.reputation(this.character, this.activeScreen.npc) %}
-        <div class="screen-info {% if reputation < 0 %}text-third{% else %}text-primary{% endif %}">
-            {{ reputation > 0 ? '+' ~ reputation : reputation }}
+        {% if this.character.profession.slug in ['voleur'] and this.playerNpc.npc.profession.slug not in ['garde', 'pretre'] %}
+            <div class="screen-info">
+                {{ this.playerNpc.fortune }}
+                {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+            </div>
+        {% endif %}
+
+        <div class="screen-info {% if this.playerNpc.reputation < 0 %}text-third{% else %}text-primary{% endif %}">
+            {{ this.playerNpc.reputation > 0 ? '+' ~ this.playerNpc.reputation : this.playerNpc.reputation }}
             {{ ux_icon('mdi:head-heart-outline', {'class': 'app-icon'}) }}
         </div>
     </div>

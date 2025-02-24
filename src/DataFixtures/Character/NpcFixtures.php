@@ -121,6 +121,27 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'location' => 'location_building_forge_de_port_saint_doux',
                 'reference' => 'npc_gart_le_forgeron',
             ],
+            [
+                'name' => "Wilbert l'Arcaniste",
+                'picture' => 'wilbert-larcaniste.png',
+                'description' => "<p>Vous êtes face à un homme plutôt maigre, vêtu d'une robe de mage. Il est en train de lire un vieux grimoire, plongé dans ses pensées. Il vous regarde avec un sourire bienveillant.</p><p><em>Bienvenue, aventurier. Que puis-je faire pour vous aider&nbsp;?</em></p>",
+                'strength' => 9,
+                'dexterity' => 11,
+                'constitution' => 9,
+                'wisdom' => 14,
+                'intelligence' => 16,
+                'charisma' => 13,
+                'healthMax' => 90,
+                'health' => 90,
+                'manaMax' => 80,
+                'mana' => 80,
+                'fortune' => 2000,
+                'level' => 2,
+                'race' => 'race_gnome',
+                'profession' => 'profession_arcaniste',
+                'location' => 'location_building_arcanes_de_port_saint_doux',
+                'reference' => 'npc_wilbert_larcaniste',
+            ],
         ];
 
         foreach($characters as $data) {

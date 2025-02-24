@@ -1,3 +1,7 @@
 <div class="screen-footerbox">
-    {{ this.activeScreen.npc.description | raw }}
+    {% if this.description %}
+        {{ this.description | raw }}
+    {% else %}
+        {{ this.playerNpc.npc.description | raw }}
+    {% endif %}
 </div>

@@ -11,7 +11,7 @@ readonly class CharacterLevelService
 
     private const XP_TABLE = [
         1 => 0,
-        2 => 50,
+        2 => 75,
         3 => 200,
         4 => 450,
         5 => 800,

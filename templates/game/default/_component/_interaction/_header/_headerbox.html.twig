@@ -1,6 +1,6 @@
 <div class="screen-headerbox">
     <div class="screen-actions">
-        <a href="{{ path('app_game_character_sheet_player', {'back' : 'jeu'}) }}"
+        <a href="{{ path('app_game_character_sheet_player') }}"
            class="screen-control {% if this.characterUpdated %}blink{% endif %}">
             {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
         </a>
@@ -12,7 +12,7 @@
     </div>
 
     <h2 class="screen-title">
-        {{ this.activeScreen.npc.name }}
+        {{ this.playerNpc.npc.name }}
     </h2>
 
     <a href="{{ path('app_front_office_home') }}"

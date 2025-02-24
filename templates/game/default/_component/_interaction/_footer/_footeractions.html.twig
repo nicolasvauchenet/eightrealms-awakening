@@ -5,6 +5,18 @@
         </button>
     {% endfor %} #}
 
+    {% if this.playerNpc.npc.profession.slug in ['marchand', 'forgeron', 'arcaniste'] %}
+        <button class="screen-action" title="Commercer" {{ live_action('doAction', {'id' : this.playerNpc.npc.id, 'type': 'trade'}) }}>
+            <img src="{{ asset('img/core/action/trade.png') }}" alt="Commercer avec {{ this.playerNpc.npc.name }}"/>
+        </button>
+    {% endif %}
+
+    {% if this.character.profession.slug in ['voleur'] and this.playerNpc.npc.profession.slug not in ['garde', 'pretre'] and this.playerNpc.fortune > 0 %}
+        <button class="screen-action" title="Voler" {{ live_action('doAction', {'id': this.playerNpc.npc.id, 'type': 'steal'}) }}>
+            <img src="{{ asset('img/core/action/steal.png') }}" alt="Voler {{ this.playerNpc.npc.name }}"/>
+        </button>
+    {% endif %}
+
     <button class="screen-action" title="Partir" {{ live_action('doAction', {'type': 'exit'}) }}>
         <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
     </button>

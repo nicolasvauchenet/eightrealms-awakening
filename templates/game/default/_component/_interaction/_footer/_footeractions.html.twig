@@ -1,0 +1,11 @@
+<div class="screen-footeractions">
+    {# {% for npc in this.activeScreen.location.npcs %}
+        <button class="screen-action" title="{{ npc.name }}" {{ live_action('doAction', {'id': npc.id, 'type': 'interaction'}) }}>
+            <img src="{{ asset('img/chapter1/npc/thumb_' ~ npc.picture) }}" alt="{{ npc.name }}"/>
+        </button>
+    {% endfor %} #}
+
+    <button class="screen-action" title="Partir" {{ live_action('doAction', {'type': 'exit'}) }}>
+        <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
+    </button>
+</div>

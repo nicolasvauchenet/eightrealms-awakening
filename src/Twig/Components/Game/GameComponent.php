@@ -5,7 +5,9 @@ namespace App\Twig\Components\Game;
 use App\Entity\Action\Action;
 use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
+use App\Entity\Character\PlayerNpc;
 use App\Entity\Location\PlayerLocation;
+use App\Entity\Screen\InteractionScreen;
 use App\Entity\Screen\LocationScreen;
 use App\Entity\Screen\Screen;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,6 +28,8 @@ class GameComponent
     private string $activeScreenSlug = 'laventure-commence';
 
     public ?string $activeScreenType = 'cinematic';
+
+    public ?PlayerNpc $playerNpc = null;
 
     public bool $characterUpdated = false;
 
@@ -64,12 +68,38 @@ class GameComponent
     }
 
     #[LiveAction]
-    public function doAction(#[LiveArg] int $id, #[LiveArg] ?string $type = null): void
+    public function doAction(#[LiveArg] ?int $id = null, #[LiveArg] ?string $type = null): void
     {
         if($type) {
             switch($type) {
                 case 'interaction':
-                    dd('interaction');
+                    $npc = $this->entityManager->getRepository(Npc::class)->find($id);
+
+                    $playerNpc = null;
+                    foreach($this->character->getPlayerNpcs() as $existingPlayerNpc) {
+                        if($existingPlayerNpc->getNpc() === $npc) {
+                            $playerNpc = $existingPlayerNpc;
+                        }
+                    }
+                    if(!$playerNpc) {
+                        $playerNpc = (new PlayerNpc())
+                            ->setPlayer($this->character)
+                            ->setNpc($npc)
+                            ->setHealth($npc->getHealthMax())
+                            ->setMana($npc->getManaMax())
+                            ->setFortune($npc->getFortune())
+                            ->setReputation(0);
+                        $this->entityManager->persist($playerNpc);
+                        $this->entityManager->flush();
+                    }
+                    $this->playerNpc = $playerNpc;
+
+                    $screen = $this->entityManager->getRepository(InteractionScreen::class)->findOneBy(['npc' => $npc]);
+                    $this->changeScreen($screen->getSlug());
+                    break;
+                case 'exit':
+                    $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $this->character->getLocation()]);
+                    $this->setActiveScreen($screen->getSlug());
                     break;
                 default:
                     break;

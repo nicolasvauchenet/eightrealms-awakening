@@ -3,5 +3,7 @@
         {% include 'game/default/_component/_cinematic/_index.html.twig' %}
     {% elseif this.activeScreenType == 'location' %}
         {% include 'game/default/_component/_location/_index.html.twig' %}
+    {% elseif this.activeScreenType == 'interaction' %}
+        {% include 'game/default/_component/_interaction/_index.html.twig' %}
     {% endif %}
 </div>

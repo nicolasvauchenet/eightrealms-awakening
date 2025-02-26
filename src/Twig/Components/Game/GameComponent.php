@@ -118,7 +118,8 @@ class GameComponent
                                 ->setEquipped($npcCharacterItem->isEquipped())
                                 ->setSlot($npcCharacterItem->getSlot())
                                 ->setHealth($npcCharacterItem->getHealth())
-                                ->setCharge($npcCharacterItem->getCharge());
+                                ->setCharge($npcCharacterItem->getCharge())
+                                ->setOriginal(true);
                             $this->entityManager->persist($playerNpcItem);
                         }
                         $this->entityManager->persist($playerNpc);
@@ -147,6 +148,11 @@ class GameComponent
                         }
                         $this->entityManager->persist($newCharacterItem);
 
+                        $playerNpcItem = $this->entityManager->getRepository(PlayerNpcItem::class)->findOneBy(['playerNpc' => $this->playerNpc, 'item' => $characterItem->getItem()]);
+                        if($playerNpcItem && !$playerNpcItem->isOriginal()) {
+                            $this->entityManager->remove($playerNpcItem);
+                        }
+
                         $this->character->setFortune($this->character->getFortune() - $itemPrice);
                         $this->playerNpc->setFortune($this->playerNpc->getFortune() + $itemPrice);
                         $this->entityManager->persist($this->character);
@@ -165,11 +171,12 @@ class GameComponent
                         $this->description = "<p>{$this->playerNpc->getNpc()->getName()} n'a pas assez de couronnes pour vous acheter cet objet.</p>";
                     } else {
                         $playerNpcItem = $this->entityManager->getRepository(PlayerNpcItem::class)->findOneBy(['playerNpc' => $this->playerNpc, 'item' => $characterItem->getItem()]);
-                        if(!$playerNpcItem) {
+                        if(!$playerNpcItem || !$playerNpcItem->isOriginal()) {
                             $playerNpcItem = (new PlayerNpcItem())
                                 ->setPlayerNpc($this->playerNpc)
                                 ->setItem($characterItem->getItem())
-                                ->setEquipped(false);
+                                ->setEquipped(false)
+                                ->setOriginal(false);
                             if($characterItem->getItem() instanceof Armor || $characterItem->getItem() instanceof Shield || $characterItem->getItem() instanceof Weapon) {
                                 $playerNpcItem->setHealth($characterItem->getItem()->getHealth());
                             } else if($characterItem->getItem() instanceof Magical) {
@@ -256,7 +263,8 @@ class GameComponent
                                         ->setEquipped($npcCharacterItem->isEquipped())
                                         ->setSlot($npcCharacterItem->getSlot())
                                         ->setHealth($npcCharacterItem->getHealth())
-                                        ->setCharge($npcCharacterItem->getCharge());
+                                        ->setCharge($npcCharacterItem->getCharge())
+                                        ->setOriginal(true);
                                     $this->entityManager->persist($playerNpcItem);
                                 }
                             }

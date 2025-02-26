@@ -34,6 +34,9 @@ class PlayerNpcItem
     #[ORM\JoinColumn(nullable: false)]
     private ?Item $item = null;
 
+    #[ORM\Column]
+    private ?bool $original = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +110,18 @@ class PlayerNpcItem
     public function setItem(?Item $item): static
     {
         $this->item = $item;
+
+        return $this;
+    }
+
+    public function isOriginal(): ?bool
+    {
+        return $this->original;
+    }
+
+    public function setOriginal(bool $original): static
+    {
+        $this->original = $original;
 
         return $this;
     }

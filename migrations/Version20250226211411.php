@@ -20,7 +20,7 @@ final class Version20250226211411 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE player_npc_item (id SERIAL NOT NULL, player_npc_id INT NOT NULL, item_id INT NOT NULL, equipped BOOLEAN NOT NULL, health INT DEFAULT NULL, charge INT DEFAULT NULL, slot VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE player_npc_item (id SERIAL NOT NULL, player_npc_id INT NOT NULL, item_id INT NOT NULL, equipped BOOLEAN NOT NULL, health INT DEFAULT NULL, charge INT DEFAULT NULL, slot VARCHAR(255) DEFAULT NULL, original BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_408023C7557DFD57 ON player_npc_item (player_npc_id)');
         $this->addSql('CREATE INDEX IDX_408023C7126F525E ON player_npc_item (item_id)');
         $this->addSql('ALTER TABLE player_npc_item ADD CONSTRAINT FK_408023C7557DFD57 FOREIGN KEY (player_npc_id) REFERENCES player_npc (id) NOT DEFERRABLE INITIALLY IMMEDIATE');

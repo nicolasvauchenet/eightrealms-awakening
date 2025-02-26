@@ -1,10 +1,26 @@
 <div {{ attributes }}>
+    {% set hasRealmMap = false %}
+    {% set hasLocationMap = false %}
+    {% for characterItem in this.character.characterItems %}
+        {% if characterItem.item.type == 'realm' %}
+            {% set hasRealmMap = true %}
+        {% elseif characterItem.item.type == 'location' and this.location is defined %}
+            {% if characterItem.item.slug == this.location.slug %}
+                {% set hasLocationMap = true %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
     <div class="app-map" data-loading="addClass(loading)">
         {% include 'game/map/default/_component/_header.html.twig' %}
 
         <main class="map-main">
-            {% include 'game/map/default/_component/_realm.html.twig' %}
-            {% include 'game/map/default/_component/_location.html.twig' %}
+            {% if hasRealmMap %}
+                {% include 'game/map/default/_component/_realm.html.twig' %}
+            {% endif %}
+            {% if hasLocationMap %}
+                {% include 'game/map/default/_component/_location.html.twig' %}
+            {% endif %}
             {% include 'game/map/default/_component/_walk.html.twig' %}
             {% include 'game/map/default/_component/_travel.html.twig' %}
         </main>

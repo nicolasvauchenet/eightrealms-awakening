@@ -2,6 +2,7 @@ twig:
   file_name_pattern: '*.twig'
   globals:
     app_locale: '%app_locale%'
+    app_itemService: '@App\Service\Item\ItemService'
     app_characterItemService: '@App\Service\Item\CharacterItemService'
     app_characterSpellService: '@App\Service\Spell\CharacterSpellService'
     app_characterBonusService: '@App\Service\Character\CharacterBonusService'

@@ -3,7 +3,7 @@
   box-sizing: border-box;
   @include displayFlex(space-between, center, null, column);
   flex: 1;
-  padding: 1rem;
+  padding: 1rem 0.5rem;
   width: 100%;
   @extend .appears;
   animation-delay: 1s;
@@ -36,4 +36,6 @@
 
   @import "./cinematic";
   @import "./location";
+  @import "./interaction";
+  @import "./trade";
 }

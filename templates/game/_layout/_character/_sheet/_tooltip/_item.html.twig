@@ -145,8 +145,10 @@
                     {% endif %}
                 </h4>
 
-                {% if not app_characterItemService.canEquipItem(this.character, characterItem) %}
-                    <h4 class="text-danger">{{ this.character.name}} ne peut pas utiliser cet objet</h4>
+                {% if this.activeScreenType is not defined or this.activeScreenType != 'trade' %}
+                    {% if not app_characterItemService.canEquipItem(this.character, characterItem) %}
+                        <h4 class="text-danger">{{ this.character.name }} ne peut pas utiliser cet objet</h4>
+                    {% endif %}
                 {% endif %}
 
                 {% if characterItem.item.category.slug == 'nourriture' and characterItem.item.effect is defined and characterItem.item.effect is not null %}
@@ -157,9 +159,10 @@
                     <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}" alt="{{ characterItem.item.name }}" class="tooltip-image"/>
                 </figure>
 
-                {% if characterItem.health or characterItem.charge %}
+                {% if characterItem.health is not null or characterItem.charge is not null %}
                     <div class="gauge">
-                        <div class="gauge-fill {% if characterItem.health %}success{% elseif characterItem.charge %}info{% endif %}" style="--value: 1"></div>
+                        <div class="gauge-fill {% if characterItem.health %}success{% elseif characterItem.charge %}info{% endif %}"
+                             style="--value: {{ app_itemService.health(characterItem) }}"></div>
                     </div>
                 {% endif %}
             </div>

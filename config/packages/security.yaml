@@ -36,7 +36,7 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/accueil, roles: PUBLIC_ACCESS }
-    - { path: ^/inscription, roles: PUBLIC_ACCESS }
+    - { path: ^/nouveau-joueur, roles: PUBLIC_ACCESS }
     - { path: ^/connexion, roles: PUBLIC_ACCESS }
     - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/administration, roles: ROLE_ADMIN }

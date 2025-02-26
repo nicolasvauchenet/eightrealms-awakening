@@ -21,6 +21,9 @@ class Armor extends Item
     #[ORM\Column(nullable: true)]
     private ?int $amount = null;
 
+    #[ORM\Column( nullable: true)]
+    private ?int $health = null;
+
     #[ORM\Column]
     private ?int $price = null;
 
@@ -68,6 +71,18 @@ class Armor extends Item
     public function setAmount(?int $amount): static
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getHealth(): ?int
+    {
+        return $this->health;
+    }
+
+    public function setHealth(?int $health): static
+    {
+        $this->health = $health;
 
         return $this;
     }

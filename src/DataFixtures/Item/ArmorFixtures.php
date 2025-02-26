@@ -21,6 +21,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'armor_robe_mage.png',
                 'type' => 'Robe',
                 'defense' => 1,
+                'health' => 10,
                 'price' => 100,
                 'reference' => 'armor_mage',
             ],
@@ -31,6 +32,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'armor_robe_druid.png',
                 'type' => 'Robe',
                 'defense' => 1,
+                'health' => 10,
                 'price' => 100,
                 'reference' => 'armor_druid',
             ],
@@ -41,6 +43,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'armor_leather.png',
                 'type' => 'Armure légère',
                 'defense' => 2,
+                'health' => 20,
                 'price' => 150,
                 'reference' => 'armor_leather',
             ],
@@ -51,6 +54,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'armor_iron.png',
                 'type' => 'Armure lourde',
                 'defense' => 4,
+                'health' => 30,
                 'price' => 200,
                 'reference' => 'armor_iron',
             ],
@@ -61,6 +65,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'armor_steel.png',
                 'type' => 'Armure lourde',
                 'defense' => 6,
+                'health' => 40,
                 'price' => 300,
                 'reference' => 'armor_steel',
             ],
@@ -71,6 +76,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'armor_plates.png',
                 'type' => 'Armure lourde',
                 'defense' => 8,
+                'health' => 50,
                 'price' => 400,
                 'reference' => 'armor_plates',
             ],
@@ -85,6 +91,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'defense' => 1,
                 'target' => 'mana',
                 'amount' => 10,
+                'health' => 10,
                 'price' => 1000,
                 'reference' => 'armor_mage_apprentice',
             ],
@@ -97,6 +104,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 'defense' => 4,
                 'target' => 'health',
                 'amount' => 20,
+                'health' => 30,
                 'price' => 2000,
                 'reference' => 'armor_iron_health',
             ],
@@ -113,6 +121,7 @@ class ArmorFixtures extends Fixture implements OrderedFixtureInterface
                 ->setTarget($data['target'] ?? null)
                 ->setEffect($data['effect'] ?? null)
                 ->setAmount($data['amount'] ?? null)
+                ->setHealth($data['health'])
                 ->setPrice($data['price']);
             $manager->persist($armor);
             $this->addReference($data['reference'], $armor);

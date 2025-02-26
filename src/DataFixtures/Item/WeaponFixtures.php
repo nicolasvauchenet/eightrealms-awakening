@@ -21,6 +21,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'dagger.png',
                 'type' => 'Arme de mêlée',
                 'damage' => 4,
+                'health' => 5,
                 'price' => 25,
                 'reference' => 'weapon_dagger',
             ],
@@ -31,6 +32,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'sword_short.png',
                 'type' => 'Arme de mêlée',
                 'damage' => 6,
+                'health' => 10,
                 'price' => 50,
                 'reference' => 'weapon_shortsword',
             ],
@@ -41,6 +43,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'sword_long.png',
                 'type' => 'Arme de mêlée',
                 'damage' => 8,
+                'health' => 15,
                 'price' => 100,
                 'reference' => 'weapon_longsword',
             ],
@@ -51,6 +54,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'ax_war.png',
                 'type' => 'Arme de mêlée',
                 'damage' => 8,
+                'health' => 15,
                 'price' => 100,
                 'reference' => 'weapon_warax',
             ],
@@ -61,6 +65,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'hammer_war.png',
                 'type' => 'Arme de mêlée',
                 'damage' => 8,
+                'health' => 15,
                 'price' => 100,
                 'reference' => 'weapon_warhammer',
             ],
@@ -74,6 +79,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Arme de jet',
                 'damage' => 6,
                 'range' => 5,
+                'health' => 10,
                 'price' => 50,
                 'reference' => 'weapon_shortbow',
             ],
@@ -85,6 +91,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Arme de jet',
                 'damage' => 8,
                 'range' => 10,
+                'health' => 15,
                 'price' => 100,
                 'reference' => 'weapon_longbow',
             ],
@@ -99,6 +106,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'damage' => 8,
                 'target' => 'damage',
                 'amount' => 5,
+                'health' => 15,
                 'price' => 1000,
                 'reference' => 'weapon_longsword_storm',
             ],
@@ -112,6 +120,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'range' => 10,
                 'target' => 'damage',
                 'amount' => 5,
+                'health' => 15,
                 'price' => 1000,
                 'reference' => 'weapon_longbow_storm',
             ],
@@ -125,6 +134,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'range' => 8,
                 'target' => 'damage',
                 'amount' => 5,
+                'health' => 10,
                 'price' => 200,
                 'reference' => 'weapon_gunstorm',
             ],
@@ -142,6 +152,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 ->setEffect($data['effect'] ?? null)
                 ->setAmount($data['amount'] ?? null)
                 ->setRange($data['range'] ?? null)
+                ->setHealth($data['health'])
                 ->setPrice($data['price']);
             $manager->persist($weapon);
             $this->addReference($data['reference'], $weapon);

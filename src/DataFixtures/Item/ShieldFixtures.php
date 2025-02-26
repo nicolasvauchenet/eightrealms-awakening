@@ -21,6 +21,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'shield_wood.png',
                 'type' => 'Bouclier léger',
                 'defense' => 2,
+                'health' => 10,
                 'price' => 50,
                 'reference' => 'shield_wooden',
             ],
@@ -31,6 +32,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'shield_iron.png',
                 'type' => 'Bouclier lourd',
                 'defense' => 3,
+                'health' => 20,
                 'price' => 150,
                 'reference' => 'shield_iron',
             ],
@@ -41,6 +43,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'shield_steel.png',
                 'type' => 'Bouclier lourd',
                 'defense' => 5,
+                'health' => 30,
                 'price' => 250,
                 'reference' => 'shield_steel',
             ],
@@ -55,6 +58,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'defense' => 3,
                 'target' => 'health',
                 'amount' => 10,
+                'health' => 20,
                 'price' => 1000,
                 'reference' => 'shield_iron_health',
             ],
@@ -67,6 +71,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 'defense' => 3,
                 'target' => 'defense',
                 'amount' => 5,
+                'health' => 20,
                 'price' => 1000,
                 'reference' => 'shield_iron_defense',
             ],
@@ -83,6 +88,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
                 ->setTarget($data['target'] ?? null)
                 ->setEffect($data['effect'] ?? null)
                 ->setAmount($data['amount'] ?? null)
+                ->setHealth($data['health'])
                 ->setPrice($data['price']);
             $manager->persist($shield);
             $this->addReference($data['reference'], $shield);

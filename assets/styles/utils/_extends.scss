@@ -108,6 +108,12 @@
   color: $danger !important;
 }
 
+/* VISIBILITY */
+.disabled {
+  opacity: 0.5 !important;
+  pointer-events: none;
+}
+
 /* ANIMATIONS */
 .appears {
   opacity: 0;

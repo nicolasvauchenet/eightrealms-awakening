@@ -1,3 +1,7 @@
 <div class="screen-footerbox">
-    <p>Vous commercez avec {{ this.activeScreen.npc.name }}.</p>
+    {% if this.description %}
+        {{ this.description | raw }}
+    {% else %}
+        <p>Vous commercez avec {{ this.playerNpc.npc.name }}.</p>
+    {% endif %}
 </div>

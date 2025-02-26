@@ -3,13 +3,15 @@
   margin-top: 1rem;
   width: 100%;
 
-  .left,
-  .right {
+  & > .left,
+  & > .right {
     @include displayFlex(flex-start, center, 0.5rem, column);
 
     .screen-info {
-      @include displayFlex(center, center, 2px);
+      box-sizing: border-box;
+      @include displayFlex(flex-start, center, 2px);
       padding: 0.25rem;
+      width: 100%;
       font-family: $font-secondary;
       font-size: 0.85rem;
       font-weight: bold;
@@ -23,6 +25,12 @@
       .app-icon {
         height: 1.75rem;
       }
+    }
+  }
+
+  .right {
+    .screen-info {
+      justify-content: flex-end;
     }
   }
 }

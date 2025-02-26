@@ -23,7 +23,7 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
             return new RedirectResponse($this->router->generate('app_back_office_home'));
         }
 
-        $request->getSession()->getFlashBag()->add('success', "Bon retour dans les Huit Royaumes, {$user->getName()}&nbsp;!");
+        $request->getSession()->getFlashBag()->add('success', "Bienvenue dans les Huit Royaumes, {$user->getName()}&nbsp;!");
 
         return new RedirectResponse($this->router->generate('app_front_office_home'));
     }

@@ -109,9 +109,10 @@
 
                                 <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}" alt="{{ characterItem.item.name }}" class="card-image"/>
 
-                                {% if characterItem.health or characterItem.charge %}
+                                {% if characterItem.health is not null or characterItem.charge is not null %}
                                     <div class="gauge">
-                                        <div class="gauge-fill {% if characterItem.health %}success{% elseif characterItem.charge %}info{% endif %}" style="--value: 1"></div>
+                                        <div class="gauge-fill {% if characterItem.health %}success{% elseif characterItem.charge %}info{% endif %}"
+                                             style="--value: {{ app_itemService.health(characterItem) }}"></div>
                                     </div>
                                 {% endif %}
                             </div>

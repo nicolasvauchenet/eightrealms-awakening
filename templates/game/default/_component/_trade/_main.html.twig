@@ -1,3 +1,63 @@
 <main class="screen-main">
-    &nbsp;
+    <div class="screen-trade">
+        <div class="left">
+            <h3>{{ this.character.name }}</h3>
+
+            <div class="scrollable">
+                <div class="app-grid two">
+                    {% for characterItem in app_characterItemService.sellableItems(this.playerNpc.npc, this.character.characterItems) %}
+                        <div class="app-card item" data-controller="tooltip">
+                            <a href="#" data-action="click->tooltip#open">
+                                <div class="card-header">
+                                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                                         alt="{{ characterItem.item.name }}"
+                                         class="card-image {% if app_itemService.sellPrice(characterItem, this.playerNpc) > this.playerNpc.fortune %}disabled{% endif %}"/>
+                                </div>
+                            </a>
+
+                            {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+
+                            <div class="card-footer">
+                                <button class="bg-primary {% if app_itemService.sellPrice(characterItem, this.playerNpc) > this.playerNpc.fortune %}disabled{% endif %}"
+                                        {{ live_action('doAction', {'id': characterItem.id, 'type': 'sell' }) }}>
+                                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                                    {{ app_itemService.sellPrice(characterItem, this.playerNpc, 'sell') }}
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <h3>{{ this.playerNpc.npc.name }}</h3>
+
+            <div class="scrollable">
+                <div class="app-grid two">
+                    {% for characterItem in this.playerNpc.playerNpcItems %}
+                        <div class="app-card item" data-controller="tooltip">
+                            <a href="#" data-action="click->tooltip#open">
+                                <div class="card-header">
+                                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                                         alt="{{ characterItem.item.name }}"
+                                         class="card-image {% if app_itemService.buyPrice(characterItem) > this.character.fortune %}disabled{% endif %}"/>
+                                </div>
+                            </a>
+
+                            {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+
+                            <div class="card-footer">
+                                <button class="bg-primary {% if app_itemService.buyPrice(characterItem) > this.character.fortune %}disabled{% endif %}"
+                                        {{ live_action('doAction', {'id': characterItem.id, 'type': 'buy' }) }}>
+                                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                                    {{ app_itemService.buyPrice(characterItem) }}
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 </main>

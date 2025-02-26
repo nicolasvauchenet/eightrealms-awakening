@@ -28,7 +28,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_aldrin',
                 'item' => 'weapon_longsword_storm',
                 'isEquipped' => true,
-                'health' => 30,
                 'slot' => 'righthand',
                 'class' => Weapon::class,
             ],
@@ -36,7 +35,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_aldrin',
                 'item' => 'armor_iron_health',
                 'isEquipped' => true,
-                'health' => 50,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
@@ -44,7 +42,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_aldrin',
                 'item' => 'shield_iron_defense',
                 'isEquipped' => true,
-                'health' => 50,
                 'slot' => 'shield',
                 'class' => Shield::class,
             ],
@@ -83,7 +80,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_aldrin',
                 'item' => 'weapon_shortbow',
                 'isEquipped' => false,
-                'health' => 30,
                 'class' => Weapon::class,
             ],
             [
@@ -147,8 +143,19 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_aldrin',
                 'item' => 'magical_firewand',
                 'isEquipped' => false,
-                'charge' => 20,
                 'class' => Magical::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'map_royaume_de_lile_du_nord',
+                'isEquipped' => false,
+                'class' => Map::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'map_royaume_de_lile_du_nord',
+                'isEquipped' => false,
+                'class' => Map::class,
             ],
             [
                 'character' => 'character_aldrin',
@@ -162,16 +169,13 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_elandra',
                 'item' => 'magical_firestick',
                 'isEquipped' => true,
-                'charge' => 20,
                 'slot' => 'righthand',
                 'class' => Magical::class,
             ],
             [
                 'character' => 'character_elandra',
                 'item' => 'armor_mage_apprentice',
-                'quantity' => 1,
                 'isEquipped' => true,
-                'health' => 10,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
@@ -205,7 +209,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_elandra',
                 'item' => 'armor_iron',
                 'isEquipped' => false,
-                'health' => 50,
                 'class' => Armor::class,
             ],
 
@@ -214,7 +217,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_eryndor',
                 'item' => 'weapon_longbow_storm',
                 'isEquipped' => true,
-                'health' => 20,
                 'slot' => 'bow',
                 'class' => Weapon::class,
             ],
@@ -222,7 +224,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_eryndor',
                 'item' => 'armor_leather',
                 'isEquipped' => true,
-                'health' => 30,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
@@ -256,14 +257,12 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_eryndor',
                 'item' => 'armor_iron',
                 'isEquipped' => false,
-                'health' => 50,
                 'class' => Armor::class,
             ],
             [
                 'character' => 'character_eryndor',
                 'item' => 'magical_firewand',
                 'isEquipped' => false,
-                'charge' => 20,
                 'class' => Magical::class,
             ],
 
@@ -272,7 +271,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_lyra',
                 'item' => 'weapon_dagger',
                 'isEquipped' => true,
-                'health' => 20,
                 'slot' => 'righthand',
                 'class' => Weapon::class,
             ],
@@ -280,7 +278,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_lyra',
                 'item' => 'armor_leather',
                 'isEquipped' => true,
-                'health' => 30,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
@@ -315,14 +312,12 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_lyra',
                 'item' => 'armor_iron',
                 'isEquipped' => false,
-                'health' => 50,
                 'class' => Armor::class,
             ],
             [
                 'character' => 'character_lyra',
                 'item' => 'magical_firewand',
                 'isEquipped' => false,
-                'charge' => 20,
                 'class' => Magical::class,
             ],
 
@@ -331,7 +326,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_tharasha',
                 'item' => 'weapon_warhammer',
                 'isEquipped' => true,
-                'health' => 90,
                 'slot' => 'righthand',
                 'class' => Weapon::class,
             ],
@@ -339,7 +333,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_tharasha',
                 'item' => 'armor_iron',
                 'isEquipped' => true,
-                'health' => 50,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
@@ -347,7 +340,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_tharasha',
                 'item' => 'magical_firewand',
                 'isEquipped' => false,
-                'charge' => 20,
                 'class' => Magical::class,
             ],
 
@@ -356,7 +348,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_isilea',
                 'item' => 'magical_healstick',
                 'isEquipped' => true,
-                'charge' => 20,
                 'slot' => 'righthand',
                 'class' => Magical::class,
             ],
@@ -365,7 +356,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'item' => 'armor_druid',
                 'quantity' => 1,
                 'isEquipped' => true,
-                'health' => 10,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
@@ -399,7 +389,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_isilea',
                 'item' => 'armor_iron',
                 'isEquipped' => false,
-                'health' => 50,
                 'class' => Armor::class,
             ],
 
@@ -408,7 +397,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_thorin',
                 'item' => 'weapon_warax',
                 'isEquipped' => true,
-                'health' => 90,
                 'slot' => 'righthand',
                 'class' => Weapon::class,
             ],
@@ -416,7 +404,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_thorin',
                 'item' => 'armor_plates',
                 'isEquipped' => true,
-                'health' => 90,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
@@ -424,7 +411,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_thorin',
                 'item' => 'magical_firewand',
                 'isEquipped' => false,
-                'charge' => 20,
                 'class' => Magical::class,
             ],
 
@@ -440,7 +426,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_grymm',
                 'item' => 'armor_leather',
                 'isEquipped' => true,
-                'health' => 30,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
@@ -474,7 +459,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_grymm',
                 'item' => 'magical_firewand',
                 'isEquipped' => true,
-                'charge' => 20,
                 'slot' => 'lefthand',
                 'class' => Magical::class,
             ],
@@ -482,18 +466,25 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'character' => 'character_grymm',
                 'item' => 'armor_iron',
                 'isEquipped' => false,
-                'health' => 50,
                 'class' => Armor::class,
             ],
         ];
 
         foreach($characterItems as $data) {
             $characterItem = new CharacterItem();
+            $item = $this->getReference($data['item'], $data['class']);
+            if($item instanceof Armor || $item instanceof Shield || $item instanceof Weapon) {
+                $itemHealth = $item->getHealth();
+            } else if($item instanceof Magical) {
+                $itemCharge = $item->getCharge();
+            } else {
+                $itemHealth = null;
+            }
             $characterItem->setCharacter($this->getReference($data['character'], PreGenerated::class))
-                ->setItem($this->getReference($data['item'], $data['class']))
+                ->setItem($item)
                 ->setEquipped($data['isEquipped'])
-                ->setHealth($data['health'] ?? null)
-                ->setCharge($data['charge'] ?? null)
+                ->setHealth($itemHealth ?? null)
+                ->setCharge($itemCharge ?? null)
                 ->setSlot($data['slot'] ?? null);
             $manager->persist($characterItem);
         }

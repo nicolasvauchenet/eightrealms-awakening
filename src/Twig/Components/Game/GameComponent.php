@@ -6,6 +6,12 @@ use App\Entity\Action\Action;
 use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerNpc;
+use App\Entity\Item\Armor;
+use App\Entity\Item\CharacterItem;
+use App\Entity\Item\Magical;
+use App\Entity\Item\PlayerNpcItem;
+use App\Entity\Item\Shield;
+use App\Entity\Item\Weapon;
 use App\Entity\Location\PlayerLocation;
 use App\Entity\Screen\CinematicScreen;
 use App\Entity\Screen\InteractionScreen;
@@ -13,6 +19,7 @@ use App\Entity\Screen\LocationScreen;
 use App\Entity\Screen\Screen;
 use App\Entity\Screen\TradeScreen;
 use App\Service\Character\CharacterReputationService;
+use App\Service\Item\ItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -26,18 +33,24 @@ class GameComponent
 {
     use DefaultActionTrait;
 
+    #[LiveProp(writable: true)]
     public ?Screen $activeScreen = null;
 
+    #[LiveProp(writable: true)]
     public ?Screen $previousScreen = null;
 
     private string $activeScreenSlug = 'laventure-commence';
 
+    #[LiveProp(writable: true)]
     public ?string $activeScreenType = 'cinematic';
 
+    #[LiveProp(writable: true)]
     public ?PlayerNpc $playerNpc = null;
 
+    #[LiveProp(writable: true)]
     public bool $characterUpdated = false;
 
+    #[LiveProp(writable: true)]
     public bool $characterLocationsUpdated = false;
 
     public ?string $description = null;
@@ -46,7 +59,8 @@ class GameComponent
     public Player $character;
 
     public function __construct(private readonly EntityManagerInterface     $entityManager,
-                                private readonly CharacterReputationService $characterReputationService)
+                                private readonly CharacterReputationService $characterReputationService,
+                                private readonly ItemService                $itemService)
     {
     }
 
@@ -97,6 +111,16 @@ class GameComponent
                             ->setMana($npc->getManaMax())
                             ->setFortune($npc->getFortune())
                             ->setReputation($this->characterReputationService->getReputation($this->character, $npc));
+                        foreach($npc->getCharacterItems() as $npcCharacterItem) {
+                            $playerNpcItem = (new PlayerNpcItem())
+                                ->setPlayerNpc($playerNpc)
+                                ->setItem($npcCharacterItem->getItem())
+                                ->setEquipped($npcCharacterItem->isEquipped())
+                                ->setSlot($npcCharacterItem->getSlot())
+                                ->setHealth($npcCharacterItem->getHealth())
+                                ->setCharge($npcCharacterItem->getCharge());
+                            $this->entityManager->persist($playerNpcItem);
+                        }
                         $this->entityManager->persist($playerNpc);
                         $this->entityManager->flush();
                     }
@@ -104,6 +128,67 @@ class GameComponent
 
                     $screen = $this->entityManager->getRepository(InteractionScreen::class)->findOneBy(['npc' => $npc]);
                     $this->changeScreen($screen->getSlug());
+                    break;
+                case 'buy':
+                    $characterItem = $this->entityManager->getRepository(PlayerNpcItem::class)->find($id);
+                    $itemPrice = $this->itemService->getBuyPrice($characterItem);
+
+                    if($itemPrice > $this->character->getFortune()) {
+                        $this->description = "<p>Vous n'avez pas assez de couronnes pour acheter cet objet.</p>";
+                    } else {
+                        $newCharacterItem = (new CharacterItem())
+                            ->setCharacter($this->character)
+                            ->setItem($characterItem->getItem())
+                            ->setEquipped(false);
+                        if($characterItem->getItem() instanceof Armor || $characterItem->getItem() instanceof Shield || $characterItem->getItem() instanceof Weapon) {
+                            $newCharacterItem->setHealth($characterItem->getItem()->getHealth());
+                        } else if($characterItem->getItem() instanceof Magical) {
+                            $newCharacterItem->setCharge($characterItem->getItem()->getCharge());
+                        }
+                        $this->entityManager->persist($newCharacterItem);
+
+                        $this->character->setFortune($this->character->getFortune() - $itemPrice);
+                        $this->playerNpc->setFortune($this->playerNpc->getFortune() + $itemPrice);
+                        $this->entityManager->persist($this->character);
+                        $this->entityManager->persist($this->playerNpc);
+
+                        $this->entityManager->flush();
+
+                        $this->description = "<p>Vous avez acheté 1 {$characterItem->getItem()->getName()} à {$this->playerNpc->getNpc()->getName()} pour $itemPrice couronne" . ($itemPrice > 1 ? 's' : '') . ".</p>";
+                    }
+                    break;
+                case 'sell':
+                    $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($id);
+                    $itemPrice = $this->itemService->getSellPrice($characterItem, $this->playerNpc);
+
+                    if($itemPrice > $this->playerNpc->getFortune()) {
+                        $this->description = "<p>{$this->playerNpc->getNpc()->getName()} n'a pas assez de couronnes pour vous acheter cet objet.</p>";
+                    } else {
+                        $playerNpcItem = $this->entityManager->getRepository(PlayerNpcItem::class)->findOneBy(['playerNpc' => $this->playerNpc, 'item' => $characterItem->getItem()]);
+                        if(!$playerNpcItem) {
+                            $playerNpcItem = (new PlayerNpcItem())
+                                ->setPlayerNpc($this->playerNpc)
+                                ->setItem($characterItem->getItem())
+                                ->setEquipped(false);
+                            if($characterItem->getItem() instanceof Armor || $characterItem->getItem() instanceof Shield || $characterItem->getItem() instanceof Weapon) {
+                                $playerNpcItem->setHealth($characterItem->getItem()->getHealth());
+                            } else if($characterItem->getItem() instanceof Magical) {
+                                $playerNpcItem->setCharge($characterItem->getItem()->getCharge());
+                            }
+                            $this->entityManager->persist($playerNpcItem);
+                        }
+                        $this->entityManager->remove($characterItem);
+
+                        $this->playerNpc->setFortune($this->playerNpc->getFortune() - $itemPrice);
+                        $this->character->setFortune($this->character->getFortune() + $itemPrice);
+
+                        $this->entityManager->persist($this->character);
+                        $this->entityManager->persist($this->playerNpc);
+
+                        $this->entityManager->flush();
+
+                        $this->description = "<p>Vous avez vendu 1 {$characterItem->getItem()->getName()} à {$this->playerNpc->getNpc()->getName()} pour $itemPrice couronne" . ($itemPrice > 1 ? 's' : '') . ".</p>";
+                    }
                     break;
                 case 'steal':
                     $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $id]);
@@ -164,6 +249,16 @@ class GameComponent
                                     ->setMana($npc->getManaMax())
                                     ->setFortune($npc->getFortune())
                                     ->setReputation($this->characterReputationService->getReputation($this->character, $npc) - 2);
+                                foreach($npc->getCharacterItems() as $npcCharacterItem) {
+                                    $playerNpcItem = (new PlayerNpcItem())
+                                        ->setPlayerNpc($playerNpc)
+                                        ->setItem($npcCharacterItem->getItem())
+                                        ->setEquipped($npcCharacterItem->isEquipped())
+                                        ->setSlot($npcCharacterItem->getSlot())
+                                        ->setHealth($npcCharacterItem->getHealth())
+                                        ->setCharge($npcCharacterItem->getCharge());
+                                    $this->entityManager->persist($playerNpcItem);
+                                }
                             }
                             $this->entityManager->persist($playerNpc);
                             $this->entityManager->flush();

@@ -3,11 +3,14 @@
 namespace App\Service\Item;
 
 use App\Entity\Character\Character;
+use App\Entity\Character\Npc;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Magical;
 use App\Entity\Item\Shield;
 use App\Repository\Item\CharacterItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 readonly class CharacterItemService
 {
@@ -51,5 +54,17 @@ readonly class CharacterItemService
         }
 
         return true;
+    }
+
+    public function getSellableItems(Npc $npc, Collection $characterItems): Collection
+    {
+        switch($npc->getProfession()->getSlug()) {
+            case 'marchand':
+                return $characterItems->filter(function($item) {
+                    return in_array($item->getItem()->getCategory()->getSlug(), ['nourriture', 'cadeau', 'carte']);
+                });
+            default:
+                return new ArrayCollection();
+        }
     }
 }

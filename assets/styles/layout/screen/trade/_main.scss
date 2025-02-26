@@ -1,0 +1,57 @@
+.screen-main {
+  .screen-trade {
+    @include displayFlex(space-between, flex-start, 1rem);
+    margin-top: 1rem;
+    width: 100%;
+
+    & > .left,
+    & > .right {
+      @include displayFlex(flex-start, center, 0.5rem, column);
+      flex: 1;
+      padding: 0.5rem 0.25rem 0.25rem;
+      background-color: rgba($secondary, 0.85);
+      border: 0.25rem groove $secondary;
+      border-radius: 0.5rem;
+      box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+      & > h3 {
+        margin: 0 1.5rem 0.25rem;
+        font-size: 0.85rem;
+        text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+      }
+
+      & > .scrollable {
+        box-sizing: border-box;
+        overflow-y: auto;
+        padding: 0 0.5rem 0.5rem 0;
+        min-height: 47dvh;
+        max-height: 47dvh;
+        width: 100%;
+
+        .app-grid {
+          &.two {
+            grid-gap: 0.5rem;
+            align-items: flex-start;
+
+            .app-card {
+              .card-header {
+                padding-bottom: 0.25rem;
+
+                .card-image {
+                  height: 6.5dvh;
+                }
+              }
+
+              .card-footer {
+                a,
+                button {
+                  gap: 2px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<div class="app-screen dialogue" data-loading="addClass(loading)">
+    <img src="{{ asset('img/chapter1/npc/' ~ this.activeScreen.dialogue.npc.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.dialogue.npc.name }}"/>
+
+    {% include 'game/default/_component/_dialogue/_header/_index.html.twig' %}
+
+    {% include 'game/default/_component/_dialogue/_main.html.twig' %}
+
+    {% include 'game/default/_component/_dialogue/_footer/_index.html.twig' %}
+</div>

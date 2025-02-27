@@ -14,6 +14,7 @@ use App\Entity\Item\Shield;
 use App\Entity\Item\Weapon;
 use App\Entity\Location\PlayerLocation;
 use App\Entity\Screen\CinematicScreen;
+use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\InteractionScreen;
 use App\Entity\Screen\LocationScreen;
 use App\Entity\Screen\Screen;
@@ -91,7 +92,7 @@ class GameComponent
     }
 
     #[LiveAction]
-    public function interactionScreen(#[LiveArg] ?int $id = null): void
+    public function interactionScreen(#[LiveArg] int $id): void
     {
         $npc = $this->entityManager->getRepository(Npc::class)->find($id);
 
@@ -111,10 +112,17 @@ class GameComponent
     }
 
     #[LiveAction]
-    public function tradeScreen(#[LiveArg] ?int $id = null): void
+    public function tradeScreen(#[LiveArg] int $id): void
     {
         $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $id]);
         $screen = $this->entityManager->getRepository(TradeScreen::class)->findOneBy(['npc' => $this->playerNpc->getNpc()]);
+        $this->changeScreen($screen->getId());
+    }
+
+    #[LiveAction]
+    public function dialogueScreen(#[LiveArg] int $id): void
+    {
+        $screen = $this->entityManager->getRepository(DialogueScreen::class)->findOneBy(['dialogue' => $id]);
         $this->changeScreen($screen->getId());
     }
 

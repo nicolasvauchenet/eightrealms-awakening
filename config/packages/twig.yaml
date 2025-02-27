@@ -8,6 +8,7 @@ twig:
     app_characterBonusService: '@App\Service\Character\CharacterBonusService'
     app_characterLevelService: '@App\Service\Character\CharacterLevelService'
     app_characterReputationService: '@App\Service\Character\CharacterReputationService'
+    app_dialogueService: '@App\Service\Dialogue\DialogueService'
 
 when@test:
   twig:

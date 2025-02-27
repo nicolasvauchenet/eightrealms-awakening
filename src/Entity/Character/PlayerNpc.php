@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Dialogue\Dialogue;
 use App\Entity\Item\PlayerNpcItem;
 use App\Repository\Character\PlayerNpcRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -41,6 +42,9 @@ class PlayerNpc
      */
     #[ORM\OneToMany(targetEntity: PlayerNpcItem::class, mappedBy: 'playerNpc', orphanRemoval: true)]
     private Collection $playerNpcItems;
+
+    #[ORM\ManyToOne]
+    private ?Dialogue $lastDialogue = null;
 
     public function __construct()
     {
@@ -134,7 +138,7 @@ class PlayerNpc
 
     public function addPlayerNpcItem(PlayerNpcItem $playerNpcItem): static
     {
-        if (!$this->playerNpcItems->contains($playerNpcItem)) {
+        if(!$this->playerNpcItems->contains($playerNpcItem)) {
             $this->playerNpcItems->add($playerNpcItem);
             $playerNpcItem->setPlayerNpc($this);
         }
@@ -144,12 +148,24 @@ class PlayerNpc
 
     public function removePlayerNpcItem(PlayerNpcItem $playerNpcItem): static
     {
-        if ($this->playerNpcItems->removeElement($playerNpcItem)) {
+        if($this->playerNpcItems->removeElement($playerNpcItem)) {
             // set the owning side to null (unless already changed)
-            if ($playerNpcItem->getPlayerNpc() === $this) {
+            if($playerNpcItem->getPlayerNpc() === $this) {
                 $playerNpcItem->setPlayerNpc(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLastDialogue(): ?Dialogue
+    {
+        return $this->lastDialogue;
+    }
+
+    public function setLastDialogue(?Dialogue $lastDialogue): static
+    {
+        $this->lastDialogue = $lastDialogue;
 
         return $this;
     }

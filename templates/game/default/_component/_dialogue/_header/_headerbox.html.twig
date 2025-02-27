@@ -1,0 +1,30 @@
+<div class="screen-headerbox">
+    <div class="screen-actions">
+        <a href="{{ path('app_game_character_sheet_player') }}"
+           class="screen-control {% if this.characterUpdated %}blink {% if app_characterLevelService.canLevelUp(this.character) %}text-third{% endif %}{% endif %}">
+            {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
+        </a>
+
+        <a href="{{ path('app_game_map_home') }}"
+           class="screen-control {% if this.characterLocationsUpdated %}blink{% endif %}">
+            {{ ux_icon('solar:map-bold', {'class': 'app-icon'}) }}
+        </a>
+    </div>
+
+    <h2 class="screen-title">
+        <small>
+            {% if this.activeScreen.dialogue.type == 'dialogue' %}
+                Discuter avec
+            {% elseif this.activeScreen.dialogue.type == 'rumor' %}
+                Les ragots de
+            {% endif %}
+        </small>
+        {{ this.playerNpc.npc.name }}
+    </h2>
+
+    <a href="{{ path('app_front_office_home') }}"
+       class="screen-control bg-danger"
+       onclick="return window.confirm('Quitter l\'aventure en cours ?')">
+        {{ ux_icon('streamline:emergency-exit-solid', {'class': 'app-icon'}) }}
+    </a>
+</div>

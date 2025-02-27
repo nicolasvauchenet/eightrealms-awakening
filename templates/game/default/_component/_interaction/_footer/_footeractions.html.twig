@@ -1,9 +1,17 @@
 <div class="screen-footeractions">
-    {#{% for dialogue in this.playerNpc.npc.dialogues %}
-        <button class="screen-action" title="{{ npc.name }}" {{ live_action('doAction', {'id': npc.id, 'type': 'interaction'}) }}>
-            <img src="{{ asset('img/chapter1/npc/thumb_' ~ npc.picture) }}" alt="{{ npc.name }}"/>
+    {% set dialogue = app_dialogueService.currentDialogue(this.playerNpc) %}
+    {% if dialogue %}
+        <button class="screen-action" title="Discuter avec {{ this.playerNpc.npc.name }}" {{ live_action('dialogueScreen', {'id': dialogue.id}) }}>
+            <img src="{{ asset('img/core/action/history.png') }}" alt="Discuter avec {{ this.playerNpc.npc.name }}"/>
         </button>
-    {% endfor %}#}
+    {% endif %}
+
+    {% set rumor = app_dialogueService.currentDialogue(this.playerNpc, 'rumor') %}
+    {% if rumor %}
+        <button class="screen-action" title="Les ragots de {{ this.playerNpc.npc.name }}" {{ live_action('dialogueScreen', {'id': rumor.id}) }}>
+            <img src="{{ asset('img/core/action/rumors.png') }}" alt="Les ragots de {{ this.playerNpc.npc.name }}"/>
+        </button>
+    {% endif %}
 
     {% if this.playerNpc.npc.profession.slug in ['marchand', 'forgeron', 'arcaniste'] %}
         <button class="screen-action" title="Commercer" {{ live_action('tradeScreen', {'id' : this.playerNpc.npc.id}) }}>

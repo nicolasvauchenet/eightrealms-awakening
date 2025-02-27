@@ -7,5 +7,7 @@
         {% include 'game/default/_component/_interaction/_index.html.twig' %}
     {% elseif this.activeScreenType == 'trade' %}
         {% include 'game/default/_component/_trade/_index.html.twig' %}
+    {% elseif this.activeScreenType == 'dialogue' %}
+        {% include 'game/default/_component/_dialogue/_index.html.twig' %}
     {% endif %}
 </div>

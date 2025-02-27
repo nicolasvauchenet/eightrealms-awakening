@@ -1,0 +1,12 @@
+<div class="screen-headerinfos">
+    <div class="left">
+        &nbsp;
+    </div>
+
+    <div class="right">
+        <div class="screen-info {% if this.playerNpc.reputation < 0 %}text-third{% else %}text-primary{% endif %}">
+            {{ this.playerNpc.reputation > 0 ? '+' ~ this.playerNpc.reputation : this.playerNpc.reputation }}
+            {{ ux_icon('mdi:head-heart-outline', {'class': 'app-icon'}) }}
+        </div>
+    </div>
+</div>

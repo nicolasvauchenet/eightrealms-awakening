@@ -1,9 +1,13 @@
 <div class="screen-headerinfos">
     <div class="left">
-        <div class="screen-info">
-            {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
-            {{ this.character.fortune }}
-        </div>
+        {% if this.character.profession.slug in ['voleur'] and this.playerNpc.npc.profession.slug not in ['garde', 'pretre'] %}
+            <div class="screen-info">
+                {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                {{ this.character.fortune }}
+            </div>
+        {% else %}
+            &nbsp;
+        {% endif %}
     </div>
 
     <div class="right">

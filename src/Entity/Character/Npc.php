@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Dialogue\Dialogue;
 use App\Entity\Location\Location;
 use App\Entity\Screen\InteractionScreen;
 use App\Repository\Character\NpcRepository;
@@ -25,10 +26,17 @@ class Npc extends Character
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 
+    /**
+     * @var Collection<int, Dialogue>
+     */
+    #[ORM\OneToMany(targetEntity: Dialogue::class, mappedBy: 'npc', orphanRemoval: true)]
+    private Collection $dialogues;
+
     public function __construct()
     {
         parent::__construct();
         $this->playerNpcs = new ArrayCollection();
+        $this->dialogues = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -81,6 +89,36 @@ class Npc extends Character
     public function setLocation(?Location $location): static
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dialogue>
+     */
+    public function getDialogues(): Collection
+    {
+        return $this->dialogues;
+    }
+
+    public function addDialogue(Dialogue $dialogue): static
+    {
+        if(!$this->dialogues->contains($dialogue)) {
+            $this->dialogues->add($dialogue);
+            $dialogue->setNpc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDialogue(Dialogue $dialogue): static
+    {
+        if($this->dialogues->removeElement($dialogue)) {
+            // set the owning side to null (unless already changed)
+            if($dialogue->getNpc() === $this) {
+                $dialogue->setNpc(null);
+            }
+        }
 
         return $this;
     }

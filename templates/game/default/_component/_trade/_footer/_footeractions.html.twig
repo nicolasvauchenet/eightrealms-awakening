@@ -1,9 +1,17 @@
 <div class="screen-footeractions">
-    <button class="screen-action" title="{{ this.activeScreen.npc.name }}" {{ live_action('doAction', {'id': this.activeScreen.npc.id, 'type': 'interaction'}) }}>
+    {% if this.character.profession.slug in ['voleur'] and this.playerNpc.npc.profession.slug not in ['garde', 'pretre'] and this.playerNpc.fortune > 0 %}
+        {% if this.character.fortune > 0 or this.character.experience > 0 %}
+            <button class="screen-action" title="Voler" {{ live_action('steal', {'id': this.playerNpc.npc.id}) }}>
+                <img src="{{ asset('img/core/action/steal.png') }}" alt="Voler {{ this.playerNpc.npc.name }}"/>
+            </button>
+        {% endif %}
+    {% endif %}
+
+    <button class="screen-action" title="{{ this.activeScreen.npc.name }}" {{ live_action('interactionScreen', {'id': this.activeScreen.npc.id}) }}>
         <img src="{{ asset('img/chapter1/npc/thumb_' ~ this.activeScreen.npc.picture) }}" alt="{{ this.activeScreen.npc.name }}"/>
     </button>
 
-    <button class="screen-action" title="Partir" {{ live_action('doAction', {'type': 'exit'}) }}>
+    <button class="screen-action" title="Partir" {{ live_action('exitScreen') }}>
         <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
     </button>
 </div>

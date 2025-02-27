@@ -44,17 +44,17 @@ readonly class ItemService
         $charisma = $characterItem->getPlayerNpc()->getPlayer()->getCharisma();
 
         $repFactor = match (true) {
-            $reputation >= 11 => 0.75,  // Très avantageux (-25% prix d'achat)
-            $reputation >= 5 => 0.85,   // Avantageux (-15%)
-            $reputation > -5 => 1.0,    // Neutre (Prix normal)
-            $reputation > -11 => 1.15,  // Désavantageux (+15%)
-            default => 1.35,            // Très désavantageux (+35%)
+            $reputation >= 11 => 0.5,
+            $reputation >= 5 => 0.75,
+            $reputation > -5 => 1.25,
+            $reputation > -11 => 1.5,
+            default => 1.75,
         };
 
         return max(1, (int)round(
             $price
-            * $repFactor  // Applique le facteur de réputation
-            * (1 - $charisma * 0.01)  // Applique la réduction liée au charisme
+            * $repFactor
+            * (1 - $charisma * 0.01)
         ));
     }
 
@@ -66,11 +66,11 @@ readonly class ItemService
         $healthFactor = $this->getHealth($characterItem);
 
         $repFactor = match (true) {
-            $reputation >= 11 => 0.75,  // Très avantageux (-25% prix d'achat)
-            $reputation >= 5 => 0.85,   // Avantageux (-15%)
-            $reputation > -5 => 1.0,    // Neutre (Prix normal)
-            $reputation > -11 => 1.15,  // Désavantageux (+15%)
-            default => 1.35,            // Très désavantageux (+35%)
+            $reputation >= 11 => 0.5,
+            $reputation >= 5 => 0.75,
+            $reputation > -5 => 1.25,
+            $reputation > -11 => 1.5,
+            default => 1.75,
         };
 
         $buyPrice = (int)round($price * $repFactor * (1 - $charisma * 0.01));
@@ -78,11 +78,11 @@ readonly class ItemService
         return max(1, min(
             (int)round(
                 ($price / 3)
-                * (1 + $reputation / 50)  // Réputation positive = prix de vente amélioré
-                * (1 + $charisma * 0.005) // Charisme donne un léger bonus
-                * $healthFactor           // Facteur de durabilité de l'objet
+                * (1 + $reputation / 50)
+                * (1 + $charisma * 0.005)
+                * $healthFactor
             ),
-            (int)round($buyPrice * 0.75) // La vente ne peut pas dépasser 75% du prix d'achat
+            (int)round($buyPrice * 0.75)
         ));
     }
 

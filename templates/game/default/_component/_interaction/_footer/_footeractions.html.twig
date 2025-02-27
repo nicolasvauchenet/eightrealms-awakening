@@ -1,25 +1,25 @@
 <div class="screen-footeractions">
-    {# {% for npc in this.activeScreen.location.npcs %}
+    {#{% for dialogue in this.playerNpc.npc.dialogues %}
         <button class="screen-action" title="{{ npc.name }}" {{ live_action('doAction', {'id': npc.id, 'type': 'interaction'}) }}>
             <img src="{{ asset('img/chapter1/npc/thumb_' ~ npc.picture) }}" alt="{{ npc.name }}"/>
         </button>
-    {% endfor %} #}
+    {% endfor %}#}
 
     {% if this.playerNpc.npc.profession.slug in ['marchand', 'forgeron', 'arcaniste'] %}
-        <button class="screen-action" title="Commercer" {{ live_action('doAction', {'id' : this.playerNpc.npc.id, 'type': 'trade'}) }}>
+        <button class="screen-action" title="Commercer" {{ live_action('tradeScreen', {'id' : this.playerNpc.npc.id}) }}>
             <img src="{{ asset('img/core/action/trade.png') }}" alt="Commercer avec {{ this.playerNpc.npc.name }}"/>
         </button>
     {% endif %}
 
     {% if this.character.profession.slug in ['voleur'] and this.playerNpc.npc.profession.slug not in ['garde', 'pretre'] and this.playerNpc.fortune > 0 %}
         {% if this.character.fortune > 0 or this.character.experience > 0 %}
-            <button class="screen-action" title="Voler" {{ live_action('doAction', {'id': this.playerNpc.npc.id, 'type': 'steal'}) }}>
+            <button class="screen-action" title="Voler" {{ live_action('steal', {'id': this.playerNpc.npc.id}) }}>
                 <img src="{{ asset('img/core/action/steal.png') }}" alt="Voler {{ this.playerNpc.npc.name }}"/>
             </button>
         {% endif %}
     {% endif %}
 
-    <button class="screen-action" title="Partir" {{ live_action('doAction', {'type': 'exit'}) }}>
+    <button class="screen-action" title="Partir" {{ live_action('exitScreen') }}>
         <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
     </button>
 </div>

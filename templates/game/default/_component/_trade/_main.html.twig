@@ -19,7 +19,7 @@
 
                             <div class="card-footer">
                                 <button class="bg-primary {% if app_itemService.sellPrice(characterItem, this.playerNpc) > this.playerNpc.fortune %}disabled{% endif %}"
-                                        {{ live_action('doAction', {'id': characterItem.id, 'type': 'sell' }) }}>
+                                        {{ live_action('sell', {'id': characterItem.id }) }}>
                                     {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
                                     {{ app_itemService.sellPrice(characterItem, this.playerNpc, 'sell') }}
                                 </button>
@@ -49,7 +49,7 @@
 
                             <div class="card-footer">
                                 <button class="bg-primary {% if app_itemService.buyPrice(characterItem) > this.character.fortune %}disabled{% endif %}"
-                                        {{ live_action('doAction', {'id': characterItem.id, 'type': 'buy' }) }}>
+                                        {{ live_action('buy', {'id': characterItem.id }) }}>
                                     {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
                                     {{ app_itemService.buyPrice(characterItem) }}
                                 </button>

@@ -1,6 +1,6 @@
 <footer class="screen-footer">
     {% if this.previousScreen %}
-        <button class="app-button cta" {{ live_action('doAction', {'id': this.previousScreen.id, 'type': 'changeScreen'}) }}>
+        <button class="app-button cta" {{ live_action('changeScreen', {'id': this.previousScreen.id}) }}>
             Continuer
         </button>
     {% else %}

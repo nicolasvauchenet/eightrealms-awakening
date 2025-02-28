@@ -22,10 +22,11 @@ class PlayerQuestRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('pq')
             ->select('pq, q, s')
             ->join('pq.step', 's')
-            ->join('s.quest', 'q')
+            ->join('pq.quest', 'q')
             ->where('pq.player = :player')
             ->setParameter('player', $player)
-            ->orderBy('q.id', 'ASC')
+            ->orderBy('q.type', 'ASC')
+            ->addOrderBy('q.id', 'ASC')
             ->addOrderBy('s.position', 'ASC')
             ->getQuery()
             ->getResult();

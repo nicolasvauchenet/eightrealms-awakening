@@ -21,7 +21,9 @@ readonly class QuestService
         if(!$playerQuest) {
             $playerQuest = (new PlayerQuest())
                 ->setPlayer($player)
+                ->setQuest($quest)
                 ->setStep($step)
+                ->setQuestStatus('progress')
                 ->setStatus('progress');
             $this->entityManager->persist($playerQuest);
             $this->entityManager->flush();
@@ -38,17 +40,19 @@ readonly class QuestService
         $quests = [];
 
         foreach($playerQuests as $playerQuest) {
-            $quest = $playerQuest->getStep()->getQuest();
+            $quest = $playerQuest->getQuest();
+            $step = $playerQuest->getStep();
             $questId = $quest->getId();
 
             if(!isset($quests[$questId])) {
                 $quests[$questId] = [
                     'quest' => $quest,
                     'steps' => [],
+                    'status' => $playerQuest->getQuestStatus(),
                 ];
             }
 
-            $quests[$questId]['steps'][] = $playerQuest->getStep();
+            $quests[$questId]['steps'][] = $step;
         }
 
         return $quests;

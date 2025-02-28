@@ -25,6 +25,13 @@ class PlayerQuest
     #[ORM\JoinColumn(nullable: false)]
     private ?Step $step = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Quest $quest = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $questStatus = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +69,30 @@ class PlayerQuest
     public function setStep(?Step $step): static
     {
         $this->step = $step;
+
+        return $this;
+    }
+
+    public function getQuest(): ?Quest
+    {
+        return $this->quest;
+    }
+
+    public function setQuest(?Quest $quest): static
+    {
+        $this->quest = $quest;
+
+        return $this;
+    }
+
+    public function getQuestStatus(): ?string
+    {
+        return $this->questStatus;
+    }
+
+    public function setQuestStatus(string $questStatus): static
+    {
+        $this->questStatus = $questStatus;
 
         return $this;
     }

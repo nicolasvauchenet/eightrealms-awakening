@@ -35,12 +35,18 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'type' => 'rumor',
                 'text' => "<p><em>Il y a eu une \"bagarre\" à la taverne de la Flûte Moisie… Je sais pas si vous avez entendu parler de ça… Mais je vous conseille de pas trop traîner par là-bas à la nuit tombée… Cet endroit peut être dangereux. Vous feriez mieux de rester là où c'est sûr.</em></p>",
+                'conditions' => [
+                    'hasNoQuest' => 'quest_secondary_bagarre_bizarre',
+                ],
                 'npc' => 'npc_robert_le_garde',
                 'reference' => 'dialogue_robert_le_garde_rumor_1',
             ],
             [
                 'type' => 'rumor',
                 'text' => "<p><em>Aux Docks de l'Ouest. C'est vers la mer. Ça s'appelle comme ça mais c'est au nord-est de la ville. Me demandez pas pourquoi, j'en sais rien. Chus point géographiste. Chuis garde.</em></p>",
+                'conditions' => [
+                    'hasNoQuest' => 'quest_secondary_bagarre_bizarre',
+                ],
                 'npc' => 'npc_robert_le_garde',
                 'parent' => 'dialogue_robert_le_garde_rumor_1',
                 'reference' => 'dialogue_robert_le_garde_rumor_2',
@@ -62,6 +68,29 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                 'parent' => 'dialogue_robert_le_garde_rumor_2',
                 'reference' => 'dialogue_robert_le_garde_rumor_2_decline',
             ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Il vous a dit quoi le tavernier&nbsp;? Allez, dites-moi&nbsp;! Faut quand même que je sache ce qui se passe dans ma ville…</em></p>",
+                'npc' => 'npc_robert_le_garde',
+                'conditions' => [
+                    'hasQuest' => 'quest_secondary_bagarre_bizarre',
+                ],
+                'parent' => 'dialogue_robert_le_garde_rumor_1',
+                'reference' => 'dialogue_robert_le_garde_rumor_2_accepted',
+            ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Bien joué. J'dois avouer que j'aurais pas misé un sou sur vous. Mais vous avez réussi. J'vous félicite. Et j'vous remercie. J'vais pouvoir me sortir ça de la tête.</em></p>",
+                'npc' => 'npc_robert_le_garde',
+                'conditions' => [
+                    'completedQuest' => 'quest_secondary_bagarre_bizarre',
+                ],
+                'effects' => [
+                    'rewardQuest' => 'quest_secondary_bagarre_bizarre',
+                ],
+                'parent' => 'dialogue_robert_le_garde_rumor_1',
+                'reference' => 'dialogue_robert_le_garde_rumor_2_reward',
+            ],
 
             // Bilo le Passant
             [
@@ -77,12 +106,18 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'rumor',
                 'text' => "<p><em>Vous avez entendu parler des rats qui envahissent les rues du Vieux Port&nbsp;? Il y en a partout&nbsp;! Et ils sortent même le jour maintenant… C’est inquiétant.</em></p>",
                 'npc' => 'npc_bilo_le_passant',
+                'conditions' => [
+                    'hasNoQuest' => 'quest_secondary_des_rats_sur_les_docks',
+                ],
                 'reference' => 'dialogue_bilo_le_passant_rumor_1',
             ],
             [
                 'type' => 'rumor',
                 'text' => "<p><em>C'est dans les Anciens Docks, au sud-est de la ville. C'est l'ancien quartier des pêcheurs et des marins, mais surtout des vieux qui se sont pas fait à la modernité des Docks de l'Ouest. C'est un endroit calme, mais avec ces rats, ça devient un peu plus animé… enfin, si on peut dire.</em></p>",
                 'npc' => 'npc_bilo_le_passant',
+                'conditions' => [
+                    'hasNoQuest' => 'quest_secondary_des_rats_sur_les_docks',
+                ],
                 'parent' => 'dialogue_bilo_le_passant_rumor_1',
                 'reference' => 'dialogue_bilo_le_passant_rumor_2',
             ],
@@ -103,21 +138,67 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                 'parent' => 'dialogue_bilo_le_passant_rumor_2',
                 'reference' => 'dialogue_bilo_le_passant_rumor_2_decline',
             ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Alors, ces rats&nbsp;? Vous les avez vus&nbsp;? Vous avez fait quelque chose&nbsp;?</em></p>",
+                'npc' => 'npc_bilo_le_passant',
+                'conditions' => [
+                    'hasQuest' => 'quest_secondary_des_rats_sur_les_docks',
+                ],
+                'parent' => 'dialogue_bilo_le_passant_rumor_1',
+                'reference' => 'dialogue_bilo_le_passant_rumor_2_accepted',
+            ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Bravo&nbsp;! Vous avez réussi à vous débarrasser de ces rats&nbsp;! C'est un soulagement pour tout le monde. Merci pour votre aide. J'espère que vous ne vous êtes pas fait mordre trop fort…</em></p>",
+                'npc' => 'npc_bilo_le_passant',
+                'conditions' => [
+                    'completedQuest' => 'quest_secondary_des_rats_sur_les_docks',
+                ],
+                'effects' => [
+                    'rewardQuest' => 'quest_secondary_des_rats_sur_les_docks',
+                ],
+                'parent' => 'dialogue_bilo_le_passant_rumor_1',
+                'reference' => 'dialogue_bilo_le_passant_rumor_2_reward',
+            ],
         ];
 
         foreach($dialogues as $data) {
             $dialogue = new Dialogue();
             $dialogue->setType($data['type'])
                 ->setText($data['text'])
-                ->setConditions($data['conditions'] ?? null)
                 ->setParent(isset($data['parent']) ? $this->getReference($data['parent'], Dialogue::class) : null)
                 ->setNpc($this->getReference($data['npc'], Npc::class));
+
+            if(isset($data['conditions'])) {
+                $dialogueConditions = [];
+                foreach($data['conditions'] as $condition => $value) {
+                    if($condition === 'hasNoQuest') {
+                        $quest = $this->getReference($value, Quest::class);
+                        $dialogueConditions['hasNoQuest'] = $quest->getId();
+                    }
+                    if($condition === 'hasQuest') {
+                        $quest = $this->getReference($value, Quest::class);
+                        $dialogueConditions['hasQuest'] = $quest->getId();
+                    }
+                    if($condition === 'completedQuest') {
+                        $quest = $this->getReference($value, Quest::class);
+                        $dialogueConditions['completedQuest'] = $quest->getId();
+                    }
+                }
+                $dialogue->setConditions($dialogueConditions);
+            }
+
             if(isset($data['effects'])) {
                 $dialogueEffects = [];
                 foreach($data['effects'] as $effect => $value) {
                     if($effect === 'startQuest') {
                         $quest = $this->getReference($value, Quest::class);
                         $dialogueEffects['startQuest'] = $quest->getId();
+                    }
+                    if($effect === 'rewardQuest') {
+                        $quest = $this->getReference($value, Quest::class);
+                        $dialogueEffects['rewardQuest'] = $quest->getId();
                     }
                 }
                 $dialogue->setEffects($dialogueEffects);

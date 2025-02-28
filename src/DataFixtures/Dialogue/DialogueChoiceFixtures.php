@@ -4,6 +4,7 @@ namespace App\DataFixtures\Dialogue;
 
 use App\Entity\Dialogue\Dialogue;
 use App\Entity\Dialogue\DialogueChoice;
+use App\Entity\Location\Location;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -19,6 +20,7 @@ class DialogueChoiceFixtures extends Fixture implements OrderedFixtureInterface
                 'position' => 1,
                 'dialogue' => 'dialogue_robert_le_garde_rumor_1',
                 'effects' => [
+                    'newLocation' => 'location_zone_vieille_ville',
                     'changeDialogue' => 'dialogue_robert_le_garde_rumor_2',
                 ],
                 'reference' => 'dialogue_robert_le_garde_rumor_1_choice_1',
@@ -52,6 +54,7 @@ class DialogueChoiceFixtures extends Fixture implements OrderedFixtureInterface
                 'position' => 1,
                 'dialogue' => 'dialogue_bilo_le_passant_rumor_1',
                 'effects' => [
+                    'newLocation' => 'location_zone_anciens_docks',
                     'changeDialogue' => 'dialogue_bilo_le_passant_rumor_2',
                 ],
                 'reference' => 'dialogue_bilo_le_passant_rumor_1_choice_1',
@@ -94,6 +97,10 @@ class DialogueChoiceFixtures extends Fixture implements OrderedFixtureInterface
                     if($effect === 'changeDialogue') {
                         $dialogueScreen = $this->getReference($value, Dialogue::class);
                         $dialogueChoiceEffects['changeDialogue'] = $dialogueScreen->getId();
+                    }
+                    if($effect === 'newLocation') {
+                        $location = $this->getReference($value, Location::class);
+                        $dialogueChoiceEffects['newLocation'] = $location->getId();
                     }
                 }
                 $dialogueChoice->setEffects($dialogueChoiceEffects);

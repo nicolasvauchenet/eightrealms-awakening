@@ -13,6 +13,7 @@ use App\Entity\Item\Magical;
 use App\Entity\Item\PlayerNpcItem;
 use App\Entity\Item\Shield;
 use App\Entity\Item\Weapon;
+use App\Entity\Location\Location;
 use App\Entity\Location\PlayerLocation;
 use App\Entity\Quest\Quest;
 use App\Entity\Screen\CinematicScreen;
@@ -24,6 +25,7 @@ use App\Entity\Screen\TradeScreen;
 use App\Service\Character\CharacterReputationService;
 use App\Service\Dialogue\DialogueService;
 use App\Service\Item\ItemService;
+use App\Service\Location\LocationService;
 use App\Service\Quest\QuestService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -70,7 +72,8 @@ class GameComponent
                                 private readonly CharacterReputationService $characterReputationService,
                                 private readonly ItemService                $itemService,
                                 private readonly DialogueService            $dialogueService,
-                                private readonly QuestService               $questService)
+                                private readonly QuestService               $questService,
+                                private readonly LocationService            $locationService)
     {
     }
 
@@ -294,8 +297,8 @@ class GameComponent
                 $location = $screen->getLocation();
 
                 if($location !== $this->character->getLocation()) {
-                    $this->characterLocationsUpdated = true;
                     $this->character->setLocation($location);
+                    $this->characterLocationsUpdated = true;
 
                     $playerLocationExists = false;
                     foreach($this->character->getPlayerLocations() as $playerLocation) {
@@ -342,23 +345,26 @@ class GameComponent
         }
 
         foreach($effects as $effect => $data) {
-            switch($effect) {
-                case 'changeDialogue':
-                    $this->dialogue = $this->entityManager->getRepository(Dialogue::class)->find($data);
-                    $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $this->dialogue->getNpc()]);
-                    $screen = $this->entityManager->getRepository(DialogueScreen::class)->findOneBy(['npc' => $this->playerNpc->getNpc()]);
-                    if($this->dialogue->getEffects()) {
-                        $this->doEffects($this->dialogue->getEffects());
-                    }
-                    $this->changeScreen($screen->getId());
-                    break;
-                case 'startQuest':
-                    $quest = $this->entityManager->getRepository(Quest::class)->find($data);
-                    $started = $this->questService->startQuest($quest, $this->character);
-                    $this->characterUpdated = $started;
-                    break;
-                default:
-                    break;
+            if($effect === 'startQuest') {
+                $quest = $this->entityManager->getRepository(Quest::class)->find($data);
+                $started = $this->questService->startQuest($quest, $this->character);
+                $this->characterUpdated = $started;
+            }
+
+            if($effect === 'newLocation') {
+                $location = $this->entityManager->getRepository(Location::class)->find($data);
+                $exists = $this->locationService->addLocation($location, $this->character);
+                $this->characterLocationsUpdated = $exists;
+            }
+
+            if($effect === 'changeDialogue') {
+                $this->dialogue = $this->entityManager->getRepository(Dialogue::class)->find($data);
+                $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $this->dialogue->getNpc()]);
+                $screen = $this->entityManager->getRepository(DialogueScreen::class)->findOneBy(['npc' => $this->playerNpc->getNpc()]);
+                if($this->dialogue->getEffects()) {
+                    $this->doEffects($this->dialogue->getEffects());
+                }
+                $this->changeScreen($screen->getId());
             }
         }
     }

@@ -13,7 +13,7 @@
         </button>
     {% endif %}
 
-    {% if this.playerNpc.npc.profession.slug in ['marchand', 'forgeron', 'arcaniste'] %}
+    {% if this.playerNpc.npc.profession.slug in ['marchand', 'forgeron', 'arcaniste', 'tavernier'] %}
         <button class="screen-action" title="Commercer" {{ live_action('tradeScreen', {'id' : this.playerNpc.npc.id}) }}>
             <img src="{{ asset('img/core/action/trade.png') }}" alt="Commercer avec {{ this.playerNpc.npc.name }}"/>
         </button>

@@ -133,6 +133,13 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
                 'attitude' => 'amical',
                 'reference' => 'profession_pretre',
             ],
+            [
+                'name' => 'Tavernier',
+                'description' => "<p>Le Tavernier est le propriétaire d'une taverne, servant des boissons et des repas aux clients.</p>",
+                'type' => 'pnj',
+                'attitude' => 'amical',
+                'reference' => 'profession_tavernier',
+            ],
         ];
 
         foreach($professions as $data) {

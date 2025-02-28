@@ -63,6 +63,14 @@ readonly class CharacterItemService
                 return $characterItems->filter(function($item) {
                     return in_array($item->getItem()->getCategory()->getSlug(), ['nourriture', 'cadeau', 'carte']);
                 });
+            case 'tavernier':
+                return $characterItems->filter(function($item) {
+                    return in_array($item->getItem()->getCategory()->getSlug(), ['nourriture']);
+                });
+            case 'forgeron':
+                return $characterItems->filter(function($item) {
+                    return in_array($item->getItem()->getCategory()->getSlug(), ['armure', 'armure enchantee', 'bouclier', 'bouclier enchante', 'arme', 'arme enchantee']);
+                });
             default:
                 return new ArrayCollection();
         }

@@ -142,6 +142,27 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'location' => 'location_building_arcanes_de_port_saint_doux',
                 'reference' => 'npc_wilbert_larcaniste',
             ],
+            [
+                'name' => 'Jarrod le Tavernier',
+                'picture' => 'tavernier.png',
+                'description' => "<p>Le Tavernier de la Flûte Moisie est un homme jovial, toujours prêt à servir une bonne bière à ses clients. Il vous regarde avec un sourire chaleureux.</p><p><em>Bienvenue à la Flûte Moisie, aventurier. Que puis-je vous servir&nbsp;?</em></p>",
+                'strength' => 11,
+                'dexterity' => 12,
+                'constitution' => 11,
+                'wisdom' => 14,
+                'intelligence' => 10,
+                'charisma' => 10,
+                'healthMax' => 110,
+                'health' => 110,
+                'manaMax' => 50,
+                'mana' => 50,
+                'fortune' => 500,
+                'level' => 2,
+                'race' => 'race_humain',
+                'profession' => 'profession_tavernier',
+                'location' => 'location_building_taverne_de_la_flute_moisie',
+                'reference' => 'npc_jarrod_le_tavernier',
+            ],
         ];
 
         foreach($characters as $data) {

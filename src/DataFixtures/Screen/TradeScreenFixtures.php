@@ -33,6 +33,11 @@ class TradeScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'npc' => 'npc_wilbert_larcaniste',
                 'reference' => 'screen_trade_reload_wilbert_larcaniste',
             ],
+            [
+                'name' => 'Commercer avec Jarrod le Tavernier',
+                'npc' => 'npc_jarrod_le_tavernier',
+                'reference' => 'screen_trade_jarrod_le_tavernier',
+            ],
         ];
 
         foreach($screens as $data) {

@@ -29,6 +29,16 @@ class InteractionScreenFixtures extends Fixture implements OrderedFixtureInterfa
                 'npc' => 'npc_bilo_le_passant',
                 'reference' => 'screen_interaction_bilo_le_passant',
             ],
+            [
+                'name' => 'Grand Prêtre de Port Saint-Doux',
+                'npc' => 'npc_grand_pretre_de_port_saint_doux',
+                'reference' => 'screen_interaction_grand_pretre_de_port_saint_doux',
+            ],
+            [
+                'name' => 'Gart le Forgeron',
+                'npc' => 'npc_gart_le_forgeron',
+                'reference' => 'screen_interaction_gart_le_forgeron',
+            ],
         ];
 
         foreach($screens as $data) {

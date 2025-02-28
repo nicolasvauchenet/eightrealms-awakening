@@ -104,6 +104,14 @@ class GameComponent
     }
 
     #[LiveAction]
+    public function locationScreen(#[LiveArg] int $id): void
+    {
+        $location = $this->entityManager->getRepository(Location::class)->find($id);
+        $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $location]);
+        $this->changeScreen($screen->getId());
+    }
+
+    #[LiveAction]
     public function interactionScreen(#[LiveArg] int $id): void
     {
         $npc = $this->entityManager->getRepository(Npc::class)->find($id);

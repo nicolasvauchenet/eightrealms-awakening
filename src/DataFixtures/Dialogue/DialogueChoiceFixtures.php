@@ -14,13 +14,25 @@ class DialogueChoiceFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $dialogueChoices = [
+            // Sophie la Marchande
+            [
+                'text' => 'Où se trouve le temple&nbsp;?',
+                'position' => 1,
+                'dialogue' => 'dialogue_sophie_la_marchande_rumor_1',
+                'effects' => [
+                    'newLocation' => 'location_zone_vieille_ville',
+                    'changeDialogue' => 'dialogue_sophie_la_marchande_rumor_2',
+                ],
+                'reference' => 'dialogue_sophie_la_marchande_rumor_1_choice_1',
+            ],
+
             // Robert le Garde
             [
                 'text' => 'Où se trouve cette taverne&nbsp;?',
                 'position' => 1,
                 'dialogue' => 'dialogue_robert_le_garde_rumor_1',
                 'effects' => [
-                    'newLocation' => 'location_zone_vieille_ville',
+                    'newLocation' => 'location_zone_docks_de_l_ouest',
                     'changeDialogue' => 'dialogue_robert_le_garde_rumor_2',
                 ],
                 'reference' => 'dialogue_robert_le_garde_rumor_1_choice_1',

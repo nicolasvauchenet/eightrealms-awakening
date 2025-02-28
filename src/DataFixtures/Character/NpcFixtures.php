@@ -81,8 +81,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => 'Grand Prêtre de Port Saint-Doux',
-                'picture' => 'grand-pretre_de_port_saint_doux.png',
-                'description' => "<p>Le Grand Prêtre de Port Saint-Doux est en train de lire un vieux grimoire, plongé dans ses pensées. Il vous regarde avec un sourire bienveillant.</p><p><em>Bienvenue, mon enfant. Que puis-je faire pour vous aider&nbsp;?</em></p>",
+                'picture' => 'pretre.png',
+                'description' => "<p>Le Grand Prêtre de Port Saint-Doux semble plongé dans ses pensées. Il relève la tête en vous voyant vous approcher, et vous regarde avec un sourire bienveillant.</p><p><em>Bienvenue, mon enfant. Que puis-je faire pour vous aider&nbsp;?</em></p>",
                 'strength' => 10,
                 'dexterity' => 10,
                 'constitution' => 10,
@@ -102,7 +102,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => 'Gart le Forgeron',
-                'picture' => 'gart-le-forgeron.png',
+                'picture' => 'forgeron.png',
                 'description' => "<p>Vous êtes face à un homme plutôt baraqué. Il est en train de travailler sur une épée, la sueur perlant sur son front couvert de suie. Il vous regarde avec un sourire chaleureux.</p><p><em>Bonjour&nbsp;! Vous cherchez une arme&nbsp;? Une armure&nbsp;? Un bouclier&nbsp;? Je peux vous forger une épée digne des plus grands héros&nbsp;!</em></p>",
                 'strength' => 15,
                 'dexterity' => 15,
@@ -123,7 +123,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => "Wilbert l'Arcaniste",
-                'picture' => 'wilbert-larcaniste.png',
+                'picture' => 'arcaniste.png',
                 'description' => "<p>Vous êtes face à un homme plutôt maigre, vêtu d'une robe de mage. Il est en train de lire un vieux grimoire, plongé dans ses pensées. Il vous regarde avec un sourire bienveillant.</p><p><em>Bienvenue, aventurier. Que puis-je faire pour vous aider&nbsp;?</em></p>",
                 'strength' => 9,
                 'dexterity' => 11,

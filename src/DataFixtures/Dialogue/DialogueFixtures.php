@@ -24,6 +24,18 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                 'npc' => 'npc_sophie_la_marchande',
                 'reference' => 'dialogue_sophie_la_marchande_1',
             ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>J'ai hâte de terminer ma journée pour aller au temple&nbsp;! J'ai besoin de prier pour que tout ça se termine bien…</em></p>",
+                'npc' => 'npc_sophie_la_marchande',
+                'reference' => 'dialogue_sophie_la_marchande_rumor_1',
+            ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Dans le Quartier de la Vieille Ville, bien sûr&nbsp;! Vous n'avez pas vu la flèche du temple&nbsp;? C'est le plus grand bâtiment de la ville, en plein centre. Vous ne pouvez pas le manquer, il suffit de lever la tête.</em></p>",
+                'npc' => 'npc_sophie_la_marchande',
+                'reference' => 'dialogue_sophie_la_marchande_rumor_2',
+            ],
 
             // Robert le Garde
             [

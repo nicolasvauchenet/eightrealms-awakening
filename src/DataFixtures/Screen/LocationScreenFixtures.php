@@ -44,6 +44,11 @@ class LocationScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'location' => 'location_building_forge_de_port_saint_doux',
                 'reference' => 'screen_location_forge_de_port_saint_doux',
             ],
+            [
+                'name' => 'Taverne de la Flûte Moisie',
+                'location' => 'location_building_taverne_de_la_flute_moisie',
+                'reference' => 'screen_location_taverne_de_la_flute_moisie',
+            ],
         ];
 
         foreach($screens as $data) {

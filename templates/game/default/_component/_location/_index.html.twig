@@ -1,5 +1,9 @@
 <div class="app-screen location" data-loading="addClass(loading)">
-    <img src="{{ asset('img/chapter1/location/' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
+    {% if this.activeScreen.location.type == 'building' %}
+        <img src="{{ asset('img/core/location/' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
+    {% else %}
+        <img src="{{ asset('img/chapter1/location/' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
+    {% endif %}
 
     {% include 'game/default/_component/_location/_header/_index.html.twig' %}
 

@@ -1,7 +1,23 @@
 <div class="screen-footeractions">
-    {% for npc in this.activeScreen.location.npcs %}
-        <button class="screen-action" title="{{ npc.name }}" {{ live_action('interactionScreen', {'id': npc.id}) }}>
-            <img src="{{ asset('img/chapter1/npc/thumb_' ~ npc.picture) }}" alt="{{ npc.name }}"/>
+    {% for location in this.activeScreen.location.children %}
+        <button class="screen-action" title="{{ location.name }}" {{ live_action('locationScreen', {'id': location.id}) }}>
+            <img src="{{ asset('img/core/location/thumb_' ~ location.picture) }}" alt="{{ location.name }}"/>
         </button>
     {% endfor %}
+
+    {% for npc in this.activeScreen.location.npcs %}
+        <button class="screen-action" title="{{ npc.name }}" {{ live_action('interactionScreen', {'id': npc.id}) }}>
+            {% if this.activeScreen.location.type == 'building' %}
+                <img src="{{ asset('img/core/npc/thumb_' ~ npc.picture) }}" alt="{{ npc.name }}"/>
+            {% else %}
+                <img src="{{ asset('img/chapter1/npc/thumb_' ~ npc.picture) }}" alt="{{ npc.name }}"/>
+            {% endif %}
+        </button>
+    {% endfor %}
+
+    {% if this.activeScreen.location.type == 'building' %}
+        <button class="screen-action" title="Partir" {{ live_action('locationScreen', {'id': this.activeScreen.location.parent.id}) }}>
+            <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
+        </button>
+    {% endif %}
 </div>

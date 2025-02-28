@@ -25,6 +25,11 @@ class LocationScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'screen_location_anciens_docks',
             ],
             [
+                'name' => 'Vieille Ville',
+                'location' => 'location_zone_vieille_ville',
+                'reference' => 'screen_location_vieille_ville',
+            ],
+            [
                 'name' => "Docks de l'Ouest",
                 'location' => 'location_zone_docks_de_l_ouest',
                 'reference' => 'screen_location_docks_de_l_ouest',

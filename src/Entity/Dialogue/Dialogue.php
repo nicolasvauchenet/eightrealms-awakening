@@ -39,7 +39,8 @@ class Dialogue
     /**
      * @var Collection<int, DialogueChoice>
      */
-    #[ORM\OneToMany(targetEntity: DialogueChoice::class, mappedBy: 'dialog', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: DialogueChoice::class, mappedBy: 'dialogue', orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $dialogueChoices;
 
     public function __construct()

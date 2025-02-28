@@ -2,6 +2,7 @@
 
 namespace App\Repository\Quest;
 
+use App\Entity\Character\Player;
 use App\Entity\Quest\PlayerQuest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +17,17 @@ class PlayerQuestRepository extends ServiceEntityRepository
         parent::__construct($registry, PlayerQuest::class);
     }
 
-//    /**
-//     * @return PlayerQuest[] Returns an array of PlayerQuest objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?PlayerQuest
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findQuestsWithStepsByPlayer(Player $player): array
+    {
+        return $this->createQueryBuilder('pq')
+            ->select('pq, q, s')
+            ->join('pq.step', 's')
+            ->join('s.quest', 'q')
+            ->where('pq.player = :player')
+            ->setParameter('player', $player)
+            ->orderBy('q.id', 'ASC')
+            ->addOrderBy('s.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

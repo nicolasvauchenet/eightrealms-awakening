@@ -6,6 +6,7 @@ use App\Entity\Action\Action;
 use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerNpc;
+use App\Entity\Dialogue\Dialogue;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Magical;
@@ -13,6 +14,7 @@ use App\Entity\Item\PlayerNpcItem;
 use App\Entity\Item\Shield;
 use App\Entity\Item\Weapon;
 use App\Entity\Location\PlayerLocation;
+use App\Entity\Quest\Quest;
 use App\Entity\Screen\CinematicScreen;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\InteractionScreen;
@@ -20,7 +22,9 @@ use App\Entity\Screen\LocationScreen;
 use App\Entity\Screen\Screen;
 use App\Entity\Screen\TradeScreen;
 use App\Service\Character\CharacterReputationService;
+use App\Service\Dialogue\DialogueService;
 use App\Service\Item\ItemService;
+use App\Service\Quest\QuestService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -49,6 +53,9 @@ class GameComponent
     public ?PlayerNpc $playerNpc = null;
 
     #[LiveProp(writable: true)]
+    public ?Dialogue $dialogue = null;
+
+    #[LiveProp(writable: true)]
     public bool $characterUpdated = false;
 
     #[LiveProp(writable: true)]
@@ -61,7 +68,9 @@ class GameComponent
 
     public function __construct(private readonly EntityManagerInterface     $entityManager,
                                 private readonly CharacterReputationService $characterReputationService,
-                                private readonly ItemService                $itemService)
+                                private readonly ItemService                $itemService,
+                                private readonly DialogueService            $dialogueService,
+                                private readonly QuestService               $questService)
     {
     }
 
@@ -120,9 +129,14 @@ class GameComponent
     }
 
     #[LiveAction]
-    public function dialogueScreen(#[LiveArg] int $id): void
+    public function dialogueScreen(#[LiveArg] int $id, #[LiveArg] ?string $type = 'dialogue'): void
     {
-        $screen = $this->entityManager->getRepository(DialogueScreen::class)->findOneBy(['dialogue' => $id]);
+        $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->find($id);
+        $this->dialogue = $this->dialogueService->getCurrentDialogue($this->playerNpc, $type);
+        $screen = $this->entityManager->getRepository(DialogueScreen::class)->findOneBy(['npc' => $this->playerNpc->getNpc()]);
+        if($this->dialogue->getEffects()) {
+            $this->doEffects($this->dialogue->getEffects());
+        }
         $this->changeScreen($screen->getId());
     }
 
@@ -316,6 +330,35 @@ class GameComponent
                 $this->entityManager->flush();
 
                 $this->changeScreen($screen->getId());
+            }
+        }
+    }
+
+    #[LiveAction]
+    public function doEffects(#[LiveArg] ?array $effects = null): void
+    {
+        if(!$effects) {
+            return;
+        }
+
+        foreach($effects as $effect => $data) {
+            switch($effect) {
+                case 'changeDialogue':
+                    $this->dialogue = $this->entityManager->getRepository(Dialogue::class)->find($data);
+                    $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $this->dialogue->getNpc()]);
+                    $screen = $this->entityManager->getRepository(DialogueScreen::class)->findOneBy(['npc' => $this->playerNpc->getNpc()]);
+                    if($this->dialogue->getEffects()) {
+                        $this->doEffects($this->dialogue->getEffects());
+                    }
+                    $this->changeScreen($screen->getId());
+                    break;
+                case 'startQuest':
+                    $quest = $this->entityManager->getRepository(Quest::class)->find($data);
+                    $started = $this->questService->startQuest($quest, $this->character);
+                    $this->characterUpdated = $started;
+                    break;
+                default:
+                    break;
             }
         }
     }

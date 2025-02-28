@@ -48,6 +48,7 @@ class Location
      * @var Collection<int, Npc>
      */
     #[ORM\OneToMany(targetEntity: Npc::class, mappedBy: 'location')]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $npcs;
 
     /**
@@ -191,7 +192,7 @@ class Location
 
     public function addNpc(Npc $npc): static
     {
-        if (!$this->npcs->contains($npc)) {
+        if(!$this->npcs->contains($npc)) {
             $this->npcs->add($npc);
             $npc->setLocation($this);
         }
@@ -201,9 +202,9 @@ class Location
 
     public function removeNpc(Npc $npc): static
     {
-        if ($this->npcs->removeElement($npc)) {
+        if($this->npcs->removeElement($npc)) {
             // set the owning side to null (unless already changed)
-            if ($npc->getLocation() === $this) {
+            if($npc->getLocation() === $this) {
                 $npc->setLocation(null);
             }
         }
@@ -221,7 +222,7 @@ class Location
 
     public function addCreatureLocation(CreatureLocation $creatureLocation): static
     {
-        if (!$this->creatureLocations->contains($creatureLocation)) {
+        if(!$this->creatureLocations->contains($creatureLocation)) {
             $this->creatureLocations->add($creatureLocation);
             $creatureLocation->setLocation($this);
         }
@@ -231,9 +232,9 @@ class Location
 
     public function removeCreatureLocation(CreatureLocation $creatureLocation): static
     {
-        if ($this->creatureLocations->removeElement($creatureLocation)) {
+        if($this->creatureLocations->removeElement($creatureLocation)) {
             // set the owning side to null (unless already changed)
-            if ($creatureLocation->getLocation() === $this) {
+            if($creatureLocation->getLocation() === $this) {
                 $creatureLocation->setLocation(null);
             }
         }

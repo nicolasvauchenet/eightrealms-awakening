@@ -2,6 +2,7 @@
 
 namespace App\Entity\Screen;
 
+use App\Entity\Character\Npc;
 use App\Entity\Dialogue\Dialogue;
 use App\Repository\Screen\DialogueScreenRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,16 +13,16 @@ class DialogueScreen extends Screen
 {
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Dialogue $dialogue = null;
+    private ?Npc $npc = null;
 
-    public function getDialogue(): ?Dialogue
+    public function getNpc(): ?Npc
     {
-        return $this->dialogue;
+        return $this->npc;
     }
 
-    public function setDialogue(?Dialogue $dialogue): static
+    public function setNpc(?Npc $npc): static
     {
-        $this->dialogue = $dialogue;
+        $this->npc = $npc;
 
         return $this;
     }

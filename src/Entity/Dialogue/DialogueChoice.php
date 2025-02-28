@@ -30,6 +30,12 @@ class DialogueChoice
     #[ORM\JoinColumn(nullable: false)]
     private ?Dialogue $dialogue = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $type = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +97,30 @@ class DialogueChoice
     public function setDialogue(?Dialogue $dialogue): static
     {
         $this->dialogue = $dialogue;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): static
+    {
+        $this->picture = $picture;
 
         return $this;
     }

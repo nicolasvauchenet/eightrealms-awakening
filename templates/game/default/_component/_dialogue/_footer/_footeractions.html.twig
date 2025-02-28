@@ -1,6 +1,16 @@
 <div class="screen-footeractions">
-    <button class="screen-action" title="{{ this.activeScreen.dialogue.npc.name }}" {{ live_action('interactionScreen', {'id': this.activeScreen.dialogue.npc.id}) }}>
-        <img src="{{ asset('img/chapter1/npc/thumb_' ~ this.activeScreen.dialogue.npc.picture) }}" alt="{{ this.activeScreen.dialogue.npc.name }}"/>
+    {% for dialogueChoice in this.dialogue.dialogueChoices %}
+        <button class="screen-action" title="Répondre à {{ this.dialogue.npc.name }}" {{ live_action('doEffects', {'effects': dialogueChoice.effects}) }}>
+            {% if dialogueChoice.type == 'accept' or dialogueChoice.type == 'decline' %}
+                <img src="{{ asset('img/core/action/' ~ dialogueChoice.picture) }}" alt="{{ this.dialogue.npc.name }}"/>
+            {% else %}
+                {{ dialogueChoice.text | raw }}
+            {% endif %}
+        </button>
+    {% endfor %}
+
+    <button class="screen-action" title="{{ this.dialogue.npc.name }}" {{ live_action('interactionScreen', {'id': this.dialogue.npc.id}) }}>
+        <img src="{{ asset('img/chapter1/npc/thumb_' ~ this.dialogue.npc.picture) }}" alt="{{ this.dialogue.npc.name }}"/>
     </button>
 
     <button class="screen-action" title="Partir" {{ live_action('exitScreen') }}>

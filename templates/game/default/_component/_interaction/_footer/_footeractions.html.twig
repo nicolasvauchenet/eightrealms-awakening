@@ -1,14 +1,14 @@
 <div class="screen-footeractions">
     {% set dialogue = app_dialogueService.currentDialogue(this.playerNpc) %}
     {% if dialogue %}
-        <button class="screen-action" title="Discuter avec {{ this.playerNpc.npc.name }}" {{ live_action('dialogueScreen', {'id': dialogue.id}) }}>
+        <button class="screen-action" title="Discuter avec {{ this.playerNpc.npc.name }}" {{ live_action('dialogueScreen', {'id': this.playerNpc.id}) }}>
             <img src="{{ asset('img/core/action/history.png') }}" alt="Discuter avec {{ this.playerNpc.npc.name }}"/>
         </button>
     {% endif %}
 
     {% set rumor = app_dialogueService.currentDialogue(this.playerNpc, 'rumor') %}
     {% if rumor %}
-        <button class="screen-action" title="Les ragots de {{ this.playerNpc.npc.name }}" {{ live_action('dialogueScreen', {'id': rumor.id}) }}>
+        <button class="screen-action" title="Les ragots de {{ this.playerNpc.npc.name }}" {{ live_action('dialogueScreen', {'id': this.playerNpc.id, 'type': 'rumor'}) }}>
             <img src="{{ asset('img/core/action/rumors.png') }}" alt="Les ragots de {{ this.playerNpc.npc.name }}"/>
         </button>
     {% endif %}

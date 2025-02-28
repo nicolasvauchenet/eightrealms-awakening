@@ -20,9 +20,9 @@ final class Version20250227190005 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE screen_dialogue ADD dialogue_id INT NOT NULL');
-        $this->addSql('ALTER TABLE screen_dialogue ADD CONSTRAINT FK_8DF98859A6E12CBD FOREIGN KEY (dialogue_id) REFERENCES dialogue (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('CREATE INDEX IDX_8DF98859A6E12CBD ON screen_dialogue (dialogue_id)');
+        $this->addSql('ALTER TABLE screen_dialogue ADD npc_id INT NOT NULL');
+        $this->addSql('ALTER TABLE screen_dialogue ADD CONSTRAINT FK_8DF98859A6E12CBD FOREIGN KEY (npc_id) REFERENCES npc (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('CREATE INDEX IDX_8DF98859A6E12CBD ON screen_dialogue (npc_id)');
     }
 
     public function down(Schema $schema): void

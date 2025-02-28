@@ -2,6 +2,6 @@
     {% if this.description %}
         {{ this.description | raw }}
     {% else %}
-        {{ this.activeScreen.dialogue.text | raw }}
+        {{ this.dialogue.text | raw }}
     {% endif %}
 </div>

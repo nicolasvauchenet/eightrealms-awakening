@@ -9,6 +9,7 @@ twig:
     app_characterLevelService: '@App\Service\Character\CharacterLevelService'
     app_characterReputationService: '@App\Service\Character\CharacterReputationService'
     app_dialogueService: '@App\Service\Dialogue\DialogueService'
+    app_questService: '@App\Service\Quest\QuestService'
 
 when@test:
   twig:

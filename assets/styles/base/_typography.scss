@@ -17,15 +17,28 @@ h2 {
   text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
 }
 
-a {
-  text-decoration: none;
-  transition: all 0.5s;
+p {
+  width: 100%;
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 strong {
   font-weight: bold;
 }
 
+small {
+  font-size: 0.5em;
+}
+
 em {
   font-style: italic;
+}
+
+a {
+  text-decoration: none;
+  transition: all 0.5s;
 }

@@ -1,11 +1,51 @@
 <div class="sheet-content quests {% if this.activeContent == 'quests' %}active{% endif %}">
     <h3 class="sheet-subtitle">Journal des Quêtes</h3>
 
-    <p class="text-primary text-center">
-        <strong>
-            Aucune quête en cours.
-            <br/>
-            Vous devriez peut-être parler à des gens…
-        </strong>
-    </p>
+    {% set mainQuest = null %}
+    {% set sideQuests = [] %}
+    {% for questData in app_questService.quests(this.character) %}
+        {% if questData.quest.type == 'Principale' %}
+            {% set mainQuest = questData %}
+        {% else %}
+            {% set sideQuests = sideQuests|merge([questData]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if mainQuest or sideQuests is not empty %}
+        <div class="quests">
+            {% if mainQuest %}
+                <div class="main-quest">
+                    <h2 class="type">Quête Principale</h2>
+                    <div class="content">
+                        <h3 class="name">{{ mainQuest.quest.name }}</h3>
+                        {% for step in mainQuest.steps %}
+                            {{ step.description | raw }}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if sideQuests is not empty %}
+                <div class="side-quests">
+                    <h2 class="type">Quêtes Secondaires</h2>
+                    {% for questData in sideQuests %}
+                        <div class="content">
+                            <h3 class="name">{{ questData.quest.name }}</h3>
+                            {% for step in questData.steps %}
+                                {{ step.description | raw }}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <p class="text-primary text-center">
+            <strong>
+                Aucune quête en cours.
+                <br/>
+                Vous devriez peut-être parler à des gens…
+            </strong>
+        </p>
+    {% endif %}
 </div>

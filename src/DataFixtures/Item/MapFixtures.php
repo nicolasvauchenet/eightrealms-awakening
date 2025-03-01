@@ -36,6 +36,16 @@ class MapFixtures extends Fixture implements OrderedFixtureInterface
                 'price' => 75,
                 'reference' => 'map_port_saint_doux',
             ],
+            [
+                'category' => 'category_map',
+                'name' => 'Plouc',
+                'description' => "<p>Cette carte montre les quelques maisons de Plouc, un village perdu à l'ouest de l'Île du Nord. Un endroit idéal pour se reposer et se ressourcer. Ou pour pêcher…</p>",
+                'picture' => 'map.png',
+                'type' => 'location',
+                'map' => 'plouc.png',
+                'price' => 75,
+                'reference' => 'map_plouc',
+            ],
         ];
 
         foreach($maps as $data) {

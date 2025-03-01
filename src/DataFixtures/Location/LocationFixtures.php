@@ -32,6 +32,15 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                 'parent' => 'location_realm_royaume_de_l_ile_du_nord',
                 'reference' => 'location_port_saint_doux',
             ],
+            [
+                'name' => 'Plouc',
+                'type' => 'location',
+                'picture' => 'plouc.webp',
+                'map' => 'map-plouc.png',
+                'description' => "<p>Le village de pêcheurs de Plouc est un endroit reculé, situé à quelques lieues de Port Saint-Doux. Les habitants, simples et rustiques, vivent de la pêche et de la chasse, loin de l'agitation de la capitale. Les maisons en bois et en torchis s'alignent le long de la côte, où un semblant d'embarcadère semble servir de port de pêche. Les villageois vous regardent d'un air méfiant, et s'en remettent à leurs occupations.</p>",
+                'parent' => 'location_realm_royaume_de_l_ile_du_nord',
+                'reference' => 'location_plouc',
+            ],
 
             // Zone
             [

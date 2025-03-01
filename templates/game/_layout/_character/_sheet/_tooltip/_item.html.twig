@@ -138,7 +138,12 @@
                     {% endif %}
                 </div>
 
+                {% if characterItem.questItem is defined and characterItem.questItem %}
+                    <h4 class="text-danger mb-1">Objet de quête</h4>
+                {% endif %}
+
                 <h3 class="tooltip-title">{{ characterItem.item.name }}</h3>
+
                 <h4 class="tooltip-subtitle">
                     {% if characterItem.item.category.slug in ['armure', 'bouclier', 'arme'] %}
                         {{ characterItem.item.type }}

@@ -18,9 +18,9 @@ readonly class CharacterItemService
     {
     }
 
-    public function getCharacterItems(Character $character): array
+    public function getCharacterItems(Character $character, ?bool $questItem = false): array
     {
-        return $this->characterItemRepository->findCharacterItemsByCategories($character);
+        return $this->characterItemRepository->findCharacterItemsByCategories($character, $questItem);
     }
 
     public function getEquippedItems(Character $character): array

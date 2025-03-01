@@ -4,6 +4,7 @@ namespace App\DataFixtures\Dialogue;
 
 use App\Entity\Character\Npc;
 use App\Entity\Dialogue\Dialogue;
+use App\Entity\Item\Shield;
 use App\Entity\Quest\Quest;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -173,6 +174,68 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                 'parent' => 'dialogue_bilo_le_passant_rumor_1',
                 'reference' => 'dialogue_bilo_le_passant_rumor_2_reward',
             ],
+
+            // Gart le Forgeron
+            [
+                'type' => 'dialogue',
+                'text' => "<p><em>Le Prince, et maintenant le Roi. Tous les deux disparus dans ce satané donjon… Notre île aurait bien besoin de l'aide d'un valeureux aventurier. Mais je me demande si ça existe encore, des gens prêts à risquer leur vie pour les autres…</em></p>",
+                'effects' => [
+                    'startQuest' => 'quest_main',
+                ],
+                'npc' => 'npc_gart_le_forgeron',
+                'reference' => 'dialogue_gart_le_forgeron_1',
+            ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Vous n'iriez pas à Plouc, des fois&nbsp;? J'ai une livraison à faire, mais je n'ai pas le temps de m'en occuper. Vous pourriez m'aider&nbsp;? Ça me rendrait un fier service.</em></p>",
+                'npc' => 'npc_gart_le_forgeron',
+                'conditions' => [
+                    'hasNoQuest' => 'quest_secondary_livraison_en_cours',
+                ],
+                'reference' => 'dialogue_gart_le_forgeron_rumor_1',
+            ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>À l'ouest de l'île. C'est à quelques lieues d'ici, un petit village de pêcheurs. Vous ne pouvez pas le manquer, c'est le seul village de l'île. Vous trouverez un jeune pêcheur, Gérard, qui vous attend dans la première maison à droite en entrant dans le village.</em></p>",
+                'npc' => 'npc_gart_le_forgeron',
+                'conditions' => [
+                    'hasNoQuest' => 'quest_secondary_livraison_en_cours',
+                ],
+                'parent' => 'dialogue_gart_le_forgeron_rumor_1',
+                'reference' => 'dialogue_gart_le_forgeron_rumor_2',
+            ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Très bien, voici le bouclier. Vous n'aurez qu'à le donner à Gérard, le jeune pêcheur. Il habite dans la première maison à droite en entrant dans le village. Merci pour votre aide.</em></p>",
+                'npc' => 'npc_gart_le_forgeron',
+                'effects' => [
+                    'startQuest' => 'quest_secondary_livraison_en_cours',
+                    'addItem' => [
+                        'item' => 'shield_wooden',
+                        'itemClass' => Shield::class,
+                        'questItem' => true,
+                    ],
+                ],
+                'parent' => 'dialogue_gart_le_forgeron_rumor_2',
+                'reference' => 'dialogue_gart_le_forgeron_rumor_2_accept',
+            ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Bon, je ne vous ennuierai pas plus avec mes problèmes. Si vous changez d'avis, vous savez où me trouver. Merci quand même.</em></p>",
+                'npc' => 'npc_gart_le_forgeron',
+                'parent' => 'dialogue_gart_le_forgeron_rumor_2',
+                'reference' => 'dialogue_gart_le_forgeron_rumor_2_decline',
+            ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Vous avez vu Gérard&nbsp;? Vous lui avez donné le bouclier&nbsp;? Vous avez fait votre livraison&nbsp;?</em></p>",
+                'npc' => 'npc_gart_le_forgeron',
+                'conditions' => [
+                    'hasQuest' => 'quest_secondary_livraison_en_cours',
+                ],
+                'parent' => 'dialogue_gart_le_forgeron_rumor_1',
+                'reference' => 'dialogue_gart_le_forgeron_rumor_2_accepted',
+            ],
         ];
 
         foreach($dialogues as $data) {
@@ -211,6 +274,13 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                     if($effect === 'rewardQuest') {
                         $quest = $this->getReference($value, Quest::class);
                         $dialogueEffects['rewardQuest'] = $quest->getId();
+                    }
+                    if($effect === 'addItem') {
+                        $item = $this->getReference($value['item'], $value['itemClass']);
+                        $dialogueEffects['addItem'] = [
+                            'item' => $item->getId(),
+                            'questItem' => $value['questItem'] ?? false,
+                        ];
                     }
                 }
                 $dialogue->setEffects($dialogueEffects);

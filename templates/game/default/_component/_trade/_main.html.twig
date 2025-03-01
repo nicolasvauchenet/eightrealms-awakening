@@ -11,14 +11,14 @@
                                 <div class="card-header">
                                     <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
                                          alt="{{ characterItem.item.name }}"
-                                         class="card-image {% if app_itemService.sellPrice(characterItem, this.playerNpc) > this.playerNpc.fortune %}disabled{% endif %}"/>
+                                         class="card-image {% if (app_itemService.sellPrice(characterItem, this.playerNpc) > this.playerNpc.fortune) or characterItem.questItem %}disabled{% endif %}"/>
                                 </div>
                             </a>
 
                             {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
 
                             <div class="card-footer">
-                                <button class="bg-primary {% if app_itemService.sellPrice(characterItem, this.playerNpc) > this.playerNpc.fortune %}disabled{% endif %}"
+                                <button class="bg-primary {% if (app_itemService.sellPrice(characterItem, this.playerNpc) > this.playerNpc.fortune) or characterItem.questItem %}disabled{% endif %}"
                                         {{ live_action('sell', {'id': characterItem.id }) }}>
                                     {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
                                     {{ app_itemService.sellPrice(characterItem, this.playerNpc, 'sell') }}

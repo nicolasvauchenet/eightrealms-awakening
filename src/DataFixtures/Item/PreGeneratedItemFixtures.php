@@ -163,6 +163,12 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'isEquipped' => false,
                 'class' => Map::class,
             ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'map_plouc',
+                'isEquipped' => false,
+                'class' => Map::class,
+            ],
 
             // Elandra la Sage
             [
@@ -479,13 +485,15 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 $itemCharge = $item->getCharge();
             } else {
                 $itemHealth = null;
+                $itemCharge = null;
             }
             $characterItem->setCharacter($this->getReference($data['character'], PreGenerated::class))
                 ->setItem($item)
                 ->setEquipped($data['isEquipped'])
                 ->setHealth($itemHealth ?? null)
                 ->setCharge($itemCharge ?? null)
-                ->setSlot($data['slot'] ?? null);
+                ->setSlot($data['slot'] ?? null)
+                ->setQuestItem(false);
             $manager->persist($characterItem);
         }
 

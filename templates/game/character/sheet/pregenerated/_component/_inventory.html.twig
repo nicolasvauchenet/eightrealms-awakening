@@ -126,29 +126,5 @@
                 {% endfor %}
             </div>
         {% endfor %}
-
-        <h4 class="name">Objets de quête</h4>
-
-        <div class="app-grid three">
-            <div class="app-card item" data-controller="tooltip">
-                <a href="#" data-action="click->tooltip#open">
-                    <div class="card-header">
-                        <img src="{{ asset('img/core/item/amulet/amulet.png') }}" alt="Item Test" class="card-image"/>
-
-                        <div class="card-attributes">
-                            <div class="card-attribute text-primary">
-                                {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
-                                +20
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">Médaillon des vents</h3>
-                    </div>
-                </a>
-                {# {% include 'game/_layout/_sheet/_tooltip.html.twig' with {'type': 'item', 'content': i} %} #}
-            </div>
-        </div>
     </div>
 </div>

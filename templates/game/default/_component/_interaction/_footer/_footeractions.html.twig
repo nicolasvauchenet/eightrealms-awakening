@@ -27,6 +27,12 @@
         {% endif %}
     {% endif %}
 
+    {% if this.playerNpc.npc.profession.slug == 'pretre' %}
+        <button class="screen-action" title="Bénédiction" {{ live_action('blessing', {'id': this.playerNpc.id}) }}>
+            <img src="{{ asset('img/core/action/blessing.png') }}" alt="Prier avec {{ this.playerNpc.npc.name }}"/>
+        </button>
+    {% endif %}
+
     <button class="screen-action" title="Partir" {{ live_action('exitScreen') }}>
         <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
     </button>

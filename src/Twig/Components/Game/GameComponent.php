@@ -9,6 +9,7 @@ use App\Entity\Character\PlayerNpc;
 use App\Entity\Dialogue\Dialogue;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
+use App\Entity\Item\Item;
 use App\Entity\Item\Magical;
 use App\Entity\Item\PlayerNpcItem;
 use App\Entity\Item\Shield;
@@ -154,7 +155,11 @@ class GameComponent
     #[LiveAction]
     public function exitScreen(): void
     {
-        $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $this->character->getLocation()]);
+        if($this->playerNpc && $this->playerNpc->getNpc()->getLocation()->getType() === 'building') {
+            $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $this->playerNpc->getNpc()->getLocation()]);
+        } else {
+            $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $this->character->getLocation()]);
+        }
         $this->changeScreen($screen->getId());
     }
 
@@ -170,7 +175,8 @@ class GameComponent
             $newCharacterItem = (new CharacterItem())
                 ->setCharacter($this->character)
                 ->setItem($characterItem->getItem())
-                ->setEquipped(false);
+                ->setEquipped(false)
+                ->setQuestItem(false);
             if($characterItem->getItem() instanceof Armor || $characterItem->getItem() instanceof Shield || $characterItem->getItem() instanceof Weapon) {
                 $newCharacterItem->setHealth($characterItem->getItem()->getHealth());
             } else if($characterItem->getItem() instanceof Magical) {
@@ -295,6 +301,23 @@ class GameComponent
     }
 
     #[LiveAction]
+    public function blessing(#[LiveArg] ?int $id = null): void
+    {
+        $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->find($id);
+        $playerNpc->setFortune($playerNpc->getFortune() + 10);
+        $this->entityManager->persist($playerNpc);
+
+        $this->character->setFortune($this->character->getFortune() - 10)
+            ->setHealth($this->character->getHealthMax())
+            ->setMana($this->character->getManaMax());
+        $this->entityManager->persist($this->character);
+
+        $this->entityManager->flush();
+
+        $this->description = "<p>Vous avez reçu une bénédiction du {$playerNpc->getNpc()->getName()} et vous avez été soigné.</p><p>Cela vous a coûté 10 couronnes, mais vous vous sentez vraiment bien à présent…</p>";
+    }
+
+    #[LiveAction]
     public function doAction(#[LiveArg] ?int $id = null): void
     {
         $action = $this->entityManager->getRepository(Action::class)->find($id);
@@ -363,6 +386,23 @@ class GameComponent
                 $location = $this->entityManager->getRepository(Location::class)->find($data);
                 $exists = $this->locationService->addLocation($location, $this->character);
                 $this->characterLocationsUpdated = $exists;
+            }
+
+            if($effect === 'addItem') {
+                $item = $this->entityManager->getRepository(Item::class)->find($data['item']);
+                $characterItem = (new CharacterItem())
+                    ->setCharacter($this->character)
+                    ->setItem($item)
+                    ->setEquipped(false)
+                    ->setQuestItem($data['questItem']);
+                if($item instanceof Armor || $item instanceof Shield || $item instanceof Weapon) {
+                    $characterItem->setHealth($item->getHealth());
+                } else if($item instanceof Magical) {
+                    $characterItem->setCharge($item->getCharge());
+                }
+                $this->entityManager->persist($characterItem);
+                $this->entityManager->flush();
+                $this->characterUpdated = true;
             }
 
             if($effect === 'changeDialogue') {

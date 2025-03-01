@@ -23,7 +23,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             ->setName('Administrateur')
             ->setActive(true);
         $manager->persist($user);
-        $this->addReference('user-admin', $user);
+        $this->addReference('user_admin', $user);
 
         $user = new User();
         $user->setEmail('nvauche@gmail.com')
@@ -31,7 +31,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             ->setName('Nicolas')
             ->setActive(true);
         $manager->persist($user);
-        $this->addReference('user-nicolas', $user);
+        $this->addReference('user_nicolas', $user);
 
         $manager->flush();
     }

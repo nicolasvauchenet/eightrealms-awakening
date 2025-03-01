@@ -20,7 +20,7 @@ class CharacterItemRepository extends ServiceEntityRepository
     /**
      * @return array Returns items grouped by category
      */
-    public function findCharacterItemsByCategories(Character $character): array
+    public function findCharacterItemsByCategories(Character $character, ?bool $questItem = false): array
     {
         $characterItems = $this->createQueryBuilder('ci')
             ->leftJoin('ci.item', 'i')
@@ -28,6 +28,8 @@ class CharacterItemRepository extends ServiceEntityRepository
             ->addSelect('i', 'c')
             ->andWhere('ci.character = :character')
             ->setParameter('character', $character)
+            ->andWhere('ci.questItem = :questItem')
+            ->setParameter('questItem', $questItem)
             ->orderBy('c.position', 'ASC')
             ->addOrderBy('ci.equipped', 'DESC')
             ->getQuery()

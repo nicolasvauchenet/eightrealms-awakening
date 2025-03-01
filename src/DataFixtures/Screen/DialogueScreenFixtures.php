@@ -28,6 +28,11 @@ class DialogueScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'npc' => 'npc_bilo_le_passant',
                 'reference' => 'screen_dialogue_bilo_le_passant',
             ],
+            [
+                'name' => 'Discuter avec Gart le Forgeron',
+                'npc' => 'npc_gart_le_forgeron',
+                'reference' => 'screen_dialogue_gart_le_forgeron',
+            ],
         ];
 
         foreach($screens as $data) {

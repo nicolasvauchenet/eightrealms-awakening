@@ -34,6 +34,9 @@ class CharacterItem
     #[ORM\JoinColumn(nullable: false)]
     private ?Item $item = null;
 
+    #[ORM\Column]
+    private ?bool $questItem = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +110,18 @@ class CharacterItem
     public function setItem(?Item $item): static
     {
         $this->item = $item;
+
+        return $this;
+    }
+
+    public function isQuestItem(): ?bool
+    {
+        return $this->questItem;
+    }
+
+    public function setQuestItem(bool $questItem): static
+    {
+        $this->questItem = $questItem;
 
         return $this;
     }

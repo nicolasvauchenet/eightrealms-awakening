@@ -10,7 +10,8 @@
     <div class="app-grid two">
         {% for playerLocation in this.character.playerLocations %}
             {% if playerLocation.location.type == 'location' %}
-                <button class="app-button outline {% if playerLocation.location == this.character.location.parent %}disabled{% endif %}">
+                <button class="app-button outline {% if (this.character.location.parent and playerLocation.location == this.character.location.parent) or playerLocation.location == this.character.location %}disabled{% endif %}"
+                        {{ live_action('walk', {'locationId': playerLocation.location.id}) }}>
                     {{ playerLocation.location.name }}
                 </button>
             {% endif %}

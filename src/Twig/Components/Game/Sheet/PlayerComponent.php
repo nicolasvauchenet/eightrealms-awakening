@@ -118,6 +118,9 @@ class PlayerComponent
                     $characterItem->setSlot('amulet');
                     break;
                 case 'bouclier':
+                    if(isset($equippedItems['shield'])) {
+                        $equippedItems['shield']->setEquipped(false)->setSlot(null);
+                    }
                     if(isset($equippedItems['lefthand'])) {
                         $equippedItems['lefthand']->setEquipped(false)->setSlot(null);
                     }

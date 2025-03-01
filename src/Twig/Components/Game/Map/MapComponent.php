@@ -38,6 +38,10 @@ class MapComponent extends AbstractController
         if($this->location === null) {
             $this->setCurrentLocation();
         }
+
+        if(sizeof($this->location->getChildren()) === 0) {
+            $this->activeContent = 'travel';
+        }
     }
 
     private function setCurrentLocation(): void

@@ -64,7 +64,7 @@ class StepFixtures extends Fixture implements OrderedFixtureInterface
 
             [
                 'position' => 1,
-                'description' => "<p>Grant le Forgeron m'a demandé de livrer un bouclier dans le village de Plouc. Il s'agit d'une commande spéciale pour un client qui n'a pas pu se déplacer pour venir le chercher.</p><p>Le client est un jeune pêcheur qui s'appelle Gérard et il habite dans la première maison à droite en entrant dans le village.</p>",
+                'description' => "<p>Gart le Forgeron m'a demandé de livrer un bouclier dans le village de Plouc. Il s'agit d'une commande spéciale pour un client qui n'a pas pu se déplacer pour venir le chercher.</p><p>Le client est un jeune pêcheur qui s'appelle Gérard et il habite dans la première maison à droite en entrant dans le village.</p>",
                 'quest' => 'quest_secondary_livraison_en_cours',
                 'reference' => 'quest_secondary_livraison_en_cours_step_1',
             ],

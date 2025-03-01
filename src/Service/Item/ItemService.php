@@ -86,7 +86,7 @@ readonly class ItemService
         ));
     }
 
-    public function getHealth(CharacterItem $characterItem): float
+    public function getHealth(CharacterItem|PlayerNpcItem $characterItem): float
     {
         $item = $characterItem->getItem();
 

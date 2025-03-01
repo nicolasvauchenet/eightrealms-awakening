@@ -155,7 +155,8 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
             $characterItem = new CharacterItem();
             $characterItem->setCharacter($this->getReference($data['character'], Npc::class))
                 ->setItem($this->getReference($data['item'], $data['class']))
-                ->setEquipped(false);
+                ->setEquipped(false)
+                ->setQuestItem(false);
             $manager->persist($characterItem);
         }
 

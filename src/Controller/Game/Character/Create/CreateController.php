@@ -7,6 +7,7 @@ use App\Entity\Character\Player;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Food;
 use App\Entity\Item\Gift;
+use App\Entity\Item\Map;
 use App\Entity\Spell\CharacterSpell;
 use App\Entity\User;
 use App\Form\Character\PlayerType;
@@ -78,8 +79,9 @@ final class CreateController extends AbstractController
                     ->setItem($characterItem->getItem())
                     ->setEquipped($characterItem->isEquipped())
                     ->setSlot($characterItem->getSlot())
-                    ->setHealth($characterItem->getHealth())
-                    ->setCharge($characterItem->getCharge());
+                    ->setHealth($characterItem->getHealth() ?? null)
+                    ->setCharge($characterItem->getCharge() ?? null)
+                    ->setQuestItem(false);
                 $entityManager->persist($newCharacterItem);
             }
 
@@ -87,21 +89,24 @@ final class CreateController extends AbstractController
             $characterItem = (new CharacterItem())
                 ->setCharacter($character)
                 ->setItem($bread)
-                ->setEquipped(false);
+                ->setEquipped(false)
+                ->setQuestItem(false);
             $entityManager->persist($characterItem);
 
             $beer = $entityManager->getRepository(Food::class)->findOneBy(['slug' => 'chope-de-biere']);
             $characterItem = (new CharacterItem())
                 ->setCharacter($character)
                 ->setItem($beer)
-                ->setEquipped(false);
+                ->setEquipped(false)
+                ->setQuestItem(false);
             $entityManager->persist($characterItem);
 
             $flowers = $entityManager->getRepository(Gift::class)->findOneBy(['slug' => 'bouquet-de-fleurs']);
             $characterItem = (new CharacterItem())
                 ->setCharacter($character)
                 ->setItem($flowers)
-                ->setEquipped(false);
+                ->setEquipped(false)
+                ->setQuestItem(false);
             $entityManager->persist($characterItem);
 
             foreach($preGenerated->getCharacterSpells() as $characterSpell) {

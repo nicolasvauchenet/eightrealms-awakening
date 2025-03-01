@@ -19,6 +19,9 @@ class DialogueChoiceFixtures extends Fixture implements OrderedFixtureInterface
                 'text' => 'Où se trouve le temple&nbsp;?',
                 'position' => 1,
                 'dialogue' => 'dialogue_sophie_la_marchande_rumor_1',
+                'conditions' => [
+                    'hasNoLocation' => 'location_zone_vieille_ville',
+                ],
                 'effects' => [
                     'newLocation' => 'location_zone_vieille_ville',
                     'changeDialogue' => 'dialogue_sophie_la_marchande_rumor_2',
@@ -93,6 +96,40 @@ class DialogueChoiceFixtures extends Fixture implements OrderedFixtureInterface
                 ],
                 'reference' => 'dialogue_bilo_le_passant_rumor_2_choice_decline',
             ],
+
+            // Gart le Forgeron
+            [
+                'text' => 'Plouc&nbsp;?',
+                'position' => 1,
+                'dialogue' => 'dialogue_gart_le_forgeron_rumor_1',
+                'effects' => [
+                    'newLocation' => 'location_plouc',
+                    'changeDialogue' => 'dialogue_gart_le_forgeron_rumor_2',
+                ],
+                'reference' => 'dialogue_gart_le_forgeron_rumor_1_choice_1',
+            ],
+            [
+                'text' => "Je m'en occupe",
+                'position' => 1,
+                'type' => 'accept',
+                'picture' => 'accept.png',
+                'dialogue' => 'dialogue_gart_le_forgeron_rumor_2',
+                'effects' => [
+                    'changeDialogue' => 'dialogue_gart_le_forgeron_rumor_2_accept',
+                ],
+                'reference' => 'dialogue_gart_le_forgeron_rumor_2_choice_accept',
+            ],
+            [
+                'text' => 'Laissez tomber',
+                'position' => 2,
+                'type' => 'decline',
+                'picture' => 'decline.png',
+                'dialogue' => 'dialogue_gart_le_forgeron_rumor_2',
+                'effects' => [
+                    'changeDialogue' => 'dialogue_gart_le_forgeron_rumor_2_decline',
+                ],
+                'reference' => 'dialogue_gart_le_forgeron_rumor_2_choice_decline',
+            ],
         ];
 
         foreach($dialogueChoices as $data) {
@@ -101,8 +138,19 @@ class DialogueChoiceFixtures extends Fixture implements OrderedFixtureInterface
                 ->setPosition($data['position'])
                 ->setType($data['type'] ?? null)
                 ->setPicture($data['picture'] ?? null)
-                ->setConditions($data['conditions'] ?? null)
                 ->setDialogue($this->getReference($data['dialogue'], Dialogue::class));
+
+            if(isset($data['conditions'])) {
+                $dialogueChoiceConditions = [];
+                foreach($data['conditions'] as $condition => $value) {
+                    if($condition === 'hasNoLocation') {
+                        $location = $this->getReference($value, Location::class);
+                        $dialogueChoiceConditions['hasNoLocation'] = $location->getId();
+                    }
+                }
+                $dialogueChoice->setConditions($dialogueChoiceConditions);
+            }
+
             if(isset($data['effects'])) {
                 $dialogueChoiceEffects = [];
                 foreach($data['effects'] as $effect => $value) {

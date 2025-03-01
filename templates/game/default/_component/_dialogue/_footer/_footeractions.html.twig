@@ -1,16 +1,34 @@
 <div class="screen-footeractions">
     {% for dialogueChoice in this.dialogue.dialogueChoices %}
-        <button class="screen-action" title="Répondre à {{ this.dialogue.npc.name }}" {{ live_action('doEffects', {'effects': dialogueChoice.effects}) }}>
-            {% if dialogueChoice.type == 'accept' or dialogueChoice.type == 'decline' %}
-                <img src="{{ asset('img/core/action/' ~ dialogueChoice.picture) }}" alt="{{ this.dialogue.npc.name }}"/>
-            {% else %}
-                {{ dialogueChoice.text | raw }}
-            {% endif %}
-        </button>
+        {% set visible = true %}
+        {% if dialogueChoice.conditions %}
+            {% for condition, value in dialogueChoice.conditions %}
+                {% if condition == 'hasNoLocation' %}
+                    {% for playerLocation in this.character.playerLocations %}
+                        {% if playerLocation.location.id == value %}
+                            {% set visible = false %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if visible %}
+            <button class="screen-action" title="Répondre à {{ this.dialogue.npc.name }}" {{ live_action('doEffects', {'effects': dialogueChoice.effects}) }}>
+                {% if dialogueChoice.type == 'accept' or dialogueChoice.type == 'decline' %}
+                    <img src="{{ asset('img/core/action/' ~ dialogueChoice.picture) }}" alt="{{ this.dialogue.npc.name }}"/>
+                {% else %}
+                    {{ dialogueChoice.text | raw }}
+                {% endif %}
+            </button>
+        {% endif %}
     {% endfor %}
 
     <button class="screen-action" title="{{ this.dialogue.npc.name }}" {{ live_action('interactionScreen', {'id': this.dialogue.npc.id}) }}>
-        <img src="{{ asset('img/chapter1/npc/thumb_' ~ this.dialogue.npc.picture) }}" alt="{{ this.dialogue.npc.name }}"/>
+        {% if this.dialogue.npc.location.type == 'building' %}
+            <img src="{{ asset('img/core/npc/thumb_' ~ this.dialogue.npc.picture) }}" alt="{{ this.dialogue.npc.name }}"/>
+        {% else %}
+            <img src="{{ asset('img/chapter1/npc/thumb_' ~ this.dialogue.npc.picture) }}" alt="{{ this.dialogue.npc.name }}"/>
+        {% endif %}
     </button>
 
     <button class="screen-action" title="Partir" {{ live_action('exitScreen') }}>

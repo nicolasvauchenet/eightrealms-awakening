@@ -15,6 +15,11 @@ class LocationScreenFixtures extends Fixture implements OrderedFixtureInterface
         $screens = [
             // Port Saint-Doux
             [
+                'name' => 'Port Saint-Doux',
+                'location' => 'location_port_saint_doux',
+                'reference' => 'screen_location_port_saint_doux',
+            ],
+            [
                 'name' => 'Quartier du Marché',
                 'location' => 'location_zone_quartier_du_marche',
                 'reference' => 'screen_location_quartier_du_marche',
@@ -48,6 +53,13 @@ class LocationScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Taverne de la Flûte Moisie',
                 'location' => 'location_building_taverne_de_la_flute_moisie',
                 'reference' => 'screen_location_taverne_de_la_flute_moisie',
+            ],
+
+            // Plouc
+            [
+                'name' => 'Plouc',
+                'location' => 'location_plouc',
+                'reference' => 'screen_location_plouc',
             ],
         ];
 

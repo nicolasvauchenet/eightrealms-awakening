@@ -18,10 +18,15 @@
             {% if hasRealmMap %}
                 {% include 'game/map/default/_component/_realm.html.twig' %}
             {% endif %}
+
             {% if hasLocationMap %}
                 {% include 'game/map/default/_component/_location.html.twig' %}
             {% endif %}
-            {% include 'game/map/default/_component/_walk.html.twig' %}
+
+            {% if this.location.children | length > 0 %}
+                {% include 'game/map/default/_component/_walk.html.twig' %}
+            {% endif %}
+
             {% include 'game/map/default/_component/_travel.html.twig' %}
         </main>
 

@@ -1,8 +1,10 @@
 <div class="screen-footeractions">
     {% for location in this.activeScreen.location.children %}
-        <button class="screen-action" title="{{ location.name }}" {{ live_action('locationScreen', {'id': location.id}) }}>
-            <img src="{{ asset('img/core/location/thumb_' ~ location.picture) }}" alt="{{ location.name }}"/>
-        </button>
+        {% if location.type == 'building' %}
+            <button class="screen-action" title="{{ location.name }}" {{ live_action('locationScreen', {'id': location.id}) }}>
+                <img src="{{ asset('img/core/location/thumb_' ~ location.picture) }}" alt="{{ location.name }}"/>
+            </button>
+        {% endif %}
     {% endfor %}
 
     {% for npc in this.activeScreen.location.npcs %}

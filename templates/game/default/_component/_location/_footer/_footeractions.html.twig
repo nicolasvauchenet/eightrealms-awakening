@@ -17,6 +17,29 @@
         </button>
     {% endfor %}
 
+    {% for combat in this.activeScreen.location.combats %}
+        {% if combat.step is defined %}
+            {% set playerHasCombat = false %}
+            {% for playerQuest in this.character.playerQuests %}
+                {% if playerQuest.step == combat.step %}
+                    {% set playerHasCombat = true %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% set playerHasCombat = true %}
+        {% endif %}
+
+        {% if playerHasCombat %}
+            <button class="screen-action" title="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}" {# {{ live_action('locationScreen', {'id': this.activeScreen.location.parent.id}) }} #}>
+                {% if combat.picture %}
+                    <img src="{{ asset('img/core/creature/' ~ combat.picture) }}" alt="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}"/>
+                {% else %}
+                    <img src="{{ asset('img/core/action/attack.png') }}" alt="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}"/>
+                {% endif %}
+            </button>
+        {% endif %}
+    {% endfor %}
+
     {% if this.activeScreen.location.type == 'building' %}
         <button class="screen-action" title="Partir" {{ live_action('locationScreen', {'id': this.activeScreen.location.parent.id}) }}>
             <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>

@@ -3,6 +3,7 @@
 namespace App\Entity\Location;
 
 use App\Entity\Character\Npc;
+use App\Entity\Combat\Combat;
 use App\Repository\Location\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -57,11 +58,18 @@ class Location
     #[ORM\OneToMany(targetEntity: CreatureLocation::class, mappedBy: 'location', orphanRemoval: true)]
     private Collection $creatureLocations;
 
+    /**
+     * @var Collection<int, Combat>
+     */
+    #[ORM\OneToMany(targetEntity: Combat::class, mappedBy: 'location', orphanRemoval: true)]
+    private Collection $combats;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->npcs = new ArrayCollection();
         $this->creatureLocations = new ArrayCollection();
+        $this->combats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -236,6 +244,36 @@ class Location
             // set the owning side to null (unless already changed)
             if($creatureLocation->getLocation() === $this) {
                 $creatureLocation->setLocation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Combat>
+     */
+    public function getCombats(): Collection
+    {
+        return $this->combats;
+    }
+
+    public function addCombat(Combat $combat): static
+    {
+        if (!$this->combats->contains($combat)) {
+            $this->combats->add($combat);
+            $combat->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCombat(Combat $combat): static
+    {
+        if ($this->combats->removeElement($combat)) {
+            // set the owning side to null (unless already changed)
+            if ($combat->getLocation() === $this) {
+                $combat->setLocation(null);
             }
         }
 

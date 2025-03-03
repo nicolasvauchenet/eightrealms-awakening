@@ -4,6 +4,7 @@ namespace App\Entity\Screen;
 
 use App\Entity\Character\Creature;
 use App\Entity\Character\Npc;
+use App\Entity\Combat\Combat;
 use App\Entity\Location\Location;
 use App\Repository\Screen\CombatScreenRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,101 +16,43 @@ use Doctrine\ORM\Mapping as ORM;
 class CombatScreen extends Screen
 {
     /**
-     * @var Collection<int, Npc>
+     * @var Collection<int, Combat>
      */
-    #[ORM\ManyToMany(targetEntity: Npc::class)]
-    #[ORM\JoinTable(
-        name: 'screen_combat_npc',
-        joinColumns: [
-            new ORM\JoinColumn(name: 'screen_combat_id', referencedColumnName: 'id')
-        ],
-        inverseJoinColumns: [
-            new ORM\JoinColumn(name: 'npc_id', referencedColumnName: 'id')
-        ]
-    )]
-    private Collection $npcs;
-
-    /**
-     * @var Collection<int, Creature>
-     */
-    #[ORM\ManyToMany(targetEntity: Creature::class)]
-    #[ORM\JoinTable(
-        name: 'screen_combat_creature',
-        joinColumns: [
-            new ORM\JoinColumn(name: 'screen_combat_id', referencedColumnName: 'id')
-        ],
-        inverseJoinColumns: [
-            new ORM\JoinColumn(name: 'creature_id', referencedColumnName: 'id')
-        ]
-    )]
-    private Collection $creatures;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Location $location = null;
+    #[ORM\OneToMany(targetEntity: Combat::class, mappedBy: 'combatScreen', orphanRemoval: true)]
+    private Collection $combats;
 
     public function __construct()
     {
-        $this->npcs = new ArrayCollection();
-        $this->creatures = new ArrayCollection();
+        parent::__construct();
+        $this->combats = new ArrayCollection();
     }
 
     /**
-     * @return Collection<int, Npc>
+     * @return Collection<int, Combat>
      */
-    public function getNpcs(): Collection
+    public function getCombats(): Collection
     {
-        return $this->npcs;
+        return $this->combats;
     }
 
-    public function addNpc(Npc $npc): static
+    public function addCombat(Combat $combat): static
     {
-        if(!$this->npcs->contains($npc)) {
-            $this->npcs->add($npc);
+        if(!$this->combats->contains($combat)) {
+            $this->combats->add($combat);
+            $combat->setCombatScreen($this);
         }
 
         return $this;
     }
 
-    public function removeNpc(Npc $npc): static
+    public function removeCombat(Combat $combat): static
     {
-        $this->npcs->removeElement($npc);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Creature>
-     */
-    public function getCreatures(): Collection
-    {
-        return $this->creatures;
-    }
-
-    public function addCreature(Creature $creature): static
-    {
-        if(!$this->creatures->contains($creature)) {
-            $this->creatures->add($creature);
+        if($this->combats->removeElement($combat)) {
+            // set the owning side to null (unless already changed)
+            if($combat->getCombatScreen() === $this) {
+                $combat->setCombatScreen(null);
+            }
         }
-
-        return $this;
-    }
-
-    public function removeCreature(Creature $creature): static
-    {
-        $this->creatures->removeElement($creature);
-
-        return $this;
-    }
-
-    public function getLocation(): ?Location
-    {
-        return $this->location;
-    }
-
-    public function setLocation(?Location $location): static
-    {
-        $this->location = $location;
 
         return $this;
     }

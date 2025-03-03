@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Combat\NpcCombat;
 use App\Entity\Dialogue\Dialogue;
 use App\Entity\Location\Location;
 use App\Entity\Screen\InteractionScreen;
@@ -32,11 +33,18 @@ class Npc extends Character
     #[ORM\OneToMany(targetEntity: Dialogue::class, mappedBy: 'npc', orphanRemoval: true)]
     private Collection $dialogues;
 
+    /**
+     * @var Collection<int, NpcCombat>
+     */
+    #[ORM\OneToMany(targetEntity: NpcCombat::class, mappedBy: 'npc', orphanRemoval: true)]
+    private Collection $npcCombats;
+
     public function __construct()
     {
         parent::__construct();
         $this->playerNpcs = new ArrayCollection();
         $this->dialogues = new ArrayCollection();
+        $this->npcCombats = new ArrayCollection();
     }
 
     public function getLevel(): ?int
@@ -117,6 +125,36 @@ class Npc extends Character
             // set the owning side to null (unless already changed)
             if($dialogue->getNpc() === $this) {
                 $dialogue->setNpc(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NpcCombat>
+     */
+    public function getNpcCombats(): Collection
+    {
+        return $this->npcCombats;
+    }
+
+    public function addNpcCombat(NpcCombat $npcCombat): static
+    {
+        if (!$this->npcCombats->contains($npcCombat)) {
+            $this->npcCombats->add($npcCombat);
+            $npcCombat->setNpc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNpcCombat(NpcCombat $npcCombat): static
+    {
+        if ($this->npcCombats->removeElement($npcCombat)) {
+            // set the owning side to null (unless already changed)
+            if ($npcCombat->getNpc() === $this) {
+                $npcCombat->setNpc(null);
             }
         }
 

@@ -30,9 +30,9 @@
         {% endif %}
 
         {% if playerHasCombat %}
-            <button class="screen-action" title="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}" {# {{ live_action('locationScreen', {'id': this.activeScreen.location.parent.id}) }} #}>
-                {% if combat.picture %}
-                    <img src="{{ asset('img/core/creature/' ~ combat.picture) }}" alt="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}"/>
+            <button class="screen-action" title="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}" {{ live_action('combatScreen', {'id': combat.id}) }}>
+                {% if combat.thumb %}
+                    <img src="{{ asset('img/' ~ combat.thumb) }}" alt="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}"/>
                 {% else %}
                     <img src="{{ asset('img/core/action/attack.png') }}" alt="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}"/>
                 {% endif %}

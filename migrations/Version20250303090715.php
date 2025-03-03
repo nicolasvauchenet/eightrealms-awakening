@@ -20,7 +20,7 @@ final class Version20250303090715 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE combat (id SERIAL NOT NULL, location_id INT NOT NULL, quest_id INT DEFAULT NULL, step_id INT DEFAULT NULL, name VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE combat (id SERIAL NOT NULL, location_id INT NOT NULL, quest_id INT DEFAULT NULL, step_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, picture VARCHAR(255) NOT NULL, thumb VARCHAR(255) DEFAULT NULL, description TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_8D51E39864D218E ON combat (location_id)');
         $this->addSql('CREATE INDEX IDX_8D51E398209E9EF4 ON combat (quest_id)');
         $this->addSql('CREATE INDEX IDX_8D51E39873B21E9C ON combat (step_id)');

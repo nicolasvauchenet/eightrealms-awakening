@@ -1,5 +1,5 @@
 <div class="app-screen cinematic" data-loading="addClass(loading)">
-    <img src="{{ asset('img/chapter1/screen/' ~ this.activeScreen.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
+    <img src="{{ asset('img/' ~ this.activeScreen.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
     <div class="app-overlay"></div>
 
     {% include 'game/default/_component/_cinematic/_header.html.twig' %}

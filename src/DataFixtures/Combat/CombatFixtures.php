@@ -22,7 +22,9 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
         $combats = [
             [
                 'name' => 'Des rats sur les docks',
-                'picture' => 'rat.png',
+                'picture' => 'anciens-docks-rats.webp',
+                'thumb' => 'core/creature/rat.png',
+                'description' => "<p>Trois gros rats vous ont repéré et vous attaquent&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
                 'location' => 'location_zone_anciens_docks',
                 'quest' => 'quest_secondary_des_rats_sur_les_docks',
                 'step' => 'quest_secondary_des_rats_sur_les_docks_step_1',
@@ -39,7 +41,9 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
         foreach($combats as $data) {
             $combat = new Combat();
             $combat->setName($data['name'] ?? null)
-                ->setPicture($data['picture'] ?? null)
+                ->setPicture($data['picture'])
+                ->setThumb($data['thumb'] ?? null)
+                ->setDescription($data['description'])
                 ->setLocation($this->getReference($data['location'], Location::class))
                 ->setQuest(isset($data['quest']) ? $this->getReference($data['quest'], Quest::class) : null)
                 ->setStep(isset($data['step']) ? $this->getReference($data['step'], Step::class) : null)

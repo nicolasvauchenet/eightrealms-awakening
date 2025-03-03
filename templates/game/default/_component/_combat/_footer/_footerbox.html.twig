@@ -1,0 +1,7 @@
+<div class="screen-footerbox">
+    {% if this.description %}
+        {{ this.description | raw }}
+    {% else %}
+        {{ this.combat.description | raw }}
+    {% endif %}
+</div>

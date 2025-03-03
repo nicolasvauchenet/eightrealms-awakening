@@ -9,6 +9,7 @@ use App\Entity\Screen\CombatScreen;
 use App\Repository\Combat\CombatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CombatRepository::class)]
@@ -19,8 +20,17 @@ class Combat
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $picture = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $thumb = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'combats')]
     #[ORM\JoinColumn(nullable: false)]
@@ -48,9 +58,6 @@ class Combat
     #[ORM\JoinColumn(nullable: false)]
     private ?CombatScreen $combatScreen = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $picture = null;
-
     public function __construct()
     {
         $this->npcCombats = new ArrayCollection();
@@ -67,9 +74,45 @@ class Combat
         return $this->name;
     }
 
-    public function setName(?string $name): static
+    public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): static
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getThumb(): ?string
+    {
+        return $this->thumb;
+    }
+
+    public function setThumb(?string $thumb): static
+    {
+        $this->thumb = $thumb;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -120,7 +163,7 @@ class Combat
 
     public function addNpcCombat(NpcCombat $npcCombat): static
     {
-        if (!$this->npcCombats->contains($npcCombat)) {
+        if(!$this->npcCombats->contains($npcCombat)) {
             $this->npcCombats->add($npcCombat);
             $npcCombat->setCombat($this);
         }
@@ -130,9 +173,9 @@ class Combat
 
     public function removeNpcCombat(NpcCombat $npcCombat): static
     {
-        if ($this->npcCombats->removeElement($npcCombat)) {
+        if($this->npcCombats->removeElement($npcCombat)) {
             // set the owning side to null (unless already changed)
-            if ($npcCombat->getCombat() === $this) {
+            if($npcCombat->getCombat() === $this) {
                 $npcCombat->setCombat(null);
             }
         }
@@ -150,7 +193,7 @@ class Combat
 
     public function addCreatureCombat(CreatureCombat $creatureCombat): static
     {
-        if (!$this->creatureCombats->contains($creatureCombat)) {
+        if(!$this->creatureCombats->contains($creatureCombat)) {
             $this->creatureCombats->add($creatureCombat);
             $creatureCombat->setCombat($this);
         }
@@ -160,9 +203,9 @@ class Combat
 
     public function removeCreatureCombat(CreatureCombat $creatureCombat): static
     {
-        if ($this->creatureCombats->removeElement($creatureCombat)) {
+        if($this->creatureCombats->removeElement($creatureCombat)) {
             // set the owning side to null (unless already changed)
-            if ($creatureCombat->getCombat() === $this) {
+            if($creatureCombat->getCombat() === $this) {
                 $creatureCombat->setCombat(null);
             }
         }
@@ -178,18 +221,6 @@ class Combat
     public function setCombatScreen(?CombatScreen $combatScreen): static
     {
         $this->combatScreen = $combatScreen;
-
-        return $this;
-    }
-
-    public function getPicture(): ?string
-    {
-        return $this->picture;
-    }
-
-    public function setPicture(?string $picture): static
-    {
-        $this->picture = $picture;
 
         return $this;
     }

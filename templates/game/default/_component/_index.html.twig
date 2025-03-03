@@ -9,5 +9,7 @@
         {% include 'game/default/_component/_trade/_index.html.twig' %}
     {% elseif this.activeScreenType == 'dialogue' %}
         {% include 'game/default/_component/_dialogue/_index.html.twig' %}
+    {% elseif this.activeScreenType == 'combat' %}
+        {% include 'game/default/_component/_combat/_index.html.twig' %}
     {% endif %}
 </div>

@@ -6,6 +6,7 @@ use App\Entity\Action\Action;
 use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerNpc;
+use App\Entity\Combat\Combat;
 use App\Entity\Dialogue\Dialogue;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
@@ -18,6 +19,7 @@ use App\Entity\Location\Location;
 use App\Entity\Location\PlayerLocation;
 use App\Entity\Quest\Quest;
 use App\Entity\Screen\CinematicScreen;
+use App\Entity\Screen\CombatScreen;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\InteractionScreen;
 use App\Entity\Screen\LocationScreen;
@@ -57,6 +59,9 @@ class GameComponent
 
     #[LiveProp(writable: true)]
     public ?Dialogue $dialogue = null;
+
+    #[LiveProp(writable: true)]
+    public ?Combat $combat = null;
 
     #[LiveProp(writable: true)]
     public bool $characterUpdated = false;
@@ -149,6 +154,14 @@ class GameComponent
         if($this->dialogue->getEffects()) {
             $this->doEffects($this->dialogue->getEffects());
         }
+        $this->changeScreen($screen->getId());
+    }
+
+    #[LiveAction]
+    public function combatScreen(#[LiveArg] int $id): void
+    {
+        $this->combat = $this->entityManager->getRepository(Combat::class)->find($id);
+        $screen = $this->combat->getCombatScreen();
         $this->changeScreen($screen->getId());
     }
 

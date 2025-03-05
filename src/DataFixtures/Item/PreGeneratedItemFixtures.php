@@ -217,6 +217,20 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'isEquipped' => false,
                 'class' => Armor::class,
             ],
+            [
+                'character' => 'character_elandra',
+                'item' => 'weapon_dagger',
+                'isEquipped' => true,
+                'slot' => 'lefthand',
+                'class' => Weapon::class,
+            ],
+            [
+                'character' => 'character_elandra',
+                'item' => 'scroll_heal',
+                'isEquipped' => true,
+                'slot' => 'scroll',
+                'class' => Scroll::class,
+            ],
 
             // Eryndor le Vigilant
             [
@@ -481,7 +495,9 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             $item = $this->getReference($data['item'], $data['class']);
             if($item instanceof Armor || $item instanceof Shield || $item instanceof Weapon) {
                 $itemHealth = $item->getHealth();
+                $itemCharge = null;
             } else if($item instanceof Magical) {
+                $itemHealth = null;
                 $itemCharge = $item->getCharge();
             } else {
                 $itemHealth = null;

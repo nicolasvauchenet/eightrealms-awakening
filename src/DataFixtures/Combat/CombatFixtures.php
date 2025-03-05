@@ -23,7 +23,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Des rats sur les docks',
                 'picture' => 'anciens-docks-rats.webp',
-                'thumb' => 'core/creature/rat.png',
+                'thumb' => 'core/creature/thumb_rat.png',
                 'description' => "<p>Trois gros rats vous ont repéré et vous attaquent&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
                 'location' => 'location_zone_anciens_docks',
                 'quest' => 'quest_secondary_des_rats_sur_les_docks',

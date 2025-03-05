@@ -16,7 +16,7 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
         $creatures = [
             [
                 'name' => 'Gros rat',
-                'picture' => 'big_rat.png',
+                'picture' => 'rat.png',
                 'description' => "<p>Le rat est un animal nuisible qui se reproduit rapidement. Il est capable de transmettre des maladies et de causer des dégâts matériels. Il est important de s'en débarrasser rapidement.</p>",
                 'strength' => 8,
                 'dexterity' => 12,

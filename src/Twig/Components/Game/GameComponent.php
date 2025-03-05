@@ -7,6 +7,7 @@ use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerNpc;
 use App\Entity\Combat\Combat;
+use App\Entity\Combat\PlayerCombat;
 use App\Entity\Dialogue\Dialogue;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
@@ -61,7 +62,7 @@ class GameComponent
     public ?Dialogue $dialogue = null;
 
     #[LiveProp(writable: true)]
-    public ?Combat $combat = null;
+    public ?PlayerCombat $playerCombat = null;
 
     #[LiveProp(writable: true)]
     public bool $characterUpdated = false;
@@ -160,8 +161,21 @@ class GameComponent
     #[LiveAction]
     public function combatScreen(#[LiveArg] int $id): void
     {
-        $this->combat = $this->entityManager->getRepository(Combat::class)->find($id);
-        $screen = $this->combat->getCombatScreen();
+        $combat = $this->entityManager->getRepository(Combat::class)->find($id);
+
+        $playerCombat = $this->entityManager->getRepository(PlayerCombat::class)->findOneBy(['player' => $this->character, 'combat' => $combat]);
+        if(!$playerCombat) {
+            $playerCombat = (new PlayerCombat())
+                ->setPlayer($this->character)
+                ->setCombat($combat)
+                ->setStatus('progress');
+            $this->entityManager->persist($playerCombat);
+            $this->entityManager->flush();
+        }
+
+        $this->playerCombat = $playerCombat;
+
+        $screen = $this->playerCombat->getCombat()->getCombatScreen();
         $this->changeScreen($screen->getId());
     }
 
@@ -428,6 +442,16 @@ class GameComponent
                 $this->changeScreen($screen->getId());
             }
         }
+    }
+
+    #[LiveAction]
+    public function flee(): void
+    {
+        $this->playerCombat->setStatus('fled')
+            ->setUpdatedAt(new \DateTimeImmutable());
+        $this->entityManager->persist($this->playerCombat);
+        $this->entityManager->flush();
+        $this->exitScreen();
     }
 
     private function meetNpc(Npc $npc): PlayerNpc

@@ -1,0 +1,51 @@
+<div class="app-popup combat"
+     data-popup-target="popup">
+    <div class="popup-body">
+        <div class="popup-content">
+            {% if app_characterItemService.equippedItems(this.character).righthand and app_characterItemService.equippedItems(this.character).lefthand %}
+                <button class="screen-action" title="Attaquer avec les deux mains" {# {{ live_action('flee') }} #}>
+                    <img src="{{ asset('img/core/action/attack.png') }}" class="equip" alt="Deux main"/>
+                </button>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).righthand %}
+                <button class="screen-action" title="Attaquer avec la main droite" {# {{ live_action('flee') }} #}>
+                    <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).righthand.item.picture) }}"
+                         alt="{{ app_characterItemService.equippedItems(this.character).righthand.item.name }}"/>
+                </button>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).lefthand %}
+                <button class="screen-action" title="Attaquer avec la main gauche" {# {{ live_action('flee') }} #}>
+                    <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).lefthand.item.picture) }}"
+                         alt="{{ app_characterItemService.equippedItems(this.character).lefthand.item.name }}"/>
+                </button>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).bow %}
+                <button class="screen-action" title="Attaquer avec l'arc" {# {{ live_action('flee') }} #}>
+                    <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).bow.item.picture) }}"
+                         alt="{{ app_characterItemService.equippedItems(this.character).bow.item.name }}"/>
+                </button>
+            {% endif %}
+
+            <button class="screen-action" title="Lancer un sortilège" {# {{ live_action('flee') }} #}>
+                <img src="{{ asset('img/core/action/attack.png') }}" class="equip" alt="Sortilège"/>
+            </button>
+
+            {% if app_characterItemService.equippedItems(this.character).scroll %}
+                <button class="screen-action" title="Utiliser un parchemin" {# {{ live_action('flee') }} #}>
+                    <img src="{{ asset('img/core/item/scroll/' ~ app_characterItemService.equippedItems(this.character).scroll.item.picture) }}"
+                         alt="{{ app_characterItemService.equippedItems(this.character).scroll.item.name }}"/>
+                </button>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).potion %}
+                <button class="screen-action" title="Boire une potion" {# {{ live_action('flee') }} #}>
+                    <img src="{{ asset('img/core/item/potion/' ~ app_characterItemService.equippedItems(this.character).potion.item.picture) }}"
+                         alt="{{ app_characterItemService.equippedItems(this.character).potion.item.name }}"/>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>

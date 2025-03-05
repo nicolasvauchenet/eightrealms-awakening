@@ -2,6 +2,6 @@
     {% if this.description %}
         {{ this.description | raw }}
     {% else %}
-        {{ this.combat.description | raw }}
+        {{ this.playerCombat.combat.description | raw }}
     {% endif %}
 </div>

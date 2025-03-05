@@ -1,0 +1,30 @@
+.app-popup {
+  display: none;
+  position: absolute;
+  left: 0.25rem;
+  right: 0.25rem;
+  bottom: 14rem;
+  z-index: 9999;
+
+  @include respondTo(md) {
+    bottom: 15rem;
+  }
+
+  &.is-active {
+    display: block;
+  }
+
+  .popup-body {
+    .popup-content {
+      @include displayFlex(center, center, 0.5rem);
+      width: 100%;
+      max-width: calc(600px - 0.5rem);
+      @extend .appears;
+      animation-duration: 0.5s;
+
+      @include respondTo(md) {
+        gap: 1.5rem;
+      }
+    }
+  }
+}

@@ -106,4 +106,9 @@ readonly class ItemService
 
         return max(0.0, min(1.0, $current / $maximum));
     }
+
+    public function isMagical(Item $item): bool
+    {
+        return $item instanceof Magical;
+    }
 }

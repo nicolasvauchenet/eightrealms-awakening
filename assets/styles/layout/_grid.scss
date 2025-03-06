@@ -9,4 +9,8 @@
   &.three {
     @include displayGrid(repeat(3, 1fr), 0.5rem);
   }
+
+  &.four {
+    @include displayGrid(repeat(4, 1fr), 0.5rem);
+  }
 }

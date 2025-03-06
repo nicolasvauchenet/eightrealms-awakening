@@ -1,0 +1,68 @@
+<div class="app-popup spellsbook"
+     data-popup-target="popup">
+    <div class="popup-body">
+        <div class="popup-content">
+            <h3 class="popup-title">Lancer un Sortilège</h3>
+
+            <div class="app-grid three">
+                {% for characterSpell in this.character.characterSpells %}
+                    <div class="app-card spell {% if (characterSpell.mana + characterSpell.spell.mana) > this.character.mana %}faded{% endif %}" data-controller="tooltip">
+                        <a href="#" data-action="click->tooltip#open">
+                            <div class="card-header">
+                                <div class="card-attributes">
+                                    <div class="card-attribute text-fourth">
+                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                        {{ characterSpell.spell.mana + characterSpell.mana }}
+                                    </div>
+                                    {% if characterSpell.spell.type == 'Offensif' %}
+                                        <div class="card-attribute text-third">
+                                            {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon'}) }}
+                                            {{ characterSpell.spell.amount + characterSpell.amount }}
+                                        </div>
+                                    {% elseif characterSpell.spell.type == 'Défensif' or characterSpell.spell.type == 'Utile' %}
+                                        {% if characterSpell.spell.effect is not null %}
+                                            <div class="card-attribute text-primary">
+                                                {{ ux_icon('lsicon:time-two-filled', {'class': 'app-icon'}) }}
+                                                {{ characterSpell.spell.duration + characterSpell.duration }}
+                                            </div>
+                                        {% else %}
+                                            {% if characterSpell.spell.target == 'health' %}
+                                                <div class="card-attribute text-third">
+                                                    {{ ux_icon('game-icons:health-potion', {'class': 'app-icon'}) }}
+                                                    +{{ characterSpell.spell.amount + characterSpell.amount }}
+                                                </div>
+                                            {% elseif characterSpell.spell.target == 'mana' %}
+                                                <div class="card-attribute text-fourth">
+                                                    {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                                    +{{ characterSpell.spell.amount + characterSpell.amount }}
+                                                </div>
+                                            {% elseif characterSpell.spell.target == 'defense' %}
+                                                <div class="card-attribute text-primary">
+                                                    {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
+                                                    +{{ characterSpell.spell.amount + characterSpell.amount }}
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                                <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.category.picture) }}" alt="{{ characterSpell.spell.name }}" class="card-image"/>
+                            </div>
+
+                            <div class="card-body">
+                                <h3 class="card-title">{{ characterSpell.spell.name }}</h3>
+                            </div>
+                        </a>
+                        {% include 'game/_layout/_character/_sheet/_tooltip/_spell.html.twig' with {characterSpell: characterSpell} %}
+
+                        <div class="card-footer">
+                            <button class="bg-success {% if (characterSpell.mana + characterSpell.spell.mana) > this.character.mana %}disabled{% endif %}"{# {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}#}>
+                                {{ ux_icon('game-icons:bolt-spell-cast', {'class': 'app-icon'}) }}
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

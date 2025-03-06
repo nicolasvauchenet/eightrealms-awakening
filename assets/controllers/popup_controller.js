@@ -15,29 +15,53 @@ export default class extends Controller {
         event.preventDefault();
         event.stopPropagation();
 
-        this.closeAllPopups();
+        const clickedElement = event.currentTarget;
+        const parentPopup = clickedElement.closest(".app-popup");
+        const targetPopup = parentPopup?.querySelector(".app-popup.spellsbook");
 
-        this.popupTarget.parentNode.classList.add('active');
-        this.popupTarget.classList.add('is-active');
-        document.body.style.overflow = 'hidden';
-
-        const backElement = document.body.querySelector('.back');
-        if (backElement) {
-            backElement.style.display = 'none';
+        if (targetPopup) {
+            if (targetPopup.classList.contains('is-active')) {
+                targetPopup.classList.remove('is-active');
+                targetPopup.parentNode.classList.remove('active');
+            } else {
+                this.closeOtherPopups(parentPopup);
+                targetPopup.classList.add('is-active');
+                targetPopup.parentNode.classList.add('active');
+            }
+        } else {
+            if (this.popupTarget.classList.contains('is-active')) {
+                this.popupTarget.classList.remove('is-active');
+                this.popupTarget.parentNode.classList.remove('active');
+            } else {
+                this.closeAllPopups();
+                this.popupTarget.classList.add('is-active');
+                this.popupTarget.parentNode.classList.add('active');
+            }
         }
+
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeOtherPopups(parentPopup) {
+        document.querySelectorAll('.app-popup.is-active').forEach(popup => {
+            if (popup !== parentPopup) {
+                popup.classList.remove('is-active');
+                popup.parentNode.classList.remove('active');
+            }
+        });
     }
 
     closeAllPopups() {
         document.querySelectorAll('.app-popup.is-active').forEach(popup => {
-            popup.parentNode.classList.remove('active');
             popup.classList.remove('is-active');
+            popup.parentNode.classList.remove('active');
         });
+        document.body.style.overflow = '';
     }
 
     closeOnOutsideClick(event) {
         if (!event.target.closest('.app-popup.is-active')) {
             this.closeAllPopups();
-            document.body.style.overflow = '';
         }
     }
 }

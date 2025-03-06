@@ -1,6 +1,6 @@
 .screen-headerinfos {
   @include displayFlex(space-between, flex-start);
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   width: 100%;
 
   & > .left,

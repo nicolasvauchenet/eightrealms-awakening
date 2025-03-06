@@ -29,9 +29,12 @@
                 </button>
             {% endif %}
 
-            <button class="screen-action" title="Lancer un sortilège" {# {{ live_action('flee') }} #}>
-                <img src="{{ asset('img/core/action/attack.png') }}" class="equip" alt="Sortilège"/>
-            </button>
+            <div class="spell-action" data-controller="popup">
+                <button class="screen-action" title="Lancer un sortilège" data-action="click->popup#open">
+                    <img src="{{ asset('img/core/action/cast.png') }}" alt="Sortilège"/>
+                </button>
+                {% include 'game/_layout/_game/_combat/_spellsbook.html.twig' with {'creatureCombat': creatureCombat, 'position': loop.index} %}
+            </div>
 
             {% if app_characterItemService.equippedItems(this.character).scroll %}
                 <button class="screen-action" title="Utiliser un parchemin" {# {{ live_action('flee') }} #}>

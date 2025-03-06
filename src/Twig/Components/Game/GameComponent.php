@@ -7,6 +7,7 @@ use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerNpc;
 use App\Entity\Combat\Combat;
+use App\Entity\Combat\CreatureCombat;
 use App\Entity\Combat\PlayerCombat;
 use App\Entity\Dialogue\Dialogue;
 use App\Entity\Item\Armor;
@@ -20,14 +21,15 @@ use App\Entity\Location\Location;
 use App\Entity\Location\PlayerLocation;
 use App\Entity\Quest\Quest;
 use App\Entity\Screen\CinematicScreen;
-use App\Entity\Screen\CombatScreen;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\InteractionScreen;
 use App\Entity\Screen\LocationScreen;
 use App\Entity\Screen\Screen;
 use App\Entity\Screen\TradeScreen;
+use App\Entity\Spell\CharacterSpell;
 use App\Service\Character\CharacterReputationService;
 use App\Service\Dialogue\DialogueService;
+use App\Service\Item\CharacterItemService;
 use App\Service\Item\ItemService;
 use App\Service\Location\LocationService;
 use App\Service\Quest\QuestService;
@@ -70,7 +72,8 @@ class GameComponent
     #[LiveProp(writable: true)]
     public bool $characterLocationsUpdated = false;
 
-    public ?string $description = null;
+    #[LiveProp(writable: true)]
+    public ?string $description = '';
 
     #[LiveProp(writable: true)]
     public Player $character;
@@ -80,7 +83,7 @@ class GameComponent
                                 private readonly ItemService                $itemService,
                                 private readonly DialogueService            $dialogueService,
                                 private readonly QuestService               $questService,
-                                private readonly LocationService            $locationService)
+                                private readonly LocationService            $locationService, private readonly CharacterItemService $characterItemService)
     {
     }
 
@@ -174,6 +177,7 @@ class GameComponent
         }
 
         $this->playerCombat = $playerCombat;
+        $this->description = '';
 
         $screen = $this->playerCombat->getCombat()->getCombatScreen();
         $this->changeScreen($screen->getId());
@@ -451,7 +455,67 @@ class GameComponent
             ->setUpdatedAt(new \DateTimeImmutable());
         $this->entityManager->persist($this->playerCombat);
         $this->entityManager->flush();
+
+        $this->description = '<p class="text-warning mb-1">Vous avez fui le combat&nbsp;!</p>';
         $this->exitScreen();
+    }
+
+    #[LiveAction]
+    public function attack(#[LiveArg] string $type, #[LiveArg] int $creatureCombatId, #[LiveArg] int $position): void
+    {
+        $creatureCombat = $this->entityManager->getRepository(CreatureCombat::class)->find($creatureCombatId);
+        switch($type) {
+            case 'twohands':
+                $characterItemRight = $this->characterItemService->getEquippedItems($this->character)['righthand'];
+                $characterItemLeft = $this->characterItemService->getEquippedItems($this->character)['lefthand'];
+                $this->description .= "<p>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItemRight->getItem()->getName()} et votre votre {$characterItemLeft->getItem()->getName()}.</p>";
+                break;
+            case 'righthand':
+                $characterItem = $this->characterItemService->getEquippedItems($this->character)['righthand'];
+                $this->description .= "<p>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}.</p>";
+                break;
+            case 'lefthand':
+                $characterItem = $this->characterItemService->getEquippedItems($this->character)['lefthand'];
+                $this->description .= "<p>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}.</p>";
+                break;
+            case 'bow':
+                $characterItem = $this->characterItemService->getEquippedItems($this->character)['bow'];
+                $this->description .= "<p>Vous attaquez {$creatureCombat->getCreature()->getName()} $position votre {$characterItem->getItem()->getName()}.</p>";
+                break;
+            default:
+                break;
+        }
+    }
+
+    #[LiveAction]
+    public function use(#[LiveArg] string $type): void
+    {
+        switch($type) {
+            case 'scroll':
+                $characterItem = $this->characterItemService->getEquippedItems($this->character)['scroll'];
+                $this->description .= "<p>Vous lisez votre Parchemin de {$characterItem->getItem()->getName()}.</p>";
+                break;
+            case 'potion':
+                $characterItem = $this->characterItemService->getEquippedItems($this->character)['potion'];
+                $this->description .= "<p>Vous buvez votre {$characterItem->getItem()->getName()}.</p>";
+                break;
+            default:
+                break;
+        }
+    }
+
+    #[LiveAction]
+    public function cast(#[LiveArg] int $creatureCombatId, #[LiveArg] int $position, #[LiveArg] int $characterSpellId): void
+    {
+        $creatureCombat = $this->entityManager->getRepository(CreatureCombat::class)->find($creatureCombatId);
+        $characterSpell = $this->entityManager->getRepository(CharacterSpell::class)->find($characterSpellId);
+
+        if($characterSpell->getSpell()->getType() === 'Offensif') {
+            $this->description .= "<p>Vous lancez le sort {$characterSpell->getSpell()->getName()} sur {$creatureCombat->getCreature()->getName()} $position.</p>";
+        } else {
+            $this->description .= "<p>Vous lancez le sort {$characterSpell->getSpell()->getName()}.</p>";
+
+        }
     }
 
     private function meetNpc(Npc $npc): PlayerNpc

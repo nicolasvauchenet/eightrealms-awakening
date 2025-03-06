@@ -3,7 +3,6 @@
         <div class="combat-action" data-controller="popup">
             <button class="screen-action"
                     title="{{ creatureCombat.creature.name }}"
-                    {# {{ live_action('flee') }} #}
                     data-action="click->popup#open">
                 <img src="{{ asset('img/core/creature/thumb_' ~ creatureCombat.creature.picture) }}" alt="{{ creatureCombat.creature.name }}"/>
                 <div class="gauge">

@@ -64,7 +64,7 @@
   .popup-body {
     .popup-content {
       position: relative;
-      @include displayFlex(center, center, 0.25rem);
+      @include displayFlex(space-evenly, center, 0.25rem);
       width: 100%;
       max-width: calc(600px - 0.5rem);
       @extend .appears;

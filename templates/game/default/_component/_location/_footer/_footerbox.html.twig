@@ -1,3 +1,7 @@
 <div class="screen-footerbox">
+    {% if this.description %}
+        {{ this.description | raw }}
+    {% endif %}
+
     {{ this.activeScreen.location.description | raw }}
 </div>

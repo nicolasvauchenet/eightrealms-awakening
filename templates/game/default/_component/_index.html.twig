@@ -1,4 +1,4 @@
-<div {{ attributes }}>
+<div {{ attributes.defaults(stimulus_controller('action')) }}>
     {% if this.activeScreenType == 'cinematic' %}
         {% include 'game/default/_component/_cinematic/_index.html.twig' %}
     {% elseif this.activeScreenType == 'location' %}

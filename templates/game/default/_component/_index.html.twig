@@ -1,4 +1,4 @@
-<div {{ attributes.defaults(stimulus_controller('action')) }}>
+<div {{ attributes.defaults(stimulus_controller('action', {screenType: this.activeScreenType})) }} data-action="live:updated@window->action#updateScreenType">
     {% if this.activeScreenType == 'cinematic' %}
         {% include 'game/default/_component/_cinematic/_index.html.twig' %}
     {% elseif this.activeScreenType == 'location' %}

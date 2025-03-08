@@ -46,12 +46,14 @@ class Combat
      * @var Collection<int, NpcCombat>
      */
     #[ORM\OneToMany(targetEntity: NpcCombat::class, mappedBy: 'combat', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $npcCombats;
 
     /**
      * @var Collection<int, CreatureCombat>
      */
     #[ORM\OneToMany(targetEntity: CreatureCombat::class, mappedBy: 'combat', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $creatureCombats;
 
     #[ORM\ManyToOne(inversedBy: 'combats')]

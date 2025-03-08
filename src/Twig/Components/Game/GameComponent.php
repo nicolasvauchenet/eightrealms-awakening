@@ -8,6 +8,8 @@ use App\Entity\Character\Player;
 use App\Entity\Character\PlayerNpc;
 use App\Entity\Combat\Combat;
 use App\Entity\Combat\CreatureCombat;
+use App\Entity\Combat\CreaturePlayerCombat;
+use App\Entity\Combat\NpcPlayerCombat;
 use App\Entity\Combat\PlayerCombat;
 use App\Entity\Dialogue\Dialogue;
 use App\Entity\Item\Armor;
@@ -19,7 +21,9 @@ use App\Entity\Item\Shield;
 use App\Entity\Item\Weapon;
 use App\Entity\Location\Location;
 use App\Entity\Location\PlayerLocation;
+use App\Entity\Quest\PlayerQuest;
 use App\Entity\Quest\Quest;
+use App\Entity\Quest\Step;
 use App\Entity\Screen\CinematicScreen;
 use App\Entity\Screen\DialogueScreen;
 use App\Entity\Screen\InteractionScreen;
@@ -27,6 +31,7 @@ use App\Entity\Screen\LocationScreen;
 use App\Entity\Screen\Screen;
 use App\Entity\Screen\TradeScreen;
 use App\Entity\Spell\CharacterSpell;
+use App\Service\Character\CharacterBonusService;
 use App\Service\Character\CharacterReputationService;
 use App\Service\Dialogue\DialogueService;
 use App\Service\Item\CharacterItemService;
@@ -46,13 +51,22 @@ class GameComponent
 {
     use DefaultActionTrait;
 
+    private string $activeScreenSlug = 'laventure-commence';
+
+    #[LiveProp(writable: true)]
+    public array $turnOrder = [];
+
+    #[LiveProp(writable: true)]
+    public ?int $currentTurn = null;
+
+    #[LiveProp(writable: true)]
+    public ?int $nbTurns = 1;
+
     #[LiveProp(writable: true)]
     public ?Screen $activeScreen = null;
 
     #[LiveProp(writable: true)]
     public ?Screen $previousScreen = null;
-
-    private string $activeScreenSlug = 'laventure-commence';
 
     #[LiveProp(writable: true)]
     public ?string $activeScreenType = 'cinematic';
@@ -80,10 +94,12 @@ class GameComponent
 
     public function __construct(private readonly EntityManagerInterface     $entityManager,
                                 private readonly CharacterReputationService $characterReputationService,
+                                private readonly CharacterBonusService      $characterBonusService,
                                 private readonly ItemService                $itemService,
                                 private readonly DialogueService            $dialogueService,
                                 private readonly QuestService               $questService,
-                                private readonly LocationService            $locationService, private readonly CharacterItemService $characterItemService)
+                                private readonly LocationService            $locationService,
+                                private readonly CharacterItemService       $characterItemService)
     {
     }
 
@@ -117,8 +133,12 @@ class GameComponent
     public function locationScreen(#[LiveArg] int $id): void
     {
         $location = $this->entityManager->getRepository(Location::class)->find($id);
+        $this->character->setLocation($location);
+        $this->entityManager->persist($this->character);
+        $this->entityManager->flush();
         $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $location]);
         $this->changeScreen($screen->getId());
+        $this->description = '';
     }
 
     #[LiveAction]
@@ -172,15 +192,52 @@ class GameComponent
                 ->setPlayer($this->character)
                 ->setCombat($combat)
                 ->setStatus('progress');
-            $this->entityManager->persist($playerCombat);
-            $this->entityManager->flush();
+            foreach($combat->getCreatureCombats() as $creatureCombat) {
+                $playerCreatureCombat = (new CreaturePlayerCombat())
+                    ->setPlayerCombat($playerCombat)
+                    ->setCreature($creatureCombat->getCreature())
+                    ->setHealth($creatureCombat->getCreature()->getHealthMax())
+                    ->setMana($creatureCombat->getCreature()->getManaMax());
+                $this->entityManager->persist($playerCreatureCombat);
+                $playerCombat->addCreaturePlayerCombat($playerCreatureCombat);
+                $this->entityManager->persist($playerCombat);
+                $this->entityManager->flush();
+            }
+            foreach($combat->getNpcCombats() as $npcCombat) {
+                $playerNpcCombat = (new NpcPlayerCombat())
+                    ->setPlayerCombat($playerCombat)
+                    ->setNpc($npcCombat->getNpc())
+                    ->setHealth($npcCombat->getNpc()->getHealthMax())
+                    ->setMana($npcCombat->getNpc()->getManaMax());
+                $this->entityManager->persist($playerNpcCombat);
+                $playerCombat->addNpcPlayerCombat($playerNpcCombat);
+                $this->entityManager->persist($playerCombat);
+                $this->entityManager->flush();
+            }
+        } else {
+            /*foreach($playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
+                $creatureCombat->setHealth($creatureCombat->getCreature()->getHealthMax())
+                    ->setMana($creatureCombat->getCreature()->getManaMax());
+                $this->entityManager->persist($creatureCombat);
+            }
+
+            foreach($playerCombat->getNpcPlayerCombats() as $npcCombat) {
+                $npcCombat->setHealth($npcCombat->getNpc()->getHealthMax())
+                    ->setMana($npcCombat->getNpc()->getManaMax());
+                $this->entityManager->persist($npcCombat);
+            }*/
         }
 
+        $playerCombat->setStatus('progress');
+        $this->entityManager->persist($playerCombat);
+        $this->entityManager->flush();
+
         $this->playerCombat = $playerCombat;
-        $this->description = '';
 
         $screen = $this->playerCombat->getCombat()->getCombatScreen();
         $this->changeScreen($screen->getId());
+
+        $this->startCombat();
     }
 
     #[LiveAction]
@@ -354,47 +411,63 @@ class GameComponent
         $action = $this->entityManager->getRepository(Action::class)->find($id);
 
         foreach($action->getEffects() as $effect => $data) {
-            if($effect === 'changeLocation') {
-                $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['slug' => $data]);
-                $location = $screen->getLocation();
+            switch($effect) {
+                case 'resurrect':
+                    $this->character->setHealth($this->character->getHealthMax())
+                        ->setMana($this->character->getManaMax())
+                        ->setFortune($this->character->getFortune() - 50);
+                    break;
+                case 'changeLocation':
+                    if(empty($data)) {
+                        $this->exitScreen();
 
-                if($location !== $this->character->getLocation()) {
-                    $this->character->setLocation($location);
-                    $this->characterLocationsUpdated = true;
-
-                    $playerLocationExists = false;
-                    foreach($this->character->getPlayerLocations() as $playerLocation) {
-                        if($playerLocation === $location) {
-                            $playerLocationExists = true;
-                        }
+                        return;
+                    } else {
+                        $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['slug' => $data]);
+                        $location = $screen->getLocation();
                     }
-                    if(!$playerLocationExists) {
-                        $playerLocation = (new PlayerLocation())
-                            ->setPlayer($this->character)
-                            ->setLocation($location);
-                        $this->entityManager->persist($playerLocation);
 
-                        if($location->getType() === 'zone') {
-                            $playerParentLocationExists = false;
-                            foreach($this->character->getPlayerLocations() as $playerLocation) {
-                                if($playerLocation === $location->getParent()) {
-                                    $playerParentLocationExists = true;
+                    if($location !== $this->character->getLocation()) {
+                        $this->character->setLocation($location);
+
+                        $playerLocationExists = false;
+                        foreach($this->character->getPlayerLocations() as $playerLocation) {
+                            if($playerLocation->getLocation() === $location) {
+                                $playerLocationExists = true;
+                            }
+                        }
+                        if(!$playerLocationExists) {
+                            $playerLocation = (new PlayerLocation())
+                                ->setPlayer($this->character)
+                                ->setLocation($location);
+                            $this->entityManager->persist($playerLocation);
+
+                            if($location->getType() === 'zone' || $location->getType() === 'building') {
+                                $playerParentLocationExists = false;
+                                foreach($this->character->getPlayerLocations() as $playerLocation) {
+                                    if($playerLocation->getLocation() === $location->getParent()) {
+                                        $playerParentLocationExists = true;
+                                    }
+                                }
+                                if(!$playerParentLocationExists) {
+                                    $playerParentLocation = (new PlayerLocation())
+                                        ->setPlayer($this->character)
+                                        ->setLocation($location->getParent());
+                                    $this->entityManager->persist($playerParentLocation);
                                 }
                             }
-                            if(!$playerParentLocationExists) {
-                                $playerParentLocation = (new PlayerLocation())
-                                    ->setPlayer($this->character)
-                                    ->setLocation($location->getParent());
-                                $this->entityManager->persist($playerParentLocation);
-                            }
+
+                            $this->characterLocationsUpdated = true;
                         }
                     }
-                }
 
-                $this->entityManager->persist($this->character);
-                $this->entityManager->flush();
+                    $this->entityManager->persist($this->character);
+                    $this->entityManager->flush();
 
-                $this->changeScreen($screen->getId());
+                    $this->changeScreen($screen->getId());
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -436,6 +509,51 @@ class GameComponent
                 $this->characterUpdated = true;
             }
 
+            if($effect === 'increaseReputation') {
+                $this->previousScreen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $this->character->getLocation()]);
+                foreach($this->previousScreen->getLocation()->getNpcs() as $npc) {
+                    $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $npc]);
+                    if($playerNpc) {
+                        $playerNpc->setReputation($playerNpc->getReputation() + $data);
+                    } else {
+                        $playerNpc = $this->meetNpc($npc);
+                        $playerNpc->setReputation($this->characterReputationService->getReputation($this->character, $npc) + $data);
+                    }
+                    $this->entityManager->persist($playerNpc);
+                }
+                $this->entityManager->flush();
+            }
+
+            if($effect === 'rewardQuest') {
+                $quest = $this->entityManager->getRepository(Quest::class)->find($data);
+                $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy(['player' => $this->character, 'quest' => $quest]);
+
+                if($playerQuest->getQuest()->getReward()) {
+                    foreach($playerQuest->getQuest()->getReward() as $type => $value) {
+                        switch($type) {
+                            case 'xp':
+                                $this->character->setExperience($this->character->getExperience() + $value);
+                                break;
+                            case 'crown':
+                                $this->character->setFortune($this->character->getFortune() + $value);
+                                break;
+                            case 'items':
+                                dd($value);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    $this->entityManager->persist($this->character);
+                    $this->characterUpdated = true;
+                }
+
+                $playerQuest->setQuestStatus('rewarded');
+                $this->entityManager->persist($playerQuest);
+                $this->entityManager->flush();
+            }
+
             if($effect === 'changeDialogue') {
                 $this->dialogue = $this->entityManager->getRepository(Dialogue::class)->find($data);
                 $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $this->dialogue->getNpc()]);
@@ -451,6 +569,27 @@ class GameComponent
     #[LiveAction]
     public function flee(): void
     {
+        $playerInitiative = random_int(1, 20) + $this->character->getDexterity();
+        $creaturesInitiative = [];
+
+        // Récupération des créatures encore en vie et génération de leur jet d'initiative
+        foreach($this->playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
+            if($creatureCombat->getHealth() > 0) {
+                $creaturesInitiative[] = random_int(1, 20) + $creatureCombat->getCreature()->getDexterity();
+            }
+        }
+
+        // Si une créature a une meilleure initiative que le joueur, il ne peut pas fuir
+        foreach($creaturesInitiative as $initiative) {
+            if($initiative >= $playerInitiative) {
+                $this->description .= '<p class="text-danger">Vous tentez de fuir, mais les ennemis vous bloquent&nbsp;! Vous perdez votre tour.</p>';
+                $this->nextTurn();
+
+                return;
+            }
+        }
+
+        // Si le joueur gagne, il quitte le combat
         $this->playerCombat->setStatus('fled')
             ->setUpdatedAt(new \DateTimeImmutable());
         $this->entityManager->persist($this->playerCombat);
@@ -463,28 +602,32 @@ class GameComponent
     #[LiveAction]
     public function attack(#[LiveArg] string $type, #[LiveArg] int $creatureCombatId, #[LiveArg] int $position): void
     {
-        $creatureCombat = $this->entityManager->getRepository(CreatureCombat::class)->find($creatureCombatId);
+        $creatureCombat = $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($creatureCombatId);
+
         switch($type) {
             case 'twohands':
                 $characterItemRight = $this->characterItemService->getEquippedItems($this->character)['righthand'];
                 $characterItemLeft = $this->characterItemService->getEquippedItems($this->character)['lefthand'];
-                $this->description .= "<p>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItemRight->getItem()->getName()} et votre votre {$characterItemLeft->getItem()->getName()}.</p>";
+                $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItemRight->getItem()->getName()} et votre {$characterItemLeft->getItem()->getName()}.</strong><br/>";
                 break;
             case 'righthand':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['righthand'];
-                $this->description .= "<p>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}.</p>";
+                $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}</strong>.<br/>";
                 break;
             case 'lefthand':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['lefthand'];
-                $this->description .= "<p>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}.</p>";
+                $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}</strong>.<br/>";
                 break;
             case 'bow':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['bow'];
-                $this->description .= "<p>Vous attaquez {$creatureCombat->getCreature()->getName()} $position votre {$characterItem->getItem()->getName()}.</p>";
+                $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position votre {$characterItem->getItem()->getName()}</strong>.<br/>";
                 break;
             default:
                 break;
         }
+
+        $this->resolveAttack($this->character, $creatureCombat, $type);
+        $this->nextTurn();
     }
 
     #[LiveAction]
@@ -497,11 +640,22 @@ class GameComponent
                 break;
             case 'potion':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['potion'];
+                if($characterItem->getItem()->getTarget() === 'health') {
+                    $this->character->setHealth($this->character->getHealth() + $characterItem->getItem()->getAmount());
+                } else if($characterItem->getItem()->getTarget() === 'health') {
+                    $this->character->setMana($this->character->getMana() + $characterItem->getItem()->getAmount());
+                }
+                $this->entityManager->persist($this->character);
+                $this->entityManager->remove($characterItem);
+                $this->entityManager->flush();
+
                 $this->description .= "<p>Vous buvez votre {$characterItem->getItem()->getName()}.</p>";
                 break;
             default:
                 break;
         }
+
+        $this->nextTurn();
     }
 
     #[LiveAction]
@@ -542,5 +696,318 @@ class GameComponent
         $this->entityManager->flush();
 
         return $playerNpc;
+    }
+
+    public function startCombat(): void
+    {
+        $this->initializeTurnOrder();
+        $this->description .= "<h3>Tour {$this->nbTurns} :</h3><p>";
+        $this->executeTurn();
+    }
+
+    private function executeTurn(): void
+    {
+        if($this->isCombatOver()) {
+            return;
+        }
+
+        // Récupérer les informations du protagoniste actuel
+        $currentEntityData = $this->turnOrder[$this->currentTurn];
+        $currentEntity = $this->fetchEntityById($currentEntityData['type'], $currentEntityData['id']);
+
+        if(($currentEntity instanceof CreaturePlayerCombat || $currentEntity instanceof NpcPlayerCombat) && $currentEntity->getHealth() <= 0) {
+            $this->nextTurn();
+
+            return;
+        }
+
+        if($currentEntity instanceof Player) {
+            return;
+        }
+
+        if($currentEntity instanceof CreaturePlayerCombat || $currentEntity instanceof NpcPlayerCombat) {
+            $this->executeEnemyAttack($currentEntity);
+            $this->nextTurn();
+        }
+    }
+
+    private function isCombatOver(): bool
+    {
+        foreach($this->turnOrder as $entityData) {
+            $entity = $this->fetchEntityById($entityData['type'], $entityData['id']);
+
+            if(($entity instanceof CreaturePlayerCombat && $entity->getHealth() > 0) ||
+                ($entity instanceof NpcPlayerCombat && $entity->getHealth() > 0)) {
+                return false;
+            }
+        }
+
+        $this->description = '';
+
+        // Si plus d'ennemis, marquer la victoire
+        $this->playerCombat->setStatus('victory')
+            ->setUpdatedAt(new \DateTimeImmutable());
+        $this->entityManager->persist($this->playerCombat);
+
+        if($this->playerCombat->getCombat()->getQuest()) {
+            $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy(['player' => $this->character, 'step' => $this->playerCombat->getCombat()->getStep()]);
+            $playerQuest->setStatus('completed');
+            if($this->playerCombat->getCombat()->getStep()->getReward()) {
+                foreach($this->playerCombat->getCombat()->getStep()->getReward() as $type => $value) {
+                    switch($type) {
+                        case 'xp':
+                            $this->character->setExperience($this->character->getExperience() + $value);
+                            break;
+                        case 'crown':
+                            $this->character->setFortune($this->character->getFortune() + $value);
+                            break;
+                        case 'items':
+                            dd($value);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                $this->entityManager->persist($this->character);
+                $this->characterUpdated = true;
+            }
+
+            $nextStep = $this->entityManager->getRepository(Step::class)->findNextStep($this->playerCombat->getCombat()->getStep());
+            if(!$nextStep) {
+                $playerQuest->setQuestStatus('completed');
+                $this->description .= "<p class='text-success'><strong>Vous avez terminé la quête {$this->playerCombat->getCombat()->getQuest()->getName()}&nbsp;!</strong></p>";
+                $this->characterUpdated = true;
+            }
+
+            $this->entityManager->persist($playerQuest);
+        }
+
+        $this->entityManager->flush();
+        $screen = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy(['slug' => 'victoire']);
+        $this->changeScreen($screen->getId());
+
+        return true;
+    }
+
+    private function resolveAttack(Player $attacker, CreaturePlayerCombat|NpcPlayerCombat $target, string $type): void
+    {
+        $characterItems = $this->characterItemService->getEquippedItems($attacker);
+        $weaponRight = $characterItems['righthand'];
+        $weaponLeft = $characterItems['lefthand'];
+
+        switch($type) {
+            case 'righthand':
+                $this->handleAttack($attacker, $target, $weaponRight, 'main droite', 0);
+                break;
+
+            case 'lefthand':
+                $malus = ($weaponLeft && !$weaponLeft->getItem() instanceof Magical) ? -2 : 0;
+                $this->handleAttack($attacker, $target, $weaponLeft, 'main gauche', $malus);
+                break;
+
+            case 'twohands':
+                $isRightMagical = $weaponRight && $weaponRight->getItem() instanceof Magical;
+                $isLeftMagical = $weaponLeft && $weaponLeft->getItem() instanceof Magical;
+
+                $malusRight = $isRightMagical ? 0 : -1;
+                $malusLeft = $isLeftMagical ? 0 : -2;
+
+                $this->handleAttack($attacker, $target, $weaponRight, 'main droite', $malusRight);
+                $this->handleAttack($attacker, $target, $weaponLeft, 'main gauche', $malusLeft);
+                break;
+        }
+    }
+
+    private function handleAttack(Player $attacker, CreaturePlayerCombat|NpcPlayerCombat $target, ?CharacterItem $weapon, string $hand, int $malus): void
+    {
+        if(!$weapon) {
+            $this->description .= "Vous tentez une attaque avec $hand, mais vous n'avez pas d'arme équipée !<br/>";
+
+            return;
+        }
+
+        $isMagical = $weapon->getItem() instanceof Magical;
+
+        if($isMagical && $weapon->getCharge() <= 0) {
+            $this->description .= "<span class='text-danger'>Votre {$weapon->getItem()->getName()} n'a plus de charges&nbsp;!</span><br/>";
+
+            return;
+        }
+
+        // Jet d'attaque
+        if($isMagical) {
+            $attackRoll = random_int(7, 20) + $attacker->getIntelligence();
+        } else {
+            $attackRoll = random_int(1, 20) + $attacker->getStrength() + floor($attacker->getLevel() / 2) + $malus;
+        }
+
+        // Jet de défense
+        if($target instanceof CreaturePlayerCombat) {
+            $defenseRoll = $isMagical
+                ? random_int(1, 15) + $target->getCreature()->getWisdom()
+                : random_int(1, 20) + $target->getCreature()->getDexterity();
+            $defenseBonus = floor($target->getCreature()->getDefense() / 2);
+            $targetName = $target->getCreature()->getName();
+        } else if($target instanceof NpcPlayerCombat) {
+            $defenseRoll = $isMagical
+                ? random_int(1, 15) + $target->getNpc()->getWisdom()
+                : random_int(1, 20) + $target->getNpc()->getDexterity();
+            $defenseBonus = floor($this->characterBonusService->getCharacterBonus($target->getNpc(), 'defense')['amount'] / 2);
+            $targetName = $target->getNpc()->getName();
+        }
+
+        // Vérification de la réussite
+        if($attackRoll >= $defenseRoll) {
+            $isCritical = ($attackRoll == 20);
+
+            if($isMagical) {
+                $damage = $weapon->getItem()->getAmount(); // Dégâts fixes pour la magie
+                $weapon->setCharge(max(0, $weapon->getCharge() - 1));
+                $this->description .= "<span class='text-info'>L'arme magique {$weapon->getItem()->getName()} perd 1 charge !</span><br/>";
+            } else {
+                // Calcul des dégâts de l'arme physique
+                $weaponDamage = $weapon->getItem()->getDamage(); // Dégâts propres à l'arme
+                if($weapon->getItem()->getTarget() === 'damage') {
+                    $weaponDamage += $weapon->getItem()->getAmount(); // Dégâts supplémentaires si arme enchantés
+                }
+                $strengthBonus = floor($attacker->getStrength() / 4); // Bonus de force
+                $baseDamage = random_int($weaponDamage, $weaponDamage + 5) + $strengthBonus;
+
+                // Application de la réduction d'armure sauf si coup critique
+                $damage = $isCritical ? $baseDamage * 2 : max(1, $baseDamage - $defenseBonus);
+            }
+
+            if($isCritical) {
+                $this->description .= "<strong class='text-danger'>Coup critique !</strong><br/>";
+            }
+
+            $target->setHealth(max(0, $target->getHealth() - $damage));
+            $this->description .= "<span class='text-success'>Vous infligez $damage dégât" . ($damage > 1 ? 's' : '') . " à $targetName avec {$weapon->getItem()->getName()} ($hand).</span><br/>";
+
+            if($target->getHealth() <= 0) {
+                $this->description .= "<strong class='text-success'>Vous avez tué $targetName !</strong><br/>";
+            }
+
+            $this->entityManager->persist($target);
+            $this->entityManager->persist($weapon);
+            $this->entityManager->flush();
+        } else {
+            $this->description .= "Votre attaque échoue, $targetName esquive !<br/>";
+        }
+    }
+
+    private function executeEnemyAttack($enemy): void
+    {
+        $target = $this->character;
+        $attackRoll = random_int(1, 20);
+
+        if($enemy instanceof CreaturePlayerCombat) {
+            $attackRoll += $enemy->getCreature()->getStrength();
+            $damageRange = [$enemy->getCreature()->getDamage(), $enemy->getCreature()->getDamage() + 4];
+        } else if($enemy instanceof NpcPlayerCombat) {
+            $attackRoll += $enemy->getNpc()->getStrength();
+            $damageRange = [$this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'] - 2,
+                $this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'] + 2];
+        }
+
+        $defenseRoll = random_int(1, 20) + $target->getDexterity();
+        $defenseBonus = $this->characterBonusService->getCharacterBonus($target, 'defense')['amount'] + floor($target->getConstitution() / 2);
+
+        if($attackRoll >= $defenseRoll) {
+            $baseDamage = random_int($damageRange[0], $damageRange[1]);
+            $damage = max(1, $baseDamage - $defenseBonus);
+
+            if($attackRoll == 20) {
+                $damage *= 2;
+                $this->description .= "<strong class='text-danger'>{$enemy->getCreature()->getName()} vous inflige un coup critique !</strong><br/>";
+            }
+
+            $target->setHealth(max(0, $target->getHealth() - $damage));
+            $this->description .= "<span class='text-warning'>{$enemy->getCreature()->getName()} vous attaque et inflige $damage dégât" . ($damage > 1 ? 's' : '') . ".</span><br/>";
+
+        } else {
+            $this->description .= "{$enemy->getCreature()->getName()} tente de vous attaquer mais vous esquivez !<br/>";
+        }
+
+        if($target->getHealth() <= 0) {
+            $this->description = '';
+            $screen = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy(['slug' => 'defaite']);
+            $this->changeScreen($screen->getId());
+        }
+
+        $this->entityManager->persist($target);
+        $this->entityManager->flush();
+    }
+
+    private function nextTurn(): void
+    {
+        // Passer au protagoniste suivant
+        $this->currentTurn++;
+
+        // Si on a atteint la fin de la liste, recommencer depuis le premier
+        if($this->currentTurn >= count($this->turnOrder)) {
+            $this->currentTurn = 0;
+            $this->initializeTurnOrder();
+            $this->nbTurns++;
+            $this->description .= "</p><h3>Tour {$this->nbTurns} :</h3>";
+        }
+
+        // Relancer l'exécution du tour pour le prochain protagoniste
+        $this->executeTurn();
+    }
+
+    private function initializeTurnOrder(): void
+    {
+        $entities = [['type' => 'player', 'id' => $this->character->getId()]];
+        $playerCombat = $this->entityManager->getRepository(PlayerCombat::class)->find($this->playerCombat->getId());
+
+        $i = 0;
+        foreach($playerCombat->getCreaturePlayerCombats() as $combatCreature) {
+            $i++;
+            if($combatCreature->getHealth() > 0) {
+                $entities[] = ['type' => 'creature_combat', 'id' => $combatCreature->getId(), 'position' => $i];
+            }
+        }
+
+        $i = 0;
+        foreach($playerCombat->getNpcPlayerCombats() as $combatNpc) {
+            $i++;
+            if($combatNpc->getHealth() > 0) {
+                $entities[] = ['type' => 'npc_combat', 'id' => $combatNpc->getId(), 'position' => $i];
+            }
+        }
+
+        usort($entities, function($a, $b) {
+            $initiativeA = $this->getInitiative($a['type'], $a['id']);
+            $initiativeB = $this->getInitiative($b['type'], $b['id']);
+
+            return $initiativeB <=> $initiativeA;
+        });
+
+        $this->turnOrder = $entities;
+        $this->currentTurn = 0;
+    }
+
+    private function getInitiative(string $type, int $id): int
+    {
+        $entity = $this->fetchEntityById($type, $id);
+
+        return match ($type) {
+            'player' => random_int(1, 20) + $entity->getDexterity(),
+            'creature_combat' => random_int(1, 20) + $entity->getCreature()->getDexterity(),
+            'npc_combat' => random_int(1, 20) + $entity->getNpc()->getDexterity(),
+            default => 0,
+        };
+    }
+
+    private function fetchEntityById(string $type, int $id)
+    {
+        return match ($type) {
+            'player' => $this->entityManager->getRepository(Player::class)->find($id),
+            'creature_combat' => $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($id),
+            'npc_combat' => $this->entityManager->getRepository(NpcPlayerCombat::class)->find($id),
+            default => throw new \Exception("Type d'entité inconnu pour l'ID : $id"),
+        };
     }
 }

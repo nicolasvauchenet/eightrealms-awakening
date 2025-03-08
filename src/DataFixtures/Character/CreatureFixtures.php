@@ -18,18 +18,17 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Gros rat',
                 'picture' => 'rat.png',
                 'description' => "<p>Le rat est un animal nuisible qui se reproduit rapidement. Il est capable de transmettre des maladies et de causer des dégâts matériels. Il est important de s'en débarrasser rapidement.</p>",
-                'strength' => 8,
-                'dexterity' => 12,
+                'strength' => 9,
+                'dexterity' => 9,
                 'constitution' => 8,
                 'wisdom' => 7,
-                'intelligence' => 10,
+                'intelligence' => 12,
                 'charisma' => 4,
-                'healthMax' => 80,
-                'manaMax' => 50,
+                'healthMax' => 50,
+                'manaMax' => 0,
                 'fortune' => 0,
-                'locations' => [
-                    'location_zone_anciens_docks',
-                ],
+                'damage' => 15,
+                'defense' => 3,
                 'reference' => 'creature_gros_rat',
             ],
         ];
@@ -47,7 +46,9 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
                 ->setCharisma($data['charisma'])
                 ->setHealthMax($data['healthMax'])
                 ->setManaMax($data['manaMax'])
-                ->setFortune($data['fortune']);
+                ->setFortune($data['fortune'])
+                ->setDamage($data['damage'])
+                ->setDefense($data['defense']);
             $manager->persist($creature);
             $this->addReference($data['reference'], $creature);
 

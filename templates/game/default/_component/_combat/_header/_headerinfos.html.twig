@@ -46,7 +46,7 @@
                              alt="{{ app_characterItemService.equippedItems(this.character).armor.item.name }}"/>
                         <div class="gauge">
                             <div class="gauge-fill success"
-                                 style="--value: 1"></div>
+                                 style="--value: {{ app_characterItemService.equippedItems(this.character).armor.health / app_characterItemService.equippedItems(this.character).armor.item.health }}"></div>
                         </div>
                     </a>
                     {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).armor} %}
@@ -61,7 +61,7 @@
                              alt="{{ app_characterItemService.equippedItems(this.character).shield.item.name }}"/>
                         <div class="gauge">
                             <div class="gauge-fill success"
-                                 style="--value: 1"></div>
+                                 style="--value: {{ app_characterItemService.equippedItems(this.character).shield.health / app_characterItemService.equippedItems(this.character).shield.item.health }}"></div>
                         </div>
                     </a>
                     {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).shield} %}
@@ -78,7 +78,7 @@
                              alt="{{ app_characterItemService.equippedItems(this.character).righthand.item.name }}"/>
                         <div class="gauge">
                             <div class="gauge-fill {% if app_itemService.isMagical(app_characterItemService.equippedItems(this.character).righthand.item) %}info{% else %}success{% endif %}"
-                                 style="--value: 1"></div>
+                                 style="--value: {% if app_itemService.isMagical(app_characterItemService.equippedItems(this.character).righthand.item) %}{{ app_characterItemService.equippedItems(this.character).righthand.charge / app_characterItemService.equippedItems(this.character).righthand.item.charge }}{% else %}{{ app_characterItemService.equippedItems(this.character).righthand.health / app_characterItemService.equippedItems(this.character).righthand.item.health }}{% endif %}"></div>
                         </div>
                     </a>
                     {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).righthand} %}
@@ -93,7 +93,7 @@
                              alt="{{ app_characterItemService.equippedItems(this.character).lefthand.item.name }}"/>
                         <div class="gauge">
                             <div class="gauge-fill {% if app_itemService.isMagical(app_characterItemService.equippedItems(this.character).lefthand.item) %}info{% else %}success{% endif %}"
-                                 style="--value: 1"></div>
+                                 style="--value: {% if app_itemService.isMagical(app_characterItemService.equippedItems(this.character).lefthand.item) %}{{ app_characterItemService.equippedItems(this.character).lefthand.charge / app_characterItemService.equippedItems(this.character).lefthand.item.charge }}{% else %}{{ app_characterItemService.equippedItems(this.character).lefthand.health / app_characterItemService.equippedItems(this.character).lefthand.item.health }}{% endif %}"></div>
                         </div>
                     </a>
                     {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).lefthand} %}
@@ -109,7 +109,7 @@
                          alt="{{ app_characterItemService.equippedItems(this.character).bow.item.name }}"/>
                     <div class="gauge">
                         <div class="gauge-fill success"
-                             style="--value: 1"></div>
+                             style="--value: {{ app_characterItemService.equippedItems(this.character).bow.health / app_characterItemService.equippedItems(this.character).bow.item.health }}"></div>
                     </div>
                 </a>
                 {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).bow} %}

@@ -26,21 +26,21 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
             // Aldrin le Brave
             [
                 'character' => 'character_aldrin',
-                'item' => 'weapon_longsword_storm',
+                'item' => 'weapon_longsword',
                 'isEquipped' => true,
                 'slot' => 'righthand',
                 'class' => Weapon::class,
             ],
             [
                 'character' => 'character_aldrin',
-                'item' => 'armor_iron_health',
+                'item' => 'armor_iron',
                 'isEquipped' => true,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
             [
                 'character' => 'character_aldrin',
-                'item' => 'shield_iron_defense',
+                'item' => 'shield_iron',
                 'isEquipped' => true,
                 'slot' => 'shield',
                 'class' => Shield::class,
@@ -168,6 +168,24 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
                 'item' => 'map_plouc',
                 'isEquipped' => false,
                 'class' => Map::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'weapon_longsword_storm',
+                'isEquipped' => false,
+                'class' => Weapon::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'armor_iron_health',
+                'isEquipped' => false,
+                'class' => Armor::class,
+            ],
+            [
+                'character' => 'character_aldrin',
+                'item' => 'shield_iron_defense',
+                'isEquipped' => false,
+                'class' => Shield::class,
             ],
 
             // Elandra la Sage

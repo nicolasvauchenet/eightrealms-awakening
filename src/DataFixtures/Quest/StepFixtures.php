@@ -38,7 +38,7 @@ class StepFixtures extends Fixture implements OrderedFixtureInterface
             // Secondaires
             [
                 'position' => 1,
-                'description' => "<p>Un passant rencontré sur la place du Marché a parlé de rats qui auraient envahi les Anciens Docks de la ville. Il semblerait que ces rats soient plus gros et plus agressifs que la normale.</p><p>Il serait peut-être intéressant de se rendre aux Anciens Docks pour voir de quoi il en retourne.</p>",
+                'description' => "<p>J'ai rencontré un passant sur la place du Marché. Il s'appelle Bilo, et il a parlé de rats qui auraient envahi les Anciens Docks de la ville. Il semblerait que ces rats soient plus gros et plus agressifs que la normale.</p><p>Il serait peut-être intéressant de se rendre aux Anciens Docks pour voir de quoi il en retourne.</p>",
                 'quest' => 'quest_secondary_des_rats_sur_les_docks',
                 'reference' => 'quest_secondary_des_rats_sur_les_docks_step_1',
             ],

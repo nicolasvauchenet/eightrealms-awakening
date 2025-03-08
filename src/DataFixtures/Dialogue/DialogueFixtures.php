@@ -130,6 +130,7 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                 'npc' => 'npc_bilo_le_passant',
                 'conditions' => [
                     'hasNoQuest' => 'quest_secondary_des_rats_sur_les_docks',
+                    'notRewardedQuest' => 'quest_secondary_des_rats_sur_les_docks',
                 ],
                 'parent' => 'dialogue_bilo_le_passant_rumor_1',
                 'reference' => 'dialogue_bilo_le_passant_rumor_2',
@@ -138,6 +139,9 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'rumor',
                 'text' => "<p><em>Super&nbsp;! Enfin quelqu'un qui s'occupe des problèmes du peuple&nbsp;! C'est pas tous les jours qu'on voit ça. Merci, vraiment&nbsp;!</em></p>",
                 'npc' => 'npc_bilo_le_passant',
+                'conditions' => [
+                    'hasNoQuest' => 'quest_secondary_des_rats_sur_les_docks',
+                ],
                 'effects' => [
                     'startQuest' => 'quest_secondary_des_rats_sur_les_docks',
                 ],
@@ -148,6 +152,9 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'rumor',
                 'text' => "<p><em>Oh, vous savez moi, ce que j'en dis… Si c'est le problème de personne, et que les gardes sont trop occupés, alors qui va s'en occuper de ces rats&nbsp;?</em></p>",
                 'npc' => 'npc_bilo_le_passant',
+                'conditions' => [
+                    'hasNoQuest' => 'quest_secondary_des_rats_sur_les_docks',
+                ],
                 'parent' => 'dialogue_bilo_le_passant_rumor_2',
                 'reference' => 'dialogue_bilo_le_passant_rumor_2_decline',
             ],
@@ -163,12 +170,13 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'type' => 'rumor',
-                'text' => "<p><em>Bravo&nbsp;! Vous avez réussi à vous débarrasser de ces rats&nbsp;! C'est un soulagement pour tout le monde. Merci pour votre aide. J'espère que vous ne vous êtes pas fait mordre trop fort…</em></p>",
+                'text' => "<p><em>Bravo&nbsp;! Vous avez réussi à vous débarrasser de ces rats&nbsp;! C'est un soulagement pour tout le monde, et soyez sûr que je vais m'empresser d'aller raconter votre victoire&nbsp;! J'espère que vous ne vous êtes pas fait mordre trop fort…</em></p>",
                 'npc' => 'npc_bilo_le_passant',
                 'conditions' => [
                     'completedQuest' => 'quest_secondary_des_rats_sur_les_docks',
                 ],
                 'effects' => [
+                    'increaseReputation' => 1,
                     'rewardQuest' => 'quest_secondary_des_rats_sur_les_docks',
                 ],
                 'parent' => 'dialogue_bilo_le_passant_rumor_1',
@@ -260,6 +268,10 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                         $quest = $this->getReference($value, Quest::class);
                         $dialogueConditions['completedQuest'] = $quest->getId();
                     }
+                    if($condition === 'notRewardedQuest') {
+                        $quest = $this->getReference($value, Quest::class);
+                        $dialogueConditions['notRewardedQuest'] = $quest->getId();
+                    }
                 }
                 $dialogue->setConditions($dialogueConditions);
             }
@@ -281,6 +293,9 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                             'item' => $item->getId(),
                             'questItem' => $value['questItem'] ?? false,
                         ];
+                    }
+                    if($effect === 'increaseReputation') {
+                        $dialogueEffects['increaseReputation'] = $value;
                     }
                 }
                 $dialogue->setEffects($dialogueEffects);

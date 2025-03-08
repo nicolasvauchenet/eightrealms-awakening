@@ -1,7 +1,7 @@
 <div class="screen-footerbox">
+    {{ this.playerCombat.combat.description | raw }}
+
     {% if this.description %}
         {{ this.description | raw }}
-    {% else %}
-        {{ this.playerCombat.combat.description | raw }}
     {% endif %}
 </div>

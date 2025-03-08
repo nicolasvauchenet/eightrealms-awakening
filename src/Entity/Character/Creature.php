@@ -70,6 +70,12 @@ class Creature
     #[ORM\OneToMany(targetEntity: PlayerCreature::class, mappedBy: 'creature', orphanRemoval: true)]
     private Collection $playerCreatures;
 
+    #[ORM\Column]
+    private ?int $damage = null;
+
+    #[ORM\Column]
+    private ?int $defense = null;
+
     public function __construct()
     {
         $this->creatureItems = new ArrayCollection();
@@ -293,6 +299,30 @@ class Creature
                 $playerCreature->setCreature(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDamage(): ?int
+    {
+        return $this->damage;
+    }
+
+    public function setDamage(int $damage): static
+    {
+        $this->damage = $damage;
+
+        return $this;
+    }
+
+    public function getDefense(): ?int
+    {
+        return $this->defense;
+    }
+
+    public function setDefense(int $defense): static
+    {
+        $this->defense = $defense;
 
         return $this;
     }

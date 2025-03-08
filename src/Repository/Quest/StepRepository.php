@@ -16,28 +16,16 @@ class StepRepository extends ServiceEntityRepository
         parent::__construct($registry, Step::class);
     }
 
-//    /**
-//     * @return Step[] Returns an array of Step objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Step
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findNextStep(Step $currentStep): ?Step
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.quest = :quest')
+            ->andWhere('s.position > :position')
+            ->setParameter('quest', $currentStep->getQuest())
+            ->setParameter('position', $currentStep->getPosition())
+            ->orderBy('s.position', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

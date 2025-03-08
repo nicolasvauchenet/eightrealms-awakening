@@ -8,8 +8,19 @@
       max-height: 61dvh;
     }
 
-    .main-quest {
+    .main-quest,
+    .side-quests {
       margin-bottom: 1.5rem;
+    }
+
+    .completed-quests {
+      .type {
+        background-color: $success;
+      }
+
+      .content {
+        opacity: 0.75;
+      }
     }
 
     .type {
@@ -33,6 +44,10 @@
 
       &:last-child {
         margin-bottom: 0;
+      }
+
+      &.completed {
+        text-decoration: line-through;
       }
 
       .name {

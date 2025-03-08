@@ -28,17 +28,19 @@ readonly class DialogueService
         if(!$dialogue->getParent()) {
             if($this->validateDialogueConditions($dialogue, $playerNpc)) {
                 return $dialogue;
-            }
-        }
+            } else {
+                $childrenDialogues = $this->entityManager->getRepository(Dialogue::class)->findBy([
+                    'parent' => $dialogue,
+                ]);
 
-        $childrenDialogues = $this->entityManager->getRepository(Dialogue::class)->findBy([
-            'parent' => $dialogue,
-        ]);
-
-        foreach($childrenDialogues as $childDialogue) {
-            if($this->validateDialogueConditions($childDialogue, $playerNpc)) {
-                return $childDialogue;
+                foreach($childrenDialogues as $childDialogue) {
+                    if($this->validateDialogueConditions($childDialogue, $playerNpc)) {
+                        return $childDialogue;
+                    }
+                }
             }
+
+            return null;
         }
 
         return $dialogue;
@@ -47,6 +49,7 @@ readonly class DialogueService
     private function validateDialogueConditions(Dialogue $dialogue, PlayerNpc $playerNpc): bool
     {
         $conditions = $dialogue->getConditions();
+        $isValidated = true;
 
         if(!$conditions) {
             return true;
@@ -62,17 +65,24 @@ readonly class DialogueService
             switch($condition) {
                 case 'hasQuest':
                     if(!$playerQuest) {
-                        return false;
+                        $isValidated = false;
+                    } else if(in_array($playerQuest->getQuestStatus(), ['completed', 'rewarded'])) {
+                        $isValidated = false;
                     }
                     break;
                 case 'hasNoQuest':
                     if($playerQuest) {
-                        return false;
+                        $isValidated = false;
                     }
                     break;
                 case 'completedQuest':
-                    if(!$playerQuest || $playerQuest->getStatus() !== 'completed') {
-                        return false;
+                    if(!$playerQuest || $playerQuest->getQuestStatus() !== 'completed') {
+                        $isValidated = false;
+                    }
+                    break;
+                case 'notRewardedQuest':
+                    if($playerQuest->getQuestStatus() === 'rewarded') {
+                        $isValidated = false;
                     }
                     break;
                 default:
@@ -80,6 +90,6 @@ readonly class DialogueService
             }
         }
 
-        return true;
+        return $isValidated;
     }
 }

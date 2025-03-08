@@ -24,6 +24,27 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
                 'screenClass' => CinematicScreen::class,
                 'reference' => 'action_transition_start',
             ],
+            [
+                'name' => 'Continuer',
+                'type' => 'transition',
+                'effects' => [
+                    'changeLocation' => '',
+                ],
+                'screen' => 'screen_cinematic_victory',
+                'screenClass' => CinematicScreen::class,
+                'reference' => 'action_transition_victory',
+            ],
+            [
+                'name' => 'Résurrection',
+                'type' => 'transition',
+                'effects' => [
+                    'resurrect' => true,
+                    'changeLocation' => 'temple-de-port-saint-doux',
+                ],
+                'screen' => 'screen_cinematic_defeat',
+                'screenClass' => CinematicScreen::class,
+                'reference' => 'action_transition_defeat',
+            ],
         ];
 
         foreach($actions as $data) {

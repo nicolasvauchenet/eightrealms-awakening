@@ -21,7 +21,7 @@
         {% if combat.step is defined %}
             {% set playerHasCombat = false %}
             {% for playerQuest in this.character.playerQuests %}
-                {% if playerQuest.step == combat.step %}
+                {% if playerQuest.step == combat.step and playerQuest.status != 'completed' %}
                     {% set playerHasCombat = true %}
                 {% endif %}
             {% endfor %}

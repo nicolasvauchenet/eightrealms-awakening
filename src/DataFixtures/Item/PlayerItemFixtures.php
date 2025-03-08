@@ -26,21 +26,21 @@ class PlayerItemFixtures extends Fixture implements OrderedFixtureInterface
             // Aldrin le Brave
             [
                 'character' => 'player_aldrin',
-                'item' => 'weapon_longsword_storm',
+                'item' => 'weapon_longsword',
                 'isEquipped' => true,
                 'slot' => 'righthand',
                 'class' => Weapon::class,
             ],
             [
                 'character' => 'player_aldrin',
-                'item' => 'armor_iron_health',
+                'item' => 'armor_iron',
                 'isEquipped' => true,
                 'slot' => 'armor',
                 'class' => Armor::class,
             ],
             [
                 'character' => 'player_aldrin',
-                'item' => 'shield_iron_defense',
+                'item' => 'shield_iron',
                 'isEquipped' => true,
                 'slot' => 'shield',
                 'class' => Shield::class,
@@ -85,8 +85,7 @@ class PlayerItemFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'character' => 'player_aldrin',
                 'item' => 'ring_knight',
-                'isEquipped' => true,
-                'slot' => 'ring',
+                'isEquipped' => false,
                 'class' => Ring::class,
             ],
             [
@@ -135,8 +134,7 @@ class PlayerItemFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'character' => 'player_aldrin',
                 'item' => 'amulet_protection',
-                'isEquipped' => true,
-                'slot' => 'amulet',
+                'isEquipped' => false,
                 'class' => Amulet::class,
             ],
             [
@@ -168,6 +166,24 @@ class PlayerItemFixtures extends Fixture implements OrderedFixtureInterface
                 'item' => 'map_plouc',
                 'isEquipped' => false,
                 'class' => Map::class,
+            ],
+            [
+                'character' => 'player_aldrin',
+                'item' => 'weapon_longsword_storm',
+                'isEquipped' => false,
+                'class' => Weapon::class,
+            ],
+            [
+                'character' => 'player_aldrin',
+                'item' => 'armor_iron_health',
+                'isEquipped' => false,
+                'class' => Armor::class,
+            ],
+            [
+                'character' => 'player_aldrin',
+                'item' => 'shield_iron_defense',
+                'isEquipped' => false,
+                'class' => Shield::class,
             ],
         ];
 

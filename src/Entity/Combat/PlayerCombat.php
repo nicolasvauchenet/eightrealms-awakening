@@ -4,6 +4,8 @@ namespace App\Entity\Combat;
 
 use App\Entity\Character\Player;
 use App\Repository\Combat\PlayerCombatRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -33,6 +35,26 @@ class PlayerCombat
     #[ORM\ManyToOne(inversedBy: 'playerCombats')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Player $player = null;
+
+    /**
+     * @var Collection<int, CreaturePlayerCombat>
+     */
+    #[ORM\OneToMany(targetEntity: CreaturePlayerCombat::class, mappedBy: 'playerCombat', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
+    private Collection $creaturePlayerCombats;
+
+    /**
+     * @var Collection<int, NpcPlayerCombat>
+     */
+    #[ORM\OneToMany(targetEntity: NpcPlayerCombat::class, mappedBy: 'playerCombat', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
+    private Collection $npcPlayerCombats;
+
+    public function __construct()
+    {
+        $this->creaturePlayerCombats = new ArrayCollection();
+        $this->npcPlayerCombats = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,6 +117,66 @@ class PlayerCombat
     public function setPlayer(?Player $player): static
     {
         $this->player = $player;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CreaturePlayerCombat>
+     */
+    public function getCreaturePlayerCombats(): Collection
+    {
+        return $this->creaturePlayerCombats;
+    }
+
+    public function addCreaturePlayerCombat(CreaturePlayerCombat $creaturePlayerCombat): static
+    {
+        if(!$this->creaturePlayerCombats->contains($creaturePlayerCombat)) {
+            $this->creaturePlayerCombats->add($creaturePlayerCombat);
+            $creaturePlayerCombat->setPlayerCombat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreaturePlayerCombat(CreaturePlayerCombat $creaturePlayerCombat): static
+    {
+        if($this->creaturePlayerCombats->removeElement($creaturePlayerCombat)) {
+            // set the owning side to null (unless already changed)
+            if($creaturePlayerCombat->getPlayerCombat() === $this) {
+                $creaturePlayerCombat->setPlayerCombat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NpcPlayerCombat>
+     */
+    public function getNpcPlayerCombats(): Collection
+    {
+        return $this->npcPlayerCombats;
+    }
+
+    public function addNpcPlayerCombat(NpcPlayerCombat $npcPlayerCombat): static
+    {
+        if(!$this->npcPlayerCombats->contains($npcPlayerCombat)) {
+            $this->npcPlayerCombats->add($npcPlayerCombat);
+            $npcPlayerCombat->setPlayerCombat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNpcPlayerCombat(NpcPlayerCombat $npcPlayerCombat): static
+    {
+        if($this->npcPlayerCombats->removeElement($npcPlayerCombat)) {
+            // set the owning side to null (unless already changed)
+            if($npcPlayerCombat->getPlayerCombat() === $this) {
+                $npcPlayerCombat->setPlayerCombat(null);
+            }
+        }
 
         return $this;
     }

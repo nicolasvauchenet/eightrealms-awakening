@@ -4,11 +4,16 @@
     {% set quests = app_questService.quests(this.character) %}
     {% set mainQuest = null %}
     {% set sideQuests = [] %}
+    {% set completedQuests = [] %}
     {% for questData in quests %}
-        {% if questData.quest.type == 'Principale' %}
-            {% set mainQuest = questData %}
+        {% if questData.status == 'rewarded' %}
+            {% set completedQuests = completedQuests | merge([questData]) %}
         {% else %}
-            {% set sideQuests = sideQuests|merge([questData]) %}
+            {% if questData.quest.type == 'Principale' %}
+                {% set mainQuest = questData %}
+            {% else %}
+                {% set sideQuests = sideQuests | merge([questData]) %}
+            {% endif %}
         {% endif %}
     {% endfor %}
 
@@ -48,5 +53,21 @@
                 Vous devriez peut-être parler à des gens…
             </strong>
         </p>
+    {% endif %}
+
+    {% if completedQuests is not empty %}
+        <div class="quests">
+            <div class="completed-quests">
+                <h2 class="type">Quêtes Terminées</h2>
+                {% for questData in completedQuests %}
+                    <div class="content completed">
+                        <h3 class="name">{{ questData.quest.name }}</h3>
+                        {% for step in questData.steps %}
+                            {{ step.description | raw }}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     {% endif %}
 </div>

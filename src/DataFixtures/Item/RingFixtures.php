@@ -22,7 +22,7 @@ class RingFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Défensif',
                 'target' => 'health',
                 'amount' => 20,
-                'price' => 500,
+                'price' => 750,
                 'reference' => 'ring_health',
             ],
             [
@@ -33,7 +33,7 @@ class RingFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Défensif',
                 'target' => 'mana',
                 'amount' => 20,
-                'price' => 500,
+                'price' => 750,
                 'reference' => 'ring_mana',
             ],
             [
@@ -44,7 +44,7 @@ class RingFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Défensif',
                 'target' => 'defense',
                 'amount' => 5,
-                'price' => 500,
+                'price' => 750,
                 'reference' => 'ring_protection',
             ],
 
@@ -57,7 +57,7 @@ class RingFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Offensif',
                 'target' => 'damage',
                 'amount' => 5,
-                'price' => 500,
+                'price' => 750,
                 'reference' => 'ring_knight',
             ],
 
@@ -69,7 +69,7 @@ class RingFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'ring.png',
                 'type' => 'Utile',
                 'effect' => 'nightVision',
-                'price' => 400,
+                'price' => 800,
                 'reference' => 'ring_night_vision',
             ],
         ];

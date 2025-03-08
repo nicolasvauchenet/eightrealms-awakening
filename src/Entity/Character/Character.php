@@ -80,12 +80,14 @@ abstract class Character
      * @var Collection<int, CharacterItem>
      */
     #[ORM\OneToMany(targetEntity: CharacterItem::class, mappedBy: 'character', orphanRemoval: true)]
+    #[ORM\OrderBy(['item' => 'ASC'])]
     private Collection $characterItems;
 
     /**
      * @var Collection<int, CharacterSpell>
      */
     #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'character', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $characterSpells;
 
     public function __construct()

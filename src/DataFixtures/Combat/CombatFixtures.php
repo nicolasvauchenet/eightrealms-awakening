@@ -36,6 +36,24 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                 ],
                 'reference' => 'combat_des_rats_sur_les_docks',
             ],
+            [
+                'name' => 'Une bande de rats sur les docks',
+                'picture' => 'anciens-docks-rats.webp',
+                'thumb' => 'core/creature/thumb_rat.png',
+                'description' => "<p>Un groupe de gros rats vous a repéré et vous attaque&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
+                'location' => 'location_zone_anciens_docks',
+                'screen' => 'screen_combat_une_bande_de_rats_sur_les_docks',
+                'creatures' => [
+                    'creature_gros_rat',
+                    'creature_gros_rat',
+                    'creature_gros_rat',
+                ],
+                'reward' => [
+                    'xp' => 20,
+                    'crown' => 20,
+                ],
+                'reference' => 'combat_une_bande_de_rats_sur_les_docks',
+            ],
         ];
 
         foreach($combats as $data) {
@@ -47,7 +65,8 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                 ->setLocation($this->getReference($data['location'], Location::class))
                 ->setQuest(isset($data['quest']) ? $this->getReference($data['quest'], Quest::class) : null)
                 ->setStep(isset($data['step']) ? $this->getReference($data['step'], Step::class) : null)
-                ->setCombatScreen($this->getReference($data['screen'], CombatScreen::class));
+                ->setCombatScreen($this->getReference($data['screen'], CombatScreen::class))
+                ->setReward($data['reward'] ?? null);
 
             if(isset($data['npcs'])) {
                 foreach($data['npcs'] as $npcReference) {

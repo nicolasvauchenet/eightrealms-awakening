@@ -18,23 +18,43 @@
     {% endfor %}
 
     {% for combat in this.activeScreen.location.combats %}
-        {% if combat.step is defined %}
+        {% set isQuest = false %}
+        {% if combat.step %}
             {% set playerHasCombat = false %}
             {% for playerQuest in this.character.playerQuests %}
                 {% if playerQuest.step == combat.step and playerQuest.status != 'completed' %}
                     {% set playerHasCombat = true %}
+                    {% set isQuest = true %}
                 {% endif %}
             {% endfor %}
         {% else %}
-            {% set playerHasCombat = true %}
+            {% set playerCombatExists = false %}
+            {% for playerCombat in this.character.playerCombats %}
+                {% if playerCombat.combat == combat %}
+                    {% set playerCombatExists = true %}
+                    {% if playerCombat.status != 'victory' %}
+                        {% set playerHasCombat = true %}
+                    {% else %}
+                        {% set now = "now"|date("U") %}
+                        {% set combatUpdatedAt = playerCombat.updatedAt|date("U") %}
+                        {% set diff = now - combatUpdatedAt %}
+                        {% if diff >= 86400 %}
+                            {% set playerHasCombat = true %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if not playerCombatExists %}
+                {% set playerHasCombat = true %}
+            {% endif %}
         {% endif %}
 
         {% if playerHasCombat %}
-            <button class="screen-action" title="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}" {{ live_action('combatScreen', {'id': combat.id}) }}>
+            <button class="screen-action {% if isQuest %}quest{% endif %}" title="{% if isQuest %}Quête{% else %}Combat{% endif %}{% if combat.name %} : {{ combat.name }}{% endif %}" {{ live_action('combatScreen', {'id': combat.id}) }}>
                 {% if combat.thumb %}
-                    <img src="{{ asset('img/' ~ combat.thumb) }}" alt="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}"/>
+                    <img src="{{ asset('img/' ~ combat.thumb) }}" alt="{% if isQuest %}Quête{% else %}Combat{% endif %}{% if combat.name %} : {{ combat.name }}{% endif %}"/>
                 {% else %}
-                    <img src="{{ asset('img/core/action/attack.png') }}" alt="Combat : {% if combat.name %} : {{ combat.name }}{% endif %}"/>
+                    <img src="{{ asset('img/core/action/attack.png') }}" alt="{% if isQuest %}Quête{% else %}Combat{% endif %}{% if combat.name %} : {{ combat.name }}{% endif %}"/>
                 {% endif %}
             </button>
         {% endif %}

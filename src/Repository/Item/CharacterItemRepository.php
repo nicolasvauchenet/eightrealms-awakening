@@ -32,6 +32,7 @@ class CharacterItemRepository extends ServiceEntityRepository
             ->setParameter('questItem', $questItem)
             ->orderBy('c.position', 'ASC')
             ->addOrderBy('ci.equipped', 'DESC')
+            ->addOrderBy('i.name', 'ASC')
             ->getQuery()
             ->getResult();
 

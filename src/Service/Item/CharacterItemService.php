@@ -69,7 +69,7 @@ readonly class CharacterItemService
                 });
             case 'forgeron':
                 return $characterItems->filter(function($item) {
-                    return in_array($item->getItem()->getCategory()->getSlug(), ['armure', 'armure enchantee', 'bouclier', 'bouclier enchante', 'arme', 'arme enchantee']);
+                    return in_array($item->getItem()->getCategory()->getSlug(), ['armure', 'bouclier', 'arme', 'amulette', 'anneau', 'carte']);
                 });
             default:
                 return new ArrayCollection();

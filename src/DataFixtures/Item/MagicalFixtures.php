@@ -24,7 +24,7 @@ class MagicalFixtures extends Fixture implements OrderedFixtureInterface
                 'amount' => 10,
                 'area' => 1,
                 'charge' => 10,
-                'price' => 200,
+                'price' => 250,
                 'reference' => 'magical_firewand',
             ],
             [
@@ -37,7 +37,7 @@ class MagicalFixtures extends Fixture implements OrderedFixtureInterface
                 'amount' => 10,
                 'area' => 1,
                 'charge' => 10,
-                'price' => 200,
+                'price' => 250,
                 'reference' => 'magical_icewand',
             ],
             [
@@ -50,7 +50,7 @@ class MagicalFixtures extends Fixture implements OrderedFixtureInterface
                 'amount' => 10,
                 'area' => 1,
                 'charge' => 10,
-                'price' => 200,
+                'price' => 250,
                 'reference' => 'magical_stormwand',
             ],
             [
@@ -63,7 +63,7 @@ class MagicalFixtures extends Fixture implements OrderedFixtureInterface
                 'amount' => 20,
                 'area' => 3,
                 'charge' => 20,
-                'price' => 600,
+                'price' => 650,
                 'reference' => 'magical_firestick',
             ],
             [
@@ -76,7 +76,7 @@ class MagicalFixtures extends Fixture implements OrderedFixtureInterface
                 'amount' => 20,
                 'area' => 3,
                 'charge' => 20,
-                'price' => 600,
+                'price' => 650,
                 'reference' => 'magical_icestick',
             ],
             [
@@ -89,7 +89,7 @@ class MagicalFixtures extends Fixture implements OrderedFixtureInterface
                 'amount' => 20,
                 'area' => 3,
                 'charge' => 20,
-                'price' => 600,
+                'price' => 650,
                 'reference' => 'magical_stormstick',
             ],
 
@@ -103,7 +103,7 @@ class MagicalFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'health',
                 'amount' => 20,
                 'charge' => 20,
-                'price' => 400,
+                'price' => 500,
                 'reference' => 'magical_healstick',
             ],
             [
@@ -115,7 +115,7 @@ class MagicalFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'defense',
                 'amount' => 20,
                 'charge' => 20,
-                'price' => 400,
+                'price' => 500,
                 'reference' => 'magical_protectionstick',
             ],
         ];

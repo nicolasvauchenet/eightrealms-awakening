@@ -13,8 +13,12 @@ class CombatScreenFixtures extends Fixture implements OrderedFixtureInterface
     {
         $screens = [
             [
-                'name' => 'Des rats sur les docks',
+                'name' => 'Des rats sur les Docks',
                 'reference' => 'screen_combat_des_rats_sur_les_docks',
+            ],
+            [
+                'name' => 'Une bande de rats sur les Docks',
+                'reference' => 'screen_combat_une_bande_de_rats_sur_les_docks',
             ],
         ];
 

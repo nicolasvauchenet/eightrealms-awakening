@@ -8,13 +8,30 @@
     </h2>
 
     <div class="app-grid two">
-        {% for playerLocation in this.character.playerLocations %}
-            {% if playerLocation.location.type == 'zone' %}
-                <button class="app-button outline {% if playerLocation.location == this.character.location %}disabled{% endif %}"
-                        {{ live_action('walk', {'locationId': playerLocation.location.id}) }}>
-                    {{ playerLocation.location.name }}
-                </button>
+        {% if hasLocationMap %}
+            {% if this.character.location.type == 'building' %}
+                {% set location = this.character.location.parent.parent %}
+            {% elseif this.character.location.type == 'zone' %}
+                {% set location = this.character.location.parent %}
+            {% else %}
+                {% set location = this.character.location %}
             {% endif %}
-        {% endfor %}
+
+            {% for zone in location.children %}
+                <button class="app-button outline {% if zone == this.character.location %}disabled{% endif %}"
+                        {{ live_action('walk', {'locationId': zone.id}) }}>
+                    {{ zone.name }}
+                </button>
+            {% endfor %}
+        {% else %}
+            {% for playerLocation in this.character.playerLocations %}
+                {% if playerLocation.location.type == 'zone' %}
+                    <button class="app-button outline {% if playerLocation.location == this.character.location %}disabled{% endif %}"
+                            {{ live_action('walk', {'locationId': playerLocation.location.id}) }}>
+                        {{ playerLocation.location.name }}
+                    </button>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
 </div>

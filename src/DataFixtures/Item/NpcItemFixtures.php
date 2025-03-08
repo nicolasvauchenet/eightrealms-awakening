@@ -37,16 +37,6 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'character' => 'npc_sophie_la_marchande',
-                'item' => 'ring_silver',
-                'class' => Gift::class,
-            ],
-            [
-                'character' => 'npc_sophie_la_marchande',
-                'item' => 'ring_gold',
-                'class' => Gift::class,
-            ],
-            [
-                'character' => 'npc_sophie_la_marchande',
                 'item' => 'map_port_saint_doux',
                 'class' => Map::class,
             ],
@@ -148,6 +138,26 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
                 'character' => 'npc_gart_le_forgeron',
                 'item' => 'weapon_longbow',
                 'class' => Weapon::class,
+            ],
+            [
+                'character' => 'npc_gart_le_forgeron',
+                'item' => 'ring_copper',
+                'class' => Gift::class,
+            ],
+            [
+                'character' => 'npc_gart_le_forgeron',
+                'item' => 'ring_silver',
+                'class' => Gift::class,
+            ],
+            [
+                'character' => 'npc_gart_le_forgeron',
+                'item' => 'ring_gold',
+                'class' => Gift::class,
+            ],
+            [
+                'character' => 'npc_gart_le_forgeron',
+                'item' => 'map_plouc',
+                'class' => Map::class,
             ],
         ];
 

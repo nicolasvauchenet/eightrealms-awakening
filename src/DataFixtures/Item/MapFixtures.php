@@ -21,7 +21,7 @@ class MapFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'map.png',
                 'type' => 'realm',
                 'map' => 'royaume-de-l-ile-du-nord.png',
-                'price' => 100,
+                'price' => 1000,
                 'reference' => 'map_royaume_de_lile_du_nord',
             ],
 
@@ -33,7 +33,7 @@ class MapFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'map.png',
                 'type' => 'location',
                 'map' => 'port-saint-doux.png',
-                'price' => 75,
+                'price' => 500,
                 'reference' => 'map_port_saint_doux',
             ],
             [
@@ -43,7 +43,7 @@ class MapFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'map.png',
                 'type' => 'location',
                 'map' => 'plouc.png',
-                'price' => 75,
+                'price' => 250,
                 'reference' => 'map_plouc',
             ],
         ];

@@ -21,8 +21,8 @@ class PotionFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'potion_health.png',
                 'type' => 'Défensif',
                 'target' => 'health',
-                'amount' => 10,
-                'price' => 50,
+                'amount' => 20,
+                'price' => 100,
                 'reference' => 'potion_lighthealing',
             ],
             [
@@ -32,8 +32,8 @@ class PotionFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'potion_health.png',
                 'type' => 'Défensif',
                 'target' => 'health',
-                'amount' => 30,
-                'price' => 150,
+                'amount' => 50,
+                'price' => 200,
                 'reference' => 'potion_healing',
             ],
             [
@@ -43,8 +43,8 @@ class PotionFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'potion_mana.png',
                 'type' => 'Défensif',
                 'target' => 'mana',
-                'amount' => 10,
-                'price' => 50,
+                'amount' => 20,
+                'price' => 100,
                 'reference' => 'potion_lightmana',
             ],
             [
@@ -54,8 +54,8 @@ class PotionFixtures extends Fixture implements OrderedFixtureInterface
                 'picture' => 'potion_mana.png',
                 'type' => 'Défensif',
                 'target' => 'mana',
-                'amount' => 30,
-                'price' => 150,
+                'amount' => 50,
+                'price' => 200,
                 'reference' => 'potion_mana',
             ],
 
@@ -68,7 +68,7 @@ class PotionFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Utile',
                 'effect' => 'invisibility',
                 'duration' => 3,
-                'price' => 100,
+                'price' => 500,
                 'reference' => 'potion_invisibility',
             ],
         ];

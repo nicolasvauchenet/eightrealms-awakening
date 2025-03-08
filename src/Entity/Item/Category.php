@@ -34,6 +34,7 @@ class Category
      * @var Collection<int, Item>
      */
     #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'category', orphanRemoval: true)]
+    #[ORM\OrderBy(['equipped' => 'DESC', 'name' => 'ASC'])]
     private Collection $items;
 
     public function __construct()

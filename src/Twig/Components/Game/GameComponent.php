@@ -157,6 +157,7 @@ class GameComponent
         }
         $this->playerNpc = $playerNpc;
 
+        $this->description = '';
         $screen = $this->entityManager->getRepository(InteractionScreen::class)->findOneBy(['npc' => $npc]);
         $this->changeScreen($screen->getId());
     }
@@ -178,6 +179,7 @@ class GameComponent
         if($this->dialogue->getEffects()) {
             $this->doEffects($this->dialogue->getEffects());
         }
+        $this->description = '';
         $this->changeScreen($screen->getId());
     }
 
@@ -215,7 +217,7 @@ class GameComponent
                 $this->entityManager->flush();
             }
         } else {
-            /*foreach($playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
+            foreach($playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
                 $creatureCombat->setHealth($creatureCombat->getCreature()->getHealthMax())
                     ->setMana($creatureCombat->getCreature()->getManaMax());
                 $this->entityManager->persist($creatureCombat);
@@ -225,7 +227,7 @@ class GameComponent
                 $npcCombat->setHealth($npcCombat->getNpc()->getHealthMax())
                     ->setMana($npcCombat->getNpc()->getManaMax());
                 $this->entityManager->persist($npcCombat);
-            }*/
+            }
         }
 
         $playerCombat->setStatus('progress');
@@ -701,7 +703,7 @@ class GameComponent
     public function startCombat(): void
     {
         $this->initializeTurnOrder();
-        $this->description .= "<h3>Tour {$this->nbTurns} :</h3><p>";
+        $this->description .= "<h3>Tour {$this->nbTurns}&nbsp;:</h3><p>";
         $this->executeTurn();
     }
 
@@ -781,6 +783,27 @@ class GameComponent
             }
 
             $this->entityManager->persist($playerQuest);
+        } else {
+            if($this->playerCombat->getCombat()->getReward()) {
+                foreach($this->playerCombat->getCombat()->getReward() as $type => $value) {
+                    switch($type) {
+                        case 'xp':
+                            $this->character->setExperience($this->character->getExperience() + $value);
+                            break;
+                        case 'crown':
+                            $this->character->setFortune($this->character->getFortune() + $value);
+                            break;
+                        case 'items':
+                            dd($value);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                $this->entityManager->persist($this->character);
+                $this->characterUpdated = true;
+            }
         }
 
         $this->entityManager->flush();
@@ -822,7 +845,7 @@ class GameComponent
     private function handleAttack(Player $attacker, CreaturePlayerCombat|NpcPlayerCombat $target, ?CharacterItem $weapon, string $hand, int $malus): void
     {
         if(!$weapon) {
-            $this->description .= "Vous tentez une attaque avec $hand, mais vous n'avez pas d'arme équipée !<br/>";
+            $this->description .= "Vous tentez une attaque avec $hand, mais vous n'avez pas d'arme équipée&nbsp;!<br/>";
 
             return;
         }
@@ -864,7 +887,6 @@ class GameComponent
             if($isMagical) {
                 $damage = $weapon->getItem()->getAmount(); // Dégâts fixes pour la magie
                 $weapon->setCharge(max(0, $weapon->getCharge() - 1));
-                $this->description .= "<span class='text-info'>L'arme magique {$weapon->getItem()->getName()} perd 1 charge !</span><br/>";
             } else {
                 // Calcul des dégâts de l'arme physique
                 $weaponDamage = $weapon->getItem()->getDamage(); // Dégâts propres à l'arme
@@ -879,21 +901,21 @@ class GameComponent
             }
 
             if($isCritical) {
-                $this->description .= "<strong class='text-danger'>Coup critique !</strong><br/>";
+                $this->description .= "<strong class='text-danger'>Coup critique&nbsp;!</strong><br/>";
             }
 
             $target->setHealth(max(0, $target->getHealth() - $damage));
             $this->description .= "<span class='text-success'>Vous infligez $damage dégât" . ($damage > 1 ? 's' : '') . " à $targetName avec {$weapon->getItem()->getName()} ($hand).</span><br/>";
 
             if($target->getHealth() <= 0) {
-                $this->description .= "<strong class='text-success'>Vous avez tué $targetName !</strong><br/>";
+                $this->description .= "<strong class='text-success'>Vous avez tué $targetName&nbsp;!</strong><br/>";
             }
 
             $this->entityManager->persist($target);
             $this->entityManager->persist($weapon);
             $this->entityManager->flush();
         } else {
-            $this->description .= "Votre attaque échoue, $targetName esquive !<br/>";
+            $this->description .= "Votre attaque $hand échoue, $targetName esquive&nbsp;!<br/>";
         }
     }
 
@@ -920,14 +942,14 @@ class GameComponent
 
             if($attackRoll == 20) {
                 $damage *= 2;
-                $this->description .= "<strong class='text-danger'>{$enemy->getCreature()->getName()} vous inflige un coup critique !</strong><br/>";
+                $this->description .= "<strong class='text-danger'>{$enemy->getCreature()->getName()} vous inflige un coup critique&nbsp;!</strong><br/>";
             }
 
             $target->setHealth(max(0, $target->getHealth() - $damage));
             $this->description .= "<span class='text-warning'>{$enemy->getCreature()->getName()} vous attaque et inflige $damage dégât" . ($damage > 1 ? 's' : '') . ".</span><br/>";
 
         } else {
-            $this->description .= "{$enemy->getCreature()->getName()} tente de vous attaquer mais vous esquivez !<br/>";
+            $this->description .= "{$enemy->getCreature()->getName()} tente de vous attaquer mais vous esquivez&nbsp;!<br/>";
         }
 
         if($target->getHealth() <= 0) {
@@ -950,7 +972,7 @@ class GameComponent
             $this->currentTurn = 0;
             $this->initializeTurnOrder();
             $this->nbTurns++;
-            $this->description .= "</p><h3>Tour {$this->nbTurns} :</h3>";
+            $this->description .= "</p><h3>Tour {$this->nbTurns}&nbsp;:</h3>";
         }
 
         // Relancer l'exécution du tour pour le prochain protagoniste

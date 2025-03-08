@@ -60,6 +60,9 @@ class Combat
     #[ORM\JoinColumn(nullable: false)]
     private ?CombatScreen $combatScreen = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?array $reward = null;
+
     public function __construct()
     {
         $this->npcCombats = new ArrayCollection();
@@ -223,6 +226,18 @@ class Combat
     public function setCombatScreen(?CombatScreen $combatScreen): static
     {
         $this->combatScreen = $combatScreen;
+
+        return $this;
+    }
+
+    public function getReward(): ?array
+    {
+        return $this->reward;
+    }
+
+    public function setReward(?array $reward): static
+    {
+        $this->reward = $reward;
 
         return $this;
     }

@@ -29,7 +29,7 @@ readonly class CharacterBonusService
             $item = $characterItem->getItem();
             $categorySlug = $item->getCategory()->getSlug();
             $itemTarget = method_exists($item, 'getTarget') ? $item->getTarget() : null;
-            $itemAmount = method_exists($item, 'getAmount') ? $item->getAmount() : 0;
+            $itemAmount = method_exists($item, 'getAmount') && $characterItem->getCharge() > 0 ? $item->getAmount() : 0;
 
             if(in_array($categorySlug, $bonusMapping[$bonusType] ?? [])) {
                 if($bonusType === 'magicalDamage') {

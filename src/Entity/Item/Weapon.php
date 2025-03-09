@@ -30,6 +30,9 @@ class Weapon extends Item
     #[ORM\Column]
     private ?int $price = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $charge = null;
+
     public function getDamage(): ?int
     {
         return $this->damage;
@@ -110,6 +113,18 @@ class Weapon extends Item
     public function setPrice(int $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getCharge(): ?int
+    {
+        return $this->charge;
+    }
+
+    public function setCharge(?int $charge): static
+    {
+        $this->charge = $charge;
 
         return $this;
     }

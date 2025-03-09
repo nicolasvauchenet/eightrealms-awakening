@@ -107,6 +107,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'damage',
                 'amount' => 5,
                 'health' => 15,
+                'charge' => 50,
                 'price' => 1500,
                 'reference' => 'weapon_longsword_storm',
             ],
@@ -121,6 +122,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'damage',
                 'amount' => 5,
                 'health' => 15,
+                'charge' => 50,
                 'price' => 1500,
                 'reference' => 'weapon_longbow_storm',
             ],
@@ -135,6 +137,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 'target' => 'damage',
                 'amount' => 5,
                 'health' => 10,
+                'charge' => 20,
                 'price' => 2000,
                 'reference' => 'weapon_gunstorm',
             ],
@@ -153,6 +156,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                 ->setAmount($data['amount'] ?? null)
                 ->setRange($data['range'] ?? null)
                 ->setHealth($data['health'])
+                ->setCharge($data['charge'] ?? null)
                 ->setPrice($data['price']);
             $manager->persist($weapon);
             $this->addReference($data['reference'], $weapon);

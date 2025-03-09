@@ -90,9 +90,17 @@ readonly class ItemService
     {
         $item = $characterItem->getItem();
 
-        if($item instanceof Armor || $item instanceof Shield || $item instanceof Weapon) {
+        if($item instanceof Armor || $item instanceof Shield) {
             $current = $characterItem->getHealth();
             $maximum = $item->getHealth();
+        } else if($item instanceof Weapon) {
+            if($item->getCharge()) {
+                $current = $characterItem->getCharge();
+                $maximum = $item->getCharge();
+            } else {
+                $current = $characterItem->getHealth();
+                $maximum = $item->getHealth();
+            }
         } else if($item instanceof Magical) {
             $current = $characterItem->getCharge();
             $maximum = $item->getCharge();

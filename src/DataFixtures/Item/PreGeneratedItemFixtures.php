@@ -511,9 +511,12 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
         foreach($characterItems as $data) {
             $characterItem = new CharacterItem();
             $item = $this->getReference($data['item'], $data['class']);
-            if($item instanceof Armor || $item instanceof Shield || $item instanceof Weapon) {
+            if($item instanceof Armor || $item instanceof Shield) {
                 $itemHealth = $item->getHealth();
                 $itemCharge = null;
+            } else if($item instanceof Weapon) {
+                $itemHealth = $item->getHealth();
+                $itemCharge = $item->getCharge() ?? null;
             } else if($item instanceof Magical) {
                 $itemHealth = null;
                 $itemCharge = $item->getCharge();

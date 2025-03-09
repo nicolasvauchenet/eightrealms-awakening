@@ -7,6 +7,7 @@ use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Food;
 use App\Entity\Item\Gift;
+use App\Entity\Item\Magical;
 use App\Entity\Item\Map;
 use App\Entity\Item\Shield;
 use App\Entity\Item\Weapon;
@@ -163,9 +164,26 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
 
         foreach($characterItems as $data) {
             $characterItem = new CharacterItem();
+            $item = $this->getReference($data['item'], $data['class']);
+            if($item instanceof Armor || $item instanceof Shield) {
+                $itemHealth = $item->getHealth();
+                $itemCharge = null;
+            } else if($item instanceof Weapon) {
+                $itemHealth = $item->getHealth();
+                $itemCharge = $item->getCharge() ?? null;
+            } else if($item instanceof Magical) {
+                $itemHealth = null;
+                $itemCharge = $item->getCharge();
+            } else {
+                $itemHealth = null;
+                $itemCharge = null;
+            }
             $characterItem->setCharacter($this->getReference($data['character'], Npc::class))
-                ->setItem($this->getReference($data['item'], $data['class']))
-                ->setEquipped(false)
+                ->setItem($item)
+                ->setEquipped($data['isEquipped'] ?? false)
+                ->setHealth($itemHealth ?? null)
+                ->setCharge($itemCharge ?? null)
+                ->setSlot($data['slot'] ?? null)
                 ->setQuestItem(false);
             $manager->persist($characterItem);
         }

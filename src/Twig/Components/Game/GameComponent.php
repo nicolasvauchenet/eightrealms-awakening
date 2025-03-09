@@ -853,7 +853,7 @@ class GameComponent
         $isMagical = $weapon->getItem() instanceof Magical;
 
         if($isMagical && $weapon->getCharge() <= 0) {
-            $this->description .= "<span class='text-danger'>Votre {$weapon->getItem()->getName()} n'a plus de charges&nbsp;!</span><br/>";
+            $this->description .= "<span class='text-danger'>Votre {$weapon->getItem()->getName()} n'a plus de charge&nbsp;!</span><br/>";
 
             return;
         }
@@ -891,7 +891,13 @@ class GameComponent
                 // Calcul des dégâts de l'arme physique
                 $weaponDamage = $weapon->getItem()->getDamage(); // Dégâts propres à l'arme
                 if($weapon->getItem()->getTarget() === 'damage') {
-                    $weaponDamage += $weapon->getItem()->getAmount(); // Dégâts supplémentaires si arme enchantés
+                    if($weapon->getCharge() > 0) {
+                        $weaponDamage += $weapon->getItem()->getAmount(); // Dégâts supplémentaires si arme enchantés
+                        $weapon->setCharge(max(0, $weapon->getCharge() - 1));
+                        $this->entityManager->persist($weapon);
+                    } else {
+                        $this->description .= "<span class='text-danger'>Votre {$weapon->getItem()->getName()} n'a plus de charge&nbsp;! Elle n'inflige que des dégâts physiques.</span><br/>";
+                    }
                 }
                 $strengthBonus = floor($attacker->getStrength() / 4); // Bonus de force
                 $baseDamage = random_int($weaponDamage, $weaponDamage + 5) + $strengthBonus;

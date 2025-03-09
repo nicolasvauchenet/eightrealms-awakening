@@ -37,7 +37,8 @@
     </div>
 
     <div class="right">
-        <div class="{% if app_characterItemService.equippedItems(this.character).armor and app_characterItemService.equippedItems(this.character).shield %}app-grid two{% endif %}">
+        <div class="app-grid two">
+            &nbsp;
             {% if app_characterItemService.equippedItems(this.character).armor %}
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
@@ -52,22 +53,35 @@
                     {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).armor} %}
                 </div>
             {% endif %}
-
-            {% if app_characterItemService.equippedItems(this.character).shield %}
-                <div class="screen-info" data-controller="tooltip">
-                    <a data-action="click->tooltip#open">
-                        <img src="{{ asset('img/core/item/shield/' ~ app_characterItemService.equippedItems(this.character).shield.item.picture) }}"
-                             class="equip"
-                             alt="{{ app_characterItemService.equippedItems(this.character).shield.item.name }}"/>
-                        <div class="gauge">
-                            <div class="gauge-fill success"
-                                 style="--value: {{ app_characterItemService.equippedItems(this.character).shield.health / app_characterItemService.equippedItems(this.character).shield.item.health }}"></div>
-                        </div>
-                    </a>
-                    {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).shield} %}
-                </div>
-            {% endif %}
         </div>
+
+        {% if app_characterItemService.equippedItems(this.character).amulet or app_characterItemService.equippedItems(this.character).ring %}
+            <div class="app-grid two">
+                {% if app_characterItemService.equippedItems(this.character).amulet %}
+                    <div class="screen-info" data-controller="tooltip">
+                        <a data-action="click->tooltip#open">
+                            <img src="{{ asset('img/core/item/amulet/' ~ app_characterItemService.equippedItems(this.character).amulet.item.picture) }}"
+                                 class="equip"
+                                 alt="{{ app_characterItemService.equippedItems(this.character).amulet.item.name }}"/>
+                        </a>
+                        {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).amulet} %}
+                    </div>
+                {% else %}
+                    &nbsp;
+                {% endif %}
+
+                {% if app_characterItemService.equippedItems(this.character).ring %}
+                    <div class="screen-info" data-controller="tooltip">
+                        <a data-action="click->tooltip#open">
+                            <img src="{{ asset('img/core/item/ring/' ~ app_characterItemService.equippedItems(this.character).ring.item.picture) }}"
+                                 class="equip"
+                                 alt="{{ app_characterItemService.equippedItems(this.character).ring.item.name }}"/>
+                        </a>
+                        {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).ring} %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
 
         <div class="app-grid two">
             {% if app_characterItemService.equippedItems(this.character).righthand %}
@@ -111,6 +125,21 @@
                         {% endif %}
                     </a>
                     {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).lefthand} %}
+                </div>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).shield %}
+                <div class="screen-info" data-controller="tooltip">
+                    <a data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/shield/' ~ app_characterItemService.equippedItems(this.character).shield.item.picture) }}"
+                             class="equip"
+                             alt="{{ app_characterItemService.equippedItems(this.character).shield.item.name }}"/>
+                        <div class="gauge">
+                            <div class="gauge-fill success"
+                                 style="--value: {{ app_characterItemService.equippedItems(this.character).shield.health / app_characterItemService.equippedItems(this.character).shield.item.health }}"></div>
+                        </div>
+                    </a>
+                    {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).shield} %}
                 </div>
             {% endif %}
         </div>

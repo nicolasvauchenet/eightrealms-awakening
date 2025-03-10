@@ -86,7 +86,7 @@ class SpellFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Mur de Glace',
                 'category' => 'category_water',
                 'description' => "<p>Ce sort invoque un mur imposant de glace, bloquant le passage des ennemis et offrant une barrière temporaire. Idéal pour contrôler le champ de bataille, protéger ses alliés ou ralentir les assauts, le Mur de Glace est une solution tactique dans de nombreuses situations.</p>",
-                'type' => 'Défensif',
+                'type' => 'Utile',
                 'mana' => 15,
                 'effect' => 'invisibility',
                 'duration' => 1,

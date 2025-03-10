@@ -21,6 +21,7 @@
     .app-grid {
       margin-bottom: 1rem;
       padding-right: 0.5rem;
+      align-items: flex-start;
 
       @include respondTo('md') {
         grid-template-columns: repeat(4, 1fr);

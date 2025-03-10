@@ -12,6 +12,12 @@
                     <small>{{ app.user.name }}</small>
                     Mon Compte
                 </a>
+
+                <a href="{{ path('app_logout') }}"
+                   class="app-button outline text-danger"
+                   onclick="return window.confirm('Quitter les Huit Royaumes ?')">
+                    Déconnexion
+                </a>
             </p>
 
             {% if app.user.character %}

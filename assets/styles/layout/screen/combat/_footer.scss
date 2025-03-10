@@ -2,7 +2,11 @@
   .screen-footeractions {
     .combat-action,
     .spell-action {
+      border: 3px solid transparent;
+      transition: all 0.3s;
+
       &.active {
+        border-color: $white;
         border-radius: 0.5rem;
         box-shadow: 0 0 0.5rem rgba($white, 0.8),
         0 0 0.75rem rgba($white, 0.6),

@@ -784,14 +784,164 @@ class GameComponent
     #[LiveAction]
     public function cast(#[LiveArg] int $creatureCombatId, #[LiveArg] int $position, #[LiveArg] int $characterSpellId): void
     {
-        $creatureCombat = $this->entityManager->getRepository(CreatureCombat::class)->find($creatureCombatId);
+        $creatureCombat = $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($creatureCombatId);
         $characterSpell = $this->entityManager->getRepository(CharacterSpell::class)->find($characterSpellId);
+        $spell = $characterSpell->getSpell();
 
-        if($characterSpell->getSpell()->getType() === 'Offensif') {
-            $this->description .= "<p>Vous lancez le sort {$characterSpell->getSpell()->getName()} sur {$creatureCombat->getCreature()->getName()} $position.</p>";
+        // Vérification du mana
+        $manaCost = $spell->getMana() + $characterSpell->getMana();
+        if($this->character->getMana() < $manaCost) {
+            $this->description .= "<p class='text-danger'>Vous n'avez pas assez de mana pour lancer <strong>{$spell->getName()}</strong>.</p>";
+
+            return;
+        }
+
+        // Déduction du mana
+        $this->character->setMana($this->character->getMana() - $manaCost);
+        $this->entityManager->persist($this->character);
+
+        // Gestion des différents types de sorts
+        switch($spell->getType()) {
+            case 'Offensif':
+                $this->applyOffensiveSpell($characterSpell, $creatureCombat, $position);
+                break;
+
+            case 'Défensif':
+                $this->applyDefensiveSpell($characterSpell);
+                break;
+
+            case 'Utile':
+                $this->applyUtilitySpell($characterSpell);
+                break;
+        }
+
+        $this->entityManager->flush();
+        $this->nextTurn();
+    }
+
+    private function applyOffensiveSpell(CharacterSpell $characterSpell, CreaturePlayerCombat $target, int $position): void
+    {
+        // Détermination de la résistance basée sur la Sagesse pour la réussite du sort
+        $resistStat = $target->getCreature()->getWisdom();
+        $resistRoll = random_int(1, 20) + floor($resistStat / 2);
+        $spellSuccessRoll = random_int(5, 20) + $this->character->getLevel() + $characterSpell->getLevel();
+
+        if($spellSuccessRoll >= $resistRoll) {
+            // Détermination de la résistance aux dégâts après réussite du sort
+            if($characterSpell->getSpell()->getTarget() === 'health') {
+                $damageReductionStat = $target->getCreature()->getConstitution();
+            } else {
+                $damageReductionStat = $target->getCreature()->getIntelligence();
+            }
+
+            // Calcul des dégâts en fonction de la réduction
+            $baseDamage = $characterSpell->getSpell()->getAmount() + $characterSpell->getAmount();
+            $damageReduction = max(0, floor($damageReductionStat / 3));
+            $damage = max(1, $baseDamage - $damageReduction);
+
+            // Application des dégâts
+            $target->setHealth(max(0, $target->getHealth() - $damage));
+            $this->description .= "<span class='text-success'>Vous lancez <strong>{$characterSpell->getSpell()->getName()}</strong> sur {$target->getCreature()->getName()} $position et infligez <strong>{$damage}</strong> dégâts.</span><br/>";
+
+            if($target->getHealth() <= 0) {
+                $this->description .= "<span class='text-success'><strong>Vous avez vaincu {$target->getCreature()->getName()} $position&nbsp;!</strong></span><br/>";
+            }
+
+            $this->entityManager->persist($target);
+
+            // Gestion des dégâts de zone (si applicable)
+            if($characterSpell->getSpell()->getArea() + $characterSpell->getArea() > 1) {
+                $this->applyAreaDamage($characterSpell, $target, $damage, $position);
+            }
+
+            // Gestion des effets de statut (ex: paralysie, brûlure)
+            if($characterSpell->getSpell()->getEffect()) {
+                $spellAmount = $characterSpell->getSpell()->getAmount() + $characterSpell->getAmount();
+                $spellDuration = $characterSpell->getSpell()->getDuration() + $characterSpell->getDuration();
+                $this->temporaryEffects[] = [
+                    'effect' => $characterSpell->getSpell()->getEffect(),
+                    'amount' => $spellAmount,
+                    'remainingTurns' => $spellDuration + 1,
+                ];
+                $this->description .= "<span class='text-warning'>{$target->getCreature()->getName()} est affecté par <strong>{$characterSpell->getSpell()->getEffect()}</strong> pour {$spellDuration} tour(s).</span><br/>";
+            }
         } else {
-            $this->description .= "<p>Vous lancez le sort {$characterSpell->getSpell()->getName()}.</p>";
+            $this->description .= "<span class='text-warning'>{$target->getCreature()->getName()} résiste au sort <strong>{$characterSpell->getSpell()->getName()}</strong> !</span><br/>";
+        }
+    }
 
+    private function applyAreaDamage(CharacterSpell $characterSpell, CreaturePlayerCombat $primaryTarget, int $primaryDamage, int $position): void
+    {
+        $otherEnemies = [];
+        foreach($this->playerCombat->getCreaturePlayerCombats() as $otherCombat) {
+            if($otherCombat->getId() !== $primaryTarget->getId() && $otherCombat->getHealth() > 0) {
+                $otherEnemies[] = $otherCombat;
+            }
+        }
+
+        shuffle($otherEnemies);
+        $otherTargets = array_slice($otherEnemies, 0, ($characterSpell->getSpell()->getArea() + $characterSpell->getArea()) - 1);
+
+        foreach($otherTargets as $otherTarget) {
+            $splashDamage = (int)floor($primaryDamage * 2 / 3);
+            $otherTarget->setHealth(max(0, $otherTarget->getHealth() - $splashDamage));
+            $this->description .= "<span class='text-success'>{$otherTarget->getCreature()->getName()} $position est aussi touché et subit <strong>{$splashDamage}</strong> dégâts.</span><br/>";
+
+            if($otherTarget->getHealth() <= 0) {
+                $this->description .= "<span class='text-success'><strong>{$otherTarget->getCreature()->getName()} $position est vaincu !</strong></span><br/>";
+            }
+            $this->entityManager->persist($otherTarget);
+        }
+    }
+
+    private function applyDefensiveSpell(CharacterSpell $characterSpell): void
+    {
+        $amount = $characterSpell->getSpell()->getAmount() + $characterSpell->getAmount();
+        $duration = $characterSpell->getSpell()->getDuration() + $characterSpell->getDuration();
+
+        switch($characterSpell->getSpell()->getTarget()) {
+            case 'health':
+                $this->character->setHealth($this->character->getHealth() + $amount);
+                $this->description .= "<span class='text-success'>Vous récupérez {$amount} point(s) de vie.</span><br/>";
+                break;
+
+            case 'mana':
+                $this->character->setMana($this->character->getMana() + $amount);
+                $this->description .= "<span class='text-success'>Vous récupérez {$amount} point(s) de magie.</span><br/>";
+                break;
+
+            case 'damage':
+                $this->temporaryEffects[] = [
+                    'effect' => 'damage',
+                    'amount' => $amount,
+                    'remainingTurns' => $duration + 1,
+                ];
+                $this->description .= "<span class='text-success'>Votre bonus de dégâts augmente de {$amount} pour {$duration} tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
+                break;
+
+            case 'defense':
+                $this->temporaryEffects[] = [
+                    'effect' => 'defense',
+                    'amount' => $amount,
+                    'remainingTurns' => $duration + 1,
+                ];
+                $this->description .= "<span class='text-success'>Votre bonus de défense augmente de {$amount} pour {$duration} tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
+                break;
+        }
+
+        $this->entityManager->persist($this->character);
+    }
+
+    private function applyUtilitySpell(CharacterSpell $characterSpell): void
+    {
+        $duration = $characterSpell->getSpell()->getDuration() + $characterSpell->getDuration();
+        if($characterSpell->getSpell()->getEffect() === 'invisibility') {
+            $this->temporaryEffects[] = [
+                'effect' => 'invisibility',
+                'amount' => null,
+                'remainingTurns' => $duration + 1,
+            ];
+            $this->description .= "<span class='text-success'>Vous devenez invisible pendant {$duration} tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
         }
     }
 
@@ -1093,7 +1243,7 @@ class GameComponent
         // Vérifier si le joueur est invisible
         foreach($this->temporaryEffects as $temporaryEffect) {
             if($temporaryEffect['effect'] === 'invisibility') {
-                $this->description .= "<p class='text-info'>Vous êtes invisible, {$enemy->getCreature()->getName()} ne vous attaque pas&nbsp;!</p>";
+                $this->description .= "<span class='text-info'>Vous êtes invisible, {$enemy->getCreature()->getName()} ne vous attaque pas&nbsp;!</span><br/>";
 
                 return;
             }

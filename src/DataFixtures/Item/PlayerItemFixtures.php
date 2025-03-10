@@ -185,6 +185,30 @@ class PlayerItemFixtures extends Fixture implements OrderedFixtureInterface
                 'isEquipped' => false,
                 'class' => Shield::class,
             ],
+            [
+                'character' => 'player_aldrin',
+                'item' => 'scroll_deconcentration',
+                'isEquipped' => false,
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'player_aldrin',
+                'item' => 'scroll_concentration',
+                'isEquipped' => false,
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'player_aldrin',
+                'item' => 'scroll_power',
+                'isEquipped' => false,
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'player_aldrin',
+                'item' => 'scroll_invisibility',
+                'isEquipped' => false,
+                'class' => Scroll::class,
+            ],
         ];
 
         foreach($characterItems as $data) {

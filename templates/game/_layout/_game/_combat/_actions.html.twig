@@ -53,7 +53,7 @@
 
             {% if app_characterItemService.equippedItems(this.character).scroll %}
                 <button class="screen-action" title="Utiliser un parchemin"
-                        {{ live_action('use', {'type': 'scroll'}) }}>
+                        {{ live_action('use', {'type': 'scroll', 'enemyId': creatureCombat.id, 'position': position}) }}>
                     <img src="{{ asset('img/core/item/scroll/' ~ app_characterItemService.equippedItems(this.character).scroll.item.picture) }}"
                          alt="{{ app_characterItemService.equippedItems(this.character).scroll.item.name }}"/>
                 </button>

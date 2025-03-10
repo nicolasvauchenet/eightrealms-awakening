@@ -15,13 +15,25 @@
         {% endif %}
 
         {% set bonus = app_characterBonusService.characterBonus(this.character, 'defense') %}
+        {% set defenseBonus = 0 %}
+        {% for effect in this.temporaryEffects %}
+            {% if effect.effect == 'defense' %}
+                {% set defenseBonus = defenseBonus + effect.amount %}
+            {% endif %}
+        {% endfor %}
         <div class="screen-info {% if bonus['extra'] %}text-success{% endif %}">
             {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
-            +{{ bonus['amount'] }}
+            +{{ bonus['amount'] + defenseBonus }}
         </div>
 
         {% set bonus = app_characterBonusService.characterBonus(this.character, 'damage') %}
         {% set magicalBonus = app_characterBonusService.characterBonus(this.character, 'magicalDamage') %}
+        {% set damageBonus = 0 %}
+        {% for effect in this.temporaryEffects %}
+            {% if effect.effect == 'damage' %}
+                {% set damageBonus = damageBonus + effect.amount %}
+            {% endif %}
+        {% endfor %}
         <div class="screen-info {% if bonus['extra'] or magicalBonus['extra'] %}text-success{% endif %}">
             {% set weapons = app_characterItemService.equippedWeapons(this.character) %}
             {% set magicalWeapons = app_characterItemService.equippedWeapons(this.character, true) %}
@@ -32,7 +44,7 @@
             {% else %}
                 {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
             {% endif %}
-            +{{ bonus['amount'] + magicalBonus['amount'] }}
+            +{{ bonus['amount'] + magicalBonus['amount'] + damageBonus }}
         </div>
     </div>
 

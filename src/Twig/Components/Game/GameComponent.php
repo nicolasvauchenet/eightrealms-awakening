@@ -92,6 +92,9 @@ class GameComponent
     #[LiveProp(writable: true)]
     public Player $character;
 
+    #[LiveProp(writable: true)]
+    public array $temporaryEffects = [];
+
     public function __construct(private readonly EntityManagerInterface     $entityManager,
                                 private readonly CharacterReputationService $characterReputationService,
                                 private readonly CharacterBonusService      $characterBonusService,
@@ -235,6 +238,8 @@ class GameComponent
         $this->entityManager->flush();
 
         $this->playerCombat = $playerCombat;
+
+        $this->temporaryEffects = [];
 
         $screen = $this->playerCombat->getCombat()->getCombatScreen();
         $this->changeScreen($screen->getId());
@@ -598,6 +603,7 @@ class GameComponent
         $this->entityManager->flush();
 
         $this->description = '<p class="text-warning mb-1">Vous avez fui le combat&nbsp;!</p>';
+        $this->temporaryEffects = [];
         $this->exitScreen();
     }
 
@@ -633,25 +639,140 @@ class GameComponent
     }
 
     #[LiveAction]
-    public function use(#[LiveArg] string $type): void
+    public function use(#[LiveArg] string $type, #[LiveArg] ?int $enemyId = null, #[LiveArg] ?int $position = null): void
     {
         switch($type) {
             case 'scroll':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['scroll'];
-                $this->description .= "<p>Vous lisez votre Parchemin de {$characterItem->getItem()->getName()}.</p>";
+                $this->description .= "<strong>Vous lisez votre Parchemin de {$characterItem->getItem()->getName()}.</strong><br/>";
+
+                switch($characterItem->getItem()->getType()) {
+                    case 'Offensif':
+                        $enemy = $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($enemyId);
+                        switch($characterItem->getItem()->getTarget()) {
+                            case 'health':
+                                $enemy->setHealth($enemy->getHealth() - $characterItem->getItem()->getAmount());
+                                $this->entityManager->persist($enemy);
+                                $this->description .= "<span class='text-success'>Vous infligez {$characterItem->getItem()->getAmount()} dégâts magiques à {$enemy->getCreature()->getName()} $position.</span><br/>";
+
+                                // Si area > 1, toucher d'autres ennemis
+                                if($characterItem->getItem()->getArea() > 1) {
+                                    $otherEnemies = [];
+                                    foreach($this->playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
+                                        if($creatureCombat->getId() !== $enemyId && $creatureCombat->getHealth() > 0) {
+                                            $otherEnemies[] = $creatureCombat;
+                                        }
+                                    }
+
+                                    shuffle($otherEnemies);
+                                    $targets = array_slice($otherEnemies, 0, $characterItem->getItem()->getArea() - 1);
+
+                                    foreach($targets as $target) {
+                                        $splashDamage = (int)floor($characterItem->getItem()->getAmount() * 2 / 3);
+                                        $target->setHealth($target->getHealth() - $splashDamage);
+                                        $this->entityManager->persist($target);
+                                        $this->description .= "<span class='text-success'>{$target->getCreature()->getName()} est aussi touché et subit {$splashDamage} dégâts.</span><br/>";
+                                        if($target->getHealth() <= 0) {
+                                            $this->description .= "<strong class='text-success'>Vous avez tué {$target->getCreature()->getName()}&nbsp;!</strong><br/>";
+                                        }
+                                    }
+                                }
+                                $this->entityManager->flush();
+                                break;
+                            case 'mana':
+                                $enemy->setMana($enemy->getMana() - $characterItem->getItem()->getAmount());
+                                $this->entityManager->persist($enemy);
+                                $this->description .= "<span class='text-success'>{$enemy->getCreature()->getName()} $position perd {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+
+                                // Si area > 1, toucher d'autres ennemis
+                                if($characterItem->getItem()->getArea() > 1) {
+                                    $otherEnemies = [];
+                                    foreach($this->playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
+                                        if($creatureCombat->getId() !== $enemyId && $creatureCombat->getMana() > 0) {
+                                            $otherEnemies[] = $creatureCombat;
+                                        }
+                                    }
+
+                                    shuffle($otherEnemies);
+                                    $targets = array_slice($otherEnemies, 0, $characterItem->getItem()->getArea() - 1);
+
+                                    foreach($targets as $target) {
+                                        $splashDamage = (int)floor($characterItem->getItem()->getAmount() * 2 / 3);
+                                        $target->setMana($target->getMana() - $splashDamage);
+                                        $this->entityManager->persist($target);
+                                        $this->description .= "<span class='text-success'>{$target->getCreature()->getName()} est aussi touché et perd {$splashDamage} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                                    }
+                                }
+                                $this->entityManager->flush();
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case 'Défensif':
+                        switch($characterItem->getItem()->getTarget()) {
+                            case 'health':
+                                $this->character->setHealth($this->character->getHealth() + $characterItem->getItem()->getAmount());
+                                $this->entityManager->persist($this->character);
+                                $this->entityManager->flush();
+                                $this->description .= "<span class='text-success'>Vous récupérez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de vie.</span><br/>";
+                                break;
+                            case 'mana':
+                                $this->character->setMana($this->character->getMana() + $characterItem->getItem()->getAmount());
+                                $this->entityManager->persist($this->character);
+                                $this->entityManager->flush();
+                                $this->description .= "<span class='text-success'>Vous récupérez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                                break;
+                            case 'damage':
+                                $this->temporaryEffects[] = [
+                                    'effect' => 'damage',
+                                    'amount' => $characterItem->getItem()->getAmount(),
+                                    'remainingTurns' => $characterItem->getItem()->getDuration() + 1,
+                                ];
+                                $this->description .= "<span class='text-success'>Votre bonus de dégâts augmente de {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " pendant {$characterItem->getItem()->getDuration()} tour" . ($characterItem->getItem()->getDuration() > 1 ? 's' : '') . ".</span><br/>";
+                                break;
+                            case 'defense':
+                                $this->temporaryEffects[] = [
+                                    'effect' => 'defense',
+                                    'amount' => $characterItem->getItem()->getAmount(),
+                                    'remainingTurns' => $characterItem->getItem()->getDuration() + 1,
+                                ];
+                                $this->description .= "<span class='text-success'>Votre bonus de défense augmente de {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " pendant {$characterItem->getItem()->getDuration()} tour" . ($characterItem->getItem()->getDuration() > 1 ? 's' : '') . ".</span><br/>";
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case 'Utile':
+                        switch($characterItem->getItem()->getEffect()) {
+                            case 'invisibility':
+                                $this->temporaryEffects[] = [
+                                    'effect' => 'invisibility',
+                                    'amount' => null,
+                                    'remainingTurns' => $characterItem->getItem()->getDuration() + 1,
+                                ];
+                                $this->description .= "<span class='text-success'>Vous devenez invisible pendant {$characterItem->getItem()->getDuration()} tour" . ($characterItem->getItem()->getDuration() > 1 ? 's' : '') . ".</span><br/>";
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                /*$this->entityManager->remove($characterItem);
+                $this->entityManager->flush();*/
                 break;
             case 'potion':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['potion'];
                 if($characterItem->getItem()->getTarget() === 'health') {
                     $this->character->setHealth($this->character->getHealth() + $characterItem->getItem()->getAmount());
-                } else if($characterItem->getItem()->getTarget() === 'health') {
+                    $this->description .= "<p>Vous buvez votre {$characterItem->getItem()->getName()} et regagnez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de vie.</p>";
+                } else if($characterItem->getItem()->getTarget() === 'mana') {
                     $this->character->setMana($this->character->getMana() + $characterItem->getItem()->getAmount());
+                    $this->description .= "<p>Vous buvez votre {$characterItem->getItem()->getName()} et regagnez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</p>";
                 }
                 $this->entityManager->persist($this->character);
                 $this->entityManager->remove($characterItem);
                 $this->entityManager->flush();
-
-                $this->description .= "<p>Vous buvez votre {$characterItem->getItem()->getName()}.</p>";
                 break;
             default:
                 break;
@@ -807,6 +928,8 @@ class GameComponent
         }
 
         $this->entityManager->flush();
+
+        $this->temporaryEffects = [];
         $screen = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy(['slug' => 'victoire']);
         $this->changeScreen($screen->getId());
 
@@ -819,25 +942,27 @@ class GameComponent
         $weaponRight = $characterItems['righthand'];
         $weaponLeft = $characterItems['lefthand'];
 
+        // Vérifier les bonus d'attaque temporaires
+        $attackBonus = 0;
+        foreach($this->temporaryEffects as $temporaryEffect) {
+            if($temporaryEffect['effect'] === 'attack_bonus') {
+                $attackBonus += $temporaryEffect['amount'];
+            }
+        }
+
         switch($type) {
             case 'righthand':
-                $this->handleAttack($attacker, $target, $weaponRight, 'main droite', 0);
+                $this->handleAttack($attacker, $target, $weaponRight, 'main droite', $attackBonus);
                 break;
 
             case 'lefthand':
                 $malus = ($weaponLeft && !$weaponLeft->getItem() instanceof Magical) ? -2 : 0;
-                $this->handleAttack($attacker, $target, $weaponLeft, 'main gauche', $malus);
+                $this->handleAttack($attacker, $target, $weaponLeft, 'main gauche', $malus + $attackBonus);
                 break;
 
             case 'twohands':
-                $isRightMagical = $weaponRight && $weaponRight->getItem() instanceof Magical;
-                $isLeftMagical = $weaponLeft && $weaponLeft->getItem() instanceof Magical;
-
-                $malusRight = $isRightMagical ? 0 : -1;
-                $malusLeft = $isLeftMagical ? 0 : -2;
-
-                $this->handleAttack($attacker, $target, $weaponRight, 'main droite', $malusRight);
-                $this->handleAttack($attacker, $target, $weaponLeft, 'main gauche', $malusLeft);
+                $this->handleAttack($attacker, $target, $weaponRight, 'main droite', $attackBonus);
+                $this->handleAttack($attacker, $target, $weaponLeft, 'main gauche', $attackBonus);
                 break;
         }
     }
@@ -880,6 +1005,13 @@ class GameComponent
             $targetName = $target->getNpc()->getName();
         }
 
+        // Pas de jet de défense si invisibilité
+        foreach($this->temporaryEffects as $temporaryEffect) {
+            if($temporaryEffect['effect'] === 'invisibility') {
+                $defenseRoll = 0;
+            }
+        }
+
         // Vérification de la réussite
         if($attackRoll >= $defenseRoll) {
             $isCritical = ($attackRoll == 20);
@@ -889,14 +1021,23 @@ class GameComponent
                 $weapon->setCharge(max(0, $weapon->getCharge() - 1));
             } else {
                 // Calcul des dégâts de l'arme physique
-                $weaponDamage = $weapon->getItem()->getDamage(); // Dégâts propres à l'arme
+                $weaponDamage = $weapon->getItem()->getDamage();
+
+                // Dégâts supplémentaires si arme enchantés
                 if($weapon->getItem()->getTarget() === 'damage') {
                     if($weapon->getCharge() > 0) {
-                        $weaponDamage += $weapon->getItem()->getAmount(); // Dégâts supplémentaires si arme enchantés
+                        $weaponDamage += $weapon->getItem()->getAmount();
                         $weapon->setCharge(max(0, $weapon->getCharge() - 1));
                         $this->entityManager->persist($weapon);
                     } else {
                         $this->description .= "<span class='text-danger'>Votre {$weapon->getItem()->getName()} n'a plus de charge&nbsp;! Elle n'inflige que des dégâts physiques.</span><br/>";
+                    }
+                }
+
+                // Dégâts supplémentaires si effect actif
+                foreach($this->temporaryEffects as $temporaryEffect) {
+                    if($temporaryEffect['effect'] === 'damage') {
+                        $weaponDamage += $temporaryEffect['amount'];
                     }
                 }
                 $strengthBonus = floor($attacker->getStrength() / 4); // Bonus de force
@@ -912,13 +1053,35 @@ class GameComponent
 
             $target->setHealth(max(0, $target->getHealth() - $damage));
             $this->description .= "<span class='text-success'>Vous infligez $damage dégât" . ($damage > 1 ? 's' : '') . " à $targetName avec {$weapon->getItem()->getName()} ($hand).</span><br/>";
-
             if($target->getHealth() <= 0) {
                 $this->description .= "<strong class='text-success'>Vous avez tué $targetName&nbsp;!</strong><br/>";
             }
-
             $this->entityManager->persist($target);
             $this->entityManager->persist($weapon);
+
+            // Si area > 1, toucher d'autres ennemis
+            if($isMagical && $weapon->getItem()->getArea() > 1) {
+                $otherEnemies = [];
+                foreach($this->playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
+                    if($creatureCombat->getId() !== $target->getId() && $creatureCombat->getHealth() > 0) {
+                        $otherEnemies[] = $creatureCombat;
+                    }
+                }
+
+                shuffle($otherEnemies);
+                $otherTargets = array_slice($otherEnemies, 0, $weapon->getItem()->getArea() - 1);
+
+                foreach($otherTargets as $otherTarget) {
+                    $splashDamage = (int)floor($damage * 2 / 3);
+                    $otherTarget->setHealth(max(0, $otherTarget->getHealth() - $splashDamage));
+                    $this->description .= "<span class='text-success'>{$otherTarget->getCreature()->getName()} est aussi touché et subit {$splashDamage} dégâts.</span><br/>";
+                    if($otherTarget->getHealth() <= 0) {
+                        $this->description .= "<strong class='text-success'>Vous avez tué {$otherTarget->getCreature()->getName()}&nbsp;!</strong><br/>";
+                    }
+                    $this->entityManager->persist($otherTarget);
+                }
+            }
+
             $this->entityManager->flush();
         } else {
             $this->description .= "Votre attaque $hand échoue, $targetName esquive&nbsp;!<br/>";
@@ -927,6 +1090,15 @@ class GameComponent
 
     private function executeEnemyAttack($enemy): void
     {
+        // Vérifier si le joueur est invisible
+        foreach($this->temporaryEffects as $temporaryEffect) {
+            if($temporaryEffect['effect'] === 'invisibility') {
+                $this->description .= "<p class='text-info'>Vous êtes invisible, {$enemy->getCreature()->getName()} ne vous attaque pas&nbsp;!</p>";
+
+                return;
+            }
+        }
+
         $target = $this->character;
         $attackRoll = random_int(1, 20);
 
@@ -941,6 +1113,11 @@ class GameComponent
 
         $defenseRoll = random_int(1, 20) + $target->getDexterity();
         $defenseBonus = $this->characterBonusService->getCharacterBonus($target, 'defense')['amount'] + floor($target->getConstitution() / 2);
+        foreach($this->temporaryEffects as $temporaryEffect) {
+            if($temporaryEffect['effect'] === 'defense') {
+                $defenseBonus += $temporaryEffect['amount'];
+            }
+        }
 
         if($attackRoll >= $defenseRoll) {
             $baseDamage = random_int($damageRange[0], $damageRange[1]);
@@ -960,6 +1137,7 @@ class GameComponent
 
         if($target->getHealth() <= 0) {
             $this->description = '';
+            $this->temporaryEffects = [];
             $screen = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy(['slug' => 'defaite']);
             $this->changeScreen($screen->getId());
         }
@@ -975,6 +1153,15 @@ class GameComponent
 
         // Si on a atteint la fin de la liste, recommencer depuis le premier
         if($this->currentTurn >= count($this->turnOrder)) {
+            // Réduction de la durée des effets temporaires
+            foreach($this->temporaryEffects as $index => $temporaryEffect) {
+                $this->temporaryEffects[$index]['remainingTurns']--;
+
+                // Suppression des effets expirés
+                if($this->temporaryEffects[$index]['remainingTurns'] <= 0) {
+                    unset($this->temporaryEffects[$index]);
+                }
+            }
             $this->currentTurn = 0;
             $this->initializeTurnOrder();
             $this->nbTurns++;

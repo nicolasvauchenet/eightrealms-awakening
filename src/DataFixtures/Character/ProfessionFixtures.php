@@ -140,6 +140,13 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
                 'attitude' => 'amical',
                 'reference' => 'profession_tavernier',
             ],
+            [
+                'name' => 'Pêcheur',
+                'description' => "<p>Le Pêcheur est un habitant des côtes, vivant de la pêche et de la vente de poissons.</p>",
+                'type' => 'pnj',
+                'attitude' => 'amical',
+                'reference' => 'profession_pecheur',
+            ],
         ];
 
         foreach($professions as $data) {

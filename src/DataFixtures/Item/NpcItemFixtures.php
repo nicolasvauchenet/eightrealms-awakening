@@ -3,12 +3,16 @@
 namespace App\DataFixtures\Item;
 
 use App\Entity\Character\Npc;
+use App\Entity\Item\Amulet;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Food;
 use App\Entity\Item\Gift;
 use App\Entity\Item\Magical;
 use App\Entity\Item\Map;
+use App\Entity\Item\Potion;
+use App\Entity\Item\Ring;
+use App\Entity\Item\Scroll;
 use App\Entity\Item\Shield;
 use App\Entity\Item\Weapon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -158,6 +162,163 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'character' => 'npc_gart_le_forgeron',
                 'item' => 'map_plouc',
+                'class' => Map::class,
+            ],
+
+            // Wilbert l'Arcaniste
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'magical_firewand',
+                'class' => Magical::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'magical_icewand',
+                'class' => Magical::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'magical_stormwand',
+                'class' => Magical::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'magical_firestick',
+                'class' => Magical::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'magical_icestick',
+                'class' => Magical::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'magical_stormstick',
+                'class' => Magical::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'magical_healstick',
+                'class' => Magical::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'magical_protectionstick',
+                'class' => Magical::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'ring_health',
+                'class' => Ring::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'ring_mana',
+                'class' => Ring::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'ring_protection',
+                'class' => Ring::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'ring_knight',
+                'class' => Ring::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'ring_night_vision',
+                'class' => Ring::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'amulet_health',
+                'class' => Amulet::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'amulet_mana',
+                'class' => Amulet::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'amulet_protection',
+                'class' => Amulet::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'scroll_fireball',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'scroll_deconcentration',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'scroll_heal',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'scroll_concentration',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'scroll_power',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'scroll_barrier',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'scroll_invisibility',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'scroll_lockpick',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'potion_lighthealing',
+                'class' => Potion::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'potion_healing',
+                'class' => Potion::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'potion_lightmana',
+                'class' => Potion::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'potion_mana',
+                'class' => Potion::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'potion_invisibility',
+                'class' => Potion::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'map_royaume_de_lile_du_nord',
+                'class' => Map::class,
+            ],
+            [
+                'character' => 'npc_wilbert_larcaniste',
+                'item' => 'map_port_saint_doux',
                 'class' => Map::class,
             ],
         ];

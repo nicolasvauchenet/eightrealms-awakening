@@ -758,8 +758,8 @@ class GameComponent
                     default:
                         break;
                 }
-                /*$this->entityManager->remove($characterItem);
-                $this->entityManager->flush();*/
+                $this->entityManager->remove($characterItem);
+                $this->entityManager->flush();
                 break;
             case 'potion':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['potion'];

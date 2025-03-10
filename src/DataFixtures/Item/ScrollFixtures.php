@@ -34,7 +34,6 @@ class ScrollFixtures extends Fixture implements OrderedFixtureInterface
                 'type' => 'Offensif',
                 'target' => 'mana',
                 'amount' => 30,
-                'area' => 3,
                 'price' => 500,
                 'reference' => 'scroll_deconcentration',
             ],

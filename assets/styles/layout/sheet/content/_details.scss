@@ -37,7 +37,7 @@
   }
 
   .infos {
-    @include displayGrid(1fr 8rem, 0.5rem);
+    @include displayGrid(1fr 8.5rem, 0.5rem);
     margin-bottom: 0.5rem;
     font-family: $font-secondary;
     font-weight: bold;
@@ -107,6 +107,12 @@
             display: block;
             margin: 0 auto 0.25rem;
             height: 2.75rem;
+          }
+
+          small {
+            font-family: $font-primary;
+            font-size: 1rem;
+            vertical-align: text-bottom;
           }
         }
       }

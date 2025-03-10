@@ -40,6 +40,11 @@ class LocationScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'screen_location_docks_de_l_ouest',
             ],
             [
+                'name' => 'Quartier des Ploucs',
+                'location' => 'location_zone_quartier_des_ploucs',
+                'reference' => 'screen_location_quartier_des_ploucs',
+            ],
+            [
                 'name' => 'Temple de Port Saint-Doux',
                 'location' => 'location_building_temple_de_port_saint_doux',
                 'reference' => 'screen_location_temple_de_port_saint_doux',
@@ -53,6 +58,11 @@ class LocationScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Taverne de la Flûte Moisie',
                 'location' => 'location_building_taverne_de_la_flute_moisie',
                 'reference' => 'screen_location_taverne_de_la_flute_moisie',
+            ],
+            [
+                'name' => 'Arcanes de Port Saint-Doux',
+                'location' => 'location_building_arcanes_de_port_saint_doux',
+                'reference' => 'screen_location_building_arcanes_de_port_saint_doux',
             ],
 
             // Plouc

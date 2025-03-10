@@ -110,7 +110,7 @@ class MagicalFixtures extends Fixture implements OrderedFixtureInterface
                 'category' => 'category_magical',
                 'name' => 'Bâton de protection',
                 'description' => "<p>Ce bâton magique projette un champ de force protecteur autour de son porteur. Il absorbe les dégâts et renvoie les attaques ennemies, protégeant efficacement contre les attaques physiques et magiques. Un atout majeur pour les défenseurs cherchant à protéger leurs alliés.</p>",
-                'picture' => 'magical_shield.png',
+                'picture' => 'magical_stick.png',
                 'type' => 'Défensif',
                 'target' => 'defense',
                 'amount' => 20,

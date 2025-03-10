@@ -244,6 +244,20 @@ class DialogueFixtures extends Fixture implements OrderedFixtureInterface
                 'parent' => 'dialogue_gart_le_forgeron_rumor_1',
                 'reference' => 'dialogue_gart_le_forgeron_rumor_2_accepted',
             ],
+
+            // Jarrod le Tavernier
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Les amateurs de machins magiques devraient aller voir Wilbert l'Arcaniste. Il est un peu bizarre, mais il sait de quoi il parle. Il est à l'Arcane, avec les ploucs.</em></p>",
+                'npc' => 'npc_jarrod_le_tavernier',
+                'reference' => 'dialogue_jarrod_le_tavernier_rumor_1',
+            ],
+            [
+                'type' => 'rumor',
+                'text' => "<p><em>Le Quartier des Ploucs, comme je viens de dire. C'est le quartier des gens qui ont quitté le village de pêcheurs, Plouc. C'est quasiment eux qui l'ont construit, ce quartier, avec l'accord du Maire évidemment. C'est un quartier assez calme et ennuyeux, à l'ouest de la ville.</em></p>",
+                'npc' => 'npc_jarrod_le_tavernier',
+                'reference' => 'dialogue_jarrod_le_tavernier_rumor_2',
+            ],
         ];
 
         foreach($dialogues as $data) {

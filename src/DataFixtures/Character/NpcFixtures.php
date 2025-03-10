@@ -163,6 +163,27 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'location' => 'location_building_taverne_de_la_flute_moisie',
                 'reference' => 'npc_jarrod_le_tavernier',
             ],
+            [
+                'name' => 'Pêcheur',
+                'picture' => 'pecheur.png',
+                'description' => "<p>Cet homme a l'air pauvre et plutôt mal nourri. Il s'arrête néanmoins en voous voyant vous approcher, et vous regarde avec un sourire timide.</p><p><em>Bonjour, étranger. Vous cherchez du poisson frais&nbsp;? Je peux vous en vendre à un bon prix.</em></p>",
+                'strength' => 10,
+                'dexterity' => 12,
+                'constitution' => 8,
+                'wisdom' => 10,
+                'intelligence' => 9,
+                'charisma' => 9,
+                'healthMax' => 80,
+                'health' => 80,
+                'manaMax' => 45,
+                'mana' => 45,
+                'fortune' => 5,
+                'level' => 1,
+                'race' => 'race_humain',
+                'profession' => 'profession_pecheur',
+                'location' => 'location_zone_quartier_des_ploucs',
+                'reference' => 'npc_pecheur',
+            ],
         ];
 
         foreach($characters as $data) {

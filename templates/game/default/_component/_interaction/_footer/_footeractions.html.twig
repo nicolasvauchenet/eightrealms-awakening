@@ -34,6 +34,10 @@
     {% endif %}
 
     <button class="screen-action" title="Partir" {{ live_action('exitScreen') }}>
-        <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
+        {% if this.playerNpc.npc.location.type == 'building' %}
+            <img src="{{ asset('img/core/location/thumb_' ~ this.playerNpc.npc.location.picture) }}" alt="{{ this.playerNpc.npc.location.name }}"/>
+        {% else %}
+            <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
+        {% endif %}
     </button>
 </div>

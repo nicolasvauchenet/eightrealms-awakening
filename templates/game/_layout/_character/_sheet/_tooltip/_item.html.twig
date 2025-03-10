@@ -82,12 +82,22 @@
                                         {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
                                         +{{ characterItem.item.amount }}
                                     </div>
+                                {% elseif characterItem.item.target == 'damage' %}
+                                    <div class="tooltip-attribute text-primary">
+                                        {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon'}) }}
+                                        +{{ characterItem.item.amount }}
+                                    </div>
                                 {% endif %}
                             {% elseif characterItem.item.type == 'Offensif' %}
                                 {% if characterItem.item.target == 'health' %}
                                     <div class="tooltip-attribute text-third">
                                         {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon'}) }}
-                                        +{{ characterItem.item.amount }}
+                                        {{ characterItem.item.amount }}
+                                    </div>
+                                {% elseif characterItem.item.target == 'mana' %}
+                                    <div class="tooltip-attribute text-fourth">
+                                        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon'}) }}
+                                        {{ characterItem.item.amount }}
                                     </div>
                                 {% elseif characterItem.item.target == 'damage' %}
                                     <div class="tooltip-attribute text-primary">

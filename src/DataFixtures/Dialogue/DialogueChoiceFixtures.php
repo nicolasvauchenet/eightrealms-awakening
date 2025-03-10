@@ -130,6 +130,21 @@ class DialogueChoiceFixtures extends Fixture implements OrderedFixtureInterface
                 ],
                 'reference' => 'dialogue_gart_le_forgeron_rumor_2_choice_decline',
             ],
+
+            // Jarrod le Tavernier
+            [
+                'text' => 'Avec les ploucs&nbsp;?',
+                'position' => 1,
+                'dialogue' => 'dialogue_jarrod_le_tavernier_rumor_1',
+                'conditions' => [
+                    'hasNoLocation' => 'location_zone_quartier_des_ploucs',
+                ],
+                'effects' => [
+                    'newLocation' => 'location_zone_quartier_des_ploucs',
+                    'changeDialogue' => 'dialogue_jarrod_le_tavernier_rumor_2',
+                ],
+                'reference' => 'dialogue_jarrod_le_tavernier_rumor_1_choice_1',
+            ],
         ];
 
         foreach($dialogueChoices as $data) {

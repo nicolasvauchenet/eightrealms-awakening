@@ -71,6 +71,10 @@ readonly class CharacterItemService
                 return $characterItems->filter(function($item) {
                     return in_array($item->getItem()->getCategory()->getSlug(), ['armure', 'bouclier', 'arme', 'amulette', 'anneau', 'carte']);
                 });
+            case 'arcaniste':
+                return $characterItems->filter(function($item) {
+                    return in_array($item->getItem()->getCategory()->getSlug(), ['arme-magique', 'anneau', 'parchemin', 'potion', 'amulette', 'carte']);
+                });
             default:
                 return new ArrayCollection();
         }

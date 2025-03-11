@@ -7,7 +7,6 @@ use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerNpc;
 use App\Entity\Combat\Combat;
-use App\Entity\Combat\CreatureCombat;
 use App\Entity\Combat\CreaturePlayerCombat;
 use App\Entity\Combat\NpcPlayerCombat;
 use App\Entity\Combat\PlayerCombat;
@@ -94,6 +93,9 @@ class GameComponent
 
     #[LiveProp(writable: true)]
     public array $temporaryEffects = [];
+
+    #[LiveProp(writable: true)]
+    public array $wearLogs = [];
 
     public function __construct(private readonly EntityManagerInterface     $entityManager,
                                 private readonly CharacterReputationService $characterReputationService,
@@ -1171,7 +1173,7 @@ class GameComponent
                 $weapon->setCharge(max(0, $weapon->getCharge() - 1));
             } else {
                 // Calcul des dégâts de l'arme physique
-                $weaponDamage = $weapon->getItem()->getDamage();
+                $weaponDamage = ($weapon->getHealth() > 0) ? $weapon->getItem()->getDamage() : 1; // Si arme cassée, dégâts = 1
 
                 // Dégâts supplémentaires si arme enchantés
                 if($weapon->getItem()->getTarget() === 'damage') {
@@ -1190,8 +1192,8 @@ class GameComponent
                         $weaponDamage += $temporaryEffect['amount'];
                     }
                 }
-                $strengthBonus = floor($attacker->getStrength() / 4); // Bonus de force
-                $baseDamage = random_int($weaponDamage, $weaponDamage + 5) + $strengthBonus;
+                $strengthBonus = floor($attacker->getStrength() / 5); // Bonus de force
+                $baseDamage = random_int($weaponDamage, $weaponDamage + 2) + $strengthBonus;
 
                 // Application de la réduction d'armure sauf si coup critique
                 $damage = $isCritical ? $baseDamage * 2 : max(1, $baseDamage - $defenseBonus);
@@ -1201,11 +1203,26 @@ class GameComponent
                 $this->description .= "<strong class='text-danger'>Coup critique&nbsp;!</strong><br/>";
             }
 
+            // Application des dégâts
             $target->setHealth(max(0, $target->getHealth() - $damage));
             $this->description .= "<span class='text-success'>Vous infligez $damage dégât" . ($damage > 1 ? 's' : '') . " à $targetName avec {$weapon->getItem()->getName()} ($hand).</span><br/>";
             if($target->getHealth() <= 0) {
                 $this->description .= "<strong class='text-success'>Vous avez tué $targetName&nbsp;!</strong><br/>";
             }
+
+            // Usure de l'arme si elle n'est pas magique
+            if(!$isMagical && $weapon->getHealth() > 0) {
+                $weaponUsage = $weapon->getUsage() + 1;
+                $weapon->setUsage($weaponUsage);
+                if($weaponUsage >= 15) {
+                    $weapon->setUsage(0);
+                    $weapon->setHealth($weapon->getHealth() - 1);
+                    $this->wearLogs[] = "<span class='text-warning'>Votre {$weapon->getItem()->getName()} s'use et perd 1 PV&nbsp;!</span><br/>";
+                }
+            } else {
+                $this->wearLogs[] = "<span class='text-danger'><strong>Votre {$weapon->getItem()->getName()} est cassée&nbsp;!</strong></span><br/>";
+            }
+
             $this->entityManager->persist($target);
             $this->entityManager->persist($weapon);
 
@@ -1255,20 +1272,50 @@ class GameComponent
         if($enemy instanceof CreaturePlayerCombat) {
             $attackRoll += $enemy->getCreature()->getStrength();
             $damageRange = [$enemy->getCreature()->getDamage(), $enemy->getCreature()->getDamage() + 4];
+            $weapon = null;
         } else if($enemy instanceof NpcPlayerCombat) {
             $attackRoll += $enemy->getNpc()->getStrength();
             $damageRange = [$this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'] - 2,
                 $this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'] + 2];
+            $weapon = $this->characterItemService->getEquippedItems($enemy->getNpc())['righthand'] ?? null;
         }
 
+        // Jet de défense du joueur
         $defenseRoll = random_int(1, 20) + $target->getDexterity();
         $defenseBonus = $this->characterBonusService->getCharacterBonus($target, 'defense')['amount'] + floor($target->getConstitution() / 2);
+
+        // Vérifier si le joueur a un bouclier ou une armure équipés
+        $shield = $this->characterItemService->getEquippedItems($target)['shield'] ?? null;
+        $armor = $this->characterItemService->getEquippedItems($target)['armor'] ?? null;
+
+        // Appliquer un malus si l'équipement est usé
+        if($shield && $shield->getHealth() > 0) {
+            $shieldDurability = $shield->getHealth() / $shield->getItem()->getHealth(); // Pourcentage de durabilité
+            $shieldMalus = (1 - $shieldDurability) * floor($target->getDexterity() / 3); // Malus selon l'usure
+            $defenseBonus -= $shieldMalus;
+
+            if($shieldDurability <= 0.3) {
+                $this->description .= "<span class='text-warning'>Votre {$shield->getItem()->getName()} est en mauvais état&nbsp;!</span><br/>";
+            }
+        }
+        if($armor && $armor->getHealth() > 0) {
+            $armorDurability = $armor->getHealth() / $armor->getItem()->getHealth(); // Pourcentage de durabilité
+            $armorMalus = (1 - $armorDurability) * floor($target->getConstitution() / 3); // Malus selon l'usure
+            $defenseBonus -= $armorMalus;
+
+            if($armorDurability <= 0.3) {
+                $this->description .= "<span class='text-warning'>Votre {$armor->getItem()->getName()} est en mauvais état&nbsp;!</span><br/>";
+            }
+        }
+
+        // Ajout des effets temporaires sur la défense
         foreach($this->temporaryEffects as $temporaryEffect) {
             if($temporaryEffect['effect'] === 'defense') {
                 $defenseBonus += $temporaryEffect['amount'];
             }
         }
 
+        // Résolution de l'attaque
         if($attackRoll >= $defenseRoll) {
             $baseDamage = random_int($damageRange[0], $damageRange[1]);
             $damage = max(1, $baseDamage - $defenseBonus);
@@ -1276,11 +1323,61 @@ class GameComponent
             if($attackRoll == 20) {
                 $damage *= 2;
                 $this->description .= "<strong class='text-danger'>{$enemy->getCreature()->getName()} vous inflige un coup critique&nbsp;!</strong><br/>";
+
+                // Usure supplémentaire des équipements en cas de coup critique
+                if($shield && $shield->getHealth() > 0) {
+                    $shield->setHealth($shield->getHealth() - 1);
+                    $this->entityManager->persist($shield);
+                    $this->description .= "<span class='text-warning'>Votre {$shield->getItem()->getName()} subit un choc violent et s'abîme&nbsp;!</span><br/>";
+                }
+                if($armor && $armor->getHealth() > 0) {
+                    $armor->setHealth($armor->getHealth() - 1);
+                    $this->entityManager->persist($armor);
+                    $this->description .= "<span class='text-warning'>Votre {$armor->getItem()->getName()} est endommagée par l'attaque&nbsp;!</span><br/>";
+                }
             }
 
+            $damage = floor($damage);
             $target->setHealth(max(0, $target->getHealth() - $damage));
             $this->description .= "<span class='text-warning'>{$enemy->getCreature()->getName()} vous attaque et inflige $damage dégât" . ($damage > 1 ? 's' : '') . ".</span><br/>";
 
+            // Usure normale du bouclier et de l'armure après 15 attaques encaissées
+            if($shield && $shield->getHealth() > 0) {
+                $shield->setUsage($shield->getUsage() + 1);
+                if($shield->getUsage() >= 15) {
+                    $shield->setUsage(0);
+                    $shield->setHealth($shield->getHealth() - 1);
+
+                    $logMessage = "<span class='text-warning'>Votre {$shield->getItem()->getName()} s'use à force de bloquer les attaques&nbsp;!</span><br/>";
+                    if(!in_array($logMessage, $this->wearLogs, true)) {
+                        $this->wearLogs[] = $logMessage;
+                    }
+                }
+                $this->entityManager->persist($shield);
+            } else {
+                $logMessage = "<span class='text-danger'><strong>Votre {$shield->getItem()->getName()} est cassé&nbsp;!</strong></span><br/>";
+                if(!in_array($logMessage, $this->wearLogs, true)) {
+                    $this->wearLogs[] = $logMessage;
+                }
+            }
+
+            if($armor && $armor->getHealth() > 0) {
+                $armor->setUsage($armor->getUsage() + 1);
+                if($armor->getUsage() >= 15) {
+                    $armor->setUsage(0);
+                    $armor->setHealth($armor->getHealth() - 1);
+                    $logMessage = "<span class='text-warning'>Votre {$armor->getItem()->getName()} montre des signes d'usure&nbsp;!</span><br/>";
+                    if(!in_array($logMessage, $this->wearLogs, true)) {
+                        $this->wearLogs[] = $logMessage;
+                    }
+                }
+                $this->entityManager->persist($armor);
+            } else {
+                $logMessage = "<span class='text-danger'><strong>Votre {$armor->getItem()->getName()} est cassée&nbsp;!</strong></span><br/>";
+                if(!in_array($logMessage, $this->wearLogs, true)) {
+                    $this->wearLogs[] = $logMessage;
+                }
+            }
         } else {
             $this->description .= "{$enemy->getCreature()->getName()} tente de vous attaquer mais vous esquivez&nbsp;!<br/>";
         }
@@ -1315,6 +1412,13 @@ class GameComponent
             $this->currentTurn = 0;
             $this->initializeTurnOrder();
             $this->nbTurns++;
+
+            // Ajout des logs d'usure à la fin du tour
+            if(!empty($this->wearLogs)) {
+                $this->description .= implode('', $this->wearLogs);
+                $this->wearLogs = []; // Réinitialisation après affichage
+            }
+
             $this->description .= "</p><h3>Tour {$this->nbTurns}&nbsp;:</h3>";
         }
 

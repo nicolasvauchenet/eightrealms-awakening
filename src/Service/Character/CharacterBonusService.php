@@ -42,9 +42,9 @@ readonly class CharacterBonusService
                     }
                 } else {
                     if($bonusType === 'damage' && method_exists($item, 'getDamage')) {
-                        $bonus['amount'] += $item->getDamage();
+                        $bonus['amount'] += $characterItem->getHealth() > 0 ? $item->getDamage() : 1;
                     } else if($bonusType === 'defense' && method_exists($item, 'getDefense')) {
-                        $bonus['amount'] += $item->getDefense();
+                        $bonus['amount'] += $characterItem->getHealth() > 0 ? $item->getDefense() : 1;
                     }
                 }
             }

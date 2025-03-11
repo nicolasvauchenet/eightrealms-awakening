@@ -31,7 +31,11 @@
                                             {% endif %}
                                             <div class="card-attribute text-primary">
                                                 {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
-                                                +{{ characterItem.item.defense }}
+                                                {% if characterItem.health <= 0 %}
+                                                    +1
+                                                {% else %}
+                                                    +{{ characterItem.item.defense }}
+                                                {% endif %}
                                             </div>
                                         {% elseif characterItem.item.category.slug == 'arme' %}
                                             {% if characterItem.item.target == 'damage' %}
@@ -42,7 +46,11 @@
                                             {% endif %}
                                             <div class="card-attribute text-primary">
                                                 {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon'}) }}
-                                                +{{ characterItem.item.damage }}
+                                                {% if characterItem.health <= 0 %}
+                                                    +1
+                                                {% else %}
+                                                    +{{ characterItem.item.damage }}
+                                                {% endif %}
                                             </div>
                                         {% elseif characterItem.item.category.slug == 'arme-magique' %}
                                             {% if characterItem.item.type == 'Offensif' %}
@@ -117,7 +125,9 @@
                                     </div>
                                 {% endif %}
 
-                                <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}" alt="{{ characterItem.item.name }}" class="card-image"/>
+                                <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                                     alt="{{ characterItem.item.name }}"
+                                     class="card-image {% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"/>
 
                                 {% if characterItem.charge is not null %}
                                     <div class="gauge">

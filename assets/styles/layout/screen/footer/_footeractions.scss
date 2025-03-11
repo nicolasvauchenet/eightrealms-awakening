@@ -34,6 +34,10 @@
       width: 3rem;
       height: 3rem;
       object-fit: cover;
+
+      &.broken {
+        filter: sepia(100%) saturate(450%) hue-rotate(-50deg) brightness(85%);
+      }
     }
   }
 }

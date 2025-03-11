@@ -39,12 +39,20 @@
                         {% if characterItem.item.category.slug == 'armure' or characterItem.item.category.slug == 'bouclier' %}
                             <div class="tooltip-attribute text-primary">
                                 {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon'}) }}
-                                +{{ characterItem.item.defense }}
+                                {% if characterItem.health <= 0 %}
+                                    +1
+                                {% else %}
+                                    +{{ characterItem.item.defense }}
+                                {% endif %}
                             </div>
                         {% elseif characterItem.item.category.slug == 'arme' %}
                             <div class="tooltip-attribute text-primary">
                                 {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon'}) }}
-                                +{{ characterItem.item.damage }}
+                                {% if characterItem.health <= 0 %}
+                                    +1
+                                {% else %}
+                                    +{{ characterItem.item.damage }}
+                                {% endif %}
                             </div>
                         {% elseif characterItem.item.category.slug == 'arme-magique' %}
                             {% if characterItem.item.type == 'Offensif' %}
@@ -153,7 +161,16 @@
                 {% endif %}
 
                 {% if characterItem.equipped %}
-                    <h4 class="text-warning mb-1">Objet équipé</h4>
+                    <h4 class="text-primary mb-1">
+                        Objet équipé
+                        {% if characterItem.health is not null and characterItem.health <= 0 %}
+                            <span class="text-danger">mais brisé&nbsp;!</span>
+                        {% endif %}
+                    </h4>
+                {% else %}
+                    {% if characterItem.health is not null and characterItem.health <= 0 %}
+                        <h4 class="text-danger mb-1">Objet brisé&nbsp;!</h4>
+                    {% endif %}
                 {% endif %}
 
                 <h3 class="tooltip-title">{{ characterItem.item.name }}</h3>
@@ -175,7 +192,9 @@
                 {% endif %}
 
                 <figure class="tooltip-picture">
-                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}" alt="{{ characterItem.item.name }}" class="tooltip-image"/>
+                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                         alt="{{ characterItem.item.name }}"
+                         class="tooltip-image {% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"/>
                 </figure>
 
                 {% if characterItem.charge is not null %}

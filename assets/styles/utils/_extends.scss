@@ -118,6 +118,10 @@
   pointer-events: none;
 }
 
+.broken {
+  filter: sepia(100%) saturate(450%) hue-rotate(-50deg) brightness(85%);
+}
+
 /* ANIMATIONS */
 .appears {
   opacity: 0;

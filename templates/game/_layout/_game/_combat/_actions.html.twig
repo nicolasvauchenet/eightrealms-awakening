@@ -8,6 +8,7 @@
                             title="Attaquer avec la main droite"
                             {{ live_action('attack', {'type': 'righthand', 'creatureCombatId': creatureCombat.id, 'position': position}) }}>
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).righthand.item.picture) }}"
+                             class="{% if app_characterItemService.equippedItems(this.character).righthand.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).righthand.item.name }}"/>
                     </button>
                 {% endif %}
@@ -19,6 +20,7 @@
                             title="Attaquer avec la main gauche"
                             {{ live_action('attack', {'type': 'lefthand', 'creatureCombatId': creatureCombat.id, 'position': position}) }}>
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).lefthand.item.picture) }}"
+                             class="{% if app_characterItemService.equippedItems(this.character).lefthand.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).lefthand.item.name }}"/>
                     </button>
                 {% endif %}
@@ -29,7 +31,9 @@
                     <button class="screen-action"
                             title="Attaquer avec les deux mains"
                             {{ live_action('attack', {'type': 'twohands', 'creatureCombatId': creatureCombat.id, 'position': position}) }}>
-                        <img src="{{ asset('img/core/action/attack.png') }}" class="equip" alt="Deux main"/>
+                        <img src="{{ asset('img/core/action/attack.png') }}"
+                             class="{% if app_characterItemService.equippedItems(this.character).righthand.health <= 0 or app_characterItemService.equippedItems(this.character).lefthand.health <= 0 %}broken{% endif %}"
+                             alt="Deux mains"/>
                     </button>
                 {% endif %}
             {% endif %}

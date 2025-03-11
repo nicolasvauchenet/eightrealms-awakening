@@ -55,7 +55,7 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/armor/' ~ app_characterItemService.equippedItems(this.character).armor.item.picture) }}"
-                             class="equip"
+                             class="{% if app_characterItemService.equippedItems(this.character).armor.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).armor.item.name }}"/>
                         <div class="gauge">
                             <div class="gauge-fill success"
@@ -73,7 +73,6 @@
                     <div class="screen-info" data-controller="tooltip">
                         <a data-action="click->tooltip#open">
                             <img src="{{ asset('img/core/item/amulet/' ~ app_characterItemService.equippedItems(this.character).amulet.item.picture) }}"
-                                 class="equip"
                                  alt="{{ app_characterItemService.equippedItems(this.character).amulet.item.name }}"/>
                         </a>
                         {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).amulet} %}
@@ -86,7 +85,6 @@
                     <div class="screen-info" data-controller="tooltip">
                         <a data-action="click->tooltip#open">
                             <img src="{{ asset('img/core/item/ring/' ~ app_characterItemService.equippedItems(this.character).ring.item.picture) }}"
-                                 class="equip"
                                  alt="{{ app_characterItemService.equippedItems(this.character).ring.item.name }}"/>
                         </a>
                         {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).ring} %}
@@ -100,7 +98,7 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).righthand.item.picture) }}"
-                             class="equip"
+                             class="{% if app_characterItemService.equippedItems(this.character).righthand.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).righthand.item.name }}"/>
                         {% if app_characterItemService.equippedItems(this.character).righthand.charge is not null %}
                             <div class="gauge">
@@ -122,7 +120,7 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).lefthand.item.picture) }}"
-                             class="equip"
+                             class="{% if app_characterItemService.equippedItems(this.character).lefthand.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).lefthand.item.name }}"/>
                         {% if app_characterItemService.equippedItems(this.character).lefthand.charge is not null %}
                             <div class="gauge">
@@ -144,7 +142,7 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/shield/' ~ app_characterItemService.equippedItems(this.character).shield.item.picture) }}"
-                             class="equip"
+                             class="{% if app_characterItemService.equippedItems(this.character).shield.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).shield.item.name }}"/>
                         <div class="gauge">
                             <div class="gauge-fill success"
@@ -160,7 +158,7 @@
             <div class="screen-info" data-controller="tooltip">
                 <a data-action="click->tooltip#open">
                     <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).bow.item.picture) }}"
-                         class="equip"
+                         class="{% if app_characterItemService.equippedItems(this.character).armor.health <= 0 %}broken{% endif %}"
                          alt="{{ app_characterItemService.equippedItems(this.character).bow.item.name }}"/>
                     {% if app_characterItemService.equippedItems(this.character).bow.charge is not null %}
                         <div class="gauge">
@@ -183,7 +181,6 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/scroll/' ~ app_characterItemService.equippedItems(this.character).scroll.item.picture) }}"
-                             class="equip"
                              alt="{{ app_characterItemService.equippedItems(this.character).scroll.item.name }}"/>
                     </a>
                     {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).scroll} %}
@@ -194,7 +191,6 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/potion/' ~ app_characterItemService.equippedItems(this.character).potion.item.picture) }}"
-                             class="equip"
                              alt="{{ app_characterItemService.equippedItems(this.character).potion.item.name }}"/>
                     </a>
                     {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: app_characterItemService.equippedItems(this.character).potion} %}

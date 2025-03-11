@@ -11,7 +11,7 @@
                                 <div class="card-header">
                                     <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
                                          alt="{{ characterItem.item.name }}"
-                                         class="card-image {% if (app_itemService.sellPrice(characterItem, this.playerNpc) > this.playerNpc.fortune) or characterItem.questItem %}disabled{% endif %}"/>
+                                         class="card-image {% if (app_itemService.sellPrice(characterItem, this.playerNpc) > this.playerNpc.fortune) or characterItem.questItem %}disabled{% endif %} {% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"/>
                                 </div>
                             </a>
 

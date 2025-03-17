@@ -24,7 +24,7 @@ class Npc extends Character
     private Collection $playerNpcs;
 
     #[ORM\ManyToOne(inversedBy: 'npcs')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Location $location = null;
 
     /**
@@ -38,6 +38,9 @@ class Npc extends Character
      */
     #[ORM\OneToMany(targetEntity: NpcCombat::class, mappedBy: 'npc', orphanRemoval: true)]
     private Collection $npcCombats;
+
+    #[ORM\Column(length: 255)]
+    private ?string $thumb = null;
 
     public function __construct()
     {
@@ -157,6 +160,18 @@ class Npc extends Character
                 $npcCombat->setNpc(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getThumb(): ?string
+    {
+        return $this->thumb;
+    }
+
+    public function setThumb(string $thumb): static
+    {
+        $this->thumb = $thumb;
 
         return $this;
     }

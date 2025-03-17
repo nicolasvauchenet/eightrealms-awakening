@@ -18,7 +18,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             // Port Saint-Doux
             [
                 'name' => 'Sophie La Marchande',
-                'picture' => 'sophie-la-marchande.png',
+                'picture' => 'chapter1/npc/sophie-la-marchande.png',
+                'thumb' => 'chapter1/npc/sophie-la-marchande_thumb.png',
                 'description' => "<p>Vous êtes face à une marchande. Elle vous regarde avec un sourire bienveillant. Elle semble prête à vous aider si vous avez besoin de quelque chose.</p>",
                 'strength' => 8,
                 'dexterity' => 13,
@@ -39,7 +40,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => 'Robert Le Garde',
-                'picture' => 'robert-le-garde.png',
+                'picture' => 'chapter1/npc/robert-le-garde.png',
+                'thumb' => 'chapter1/npc/robert-le-garde_thumb.png',
                 'description' => "<p>Vous êtes face à un garde de la ville. Il est en armure et son arme est prête à être dégainée. Il vous regarde avec méfiance.</p><p><em>Qu'y a-t-il, citoyen&nbsp;? Un problème&nbsp;? Faites vite&nbsp;!</em></p>",
                 'strength' => 12,
                 'dexterity' => 11,
@@ -60,7 +62,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => 'Bilo le Passant',
-                'picture' => 'bilo-le-passant.png',
+                'picture' => 'chapter1/npc/bilo-le-passant.png',
+                'thumb' => 'chapter1/npc/bilo-le-passant_thumb.png',
                 'description' => "<p>Vous croisez un passant qui semble désœuvré. Il vous regarde avec insistance, comme s'il avait quelque chose à vous dire.</p><p><em>Euh… Oui&nbsp;? Bonjour&nbsp;? Je m'appelle Bilo&nbsp;! Comment allez-vous&nbsp;?</em></p>",
                 'strength' => 7,
                 'dexterity' => 10,
@@ -81,7 +84,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => 'Grand Prêtre de Port Saint-Doux',
-                'picture' => 'pretre.png',
+                'picture' => 'core/npc/pretre.png',
+                'thumb' => 'core/npc/pretre_thumb.png',
                 'description' => "<p>Le Grand Prêtre de Port Saint-Doux semble plongé dans ses pensées. Il relève la tête en vous voyant vous approcher, et vous regarde avec un sourire bienveillant.</p><p><em>Bienvenue, mon enfant. Que puis-je faire pour vous aider&nbsp;?</em></p>",
                 'strength' => 10,
                 'dexterity' => 10,
@@ -102,7 +106,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => 'Gart le Forgeron',
-                'picture' => 'forgeron.png',
+                'picture' => 'core/npc/forgeron.png',
+                'thumb' => 'core/npc/forgeron_thumb.png',
                 'description' => "<p>Vous êtes face à un homme plutôt baraqué. Il est en train de travailler sur une épée, la sueur perlant sur son front couvert de suie. Il vous regarde avec un sourire chaleureux.</p><p><em>Bonjour&nbsp;! Vous cherchez une arme&nbsp;? Une armure&nbsp;? Un bouclier&nbsp;? Je peux vous forger une épée digne des plus grands héros&nbsp;!</em></p>",
                 'strength' => 15,
                 'dexterity' => 15,
@@ -123,7 +128,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => "Wilbert l'Arcaniste",
-                'picture' => 'arcaniste.png',
+                'picture' => 'core/npc/arcaniste.png',
+                'thumb' => 'core/npc/arcaniste_thumb.png',
                 'description' => "<p>Vous êtes face à un homme plutôt maigre, vêtu d'une robe de mage. Il est en train de lire un vieux grimoire, plongé dans ses pensées. Il vous regarde avec un sourire bienveillant.</p><p><em>Bienvenue, aventurier. Que puis-je faire pour vous aider&nbsp;?</em></p>",
                 'strength' => 9,
                 'dexterity' => 11,
@@ -144,7 +150,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => 'Jarrod le Tavernier',
-                'picture' => 'tavernier.png',
+                'picture' => 'core/npc/tavernier.png',
+                'thumb' => 'core/npc/tavernier_thumb.png',
                 'description' => "<p>Le Tavernier de la Flûte Moisie est un homme jovial, toujours prêt à servir une bonne bière à ses clients. Il vous regarde avec un sourire chaleureux.</p><p><em>Bienvenue à la Flûte Moisie, aventurier. Que puis-je vous servir&nbsp;?</em></p>",
                 'strength' => 11,
                 'dexterity' => 12,
@@ -165,7 +172,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'name' => 'Pêcheur',
-                'picture' => 'pecheur.png',
+                'picture' => 'core/npc/pecheur.png',
+                'thumb' => 'core/npc/pecheur_thumb.png',
                 'description' => "<p>Cet homme a l'air pauvre et plutôt mal nourri. Il s'arrête néanmoins en voous voyant vous approcher, et vous regarde avec un sourire timide.</p><p><em>Bonjour, étranger. Vous cherchez du poisson frais&nbsp;? Je peux vous en vendre à un bon prix.</em></p>",
                 'strength' => 10,
                 'dexterity' => 12,
@@ -184,12 +192,55 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'location' => 'location_zone_quartier_des_ploucs',
                 'reference' => 'npc_pecheur',
             ],
+            [
+                'name' => 'Malfrat',
+                'picture' => 'core/npc/chef-malfrat.png',
+                'thumb' => 'core/npc/chef-malfrat_thumb.png',
+                'description' => "<p>Un malfrat vous barre la route. Il vous regarde avec un sourire mauvais, et semble prêt à vous attaquer si vous ne lui donnez pas ce qu'il veut.</p><p><em>Alors, mon gars, tu vas me donner tout ce que tu as, ou je vais devoir te le prendre&nbsp;!</em></p>",
+                'strength' => 12,
+                'dexterity' => 12,
+                'constitution' => 12,
+                'wisdom' => 10,
+                'intelligence' => 10,
+                'charisma' => 9,
+                'healthMax' => 120,
+                'health' => 120,
+                'manaMax' => 50,
+                'mana' => 50,
+                'fortune' => 50,
+                'level' => 2,
+                'race' => 'race_humain',
+                'profession' => 'profession_malfrat',
+                'reference' => 'npc_chef_malfrat',
+            ],
+            [
+                'name' => 'Sbire',
+                'picture' => 'core/npc/sbire.png',
+                'thumb' => 'core/npc/sbire_thumb.png',
+                'description' => "<p>Un malfrat vous barre la route. Il vous regarde avec un sourire mauvais, et semble prêt à vous attaquer si vous ne lui donnez pas ce qu'il veut.</p><p><em>Alors, mon gars, tu vas me donner tout ce que tu as, ou je vais devoir te le prendre&nbsp;!</em></p>",
+                'strength' => 10,
+                'dexterity' => 10,
+                'constitution' => 9,
+                'wisdom' => 8,
+                'intelligence' => 8,
+                'charisma' => 8,
+                'healthMax' => 90,
+                'health' => 90,
+                'manaMax' => 40,
+                'mana' => 40,
+                'fortune' => 25,
+                'level' => 1,
+                'race' => 'race_humain',
+                'profession' => 'profession_malfrat',
+                'reference' => 'npc_sbire',
+            ],
         ];
 
         foreach($characters as $data) {
             $character = new Npc();
             $character->setName($data['name'])
                 ->setPicture($data['picture'])
+                ->setThumb($data['thumb'])
                 ->setDescription($data['description'])
                 ->setStrength($data['strength'])
                 ->setDexterity($data['dexterity'])
@@ -205,7 +256,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 ->setLevel($data['level'])
                 ->setRace($this->getReference($data['race'], Race::class))
                 ->setProfession($this->getReference($data['profession'], Profession::class))
-                ->setLocation($this->getReference($data['location'], Location::class));
+                ->setLocation(isset($data['location']) ? $this->getReference($data['location'], Location::class) : null);
             $manager->persist($character);
             $this->addReference($data['reference'], $character);
         }

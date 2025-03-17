@@ -57,7 +57,7 @@
 
                         <div class="card-footer">
                             <button class="bg-success {% if (characterSpell.mana + characterSpell.spell.mana) > this.character.mana %}disabled{% endif %}"
-                                    {{ live_action('cast', {'creatureCombatId': creatureCombat.id, 'position': position, 'characterSpellId': characterSpell.id}) }}>
+                                    {{ live_action('cast', {'enemyId': enemy.id, 'enemyType': enemyType, 'position': position, 'characterSpellId': characterSpell.id}) }}>
                                 {{ ux_icon('game-icons:bolt-spell-cast', {'class': 'app-icon'}) }}
                             </button>
                         </div>

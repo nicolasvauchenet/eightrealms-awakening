@@ -62,6 +62,17 @@ class PlayerComponent
             }
             $characterItem->setSlot(null);
             $characterItem->setEquipped(false);
+
+            if(in_array($categoryName, ['armure', 'bouclier', 'anneau', 'amulette'])) {
+                if(in_array($characterItem->getItem()->getType(), ['Défensif', 'Robe enchantée', 'Armure légère enchantée', 'Armure lourde enchantée', 'Bouclier léger enchanté', 'Bouclier lourd enchanté'])) {
+                    if($characterItem->getItem()->getTarget() === 'health') {
+                        $this->character->setHealth($this->character->getHealth() - $characterItem->getItem()->getAmount());
+                    } else if($characterItem->getItem()->getTarget() === 'mana') {
+                        $this->character->setMana($this->character->getMana() - $characterItem->getItem()->getAmount());
+                    }
+                    $this->entityManager->persist($this->character);
+                }
+            }
         } else {
             $categoryCode = $characterItem->getItem()->getCategory()->getFolder();
 
@@ -134,6 +145,17 @@ class PlayerComponent
                     break;
             }
             $characterItem->setEquipped(true);
+
+            if(in_array($categoryName, ['armure', 'bouclier', 'anneau', 'amulette'])) {
+                if(in_array($characterItem->getItem()->getType(), ['Défensif', 'Robe enchantée', 'Armure légère enchantée', 'Armure lourde enchantée', 'Bouclier léger enchanté', 'Bouclier lourd enchanté'])) {
+                    if($characterItem->getItem()->getTarget() === 'health') {
+                        $this->character->setHealth($this->character->getHealth() + $characterItem->getItem()->getAmount());
+                    } else if($characterItem->getItem()->getTarget() === 'mana') {
+                        $this->character->setMana($this->character->getMana() + $characterItem->getItem()->getAmount());
+                    }
+                    $this->entityManager->persist($this->character);
+                }
+            }
         }
 
         $this->entityManager->persist($characterItem);

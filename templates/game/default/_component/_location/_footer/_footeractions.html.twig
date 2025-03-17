@@ -2,18 +2,14 @@
     {% for location in this.activeScreen.location.children %}
         {% if location.type == 'building' %}
             <button class="screen-action" title="{{ location.name }}" {{ live_action('locationScreen', {'id': location.id}) }}>
-                <img src="{{ asset('img/core/location/thumb_' ~ location.picture) }}" alt="{{ location.name }}"/>
+                <img src="{{ asset('img/core/location/' ~ location.thumb) }}" alt="{{ location.name }}"/>
             </button>
         {% endif %}
     {% endfor %}
 
     {% for npc in this.activeScreen.location.npcs %}
         <button class="screen-action" title="{{ npc.name }}" {{ live_action('interactionScreen', {'id': npc.id}) }}>
-            {% if this.activeScreen.location.type == 'building' %}
-                <img src="{{ asset('img/core/npc/thumb_' ~ npc.picture) }}" alt="{{ npc.name }}"/>
-            {% else %}
-                <img src="{{ asset('img/chapter1/npc/thumb_' ~ npc.picture) }}" alt="{{ npc.name }}"/>
-            {% endif %}
+            <img src="{{ asset('img/' ~ npc.thumb) }}" alt="{{ npc.name }}"/>
         </button>
     {% endfor %}
 
@@ -37,38 +33,14 @@
         {% endif %}
     {% endfor %}
 
-    {% for combat in this.activeScreen.location.combats %}
-        {% if not combat.step %}
-            {% set playerHasCombat = false %}
-            {% set playerCombatExists = false %}
-            {% for playerCombat in this.character.playerCombats %}
-                {% if playerCombat.combat == combat %}
-                    {% set playerCombatExists = true %}
-                    {% if playerCombat.status != 'victory' %}
-                        {% set playerHasCombat = true %}
-                    {% else %}
-                        {% set now = "now"|date("U") %}
-                        {% set combatUpdatedAt = playerCombat.updatedAt|date("U") %}
-                        {% set diff = now - combatUpdatedAt %}
-                        {% if diff >= 86400 %}
-                            {% set playerHasCombat = true %}
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-            {% if not playerCombatExists %}
-                {% set playerHasCombat = true %}
+    {% for combat in selectedCombats %}
+        <button class="screen-action" title="Combat{% if combat.name %} : {{ combat.name }}{% endif %}" {{ live_action('combatScreen', {'id': combat.id}) }}>
+            {% if combat.thumb %}
+                <img src="{{ asset('img/' ~ combat.thumb) }}" alt="Combat{% if combat.name %} : {{ combat.name }}{% endif %}"/>
+            {% else %}
+                <img src="{{ asset('img/core/action/attack.png') }}" alt="Combat{% if combat.name %} : {{ combat.name }}{% endif %}"/>
             {% endif %}
-            {% if playerHasCombat %}
-                <button class="screen-action" title="Combat{% if combat.name %} : {{ combat.name }}{% endif %}" {{ live_action('combatScreen', {'id': combat.id}) }}>
-                    {% if combat.thumb %}
-                        <img src="{{ asset('img/' ~ combat.thumb) }}" alt="Combat{% if combat.name %} : {{ combat.name }}{% endif %}"/>
-                    {% else %}
-                        <img src="{{ asset('img/core/action/attack.png') }}" alt="Combat{% if combat.name %} : {{ combat.name }}{% endif %}"/>
-                    {% endif %}
-                </button>
-            {% endif %}
-        {% endif %}
+        </button>
     {% endfor %}
 
     {% if this.activeScreen.location.type == 'building' %}

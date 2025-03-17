@@ -200,7 +200,7 @@
                 {% if characterItem.charge is not null %}
                     <div class="gauge">
                         <div class="gauge-fill info"
-                             style="--value: {{ app_itemService.health(characterItem) }}"></div>
+                             style="--value: {{ app_itemService.charge(characterItem) }}"></div>
                     </div>
                 {% elseif characterItem.health is not null %}
                     <div class="gauge">

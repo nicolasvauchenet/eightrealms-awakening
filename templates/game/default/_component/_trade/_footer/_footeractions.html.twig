@@ -8,16 +8,12 @@
     {% endif %}
 
     <button class="screen-action" title="{{ this.playerNpc.npc.name }}" {{ live_action('interactionScreen', {'id': this.playerNpc.npc.id}) }}>
-        {% if this.playerNpc.npc.location.type == 'building' %}
-            <img src="{{ asset('img/core/npc/thumb_' ~ this.playerNpc.npc.picture) }}" alt="{{ this.playerNpc.npc.name }}"/>
-        {% else %}
-            <img src="{{ asset('img/chapter1/npc/thumb_' ~ this.playerNpc.npc.picture) }}" alt="{{ this.playerNpc.npc.name }}"/>
-        {% endif %}
+        <img src="{{ asset('img/' ~ this.playerNpc.npc.thumb) }}" alt="{{ this.playerNpc.npc.name }}"/>
     </button>
 
     <button class="screen-action" title="Partir" {{ live_action('exitScreen') }}>
         {% if this.playerNpc.npc.location.type == 'building' %}
-            <img src="{{ asset('img/core/location/thumb_' ~ this.playerNpc.npc.location.picture) }}" alt="{{ this.playerNpc.npc.location.name }}"/>
+            <img src="{{ asset('img/core/location/' ~ this.playerNpc.npc.location.thumb) }}" alt="{{ this.playerNpc.npc.location.name }}"/>
         {% else %}
             <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
         {% endif %}

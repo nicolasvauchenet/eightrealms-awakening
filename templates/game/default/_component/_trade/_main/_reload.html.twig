@@ -1,0 +1,46 @@
+<main class="screen-main">
+    <div class="screen-trade reload">
+        <div class="left">
+            <h3>{{ this.character.name }}</h3>
+            <div class="scrollable">
+                <div class="app-grid three">
+                    {% set totalPrice = 0 %}
+                    {% set reloadableItems = 0 %}
+                    {% for characterItem in app_characterItemService.reloadableItems(this.character.characterItems) %}
+                        {% set totalPrice = totalPrice + app_itemService.reloadPrice(characterItem, this.playerNpc) %}
+                        {% if app_itemService.reloadPrice(characterItem, this.playerNpc) <= this.character.fortune %}
+                            {% set reloadableItems = reloadableItems + 1 %}
+                        {% endif %}
+                        <div class="app-card item" data-controller="tooltip">
+                            <a href="#" data-action="click->tooltip#open">
+                                <div class="card-header">
+                                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                                         alt="{{ characterItem.item.name }}"
+                                         class="card-image {% if app_itemService.reloadPrice(characterItem, this.playerNpc) > this.character.fortune %}disabled{% endif %} {% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"/>
+                                </div>
+                            </a>
+
+                            {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+
+                            <div class="card-footer">
+                                <button class="bg-primary {% if app_itemService.reloadPrice(characterItem, this.playerNpc) > this.character.fortune %}disabled{% endif %}"
+                                        {{ live_action('reload', {'id': characterItem.id }) }}>
+                                    {{ ux_icon('game-icons:fire-gem', {'class': 'app-icon text-warning'}) }}
+                                    {{ app_itemService.reloadPrice(characterItem, this.playerNpc) }}
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% if reloadableItems > 0 %}
+            <button class="app-button" {{ live_action('reloadAll') }}>
+                <small>Tout recharger</small>
+                {{ ux_icon('game-icons:fire-gem', {'class': 'app-icon text-warning'}) }}
+                {{ totalPrice }}
+            </button>
+        {% endif %}
+    </div>
+</main>

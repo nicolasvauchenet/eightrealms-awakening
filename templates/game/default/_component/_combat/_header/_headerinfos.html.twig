@@ -3,14 +3,14 @@
         {% set bonus = app_characterBonusService.characterBonus(this.character, 'health') %}
         <div class="screen-info {% if bonus['extra'] %}text-success{% endif %}">
             {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-            {{ this.character.health + bonus['amount'] }}
+            {{ this.character.health }}
         </div>
 
         {% if this.character.profession.type == 'magic' %}
             {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
             <div class="screen-info {% if bonus['extra'] %}text-success{% endif %}">
                 {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                {{ this.character.mana + bonus['amount'] }}
+                {{ this.character.mana }}
             </div>
         {% endif %}
 
@@ -55,7 +55,7 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/armor/' ~ app_characterItemService.equippedItems(this.character).armor.item.picture) }}"
-                             class="{% if app_characterItemService.equippedItems(this.character).armor.health <= 0 %}broken{% endif %}"
+                             class="{% if app_characterItemService.equippedItems(this.character).armor.health is not null and app_characterItemService.equippedItems(this.character).armor.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).armor.item.name }}"/>
                         <div class="gauge">
                             <div class="gauge-fill success"
@@ -98,12 +98,12 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).righthand.item.picture) }}"
-                             class="{% if app_characterItemService.equippedItems(this.character).righthand.health <= 0 %}broken{% endif %}"
+                             class="{% if app_characterItemService.equippedItems(this.character).righthand.health is not null and app_characterItemService.equippedItems(this.character).righthand.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).righthand.item.name }}"/>
                         {% if app_characterItemService.equippedItems(this.character).righthand.charge is not null %}
                             <div class="gauge">
                                 <div class="gauge-fill info"
-                                     style="--value: {{ app_itemService.health(app_characterItemService.equippedItems(this.character).righthand) }}"></div>
+                                     style="--value: {{ app_itemService.charge(app_characterItemService.equippedItems(this.character).righthand) }}"></div>
                             </div>
                         {% elseif app_characterItemService.equippedItems(this.character).righthand.health is not null %}
                             <div class="gauge">
@@ -120,12 +120,12 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).lefthand.item.picture) }}"
-                             class="{% if app_characterItemService.equippedItems(this.character).lefthand.health <= 0 %}broken{% endif %}"
+                             class="{% if app_characterItemService.equippedItems(this.character).lefthand.health is not null and app_characterItemService.equippedItems(this.character).lefthand.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).lefthand.item.name }}"/>
                         {% if app_characterItemService.equippedItems(this.character).lefthand.charge is not null %}
                             <div class="gauge">
                                 <div class="gauge-fill info"
-                                     style="--value: {{ app_itemService.health(app_characterItemService.equippedItems(this.character).lefthand) }}"></div>
+                                     style="--value: {{ app_itemService.charge(app_characterItemService.equippedItems(this.character).lefthand) }}"></div>
                             </div>
                         {% elseif app_characterItemService.equippedItems(this.character).lefthand.health is not null %}
                             <div class="gauge">
@@ -142,7 +142,7 @@
                 <div class="screen-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/shield/' ~ app_characterItemService.equippedItems(this.character).shield.item.picture) }}"
-                             class="{% if app_characterItemService.equippedItems(this.character).shield.health <= 0 %}broken{% endif %}"
+                             class="{% if app_characterItemService.equippedItems(this.character).shield.health is not null and app_characterItemService.equippedItems(this.character).shield.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).shield.item.name }}"/>
                         <div class="gauge">
                             <div class="gauge-fill success"
@@ -158,7 +158,7 @@
             <div class="screen-info" data-controller="tooltip">
                 <a data-action="click->tooltip#open">
                     <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).bow.item.picture) }}"
-                         class="{% if app_characterItemService.equippedItems(this.character).armor.health <= 0 %}broken{% endif %}"
+                         class="{% if app_characterItemService.equippedItems(this.character).bow.health is not null and app_characterItemService.equippedItems(this.character).bow.health <= 0 %}broken{% endif %}"
                          alt="{{ app_characterItemService.equippedItems(this.character).bow.item.name }}"/>
                     {% if app_characterItemService.equippedItems(this.character).bow.charge is not null %}
                         <div class="gauge">

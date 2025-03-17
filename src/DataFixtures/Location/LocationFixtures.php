@@ -89,6 +89,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Temple de Port Saint-Doux',
                 'type' => 'building',
                 'picture' => 'temple.webp',
+                'thumb' => 'temple_thumb.webp',
                 'description' => "<p>Le Temple de Port Saint-Doux est un édifice imposant, construit en pierre blanche. Les colonnes doriques soutiennent un fronton sculpté, représentant les dieux du panthéon local. À l'intérieur, les fidèles se recueillent devant les autels, déposant offrandes et prières aux pieds des statues divines. Le Grand Prêtre ne semble pas très occupé…</p>",
                 'parent' => 'location_zone_vieille_ville',
                 'reference' => 'location_building_temple_de_port_saint_doux',
@@ -97,6 +98,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Forge de Port Saint-Doux',
                 'type' => 'building',
                 'picture' => 'forge.webp',
+                'thumb' => 'forge_thumb.webp',
                 'description' => "<p>La Forge est un bâtiment en pierre, surmonté d'une haute cheminée d'où s'échappe une épaisse fumée noire. À l'intérieur, le forgeron travaille le métal avec adresse, martelant et polissant les armes et armures des guerriers de passage. Le bruit des enclumes résonne dans la pièce, couvrant à peine les jurons du forgeron…</p>",
                 'parent' => 'location_zone_vieille_ville',
                 'reference' => 'location_building_forge_de_port_saint_doux',
@@ -105,6 +107,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Arcanes de Port Saint-Doux',
                 'type' => 'building',
                 'picture' => 'arcanes.webp',
+                'thumb' => 'arcanes_thumb.webp',
                 'description' => "<p>Les arcanes de Port Saint-Doux sont un lieu mystérieux, où les arcanistes étudient les secrets de la magie. Les étagères croulent sous les grimoires et les fioles d'élixirs, tandis que les apprentis s'entraînent à lancer des sorts. L'Arcaniste a toujours l'air affairé, et qu'il s'adresse à vous ou pas, il a un souvent sourire malicieux aux lèvres…</p>",
                 'parent' => 'location_zone_quartier_des_ploucs',
                 'reference' => 'location_building_arcanes_de_port_saint_doux',
@@ -113,6 +116,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Taverne de la Flûte Moisie',
                 'type' => 'building',
                 'picture' => 'taverne.webp',
+                'thumb' => 'taverne_thumb.webp',
                 'description' => "<p>La Taverne de la Flûte Moisie est un lieu bruyant et chaleureux, où les marins et les aventuriers viennent se détendre après une longue journée de travail. Les tables en bois massif sont couvertes de chopes de bière et de plats fumants, et l'odeur de la soupe au poisson flotte dans l'air. Le Tavernier vous adresse un sourire cordial…</p>",
                 'parent' => 'location_zone_docks_de_l_ouest',
                 'reference' => 'location_building_taverne_de_la_flute_moisie',
@@ -124,6 +128,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
             $location->setName($data['name'])
                 ->setType($data['type'])
                 ->setPicture($data['picture'] ?? null)
+                ->setThumb($data['thumb'] ?? null)
                 ->setMap($data['map'] ?? null)
                 ->setDescription($data['description'])
                 ->setParent(isset($data['parent']) ? $this->getReference($data['parent'], Location::class) : null);

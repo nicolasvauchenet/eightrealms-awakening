@@ -64,6 +64,9 @@ class Location
     #[ORM\OneToMany(targetEntity: Combat::class, mappedBy: 'location', orphanRemoval: true)]
     private Collection $combats;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $thumb = null;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -276,6 +279,18 @@ class Location
                 $combat->setLocation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getThumb(): ?string
+    {
+        return $this->thumb;
+    }
+
+    public function setThumb(?string $thumb): static
+    {
+        $this->thumb = $thumb;
 
         return $this;
     }

@@ -55,13 +55,15 @@
                 {% set bonus = app_characterBonusService.characterBonus(this.character, 'health') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
-                    {{ this.character.health + bonus['amount'] }}<small>/{{ this.character.healthMax }}</small>
+                    {{ this.character.health }}
+                    <small>{{ this.character.healthMax }}</small>
                 </div>
 
                 {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
-                    {{ this.character.mana + bonus['amount'] }}<small>/{{ this.character.manaMax }}</small>
+                    {{ this.character.mana }}
+                    <small>{{ this.character.manaMax }}</small>
                 </div>
             </div>
 

@@ -6,9 +6,9 @@
                 {% if (not app_itemService.isMagical(app_characterItemService.equippedItems(this.character).righthand.item)) or app_itemService.isMagical(app_characterItemService.equippedItems(this.character).righthand.item) and app_characterItemService.equippedItems(this.character).righthand.charge > 0 %}
                     <button class="screen-action"
                             title="Attaquer avec la main droite"
-                            {{ live_action('attack', {'type': 'righthand', 'creatureCombatId': creatureCombat.id, 'position': position}) }}>
+                            {{ live_action('attack', {'type': 'righthand', 'enemyId': enemy.id, 'enemyType': enemyType, 'position': position}) }}>
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).righthand.item.picture) }}"
-                             class="{% if app_characterItemService.equippedItems(this.character).righthand.health <= 0 %}broken{% endif %}"
+                             class="{% if app_characterItemService.equippedItems(this.character).righthand.health is not null and app_characterItemService.equippedItems(this.character).righthand.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).righthand.item.name }}"/>
                     </button>
                 {% endif %}
@@ -18,9 +18,9 @@
                 {% if (not app_itemService.isMagical(app_characterItemService.equippedItems(this.character).lefthand.item)) or app_itemService.isMagical(app_characterItemService.equippedItems(this.character).lefthand.item) and app_characterItemService.equippedItems(this.character).lefthand.charge > 0 %}
                     <button class="screen-action"
                             title="Attaquer avec la main gauche"
-                            {{ live_action('attack', {'type': 'lefthand', 'creatureCombatId': creatureCombat.id, 'position': position}) }}>
+                            {{ live_action('attack', {'type': 'lefthand', 'enemyId': enemy.id, 'enemyType': enemyType, 'position': position}) }}>
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).lefthand.item.picture) }}"
-                             class="{% if app_characterItemService.equippedItems(this.character).lefthand.health <= 0 %}broken{% endif %}"
+                             class="{% if app_characterItemService.equippedItems(this.character).lefthand.health is not null and app_characterItemService.equippedItems(this.character).lefthand.health <= 0 %}broken{% endif %}"
                              alt="{{ app_characterItemService.equippedItems(this.character).lefthand.item.name }}"/>
                     </button>
                 {% endif %}
@@ -30,9 +30,9 @@
                 {% if (not app_itemService.isMagical(app_characterItemService.equippedItems(this.character).righthand.item) or (app_itemService.isMagical(app_characterItemService.equippedItems(this.character).righthand.item) and app_characterItemService.equippedItems(this.character).righthand.charge > 0)) and (not app_itemService.isMagical(app_characterItemService.equippedItems(this.character).lefthand.item) or (app_itemService.isMagical(app_characterItemService.equippedItems(this.character).lefthand.item) and app_characterItemService.equippedItems(this.character).lefthand.charge <= 0)) %}
                     <button class="screen-action"
                             title="Attaquer avec les deux mains"
-                            {{ live_action('attack', {'type': 'twohands', 'creatureCombatId': creatureCombat.id, 'position': position}) }}>
+                            {{ live_action('attack', {'type': 'twohands', 'enemyId': enemy.id, 'enemyType': enemyType, 'position': position}) }}>
                         <img src="{{ asset('img/core/action/attack.png') }}"
-                             class="{% if app_characterItemService.equippedItems(this.character).righthand.health <= 0 or app_characterItemService.equippedItems(this.character).lefthand.health <= 0 %}broken{% endif %}"
+                             class="{% if (app_characterItemService.equippedItems(this.character).righthand.health is not null and app_characterItemService.equippedItems(this.character).righthand.health <= 0) or (app_characterItemService.equippedItems(this.character).lefthand.health is not null and app_characterItemService.equippedItems(this.character).lefthand.health <= 0) %}broken{% endif %}"
                              alt="Deux mains"/>
                     </button>
                 {% endif %}
@@ -40,8 +40,9 @@
 
             {% if app_characterItemService.equippedItems(this.character).bow %}
                 <button class="screen-action" title="Attaquer avec l'arc"
-                        {{ live_action('attack', {'type': 'bow', 'creatureCombatId': creatureCombat.id, 'position': position}) }}>
+                        {{ live_action('attack', {'type': 'bow', 'enemyId': enemy.id, 'enemyType': enemyType, 'position': position}) }}>
                     <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).bow.item.picture) }}"
+                         class="{% if app_characterItemService.equippedItems(this.character).bow.health is not null and app_characterItemService.equippedItems(this.character).bow.health <= 0 %}broken{% endif %}"
                          alt="{{ app_characterItemService.equippedItems(this.character).bow.item.name }}"/>
                 </button>
             {% endif %}
@@ -51,13 +52,13 @@
                     <button class="screen-action" title="Lancer un sortilège" data-action="click->popup#open">
                         <img src="{{ asset('img/core/action/cast.png') }}" alt="Sortilège"/>
                     </button>
-                    {% include 'game/_layout/_game/_combat/_spellsbook.html.twig' with {'creatureCombat': creatureCombat, 'position': loop.index} %}
+                    {% include 'game/_layout/_game/_combat/_spellsbook.html.twig' with {'enemy': enemy, 'enemyType': enemyType, 'position': loop.index} %}
                 </div>
             {% endif %}
 
             {% if app_characterItemService.equippedItems(this.character).scroll %}
                 <button class="screen-action" title="Utiliser un parchemin"
-                        {{ live_action('use', {'type': 'scroll', 'enemyId': creatureCombat.id, 'position': position}) }}>
+                        {{ live_action('use', {'type': 'scroll', 'enemyId': enemy.id, 'enemyType': enemyType, 'position': position}) }}>
                     <img src="{{ asset('img/core/item/scroll/' ~ app_characterItemService.equippedItems(this.character).scroll.item.picture) }}"
                          alt="{{ app_characterItemService.equippedItems(this.character).scroll.item.name }}"/>
                 </button>

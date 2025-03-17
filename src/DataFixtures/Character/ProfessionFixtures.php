@@ -147,6 +147,13 @@ class ProfessionFixtures extends Fixture implements OrderedFixtureInterface
                 'attitude' => 'amical',
                 'reference' => 'profession_pecheur',
             ],
+            [
+                'name' => 'malfrat',
+                'description' => "<p>Le Malfrat est un criminel de bas étage, commettant des délits et des vols dans les rues.</p>",
+                'type' => 'pnj',
+                'attitude' => 'hostile',
+                'reference' => 'profession_malfrat',
+            ],
         ];
 
         foreach($professions as $data) {

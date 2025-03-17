@@ -20,6 +20,10 @@ class CombatScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Une bande de rats sur les Docks',
                 'reference' => 'screen_combat_une_bande_de_rats_sur_les_docks',
             ],
+            [
+                'name' => 'Des malfrats vous accostent',
+                'reference' => 'screen_combat_malfrats_docks_de_l_ouest',
+            ],
         ];
 
         foreach($screens as $data) {

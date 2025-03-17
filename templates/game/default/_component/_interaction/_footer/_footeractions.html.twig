@@ -19,6 +19,18 @@
         </button>
     {% endif %}
 
+    {% if this.playerNpc.npc.profession.slug == 'forgeron' %}
+        <button class="screen-action" title="Réparer vos objets" {{ live_action('tradeScreen', {'id' : this.playerNpc.npc.id, 'type': 'repair'}) }}>
+            <img src="{{ asset('img/core/action/repair.png') }}" alt="Réparer"/>
+        </button>
+    {% endif %}
+
+    {% if this.playerNpc.npc.profession.slug == 'arcaniste' %}
+        <button class="screen-action" title="Recharger vos objets magiques" {{ live_action('tradeScreen', {'id' : this.playerNpc.npc.id, 'type': 'reload'}) }}>
+            <img src="{{ asset('img/core/action/reload.png') }}" alt="Recharger"/>
+        </button>
+    {% endif %}
+
     {% if this.character.profession.slug in ['voleur'] and this.playerNpc.npc.profession.slug not in ['garde', 'pretre'] and this.playerNpc.fortune > 0 %}
         {% if this.character.fortune > 0 or this.character.experience > 0 %}
             <button class="screen-action" title="Voler" {{ live_action('steal', {'id': this.playerNpc.npc.id}) }}>
@@ -35,7 +47,7 @@
 
     <button class="screen-action" title="Partir" {{ live_action('exitScreen') }}>
         {% if this.playerNpc.npc.location.type == 'building' %}
-            <img src="{{ asset('img/core/location/thumb_' ~ this.playerNpc.npc.location.picture) }}" alt="{{ this.playerNpc.npc.location.name }}"/>
+            <img src="{{ asset('img/core/location/' ~ this.playerNpc.npc.location.thumb) }}" alt="{{ this.playerNpc.npc.location.name }}"/>
         {% else %}
             <img src="{{ asset('img/core/action/exit.png') }}" alt="Partir"/>
         {% endif %}

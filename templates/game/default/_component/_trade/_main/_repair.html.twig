@@ -1,0 +1,47 @@
+<main class="screen-main">
+    <div class="screen-trade repair">
+        <div class="left">
+            <h3>{{ this.character.name }}</h3>
+
+            <div class="scrollable">
+                <div class="app-grid three">
+                    {% set totalPrice = 0 %}
+                    {% set repairableItems = 0 %}
+                    {% for characterItem in app_characterItemService.repairableItems(this.character.characterItems) %}
+                        {% set totalPrice = totalPrice + app_itemService.repairPrice(characterItem, this.playerNpc) %}
+                        {% if app_itemService.repairPrice(characterItem, this.playerNpc) <= this.character.fortune %}
+                            {% set repairableItems = repairableItems + 1 %}
+                        {% endif %}
+                        <div class="app-card item" data-controller="tooltip">
+                            <a href="#" data-action="click->tooltip#open">
+                                <div class="card-header">
+                                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                                         alt="{{ characterItem.item.name }}"
+                                         class="card-image {% if app_itemService.repairPrice(characterItem, this.playerNpc) > this.character.fortune %}disabled{% endif %} {% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"/>
+                                </div>
+                            </a>
+
+                            {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+
+                            <div class="card-footer">
+                                <button class="bg-primary {% if app_itemService.repairPrice(characterItem, this.playerNpc) > this.character.fortune %}disabled{% endif %}"
+                                        {{ live_action('repair', {'id': characterItem.id }) }}>
+                                    {{ ux_icon('f7:hammer-fill', {'class': 'app-icon text-warning'}) }}
+                                    {{ app_itemService.repairPrice(characterItem, this.playerNpc) }}
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% if repairableItems > 0 %}
+            <button class="app-button" {{ live_action('repairAll') }}>
+                <small>Tout réparer</small>
+                {{ ux_icon('f7:hammer-fill', {'class': 'app-icon text-warning'}) }}
+                {{ totalPrice }}
+            </button>
+        {% endif %}
+    </div>
+</main>

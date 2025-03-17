@@ -4,13 +4,28 @@
             <button class="screen-action {% if creatureCombat.health == 0 %}disabled{% endif %}"
                     title="{{ creatureCombat.creature.name }} {{ loop.index }}"
                     data-action="click->popup#open">
-                <img src="{{ asset('img/core/creature/thumb_' ~ creatureCombat.creature.picture) }}" alt="{{ creatureCombat.creature.name }}"/>
+                <img src="{{ asset('img/core/creature/' ~ creatureCombat.creature.thumb) }}" alt="{{ creatureCombat.creature.name }}"/>
                 <div class="gauge">
                     <div class="gauge-fill success"
                          style="--value: {{ creatureCombat.health / creatureCombat.creature.healthMax }}"></div>
                 </div>
             </button>
-            {% include 'game/_layout/_game/_combat/_actions.html.twig' with {'creatureCombat': creatureCombat, 'position': loop.index} %}
+            {% include 'game/_layout/_game/_combat/_actions.html.twig' with {'enemy': creatureCombat, 'enemyType': 'creature', 'position': loop.index} %}
+        </div>
+    {% endfor %}
+
+    {% for npcCombat in this.playerCombat.npcPlayerCombats %}
+        <div class="combat-action" data-controller="popup">
+            <button class="screen-action {% if npcCombat.health == 0 %}disabled{% endif %}"
+                    title="{{ npcCombat.npc.name }} {{ loop.index }}"
+                    data-action="click->popup#open">
+                <img src="{{ asset('img/' ~ npcCombat.npc.thumb) }}" alt="{{ npcCombat.npc.name }}"/>
+                <div class="gauge">
+                    <div class="gauge-fill success"
+                         style="--value: {{ npcCombat.health / npcCombat.npc.healthMax }}"></div>
+                </div>
+            </button>
+            {% include 'game/_layout/_game/_combat/_actions.html.twig' with {'enemy': npcCombat, 'enemyType': 'npc', 'position': loop.index} %}
         </div>
     {% endfor %}
 

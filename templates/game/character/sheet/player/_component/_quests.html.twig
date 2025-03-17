@@ -17,8 +17,8 @@
         {% endif %}
     {% endfor %}
 
-    {% if mainQuest or sideQuests is not empty %}
-        <div class="quests">
+    <div class="quests">
+        {% if mainQuest or sideQuests is not empty %}
             {% if mainQuest %}
                 <div class="main-quest">
                     <h2 class="type">Quête Principale</h2>
@@ -44,30 +44,30 @@
                     {% endfor %}
                 </div>
             {% endif %}
-        </div>
-    {% else %}
-        <p class="text-primary text-center">
-            <strong>
-                Aucune quête en cours.
-                <br/>
-                Vous devriez peut-être parler à des gens…
-            </strong>
-        </p>
-    {% endif %}
+        {% else %}
+            <p class="text-primary text-center">
+                <strong>
+                    Aucune quête en cours.
+                    <br/>
+                    Vous devriez peut-être parler à des gens…
+                </strong>
+            </p>
+        {% endif %}
 
-    {% if completedQuests is not empty %}
-        <div class="quests">
-            <div class="completed-quests">
-                <h2 class="type">Quêtes Terminées</h2>
-                {% for questData in completedQuests %}
-                    <div class="content completed">
-                        <h3 class="name">{{ questData.quest.name }}</h3>
-                        {% for step in questData.steps %}
-                            {{ step.description | raw }}
-                        {% endfor %}
-                    </div>
-                {% endfor %}
+        {% if completedQuests is not empty %}
+            <div class="quests">
+                <div class="completed-quests">
+                    <h2 class="type">Quêtes Terminées</h2>
+                    {% for questData in completedQuests %}
+                        <div class="content completed">
+                            <h3 class="name">{{ questData.quest.name }}</h3>
+                            {% for step in questData.steps %}
+                                {{ step.description | raw }}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 </div>

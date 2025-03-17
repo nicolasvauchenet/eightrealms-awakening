@@ -14,6 +14,9 @@ class TradeScreen extends Screen
     #[ORM\JoinColumn(nullable: false)]
     private ?Npc $npc = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $tradeType = null;
+
     public function getNpc(): ?Npc
     {
         return $this->npc;
@@ -22,6 +25,18 @@ class TradeScreen extends Screen
     public function setNpc(?Npc $npc): static
     {
         $this->npc = $npc;
+
+        return $this;
+    }
+
+    public function getTradeType(): ?string
+    {
+        return $this->tradeType;
+    }
+
+    public function setTradeType(string $tradeType): static
+    {
+        $this->tradeType = $tradeType;
 
         return $this;
     }

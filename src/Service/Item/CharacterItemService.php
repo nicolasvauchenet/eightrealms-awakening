@@ -79,4 +79,18 @@ readonly class CharacterItemService
                 return new ArrayCollection();
         }
     }
+
+    public function getRepairableItems(Collection $characterItems): Collection
+    {
+        return $characterItems->filter(function($item) {
+            return in_array($item->getItem()->getCategory()->getSlug(), ['armure', 'bouclier', 'arme']) && $item->getHealth() < $item->getItem()->getHealth();
+        });
+    }
+
+    public function getReloadableItems(Collection $characterItems): Collection
+    {
+        return $characterItems->filter(function($item) {
+            return $item->getItem()->getCategory()->getSlug() == 'arme-magique' && $item->getCharge() < $item->getItem()->getCharge();
+        });
+    }
 }

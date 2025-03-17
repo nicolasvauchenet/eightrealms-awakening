@@ -86,6 +86,58 @@ readonly class ItemService
         ));
     }
 
+    public function getRepairPrice(CharacterItem $characterItem, PlayerNpc $playerNpc): int
+    {
+        $item = $characterItem->getItem();
+        $price = $item->getPrice();
+        $reputation = $playerNpc->getReputation();
+        $charisma = $playerNpc->getPlayer()->getCharisma();
+        $healthFactor = $this->getHealth($characterItem);
+
+        $repFactor = match (true) {
+            $reputation >= 11 => 0.5,  // Très bonne réputation : réduction importante
+            $reputation >= 5 => 0.75,  // Bonne réputation : réduction modérée
+            $reputation > -5 => 1.0,   // Réputation neutre : prix standard
+            $reputation > -11 => 1.25, // Mauvaise réputation : surcoût modéré
+            default => 1.5,            // Très mauvaise réputation : surcoût élevé
+        };
+
+        $repairCost = (int)round(
+            ($price * 0.25)  // Base : 75% du prix d'achat
+            * (1 - $healthFactor)  // Réduction selon l'état (plus c'est abîmé, plus c'est cher)
+            * $repFactor  // Ajustement selon la réputation
+            * (1 - $charisma * 0.01)  // Réduction grâce au charisme
+        );
+
+        return max(1, $repairCost);
+    }
+
+    public function getReloadPrice(CharacterItem $characterItem, PlayerNpc $playerNpc): int
+    {
+        $item = $characterItem->getItem();
+        $price = $item->getPrice();
+        $reputation = $playerNpc->getReputation();
+        $charisma = $playerNpc->getPlayer()->getCharisma();
+        $chargeFactor = $this->getCharge($characterItem);
+
+        $repFactor = match (true) {
+            $reputation >= 11 => 0.5,  // Très bonne réputation : réduction importante
+            $reputation >= 5 => 0.75,  // Bonne réputation : réduction modérée
+            $reputation > -5 => 1.0,   // Réputation neutre : prix standard
+            $reputation > -11 => 1.25, // Mauvaise réputation : surcoût modéré
+            default => 1.5,            // Très mauvaise réputation : surcoût élevé
+        };
+
+        $reloadCost = (int)round(
+            ($price * 0.25)  // Base : 75% du prix d'achat
+            * (1 - $chargeFactor)  // Réduction selon l'état (plus c'est abîmé, plus c'est cher)
+            * $repFactor  // Ajustement selon la réputation
+            * (1 - $charisma * 0.01)  // Réduction grâce au charisme
+        );
+
+        return max(1, $reloadCost);
+    }
+
     public function getHealth(CharacterItem|PlayerNpcItem $characterItem): float
     {
         $item = $characterItem->getItem();
@@ -94,12 +146,13 @@ readonly class ItemService
             $current = $characterItem->getHealth();
             $maximum = $item->getHealth();
         } else if($item instanceof Weapon) {
-            if($item->getCharge()) {
-                $current = $characterItem->getCharge();
-                $maximum = $item->getCharge();
-            } else {
+            if($item->getHealth()) {
                 $current = $characterItem->getHealth();
                 $maximum = $item->getHealth();
+            } else {
+                //TODO: Confusion entre health pour la gauge et health pour les prix de vente / réparation
+                $current = $characterItem->getCharge();
+                $maximum = $item->getCharge();
             }
         } else if($item instanceof Magical) {
             $current = $characterItem->getCharge();
@@ -110,6 +163,25 @@ readonly class ItemService
 
         if($maximum <= 0 || $current <= 0) {
             return 0.0;
+        }
+
+        return max(0.0, min(1.0, $current / $maximum));
+    }
+
+    public function getCharge(CharacterItem|PlayerNpcItem $characterItem): float
+    {
+        $item = $characterItem->getItem();
+
+        if($item instanceof Magical) {
+            $current = $characterItem->getCharge();
+            $maximum = $item->getCharge();
+        } else {
+            if(method_exists($characterItem->getItem(), 'getCharge')) {
+                $current = $characterItem->getCharge();
+                $maximum = $item->getCharge();
+            } else {
+                return 1;
+            }
         }
 
         return max(0.0, min(1.0, $current / $maximum));

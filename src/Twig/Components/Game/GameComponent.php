@@ -168,10 +168,10 @@ class GameComponent
     }
 
     #[LiveAction]
-    public function tradeScreen(#[LiveArg] int $id): void
+    public function tradeScreen(#[LiveArg] int $id, #[LiveArg] ?string $type = 'trade'): void
     {
         $this->playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $this->character, 'npc' => $id]);
-        $screen = $this->entityManager->getRepository(TradeScreen::class)->findOneBy(['npc' => $this->playerNpc->getNpc()]);
+        $screen = $this->entityManager->getRepository(TradeScreen::class)->findOneBy(['npc' => $this->playerNpc->getNpc(), 'tradeType' => $type]);
         $this->changeScreen($screen->getId());
     }
 
@@ -209,6 +209,7 @@ class GameComponent
                 $playerCombat->addCreaturePlayerCombat($playerCreatureCombat);
                 $this->entityManager->persist($playerCombat);
                 $this->entityManager->flush();
+                $enemyType = 'creature';
             }
             foreach($combat->getNpcCombats() as $npcCombat) {
                 $playerNpcCombat = (new NpcPlayerCombat())
@@ -220,18 +221,21 @@ class GameComponent
                 $playerCombat->addNpcPlayerCombat($playerNpcCombat);
                 $this->entityManager->persist($playerCombat);
                 $this->entityManager->flush();
+                $enemyType = 'npc';
             }
         } else {
             foreach($playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
                 $creatureCombat->setHealth($creatureCombat->getCreature()->getHealthMax())
                     ->setMana($creatureCombat->getCreature()->getManaMax());
                 $this->entityManager->persist($creatureCombat);
+                $enemyType = 'creature';
             }
 
             foreach($playerCombat->getNpcPlayerCombats() as $npcCombat) {
                 $npcCombat->setHealth($npcCombat->getNpc()->getHealthMax())
                     ->setMana($npcCombat->getNpc()->getManaMax());
                 $this->entityManager->persist($npcCombat);
+                $enemyType = 'npc';
             }
         }
 
@@ -242,11 +246,13 @@ class GameComponent
         $this->playerCombat = $playerCombat;
 
         $this->temporaryEffects = [];
+        $this->nbTurns = 1;
+        $this->description = '';
 
         $screen = $this->playerCombat->getCombat()->getCombatScreen();
         $this->changeScreen($screen->getId());
 
-        $this->startCombat();
+        $this->startCombat($enemyType);
     }
 
     #[LiveAction]
@@ -322,8 +328,8 @@ class GameComponent
             }
             $this->entityManager->remove($characterItem);
 
-            $this->playerNpc->setFortune($this->playerNpc->getFortune() - $itemPrice);
             $this->character->setFortune($this->character->getFortune() + $itemPrice);
+            $this->playerNpc->setFortune($this->playerNpc->getFortune() - $itemPrice);
 
             $this->entityManager->persist($this->character);
             $this->entityManager->persist($this->playerNpc);
@@ -331,6 +337,73 @@ class GameComponent
             $this->entityManager->flush();
 
             $this->description = "<p>Vous avez vendu 1 {$characterItem->getItem()->getName()} à {$this->playerNpc->getNpc()->getName()} pour $itemPrice couronne" . ($itemPrice > 1 ? 's' : '') . ".</p>";
+        }
+    }
+
+    #[LiveAction]
+    public function repair(#[LiveArg] ?int $id = null): void
+    {
+        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($id);
+        $itemPrice = $this->itemService->getRepairPrice($characterItem, $this->playerNpc);
+
+        if($itemPrice > $this->character->getFortune()) {
+            $this->description .= "<span class='text-warning'>Vous n'avez pas assez de couronnes pour faire réparer votre {$characterItem->getItem()->getName()}.</span><br/>";
+        } else {
+            $characterItem->setHealth($characterItem->getItem()->getHealth())
+                ->setUsage(null);
+            $this->entityManager->persist($characterItem);
+
+            $this->character->setFortune($this->character->getFortune() - $itemPrice);
+            if($this->character->getFortune() < 0) {
+                $this->character->setFortune(0);
+            }
+            $this->playerNpc->setFortune($this->playerNpc->getFortune() + $itemPrice);
+            $this->entityManager->persist($this->character);
+            $this->entityManager->persist($this->playerNpc);
+
+            $this->entityManager->flush();
+            $this->description .= "<span>{$this->playerNpc->getNpc()->getName()} a réparé votre {$characterItem->getItem()->getName()} pour $itemPrice couronne" . ($itemPrice > 1 ? 's' : '') . ".</span><br/>";
+        }
+    }
+
+    #[LiveAction]
+    public function repairAll(): void
+    {
+        foreach($this->characterItemService->getRepairableItems($this->character->getCharacterItems()) as $characterItem) {
+            $this->repair($characterItem->getId());
+        }
+    }
+
+    #[LiveAction]
+    public function reload(#[LiveArg] ?int $id = null): void
+    {
+        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($id);
+        $itemPrice = $this->itemService->getReloadPrice($characterItem, $this->playerNpc);
+
+        if($itemPrice > $this->character->getFortune()) {
+            $this->description .= "<span class='text-warning'>Vous n'avez pas assez de couronnes pour faire recharger votre {$characterItem->getItem()->getName()}.</span><br/>";
+        } else {
+            $characterItem->setCharge($characterItem->getItem()->getCharge());
+            $this->entityManager->persist($characterItem);
+
+            $this->character->setFortune($this->character->getFortune() - $itemPrice);
+            if($this->character->getFortune() < 0) {
+                $this->character->setFortune(0);
+            }
+            $this->playerNpc->setFortune($this->playerNpc->getFortune() + $itemPrice);
+            $this->entityManager->persist($this->character);
+            $this->entityManager->persist($this->playerNpc);
+
+            $this->entityManager->flush();
+            $this->description .= "<span>{$this->playerNpc->getNpc()->getName()} a rechargé votre {$characterItem->getItem()->getName()} pour $itemPrice couronne" . ($itemPrice > 1 ? 's' : '') . ".</span><br/>";
+        }
+    }
+
+    #[LiveAction]
+    public function reloadAll(): void
+    {
+        foreach($this->characterItemService->getRepairableItems($this->character->getCharacterItems()) as $characterItem) {
+            $this->reload($characterItem->getId());
         }
     }
 
@@ -585,6 +658,14 @@ class GameComponent
         foreach($this->playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
             if($creatureCombat->getHealth() > 0) {
                 $creaturesInitiative[] = random_int(1, 20) + $creatureCombat->getCreature()->getDexterity();
+                $enemyType = 'creature';
+            }
+        }
+
+        foreach($this->playerCombat->getNpcPlayerCombats() as $creatureCombat) {
+            if($creatureCombat->getHealth() > 0) {
+                $creaturesInitiative[] = random_int(1, 20) + $creatureCombat->getNpc()->getDexterity();
+                $enemyType = 'npc';
             }
         }
 
@@ -592,7 +673,7 @@ class GameComponent
         foreach($creaturesInitiative as $initiative) {
             if($initiative >= $playerInitiative) {
                 $this->description .= '<p class="text-danger">Vous tentez de fuir, mais les ennemis vous bloquent&nbsp;! Vous perdez votre tour.</p>';
-                $this->nextTurn();
+                $this->nextTurn($enemyType);
 
                 return;
             }
@@ -610,38 +691,58 @@ class GameComponent
     }
 
     #[LiveAction]
-    public function attack(#[LiveArg] string $type, #[LiveArg] int $creatureCombatId, #[LiveArg] int $position): void
+    public function attack(#[LiveArg] string $type, #[LiveArg] int $enemyId, #[LiveArg] string $enemyType, #[LiveArg] int $position): void
     {
-        $creatureCombat = $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($creatureCombatId);
+        if($enemyType === 'creature') {
+            $creatureCombat = $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($enemyId);
+        } else {
+            $creatureCombat = $this->entityManager->getRepository(NpcPlayerCombat::class)->find($enemyId);
+        }
 
         switch($type) {
             case 'twohands':
                 $characterItemRight = $this->characterItemService->getEquippedItems($this->character)['righthand'];
                 $characterItemLeft = $this->characterItemService->getEquippedItems($this->character)['lefthand'];
-                $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItemRight->getItem()->getName()} et votre {$characterItemLeft->getItem()->getName()}.</strong><br/>";
+                if($enemyType === 'creature') {
+                    $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItemRight->getItem()->getName()} et votre {$characterItemLeft->getItem()->getName()}.</strong><br/>";
+                } else {
+                    $this->description .= "<strong>Vous attaquez {$creatureCombat->getNpc()->getName()} $position avec votre {$characterItemRight->getItem()->getName()} et votre {$characterItemLeft->getItem()->getName()}.</strong><br/>";
+                }
                 break;
             case 'righthand':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['righthand'];
-                $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}</strong>.<br/>";
+                if($enemyType === 'creature') {
+                    $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}</strong>.<br/>";
+                } else {
+                    $this->description .= "<strong>Vous attaquez {$creatureCombat->getNpc()->getName()} $position avec votre {$characterItem->getItem()->getName()}</strong>.<br/>";
+                }
                 break;
             case 'lefthand':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['lefthand'];
-                $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}</strong>.<br/>";
+                if($enemyType === 'creature') {
+                    $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position avec votre {$characterItem->getItem()->getName()}</strong>.<br/>";
+                } else {
+                    $this->description .= "<strong>Vous attaquez {$creatureCombat->getNpc()->getName()} $position avec votre {$characterItem->getItem()->getName()}</strong>.<br/>";
+                }
                 break;
             case 'bow':
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['bow'];
-                $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position votre {$characterItem->getItem()->getName()}</strong>.<br/>";
+                if($enemyType === 'creature') {
+                    $this->description .= "<strong>Vous attaquez {$creatureCombat->getCreature()->getName()} $position votre {$characterItem->getItem()->getName()}</strong>.<br/>";
+                } else {
+                    $this->description .= "<strong>Vous attaquez {$creatureCombat->getNpc()->getName()} $position votre {$characterItem->getItem()->getName()}</strong>.<br/>";
+                }
                 break;
             default:
                 break;
         }
 
         $this->resolveAttack($this->character, $creatureCombat, $type);
-        $this->nextTurn();
+        $this->nextTurn($enemyType);
     }
 
     #[LiveAction]
-    public function use(#[LiveArg] string $type, #[LiveArg] ?int $enemyId = null, #[LiveArg] ?int $position = null): void
+    public function use(#[LiveArg] string $type, #[LiveArg] ?int $enemyId = null, #[LiveArg] ?string $enemyType = null, #[LiveArg] ?int $position = null): void
     {
         switch($type) {
             case 'scroll':
@@ -650,17 +751,30 @@ class GameComponent
 
                 switch($characterItem->getItem()->getType()) {
                     case 'Offensif':
-                        $enemy = $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($enemyId);
+                        if($enemyType === 'creature') {
+                            $enemy = $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($enemyId);
+                        } else {
+                            $enemy = $this->entityManager->getRepository(NpcPlayerCombat::class)->find($enemyId);
+                        }
                         switch($characterItem->getItem()->getTarget()) {
                             case 'health':
                                 $enemy->setHealth($enemy->getHealth() - $characterItem->getItem()->getAmount());
                                 $this->entityManager->persist($enemy);
-                                $this->description .= "<span class='text-success'>Vous infligez {$characterItem->getItem()->getAmount()} dégâts magiques à {$enemy->getCreature()->getName()} $position.</span><br/>";
+                                if($enemyType === 'creature') {
+                                    $this->description .= "<span class='text-success'>Vous infligez {$characterItem->getItem()->getAmount()} dégâts magiques à {$enemy->getCreature()->getName()} $position.</span><br/>";
+                                } else {
+                                    $this->description .= "<span class='text-success'>Vous infligez {$characterItem->getItem()->getAmount()} dégâts magiques à {$enemy->getNpc()->getName()} $position.</span><br/>";
+                                }
 
                                 // Si area > 1, toucher d'autres ennemis
                                 if($characterItem->getItem()->getArea() > 1) {
                                     $otherEnemies = [];
                                     foreach($this->playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
+                                        if($creatureCombat->getId() !== $enemyId && $creatureCombat->getHealth() > 0) {
+                                            $otherEnemies[] = $creatureCombat;
+                                        }
+                                    }
+                                    foreach($this->playerCombat->getNpcPlayerCombats() as $creatureCombat) {
                                         if($creatureCombat->getId() !== $enemyId && $creatureCombat->getHealth() > 0) {
                                             $otherEnemies[] = $creatureCombat;
                                         }
@@ -673,9 +787,17 @@ class GameComponent
                                         $splashDamage = (int)floor($characterItem->getItem()->getAmount() * 2 / 3);
                                         $target->setHealth($target->getHealth() - $splashDamage);
                                         $this->entityManager->persist($target);
-                                        $this->description .= "<span class='text-success'>{$target->getCreature()->getName()} est aussi touché et subit {$splashDamage} dégâts.</span><br/>";
+                                        if($enemyType === 'creature') {
+                                            $this->description .= "<span class='text-success'>{$target->getCreature()->getName()} est aussi touché et subit {$splashDamage} dégâts.</span><br/>";
+                                        } else {
+                                            $this->description .= "<span class='text-success'>{$target->getNpc()->getName()} est aussi touché et subit {$splashDamage} dégâts.</span><br/>";
+                                        }
                                         if($target->getHealth() <= 0) {
-                                            $this->description .= "<strong class='text-success'>Vous avez tué {$target->getCreature()->getName()}&nbsp;!</strong><br/>";
+                                            if($enemyType === 'creature') {
+                                                $this->description .= "<strong class='text-success'>Vous avez tué {$target->getCreature()->getName()}&nbsp;!</strong><br/>";
+                                            } else {
+                                                $this->description .= "<strong class='text-success'>Vous avez tué {$target->getNpc()->getName()}&nbsp;!</strong><br/>";
+                                            }
                                         }
                                     }
                                 }
@@ -684,12 +806,21 @@ class GameComponent
                             case 'mana':
                                 $enemy->setMana($enemy->getMana() - $characterItem->getItem()->getAmount());
                                 $this->entityManager->persist($enemy);
-                                $this->description .= "<span class='text-success'>{$enemy->getCreature()->getName()} $position perd {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                                if($enemyType === 'creature') {
+                                    $this->description .= "<span class='text-success'>{$enemy->getCreature()->getName()} $position perd {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                                } else {
+                                    $this->description .= "<span class='text-success'>{$enemy->getNpc()->getName()} $position perd {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                                }
 
                                 // Si area > 1, toucher d'autres ennemis
                                 if($characterItem->getItem()->getArea() > 1) {
                                     $otherEnemies = [];
                                     foreach($this->playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
+                                        if($creatureCombat->getId() !== $enemyId && $creatureCombat->getMana() > 0) {
+                                            $otherEnemies[] = $creatureCombat;
+                                        }
+                                    }
+                                    foreach($this->playerCombat->getNpcPlayerCombats() as $creatureCombat) {
                                         if($creatureCombat->getId() !== $enemyId && $creatureCombat->getMana() > 0) {
                                             $otherEnemies[] = $creatureCombat;
                                         }
@@ -702,7 +833,11 @@ class GameComponent
                                         $splashDamage = (int)floor($characterItem->getItem()->getAmount() * 2 / 3);
                                         $target->setMana($target->getMana() - $splashDamage);
                                         $this->entityManager->persist($target);
-                                        $this->description .= "<span class='text-success'>{$target->getCreature()->getName()} est aussi touché et perd {$splashDamage} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                                        if($enemyType === 'creature') {
+                                            $this->description .= "<span class='text-success'>{$target->getCreature()->getName()} est aussi touché et perd {$splashDamage} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                                        } else {
+                                            $this->description .= "<span class='text-success'>{$target->getNpc()->getName()} est aussi touché et perd {$splashDamage} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                                        }
                                     }
                                 }
                                 $this->entityManager->flush();
@@ -780,19 +915,23 @@ class GameComponent
                 break;
         }
 
-        $this->nextTurn();
+        $this->nextTurn($enemyType);
     }
 
     #[LiveAction]
-    public function cast(#[LiveArg] int $creatureCombatId, #[LiveArg] int $position, #[LiveArg] int $characterSpellId): void
+    public function cast(#[LiveArg] int $enemyId, #[LiveArg] string $enemyType, #[LiveArg] int $position, #[LiveArg] int $characterSpellId): void
     {
-        $creatureCombat = $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($creatureCombatId);
+        if($enemyType === 'creature') {
+            $creatureCombat = $this->entityManager->getRepository(CreaturePlayerCombat::class)->find($enemyId);
+        } else {
+            $creatureCombat = $this->entityManager->getRepository(NpcPlayerCombat::class)->find($enemyId);
+        }
         $characterSpell = $this->entityManager->getRepository(CharacterSpell::class)->find($characterSpellId);
         $spell = $characterSpell->getSpell();
 
         // Vérification du mana
         $manaCost = $spell->getMana() + $characterSpell->getMana();
-        if($this->character->getMana() < $manaCost) {
+        if($this->characterBonusService->getCharacterBonus($this->character, 'mana')['amount'] < $manaCost) {
             $this->description .= "<p class='text-danger'>Vous n'avez pas assez de mana pour lancer <strong>{$spell->getName()}</strong>.</p>";
 
             return;
@@ -805,7 +944,7 @@ class GameComponent
         // Gestion des différents types de sorts
         switch($spell->getType()) {
             case 'Offensif':
-                $this->applyOffensiveSpell($characterSpell, $creatureCombat, $position);
+                $this->applyOffensiveSpell($characterSpell, $creatureCombat, $enemyType, $position);
                 break;
 
             case 'Défensif':
@@ -818,22 +957,34 @@ class GameComponent
         }
 
         $this->entityManager->flush();
-        $this->nextTurn();
+        $this->nextTurn($enemyType);
     }
 
-    private function applyOffensiveSpell(CharacterSpell $characterSpell, CreaturePlayerCombat $target, int $position): void
+    private function applyOffensiveSpell(CharacterSpell $characterSpell, CreaturePlayerCombat|NpcPlayerCombat $target, string $enemyType, int $position): void
     {
         // Détermination de la résistance basée sur la Sagesse pour la réussite du sort
-        $resistStat = $target->getCreature()->getWisdom();
+        if($enemyType === 'creature') {
+            $resistStat = $target->getCreature()->getWisdom();
+        } else {
+            $resistStat = $target->getNpc()->getWisdom();
+        }
         $resistRoll = random_int(1, 20) + floor($resistStat / 2);
         $spellSuccessRoll = random_int(5, 20) + $this->character->getLevel() + $characterSpell->getLevel();
 
         if($spellSuccessRoll >= $resistRoll) {
             // Détermination de la résistance aux dégâts après réussite du sort
             if($characterSpell->getSpell()->getTarget() === 'health') {
-                $damageReductionStat = $target->getCreature()->getConstitution();
+                if($enemyType === 'creature') {
+                    $damageReductionStat = $target->getCreature()->getConstitution();
+                } else {
+                    $damageReductionStat = $target->getNpc()->getConstitution();
+                }
             } else {
-                $damageReductionStat = $target->getCreature()->getIntelligence();
+                if($enemyType === 'creature') {
+                    $damageReductionStat = $target->getCreature()->getIntelligence();
+                } else {
+                    $damageReductionStat = $target->getNpc()->getIntelligence();
+                }
             }
 
             // Calcul des dégâts en fonction de la réduction
@@ -843,10 +994,18 @@ class GameComponent
 
             // Application des dégâts
             $target->setHealth(max(0, $target->getHealth() - $damage));
-            $this->description .= "<span class='text-success'>Vous lancez <strong>{$characterSpell->getSpell()->getName()}</strong> sur {$target->getCreature()->getName()} $position et infligez <strong>{$damage}</strong> dégâts.</span><br/>";
+            if($enemyType === 'creature') {
+                $this->description .= "<span class='text-success'>Vous lancez <strong>{$characterSpell->getSpell()->getName()}</strong> sur {$target->getCreature()->getName()} $position et infligez <strong>{$damage}</strong> dégâts.</span><br/>";
+            } else {
+                $this->description .= "<span class='text-success'>Vous lancez <strong>{$characterSpell->getSpell()->getName()}</strong> sur {$target->getNpc()->getName()} $position et infligez <strong>{$damage}</strong> dégâts.</span><br/>";
+            }
 
             if($target->getHealth() <= 0) {
-                $this->description .= "<span class='text-success'><strong>Vous avez vaincu {$target->getCreature()->getName()} $position&nbsp;!</strong></span><br/>";
+                if($enemyType === 'creature') {
+                    $this->description .= "<span class='text-success'><strong>Vous avez vaincu {$target->getCreature()->getName()} $position&nbsp;!</strong></span><br/>";
+                } else {
+                    $this->description .= "<span class='text-success'><strong>Vous avez vaincu {$target->getNpc()->getName()} $position&nbsp;!</strong></span><br/>";
+                }
             }
 
             $this->entityManager->persist($target);
@@ -865,17 +1024,30 @@ class GameComponent
                     'amount' => $spellAmount,
                     'remainingTurns' => $spellDuration + 1,
                 ];
-                $this->description .= "<span class='text-warning'>{$target->getCreature()->getName()} est affecté par <strong>{$characterSpell->getSpell()->getEffect()}</strong> pour {$spellDuration} tour(s).</span><br/>";
+                if($enemyType === 'creature') {
+                    $this->description .= "<span class='text-warning'>{$target->getCreature()->getName()} est affecté par <strong>{$characterSpell->getSpell()->getEffect()}</strong> pour {$spellDuration} tour(s).</span><br/>";
+                } else {
+                    $this->description .= "<span class='text-warning'>{$target->getNpc()->getName()} est affecté par <strong>{$characterSpell->getSpell()->getEffect()}</strong> pour {$spellDuration} tour(s).</span><br/>";
+                }
             }
         } else {
-            $this->description .= "<span class='text-warning'>{$target->getCreature()->getName()} résiste au sort <strong>{$characterSpell->getSpell()->getName()}</strong> !</span><br/>";
+            if($enemyType === 'creature') {
+                $this->description .= "<span class='text-warning'>{$target->getCreature()->getName()} résiste au sort <strong>{$characterSpell->getSpell()->getName()}</strong> !</span><br/>";
+            } else {
+                $this->description .= "<span class='text-warning'>{$target->getNpc()->getName()} résiste au sort <strong>{$characterSpell->getSpell()->getName()}</strong> !</span><br/>";
+            }
         }
     }
 
-    private function applyAreaDamage(CharacterSpell $characterSpell, CreaturePlayerCombat $primaryTarget, int $primaryDamage, int $position): void
+    private function applyAreaDamage(CharacterSpell $characterSpell, CreaturePlayerCombat|NpcPlayerCombat $primaryTarget, int $primaryDamage, int $position): void
     {
         $otherEnemies = [];
         foreach($this->playerCombat->getCreaturePlayerCombats() as $otherCombat) {
+            if($otherCombat->getId() !== $primaryTarget->getId() && $otherCombat->getHealth() > 0) {
+                $otherEnemies[] = $otherCombat;
+            }
+        }
+        foreach($this->playerCombat->getNpcPlayerCombats() as $otherCombat) {
             if($otherCombat->getId() !== $primaryTarget->getId() && $otherCombat->getHealth() > 0) {
                 $otherEnemies[] = $otherCombat;
             }
@@ -973,14 +1145,14 @@ class GameComponent
         return $playerNpc;
     }
 
-    public function startCombat(): void
+    public function startCombat(string $enemyType): void
     {
         $this->initializeTurnOrder();
         $this->description .= "<h3>Tour {$this->nbTurns}&nbsp;:</h3><p>";
-        $this->executeTurn();
+        $this->executeTurn($enemyType);
     }
 
-    private function executeTurn(): void
+    private function executeTurn(string $enemyType): void
     {
         if($this->isCombatOver()) {
             return;
@@ -991,7 +1163,7 @@ class GameComponent
         $currentEntity = $this->fetchEntityById($currentEntityData['type'], $currentEntityData['id']);
 
         if(($currentEntity instanceof CreaturePlayerCombat || $currentEntity instanceof NpcPlayerCombat) && $currentEntity->getHealth() <= 0) {
-            $this->nextTurn();
+            $this->nextTurn($enemyType);
 
             return;
         }
@@ -1001,8 +1173,8 @@ class GameComponent
         }
 
         if($currentEntity instanceof CreaturePlayerCombat || $currentEntity instanceof NpcPlayerCombat) {
-            $this->executeEnemyAttack($currentEntity);
-            $this->nextTurn();
+            $this->executeEnemyAttack($currentEntity, $enemyType);
+            $this->nextTurn($enemyType);
         }
     }
 
@@ -1219,7 +1391,7 @@ class GameComponent
                     $weapon->setHealth($weapon->getHealth() - 1);
                     $this->wearLogs[] = "<span class='text-warning'>Votre {$weapon->getItem()->getName()} s'use et perd 1 PV&nbsp;!</span><br/>";
                 }
-            } else {
+            } else if($weapon->getHealth() !== null) {
                 $this->wearLogs[] = "<span class='text-danger'><strong>Votre {$weapon->getItem()->getName()} est cassée&nbsp;!</strong></span><br/>";
             }
 
@@ -1255,12 +1427,16 @@ class GameComponent
         }
     }
 
-    private function executeEnemyAttack($enemy): void
+    private function executeEnemyAttack($enemy, $enemyType): void
     {
         // Vérifier si le joueur est invisible
         foreach($this->temporaryEffects as $temporaryEffect) {
             if($temporaryEffect['effect'] === 'invisibility') {
-                $this->description .= "<span class='text-info'>Vous êtes invisible, {$enemy->getCreature()->getName()} ne vous attaque pas&nbsp;!</span><br/>";
+                if($enemyType === 'creature') {
+                    $this->description .= "<span class='text-info'>Vous êtes invisible, {$enemy->getCreature()->getName()} ne vous attaque pas&nbsp;!</span><br/>";
+                } else {
+                    $this->description .= "<span class='text-info'>Vous êtes invisible, {$enemy->getNpc()->getName()} ne vous attaque pas&nbsp;!</span><br/>";
+                }
 
                 return;
             }
@@ -1322,7 +1498,11 @@ class GameComponent
 
             if($attackRoll == 20) {
                 $damage *= 2;
-                $this->description .= "<strong class='text-danger'>{$enemy->getCreature()->getName()} vous inflige un coup critique&nbsp;!</strong><br/>";
+                if($enemyType === 'creature') {
+                    $this->description .= "<strong class='text-danger'>{$enemy->getCreature()->getName()} vous inflige un coup critique&nbsp;!</strong><br/>";
+                } else {
+                    $this->description .= "<strong class='text-danger'>{$enemy->getNpc()->getName()} vous inflige un coup critique&nbsp;!</strong><br/>";
+                }
 
                 // Usure supplémentaire des équipements en cas de coup critique
                 if($shield && $shield->getHealth() > 0) {
@@ -1339,7 +1519,11 @@ class GameComponent
 
             $damage = floor($damage);
             $target->setHealth(max(0, $target->getHealth() - $damage));
-            $this->description .= "<span class='text-warning'>{$enemy->getCreature()->getName()} vous attaque et inflige $damage dégât" . ($damage > 1 ? 's' : '') . ".</span><br/>";
+            if($enemyType === 'creature') {
+                $this->description .= "<span class='text-warning'>{$enemy->getCreature()->getName()} vous attaque et inflige $damage dégât" . ($damage > 1 ? 's' : '') . ".</span><br/>";
+            } else {
+                $this->description .= "<span class='text-warning'>{$enemy->getNpc()->getName()} vous attaque et inflige $damage dégât" . ($damage > 1 ? 's' : '') . ".</span><br/>";
+            }
 
             // Usure normale du bouclier et de l'armure après 15 attaques encaissées
             if($shield && $shield->getHealth() > 0) {
@@ -1354,7 +1538,7 @@ class GameComponent
                     }
                 }
                 $this->entityManager->persist($shield);
-            } else {
+            } else if($shield) {
                 $logMessage = "<span class='text-danger'><strong>Votre {$shield->getItem()->getName()} est cassé&nbsp;!</strong></span><br/>";
                 if(!in_array($logMessage, $this->wearLogs, true)) {
                     $this->wearLogs[] = $logMessage;
@@ -1372,14 +1556,18 @@ class GameComponent
                     }
                 }
                 $this->entityManager->persist($armor);
-            } else {
+            } else if($armor) {
                 $logMessage = "<span class='text-danger'><strong>Votre {$armor->getItem()->getName()} est cassée&nbsp;!</strong></span><br/>";
                 if(!in_array($logMessage, $this->wearLogs, true)) {
                     $this->wearLogs[] = $logMessage;
                 }
             }
         } else {
-            $this->description .= "{$enemy->getCreature()->getName()} tente de vous attaquer mais vous esquivez&nbsp;!<br/>";
+            if($enemyType === 'creature') {
+                $this->description .= "{$enemy->getCreature()->getName()} tente de vous attaquer mais vous esquivez&nbsp;!<br/>";
+            } else {
+                $this->description .= "{$enemy->getNpc()->getName()} tente de vous attaquer mais vous esquivez&nbsp;!<br/>";
+            }
         }
 
         if($target->getHealth() <= 0) {
@@ -1393,7 +1581,7 @@ class GameComponent
         $this->entityManager->flush();
     }
 
-    private function nextTurn(): void
+    private function nextTurn(string $enemyType): void
     {
         // Passer au protagoniste suivant
         $this->currentTurn++;
@@ -1423,7 +1611,7 @@ class GameComponent
         }
 
         // Relancer l'exécution du tour pour le prochain protagoniste
-        $this->executeTurn();
+        $this->executeTurn($enemyType);
     }
 
     private function initializeTurnOrder(): void

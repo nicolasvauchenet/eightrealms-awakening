@@ -28,9 +28,17 @@
                     <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"
                          class="equip {% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"
                          alt="{{ characterItem.item.name }}"/>
-                    <div class="gauge">
-                        <div class="gauge-fill {% if characterItem.item.category.slug == 'arme-magique' %}info{% else %}success{% endif %}" style="--value: {{ app_itemService.health(characterItem) }}"></div>
-                    </div>
+                    {% if characterItem.charge is not null %}
+                        <div class="gauge">
+                            <div class="gauge-fill info"
+                                 style="--value: {{ app_itemService.health(characterItem) }}"></div>
+                        </div>
+                    {% elseif characterItem.health is not null %}
+                        <div class="gauge">
+                            <div class="gauge-fill success"
+                                 style="--value: {{ app_itemService.health(characterItem) }}"></div>
+                        </div>
+                    {% endif %}
                 </a>
                 {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
             {% endif %}
@@ -44,9 +52,17 @@
                     <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"
                          class="equip {% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"
                          alt="{{ characterItem.item.name }}"/>
-                    <div class="gauge">
-                        <div class="gauge-fill success" style="--value: {{ app_itemService.health(characterItem) }}"></div>
-                    </div>
+                    {% if characterItem.charge is not null %}
+                        <div class="gauge">
+                            <div class="gauge-fill info"
+                                 style="--value: {{ app_itemService.health(characterItem) }}"></div>
+                        </div>
+                    {% elseif characterItem.health is not null %}
+                        <div class="gauge">
+                            <div class="gauge-fill success"
+                                 style="--value: {{ app_itemService.health(characterItem) }}"></div>
+                        </div>
+                    {% endif %}
                 </a>
                 {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
             {% endif %}
@@ -112,9 +128,17 @@
                     <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"
                          class="equip {% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"
                          alt="{{ characterItem.item.name }}"/>
-                    <div class="gauge">
-                        <div class="gauge-fill {% if characterItem.item.category.slug == 'arme-magique' %}info{% else %}success{% endif %}" style="--value: {{ app_itemService.health(characterItem) }}"></div>
-                    </div>
+                    {% if characterItem.charge is not null %}
+                        <div class="gauge">
+                            <div class="gauge-fill info"
+                                 style="--value: {{ app_itemService.charge(characterItem) }}"></div>
+                        </div>
+                    {% elseif characterItem.health is not null %}
+                        <div class="gauge">
+                            <div class="gauge-fill success"
+                                 style="--value: {{ app_itemService.health(characterItem) }}"></div>
+                        </div>
+                    {% endif %}
                 </a>
                 {% include 'game/_layout/_character/_sheet/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
             {% endif %}

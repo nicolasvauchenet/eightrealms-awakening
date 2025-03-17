@@ -1,9 +1,5 @@
 <div class="app-screen dialogue" data-loading="addClass(loading)">
-    {% if this.playerNpc.npc.location.type == 'building' %}
-        <img src="{{ asset('img/core/npc/' ~ this.playerNpc.npc.picture) }}" class="app-wallpaper" alt="{{ this.playerNpc.npc.name }}"/>
-    {% else %}
-        <img src="{{ asset('img/chapter1/npc/' ~ this.playerNpc.npc.picture) }}" class="app-wallpaper" alt="{{ this.playerNpc.npc.name }}"/>
-    {% endif %}
+    <img src="{{ asset('img/' ~ this.activeScreen.npc.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.npc.name }}"/>
 
     {% include 'game/default/_component/_dialogue/_header/_index.html.twig' %}
 

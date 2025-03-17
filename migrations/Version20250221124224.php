@@ -20,7 +20,7 @@ final class Version20250221124224 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE npc ADD location_id INT NOT NULL');
+        $this->addSql('ALTER TABLE npc ADD location_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE npc ADD CONSTRAINT FK_468C762C64D218E FOREIGN KEY (location_id) REFERENCES location (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('CREATE INDEX IDX_468C762C64D218E ON npc (location_id)');
         $this->addSql('ALTER TABLE player ADD location_id INT DEFAULT NULL');

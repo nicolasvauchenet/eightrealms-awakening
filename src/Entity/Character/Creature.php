@@ -76,6 +76,9 @@ class Creature
     #[ORM\Column]
     private ?int $defense = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $thumb = null;
+
     public function __construct()
     {
         $this->creatureItems = new ArrayCollection();
@@ -323,6 +326,18 @@ class Creature
     public function setDefense(int $defense): static
     {
         $this->defense = $defense;
+
+        return $this;
+    }
+
+    public function getThumb(): ?string
+    {
+        return $this->thumb;
+    }
+
+    public function setThumb(string $thumb): static
+    {
+        $this->thumb = $thumb;
 
         return $this;
     }

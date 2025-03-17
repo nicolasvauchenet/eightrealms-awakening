@@ -17,7 +17,6 @@
     .screen-action {
       & > img {
         margin-bottom: 2px;
-        object-fit: contain;
       }
 
       &:has(.gauge) {

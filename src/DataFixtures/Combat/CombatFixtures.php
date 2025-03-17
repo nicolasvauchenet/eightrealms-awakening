@@ -22,8 +22,8 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
         $combats = [
             [
                 'name' => 'Des rats sur les docks',
-                'picture' => 'anciens-docks-rats.webp',
-                'thumb' => 'core/creature/thumb_rat.png',
+                'picture' => 'combat-quete-anciens-docks-rats.webp',
+                'thumb' => 'core/creature/rat_thumb.png',
                 'description' => "<p>Un groupe de gros rats vous a repéré et vous attaque&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
                 'location' => 'location_zone_anciens_docks',
                 'quest' => 'quest_secondary_des_rats_sur_les_docks',
@@ -31,15 +31,15 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                 'screen' => 'screen_combat_des_rats_sur_les_docks',
                 'creatures' => [
                     'creature_gros_rat',
-                    'creature_gros_rat',
+                    'creature_rat_geant',
                     'creature_gros_rat',
                 ],
                 'reference' => 'combat_des_rats_sur_les_docks',
             ],
             [
                 'name' => 'Une bande de rats sur les docks',
-                'picture' => 'anciens-docks-rats.webp',
-                'thumb' => 'core/creature/thumb_rat.png',
+                'picture' => 'combat-anciens-docks-rats.webp',
+                'thumb' => 'core/creature/rat_thumb.png',
                 'description' => "<p>Un groupe de gros rats vous a repéré et vous attaque&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
                 'location' => 'location_zone_anciens_docks',
                 'screen' => 'screen_combat_une_bande_de_rats_sur_les_docks',
@@ -53,6 +53,24 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                     'crown' => 20,
                 ],
                 'reference' => 'combat_une_bande_de_rats_sur_les_docks',
+            ],
+            [
+                'name' => 'Des malfrats vous accostent',
+                'picture' => 'combat-docks-de-louest-malfrats.webp',
+                'thumb' => 'core/npc/chef-malfrat_thumb.png',
+                'description' => "<p>Une bande de malfrats vous barre la route. Leur chef vous regarde avec un sourire mauvais, et semble prêt à vous attaquer si vous ne lui donnez pas ce qu'il veut.</p><p><em>Alors, mon gars, tu vas nous donner tout ce que tu as, ou on va devoir te le prendre&nbsp;!</em></p>",
+                'location' => 'location_zone_docks_de_l_ouest',
+                'screen' => 'screen_combat_malfrats_docks_de_l_ouest',
+                'npcs' => [
+                    'npc_sbire',
+                    'npc_chef_malfrat',
+                    'npc_sbire',
+                ],
+                'reward' => [
+                    'xp' => 50,
+                    'crown' => 50,
+                ],
+                'reference' => 'combat_des_malfrats_vous_accostent_docks_de_l_ouest',
             ],
         ];
 

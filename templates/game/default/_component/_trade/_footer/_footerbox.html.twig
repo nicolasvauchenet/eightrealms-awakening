@@ -2,6 +2,8 @@
     {% if this.description %}
         {{ this.description | raw }}
     {% else %}
-        <p>Vous commercez avec {{ this.playerNpc.npc.name }}.</p>
+        {% if this.activeScreen.tradeType == 'trade' %}
+            <p>Vous commercez avec {{ this.playerNpc.npc.name }}.</p>
+        {% endif %}
     {% endif %}
 </div>

@@ -1,8 +1,70 @@
+{% set eligibleCombats = [] %}
+{% set now = "now"|date("U") %}
+
+{% for combat in this.activeScreen.location.combats %}
+    {% if not combat.step %}
+        {% set playerHasCombat = false %}
+        {% set playerCombatExists = false %}
+
+        {% for playerCombat in this.character.playerCombats %}
+            {% if playerCombat.combat == combat %}
+                {% set playerCombatExists = true %}
+                {% if playerCombat.status != 'victory' %}
+                    {% set playerHasCombat = true %}
+                {% elseif playerCombat.status == 'victory' and (now - playerCombat.updatedAt|date("U")) >= 86400 %}
+                    {% set playerHasCombat = true %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if not playerCombatExists %}
+            {% set playerHasCombat = true %}
+        {% endif %}
+
+        {% if playerHasCombat %}
+            {% set eligibleCombats = eligibleCombats|merge([combat]) %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+{% set selectedCombats = [] %}
+{% if eligibleCombats|length == 1 %}
+    {% if random([true, false]) %}
+        {% set selectedCombats = eligibleCombats %}
+    {% endif %}
+{% elseif eligibleCombats|length > 1 %}
+    {% set selectedCombats = eligibleCombats|shuffle|slice(0,2) %}
+{% endif %}
+
+{% set malfratCombatAvailable = false %}
+{% for combat in selectedCombats %}
+    {% if combat.name == 'Des malfrats vous accostent' %}
+        {% set playerCombatExists = false %}
+        {% for playerCombat in this.character.playerCombats %}
+            {% if playerCombat.combat == combat %}
+                {% set playerCombatExists = true %}
+                {% if playerCombat.status != 'victory' %}
+                    {% set malfratCombatAvailable = true %}
+                {% elseif playerCombat.status == 'victory' and (now - playerCombat.updatedAt|date("U")) <= 86400 %}
+                    {% set malfratCombatAvailable = true %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {% if not playerCombatExists %}
+            {% set malfratCombatAvailable = true %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
 <div class="app-screen location" data-loading="addClass(loading)">
     {% if this.activeScreen.location.type == 'building' %}
         <img src="{{ asset('img/core/location/' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
     {% else %}
-        <img src="{{ asset('img/chapter1/location/' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
+        {% if malfratCombatAvailable %}
+            <img src="{{ asset('img/chapter1/location/nuit_' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
+        {% else %}
+            <img src="{{ asset('img/chapter1/location/' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
+        {% endif %}
     {% endif %}
 
     {% include 'game/default/_component/_location/_header/_index.html.twig' %}

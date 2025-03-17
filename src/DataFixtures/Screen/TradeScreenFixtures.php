@@ -16,26 +16,37 @@ class TradeScreenFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'name' => 'Commercer avec Sophie la Marchande',
                 'npc' => 'npc_sophie_la_marchande',
+                'tradeType' => 'trade',
                 'reference' => 'screen_trade_sophie_la_marchande',
             ],
             [
                 'name' => 'Commercer avec Gart le Forgeron',
                 'npc' => 'npc_gart_le_forgeron',
+                'tradeType' => 'trade',
                 'reference' => 'screen_trade_gart_le_forgeron',
             ],
             [
                 'name' => 'Réparer avec Gart le Forgeron',
                 'npc' => 'npc_gart_le_forgeron',
+                'tradeType' => 'repair',
                 'reference' => 'screen_trade_repair_gart_le_forgeron',
+            ],
+            [
+                'name' => "Commercer avec Wilbert l'Arcaniste",
+                'npc' => 'npc_wilbert_larcaniste',
+                'tradeType' => 'trade',
+                'reference' => 'screen_trade_wilbert_larcaniste',
             ],
             [
                 'name' => "Recharger avec Wilbert l'Arcaniste",
                 'npc' => 'npc_wilbert_larcaniste',
+                'tradeType' => 'reload',
                 'reference' => 'screen_trade_reload_wilbert_larcaniste',
             ],
             [
                 'name' => 'Commercer avec Jarrod le Tavernier',
                 'npc' => 'npc_jarrod_le_tavernier',
+                'tradeType' => 'trade',
                 'reference' => 'screen_trade_jarrod_le_tavernier',
             ],
         ];
@@ -43,7 +54,8 @@ class TradeScreenFixtures extends Fixture implements OrderedFixtureInterface
         foreach($screens as $data) {
             $screen = new TradeScreen();
             $screen->setName($data['name'])
-                ->setNpc($this->getReference($data['npc'], Npc::class));
+                ->setNpc($this->getReference($data['npc'], Npc::class))
+                ->setTradeType($data['tradeType']);
             $manager->persist($screen);
             $this->addReference($data['reference'], $screen);
         }

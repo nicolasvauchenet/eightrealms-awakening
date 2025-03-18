@@ -63,7 +63,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                 'screen' => 'screen_combat_malfrats_docks_de_l_ouest',
                 'npcs' => [
                     'npc_sbire',
-                    'npc_chef_malfrat',
+                    'npc_malfrat',
                     'npc_sbire',
                 ],
                 'reward' => [

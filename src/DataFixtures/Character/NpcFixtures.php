@@ -211,7 +211,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'level' => 2,
                 'race' => 'race_humain',
                 'profession' => 'profession_malfrat',
-                'reference' => 'npc_chef_malfrat',
+                'reference' => 'npc_malfrat',
             ],
             [
                 'name' => 'Sbire',

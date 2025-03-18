@@ -66,7 +66,7 @@
 
             {% if app_characterItemService.equippedItems(this.character).potion %}
                 <button class="screen-action" title="Boire une potion"
-                        {{ live_action('use', {'type': 'potion'}) }}>
+                        {{ live_action('use', {'type': 'potion', 'enemyType': enemyType}) }}>
                     <img src="{{ asset('img/core/item/potion/' ~ app_characterItemService.equippedItems(this.character).potion.item.picture) }}"
                          alt="{{ app_characterItemService.equippedItems(this.character).potion.item.name }}"/>
                 </button>

@@ -1,0 +1,15 @@
+{% extends 'game/_layout/_character/_sheet/_index.html.twig' %}
+
+{% block title %}Montée de niveau - Les Huit Royaumes - Chapitre I : L'Éveil{% endblock %}
+
+{% block body_class %}game character sheet levelup{% endblock %}
+
+{% block main %}
+    <a href="{{ path('app_game_character_sheet_player') }}" class="app-button back">
+        {{ ux_icon('zondicons:close-solid', {'class': 'app-icon'}) }}
+    </a>
+
+    <section class="app-section">
+        {{ component('PlayerLevel', { character: app.user.character }) }}
+    </section>
+{% endblock %}

@@ -11,12 +11,14 @@
        onclick="return false">
         {{ ux_icon('game-icons:light-backpack', {'class': 'app-icon'}) }}
     </a>
+
     <a href="#"
        class="{% if this.activeContent == 'equipment' %}active{% endif %}"
             {{ live_action('setActiveContent', {'content': 'equipment'}) }}
        onclick="return false">
         {{ ux_icon('game-icons:cape-armor', {'class': 'app-icon'}) }}
     </a>
+
     {% if character.profession.type == 'magic' %}
         <a href="#"
            class="{% if this.activeContent == 'spells' %}active{% endif %}"
@@ -25,12 +27,11 @@
             {{ ux_icon('game-icons:spell-book', {'class': 'app-icon'}) }}
         </a>
     {% endif %}
-    {% if true %}
-        <a href="#"
-           class="{% if this.activeContent == 'quests' %}active{% endif %}"
-                {{ live_action('setActiveContent', {'content': 'quests'}) }}
-           onclick="return false">
-            {{ ux_icon('game-icons:scroll-quill', {'class': 'app-icon'}) }}
-        </a>
-    {% endif %}
+
+    <a href="#"
+       class="{% if this.activeContent == 'quests' %}active{% endif %}"
+            {{ live_action('setActiveContent', {'content': 'quests'}) }}
+       onclick="return false">
+        {{ ux_icon('game-icons:scroll-quill', {'class': 'app-icon'}) }}
+    </a>
 </div>

@@ -1,0 +1,14 @@
+<div {{ attributes }}>
+    <div class="app-sheet" data-loading="addClass(loading)">
+        {% include 'game/character/sheet/level/_component/_header.html.twig' %}
+
+        <main class="sheet-main">
+            {% include 'game/character/sheet/level/_component/_details.html.twig' %}
+            {% if character.profession.type == 'magic' %}
+                {% include 'game/character/sheet/level/_component/_spells.html.twig' %}
+            {% endif %}
+        </main>
+
+        {% include 'game/character/sheet/level/_component/_footer.html.twig' %}
+    </div>
+</div>

@@ -49,6 +49,12 @@ class TradeScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'tradeType' => 'trade',
                 'reference' => 'screen_trade_jarrod_le_tavernier',
             ],
+            [
+                'name' => 'Commercer avec le Pêcheur',
+                'npc' => 'npc_pecheur',
+                'tradeType' => 'trade',
+                'reference' => 'screen_trade_pecheur',
+            ],
         ];
 
         foreach($screens as $data) {

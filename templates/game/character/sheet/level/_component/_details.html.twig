@@ -1,0 +1,159 @@
+<div class="sheet-content details {% if this.activeContent == 'details' %}active{% endif %}">
+    <div class="subtitle">
+        <div class="level">
+            {{ ux_icon('material-symbols:diamond', {'class': 'app-icon'}) }}
+            {{ this.character.level }}
+        </div>
+
+        <h3 class="sheet-subtitle">{{ this.character.profession.name }}&nbsp;{{ this.character.race.name }}</h3>
+
+        <div class="experience">
+            {{ ux_icon('simple-icons:opslevel', {'class': 'app-icon'}) }}
+            {{ this.character.experience }}
+        </div>
+    </div>
+
+    <div class="infos">
+        <div class="characteristics">
+            <div class="characteristic">
+                <div class="name">Force</div>
+                <div class="value">
+                    <span>{{ this.strength }}</span>
+                    <div class="modifier">
+                        <button
+                                class="{% if (this.characteristicBonus >= this.characteristicBonusMax) or this.strength == this.character.strength + 1 %}disabled{% endif %}"
+                                {{ live_action('increaseCharacteristic', {'characteristic': 'strength'}) }}>
+                            {{ ux_icon('ic:baseline-plus', {'class': 'app-icon'}) }}
+                        </button>
+                        <button
+                                class="{% if (this.characteristicBonus == 0) or this.strength == this.character.strength %}disabled{% endif %}"
+                                {{ live_action('decreaseCharacteristic', {'characteristic': 'strength'}) }}>
+                            {{ ux_icon('ic:baseline-minus', {'class': 'app-icon'}) }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Dextérité</div>
+                <div class="value">
+                    <span>{{ this.dexterity }}</span>
+                    <div class="modifier">
+                        <button
+                                class="{% if (this.characteristicBonus >= this.characteristicBonusMax) or this.dexterity == this.character.dexterity + 1 %}disabled{% endif %}"
+                                {{ live_action('increaseCharacteristic', {'characteristic': 'dexterity'}) }}>
+                            {{ ux_icon('ic:baseline-plus', {'class': 'app-icon'}) }}
+                        </button>
+                        <button
+                                class="{% if (this.characteristicBonus == 0) or this.dexterity == this.character.dexterity %}disabled{% endif %}"
+                                {{ live_action('decreaseCharacteristic', {'characteristic': 'dexterity'}) }}>
+                            {{ ux_icon('ic:baseline-minus', {'class': 'app-icon'}) }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Constitution</div>
+                <div class="value">
+                    <span>{{ this.constitution }}</span>
+                    <div class="modifier">
+                        <button
+                                class="{% if (this.characteristicBonus >= this.characteristicBonusMax) or this.constitution == this.character.constitution + 1 %}disabled{% endif %}"
+                                {{ live_action('increaseCharacteristic', {'characteristic': 'constitution'}) }}>
+                            {{ ux_icon('ic:baseline-plus', {'class': 'app-icon'}) }}
+                        </button>
+                        <button
+                                class="{% if (this.characteristicBonus == 0) or this.constitution == this.character.constitution %}disabled{% endif %}"
+                                {{ live_action('decreaseCharacteristic', {'characteristic': 'constitution'}) }}>
+                            {{ ux_icon('ic:baseline-minus', {'class': 'app-icon'}) }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Sagesse</div>
+                <div class="value">
+                    <span>{{ this.wisdom }}</span>
+                    <div class="modifier">
+                        <button
+                                class="{% if (this.characteristicBonus >= this.characteristicBonusMax) or this.wisdom == this.character.wisdom + 1 %}disabled{% endif %}"
+                                {{ live_action('increaseCharacteristic', {'characteristic': 'wisdom'}) }}>
+                            {{ ux_icon('ic:baseline-plus', {'class': 'app-icon'}) }}
+                        </button>
+                        <button
+                                class="{% if (this.characteristicBonus == 0) or this.wisdom == this.character.wisdom %}disabled{% endif %}"
+                                {{ live_action('decreaseCharacteristic', {'characteristic': 'wisdom'}) }}>
+                            {{ ux_icon('ic:baseline-minus', {'class': 'app-icon'}) }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Intelligence</div>
+                <div class="value">
+                    <span>{{ this.intelligence }}</span>
+                    <div class="modifier">
+                        <button
+                                class="{% if (this.characteristicBonus >= this.characteristicBonusMax) or this.intelligence == this.character.intelligence + 1 %}disabled{% endif %}"
+                                {{ live_action('increaseCharacteristic', {'characteristic': 'intelligence'}) }}>
+                            {{ ux_icon('ic:baseline-plus', {'class': 'app-icon'}) }}
+                        </button>
+                        <button
+                                class="{% if (this.characteristicBonus == 0) or this.intelligence == this.character.intelligence %}disabled{% endif %}"
+                                {{ live_action('decreaseCharacteristic', {'characteristic': 'intelligence'}) }}>
+                            {{ ux_icon('ic:baseline-minus', {'class': 'app-icon'}) }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="characteristic">
+                <div class="name">Charisme</div>
+                <div class="value">
+                    <span>{{ this.charisma }}</span>
+                    <div class="modifier">
+                        <button
+                                class="{% if (this.characteristicBonus >= this.characteristicBonusMax) or this.charisma == this.character.charisma + 1 %}disabled{% endif %}"
+                                {{ live_action('increaseCharacteristic', {'characteristic': 'charisma'}) }}>
+                            {{ ux_icon('ic:baseline-plus', {'class': 'app-icon'}) }}
+                        </button>
+                        <button
+                                class="{% if (this.characteristicBonus == 0) or this.charisma == this.character.charisma %}disabled{% endif %}"
+                                {{ live_action('decreaseCharacteristic', {'characteristic': 'charisma'}) }}>
+                            {{ ux_icon('ic:baseline-minus', {'class': 'app-icon'}) }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="attributes">
+            <div class="metrics">
+                {% set bonus = app_characterBonusService.characterBonus(this.character, 'health') %}
+                <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                    {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
+                    {{ this.health }}
+                    <small>{{ this.character.health }}</small>
+                </div>
+
+                {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
+                <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
+                    {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
+                    {{ this.mana }}
+                    <small>{{ this.character.mana }}</small>
+                </div>
+            </div>
+
+            <p class="level-bonus">
+                <span>
+                    Bonus
+                    <br/>
+                    répartis&nbsp;:
+                </span>
+                {{ this.characteristicBonus }} / {{ this.characteristicBonusMax }}
+            </p>
+        </div>
+    </div>
+
+    <div class="description">
+        <textarea name="description" id="description">{{ this.description | striptags }}</textarea>
+    </div>
+</div>

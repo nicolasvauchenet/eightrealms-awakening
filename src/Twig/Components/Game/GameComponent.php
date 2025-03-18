@@ -402,7 +402,7 @@ class GameComponent
     #[LiveAction]
     public function reloadAll(): void
     {
-        foreach($this->characterItemService->getRepairableItems($this->character->getCharacterItems()) as $characterItem) {
+        foreach($this->characterItemService->getReloadableItems($this->character->getCharacterItems()) as $characterItem) {
             $this->reload($characterItem->getId());
         }
     }
@@ -902,10 +902,10 @@ class GameComponent
                 $characterItem = $this->characterItemService->getEquippedItems($this->character)['potion'];
                 if($characterItem->getItem()->getTarget() === 'health') {
                     $this->character->setHealth($this->character->getHealth() + $characterItem->getItem()->getAmount());
-                    $this->description .= "<p>Vous buvez votre {$characterItem->getItem()->getName()} et regagnez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de vie.</p>";
+                    $this->description .= "<span class='text-success'>Vous buvez votre {$characterItem->getItem()->getName()} et regagnez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de vie.</span><br/>";
                 } else if($characterItem->getItem()->getTarget() === 'mana') {
                     $this->character->setMana($this->character->getMana() + $characterItem->getItem()->getAmount());
-                    $this->description .= "<p>Vous buvez votre {$characterItem->getItem()->getName()} et regagnez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</p>";
+                    $this->description .= "<span class='text-success'>Vous buvez votre {$characterItem->getItem()->getName()} et regagnez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
                 }
                 $this->entityManager->persist($this->character);
                 $this->entityManager->remove($characterItem);
@@ -1299,7 +1299,7 @@ class GameComponent
             return;
         }
 
-        $isMagical = $weapon->getItem() instanceof Magical;
+        $isMagical = $weapon->getItem() instanceof Magical || $weapon->getItem()->getCharge() !== null;
 
         if($isMagical && $weapon->getCharge() <= 0) {
             $this->description .= "<span class='text-danger'>Votre {$weapon->getItem()->getName()} n'a plus de charge&nbsp;!</span><br/>";
@@ -1447,12 +1447,12 @@ class GameComponent
 
         if($enemy instanceof CreaturePlayerCombat) {
             $attackRoll += $enemy->getCreature()->getStrength();
-            $damageRange = [$enemy->getCreature()->getDamage(), $enemy->getCreature()->getDamage() + 4];
+            $damageRange = [$enemy->getCreature()->getDamage(), $enemy->getCreature()->getDamage() + 10];
             $weapon = null;
         } else if($enemy instanceof NpcPlayerCombat) {
             $attackRoll += $enemy->getNpc()->getStrength();
-            $damageRange = [$this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'] - 2,
-                $this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'] + 2];
+            $damageRange = [$this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'],
+                $this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'] + 10];
             $weapon = $this->characterItemService->getEquippedItems($enemy->getNpc())['righthand'] ?? null;
         }
 

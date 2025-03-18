@@ -11,8 +11,6 @@ final class DefaultController extends AbstractController
     #[Route('/mon-personnage/niveau-superieur', name: 'app_game_character_level_home')]
     public function index(): Response
     {
-        return $this->render('game/character/level/default/index.html.twig', [
-            'character' => $this->getUser()->getCharacter(),
-        ]);
+        return $this->render('game/character/sheet/level/index.html.twig');
     }
 }

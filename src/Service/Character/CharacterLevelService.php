@@ -97,12 +97,17 @@ readonly class CharacterLevelService
         }
 
         $newLevel = $character->getLevel() + 1;
-        $character->setLevel($newLevel);
+
+        if($newLevel > self::LEVEL_MAX) {
+            return;
+        }
 
         // TODO: Ajouter +1 à 3 caractéristiques selon les règles définies
         // TODO: Offrir le choix entre augmenter un sort ou en apprendre un nouveau
         // TODO: Ajuster healthMax et manaMax si Constitution ou Intelligence sont améliorées
         // TODO: Appliquer le plafond de +50 sur les caractéristiques
+
+        $character->setLevel($newLevel);
 
         $this->entityManager->persist($character);
         $this->entityManager->flush();

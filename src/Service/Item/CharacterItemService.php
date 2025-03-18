@@ -75,6 +75,10 @@ readonly class CharacterItemService
                 return $characterItems->filter(function($item) {
                     return in_array($item->getItem()->getCategory()->getSlug(), ['arme-magique', 'anneau', 'parchemin', 'potion', 'amulette', 'carte']);
                 });
+            case 'pecheur':
+                return $characterItems->filter(function($item) {
+                    return in_array($item->getItem()->getCategory()->getSlug(), ['nourriture']);
+                });
             default:
                 return new ArrayCollection();
         }
@@ -90,7 +94,7 @@ readonly class CharacterItemService
     public function getReloadableItems(Collection $characterItems): Collection
     {
         return $characterItems->filter(function($item) {
-            return $item->getItem()->getCategory()->getSlug() == 'arme-magique' && $item->getCharge() < $item->getItem()->getCharge();
+            return in_array($item->getItem()->getCategory()->getSlug(), ['arme', 'arme-magique']) && $item->getCharge() < $item->getItem()->getCharge();
         });
     }
 }

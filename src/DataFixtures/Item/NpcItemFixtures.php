@@ -321,6 +321,45 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
                 'item' => 'map_port_saint_doux',
                 'class' => Map::class,
             ],
+
+            // Pêcheur
+            [
+                'character' => 'npc_pecheur',
+                'item' => 'food_fish',
+                'class' => Food::class,
+            ],
+
+            // Malfrat
+            [
+                'character' => 'npc_malfrat',
+                'item' => 'armor_leather',
+                'class' => Armor::class,
+                'isEquipped' => true,
+                'slot' => 'armor',
+            ],
+            [
+                'character' => 'npc_malfrat',
+                'item' => 'weapon_longsword',
+                'class' => Weapon::class,
+                'isEquipped' => true,
+                'slot' => 'righthand',
+            ],
+
+            // Sbire
+            [
+                'character' => 'npc_sbire',
+                'item' => 'armor_leather',
+                'class' => Armor::class,
+                'isEquipped' => true,
+                'slot' => 'armor',
+            ],
+            [
+                'character' => 'npc_sbire',
+                'item' => 'weapon_shortsword',
+                'class' => Weapon::class,
+                'isEquipped' => true,
+                'slot' => 'righthand',
+            ],
         ];
 
         foreach($characterItems as $data) {

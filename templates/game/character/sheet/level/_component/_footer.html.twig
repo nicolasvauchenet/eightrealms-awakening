@@ -1,0 +1,22 @@
+<div class="sheet-footer">
+    <a href="#"
+       class="{% if this.activeContent == 'details' %}active{% endif %}"
+            {{ live_action('setActiveContent', {'content': 'details'}) }}
+       onclick="return false">
+        {{ ux_icon('solar:user-id-bold', {'class': 'app-icon'}) }}
+    </a>
+
+    {% if character.profession.type == 'magic' %}
+        <a href="#"
+           class="{% if this.activeContent == 'spells' %}active{% endif %}"
+                {{ live_action('setActiveContent', {'content': 'spells'}) }}
+           onclick="return false">
+            {{ ux_icon('game-icons:spell-book', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
+
+    <a href="#"
+       class="bg-primary" {{ live_action('validateLevel') }}>
+        {{ ux_icon('material-symbols:diamond', {'class': 'app-icon'}) }}
+    </a>
+</div>

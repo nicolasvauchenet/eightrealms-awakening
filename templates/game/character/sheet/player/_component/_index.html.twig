@@ -9,9 +9,7 @@
             {% if character.profession.type == 'magic' %}
                 {% include 'game/character/sheet/player/_component/_spells.html.twig' %}
             {% endif %}
-            {% if true %}
-                {% include 'game/character/sheet/player/_component/_quests.html.twig' %}
-            {% endif %}
+            {% include 'game/character/sheet/player/_component/_quests.html.twig' %}
         </main>
 
         {% include 'game/character/sheet/player/_component/_footer.html.twig' %}

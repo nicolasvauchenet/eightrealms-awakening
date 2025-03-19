@@ -45,3 +45,15 @@
     color: inherit;
   }
 }
+
+@keyframes flash-effect {
+  0% {
+    filter: brightness(1) contrast(1) sepia(0) hue-rotate(0deg);
+  }
+  50% {
+    filter: brightness(1.2) contrast(3) sepia(0.8) hue-rotate(-20deg);
+  }
+  100% {
+    filter: brightness(1) contrast(1) sepia(0) hue-rotate(0deg);
+  }
+}

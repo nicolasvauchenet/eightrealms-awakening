@@ -28,8 +28,8 @@ class QuestFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Des rats sur les Docks',
                 'type' => 'Secondaire',
                 'reward' => [
-                    'xp' => 20,
-                    'crown' => 20,
+                    'xp' => 30,
+                    'crown' => 30,
                 ],
                 'reference' => 'quest_secondary_des_rats_sur_les_docks',
             ],

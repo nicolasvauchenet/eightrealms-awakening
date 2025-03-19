@@ -97,6 +97,12 @@ class GameComponent
     #[LiveProp(writable: true)]
     public array $wearLogs = [];
 
+    #[LiveProp(writable: true)]
+    public int $hitTarget = 0;
+
+    #[LiveProp(writable: true)]
+    public string $hit = '';
+
     public function __construct(private readonly EntityManagerInterface     $entityManager,
                                 private readonly CharacterReputationService $characterReputationService,
                                 private readonly CharacterBonusService      $characterBonusService,
@@ -1451,7 +1457,7 @@ class GameComponent
             $weapon = null;
         } else if($enemy instanceof NpcPlayerCombat) {
             $attackRoll += $enemy->getNpc()->getStrength();
-            $damageRange = [$this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'],
+            $damageRange = [$this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'] + 2,
                 $this->characterBonusService->getCharacterBonus($enemy->getNpc(), 'damage')['amount'] + 10];
             $weapon = $this->characterItemService->getEquippedItems($enemy->getNpc())['righthand'] ?? null;
         }
@@ -1494,7 +1500,11 @@ class GameComponent
         // Résolution de l'attaque
         if($attackRoll >= $defenseRoll) {
             $baseDamage = random_int($damageRange[0], $damageRange[1]);
-            $damage = max(1, $baseDamage - $defenseBonus);
+            if($enemyType === 'creature') {
+                $damage = max(1, $baseDamage - $defenseBonus + floor($enemy->getCreature()->getStrength() / 2));
+            } else {
+                $damage = max(1, $baseDamage - $defenseBonus + floor($enemy->getNpc()->getStrength() / 2));
+            }
 
             if($attackRoll == 20) {
                 $damage *= 2;
@@ -1562,6 +1572,9 @@ class GameComponent
                     $this->wearLogs[] = $logMessage;
                 }
             }
+
+            $this->hitTarget = $this->character->getId();
+            $this->hit = 'health';
         } else {
             if($enemyType === 'creature') {
                 $this->description .= "{$enemy->getCreature()->getName()} tente de vous attaquer mais vous esquivez&nbsp;!<br/>";

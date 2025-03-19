@@ -1,7 +1,8 @@
 <div class="screen-headerinfos">
     <div class="left">
         {% set bonus = app_characterBonusService.characterBonus(this.character, 'health') %}
-        <div class="screen-info {% if bonus['extra'] %}text-success{% endif %}">
+        <div class="screen-info {% if bonus['extra'] %}text-success{% endif %} {% if this.hitTarget == this.character.id and this.hit == 'health' %}flash-hit{% endif %}"
+             data-loading="removeClass(flash-hit)">
             {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
             {{ this.character.health }}
         </div>

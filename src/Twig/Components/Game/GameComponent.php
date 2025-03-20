@@ -1466,7 +1466,7 @@ class GameComponent
             $this->entityManager->persist($weapon);
 
             // Si area > 1, toucher d'autres ennemis
-            if($isMagical && $weapon->getItem()->getArea() > 1) {
+            if($isMagical && method_exists($weapon->getItem(), 'getArea') && $weapon->getItem()->getArea() > 1) {
                 $otherEnemies = [];
                 foreach($this->playerCombat->getCreaturePlayerCombats() as $creatureCombat) {
                     if($creatureCombat->getId() !== $target->getId() && $creatureCombat->getHealth() > 0) {

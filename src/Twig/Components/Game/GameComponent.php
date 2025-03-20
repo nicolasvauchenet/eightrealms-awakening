@@ -564,6 +564,8 @@ class GameComponent
             return;
         }
 
+        dd($effects);
+
         foreach($effects as $effect => $data) {
             if($effect === 'startQuest') {
                 $quest = $this->entityManager->getRepository(Quest::class)->find($data);

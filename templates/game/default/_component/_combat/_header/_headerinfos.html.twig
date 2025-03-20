@@ -1,7 +1,14 @@
+{% set hitAttribute = null %}
+{% for hit in this.hit %}
+    {% if hit['target'] == this.character.id %}
+        {% set hitAttribute = hit['attribute'] %}
+    {% endif %}
+{% endfor %}
+
 <div class="screen-headerinfos">
     <div class="left">
         {% set bonus = app_characterBonusService.characterBonus(this.character, 'health') %}
-        <div class="screen-info {% if bonus['extra'] %}text-success{% endif %} {% if this.hitTarget == this.character.id and this.hit == 'health' %}flash-hit{% endif %}"
+        <div class="screen-info {% if bonus['extra'] %}text-success{% endif %} {% if hitAttribute == 'health' %}flash-hit{% endif %}"
              data-loading="removeClass(flash-hit)">
             {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
             {{ this.character.health }}
@@ -9,7 +16,7 @@
 
         {% if this.character.profession.type == 'magic' %}
             {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
-            <div class="screen-info {% if bonus['extra'] %}text-success{% endif %}">
+            <div class="screen-info {% if bonus['extra'] %}text-success{% endif %} {% if hitAttribute == 'mana' %}flash-hit{% endif %}">
                 {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
                 {{ this.character.mana }}
             </div>
@@ -22,7 +29,7 @@
                 {% set defenseBonus = defenseBonus + effect.amount %}
             {% endif %}
         {% endfor %}
-        <div class="screen-info {% if bonus['extra'] %}text-success{% endif %}">
+        <div class="screen-info {% if bonus['extra'] %}text-success{% endif %} {% if hitAttribute == 'defense' %}flash-hit{% endif %}">
             {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
             +{{ bonus['amount'] + defenseBonus }}
         </div>
@@ -35,7 +42,7 @@
                 {% set damageBonus = damageBonus + effect.amount %}
             {% endif %}
         {% endfor %}
-        <div class="screen-info {% if bonus['extra'] or magicalBonus['extra'] %}text-success{% endif %}">
+        <div class="screen-info {% if bonus['extra'] or magicalBonus['extra'] %}text-success{% endif %} {% if hitAttribute == 'damage' %}flash-hit{% endif %}">
             {% set weapons = app_characterItemService.equippedWeapons(this.character) %}
             {% set magicalWeapons = app_characterItemService.equippedWeapons(this.character, true) %}
             {% if weapons is not empty %}
@@ -53,7 +60,7 @@
         <div class="app-grid two">
             &nbsp;
             {% if app_characterItemService.equippedItems(this.character).armor %}
-                <div class="screen-info" data-controller="tooltip">
+                <div class="screen-info {% if hitAttribute == 'armor' %}flash-hit{% endif %}" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/armor/' ~ app_characterItemService.equippedItems(this.character).armor.item.picture) }}"
                              class="{% if app_characterItemService.equippedItems(this.character).armor.health is not null and app_characterItemService.equippedItems(this.character).armor.health <= 0 %}broken{% endif %}"
@@ -96,7 +103,7 @@
 
         <div class="app-grid two">
             {% if app_characterItemService.equippedItems(this.character).righthand %}
-                <div class="screen-info" data-controller="tooltip">
+                <div class="screen-info {% if hitAttribute == 'righthand' %}flash-hit{% endif %}" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).righthand.item.picture) }}"
                              class="{% if app_characterItemService.equippedItems(this.character).righthand.health is not null and app_characterItemService.equippedItems(this.character).righthand.health <= 0 %}broken{% endif %}"
@@ -118,7 +125,7 @@
             {% endif %}
 
             {% if app_characterItemService.equippedItems(this.character).lefthand %}
-                <div class="screen-info" data-controller="tooltip">
+                <div class="screen-info {% if hitAttribute == 'lefthand' %}flash-hit{% endif %}" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).lefthand.item.picture) }}"
                              class="{% if app_characterItemService.equippedItems(this.character).lefthand.health is not null and app_characterItemService.equippedItems(this.character).lefthand.health <= 0 %}broken{% endif %}"
@@ -140,7 +147,7 @@
             {% endif %}
 
             {% if app_characterItemService.equippedItems(this.character).shield %}
-                <div class="screen-info" data-controller="tooltip">
+                <div class="screen-info {% if hitAttribute == 'shield' %}flash-hit{% endif %}" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/shield/' ~ app_characterItemService.equippedItems(this.character).shield.item.picture) }}"
                              class="{% if app_characterItemService.equippedItems(this.character).shield.health is not null and app_characterItemService.equippedItems(this.character).shield.health <= 0 %}broken{% endif %}"
@@ -156,7 +163,7 @@
         </div>
 
         {% if app_characterItemService.equippedItems(this.character).bow %}
-            <div class="screen-info" data-controller="tooltip">
+            <div class="screen-info {% if hitAttribute == 'bow' %}flash-hit{% endif %}" data-controller="tooltip">
                 <a data-action="click->tooltip#open">
                     <img src="{{ asset('img/core/item/weapon/' ~ app_characterItemService.equippedItems(this.character).bow.item.picture) }}"
                          class="{% if app_characterItemService.equippedItems(this.character).bow.health is not null and app_characterItemService.equippedItems(this.character).bow.health <= 0 %}broken{% endif %}"

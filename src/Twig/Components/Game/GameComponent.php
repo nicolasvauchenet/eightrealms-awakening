@@ -98,10 +98,7 @@ class GameComponent
     public array $wearLogs = [];
 
     #[LiveProp(writable: true)]
-    public int $hitTarget = 0;
-
-    #[LiveProp(writable: true)]
-    public string $hit = '';
+    public array $hit = [];
 
     public function __construct(private readonly EntityManagerInterface     $entityManager,
                                 private readonly CharacterReputationService $characterReputationService,
@@ -678,7 +675,7 @@ class GameComponent
         // Si une créature a une meilleure initiative que le joueur, il ne peut pas fuir
         foreach($creaturesInitiative as $initiative) {
             if($initiative >= $playerInitiative) {
-                $this->description .= '<p class="text-danger">Vous tentez de fuir, mais les ennemis vous bloquent&nbsp;! Vous perdez votre tour.</p>';
+                $this->description .= '<span class="text-danger">Vous tentez de fuir, mais les ennemis vous bloquent&nbsp;!</span><br/>';
                 $this->nextTurn($enemyType);
 
                 return;
@@ -772,6 +769,11 @@ class GameComponent
                                     $this->description .= "<span class='text-success'>Vous infligez {$characterItem->getItem()->getAmount()} dégâts magiques à {$enemy->getNpc()->getName()} $position.</span><br/>";
                                 }
 
+                                $this->hit[] = [
+                                    'target' => $enemy->getId(),
+                                    'attribute' => 'health',
+                                ];
+
                                 // Si area > 1, toucher d'autres ennemis
                                 if($characterItem->getItem()->getArea() > 1) {
                                     $otherEnemies = [];
@@ -805,6 +807,11 @@ class GameComponent
                                                 $this->description .= "<strong class='text-success'>Vous avez tué {$target->getNpc()->getName()}&nbsp;!</strong><br/>";
                                             }
                                         }
+
+                                        $this->hit[] = [
+                                            'target' => $target->getId(),
+                                            'attribute' => 'health',
+                                        ];
                                     }
                                 }
                                 $this->entityManager->flush();
@@ -859,12 +866,20 @@ class GameComponent
                                 $this->entityManager->persist($this->character);
                                 $this->entityManager->flush();
                                 $this->description .= "<span class='text-success'>Vous récupérez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de vie.</span><br/>";
+                                $this->hit[] = [
+                                    'target' => $this->character->getId(),
+                                    'attribute' => 'health',
+                                ];
                                 break;
                             case 'mana':
                                 $this->character->setMana($this->character->getMana() + $characterItem->getItem()->getAmount());
                                 $this->entityManager->persist($this->character);
                                 $this->entityManager->flush();
                                 $this->description .= "<span class='text-success'>Vous récupérez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                                $this->hit[] = [
+                                    'target' => $this->character->getId(),
+                                    'attribute' => 'mana',
+                                ];
                                 break;
                             case 'damage':
                                 $this->temporaryEffects[] = [
@@ -873,6 +888,10 @@ class GameComponent
                                     'remainingTurns' => $characterItem->getItem()->getDuration() + 1,
                                 ];
                                 $this->description .= "<span class='text-success'>Votre bonus de dégâts augmente de {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " pendant {$characterItem->getItem()->getDuration()} tour" . ($characterItem->getItem()->getDuration() > 1 ? 's' : '') . ".</span><br/>";
+                                $this->hit[] = [
+                                    'target' => $this->character->getId(),
+                                    'attribute' => 'damage',
+                                ];
                                 break;
                             case 'defense':
                                 $this->temporaryEffects[] = [
@@ -881,6 +900,10 @@ class GameComponent
                                     'remainingTurns' => $characterItem->getItem()->getDuration() + 1,
                                 ];
                                 $this->description .= "<span class='text-success'>Votre bonus de défense augmente de {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " pendant {$characterItem->getItem()->getDuration()} tour" . ($characterItem->getItem()->getDuration() > 1 ? 's' : '') . ".</span><br/>";
+                                $this->hit[] = [
+                                    'target' => $this->character->getId(),
+                                    'attribute' => 'defense',
+                                ];
                                 break;
                             default:
                                 break;
@@ -909,9 +932,17 @@ class GameComponent
                 if($characterItem->getItem()->getTarget() === 'health') {
                     $this->character->setHealth($this->character->getHealth() + $characterItem->getItem()->getAmount());
                     $this->description .= "<span class='text-success'>Vous buvez votre {$characterItem->getItem()->getName()} et regagnez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de vie.</span><br/>";
+                    $this->hit[] = [
+                        'target' => $this->character->getId(),
+                        'attribute' => 'health',
+                    ];
                 } else if($characterItem->getItem()->getTarget() === 'mana') {
                     $this->character->setMana($this->character->getMana() + $characterItem->getItem()->getAmount());
                     $this->description .= "<span class='text-success'>Vous buvez votre {$characterItem->getItem()->getName()} et regagnez {$characterItem->getItem()->getAmount()} point" . ($characterItem->getItem()->getAmount() > 1 ? 's' : '') . " de magie.</span><br/>";
+                    $this->hit[] = [
+                        'target' => $this->character->getId(),
+                        'attribute' => 'mana',
+                    ];
                 }
                 $this->entityManager->persist($this->character);
                 $this->entityManager->remove($characterItem);
@@ -1006,6 +1037,11 @@ class GameComponent
                 $this->description .= "<span class='text-success'>Vous lancez <strong>{$characterSpell->getSpell()->getName()}</strong> sur {$target->getNpc()->getName()} $position et infligez <strong>{$damage}</strong> dégâts.</span><br/>";
             }
 
+            $this->hit[] = [
+                'target' => $target->getId(),
+                'attribute' => 'health',
+            ];
+
             if($target->getHealth() <= 0) {
                 if($enemyType === 'creature') {
                     $this->description .= "<span class='text-success'><strong>Vous avez vaincu {$target->getCreature()->getName()} $position&nbsp;!</strong></span><br/>";
@@ -1066,6 +1102,10 @@ class GameComponent
             $splashDamage = (int)floor($primaryDamage * 2 / 3);
             $otherTarget->setHealth(max(0, $otherTarget->getHealth() - $splashDamage));
             $this->description .= "<span class='text-success'>{$otherTarget->getCreature()->getName()} $position est aussi touché et subit <strong>{$splashDamage}</strong> dégâts.</span><br/>";
+            $this->hit[] = [
+                'target' => $otherTarget->getId(),
+                'attribute' => 'health',
+            ];
 
             if($otherTarget->getHealth() <= 0) {
                 $this->description .= "<span class='text-success'><strong>{$otherTarget->getCreature()->getName()} $position est vaincu !</strong></span><br/>";
@@ -1083,11 +1123,19 @@ class GameComponent
             case 'health':
                 $this->character->setHealth($this->character->getHealth() + $amount);
                 $this->description .= "<span class='text-success'>Vous récupérez {$amount} point(s) de vie.</span><br/>";
+                $this->hit[] = [
+                    'target' => $this->character->getId(),
+                    'attribute' => 'health',
+                ];
                 break;
 
             case 'mana':
                 $this->character->setMana($this->character->getMana() + $amount);
                 $this->description .= "<span class='text-success'>Vous récupérez {$amount} point(s) de magie.</span><br/>";
+                $this->hit[] = [
+                    'target' => $this->character->getId(),
+                    'attribute' => 'mana',
+                ];
                 break;
 
             case 'damage':
@@ -1097,6 +1145,10 @@ class GameComponent
                     'remainingTurns' => $duration + 1,
                 ];
                 $this->description .= "<span class='text-success'>Votre bonus de dégâts augmente de {$amount} pour {$duration} tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
+                $this->hit[] = [
+                    'target' => $this->character->getId(),
+                    'attribute' => 'damage',
+                ];
                 break;
 
             case 'defense':
@@ -1106,6 +1158,10 @@ class GameComponent
                     'remainingTurns' => $duration + 1,
                 ];
                 $this->description .= "<span class='text-success'>Votre bonus de défense augmente de {$amount} pour {$duration} tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
+                $this->hit[] = [
+                    'target' => $this->character->getId(),
+                    'attribute' => 'defense',
+                ];
                 break;
         }
 
@@ -1404,6 +1460,11 @@ class GameComponent
             $this->entityManager->persist($target);
             $this->entityManager->persist($weapon);
 
+            $this->hit[] = [
+                'target' => $target->getId(),
+                'attribute' => 'health',
+            ];
+
             // Si area > 1, toucher d'autres ennemis
             if($isMagical && $weapon->getItem()->getArea() > 1) {
                 $otherEnemies = [];
@@ -1573,8 +1634,10 @@ class GameComponent
                 }
             }
 
-            $this->hitTarget = $this->character->getId();
-            $this->hit = 'health';
+            $this->hit[] = [
+                'target' => $this->character->getId(),
+                'attribute' => 'health',
+            ];
         } else {
             if($enemyType === 'creature') {
                 $this->description .= "{$enemy->getCreature()->getName()} tente de vous attaquer mais vous esquivez&nbsp;!<br/>";
@@ -1608,6 +1671,10 @@ class GameComponent
                 // Suppression des effets expirés
                 if($this->temporaryEffects[$index]['remainingTurns'] <= 0) {
                     unset($this->temporaryEffects[$index]);
+                    $this->hit[] = [
+                        'target' => $this->character->getId(),
+                        'attribute' => $this->temporaryEffects[$index],
+                    ];
                 }
             }
             $this->currentTurn = 0;

@@ -1458,7 +1458,7 @@ class GameComponent
                     $weapon->setHealth($weapon->getHealth() - 1);
                     $this->wearLogs[] = "<span class='text-warning'>Votre {$weapon->getItem()->getName()} s'use et perd 1 PV&nbsp;!</span><br/>";
                 }
-            } else if($weapon->getHealth() !== null) {
+            } else if($weapon->getHealth() !== null && $weapon->getHealth() <= 0) {
                 $this->wearLogs[] = "<span class='text-danger'><strong>Votre {$weapon->getItem()->getName()} est cassée&nbsp;!</strong></span><br/>";
             }
 

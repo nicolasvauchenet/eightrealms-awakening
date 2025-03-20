@@ -1,13 +1,13 @@
 <div class="screen-footeractions">
     {% for creatureCombat in this.playerCombat.creaturePlayerCombats %}
-        {% set hitAttribute = null %}
+        {% set hitCreature = null %}
         {% for hit in this.hit %}
             {% if hit['target'] == creatureCombat.id %}
-                {% set hitAttribute = hit['attribute'] %}
+                {% set hitCreature = hit['attribute'] %}
             {% endif %}
         {% endfor %}
         <div class="combat-action" data-controller="popup">
-            <button class="screen-action {% if creatureCombat.health == 0 %}disabled{% endif %} {% if hitAttribute == 'health' %}flash-hit{% endif %}"
+            <button class="screen-action {% if creatureCombat.health == 0 %}disabled{% endif %} {% if hitCreature == 'health' %}flash-hit{% endif %}"
                     title="{{ creatureCombat.creature.name }} {{ loop.index }}"
                     data-action="click->popup#open">
                 <img src="{{ asset('img/core/creature/' ~ creatureCombat.creature.thumb) }}" alt="{{ creatureCombat.creature.name }}"/>
@@ -21,14 +21,14 @@
     {% endfor %}
 
     {% for npcCombat in this.playerCombat.npcPlayerCombats %}
-        {% set hitAttribute = null %}
+        {% set hitNpc = null %}
         {% for hit in this.hit %}
             {% if hit['target'] == npcCombat.id %}
-                {% set hitAttribute = hit['attribute'] %}
+                {% set hitNpc = hit['attribute'] %}
             {% endif %}
         {% endfor %}
         <div class="combat-action {% if npcCombat.health == 0 %}disabled{% endif %}" data-controller="popup">
-            <button class="screen-action {% if hitAttribute == 'health' %}flash-hit{% endif %}"
+            <button class="screen-action {% if hitNpc == 'health' %}flash-hit{% endif %}"
                     title="{{ npcCombat.npc.name }} {{ loop.index }}"
                     data-action="click->popup#open">
                 <img src="{{ asset('img/' ~ npcCombat.npc.thumb) }}" alt="{{ npcCombat.npc.name }}"/>

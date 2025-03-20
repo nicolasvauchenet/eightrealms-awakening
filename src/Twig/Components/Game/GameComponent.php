@@ -1440,6 +1440,11 @@ class GameComponent
             // Application des dégâts
             $target->setHealth(max(0, $target->getHealth() - $damage));
             $this->description .= "<span class='text-success'>Vous infligez $damage dégât" . ($damage > 1 ? 's' : '') . " à $targetName avec {$weapon->getItem()->getName()} ($hand).</span><br/>";
+            $this->hit[] = [
+                'target' => $target->getId(),
+                'attribute' => 'health',
+            ];
+
             if($target->getHealth() <= 0) {
                 $this->description .= "<strong class='text-success'>Vous avez tué $targetName&nbsp;!</strong><br/>";
             }
@@ -1460,11 +1465,6 @@ class GameComponent
             $this->entityManager->persist($target);
             $this->entityManager->persist($weapon);
 
-            $this->hit[] = [
-                'target' => $target->getId(),
-                'attribute' => 'health',
-            ];
-
             // Si area > 1, toucher d'autres ennemis
             if($isMagical && $weapon->getItem()->getArea() > 1) {
                 $otherEnemies = [];
@@ -1481,6 +1481,11 @@ class GameComponent
                     $splashDamage = (int)floor($damage * 2 / 3);
                     $otherTarget->setHealth(max(0, $otherTarget->getHealth() - $splashDamage));
                     $this->description .= "<span class='text-success'>{$otherTarget->getCreature()->getName()} est aussi touché et subit {$splashDamage} dégâts.</span><br/>";
+                    $this->hit[] = [
+                        'target' => $otherTarget->getId(),
+                        'attribute' => 'health',
+                    ];
+
                     if($otherTarget->getHealth() <= 0) {
                         $this->description .= "<strong class='text-success'>Vous avez tué {$otherTarget->getCreature()->getName()}&nbsp;!</strong><br/>";
                     }

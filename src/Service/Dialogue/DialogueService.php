@@ -19,7 +19,7 @@ readonly class DialogueService
         $dialogue = $this->entityManager->getRepository(Dialogue::class)->findOneBy([
             'npc' => $playerNpc->getNpc(),
             'type' => $type,
-        ]);
+        ], ['id' => 'ASC',]);
 
         if($dialogue === null || $playerNpc->getLastDialogue() === $dialogue) {
             return null;

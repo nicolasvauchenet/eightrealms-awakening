@@ -21,6 +21,7 @@ class Npc extends Character
      * @var Collection<int, PlayerNpc>
      */
     #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'npc', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $playerNpcs;
 
     #[ORM\ManyToOne(inversedBy: 'npcs')]
@@ -31,12 +32,14 @@ class Npc extends Character
      * @var Collection<int, Dialogue>
      */
     #[ORM\OneToMany(targetEntity: Dialogue::class, mappedBy: 'npc', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $dialogues;
 
     /**
      * @var Collection<int, NpcCombat>
      */
     #[ORM\OneToMany(targetEntity: NpcCombat::class, mappedBy: 'npc', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $npcCombats;
 
     #[ORM\Column(length: 255)]

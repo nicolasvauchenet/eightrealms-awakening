@@ -43,6 +43,7 @@ class Location
     private ?self $parent = null;
 
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent', cascade: ['persist', 'remove'])]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $children;
 
     /**

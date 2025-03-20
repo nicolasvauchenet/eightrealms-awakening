@@ -62,6 +62,7 @@ class Creature
      * @var Collection<int, CreatureItem>
      */
     #[ORM\OneToMany(targetEntity: CreatureItem::class, mappedBy: 'creature', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $creatureItems;
 
     /**

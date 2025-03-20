@@ -1675,11 +1675,11 @@ class GameComponent
 
                 // Suppression des effets expirés
                 if($this->temporaryEffects[$index]['remainingTurns'] <= 0) {
-                    unset($this->temporaryEffects[$index]);
                     $this->hit[] = [
                         'target' => $this->character->getId(),
                         'attribute' => $this->temporaryEffects[$index],
                     ];
+                    unset($this->temporaryEffects[$index]);
                 }
             }
             $this->currentTurn = 0;

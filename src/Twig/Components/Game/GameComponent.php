@@ -613,7 +613,7 @@ class GameComponent
                 $quest = $this->entityManager->getRepository(Quest::class)->find($data);
                 $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy(['player' => $this->character, 'quest' => $quest]);
 
-                if($playerQuest->getQuest()->getReward()) {
+                if($playerQuest && $playerQuest->getQuest()->getReward()) {
                     foreach($playerQuest->getQuest()->getReward() as $type => $value) {
                         switch($type) {
                             case 'xp':

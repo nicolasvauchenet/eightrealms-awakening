@@ -82,7 +82,7 @@ class LevelComponent extends AbstractController
         $this->health = $this->character->getHealthMax() + $this->characterBonusService->getCharacterBonus($this->character, 'health')['amount'];
         $this->mana = $this->character->getManaMax() + $this->characterBonusService->getCharacterBonus($this->character, 'mana')['amount'];
 
-        $this->description = $this->character->getDescription();
+        $this->description = strip_tags($this->character->getDescription());
     }
 
     #[LiveAction]

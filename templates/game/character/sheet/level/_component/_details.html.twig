@@ -131,14 +131,14 @@
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-third'}) }}
                     {{ this.health }}
-                    <small>{{ this.character.health }}</small>
+                    <small>{{ this.health - app_characterBonusService.characterBonus(this.character, 'health')['amount'] }}</small>
                 </div>
 
                 {% set bonus = app_characterBonusService.characterBonus(this.character, 'mana') %}
                 <div class="metric {% if bonus['extra'] %}text-success{% endif %}">
                     {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-fourth'}) }}
                     {{ this.mana }}
-                    <small>{{ this.character.mana }}</small>
+                    <small>{{ this.mana - app_characterBonusService.characterBonus(this.character, 'mana')['amount'] }}</small>
                 </div>
             </div>
 
@@ -154,6 +154,6 @@
     </div>
 
     <div class="description">
-        <textarea name="description" id="description">{{ this.description | striptags }}</textarea>
+        <textarea name="description" id="description" data-model="description">{{ this.description }}</textarea>
     </div>
 </div>

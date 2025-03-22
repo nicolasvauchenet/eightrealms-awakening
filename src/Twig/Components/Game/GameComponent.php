@@ -1099,9 +1099,18 @@ class GameComponent
         $otherTargets = array_slice($otherEnemies, 0, ($characterSpell->getSpell()->getArea() + $characterSpell->getArea()) - 1);
 
         foreach($otherTargets as $otherTarget) {
+            if($otherTarget instanceof CreaturePlayerCombat) {
+                $enemyType = 'creature';
+            } else {
+                $enemyType = 'npc';
+            }
             $splashDamage = (int)floor($primaryDamage * 2 / 3);
             $otherTarget->setHealth(max(0, $otherTarget->getHealth() - $splashDamage));
-            $this->description .= "<span class='text-success'>{$otherTarget->getCreature()->getName()} $position est aussi touché et subit <strong>{$splashDamage}</strong> dégâts.</span><br/>";
+            if($enemyType === 'creature') {
+                $this->description .= "<span class='text-success'>{$otherTarget->getCreature()->getName()} $position est aussi touché et subit <strong>{$splashDamage}</strong> dégâts.</span><br/>";
+            } else {
+                $this->description .= "<span class='text-success'>{$otherTarget->getNpc()->getName()} $position est aussi touché et subit <strong>{$splashDamage}</strong> dégâts.</span><br/>";
+            }
             $this->hit[] = [
                 'target' => $otherTarget->getId(),
                 'attribute' => 'health',
@@ -1474,20 +1483,39 @@ class GameComponent
                     }
                 }
 
+                foreach($this->playerCombat->getNpcPlayerCombats() as $creatureCombat) {
+                    if($creatureCombat->getId() !== $target->getId() && $creatureCombat->getHealth() > 0) {
+                        $otherEnemies[] = $creatureCombat;
+                    }
+                }
+
                 shuffle($otherEnemies);
                 $otherTargets = array_slice($otherEnemies, 0, $weapon->getItem()->getArea() - 1);
 
                 foreach($otherTargets as $otherTarget) {
+                    if($otherTarget instanceof CreaturePlayerCombat) {
+                        $enemyType = 'creature';
+                    } else {
+                        $enemyType = 'npc';
+                    }
                     $splashDamage = (int)floor($damage * 2 / 3);
                     $otherTarget->setHealth(max(0, $otherTarget->getHealth() - $splashDamage));
-                    $this->description .= "<span class='text-success'>{$otherTarget->getCreature()->getName()} est aussi touché et subit {$splashDamage} dégâts.</span><br/>";
+                    if($enemyType === 'creature') {
+                        $this->description .= "<span class='text-success'>{$otherTarget->getCreature()->getName()} est aussi touché et subit {$splashDamage} dégâts.</span><br/>";
+                    } else {
+                        $this->description .= "<span class='text-success'>{$otherTarget->getNpc()->getName()} est aussi touché et subit {$splashDamage} dégâts.</span><br/>";
+                    }
                     $this->hit[] = [
                         'target' => $otherTarget->getId(),
                         'attribute' => 'health',
                     ];
 
                     if($otherTarget->getHealth() <= 0) {
-                        $this->description .= "<strong class='text-success'>Vous avez tué {$otherTarget->getCreature()->getName()}&nbsp;!</strong><br/>";
+                        if($enemyType === 'creature') {
+                            $this->description .= "<strong class='text-success'>Vous avez tué {$otherTarget->getCreature()->getName()}&nbsp;!</strong><br/>";
+                        } else {
+                            $this->description .= "<strong class='text-success'>Vous avez tué {$otherTarget->getNpc()->getName()}&nbsp;!</strong><br/>";
+                        }
                     }
                     $this->entityManager->persist($otherTarget);
                 }
@@ -1601,6 +1629,11 @@ class GameComponent
                 $this->description .= "<span class='text-warning'>{$enemy->getNpc()->getName()} vous attaque et inflige $damage dégât" . ($damage > 1 ? 's' : '') . ".</span><br/>";
             }
 
+            $this->hit[] = [
+                'target' => $this->character->getId(),
+                'attribute' => 'health',
+            ];
+
             // Usure normale du bouclier et de l'armure après 15 attaques encaissées
             if($shield && $shield->getHealth() > 0) {
                 $shield->setUsage($shield->getUsage() + 1);
@@ -1638,11 +1671,6 @@ class GameComponent
                     $this->wearLogs[] = $logMessage;
                 }
             }
-
-            $this->hit[] = [
-                'target' => $this->character->getId(),
-                'attribute' => 'health',
-            ];
         } else {
             if($enemyType === 'creature') {
                 $this->description .= "{$enemy->getCreature()->getName()} tente de vous attaquer mais vous esquivez&nbsp;!<br/>";
@@ -1689,7 +1717,7 @@ class GameComponent
             // Ajout des logs d'usure à la fin du tour
             if(!empty($this->wearLogs)) {
                 $this->description .= implode('', $this->wearLogs);
-                $this->wearLogs = []; // Réinitialisation après affichage
+                $this->wearLogs = [];
             }
 
             $this->description .= "</p><h3>Tour {$this->nbTurns}&nbsp;:</h3>";

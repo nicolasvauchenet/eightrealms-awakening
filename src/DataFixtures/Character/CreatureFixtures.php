@@ -14,6 +14,7 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $creatures = [
+            // Rats
             [
                 'name' => 'Gros rat',
                 'picture' => 'rat.png',
@@ -49,6 +50,62 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
                 'damage' => 12,
                 'defense' => 5,
                 'reference' => 'creature_rat_geant',
+            ],
+
+            // Gobelins
+            [
+                'name' => 'Éclaireur gobelin',
+                'picture' => 'gobelineclaireur.png',
+                'thumb' => 'gobelin-eclaireur_thumb.png',
+                'description' => "<p>L'éclaireur gobelin est rapide et agile, mais manque de résistance physique. Il est souvent envoyé en avant-garde pour surveiller les alentours et rapporter des informations au groupe.</p>",
+                'strength' => 8,
+                'dexterity' => 13,
+                'constitution' => 8,
+                'wisdom' => 8,
+                'intelligence' => 9,
+                'charisma' => 6,
+                'healthMax' => 60,
+                'manaMax' => 10,
+                'fortune' => 5,
+                'damage' => 9,
+                'defense' => 4,
+                'reference' => 'creature_eclaireur_gobelin',
+            ],
+            [
+                'name' => 'Guerrier gobelin',
+                'picture' => 'gobelin-guerrier.png',
+                'thumb' => 'gobelin-guerrier_thumb.png',
+                'description' => "<p>Le guerrier gobelin représente la force de frappe moyenne des gobelins. Équipé d'armes rudimentaires mais efficaces, il n'hésitera pas à engager directement le combat.</p>",
+                'strength' => 12,
+                'dexterity' => 10,
+                'constitution' => 12,
+                'wisdom' => 9,
+                'intelligence' => 8,
+                'charisma' => 6,
+                'healthMax' => 110,
+                'manaMax' => 15,
+                'fortune' => 10,
+                'damage' => 14,
+                'defense' => 7,
+                'reference' => 'creature_guerrier_gobelin',
+            ],
+            [
+                'name' => 'Chef gobelin',
+                'picture' => 'gobelin-chef.png',
+                'thumb' => 'gobelin-chef_thumb.png',
+                'description' => "<p>Le chef gobelin est redouté pour sa férocité et ses capacités au combat. Plus intelligent et charismatique que ses semblables, il coordonne les attaques de ses subordonnés et représente une menace réelle.</p>",
+                'strength' => 15,
+                'dexterity' => 12,
+                'constitution' => 15,
+                'wisdom' => 12,
+                'intelligence' => 11,
+                'charisma' => 10,
+                'healthMax' => 180,
+                'manaMax' => 30,
+                'fortune' => 20,
+                'damage' => 20,
+                'defense' => 10,
+                'reference' => 'creature_chef_gobelin',
             ],
         ];
 

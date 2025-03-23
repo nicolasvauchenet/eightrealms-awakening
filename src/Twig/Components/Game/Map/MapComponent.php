@@ -4,6 +4,9 @@ namespace App\Twig\Components\Game\Map;
 
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
+use App\Entity\Combat\CreaturePlayerCombat;
+use App\Entity\Combat\NpcPlayerCombat;
+use App\Entity\Combat\PlayerCombat;
 use App\Entity\Location\Location;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -80,18 +83,72 @@ class MapComponent extends AbstractController
         return $this->redirectToRoute('app_game_home');
     }
 
-    private function randomEncounter(Location $location): Location
+    private function randomEncounter(Location $destination): Location
     {
-        // 25 % de chance de rencontre
-        if(random_int(1, 100) <= 25) {
-            $availableCombats = $this->entityManager->getRepository(Combat::class)->findBy(['step' => null]);
-            foreach($availableCombats as $availableCombat) {
-                if(in_array($availableCombat->getLocation()->getType(), ['plain', 'forest', 'mountain'])) {
-                    return $availableCombat->getLocation();
-                }
-            }
+        // 25 % de chance de déclencher une rencontre
+        if(random_int(1, 100) > 25) {
+            return $destination;
         }
 
-        return $location;
+        // Récupérer tous les combats aléatoires (sans étape de quête)
+        $availableCombats = $this->entityManager->getRepository(Combat::class)->findBy(['step' => null]);
+
+        // Filtrer ceux associés à un lieu de type 'plain', 'forest', 'mountain'
+        $filteredCombats = array_filter($availableCombats, function(Combat $combat) {
+            return in_array($combat->getLocation()->getType(), ['plain', 'forest', 'mountain']);
+        });
+
+        // Appliquer un filtrage de niveau (combat <= niveau du personnage)
+        $characterLevel = $this->character->getLevel();
+        $levelFiltered = array_filter($filteredCombats, function(Combat $combat) use ($characterLevel) {
+            return $combat->getLevel() <= $characterLevel;
+        });
+
+        // Si aucun combat n’est éligible, on va à la destination finale
+        if(empty($levelFiltered)) {
+            return $destination;
+        }
+
+        // Choisir un combat éligible au hasard
+        $selectedCombat = $levelFiltered[array_rand($levelFiltered)];
+
+        // Vérifier si un PlayerCombat existe déjà
+        $existing = $this->entityManager->getRepository(PlayerCombat::class)
+            ->findOneBy(['player' => $this->character, 'combat' => $selectedCombat]);
+
+        if(!$existing) {
+            $playerCombat = (new PlayerCombat())
+                ->setPlayer($this->character)
+                ->setCombat($selectedCombat)
+                ->setStatus('progress');
+
+            foreach($selectedCombat->getCreatureCombats() as $creatureCombat) {
+                $creaturePlayerCombat = (new CreaturePlayerCombat())
+                    ->setPlayerCombat($playerCombat)
+                    ->setCreature($creatureCombat->getCreature())
+                    ->setHealth($creatureCombat->getCreature()->getHealthMax())
+                    ->setMana($creatureCombat->getCreature()->getManaMax());
+
+                $this->entityManager->persist($creaturePlayerCombat);
+                $playerCombat->addCreaturePlayerCombat($creaturePlayerCombat);
+            }
+
+            foreach($selectedCombat->getNpcCombats() as $npcCombat) {
+                $npcPlayerCombat = (new NpcPlayerCombat())
+                    ->setPlayerCombat($playerCombat)
+                    ->setNpc($npcCombat->getNpc())
+                    ->setHealth($npcCombat->getNpc()->getHealthMax())
+                    ->setMana($npcCombat->getNpc()->getManaMax());
+
+                $this->entityManager->persist($npcPlayerCombat);
+                $playerCombat->addNpcPlayerCombat($npcPlayerCombat);
+            }
+
+            $this->entityManager->persist($playerCombat);
+            $this->entityManager->flush();
+        }
+
+        // Rediriger vers le lieu du combat sélectionné (combat aléatoire)
+        return $selectedCombat->getLocation();
     }
 }

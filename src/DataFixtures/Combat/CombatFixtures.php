@@ -55,6 +55,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                     'xp' => 20,
                     'crown' => 20,
                 ],
+                'level' => 1,
                 'reference' => 'combat_une_bande_de_rats_sur_les_docks',
             ],
             [
@@ -73,6 +74,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                     'xp' => 50,
                     'crown' => 50,
                 ],
+                'level' => 1,
                 'reference' => 'combat_des_malfrats_vous_accostent_docks_de_l_ouest',
             ],
 
@@ -93,7 +95,27 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                     'xp' => 20,
                     'crown' => 20,
                 ],
+                'level' => 1,
                 'reference' => 'combat_des_rats_vous_attaquent_plaine',
+            ],
+            [
+                'name' => 'Des éclaireurs gobelins isolés',
+                'picture' => 'combat-plain-gobelins-eclaireurs.webp',
+                'thumb' => 'core/creature/gobelin-eclaireur_thumb.png',
+                'description' => "<p>Un groupe d'éclaireurs gobelins vous a repéré et vous attaque&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
+                'location' => 'location_plain',
+                'screen' => 'screen_combat_des_eclaireurs_gobelins',
+                'creatures' => [
+                    'creature_eclaireur_gobelin',
+                    'creature_eclaireur_gobelin',
+                    'creature_eclaireur_gobelin',
+                ],
+                'reward' => [
+                    'xp' => 30,
+                    'crown' => 30,
+                ],
+                'level' => 2,
+                'reference' => 'combat_des_eclaireurs_gobelins_isoles_plaine',
             ],
         ];
 
@@ -107,7 +129,8 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                 ->setQuest(isset($data['quest']) ? $this->getReference($data['quest'], Quest::class) : null)
                 ->setStep(isset($data['step']) ? $this->getReference($data['step'], Step::class) : null)
                 ->setCombatScreen($this->getReference($data['screen'], CombatScreen::class))
-                ->setReward($data['reward'] ?? null);
+                ->setReward($data['reward'] ?? null)
+                ->setLevel($data['level'] ?? null);
 
             if(isset($data['npcs'])) {
                 foreach($data['npcs'] as $npcReference) {

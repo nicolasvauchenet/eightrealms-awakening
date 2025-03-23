@@ -27,6 +27,10 @@ class CombatScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Des malfrats vous accostent',
                 'reference' => 'screen_combat_malfrats_docks_de_l_ouest',
             ],
+            [
+                'name' => 'Des éclaireurs gobelins',
+                'reference' => 'screen_combat_des_eclaireurs_gobelins',
+            ],
         ];
 
         foreach($screens as $data) {

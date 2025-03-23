@@ -1,9 +1,12 @@
 {% set eligibleCombats = [] %}
+{% set knownCombats = [] %}
 {% set selectedCombats = [] %}
 {% set now = "now"|date("U") %}
+{% set playerLevel = this.character.level %}
 
+{# Étape 1 : on trie les combats #}
 {% for combat in this.activeScreen.location.combats %}
-    {% if not combat.step %}
+    {% if not combat.step and combat.level is defined and combat.level <= playerLevel %}
         {% set playerCombatExists = false %}
         {% set playerHasCombat = false %}
 
@@ -12,10 +15,10 @@
                 {% set playerCombatExists = true %}
                 {% if playerCombat.status != 'victory' %}
                     {% set playerHasCombat = true %}
-                    {% set selectedCombats = selectedCombats | merge([combat]) %}
+                    {% set knownCombats = knownCombats | merge([combat]) %}
                 {% elseif playerCombat.status == 'victory' and (now - playerCombat.updatedAt|date("U")) >= 86400 %}
                     {% set playerHasCombat = true %}
-                    {% set selectedCombats = selectedCombats | merge([combat]) %}
+                    {% set knownCombats = knownCombats | merge([combat]) %}
                 {% endif %}
             {% endif %}
         {% endfor %}
@@ -30,14 +33,19 @@
     {% endif %}
 {% endfor %}
 
+{# Étape 2 : sélection finale #}
 {% if eligibleCombats | length == 1 %}
-    {% if this.activeScreen.location.type in ['plain'] %}
+    {% if this.activeScreen.location.type in ['plain', 'forest', 'mountain'] %}
         {% set selectedCombats = eligibleCombats %}
     {% elseif random([true, false]) %}
         {% set selectedCombats = eligibleCombats %}
     {% endif %}
 {% elseif eligibleCombats | length > 1 %}
-    {% set selectedCombats = eligibleCombats | shuffle | slice(0,2) %}
+    {% if knownCombats is not empty %}
+        {% set selectedCombats = [knownCombats|first] %}
+    {% else %}
+        {% set selectedCombats = eligibleCombats | shuffle | slice(0,1) %}
+    {% endif %}
 {% endif %}
 
 {% set malfratCombatAvailable = false %}

@@ -63,6 +63,9 @@ class Combat
     #[ORM\Column(nullable: true)]
     private ?array $reward = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $level = null;
+
     public function __construct()
     {
         $this->npcCombats = new ArrayCollection();
@@ -238,6 +241,18 @@ class Combat
     public function setReward(?array $reward): static
     {
         $this->reward = $reward;
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?int $level): static
+    {
+        $this->level = $level;
 
         return $this;
     }

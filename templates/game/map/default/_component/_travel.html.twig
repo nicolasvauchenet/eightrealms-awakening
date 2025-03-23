@@ -18,18 +18,22 @@
             {% endif %}
 
             {% for location in realm.children %}
-                <button class="app-button outline {% if (this.character.location.parent and location == this.character.location.parent) or location == this.character.location %}disabled{% endif %}"
-                        {{ live_action('walk', {'locationId': location.id}) }}>
-                    {{ location.name }}
-                </button>
+                {% if location.type not in ['plain'] %}
+                    <button class="app-button outline {% if (this.character.location.parent and location == this.character.location.parent) or location == this.character.location %}disabled{% endif %}"
+                            {{ live_action('walk', {'locationId': location.id}) }}>
+                        {{ location.name }}
+                    </button>
+                {% endif %}
             {% endfor %}
         {% else %}
             {% for playerLocation in this.character.playerLocations %}
                 {% if playerLocation.location.type == 'location' %}
-                    <button class="app-button outline {% if (this.character.location.parent and playerLocation.location == this.character.location.parent) or playerLocation.location == this.character.location %}disabled{% endif %}"
-                            {{ live_action('walk', {'locationId': playerLocation.location.id}) }}>
-                        {{ playerLocation.location.name }}
-                    </button>
+                    {% if playerLocation.location.type not in ['plain'] %}
+                        <button class="app-button outline {% if (this.character.location.parent and playerLocation.location == this.character.location.parent) or playerLocation.location == this.character.location %}disabled{% endif %}"
+                                {{ live_action('walk', {'locationId': playerLocation.location.id}) }}>
+                            {{ playerLocation.location.name }}
+                        </button>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         {% endif %}

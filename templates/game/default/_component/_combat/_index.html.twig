@@ -1,5 +1,9 @@
 <div class="app-screen combat" data-loading="addClass(loading)">
-    <img src="{{ asset('img/chapter1/screen/' ~ this.playerCombat.combat.picture) }}" class="app-wallpaper" alt="{{ this.playerCombat.combat.name }}"/>
+    {% if this.playerCombat.combat.location.type in ['plain'] %}
+        <img src="{{ asset('img/core/screen/' ~ this.playerCombat.combat.picture) }}" class="app-wallpaper" alt="{{ this.playerCombat.combat.name }}"/>
+    {% else %}
+        <img src="{{ asset('img/chapter1/screen/' ~ this.playerCombat.combat.picture) }}" class="app-wallpaper" alt="{{ this.playerCombat.combat.name }}"/>
+    {% endif %}
 
     {% include 'game/default/_component/_combat/_header/_index.html.twig' %}
 

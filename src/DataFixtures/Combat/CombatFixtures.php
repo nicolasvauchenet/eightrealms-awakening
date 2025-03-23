@@ -20,6 +20,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $combats = [
+            // Combats de quête
             [
                 'name' => 'Des rats sur les docks',
                 'picture' => 'combat-quete-anciens-docks-rats.webp',
@@ -28,7 +29,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                 'location' => 'location_zone_anciens_docks',
                 'quest' => 'quest_secondary_des_rats_sur_les_docks',
                 'step' => 'quest_secondary_des_rats_sur_les_docks_step_1',
-                'screen' => 'screen_combat_des_rats_sur_les_docks',
+                'screen' => 'screen_combat_une_bande_de_rats',
                 'creatures' => [
                     'creature_gros_rat',
                     'creature_rat_geant',
@@ -36,13 +37,15 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                 ],
                 'reference' => 'combat_des_rats_sur_les_docks',
             ],
+
+            // Combats de zone
             [
                 'name' => 'Une bande de rats sur les docks',
                 'picture' => 'combat-anciens-docks-rats.webp',
                 'thumb' => 'core/creature/rat_thumb.png',
                 'description' => "<p>Un groupe de gros rats vous a repéré et vous attaque&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
                 'location' => 'location_zone_anciens_docks',
-                'screen' => 'screen_combat_une_bande_de_rats_sur_les_docks',
+                'screen' => 'screen_combat_une_bande_de_rats',
                 'creatures' => [
                     'creature_gros_rat',
                     'creature_gros_rat',
@@ -71,6 +74,26 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                     'crown' => 50,
                 ],
                 'reference' => 'combat_des_malfrats_vous_accostent_docks_de_l_ouest',
+            ],
+
+            // Combats aléatoires
+            [
+                'name' => 'Des rats vous attaquent',
+                'picture' => 'combat-plain-rats.webp',
+                'thumb' => 'core/creature/rat_thumb.png',
+                'description' => "<p>Un groupe de gros rats vous a repéré et vous attaque&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
+                'location' => 'location_plain',
+                'screen' => 'screen_combat_une_bande_de_rats',
+                'creatures' => [
+                    'creature_gros_rat',
+                    'creature_gros_rat',
+                    'creature_gros_rat',
+                ],
+                'reward' => [
+                    'xp' => 20,
+                    'crown' => 20,
+                ],
+                'reference' => 'combat_des_rats_vous_attaquent_plaine',
             ],
         ];
 

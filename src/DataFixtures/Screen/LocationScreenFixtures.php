@@ -71,6 +71,18 @@ class LocationScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'location' => 'location_plouc',
                 'reference' => 'screen_location_plouc',
             ],
+            [
+                'name' => 'Maison de Gérard le Pêcheur',
+                'location' => 'location_building_maison_de_gerard_le_pecheur',
+                'reference' => 'screen_location_building_maison_de_gerard_le_pecheur',
+            ],
+
+            // Zones extérieures
+            [
+                'name' => 'Plaine',
+                'location' => 'location_plain',
+                'reference' => 'screen_location_plain',
+            ],
         ];
 
         foreach($screens as $data) {

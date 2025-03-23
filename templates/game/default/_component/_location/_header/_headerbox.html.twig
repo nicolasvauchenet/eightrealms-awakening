@@ -4,8 +4,12 @@
            class="screen-control {% if this.characterUpdated %}blink {% if app_characterLevelService.canLevelUp(this.character) %}text-third{% endif %}{% endif %}">
             {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
         </a>
-
-        {% if this.activeScreen.location.type != 'building' %}
+        {% if this.activeScreen.location.type not in ['building', 'plain'] %}
+            <a href="{{ path('app_game_map_home') }}"
+               class="screen-control {% if this.characterLocationsUpdated %}blink{% endif %}">
+                {{ ux_icon('solar:map-bold', {'class': 'app-icon'}) }}
+            </a>
+        {% elseif eligibleCombats | length == 0 %}
             <a href="{{ path('app_game_map_home') }}"
                class="screen-control {% if this.characterLocationsUpdated %}blink{% endif %}">
                 {{ ux_icon('solar:map-bold', {'class': 'app-icon'}) }}
@@ -14,7 +18,9 @@
     </div>
 
     <h2 class="screen-title">
-        <small>{{ this.activeScreen.location.parent.name }}</small>
+        {% if this.activeScreen.location.parent %}
+            <small>{{ this.activeScreen.location.parent.name }}</small>
+        {% endif %}
         {{ this.activeScreen.location.name }}
     </h2>
 

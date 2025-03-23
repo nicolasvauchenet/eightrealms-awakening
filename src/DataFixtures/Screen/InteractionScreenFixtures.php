@@ -54,6 +54,13 @@ class InteractionScreenFixtures extends Fixture implements OrderedFixtureInterfa
                 'npc' => 'npc_pecheur',
                 'reference' => 'screen_interaction_pecheur',
             ],
+
+            // Plouc
+            [
+                'name' => 'Gérard le Pêcheur',
+                'npc' => 'npc_gerard_le_pecheur',
+                'reference' => 'screen_interaction_gerard_le_pecheur',
+            ],
         ];
 
         foreach($screens as $data) {

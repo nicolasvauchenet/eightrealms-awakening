@@ -174,7 +174,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'name' => 'Pêcheur',
                 'picture' => 'core/npc/pecheur.png',
                 'thumb' => 'core/npc/pecheur_thumb.png',
-                'description' => "<p>Cet homme a l'air pauvre et plutôt mal nourri. Il s'arrête néanmoins en voous voyant vous approcher, et vous regarde avec un sourire timide.</p><p><em>Bonjour, étranger. Vous cherchez du poisson frais&nbsp;? Je peux vous en vendre à un bon prix.</em></p>",
+                'description' => "<p>Cet homme a l'air pauvre et plutôt mal nourri. Il s'arrête néanmoins en vous voyant vous approcher, et vous regarde avec un sourire timide.</p><p><em>Bonjour, étranger. Vous cherchez du poisson frais&nbsp;? Je peux vous en vendre à un bon prix.</em></p>",
                 'strength' => 10,
                 'dexterity' => 12,
                 'constitution' => 8,
@@ -192,6 +192,32 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 'location' => 'location_zone_quartier_des_ploucs',
                 'reference' => 'npc_pecheur',
             ],
+
+            // Plouc
+            [
+                'name' => 'Gérard le Pêcheur',
+                'picture' => 'chapter1/npc/gerard-le-pecheur.png',
+                'thumb' => 'chapter1/npc/gerard-le-pecheur_thumb.png',
+                'description' => "<p>Gérard vous accueille avec un sourire chaleureux. Il semble être un homme simple, mais sympathique.</p><p><em>Bonjour, étranger. Vous cherchez du poisson frais&nbsp;? Je peux vous en vendre à un bon prix.</em></p>",
+                'strength' => 10,
+                'dexterity' => 12,
+                'constitution' => 8,
+                'wisdom' => 10,
+                'intelligence' => 9,
+                'charisma' => 9,
+                'healthMax' => 80,
+                'health' => 80,
+                'manaMax' => 45,
+                'mana' => 45,
+                'fortune' => 5,
+                'level' => 1,
+                'race' => 'race_humain',
+                'profession' => 'profession_pecheur',
+                'location' => 'location_building_maison_de_gerard_le_pecheur',
+                'reference' => 'npc_gerard_le_pecheur',
+            ],
+
+            // Communs
             [
                 'name' => 'Malfrat',
                 'picture' => 'core/npc/chef-malfrat.png',

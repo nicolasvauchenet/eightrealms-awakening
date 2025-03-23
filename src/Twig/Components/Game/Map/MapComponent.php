@@ -3,6 +3,7 @@
 namespace App\Twig\Components\Game\Map;
 
 use App\Entity\Character\Player;
+use App\Entity\Combat\Combat;
 use App\Entity\Location\Location;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,10 +68,30 @@ class MapComponent extends AbstractController
     public function walk(#[LiveArg] int $locationId): RedirectResponse
     {
         $location = $this->entityManager->getRepository(Location::class)->find($locationId);
+
+        if($location->getType() === 'location' && !in_array($this->character->getLocation()->getType(), ['plain', 'forest', 'mountain'])) {
+            $location = $this->randomEncounter($location);
+        }
+
         $this->character->setLocation($location);
         $this->entityManager->persist($this->character);
         $this->entityManager->flush();
 
         return $this->redirectToRoute('app_game_home');
+    }
+
+    private function randomEncounter(Location $location): Location
+    {
+        // 25 % de chance de rencontre
+        if(random_int(1, 100) <= 25) {
+            $availableCombats = $this->entityManager->getRepository(Combat::class)->findBy(['step' => null]);
+            foreach($availableCombats as $availableCombat) {
+                if(in_array($availableCombat->getLocation()->getType(), ['plain', 'forest', 'mountain'])) {
+                    return $availableCombat->getLocation();
+                }
+            }
+        }
+
+        return $location;
     }
 }

@@ -328,6 +328,11 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
                 'item' => 'food_fish',
                 'class' => Food::class,
             ],
+            [
+                'character' => 'npc_gerard_le_pecheur',
+                'item' => 'food_fish',
+                'class' => Food::class,
+            ],
 
             // Malfrat
             [

@@ -55,6 +55,14 @@ class TradeScreenFixtures extends Fixture implements OrderedFixtureInterface
                 'tradeType' => 'trade',
                 'reference' => 'screen_trade_pecheur',
             ],
+
+            // Plouc
+            [
+                'name' => 'Commercer avec Gérard le Pêcheur',
+                'npc' => 'npc_gerard_le_pecheur',
+                'tradeType' => 'trade',
+                'reference' => 'screen_trade_gerard_le_pecheur',
+            ],
         ];
 
         foreach($screens as $data) {

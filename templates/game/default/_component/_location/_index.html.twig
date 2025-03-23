@@ -30,11 +30,13 @@
     {% endif %}
 {% endfor %}
 
-{% if eligibleCombats|length == 1 %}
-    {% if random([true, false]) %}
+{% if eligibleCombats | length == 1 %}
+    {% if this.activeScreen.location.type in ['plain'] %}
+        {% set selectedCombats = eligibleCombats %}
+    {% elseif random([true, false]) %}
         {% set selectedCombats = eligibleCombats %}
     {% endif %}
-{% elseif eligibleCombats|length > 1 %}
+{% elseif eligibleCombats | length > 1 %}
     {% set selectedCombats = eligibleCombats | shuffle | slice(0,2) %}
 {% endif %}
 
@@ -56,8 +58,10 @@
     {% endif %}
 {% endfor %}
 
-<div class="app-screen location" data-loading="addClass(loading)">
+<div class="app-screen location {{ this.activeScreen.location.type }}" data-loading="addClass(loading)">
     {% if this.activeScreen.location.type == 'building' %}
+        <img src="{{ asset('img/core/location/' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
+    {% elseif this.activeScreen.location.type in ['plain'] %}
         <img src="{{ asset('img/core/location/' ~ this.activeScreen.location.picture) }}" class="app-wallpaper" alt="{{ this.activeScreen.name }}"/>
     {% else %}
         {% if malfratCombatAvailable %}

@@ -121,6 +121,25 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                 'parent' => 'location_zone_docks_de_l_ouest',
                 'reference' => 'location_building_taverne_de_la_flute_moisie',
             ],
+            [
+                'name' => 'Maison de Gérard le Pêcheur',
+                'type' => 'building',
+                'picture' => 'maison-pecheur.webp',
+                'thumb' => 'maison_thumb.png',
+                'description' => "<p>Cette bicoque en bois est la maison de Gérard, un pêcheur du village de Plouc. Les murs sont couverts de filets de pêche et de trophées de pêche, et une odeur de poisson rance flotte dans l'air. Gérard vous accueille avec un sourire timide, et vous invite à entrer…</p>",
+                'parent' => 'location_plouc',
+                'reference' => 'location_building_maison_de_gerard_le_pecheur',
+            ],
+
+            // Zone extérieure
+            [
+                'name' => 'Plaine',
+                'type' => 'plain',
+                'picture' => 'plain.webp',
+                'description' => "<p>Une vaste plaine s'étend à perte de vue, couverte d'herbes hautes et de fleurs sauvages. Au loin, on distingue une forêt sombre, où les arbres se dressent comme des sentinelles. Le vent souffle doucement, faisant onduler les hautes herbes, et le soleil brille dans un ciel sans nuages.</p>",
+                'parent' => 'location_realm_royaume_de_l_ile_du_nord',
+                'reference' => 'location_plain',
+            ],
         ];
 
         foreach($locations as $data) {

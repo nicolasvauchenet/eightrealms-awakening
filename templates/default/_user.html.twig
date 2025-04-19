@@ -11,16 +11,15 @@
     </a>
 </p>
 
-
-{#{% if app.user.character %}
+{% if app.user.player %}
     <p>
-        <a href="{{ path('app_character_sheet_player', {'back' : 'accueil'}) }}" class="app-button">
-            <small>{{ app.user.character.name }}</small>
+        <a href="{#{{ path('app_character_sheet_player', {'back' : 'accueil'}) }}#}" class="app-button">
+            <small>{{ app.user.player.name }}</small>
             Personnage
         </a>
     </p>
 
-    {% if app.user.character.currentLocation %}
+    {% if app.user.player.currentLocation %}
         <p>
             <a href="{{ path('app_game_home') }}" class="app-button cta">
                 <small>Reprendre</small>
@@ -42,4 +41,4 @@
             Personnage
         </a>
     </p>
-{% endif %}#}
+{% endif %}

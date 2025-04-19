@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Location\Location;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -32,6 +33,9 @@ class Player extends Character
      */
     #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'player', orphanRemoval: true)]
     private Collection $playerNpcs;
+
+    #[ORM\ManyToOne]
+    private ?Location $currentLocation = null;
 
     public function __construct()
     {
@@ -124,6 +128,18 @@ class Player extends Character
                 $playerNpc->setPlayer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurrentLocation(): ?Location
+    {
+        return $this->currentLocation;
+    }
+
+    public function setCurrentLocation(?Location $currentLocation): static
+    {
+        $this->currentLocation = $currentLocation;
 
         return $this;
     }

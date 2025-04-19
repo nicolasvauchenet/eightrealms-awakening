@@ -3,6 +3,7 @@
 namespace App\Entity\Character;
 
 use App\Entity\Item\CharacterItem;
+use App\Entity\Spell\CharacterSpell;
 use App\Repository\Character\CharacterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -82,9 +83,16 @@ abstract class Character
     #[ORM\OneToMany(targetEntity: CharacterItem::class, mappedBy: 'character', orphanRemoval: true)]
     private Collection $characterItems;
 
+    /**
+     * @var Collection<int, CharacterSpell>
+     */
+    #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'character', orphanRemoval: true)]
+    private Collection $characterSpells;
+
     public function __construct()
     {
         $this->characterItems = new ArrayCollection();
+        $this->characterSpells = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -308,6 +316,36 @@ abstract class Character
             // set the owning side to null (unless already changed)
             if ($characterItem->getCharacter() === $this) {
                 $characterItem->setCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterSpell>
+     */
+    public function getCharacterSpells(): Collection
+    {
+        return $this->characterSpells;
+    }
+
+    public function addCharacterSpell(CharacterSpell $characterSpell): static
+    {
+        if (!$this->characterSpells->contains($characterSpell)) {
+            $this->characterSpells->add($characterSpell);
+            $characterSpell->setCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterSpell(CharacterSpell $characterSpell): static
+    {
+        if ($this->characterSpells->removeElement($characterSpell)) {
+            // set the owning side to null (unless already changed)
+            if ($characterSpell->getCharacter() === $this) {
+                $characterSpell->setCharacter(null);
             }
         }
 

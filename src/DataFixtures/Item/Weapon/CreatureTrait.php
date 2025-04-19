@@ -1,0 +1,35 @@
+<?php
+
+namespace App\DataFixtures\Item\Weapon;
+
+trait CreatureTrait
+{
+    const CREATURE_WEAPONS = [
+        [
+            'name' => 'Griffes',
+            'picture' => 'claws.png',
+            'description' => "<p>Les griffes d'une créature sont pointues et acérées</p>",
+            'type' => 'Arme de mêlée',
+            'price' => 0,
+            'category' => 'category_weapon',
+            'healthMax' => 0,
+            'damage' => 2,
+            'range' => 1,
+            'magical' => false,
+            'reference' => 'weapon_claws',
+        ],
+        [
+            'name' => 'Dents',
+            'picture' => 'teeth.png',
+            'description' => "<p>Les dents d'une créature sont tranchantes comme des rasoirs</p>",
+            'type' => 'Arme de mêlée',
+            'price' => 0,
+            'category' => 'category_weapon',
+            'healthMax' => 0,
+            'damage' => 4,
+            'range' => 1,
+            'magical' => false,
+            'reference' => 'weapon_teeth',
+        ],
+    ];
+}

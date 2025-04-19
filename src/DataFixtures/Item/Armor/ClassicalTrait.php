@@ -1,0 +1,81 @@
+<?php
+
+namespace App\DataFixtures\Item\Armor;
+
+trait ClassicalTrait
+{
+    const CLASSICAL_ARMORS = [
+        [
+            'name' => 'Robe de mage',
+            'picture' => 'armor_robe_mage.png',
+            'description' => "<p>Légère et souple, cette robe est conçue pour les mages qui privilégient la magie à la défense physique. Ses tissus enchâssés de motifs mystiques offrent une protection minimale, mais permettent une concentration optimale pour canaliser les énergies magiques.</p>",
+            'type' => 'Robe',
+            'price' => 200,
+            'category' => 'category_armor',
+            'healthMax' => 10,
+            'defense' => 1,
+            'magical' => false,
+            'reference' => 'armor_mage',
+        ],
+        [
+            'name' => 'Robe de druide',
+            'picture' => 'armor_robe_druid.png',
+            'description' => "<p>Confectionnée à partir de matériaux naturels, cette robe reflète l’harmonie avec la nature propre aux druides. Bien qu’elle offre peu de protection physique, elle symbolise un lien puissant avec les forces élémentaires et la faune environnante.</p>",
+            'type' => 'Robe',
+            'price' => 200,
+            'category' => 'category_armor',
+            'healthMax' => 10,
+            'defense' => 1,
+            'magical' => false,
+            'reference' => 'armor_druid',
+        ],
+        [
+            'name' => 'Armure de cuir',
+            'picture' => 'armor_leather.png',
+            'description' => "<p>Pratique et résistante, cette armure est fabriquée à partir de cuir tanné de haute qualité. Elle offre une protection modérée tout en conservant une grande mobilité, en faisant le choix favori des éclaireurs et des voleurs.</p>",
+            'type' => 'Armure légère',
+            'price' => 300,
+            'category' => 'category_armor',
+            'healthMax' => 20,
+            'defense' => 2,
+            'magical' => false,
+            'reference' => 'armor_leather',
+        ],
+        [
+            'name' => 'Armure de fer',
+            'picture' => 'armor_iron.png',
+            'description' => "<p>Robuste et fiable, cette armure forgée en fer protège efficacement contre les attaques physiques. Bien qu’un peu lourde, elle constitue un excellent compromis entre défense et maniabilité pour les guerriers débutants.</p>",
+            'type' => 'Armure lourde',
+            'price' => 450,
+            'category' => 'category_armor',
+            'healthMax' => 30,
+            'defense' => 4,
+            'magical' => false,
+            'reference' => 'armor_iron',
+        ],
+        [
+            'name' => "Armure d'acier",
+            'picture' => 'armor_steel.png',
+            'description' => "<p>Fabriquée avec un acier poli, cette armure offre une défense solide tout en étant élégante. Elle est conçue pour les combattants expérimentés qui recherchent un équilibre parfait entre protection et mobilité sur le champ de bataille.</p>",
+            'type' => 'Armure lourde',
+            'price' => 650,
+            'category' => 'category_armor',
+            'healthMax' => 40,
+            'defense' => 6,
+            'magical' => false,
+            'reference' => 'armor_steel',
+        ],
+        [
+            'name' => 'Armure de plates',
+            'picture' => 'armor_plates.png',
+            'description' => "<p>Véritable rempart ambulant, cette armure de plates offre une protection maximale. Idéale pour les chevaliers et les tanks, elle est lourde mais quasi impénétrable, capable de résister aux coups les plus puissants.</p>",
+            'type' => 'Armure lourde',
+            'price' => 900,
+            'category' => 'category_armor',
+            'healthMax' => 50,
+            'defense' => 8,
+            'magical' => false,
+            'reference' => 'armor_plates',
+        ],
+    ];
+}

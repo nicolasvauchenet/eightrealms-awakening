@@ -1,0 +1,74 @@
+<?php
+
+namespace App\DataFixtures\Item\Weapon;
+
+trait MeleeTrait
+{
+    const MELEE_WEAPONS = [
+        [
+            'name' => 'Dague',
+            'picture' => 'dagger.png',
+            'description' => "<p>Arme légère et rapide, cette dague est parfaite pour les attaques furtives ou les combats rapprochés. Facile à manier, elle est souvent utilisée par les voleurs et les assassins. Bien qu’elle inflige des dégâts modestes, sa rapidité d’exécution en fait une arme redoutable pour les frappes précises.</p>",
+            'type' => 'Arme de mêlée',
+            'price' => 50,
+            'category' => 'category_weapon',
+            'healthMax' => 5,
+            'damage' => 4,
+            'range' => 1,
+            'magical' => false,
+            'reference' => 'weapon_dagger',
+        ],
+        [
+            'name' => 'Épée courte',
+            'picture' => 'sword_short.png',
+            'description' => "<p>Une arme polyvalente, adaptée à la fois aux débutants et aux guerriers expérimentés. Légère et maniable, cette épée offre un bon équilibre entre rapidité et puissance. Elle est un choix fiable pour ceux qui recherchent une arme efficace sans trop sacrifier leur mobilité.</p>",
+            'type' => 'Arme de mêlée',
+            'price' => 150,
+            'category' => 'category_weapon',
+            'healthMax' => 10,
+            'damage' => 6,
+            'range' => 1,
+            'magical' => false,
+            'reference' => 'weapon_shortsword',
+        ],
+        [
+            'name' => 'Épée longue',
+            'picture' => 'sword_long.png',
+            'description' => "<p>Plus imposante que l’épée courte, cette arme est conçue pour infliger des dégâts supérieurs tout en conservant une maniabilité correcte. Utilisée par les chevaliers et les soldats, elle excelle dans les combats au corps à corps grâce à sa portée et à sa puissance.</p>",
+            'type' => 'Arme de mêlée',
+            'price' => 300,
+            'category' => 'category_weapon',
+            'healthMax' => 15,
+            'damage' => 8,
+            'range' => 1,
+            'magical' => false,
+            'reference' => 'weapon_longsword',
+        ],
+        [
+            'name' => 'Hache de Guerre',
+            'picture' => 'ax_war.png',
+            'description' => "<p>Forgée pour le combat, cette hache est capable de trancher armures et boucliers avec une efficacité brutale. Bien qu’elle exige une certaine force pour être maniée correctement, elle est une arme redoutée pour ses dégâts impressionnants et son impact visuel intimidant.</p>",
+            'type' => 'Arme de mêlée',
+            'price' => 500,
+            'category' => 'category_weapon',
+            'healthMax' => 15,
+            'damage' => 8,
+            'range' => 1,
+            'magical' => false,
+            'reference' => 'weapon_warax',
+        ],
+        [
+            'name' => 'Marteau de Guerre',
+            'picture' => 'hammer_war.png',
+            'description' => "<p>Arme lourde et puissante, ce marteau est conçu pour écraser les défenses ennemies. Chaque coup porté par ce marteau inflige des dégâts dévastateurs, particulièrement efficaces contre les armures lourdes. Les guerriers qui manient cette arme sont souvent craints sur le champ de bataille.</p>",
+            'type' => 'Arme de mêlée',
+            'price' => 500,
+            'category' => 'category_weapon',
+            'healthMax' => 15,
+            'damage' => 8,
+            'range' => 1,
+            'magical' => false,
+            'reference' => 'weapon_warhammer',
+        ],
+    ];
+}

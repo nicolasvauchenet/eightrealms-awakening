@@ -1,0 +1,42 @@
+<?php
+
+namespace App\DataFixtures\Character\Profession;
+
+trait SpecialTrait
+{
+    const SPECIAL_PROFESSIONS = [
+        // Personnages
+        [
+            'name' => 'Mécaniste',
+            'type' => 'specialized',
+            'playable' => true,
+            'reference' => 'profession_mecaniste',
+        ],
+
+        // Pnjs
+        [
+            'name' => 'Prêtre',
+            'type' => 'specialized',
+            'playable' => false,
+            'reference' => 'profession_pretre',
+        ],
+        [
+            'name' => 'Passant',
+            'type' => 'specialized',
+            'playable' => false,
+            'reference' => 'profession_passant',
+        ],
+        [
+            'name' => 'Pêcheur',
+            'type' => 'specialized',
+            'playable' => false,
+            'reference' => 'profession_pecheur',
+        ],
+        [
+            'name' => 'Devineresse',
+            'type' => 'specialized',
+            'playable' => false,
+            'reference' => 'profession_devineresse',
+        ],
+    ];
+}

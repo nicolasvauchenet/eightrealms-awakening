@@ -1,0 +1,66 @@
+<?php
+
+namespace App\DataFixtures\Character\Npc\PortSaintDoux;
+
+trait QuartierDuMarcheTrait
+{
+    const QUARTIER_DU_MARCHE_NPCS = [
+        [
+            'name' => 'Sophie La Marchande',
+            'picture' => 'img/chapter1/npc/sophie-la-marchande.png',
+            'thumbnail' => 'img/chapter1/npc/sophie-la-marchande_thumb.png',
+            'description' => "<p>Vous êtes face à une marchande. Elle vous regarde avec un sourire bienveillant. Elle semble prête à vous aider si vous avez besoin de quelque chose.</p>",
+            'strength' => 8,
+            'dexterity' => 13,
+            'constitution' => 10,
+            'wisdom' => 10,
+            'intelligence' => 15,
+            'charisma' => 12,
+            'healthMax' => 100,
+            'manaMax' => 50,
+            'fortune' => 500,
+            'level' => 1,
+            'race' => 'race_humain',
+            'profession' => 'profession_marchand',
+            'reference' => 'npc_sophie_la_marchande',
+        ],
+        [
+            'name' => 'Robert Le Garde',
+            'picture' => 'img/chapter1/npc/robert-le-garde.png',
+            'thumbnail' => 'img/chapter1/npc/robert-le-garde_thumb.png',
+            'description' => "<p>Vous êtes face à un garde de la ville. Il est en armure et son arme est prête à être dégainée. Il vous regarde avec méfiance.</p><p><em>Qu'y a-t-il, citoyen&nbsp;? Un problème&nbsp;? Faites vite&nbsp;!</em></p>",
+            'strength' => 12,
+            'dexterity' => 11,
+            'constitution' => 14,
+            'wisdom' => 11,
+            'intelligence' => 8,
+            'charisma' => 7,
+            'healthMax' => 150,
+            'manaMax' => 0,
+            'fortune' => 100,
+            'level' => 5,
+            'race' => 'race_humain',
+            'profession' => 'profession_garde',
+            'reference' => 'npc_robert_le_garde',
+        ],
+        [
+            'name' => 'Bilo le Passant',
+            'picture' => 'img/chapter1/npc/bilo-le-passant.png',
+            'thumbnail' => 'img/chapter1/npc/bilo-le-passant_thumb.png',
+            'description' => "<p>Vous croisez un passant qui semble désœuvré. Il vous regarde avec insistance, comme s'il avait quelque chose à vous dire.</p><p><em>Euh… Oui&nbsp;? Bonjour&nbsp;! Je m'appelle Bilo&nbsp;! Comment allez-vous&nbsp;?</em></p>",
+            'strength' => 7,
+            'dexterity' => 10,
+            'constitution' => 10,
+            'wisdom' => 12,
+            'intelligence' => 12,
+            'charisma' => 10,
+            'healthMax' => 50,
+            'manaMax' => 10,
+            'fortune' => 30,
+            'level' => 1,
+            'race' => 'race_halfelin',
+            'profession' => 'profession_passant',
+            'reference' => 'npc_bilo_le_passant',
+        ],
+    ];
+}

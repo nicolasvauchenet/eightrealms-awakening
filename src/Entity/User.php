@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Character\Player;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -51,6 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $connectedAt = null;
+
+    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    private ?Player $player = null;
 
     public function getId(): ?int
     {
@@ -182,6 +186,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConnectedAt(?\DateTimeImmutable $connectedAt): static
     {
         $this->connectedAt = $connectedAt;
+
+        return $this;
+    }
+
+    public function getPlayer(): ?Player
+    {
+        return $this->player;
+    }
+
+    public function setPlayer(Player $player): static
+    {
+        // set the owning side of the relation if necessary
+        if ($player->getOwner() !== $this) {
+            $player->setOwner($this);
+        }
+
+        $this->player = $player;
 
         return $this;
     }

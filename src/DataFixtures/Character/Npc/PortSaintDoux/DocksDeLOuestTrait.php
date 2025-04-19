@@ -1,0 +1,88 @@
+<?php
+
+namespace App\DataFixtures\Character\Npc\PortSaintDoux;
+
+trait DocksDeLOuestTrait
+{
+    const DOCKS_DE_L_OUEST_NPCS = [
+        // Npcs
+        [
+            'name' => 'Jarrod le Tavernier',
+            'picture' => 'img/chapter1/npc/jarrod-le-tavernier.png',
+            'thumbnail' => 'img/chapter1/npc/jarrod-le-tavernier_thumb.png',
+            'description' => "<p>Le Tavernier de la Flûte Moisie vous accueille avec un sourire franc, une chope à moitié vide dans une main, un torchon douteux dans l’autre. Son imposante carrure d’orque contraste avec la chaleur de son rire, et sa voix grave résonne dans toute la salle.</p><p><em>Bienvenue à la Flûte Moisie, étranger. Ici, les secrets coulent autant que la bière&nbsp;! Alors, on trinque ou on papote&nbsp;?</em></p>",
+            'strength' => 15,
+            'dexterity' => 11,
+            'constitution' => 14,
+            'wisdom' => 12,
+            'intelligence' => 9,
+            'charisma' => 11,
+            'healthMax' => 130,
+            'manaMax' => 40,
+            'fortune' => 500,
+            'level' => 2,
+            'race' => 'race_orque',
+            'profession' => 'profession_tavernier',
+            'reference' => 'npc_jarrod_le_tavernier',
+        ],
+        [
+            'name' => 'Myra la Vieille',
+            'picture' => 'img/chapter1/npc/myra-la-vieille.png',
+            'thumbnail' => 'img/chapter1/npc/myra-la-vieille_thumb.png',
+            'description' => "<p>Assise dans un coin sombre de la Flûte Moisie, Myra tricote sans jamais lever les yeux. Mais ceux qui l’écoutent parler repartent toujours avec un frisson dans le dos.</p><p><em>Je ne prédis pas l’avenir, non… Je murmure des souvenirs qui n’ont pas encore eu lieu.</em></p>",
+            'strength' => 5,
+            'dexterity' => 7,
+            'constitution' => 8,
+            'wisdom' => 17,
+            'intelligence' => 13,
+            'charisma' => 14,
+            'healthMax' => 70,
+            'manaMax' => 40,
+            'fortune' => 15,
+            'level' => 3,
+            'race' => 'race_humain',
+            'profession' => 'profession_devineresse',
+            'reference' => 'npc_myra_la_vieille',
+        ],
+
+        // Enemies
+        [
+            'name' => 'Malfrat',
+            'picture' => 'img/core/npc/chef-malfrat.png',
+            'thumbnail' => 'img/core/npc/chef-malfrat_thumb.png',
+            'description' => "<p>Un malfrat vous barre la route. Il vous regarde avec un sourire mauvais, et semble prêt à vous attaquer si vous ne lui donnez pas ce qu'il veut.</p><p><em>Alors, mon gars, tu vas me donner tout ce que tu as, ou je vais devoir te le prendre&nbsp;!</em></p>",
+            'strength' => 12,
+            'dexterity' => 12,
+            'constitution' => 12,
+            'wisdom' => 10,
+            'intelligence' => 10,
+            'charisma' => 9,
+            'healthMax' => 120,
+            'manaMax' => 50,
+            'fortune' => 50,
+            'level' => 2,
+            'race' => 'race_humain',
+            'profession' => 'profession_malfrat',
+            'reference' => 'npc_malfrat',
+        ],
+        [
+            'name' => 'Sbire',
+            'picture' => 'img/core/npc/sbire.png',
+            'thumbnail' => 'img/core/npc/sbire_thumb.png',
+            'description' => "<p>Un malfrat vous barre la route. Il vous regarde avec un sourire mauvais, et semble prêt à vous attaquer si vous ne lui donnez pas ce qu'il veut.</p><p><em>Alors, mon gars, tu vas me donner tout ce que tu as, ou je vais devoir te le prendre&nbsp;!</em></p>",
+            'strength' => 10,
+            'dexterity' => 10,
+            'constitution' => 9,
+            'wisdom' => 8,
+            'intelligence' => 8,
+            'charisma' => 8,
+            'healthMax' => 90,
+            'manaMax' => 40,
+            'fortune' => 25,
+            'level' => 1,
+            'race' => 'race_humain',
+            'profession' => 'profession_malfrat',
+            'reference' => 'npc_sbire',
+        ],
+    ];
+}

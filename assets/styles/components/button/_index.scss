@@ -16,7 +16,7 @@
   box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
   cursor: pointer;
   @extend .anim-appears;
-  animation-delay: 1.5s;
+  animation-delay: 1s;
 
   &:hover,
   &:active {

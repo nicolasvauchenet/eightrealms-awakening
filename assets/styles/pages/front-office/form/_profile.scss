@@ -1,0 +1,29 @@
+&.profile {
+  .app-main {
+    justify-content: center;
+
+    .app-section {
+      justify-content: center;
+
+      .app-form {
+        .form-fieldset {
+          margin-bottom: 1.5rem;
+        }
+
+        & > .app-button {
+          &.cta {
+            margin-bottom: 1.5rem;
+          }
+        }
+
+        & > p {
+          .app-button {
+            &.outline {
+              padding: 0.25rem 0.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.form-group {
+  margin-bottom: 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @import "../../components/form/label";
+  @import "../../components/form/control";
+  @import "../../components/form/help";
+  @import "../../components/form/error";
+}

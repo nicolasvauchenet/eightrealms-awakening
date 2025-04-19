@@ -1,0 +1,37 @@
+.app-alert {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 9998;
+  padding: 1.5rem 1rem 1.25rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  background-color: $white;
+  border: 0.25em groove $secondary;
+  border-radius: 0.5rem;
+  box-shadow: inset 0.25rem 0.25rem 0.75rem rgba($black, 0.85);
+  @extend .anim-appears;
+  animation-delay: 1s;
+
+  &.info {
+    color: $white;
+    background-color: $info;
+  }
+
+  &.success {
+    color: $white;
+    background-color: $success;
+  }
+
+  &.warning {
+    color: $white;
+    background-color: $warning;
+  }
+
+  &.danger {
+    color: $white;
+    background-color: $danger;
+  }
+}

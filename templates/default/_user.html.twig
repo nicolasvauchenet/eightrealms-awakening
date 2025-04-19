@@ -1,5 +1,5 @@
 <p>
-    <a href="{{ path('app_front_office_user_profile') }}" class="app-button outline">
+    <a href="{{ path('app_profile') }}" class="app-button outline">
         <small>{{ app.user.name }}</small>
         Mon Compte
     </a>
@@ -11,7 +11,8 @@
     </a>
 </p>
 
-{% if app.user.character %}
+
+{#{% if app.user.character %}
     <p>
         <a href="{{ path('app_character_sheet_player', {'back' : 'accueil'}) }}" class="app-button">
             <small>{{ app.user.character.name }}</small>
@@ -41,4 +42,4 @@
             Personnage
         </a>
     </p>
-{% endif %}
+{% endif %}#}

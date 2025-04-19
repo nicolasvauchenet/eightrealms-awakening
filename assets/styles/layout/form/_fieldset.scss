@@ -1,0 +1,30 @@
+.form-fieldset {
+  box-sizing: border-box;
+  padding: 1rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  background-color: rgba($secondary, 0.85);
+  border-radius: 0.5rem;
+  border: 0.25rem groove $white;
+  box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .app-grid {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+
+  @import "./group";
+
+  @import "../../components/form/legend";
+}

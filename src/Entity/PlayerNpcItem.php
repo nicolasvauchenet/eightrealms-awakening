@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Entity;
+
+use App\Entity\Character\PlayerNpc;
+use App\Entity\Item\Item;
+use App\Repository\PlayerNpcItemRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: PlayerNpcItemRepository::class)]
+class PlayerNpcItem
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column]
+    private ?bool $original = null;
+
+    #[ORM\ManyToOne(inversedBy: 'playerNpcItems')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?PlayerNpc $playerNpc = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Item $item = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function isOriginal(): ?bool
+    {
+        return $this->original;
+    }
+
+    public function setOriginal(bool $original): static
+    {
+        $this->original = $original;
+
+        return $this;
+    }
+
+    public function getPlayerNpc(): ?PlayerNpc
+    {
+        return $this->playerNpc;
+    }
+
+    public function setPlayerNpc(?PlayerNpc $playerNpc): static
+    {
+        $this->playerNpc = $playerNpc;
+
+        return $this;
+    }
+
+    public function getItem(): ?Item
+    {
+        return $this->item;
+    }
+
+    public function setItem(?Item $item): static
+    {
+        $this->item = $item;
+
+        return $this;
+    }
+}

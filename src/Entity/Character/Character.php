@@ -2,7 +2,10 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Item\CharacterItem;
 use App\Repository\Character\CharacterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -72,6 +75,17 @@ abstract class Character
 
     #[ORM\ManyToOne]
     private ?Profession $profession = null;
+
+    /**
+     * @var Collection<int, CharacterItem>
+     */
+    #[ORM\OneToMany(targetEntity: CharacterItem::class, mappedBy: 'character', orphanRemoval: true)]
+    private Collection $characterItems;
+
+    public function __construct()
+    {
+        $this->characterItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -266,6 +280,36 @@ abstract class Character
     public function setProfession(?Profession $profession): static
     {
         $this->profession = $profession;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterItem>
+     */
+    public function getCharacterItems(): Collection
+    {
+        return $this->characterItems;
+    }
+
+    public function addCharacterItem(CharacterItem $characterItem): static
+    {
+        if (!$this->characterItems->contains($characterItem)) {
+            $this->characterItems->add($characterItem);
+            $characterItem->setCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterItem(CharacterItem $characterItem): static
+    {
+        if ($this->characterItems->removeElement($characterItem)) {
+            // set the owning side to null (unless already changed)
+            if ($characterItem->getCharacter() === $this) {
+                $characterItem->setCharacter(null);
+            }
+        }
 
         return $this;
     }

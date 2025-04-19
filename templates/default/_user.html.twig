@@ -1,0 +1,44 @@
+<p>
+    <a href="{{ path('app_front_office_user_profile') }}" class="app-button outline">
+        <small>{{ app.user.name }}</small>
+        Mon Compte
+    </a>
+
+    <a href="{{ path('app_logout') }}"
+       class="app-button outline text-danger"
+       onclick="return window.confirm('Quitter les Huit Royaumes ?')">
+        Déconnexion
+    </a>
+</p>
+
+{% if app.user.character %}
+    <p>
+        <a href="{{ path('app_character_sheet_player', {'back' : 'accueil'}) }}" class="app-button">
+            <small>{{ app.user.character.name }}</small>
+            Personnage
+        </a>
+    </p>
+
+    {% if app.user.character.currentLocation %}
+        <p>
+            <a href="{{ path('app_game_home') }}" class="app-button cta">
+                <small>Reprendre</small>
+                {{ app.user.character.currentLocation.name }}
+            </a>
+        </p>
+    {% else %}
+        <p>
+            <a href="{{ path('app_game_home') }}" class="app-button cta">
+                <small>Nouvelle</small>
+                Aventure
+            </a>
+        </p>
+    {% endif %}
+{% else %}
+    <p>
+        <a href="{{ path('app_character_create') }}" class="app-button cta">
+            <small>Nouveau</small>
+            Personnage
+        </a>
+    </p>
+{% endif %}

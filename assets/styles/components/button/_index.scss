@@ -1,0 +1,36 @@
+.app-button {
+  box-sizing: border-box;
+  display: block;
+  padding: 1rem;
+  width: 100%;
+  font-family: $font-secondary;
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: $white;
+  background-color: rgba($third, 0.85);
+  border: 0.25em groove $secondary;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+  cursor: pointer;
+  @extend .anim-appears;
+  animation-delay: 1.5s;
+
+  &:hover,
+  &:active {
+    box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
+  }
+
+  small {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: $font-primary;
+    font-size: 0.75em;
+  }
+
+  @import "./cta";
+  @import "./outline";
+  @import "./back";
+}

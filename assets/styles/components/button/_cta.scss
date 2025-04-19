@@ -1,0 +1,9 @@
+&.cta {
+  font-size: 1.5rem;
+  background-color: rgba($primary, 0.85);
+
+  &:hover,
+  &:active {
+    box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
+  }
+}

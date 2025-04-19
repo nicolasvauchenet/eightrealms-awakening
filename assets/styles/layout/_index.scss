@@ -1,0 +1,47 @@
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $third;
+  border-radius: 0.25rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $third;
+  border-radius: 0.25rem;
+}
+
+html {
+  .turbo-progress-bar {
+    height: 0.5rem;
+    background-color: $primary;
+    border-bottom-right-radius: 0.25rem;
+  }
+
+  body {
+    overflow: hidden;
+    position: relative;
+    height: 100dvh;
+    font-family: $font-primary;
+    font-size: 1rem;
+    color: $white;
+    background-color: $black;
+    @extend .anim-appears;
+    animation-delay: 0s;
+
+    @include respondTo(md) {
+      margin: 0 auto;
+      max-width: 500px;
+    }
+
+    @import "./main";
+    @import "./header";
+    @import "./section";
+    @import "../pages/front-office";
+  }
+}

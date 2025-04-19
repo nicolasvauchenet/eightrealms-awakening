@@ -1,0 +1,9 @@
+.app-main {
+  position: absolute;
+  z-index: 3;
+  top: 0.5rem;
+  left: 0.5rem;
+  @include displayFlex(flex-start, center, null, column);
+  width: calc(100% - 1rem);
+  height: calc(100dvh - 1rem);
+}

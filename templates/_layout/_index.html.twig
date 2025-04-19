@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <figure class="app-wallpaper">
+        <img src="{{ asset('img/core/cover.webp') }}" class="app-coverimg" alt="Les Huit Royaumes"/>
+        <div class="app-overlay"></div>
+    </figure>
+
+    {% include '_layout/_alert.html.twig' %}
+
+    <main class="app-main">
+        {% block main %}{% endblock %}
+    </main>
+{% endblock %}

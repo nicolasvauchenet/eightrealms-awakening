@@ -1,0 +1,12 @@
+.app-wallpaper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: calc(100% - 1rem);
+  height: calc(100dvh - 1rem);
+  border: 0.5rem groove $secondary;
+
+  @import "./coverimg";
+  @import "./overlay";
+}

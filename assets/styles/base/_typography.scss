@@ -1,0 +1,44 @@
+h1,
+h2,
+h3,
+h4 {
+  font-family: $font-secondary;
+  text-align: center;
+  text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+}
+
+h1 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  width: 100%;
+
+  &:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+a {
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+strong {
+  font-weight: bold;
+}
+
+small {
+  font-size: 0.85em;
+}
+
+em {
+  font-style: italic;
+  color: $info;
+}

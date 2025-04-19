@@ -1,0 +1,32 @@
+.app-header {
+  margin: 1rem 0;
+  width: 100%;
+  text-align: center;
+
+  .app-logo {
+    display: inline-block;
+    margin-bottom: 1rem;
+
+    & > img {
+      display: block;
+      height: 6rem;
+      transition: all 0.3s;
+    }
+  }
+
+  .app-picture {
+    display: inline-block;
+    width: 100%;
+
+    & > img {
+      display: block;
+      margin: 0 auto;
+      height: 14rem;
+      transition: all 0.3s;
+
+      @include respondTo(md) {
+        height: 18rem;
+      }
+    }
+  }
+}

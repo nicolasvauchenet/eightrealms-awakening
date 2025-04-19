@@ -1,0 +1,17 @@
+{% extends '_layout/_index.html.twig' %}
+
+{% block title %}Bienvenue dans les Huit Royaumes{% endblock %}
+
+{% block body_class %}front-office home{% endblock %}
+
+{% block main %}
+    {% include '_layout/_header.html.twig' %}
+
+    <section class="app-section">
+        {% if not app.user %}
+            {% include 'default/_guest.html.twig' %}
+        {% else %}
+            {% include 'default/_user.html.twig' %}
+        {% endif %}
+    </section>
+{% endblock %}

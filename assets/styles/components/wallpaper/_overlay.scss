@@ -1,0 +1,10 @@
+.app-overlay {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100dvh - 1rem);
+  background-color: rgba($black, 0.75);
+  @extend .anim-appears;
+}

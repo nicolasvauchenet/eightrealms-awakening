@@ -2,6 +2,7 @@ twig:
   file_name_pattern: '*.twig'
   globals:
     app_locale: '%app_locale%'
+    app_characterService: '@App\Service\Character\CharacterService'
 
 when@test:
   twig:

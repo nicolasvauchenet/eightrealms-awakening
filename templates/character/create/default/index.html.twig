@@ -1,0 +1,13 @@
+{% extends '_layout/_index.html.twig' %}
+
+{% block title %}Nouveau Personnage - Les Huit Royaumes - Chapitre I : L'Éveil{% endblock %}
+
+{% block body_class %}front-office character create{% endblock %}
+
+{% block main %}
+    {% include '_layout/_header.html.twig' %}
+
+    <section class="app-section">
+        {% include 'character/create/default/_grid.html.twig' %}
+    </section>
+{% endblock %}

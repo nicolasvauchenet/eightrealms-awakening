@@ -1,0 +1,31 @@
+&.character {
+  background-color: $fourth;
+  border: 0.25rem groove $secondary;
+
+  .card-header {
+    @include displayFlex(center, flex-end);
+
+    .card-image {
+      height: 16dvh;
+      object-fit: cover;
+      border-bottom: 2px solid $primary;
+
+      @include respondTo(md) {
+        height: 18dvh;
+      }
+    }
+  }
+
+  .card-body {
+    @include displayFlex(space-between, center, 0.25rem, column);
+    flex: 1;
+
+    .card-title {
+      font-size: 1.25rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.85rem;
+    }
+  }
+}

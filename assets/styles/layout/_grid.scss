@@ -1,0 +1,16 @@
+.app-grid {
+  box-sizing: border-box;
+  width: 100%;
+
+  &.two {
+    @include displayGrid(repeat(2, 1fr), 1rem);
+  }
+
+  &.three {
+    @include displayGrid(repeat(3, 1fr), 0.5rem);
+  }
+
+  &.four {
+    @include displayGrid(repeat(4, 1fr), 0.5rem);
+  }
+}

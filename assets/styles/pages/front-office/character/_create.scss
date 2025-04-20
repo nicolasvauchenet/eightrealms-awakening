@@ -1,0 +1,13 @@
+&.create {
+  .app-main {
+    .app-section {
+      .app-grid {
+        &.scrollable {
+          @include respondTo(md) {
+            max-height: 73.5dvh;
+          }
+        }
+      }
+    }
+  }
+}

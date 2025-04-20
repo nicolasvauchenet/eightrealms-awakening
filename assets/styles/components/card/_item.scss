@@ -1,0 +1,53 @@
+&.item {
+  overflow: hidden;
+  border: 0.25rem groove $secondary;
+
+  .card-header {
+    &:has(.card-attributes) {
+      position: relative;
+
+      .card-image {
+        margin-top: 2rem;
+      }
+    }
+
+    .card-image {
+      margin-top: 0.5rem;
+      height: 7.5dvh;
+      object-fit: contain;
+    }
+
+    .card-attributes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      @include displayFlex(center, center, 0.5rem);
+      padding: 0.25rem;
+      background-color: rgba($white, 0.85);
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+
+      .card-attribute {
+        @include displayFlex(center, center);
+        flex: 1;
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: $primary;
+
+        .app-icon {
+          height: 1.25rem;
+        }
+      }
+    }
+  }
+
+  .card-body {
+    @include displayFlex(space-between, center, 0.25rem, column);
+    flex: 1;
+
+    .card-title {
+      font-size: 0.85rem;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<div class="app-grid two scrollable">
+    {% for preGenerated in app_characterService.preGenerated %}
+        <div class="app-card character">
+            <a href="{# {{ path('app_character_sheet_pregenerated', {'slug': preGenerated.slug}) }} #}">
+                <div class="card-header">
+                    <img src="{{ asset('img/core/pregenerated/' ~ preGenerated.thumbnail) }}" class="card-image" alt="{{ preGenerated.name }}"/>
+                </div>
+
+                <div class="card-body">
+                    <h2 class="card-title">{{ preGenerated.name }}</h2>
+                    <h3 class="card-subtitle">{{ preGenerated.profession.name }} {{ preGenerated.race.name }}</h3>
+                </div>
+            </a>
+
+            <div class="card-footer">
+                <a href="{# {{ path('app_character_sheet_pregenerated', {'slug': preGenerated.slug}) }} #}" class="bg-third">
+                    {{ ux_icon('carbon:view-filled', {'class': 'app-icon'}) }}
+                </a>
+                <a href="{# {{ path('app_character_customize', {'slug': preGenerated.slug}) }} #}" class="bg-primary">
+                    {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>

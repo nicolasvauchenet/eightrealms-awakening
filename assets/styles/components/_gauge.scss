@@ -1,0 +1,26 @@
+.gauge {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0.25rem 0.5rem 0;
+  width: calc(100% - 1rem);
+  height: 0.5rem;
+  background-color: #cccccc;
+  border-radius: 10px;
+
+  .gauge-fill {
+    display: block;
+    height: 100%;
+    width: calc(var(--value) * 100%);
+    transition: width 0.3s ease-in-out;
+    border-radius: 10px 0 0 10px;
+
+    &.success {
+      background-color: $success;
+    }
+
+    &.info {
+      background-color: $third;
+    }
+  }
+}

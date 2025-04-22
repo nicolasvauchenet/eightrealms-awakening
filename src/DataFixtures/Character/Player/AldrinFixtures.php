@@ -46,7 +46,7 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
                 'fortune' => 100,
                 'race' => 'race_humain',
                 'profession' => 'profession_chevalier',
-                'location' => 'location_zone_quartier_du_marche',
+                /*'location' => 'location_zone_quartier_du_marche',*/
                 'owner' => 'user_nicolas',
                 'reference' => 'player_aldrin',
             ],

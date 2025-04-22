@@ -1,0 +1,9 @@
+.screen-footer {
+  margin: 1rem;
+  width: calc(100% - 2rem);
+
+  .app-button {
+    @extend .anim-appears;
+    animation-delay: 8s;
+  }
+}

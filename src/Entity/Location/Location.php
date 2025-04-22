@@ -3,6 +3,7 @@
 namespace App\Entity\Location;
 
 use App\Entity\Item\Map;
+use App\Entity\Screen\LocationScreen;
 use App\Repository\Location\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -56,6 +57,9 @@ class Location
      */
     #[ORM\OneToMany(targetEntity: CharacterLocation::class, mappedBy: 'location', orphanRemoval: true)]
     private Collection $characterLocations;
+
+    #[ORM\OneToOne(mappedBy: 'location', cascade: ['persist', 'remove'])]
+    private ?LocationScreen $locationScreen = null;
 
     public function __construct()
     {
@@ -204,7 +208,7 @@ class Location
 
     public function addCharacterLocation(CharacterLocation $characterLocation): static
     {
-        if (!$this->characterLocations->contains($characterLocation)) {
+        if(!$this->characterLocations->contains($characterLocation)) {
             $this->characterLocations->add($characterLocation);
             $characterLocation->setLocation($this);
         }
@@ -214,12 +218,29 @@ class Location
 
     public function removeCharacterLocation(CharacterLocation $characterLocation): static
     {
-        if ($this->characterLocations->removeElement($characterLocation)) {
+        if($this->characterLocations->removeElement($characterLocation)) {
             // set the owning side to null (unless already changed)
-            if ($characterLocation->getLocation() === $this) {
+            if($characterLocation->getLocation() === $this) {
                 $characterLocation->setLocation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLocationScreen(): ?LocationScreen
+    {
+        return $this->locationScreen;
+    }
+
+    public function setLocationScreen(LocationScreen $locationScreen): static
+    {
+        // set the owning side of the relation if necessary
+        if ($locationScreen->getLocation() !== $this) {
+            $locationScreen->setLocation($this);
+        }
+
+        $this->locationScreen = $locationScreen;
 
         return $this;
     }

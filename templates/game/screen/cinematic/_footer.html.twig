@@ -1,0 +1,9 @@
+<footer class="screen-footer">
+    {% if screen.actions.footer is defined %}
+        {% for action in screen.actions.footer %}
+            <a href="{{ path('app_game_screen_' ~ action.type, {'slug': action.slug}) }}" class="app-button cta">
+                {{ action.label }}
+            </a>
+        {% endfor %}
+    {% endif %}
+</footer>

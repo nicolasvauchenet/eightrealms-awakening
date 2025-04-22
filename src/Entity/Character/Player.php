@@ -5,6 +5,7 @@ namespace App\Entity\Character;
 use App\Entity\Location\Location;
 use App\Entity\Quest\PlayerQuest;
 use App\Entity\Quest\PlayerQuestStep;
+use App\Entity\Screen\Screen;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -50,6 +51,9 @@ class Player extends Character
      */
     #[ORM\OneToMany(targetEntity: PlayerQuestStep::class, mappedBy: 'player', orphanRemoval: true)]
     private Collection $playerQuestSteps;
+
+    #[ORM\ManyToOne]
+    private ?Screen $currentScreen = null;
 
     public function __construct()
     {
@@ -216,6 +220,18 @@ class Player extends Character
                 $playerQuestStep->setPlayer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurrentScreen(): ?Screen
+    {
+        return $this->currentScreen;
+    }
+
+    public function setCurrentScreen(?Screen $currentScreen): static
+    {
+        $this->currentScreen = $currentScreen;
 
         return $this;
     }

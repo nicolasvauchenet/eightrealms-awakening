@@ -1,0 +1,7 @@
+&.cinematic {
+  .app-main {
+    @import "./header";
+    @import "./section";
+    @import "./footer";
+  }
+}

@@ -3,6 +3,7 @@
 namespace App\Entity\Character;
 
 use App\Entity\Item\CharacterItem;
+use App\Entity\Screen\InteractionScreen;
 use App\Entity\Spell\CharacterSpell;
 use App\Repository\Character\CharacterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -89,6 +90,9 @@ abstract class Character
      */
     #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'character', orphanRemoval: true)]
     private Collection $characterSpells;
+
+    #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
+    private ?InteractionScreen $interactionScreen = null;
 
     public function __construct()
     {
@@ -349,6 +353,23 @@ abstract class Character
                 $characterSpell->setCharacter(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInteractionScreen(): ?InteractionScreen
+    {
+        return $this->interactionScreen;
+    }
+
+    public function setInteractionScreen(InteractionScreen $interactionScreen): static
+    {
+        // set the owning side of the relation if necessary
+        if($interactionScreen->getNpc() !== $this) {
+            $interactionScreen->setNpc($this);
+        }
+
+        $this->interactionScreen = $interactionScreen;
 
         return $this;
     }

@@ -1,0 +1,9 @@
+<p class="reward">
+    {% if screen.actions.reward is defined and not this.isRewarded %}
+        <button {{ live_action('getReward') }}>
+            <img src="{{ asset('img/core/action/reward.png') }}" alt="Récompense"/>
+        </button>
+    {% else %}
+        <small class="text-success">Récompense obtenue&nbsp;!</small>
+    {% endif %}
+</p>

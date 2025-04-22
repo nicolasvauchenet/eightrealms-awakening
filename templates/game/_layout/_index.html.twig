@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <figure class="app-wallpaper">
+        {% if screen.picture %}
+            <img src="{{ asset(screen.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
+        {% else %}
+            <img src="{{ asset('img/core/cover.webp') }}" class="app-coverimg" alt="Les Huit Royaumes"/>
+        {% endif %}
+        <div class="app-overlay"></div>
+    </figure>
+
+    <main class="app-main">
+        {% block main %}{% endblock %}
+    </main>
+{% endblock %}

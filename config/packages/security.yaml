@@ -35,10 +35,10 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/accueil, roles: PUBLIC_ACCESS }
-    - { path: ^/nouveau-joueur, roles: PUBLIC_ACCESS }
-    - { path: ^/connexion, roles: PUBLIC_ACCESS }
-    - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/aventure, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/cinematique, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/lieu, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/, roles: PUBLIC_ACCESS }
 
   access_denied_url: /
 

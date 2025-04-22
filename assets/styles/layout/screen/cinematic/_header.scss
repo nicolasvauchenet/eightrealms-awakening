@@ -1,0 +1,11 @@
+.screen-header {
+  margin: 1rem;
+  width: calc(100% - 2rem);
+  @extend .anim-appears;
+  animation-delay: 1s;
+  animation-duration: 1.5s;
+
+  h1 {
+    font-size: 2rem;
+  }
+}

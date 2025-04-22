@@ -3,6 +3,7 @@
 namespace App\Controller\User\Delete;
 
 use App\Entity\User;
+use App\Service\User\DeleteUserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,8 @@ final class DefaultController extends AbstractController
     #[Route('/supprimer-votre-compte', name: 'app_user_delete')]
     public function index(EntityManagerInterface $entityManager,
                           Request                $request,
-                          TokenStorageInterface  $tokenStorage): Response
+                          TokenStorageInterface  $tokenStorage,
+                          DeleteUserService      $deleteService): Response
     {
         $user = $entityManager->getRepository(User::class)->find($this->getUser()->getId());
         $username = $user->getName();
@@ -23,8 +25,7 @@ final class DefaultController extends AbstractController
         $request->getSession()->invalidate();
         $tokenStorage->setToken(null);
 
-        $entityManager->remove($user);
-        $entityManager->flush();
+        $deleteService->deleteUser($user);
 
         $this->addFlash('danger', "$username a quitté les Huit Royaumes&nbsp;!");
 

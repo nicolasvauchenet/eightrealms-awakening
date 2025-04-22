@@ -1,0 +1,21 @@
+{% extends '_layout/_index.html.twig' %}
+
+{% block title %}Nouveau Personnage - Les Huit Royaumes - Chapitre I : L'Éveil{% endblock %}
+
+{% block body_class %}front-office form character{% endblock %}
+
+{% block main %}
+    <header class="app-header">
+        <figure class="app-picture">
+            <img src="{{ asset('img/core/pregenerated/' ~ character.picture) }}" alt="{{ character.name }}"/>
+        </figure>
+
+        <a href="{{ path('app_character_create') }}" class="app-button back">
+            {{ ux_icon('icon-park-solid:back', {'class': 'app-icon'}) }}
+        </a>
+    </header>
+
+    <section class="app-section">
+        {% include 'character/create/customize/_form.html.twig' %}
+    </section>
+{% endblock %}

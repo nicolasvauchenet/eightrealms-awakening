@@ -16,7 +16,7 @@
                 <a href="{# {{ path('app_character_sheet_pregenerated', {'slug': preGenerated.slug}) }} #}" class="bg-third">
                     {{ ux_icon('carbon:view-filled', {'class': 'app-icon'}) }}
                 </a>
-                <a href="{# {{ path('app_character_customize', {'slug': preGenerated.slug}) }} #}" class="bg-primary">
+                <a href="{{ path('app_character_customize', {'slug': preGenerated.slug}) }}" class="bg-primary">
                     {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}
                 </a>
             </div>

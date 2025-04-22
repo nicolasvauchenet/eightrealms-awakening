@@ -24,8 +24,8 @@ class Player extends Character
     #[ORM\Column]
     private ?int $mana = null;
 
-    #[ORM\OneToOne(inversedBy: 'player', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'player', cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?User $owner = null;
 
     /**
@@ -112,7 +112,7 @@ class Player extends Character
 
     public function addPlayerNpc(PlayerNpc $playerNpc): static
     {
-        if (!$this->playerNpcs->contains($playerNpc)) {
+        if(!$this->playerNpcs->contains($playerNpc)) {
             $this->playerNpcs->add($playerNpc);
             $playerNpc->setPlayer($this);
         }
@@ -122,9 +122,9 @@ class Player extends Character
 
     public function removePlayerNpc(PlayerNpc $playerNpc): static
     {
-        if ($this->playerNpcs->removeElement($playerNpc)) {
+        if($this->playerNpcs->removeElement($playerNpc)) {
             // set the owning side to null (unless already changed)
-            if ($playerNpc->getPlayer() === $this) {
+            if($playerNpc->getPlayer() === $this) {
                 $playerNpc->setPlayer(null);
             }
         }

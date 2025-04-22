@@ -1,0 +1,26 @@
+&.character {
+  .app-main {
+    justify-content: flex-start;
+
+    .app-header {
+      margin-bottom: 0;
+
+      .app-picture {
+        display: block;
+      }
+    }
+
+    .app-section {
+      justify-content: flex-start;
+
+      .app-form {
+        .form-fieldset {
+          .form-legend {
+            width: calc(100% - 2.5rem);
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}

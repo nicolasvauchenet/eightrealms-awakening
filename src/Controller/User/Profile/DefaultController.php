@@ -3,7 +3,7 @@
 namespace App\Controller\User\Profile;
 
 use App\Entity\User;
-use App\Form\ProfileType;
+use App\Form\User\ProfileType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

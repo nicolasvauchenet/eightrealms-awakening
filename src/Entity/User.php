@@ -53,7 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $connectedAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'owner', cascade: ['persist'])]
     private ?Player $player = null;
 
     public function getId(): ?int

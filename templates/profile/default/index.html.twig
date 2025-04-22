@@ -43,22 +43,23 @@
                onclick="return window.confirm('Voulez-vous vraiment supprimer votre compte ?');">
                 <small>Supprimer votre Compte</small>
             </a>
-            {#
-            {% if app.user.character %}
+
+            {% if app.user.player %}
                 <a href="{{ path('app_character_delete') }}"
                    class="app-button outline text-danger"
                    onclick="return window.confirm('Voulez-vous vraiment supprimer votre personnage ?');">
                     <small>Supprimer votre Personnage</small>
                 </a>
+            {% endif %}
 
-                {% if app.user.character.currentLocation %}
+            {#
+            {% if app.user.character.currentLocation %}
                     <a href=" #}{# {{ path('app_game_delete') }} #}{# "
                        class="app-button outline text-danger"
                        onclick="return window.confirm('Voulez-vous vraiment recommencer l\'aventure au début ?');">
                         <small>Recommencer l'aventure</small>
                     </a>
                 {% endif %}
-            {% endif %}
             #}
         </p>
         {{ form_end(form) }}

@@ -1,0 +1,22 @@
+<div class="sheet-content quests {% if this.activeContent == 'quests' %}active{% endif %}" data-loading="addClass(loading)">
+    <div class="quests">
+        {% set mainQuest = app_characterQuestService.playerMainQuest(this.character) %}
+        {% include 'character/sheet/_component/_quests/_main.html.twig' %}
+
+        {% set sideQuests = app_characterQuestService.playerSideQuests(this.character) %}
+        {% include 'character/sheet/_component/_quests/_side.html.twig' %}
+
+        {% if mainQuest == null and sideQuests | length == 0 %}
+            <p class="text-primary text-center">
+                <strong>
+                    Aucune quête en cours.
+                    <br/>
+                    Vous devriez peut-être parler à des gens…
+                </strong>
+            </p>
+        {% endif %}
+
+        {% set sideQuests = app_characterQuestService.playerSideQuests(this.character, 'rewarded') %}
+        {% include 'character/sheet/_component/_quests/_rewarded.html.twig' %}
+    </div>
+</div>

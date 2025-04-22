@@ -8,6 +8,8 @@
             {% set contentTitle = 'Équipement' %}
         {% elseif this.activeContent == 'spells' %}
             {% set contentTitle = 'Sortilèges' %}
+        {% elseif this.activeContent == 'quests' %}
+            {% set contentTitle = 'Journal de Quêtes' %}
         {% endif %}
 
         {% include 'character/sheet/_component/_header.html.twig' with {'contentTitle': contentTitle} %}
@@ -17,6 +19,9 @@
         {% include 'character/sheet/_component/_equipment/_index.html.twig' %}
         {% if character.profession.type == 'magical' %}
             {% include 'character/sheet/_component/_spells/_index.html.twig' %}
+        {% endif %}
+        {% if this.characterType == 'player' %}
+            {% include 'character/sheet/_component/_quests/_index.html.twig' %}
         {% endif %}
         {% include 'character/sheet/_component/_footer.html.twig' %}
     </div>

@@ -6,6 +6,7 @@ twig:
     app_characterBonusService: '@App\Service\Character\CharacterBonusService'
     app_characterItemService: '@App\Service\Item\CharacterItemService'
     app_characterSpellService: '@App\Service\Spell\CharacterSpellService'
+    app_characterQuestService: '@App\Service\Quest\CharacterQuestService'
 
 when@test:
   twig:

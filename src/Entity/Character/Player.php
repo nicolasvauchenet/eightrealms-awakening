@@ -3,6 +3,8 @@
 namespace App\Entity\Character;
 
 use App\Entity\Location\Location;
+use App\Entity\Quest\PlayerQuest;
+use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -37,9 +39,23 @@ class Player extends Character
     #[ORM\ManyToOne]
     private ?Location $currentLocation = null;
 
+    /**
+     * @var Collection<int, PlayerQuest>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerQuest::class, mappedBy: 'player', orphanRemoval: true)]
+    private Collection $playerQuests;
+
+    /**
+     * @var Collection<int, PlayerQuestStep>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerQuestStep::class, mappedBy: 'player', orphanRemoval: true)]
+    private Collection $playerQuestSteps;
+
     public function __construct()
     {
         $this->playerNpcs = new ArrayCollection();
+        $this->playerQuests = new ArrayCollection();
+        $this->playerQuestSteps = new ArrayCollection();
     }
 
     public function getExperience(): ?int
@@ -140,6 +156,66 @@ class Player extends Character
     public function setCurrentLocation(?Location $currentLocation): static
     {
         $this->currentLocation = $currentLocation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerQuest>
+     */
+    public function getPlayerQuests(): Collection
+    {
+        return $this->playerQuests;
+    }
+
+    public function addPlayerQuest(PlayerQuest $playerQuest): static
+    {
+        if (!$this->playerQuests->contains($playerQuest)) {
+            $this->playerQuests->add($playerQuest);
+            $playerQuest->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerQuest(PlayerQuest $playerQuest): static
+    {
+        if ($this->playerQuests->removeElement($playerQuest)) {
+            // set the owning side to null (unless already changed)
+            if ($playerQuest->getPlayer() === $this) {
+                $playerQuest->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerQuestStep>
+     */
+    public function getPlayerQuestSteps(): Collection
+    {
+        return $this->playerQuestSteps;
+    }
+
+    public function addPlayerQuestStep(PlayerQuestStep $playerQuestStep): static
+    {
+        if (!$this->playerQuestSteps->contains($playerQuestStep)) {
+            $this->playerQuestSteps->add($playerQuestStep);
+            $playerQuestStep->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerQuestStep(PlayerQuestStep $playerQuestStep): static
+    {
+        if ($this->playerQuestSteps->removeElement($playerQuestStep)) {
+            // set the owning side to null (unless already changed)
+            if ($playerQuestStep->getPlayer() === $this) {
+                $playerQuestStep->setPlayer(null);
+            }
+        }
 
         return $this;
     }

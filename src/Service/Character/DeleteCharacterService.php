@@ -19,7 +19,7 @@ readonly class DeleteCharacterService
         $this->deleteCharacterItems($character);
         $this->deleteCharacterSpells($character);
 
-        $this->fileUploaderService->remove('player', $character->getPicture());
+        $this->fileUploaderService->remove('character', $character->getPicture());
         $this->entityManager->remove($character);
         $this->entityManager->flush();
     }

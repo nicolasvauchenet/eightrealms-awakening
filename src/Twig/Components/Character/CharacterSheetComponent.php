@@ -21,6 +21,9 @@ class CharacterSheetComponent
     public string $characterType;
 
     #[LiveProp(writable: true)]
+    public string $back = '';
+
+    #[LiveProp(writable: true)]
     public string $activeContent = 'details';
 
     #[LiveAction]

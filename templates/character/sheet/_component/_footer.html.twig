@@ -34,5 +34,12 @@
            class="bg-primary">
             {{ ux_icon('game-icons:play-button', {'class': 'app-icon'}) }}
         </a>
+    {% else %}
+        <a href="#"
+           class="{% if this.activeContent == 'quests' %}active{% endif %}"
+                {{ live_action('setActiveContent', {'content': 'quests'}) }}
+           onclick="return false">
+            {{ ux_icon('game-icons:scroll-quill', {'class': 'app-icon'}) }}
+        </a>
     {% endif %}
 </footer>

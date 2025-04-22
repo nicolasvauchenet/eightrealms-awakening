@@ -1,0 +1,13 @@
+{% if sideQuests | length > 0 %}
+    <div class="completed-quest">
+        <h2 class="quest-type">Quêtes Terminées</h2>
+        {% for sideQuest in sideQuests %}
+            <div class="content completed">
+                <h3 class="quest-name">{{ sideQuest.quest.name }}</h3>
+                {% for step in sideQuest.quest.questSteps %}
+                    {{ step.description | raw }}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

@@ -3,6 +3,10 @@
         <a href="{{ path('app_character_create') }}" class="app-button back">
             {{ ux_icon('icon-park-solid:back', {'class': 'app-icon'}) }}
         </a>
+    {% else %}
+        <a href="/{{ back }}" class="app-button back">
+            {{ ux_icon('icon-park-solid:back', {'class': 'app-icon'}) }}
+        </a>
     {% endif %}
 
     <figure class="sheet-picture">

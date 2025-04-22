@@ -27,7 +27,7 @@ class CharacterSheetComponent
     public string $back = '';
 
     #[LiveProp(writable: true)]
-    public string $activeContent = 'equipment';
+    public string $activeContent = 'details';
 
     public function __construct(private readonly EntityManagerInterface $entityManager,
                                 private readonly CharacterItemService   $characterItemService)

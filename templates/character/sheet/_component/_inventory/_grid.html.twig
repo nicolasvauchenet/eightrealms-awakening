@@ -46,6 +46,27 @@
                 </div>
             </a>
             {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+
+            {% if this.characterType == 'player' %}
+                <div class="card-footer">
+                    {% if characterItem.item.category.slug != 'carte' and characterItem.item.category.slug != 'cadeau' and characterItem.item.category.slug != 'nourriture' %}
+                        {% if characterItem.equipped %}
+                            <button class="bg-warning" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
+                                {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
+                            </button>
+                        {% else %}
+                            <button class="bg-success {% if not app_characterItemService.canEquipItem(this.character, characterItem) %}disabled{% endif %}" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
+                                {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
+                            </button>
+                        {% endif %}
+                    {% endif %}
+                    {% if characterItem.item.category.slug == 'nourriture' or (characterItem.item.category.slug == 'potion' and characterItem.item.type != 'utile') %}
+                        <button class="bg-info" {{ live_action('useItem', {'characterItemId': characterItem.id }) }}>
+                            {{ ux_icon('ic:baseline-back-hand', {'class': 'app-icon lower'}) }}
+                        </button>
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
     {% endfor %}
 </div>

@@ -100,7 +100,7 @@ readonly class CharacterItemService
         ];
     }
 
-    /*public function toggleEquipItem(Character $character, CharacterItem $item): void
+    public function toggleEquipItem(Character $character, CharacterItem $item): void
     {
         $equippedItems = $this->getEquippedItems($character);
         $categoryName = $item->getItem()->getCategory()->getSlug();
@@ -222,9 +222,9 @@ readonly class CharacterItemService
         }
 
         $this->entityManager->persist($character);
-    }*/
+    }
 
-    /*public function useItem(Character $character, CharacterItem $characterItem): void
+    public function useItem(Character $character, CharacterItem $characterItem): void
     {
         $category = $characterItem->getItem()->getCategory()->getSlug();
         if(!in_array($category, ['potion', 'nourriture'])) {
@@ -242,7 +242,7 @@ readonly class CharacterItemService
 
         $this->entityManager->persist($character);
         $this->entityManager->remove($characterItem);
-    }*/
+    }
 
     /*public function canSellItem(PlayerCharacter $playerCharacter, CharacterItem|PlayerCharacterItem $characterItem): bool
     {

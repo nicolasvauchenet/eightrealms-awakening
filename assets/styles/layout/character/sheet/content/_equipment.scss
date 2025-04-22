@@ -1,0 +1,136 @@
+&.equipment {
+  .equipped {
+    position: relative;
+    width: 100%;
+    height: 62dvh;
+    text-align: center;
+
+    @include respondTo(md) {
+      height: 59dvh;
+    }
+
+    & > img {
+      display: block;
+      margin: 0 auto;
+      height: 100%;
+      opacity: 0.35;
+    }
+
+    .equipped-item {
+      position: absolute;
+      @include displayFlex(center, center, null, column);
+      padding: 0.5rem;
+      width: 8rem;
+      height: 8rem;
+      box-sizing: border-box;
+      background-color: rgba($white, 0.5);
+      border-radius: 0.5rem;
+      box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
+
+      &.armor {
+        top: 0.75rem;
+        left: 0.5rem;
+      }
+
+      &.righthand {
+        top: 9.5rem;
+        left: 0.5rem;
+        height: 26.5dvh;
+
+        @include respondTo(md) {
+          height: 27dvh;
+        }
+      }
+
+      &.bow {
+        bottom: 0.5rem;
+        left: 0.5rem;
+      }
+
+      &.amulet {
+        top: 4rem;
+        right: 0.5rem;
+        height: 4.75rem;
+      }
+
+      &.lefthand {
+        top: 9.5rem;
+        right: 0.5rem;
+        height: 26.5dvh;
+
+        @include respondTo(md) {
+          height: 27dvh;
+        }
+      }
+
+      &.shield {
+        bottom: 0.5rem;
+        right: 0.5rem;
+      }
+
+      &:has(.equip) {
+        .placeholder {
+          display: none;
+        }
+      }
+
+      a {
+        @include displayFlex(center, center, null, column);
+        height: 100%;
+        width: 100%;
+      }
+
+      img {
+        height: 80%;
+        object-fit: contain;
+
+        &.placeholder {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .equipped-assets {
+      position: absolute;
+      @include displayFlex(center, center);
+      width: 8rem;
+      top: 0.75rem;
+      right: 0.5rem;
+      @include displayGrid(repeat(3, 1fr), 0.25rem);
+      align-items: center;
+      height: 5dvh;
+
+      .equipped-asset {
+        @include displayFlex(center, center);
+        height: 100%;
+        background-color: rgba($white, 0.5);
+        border-radius: 0.5rem;
+        box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
+
+        &:has(.equip) {
+          .placeholder {
+            display: none;
+          }
+        }
+
+        a {
+          @include displayFlex(center, center, 0.25rem, column);
+          height: 100%;
+          width: 100%;
+        }
+
+        img {
+          width: 80%;
+          height: 84%;
+          object-fit: contain;
+
+          &.placeholder {
+            width: 70%;
+            height: 75%;
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+}

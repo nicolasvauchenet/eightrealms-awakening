@@ -2,6 +2,7 @@
 
 namespace App\Repository\Spell;
 
+use App\Entity\Character\Character;
 use App\Entity\Spell\CharacterSpell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +17,24 @@ class CharacterSpellRepository extends ServiceEntityRepository
         parent::__construct($registry, CharacterSpell::class);
     }
 
-//    /**
-//     * @return CharacterSpell[] Returns an array of CharacterSpell objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findCharacterSpellsByCategories(Character $character): array
+    {
+        $characterSpells = $this->createQueryBuilder('cs')
+            ->leftJoin('cs.spell', 's')
+            ->leftJoin('s.category', 'c')
+            ->addSelect('s', 'c')
+            ->andWhere('cs.character = :character')
+            ->setParameter('character', $character)
+            ->orderBy('c.position', 'ASC')
+            ->getQuery()
+            ->getResult();
 
-//    public function findOneBySomeField($value): ?CharacterSpell
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $grouped = [];
+        foreach($characterSpells as $characterSpell) {
+            $categoryName = $characterSpell->getSpell()->getCategory()->getName();
+            $grouped[$categoryName][] = $characterSpell;
+        }
+
+        return $grouped;
+    }
 }

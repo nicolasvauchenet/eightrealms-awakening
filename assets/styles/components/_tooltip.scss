@@ -1,0 +1,116 @@
+.app-tooltip {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+
+  &.is-active {
+    @include displayFlex(center, center);
+    @extend .anim-appears;
+    animation-delay: 0s;
+    animation-duration: 0.5s;
+  }
+
+  .tooltip-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    background: rgba($black, 0.85);
+  }
+
+  .tooltip-body {
+    position: relative;
+    z-index: 4;
+    padding: 1rem 0.5rem;
+    margin: 0 1rem;
+    max-width: calc(500px - 6rem);
+    background-color: $white;
+    border: 0.5rem groove $secondary;
+    border-radius: 0.5rem;
+    box-shadow: 0.25rem 0.25rem 0.5rem rgba($black, 0.85);
+
+    &:has(.tooltip-attribute) {
+      padding-top: 4rem;
+    }
+
+    .tooltip-title,
+    .tooltip-subtitle {
+      margin-bottom: 0.5rem;
+      text-align: center;
+      color: $primary;
+      text-shadow: none !important;
+    }
+
+    .tooltip-title {
+      font-size: 1.25rem;
+    }
+
+    .tooltip-subtitle {
+      font-family: $font-primary;
+      font-size: 1.15rem;
+      font-weight: bold;
+    }
+
+    .tooltip-attributes {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      @include displayFlex(space-evenly, center, 0.25rem);
+      background-color: $secondary;
+      border: 0.25rem groove $secondary;
+      border-top: none;
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+      .tooltip-attribute {
+        @include displayFlex(center, center, 2px);
+        padding: 0.5rem;
+        font-family: $font-secondary;
+        font-size: 1rem;
+        font-weight: bold;
+        font-style: italic;
+        color: $primary;
+      }
+    }
+
+    .tooltip-picture {
+      margin-bottom: 0.5rem;
+      text-align: center;
+
+      .tooltip-image {
+        margin-top: 0 !important;
+        height: 23dvh !important;
+      }
+    }
+
+    .gauge {
+      margin: 0 2rem 1rem;
+      width: calc(100% - 4rem);
+    }
+
+    .tooltip-description {
+      overflow-y: auto;
+      padding: 0.5rem;
+      max-height: 20dvh;
+
+      p {
+        font-family: $font-primary;
+        font-size: 1.25rem;
+        font-weight: normal;
+        text-align: justify;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        color: $black;
+      }
+    }
+  }
+}

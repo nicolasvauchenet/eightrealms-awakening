@@ -1,0 +1,23 @@
+<div {{ attributes }}>
+    <div class="app-sheet">
+        {% if this.activeContent == 'details' %}
+            {% set contentTitle = character.profession.name ~ ' ' ~ character.race.name %}
+        {% elseif this.activeContent == 'inventory' %}
+            {% set contentTitle = 'Inventaire' %}
+        {% elseif this.activeContent == 'equipment' %}
+            {% set contentTitle = 'Équipement' %}
+        {% elseif this.activeContent == 'spells' %}
+            {% set contentTitle = 'Sortilèges' %}
+        {% endif %}
+
+        {% include 'character/sheet/_component/_header.html.twig' with {'contentTitle': contentTitle} %}
+
+        {% include 'character/sheet/_component/_details/_index.html.twig' %}
+        {% include 'character/sheet/_component/_inventory/_index.html.twig' %}
+        {% include 'character/sheet/_component/_equipment/_index.html.twig' %}
+        {% if character.profession.type == 'magical' %}
+            {% include 'character/sheet/_component/_spells/_index.html.twig' %}
+        {% endif %}
+        {% include 'character/sheet/_component/_footer.html.twig' %}
+    </div>
+</div>

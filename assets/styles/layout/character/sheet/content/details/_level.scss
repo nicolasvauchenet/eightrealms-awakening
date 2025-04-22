@@ -1,0 +1,24 @@
+.level {
+  @include displayFlex(null, center, 0.25rem);
+  margin: 0 1.5rem 1rem;
+
+  p {
+    @include displayFlex(null, center, 0.25rem);
+    margin-bottom: 0;
+    font-size: 1.75rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba($black, 0.85);
+
+    &:first-child {
+      justify-content: flex-start;
+    }
+
+    &:last-child {
+      justify-content: flex-end;
+    }
+
+    .app-icon {
+      height: 2.5rem;
+    }
+  }
+}

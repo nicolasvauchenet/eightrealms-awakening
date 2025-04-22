@@ -1,0 +1,26 @@
+.sheet-header {
+  width: 100%;
+  text-align: center;
+
+  .sheet-picture {
+    display: inline-block;
+    width: 100%;
+    border-bottom: 2px groove $secondary;
+
+    & > img {
+      display: block;
+      margin: 0 auto;
+      height: 10rem;
+      transition: all 0.3s;
+
+      @include respondTo(md) {
+        height: 14rem;
+      }
+    }
+  }
+
+  h1 {
+    margin-bottom: 0.25rem;
+    font-size: 1.75rem;
+  }
+}

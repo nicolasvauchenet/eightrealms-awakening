@@ -1,0 +1,9 @@
+<div class="sheet-content inventory {% if this.activeContent == 'inventory' %}active{% endif %}" data-loading="addClass(loading)">
+    <div class="categories">
+        {% for category, characterItems in app_characterItemService.characterItems(this.character) %}
+            <h4 class="category-name">{{ category }}</h4>
+
+            {% include 'character/sheet/_component/_inventory/_grid.html.twig' %}
+        {% endfor %}
+    </div>
+</div>

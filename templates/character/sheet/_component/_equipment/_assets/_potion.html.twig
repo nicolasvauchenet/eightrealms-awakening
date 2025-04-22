@@ -1,0 +1,12 @@
+<div class="equipped-asset potion" data-controller="tooltip">
+    <img src="{{ asset('img/core/equipment/potion.png') }}" class="placeholder" alt="Potion"/>
+    {% set characterItem = app_characterItemService.equippedItems(character).potion %}
+    {% if characterItem %}
+        <a href="#" data-action="click->tooltip#open">
+            <img src="{{ asset('img/core/item/potion/' ~ characterItem.item.picture) }}"
+                 class="equip"
+                 alt="{{ characterItem.item.name }}"/>
+        </a>
+        {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+    {% endif %}
+</div>

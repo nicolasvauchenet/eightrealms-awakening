@@ -3,6 +3,9 @@ twig:
   globals:
     app_locale: '%app_locale%'
     app_characterService: '@App\Service\Character\CharacterService'
+    app_characterBonusService: '@App\Service\Character\CharacterBonusService'
+    app_characterItemService: '@App\Service\Item\CharacterItemService'
+    app_characterSpellService: '@App\Service\Spell\CharacterSpellService'
 
 when@test:
   twig:

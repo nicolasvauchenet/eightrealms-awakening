@@ -1,0 +1,12 @@
+<div class="equipped-asset scroll" data-controller="tooltip">
+    <img src="{{ asset('img/core/equipment/scroll.png') }}" class="placeholder" alt="Parchemin"/>
+    {% set characterItem = app_characterItemService.equippedItems(character).scroll %}
+    {% if characterItem %}
+        <a href="#" data-action="click->tooltip#open">
+            <img src="{{ asset('img/core/item/scroll/' ~ characterItem.item.picture) }}"
+                 class="equip"
+                 alt="{{ characterItem.item.name }}"/>
+        </a>
+        {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+    {% endif %}
+</div>

@@ -1,7 +1,7 @@
 <div class="app-grid two scrollable">
     {% for preGenerated in app_characterService.preGenerated %}
         <div class="app-card character">
-            <a href="{# {{ path('app_character_sheet_pregenerated', {'slug': preGenerated.slug}) }} #}">
+            <a href="{{ path('app_character_sheet_pregenerated', {'slug': preGenerated.slug}) }}">
                 <div class="card-header">
                     <img src="{{ asset('img/core/pregenerated/' ~ preGenerated.thumbnail) }}" class="card-image" alt="{{ preGenerated.name }}"/>
                 </div>
@@ -13,7 +13,7 @@
             </a>
 
             <div class="card-footer">
-                <a href="{# {{ path('app_character_sheet_pregenerated', {'slug': preGenerated.slug}) }} #}" class="bg-third">
+                <a href="{{ path('app_character_sheet_pregenerated', {'slug': preGenerated.slug}) }}" class="bg-third">
                     {{ ux_icon('carbon:view-filled', {'class': 'app-icon'}) }}
                 </a>
                 <a href="{{ path('app_character_customize', {'slug': preGenerated.slug}) }}" class="bg-primary">

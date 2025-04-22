@@ -1,0 +1,95 @@
+<div class="app-tooltip" data-tooltip-target="tooltip" data-action="click->tooltip#close">
+    <div class="tooltip-background" data-tooltip-target="background"></div>
+
+    <div class="tooltip-body">
+        {% set attributes = get_item_attributes(characterItem, true) %}
+        {% if attributes is not null %}
+            <div class="tooltip-attributes">
+                {% for attr in attributes %}
+                    <div class="tooltip-attribute {{ attr.class }}">
+                        {{ ux_icon(attr.icon, {'class': 'app-icon'}) }}
+                        {% if attr.amount is not null %}
+                            {% if 'simple' in attr.class %}
+                                {{ attr.amount }}
+                            {% else %}
+                                +{{ attr.amount }}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h2 class="tooltip-title">{{ characterItem.item.name }}</h2>
+
+        {% if characterItem.item.category.slug in ['armure', 'bouclier', 'arme'] %}
+            <h3 class="tooltip-subtitle">{{ characterItem.item.type }}</h3>
+        {% endif %}
+
+        {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}
+            <h3 class="tooltip-subtitle text-danger">
+                {{ this.character.name }} ne peut pas utiliser cet objet&nbsp;!
+            </h3>
+        {% endif %}
+
+        {% if app_characterItemService.health(characterItem).health <= 0 %}
+            <h3 class="tooltip-subtitle text-danger">
+                Cet objet est déterioré&nbsp;!
+            </h3>
+        {% endif %}
+
+        {% if characterItem.item.effect is defined and characterItem.item.effect is not null and characterItem.item.category.slug == 'nourriture' %}
+            <h3 class="tooltip-subtitle text-warning">
+                Provoque {{ characterItem.item.effect }}&nbsp;!
+            </h3>
+        {% endif %}
+
+        {% if characterItem.equipped and this.characterType != 'pregenerated' %}
+            <h3 class="tooltip-subtitle text-success">
+                Objet équipé
+            </h3>
+        {% endif %}
+
+        {% if characterItem.item.target is defined and characterItem.item.target is not null %}
+            <h3 class="tooltip-subtitle text-primary">
+                {% if characterItem.item.target == 'health' %}
+                    Augmente la Santé
+                {% elseif characterItem.item.target == 'health' %}
+                    Augmente la Magie
+                {% elseif characterItem.item.target == 'charisma' %}
+                    Augmente la Sagesse
+                {% endif %}
+            </h3>
+        {% endif %}
+
+        {% if characterItem.questItem %}
+            <h3 class="tooltip-subtitle text-success">
+                Objet de Quête
+            </h3>
+        {% endif %}
+
+        <figure class="tooltip-picture">
+            {% if characterItem.item.thumbnail is defined %}
+                <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
+                     class="tooltip-image {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                     alt="{{ characterItem.item.name }}"/>
+            {% else %}
+                <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                     class="tooltip-image {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                     alt="{{ characterItem.item.name }}"/>
+            {% endif %}
+
+            {% if characterItem.item.category.slug in ['armure', 'bouclier', 'arme', 'arme-magique'] %}
+                <div class="gauge {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %}">
+                    <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
+                         style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
+                    </div>
+                </div>
+            {% endif %}
+        </figure>
+
+        <div class="tooltip-description">
+            {{ characterItem.item.description | raw }}
+        </div>
+    </div>
+</div>

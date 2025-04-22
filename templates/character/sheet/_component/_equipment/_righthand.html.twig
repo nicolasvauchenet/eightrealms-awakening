@@ -1,0 +1,17 @@
+<div class="equipped-item righthand" data-controller="tooltip">
+    <img src="{{ asset('img/core/equipment/sword.png') }}" class="placeholder" alt="Main droite"/>
+    {% set characterItem = app_characterItemService.equippedItems(character).righthand %}
+    {% if characterItem %}
+        <a href="#" data-action="click->tooltip#open">
+            <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"
+                 class="equip {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                 alt="{{ characterItem.item.name }}"/>
+            <div class="gauge {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %}">
+                <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
+                     style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
+                </div>
+            </div>
+        </a>
+        {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+    {% endif %}
+</div>

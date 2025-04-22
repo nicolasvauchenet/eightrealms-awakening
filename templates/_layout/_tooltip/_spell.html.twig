@@ -1,0 +1,43 @@
+<div class="app-tooltip" data-tooltip-target="tooltip" data-action="click->tooltip#close">
+    <div class="tooltip-background" data-tooltip-target="background"></div>
+
+    <div class="tooltip-body">
+        {% set attributes = get_spell_attributes(characterSpell, true) %}
+        {% if attributes is not null %}
+            <div class="tooltip-attributes">
+                {% for attr in attributes %}
+                    <div class="tooltip-attribute {{ attr.class }}">
+                        {{ ux_icon(attr.icon, {'class': 'app-icon'}) }}
+                        {% if attr.amount is not null %}
+                            {% if 'simple' in attr.class %}
+                                {{ attr.amount }}
+                            {% else %}
+                                +{{ attr.amount }}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h2 class="tooltip-title">{{ characterSpell.spell.name }}</h2>
+
+        <h3 class="tooltip-subtitle">
+            {{ characterSpell.spell.category.name }}
+            •
+            Niveau {{ characterSpell.level }}
+        </h3>
+
+        {% if player is defined and (characterSpell.manaCost + characterSpell.spell.manaCost) > player.mana %}
+            <h3 class="tooltip-subtitle text-danger">{{ this.character.name }} n'a pas assez de mana pour lancer ce sortilège</h3>
+        {% endif %}
+
+        <figure class="tooltip-picture">
+            <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.category.picture) }}" class="tooltip-image {% if player is defined and (characterSpell.manaCost + characterSpell.spell.manaCost) > player.mana %}disabled{% endif %}" alt="{{ characterSpell.spell.name }}"/>
+        </figure>
+
+        <div class="tooltip-description">
+            {{ characterSpell.spell.description | raw }}
+        </div>
+    </div>
+</div>

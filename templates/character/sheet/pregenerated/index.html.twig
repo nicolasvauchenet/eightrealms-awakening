@@ -1,0 +1,9 @@
+{% extends '_layout/_index.html.twig' %}
+
+{% block title %}{{ character.name }} - Les Huit Royaumes - Chapitre I : L'Éveil{% endblock %}
+
+{% block body_class %}character sheet{% endblock %}
+
+{% block main %}
+    {{ component('CharacterSheet', { character: character, characterType: type }) }}
+{% endblock %}

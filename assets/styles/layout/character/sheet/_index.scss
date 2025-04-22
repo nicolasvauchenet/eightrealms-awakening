@@ -1,0 +1,25 @@
+.app-sheet {
+  @include displayFlex(null, center, null, column);
+  flex: 1;
+  width: 100%;
+
+  @import "./header";
+
+  &:has(.sheet-content.details.active) {
+    .sheet-header {
+      .sheet-picture {
+        & > img {
+          height: 16rem;
+
+          @include respondTo(md) {
+            height: 20rem;
+          }
+        }
+      }
+    }
+  }
+
+  @import "./content";
+
+  @import "./footer";
+}

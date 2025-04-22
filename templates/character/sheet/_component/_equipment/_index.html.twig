@@ -1,0 +1,19 @@
+<div class="sheet-content equipment {% if this.activeContent == 'equipment' %}active{% endif %}" data-loading="addClass(loading)">
+    <div class="equipped">
+        <img src="{{ asset('img/core/equipment/equipment.png') }}" alt="Équipement"/>
+
+        {% include 'character/sheet/_component/_equipment/_armor.html.twig' %}
+
+        {% include 'character/sheet/_component/_equipment/_assets/_index.html.twig' %}
+
+        {% include 'character/sheet/_component/_equipment/_amulet.html.twig' %}
+
+        {% include 'character/sheet/_component/_equipment/_righthand.html.twig' %}
+
+        {% include 'character/sheet/_component/_equipment/_lefthand.html.twig' %}
+
+        {% include 'character/sheet/_component/_equipment/_bow.html.twig' %}
+
+        {% include 'character/sheet/_component/_equipment/_shield.html.twig' %}
+    </div>
+</div>

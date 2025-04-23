@@ -1,0 +1,31 @@
+<div {{ attributes }}>
+    {% if this.activeContent == 'walk' %}
+        <figure class="app-wallpaper">
+            <img src="{{ asset(app_mapService.locationData(this.character.currentLocation, this.activeContent).picture) }}" class="app-coverimg" alt="{{ app_mapService.locationData(this.character.currentLocation, this.activeContent).name }}"/>
+            <div class="app-overlay"></div>
+        </figure>
+    {% elseif this.activeContent == 'travel' %}
+        <figure class="app-wallpaper">
+            <img src="{{ asset(app_mapService.locationData(this.character.currentLocation, this.activeContent).picture) }}" class="app-coverimg" alt="{{ app_mapService.locationData(this.character.currentLocation, this.activeContent).name }}"/>
+            <div class="app-overlay"></div>
+        </figure>
+    {% endif %}
+
+    <div class="app-map">
+        {% include 'map/_component/_header.html.twig' %}
+
+        {% if app_mapService.realmMap(this.character) %}
+            {% include 'map/_component/_realm/_index.html.twig' %}
+        {% endif %}
+
+        {% if app_mapService.locationMap(this.character) %}
+            {% include 'map/_component/_location/_index.html.twig' %}
+        {% endif %}
+
+        {% include 'map/_component/_walk/_index.html.twig' %}
+
+        {% include 'map/_component/_travel/_index.html.twig' %}
+
+        {% include 'map/_component/_footer.html.twig' %}
+    </div>
+</div>

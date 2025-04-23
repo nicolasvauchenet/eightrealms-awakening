@@ -1,0 +1,5 @@
+<div class="map-content location {% if this.activeContent == 'location' %}active{% endif %}" data-loading="addClass(loading)">
+    <figure class="map-container">
+        <img src="{{ asset('img/chapter1/map/' ~ app_mapService.locationMap(this.character).picture) }}" alt="{{ app_mapService.locationMap(this.character).name }}"/>
+    </figure>
+</div>

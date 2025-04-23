@@ -1,0 +1,33 @@
+<footer class="map-footer">
+    {% if app_mapService.realmMap(this.character) %}
+        <a href="#"
+           class="{% if this.activeContent == 'realm' %}active{% endif %}"
+                {{ live_action('setActiveContent', {'content': 'realm'}) }}
+           onclick="return false">
+            {{ ux_icon('mdi:world', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
+
+    {% if app_mapService.locationMap(this.character) %}
+        <a href="#"
+           class="{% if this.activeContent == 'location' %}active{% endif %}"
+                {{ live_action('setActiveContent', {'content': 'location'}) }}
+           onclick="return false">
+            {{ ux_icon('icon-park-solid:local', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
+
+    <a href="#"
+       class="{% if this.activeContent == 'walk' %}active{% endif %}"
+            {{ live_action('setActiveContent', {'content': 'walk'}) }}
+       onclick="return false">
+        {{ ux_icon('zondicons:travel-walk', {'class': 'app-icon'}) }}
+    </a>
+
+    <a href="#"
+       class="{% if this.activeContent == 'travel' %}active{% endif %}"
+            {{ live_action('setActiveContent', {'content': 'travel'}) }}
+       onclick="return false">
+        {{ ux_icon('gis:world-map', {'class': 'app-icon'}) }}
+    </a>
+</footer>

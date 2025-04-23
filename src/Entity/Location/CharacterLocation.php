@@ -17,7 +17,7 @@ class CharacterLocation
     #[ORM\Column(nullable: true)]
     private ?array $conditions = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'characterLocations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Character $character = null;
 

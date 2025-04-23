@@ -21,7 +21,7 @@ final class Version20250422144623 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE screen (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, picture VARCHAR(255) DEFAULT NULL, description TEXT DEFAULT NULL, type VARCHAR(255) NOT NULL, derivative VARCHAR(255) NOT NULL, PRIMARY KEY(id))
+            CREATE TABLE screen (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, picture VARCHAR(255) DEFAULT NULL, description TEXT DEFAULT NULL, type VARCHAR(255) NOT NULL, actions JSON DEFAULT NULL, derivative VARCHAR(255) NOT NULL, PRIMARY KEY(id))
         SQL);
     }
 

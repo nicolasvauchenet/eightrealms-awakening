@@ -3,6 +3,7 @@
 namespace App\Entity\Character;
 
 use App\Entity\Item\CharacterItem;
+use App\Entity\Location\CharacterLocation;
 use App\Entity\Screen\InteractionScreen;
 use App\Entity\Spell\CharacterSpell;
 use App\Repository\Character\CharacterRepository;
@@ -90,6 +91,12 @@ abstract class Character
      */
     #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'character', orphanRemoval: true)]
     private Collection $characterSpells;
+
+    /**
+     * @var Collection<int, CharacterLocation>
+     */
+    #[ORM\OneToMany(targetEntity: CharacterLocation::class, mappedBy: 'character', orphanRemoval: true)]
+    private Collection $characterLocations;
 
     #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
     private ?InteractionScreen $interactionScreen = null;
@@ -351,6 +358,36 @@ abstract class Character
             // set the owning side to null (unless already changed)
             if($characterSpell->getCharacter() === $this) {
                 $characterSpell->setCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterLocation>
+     */
+    public function getCharacterLocations(): Collection
+    {
+        return $this->characterLocations;
+    }
+
+    public function addCharacterLocation(CharacterLocation $characterLocation): static
+    {
+        if(!$this->characterLocations->contains($characterLocation)) {
+            $this->characterLocations->add($characterLocation);
+            $characterLocation->setCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterLocation(CharacterLocation $characterLocation): static
+    {
+        if($this->characterLocations->removeElement($characterLocation)) {
+            // set the owning side to null (unless already changed)
+            if($characterLocation->getCharacter() === $this) {
+                $characterLocation->setCharacter(null);
             }
         }
 

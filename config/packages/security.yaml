@@ -35,6 +35,8 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
+    - { path: ^/la-carte, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/mon-personnage, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/aventure, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/cinematique, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/lieu, roles: IS_AUTHENTICATED_FULLY }

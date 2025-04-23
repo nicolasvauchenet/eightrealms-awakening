@@ -1,0 +1,9 @@
+{% extends '_layout/_index.html.twig' %}
+
+{% block title %}La Carte - Les Huit Royaumes - Chapitre I : L'Éveil{% endblock %}
+
+{% block body_class %}map{% endblock %}
+
+{% block main %}
+    {{ component('Map', { character: character, back: back }) }}
+{% endblock %}

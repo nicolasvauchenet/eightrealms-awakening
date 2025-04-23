@@ -23,5 +23,4 @@ class LocationComponent
     public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
-
 }

@@ -4,7 +4,7 @@ namespace App\Controller\Game\Screen;
 
 use App\Entity\Location\Location;
 use App\Service\Game\Player\UpdatePlayerService;
-use App\Service\Game\Screen\LocationScreenService;
+use App\Service\Game\Screen\Location\LocationScreenService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;

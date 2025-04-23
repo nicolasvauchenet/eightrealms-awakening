@@ -1,0 +1,11 @@
+<div class="map-content travel {% if this.activeContent == 'travel' %}active{% endif %}" data-loading="addClass(loading)">
+    <div class="locations">
+        {% for location in app_mapService.travelLocations(this.character.currentLocation, this.character) %}
+            <button class="app-button outline {% if location == app_mapService.locationData(this.character.currentLocation, 'walk') %}focus{% endif %}"
+                    {{ live_action('move', {'locationId': location.id}) }}>
+                <img src="{{ asset(location.picture) }}" alt="{{ location.name }}"/>
+                <span>{{ location.name }}</span>
+            </button>
+        {% endfor %}
+    </div>
+</div>

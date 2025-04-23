@@ -39,6 +39,9 @@ class Screen
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
+    #[ORM\Column(nullable: true)]
+    private array $actions = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -100,6 +103,18 @@ class Screen
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getActions(): array
+    {
+        return $this->actions;
+    }
+
+    public function setActions(?array $actions): static
+    {
+        $this->actions = $actions;
 
         return $this;
     }

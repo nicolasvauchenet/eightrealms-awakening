@@ -1,0 +1,19 @@
+<header class="map-header">
+    <a href="{{ back }}" class="app-button back">
+        {{ ux_icon('icon-park-solid:back', {'class': 'app-icon'}) }}
+    </a>
+
+    <div class="header-title">
+        {% if this.activeContent == 'walk' %}
+            <h1>
+                <small>Marcher</small>
+                {{ app_mapService.locationData(this.character.currentLocation, this.activeContent).name }}
+            </h1>
+        {% elseif this.activeContent == 'travel' %}
+            <h1>
+                <small>Voyager</small>
+                {{ app_mapService.locationData(this.character.currentLocation, this.activeContent).name }}
+            </h1>
+        {% endif %}
+    </div>
+</header>

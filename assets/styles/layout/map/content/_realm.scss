@@ -1,0 +1,32 @@
+&.realm {
+  .map-container {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    height: calc(100dvh - 5rem);
+    box-shadow: inset -2px -2px 0.25rem rgba($black, 0.85);
+
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-thumb:hover {
+      display: none;
+    }
+
+    img {
+      display: block;
+      height: calc(100vh - 5rem);
+      width: auto;
+      max-width: none;
+      object-fit: cover;
+      object-position: top left;
+      box-shadow: inset -2px -2px 0.25rem rgba($black, 0.85);
+      @extend .anim-appears;
+      animation-delay: 0s;
+    }
+  }
+}

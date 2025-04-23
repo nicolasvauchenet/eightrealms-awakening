@@ -1,0 +1,28 @@
+&.map {
+  & > .app-wallpaper {
+    .app-coverimg,
+    .app-overlay {
+      display: none;
+    }
+  }
+
+  .app-main {
+    & > div {
+      @include displayFlex(null, null, null, column);
+      flex: 1;
+      width: 100%;
+
+      .app-wallpaper {
+        width: 100%;
+        height: calc(100dvh - 1rem);
+        border: none;
+
+        .app-overlay {
+          background-color: rgba($black, 0.75);
+        }
+      }
+
+      @import '../../layout/map';
+    }
+  }
+}

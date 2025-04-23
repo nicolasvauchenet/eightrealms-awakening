@@ -21,7 +21,7 @@ final class Version20250422144905 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE cinematic_screen (id INT NOT NULL, actions JSON NOT NULL, PRIMARY KEY(id))
+            CREATE TABLE cinematic_screen (id INT NOT NULL, PRIMARY KEY(id))
         SQL
         );
         $this->addSql(<<<'SQL'

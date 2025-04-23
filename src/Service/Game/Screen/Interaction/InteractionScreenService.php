@@ -37,8 +37,30 @@ readonly class InteractionScreenService
     private function createScreenActions(InteractionScreen $screen): void
     {
         $footerActions = [];
+        $character = $screen->getCharacter();
 
-        // Retour vers la zone
+        // Actions métier
+        $profession = $character->getProfession();
+        if($profession) {
+            $tradeProfessions = ['marchand', 'forgeron', 'arcaniste', 'tavernier', 'pecheur'];
+            if(in_array($profession->getSlug(), $tradeProfessions, true)) {
+                $footerActions[] = [
+                    'type' => 'trade',
+                    'slug' => $character->getSlug(),
+                    'label' => 'Marchander avec ' . $character->getName(),
+                    'thumbnail' => 'img/core/action/trade.png',
+                ];
+            } else if($profession->getSlug() === 'pretre') {
+                $footerActions[] = [
+                    'type' => 'pray',
+                    'slug' => $character->getSlug(),
+                    'label' => 'Prier avec ' . $character->getName(),
+                    'thumbnail' => 'img/core/action/pray.png',
+                ];
+            }
+        }
+
+        // Bouton retour
         $exitAction = $this->exitActionResolver->getExitAction($screen);
         if($exitAction) {
             $footerActions[] = $exitAction;

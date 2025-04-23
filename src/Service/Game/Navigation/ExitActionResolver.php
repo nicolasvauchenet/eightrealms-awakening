@@ -2,10 +2,7 @@
 
 namespace App\Service\Game\Navigation;
 
-use App\Entity\Location\Location;
 use App\Entity\Screen\Screen;
-use App\Entity\Screen\InteractionScreen;
-use App\Entity\Screen\LocationScreen;
 use App\Repository\Location\CharacterLocationRepository;
 
 readonly class ExitActionResolver
@@ -16,34 +13,65 @@ readonly class ExitActionResolver
 
     public function getExitAction(Screen $screen): ?array
     {
-        if($screen instanceof LocationScreen) {
+        $actions = $this->getExitActions($screen);
+
+        return $actions[0] ?? null;
+    }
+
+    public function getExitActions(Screen $screen): array
+    {
+        $actions = [];
+
+        // Retour au personnage (depuis un écran métier)
+        if(in_array($screen->getType(), ['dialog', 'rumor', 'repair', 'reload', 'trade'], true)) {
+            $character = $screen->getCharacter();
+            $actions[] = $this->buildAction(
+                type: 'interaction',
+                slug: $character->getSlug(),
+                label: $character->getName(),
+                thumbnail: $character->getThumbnail()
+            );
+        }
+
+        // Retour au lieu (zone, building...)
+        if(in_array($screen->getType(), ['interaction', 'trade'], true)) {
+            $character = $screen->getCharacter();
+            $charLoc = $this->characterLocationRepository->findOneBy(['character' => $character]);
+
+            if($charLoc) {
+                $actions[] = $this->buildAction(
+                    type: 'location',
+                    slug: $charLoc->getLocation()->getSlug(),
+                    label: $charLoc->getLocation()->getName(),
+                    thumbnail: 'img/core/action/leave.png'
+                );
+            }
+        }
+
+        if($screen->getType() === 'location') {
             $location = $screen->getLocation();
 
             if($location->getType() === 'building') {
                 $parent = $location->getParent();
                 if($parent) {
-                    return $this->buildAction($parent, 'Retour', 'img/core/action/exit.png');
+                    $actions[] = $this->buildAction(
+                        type: 'location',
+                        slug: $parent->getSlug(),
+                        label: $parent->getName(),
+                        thumbnail: 'img/core/action/exit.png'
+                    );
                 }
             }
         }
 
-        if($screen instanceof InteractionScreen) {
-            $character = $screen->getCharacter();
-            $charLoc = $this->characterLocationRepository->findOneBy(['character' => $character]);
-
-            if($charLoc) {
-                return $this->buildAction($charLoc->getLocation(), 'Retour', 'img/core/action/leave.png');
-            }
-        }
-
-        return null;
+        return $actions;
     }
 
-    private function buildAction(Location $location, string $label, string $thumbnail): array
+    private function buildAction(string $type, string $slug, string $label, string $thumbnail): array
     {
         return [
-            'type' => 'location',
-            'slug' => $location->getSlug(),
+            'type' => $type,
+            'slug' => $slug,
             'label' => $label,
             'thumbnail' => $thumbnail,
         ];

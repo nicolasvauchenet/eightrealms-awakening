@@ -5,6 +5,7 @@ namespace App\Entity\Character;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Screen\InteractionScreen;
+use App\Entity\Screen\TradeScreen;
 use App\Entity\Spell\CharacterSpell;
 use App\Repository\Character\CharacterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -100,6 +101,9 @@ abstract class Character
 
     #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
     private ?InteractionScreen $interactionScreen = null;
+
+    #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
+    private ?TradeScreen $tradeScreen = null;
 
     public function __construct()
     {
@@ -407,6 +411,23 @@ abstract class Character
         }
 
         $this->interactionScreen = $interactionScreen;
+
+        return $this;
+    }
+
+    public function getTradeScreen(): ?TradeScreen
+    {
+        return $this->tradeScreen;
+    }
+
+    public function setTradeScreen(TradeScreen $tradeScreen): static
+    {
+        // set the owning side of the relation if necessary
+        if ($tradeScreen->getCharacter() !== $this) {
+            $tradeScreen->setCharacter($this);
+        }
+
+        $this->tradeScreen = $tradeScreen;
 
         return $this;
     }

@@ -14,6 +14,11 @@
     </div>
 
     <h1>
+        {% if this.screen.type == 'location' and this.screen.location.parent %}
+            <small>{{ this.screen.location.parent.name }}</small>
+        {% elseif this.screen.type == 'trade' %}
+            <small>Commercer</small>
+        {% endif %}
         {{ this.screen.name }}
     </h1>
 

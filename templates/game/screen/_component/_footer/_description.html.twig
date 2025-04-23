@@ -1,3 +1,7 @@
 <div class="footer-description">
-    {{ this.screen.description | raw }}
+    {% if this.description is defined %}
+        {{ this.description | raw }}
+    {% else %}
+        {{ this.screen.description | raw }}
+    {% endif %}
 </div>

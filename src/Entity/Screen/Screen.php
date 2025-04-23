@@ -14,6 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'cinematic' => 'CinematicScreen',
     'location' => 'LocationScreen',
     'interaction' => 'InteractionScreen',
+    'trade' => 'TradeScreen',
 ])]
 abstract
 class Screen

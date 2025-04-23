@@ -3,12 +3,12 @@
 namespace App\Twig\Components\Game\Cinematic;
 
 use App\Entity\Character\Player;
+use App\Entity\Reward\PlayerReward;
 use App\Entity\Screen\CinematicScreen;
 use App\Service\Game\Reward\RewardService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PostMount;
@@ -35,7 +35,8 @@ class CinematicComponent
     #[PostMount]
     public function postMount(): void
     {
-        $this->isRewarded = $this->screen->isRewarded();
+        $playerReward = $this->entityManager->getRepository(PlayerReward::class)->findOneBy(['player' => $this->character, 'reward' => $this->screen->getReward()]);
+        $this->isRewarded = (bool)$playerReward;
     }
 
     #[LiveAction]

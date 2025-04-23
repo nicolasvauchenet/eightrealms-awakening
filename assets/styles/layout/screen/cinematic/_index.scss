@@ -1,4 +1,10 @@
 &.cinematic {
+  .app-wallpaper {
+    .app-overlay {
+      background-color: rgba($black, 0.95);
+    }
+  }
+
   .app-main {
     @import "./header";
     @import "./section";

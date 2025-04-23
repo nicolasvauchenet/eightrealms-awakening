@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Screen;
 
 use App\DataFixtures\Screen\CinematicScreen\CinematicTrait;
+use App\Entity\Reward\Reward;
 use App\Entity\Screen\CinematicScreen;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -25,7 +26,7 @@ class CinematicScreenFixtures extends Fixture implements OrderedFixtureInterface
                     ->setDescription($data['description'])
                     ->setType('cinematic')
                     ->setActions($data['actions'])
-                    ->setRewarded(false);
+                    ->setReward(isset($data['reward']) ? $this->getReference($data['reward'], Reward::class) : null);
                 $manager->persist($screen);
                 $this->addReference($data['reference'], $screen);
             }
@@ -36,6 +37,6 @@ class CinematicScreenFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 28;
+        return 30;
     }
 }

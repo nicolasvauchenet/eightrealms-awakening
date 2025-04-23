@@ -24,7 +24,7 @@ class CharacterSheetComponent
     public string $characterType;
 
     #[LiveProp(writable: true)]
-    public string $back = '';
+    public ?string $back = null;
 
     #[LiveProp(writable: true)]
     public string $activeContent = 'details';

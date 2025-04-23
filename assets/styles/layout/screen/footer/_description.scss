@@ -1,0 +1,32 @@
+.footer-description {
+  overflow-y: auto;
+  min-height: 12dvh;
+  max-height: 12dvh;
+  padding: 0.5rem;
+  background-color: $black;
+  border: 0.25rem groove $secondary;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+  scroll-behavior: smooth;
+
+  h2 {
+    margin: 0.5rem 0 0.25rem;
+    padding-top: 0.5rem;
+    font-size: 0.85rem;
+    text-align: left;
+    border-top: 1px solid $secondary;
+  }
+
+  p {
+    margin-bottom: 0.5rem;
+    line-height: 1.25rem;
+    text-align: justify;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.header-title {
+  @include displayFlex(space-between, center, 0.5rem);
+  padding: 0.5rem;
+  background-color: rgba($secondary, 0.85);
+  border: 0.25rem groove $secondary;
+  border-radius: 0.5rem;
+  box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+  .header-actions {
+    @include displayFlex(center, center, 0.5rem);
+
+    .header-control {
+      @include displayFlex(center, center);
+      padding: 0.25rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: $secondary;
+      background-color: $white;
+      border-radius: 50%;
+      box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+      transition: background-color 0.3s;
+
+      &:active {
+        box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
+      }
+
+      .app-icon {
+        height: 1.25rem;
+      }
+    }
+  }
+
+  h1 {
+    flex: 1;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+
+    small {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-family: $font-primary;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+  }
+}

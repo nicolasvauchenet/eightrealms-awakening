@@ -1,0 +1,56 @@
+.header-infos {
+  @include displayFlex(space-between);
+  margin-top: 1rem;
+  transition: opacity 0.3s;
+
+  .right {
+    .header-info {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .app-grid {
+    margin-bottom: 0.5rem;
+    grid-gap: 0.5rem;
+
+    .header-info {
+      margin-bottom: 0;
+    }
+  }
+
+  .header-info {
+    @include displayFlex(center, center, 0.25rem);
+    margin-bottom: 0.5rem;
+    padding: 0.25rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: $primary;
+    background-color: rgba($secondary, 0.95);
+    border: 0.25rem groove $secondary;
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .app-icon {
+      height: 2rem;
+    }
+
+    & > a {
+      cursor: pointer;
+
+      & > img {
+        width: 3rem;
+        height: 2.5rem;
+        object-fit: contain;
+      }
+
+      & > .gauge {
+        margin: 0;
+        width: 100%;
+      }
+    }
+  }
+}

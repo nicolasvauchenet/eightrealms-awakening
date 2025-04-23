@@ -2,6 +2,7 @@
 
 namespace App\Entity\Screen;
 
+use App\Entity\Reward\Reward;
 use App\Repository\Screen\CinematicScreenRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,8 +12,8 @@ class CinematicScreen extends Screen
     #[ORM\Column]
     private array $actions = [];
 
-    #[ORM\Column]
-    private ?bool $rewarded = null;
+    #[ORM\ManyToOne]
+    private ?Reward $reward = null;
 
     public function getActions(): array
     {
@@ -26,14 +27,14 @@ class CinematicScreen extends Screen
         return $this;
     }
 
-    public function isRewarded(): ?bool
+    public function getReward(): ?Reward
     {
-        return $this->rewarded;
+        return $this->reward;
     }
 
-    public function setRewarded(bool $rewarded): static
+    public function setReward(?Reward $reward): static
     {
-        $this->rewarded = $rewarded;
+        $this->reward = $reward;
 
         return $this;
     }

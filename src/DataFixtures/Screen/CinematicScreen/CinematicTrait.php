@@ -12,13 +12,6 @@ trait CinematicTrait
             'picture' => 'img/core/cover.webp',
             'description' => "<p>Sur la petite île qui compose le Royaume de l’Île du Nord, un mystère grandit. Le Prince Alaric, parti courageusement explorer le redouté Donjon de l’Âme, n’a plus donné signe de vie.</p><p>Lorsque le Roi Galdric III lui-même a tenté de le secourir, il a disparu à son tour.</p><p>Désormais, les habitants de la capitale, Port Saint-Doux, murmurent des rumeurs inquiétantes : le donjon abriterait un mal ancien réveillé par l’imprudence royale.</p><p>C’est au cœur de Port Saint-Doux, dans le très animé Quartier du Marché, que votre aventure commence. Entre marchands, gardes bourrus et passants bavards, chaque rencontre pourrait vous guider vers la vérité… ou vous détourner sur un chemin inattendu.</p>",
             'actions' => [
-                'reward' => [
-                    'items' => [
-                        'miche-de-pain',
-                        'chope-de-biere',
-                        'bouquet-de-fleurs',
-                    ],
-                ],
                 'footer' => [
                     [
                         'type' => 'location',
@@ -27,6 +20,7 @@ trait CinematicTrait
                     ],
                 ],
             ],
+            'reward' => 'reward_introduction',
             'screenClass' => CinematicScreen::class,
             'reference' => 'screen_cinematic_introduction',
         ],

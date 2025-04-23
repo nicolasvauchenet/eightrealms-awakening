@@ -5,6 +5,7 @@ namespace App\Service\Game\Reward;
 use App\Entity\Character\Player;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Item;
+use App\Entity\Reward\PlayerReward;
 use App\Entity\Screen\Screen;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -18,31 +19,38 @@ readonly class RewardService
     {
         $isRewarded = false;
 
-        if(isset($screen->getActions()['reward'])) {
-            if(isset($screen->getActions()['reward']['items'])) {
-                $this->giveItems($screen->getActions()['reward']['items'], $player);
+        if($screen->getReward()) {
+            $playerReward = $this->entityManager->getRepository(PlayerReward::class)->findOneBy(['player' => $player, 'reward' => $screen->getReward()]);
+            if(!$playerReward) {
+                $playerReward = (new PlayerReward())
+                    ->setPlayer($player)
+                    ->setReward($screen->getReward());
+                $this->entityManager->persist($playerReward);
+                $this->entityManager->flush();
+
+                if($screen->getReward()->getItems()) {
+                    $this->giveItems($screen->getReward()->getItems(), $player);
+                }
+
                 $isRewarded = true;
+            } else {
+                $isRewarded = false;
             }
         }
-
-        $screen->setRewarded($isRewarded);
-        $this->entityManager->persist($screen);
-        $this->entityManager->flush();
 
         return $isRewarded;
     }
 
-    private function giveItems(array $items, Player $player): void
+    private function giveItems(iterable $items, Player $player): void
     {
-        foreach($items as $itemSlug) {
-            $item = $this->entityManager->getRepository(Item::class)->findOneBy(['slug' => $itemSlug]);
+        foreach($items as $item) {
             $characterItem = (new CharacterItem())
                 ->setCharacter($player)
                 ->setItem($item)
                 ->setEquipped(false)
                 ->setQuestItem(false);
             $this->entityManager->persist($characterItem);
-            $this->entityManager->flush();
         }
+        $this->entityManager->flush();
     }
 }

@@ -1,5 +1,21 @@
 &.screen {
+  .app-wallpaper {
+    .app-overlay {
+      background-color: transparent;
+    }
+  }
+
+  .app-main {
+    & > div {
+      @include displayFlex(flex-start, center, null, column);
+      flex: 1;
+      width: 100%;
+    }
+  }
+
   @import "./header";
+  @import "./main";
+  @import "./footer";
 
   @import "./cinematic";
 }

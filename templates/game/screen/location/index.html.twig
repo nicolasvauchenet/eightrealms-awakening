@@ -5,13 +5,5 @@
 {% block body_class %}game screen {{ screen.type }}{% endblock %}
 
 {% block main %}
-    <section class="app-section">
-        <p>{{ screen.name }}</p>
-        <p>{{ screen.type }}</p>
-        <p>
-            <a href="{{ path('app_game_screen_location', {'slug': 'quartier-du-marche'}) }}">
-                Commencer l'aventure
-            </a>
-        </p>
-    </section>
+    {{ component('LocationScreen', {character: app.user.player, screen: screen}) }}
 {% endblock %}

@@ -79,4 +79,9 @@ class QuestStep
 
         return $this;
     }
+
+    public function isFirst(): bool
+    {
+        return $this->position === 1;
+    }
 }

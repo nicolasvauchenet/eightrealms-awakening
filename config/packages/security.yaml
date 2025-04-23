@@ -40,6 +40,9 @@ security:
     - { path: ^/aventure, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/cinematique, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/lieu, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/interaction, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/dialogue, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/commerce, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/, roles: PUBLIC_ACCESS }
 
   access_denied_url: /

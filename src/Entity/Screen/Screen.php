@@ -11,10 +11,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\InheritanceType('JOINED')]
 #[ORM\DiscriminatorColumn(name: 'derivative', type: 'string')]
 #[ORM\DiscriminatorMap([
-    'cinematic' => 'CinematicScreen',
-    'location' => 'LocationScreen',
-    'interaction' => 'InteractionScreen',
-    'trade' => 'TradeScreen',
+    'cinematic' => CinematicScreen::class,
+    'location' => LocationScreen::class,
+    'interaction' => InteractionScreen::class,
+    'trade' => TradeScreen::class,
+    'dialog' => DialogScreen::class,
 ])]
 abstract
 class Screen

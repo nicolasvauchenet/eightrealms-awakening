@@ -23,8 +23,19 @@ readonly class ExitActionResolver
         $actions = [];
 
         // Retour au personnage (depuis un écran métier)
-        if(in_array($screen->getType(), ['dialog', 'rumor', 'repair', 'reload', 'trade'], true)) {
+        if(in_array($screen->getType(), ['repair', 'reload', 'trade'], true)) {
             $character = $screen->getCharacter();
+            $actions[] = $this->buildAction(
+                type: 'interaction',
+                slug: $character->getSlug(),
+                label: $character->getName(),
+                thumbnail: $character->getThumbnail()
+            );
+        }
+
+        // Retour au personnage (depuis un écran dialogue)
+        if($screen->getType() === 'dialog') {
+            $character = $screen->getDialogStep()->getDialog()->getCharacter();
             $actions[] = $this->buildAction(
                 type: 'interaction',
                 slug: $character->getSlug(),
@@ -36,6 +47,18 @@ readonly class ExitActionResolver
         // Retour au lieu (zone, building...)
         if(in_array($screen->getType(), ['interaction', 'trade'], true)) {
             $character = $screen->getCharacter();
+            $charLoc = $this->characterLocationRepository->findOneBy(['character' => $character]);
+
+            if($charLoc) {
+                $actions[] = $this->buildAction(
+                    type: 'location',
+                    slug: $charLoc->getLocation()->getSlug(),
+                    label: $charLoc->getLocation()->getName(),
+                    thumbnail: 'img/core/action/leave.png'
+                );
+            }
+        } else if($screen->getType() === 'dialog') {
+            $character = $screen->getDialogStep()->getDialog()->getCharacter();
             $charLoc = $this->characterLocationRepository->findOneBy(['character' => $character]);
 
             if($charLoc) {

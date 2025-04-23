@@ -1,10 +1,14 @@
 <div class="footer-actions">
-    {% if screen.actions.footer is defined %}
-        {% for action in screen.actions.footer %}
+    {% if this.screen.actions.footer is defined %}
+        {% for action in this.screen.actions.footer %}
             {% if action.type in ['pray'] %}
                 <button class="app-button cta" title="{{ action.label }}" {{ live_action('pray', {characterSlug: action.slug}) }}>
                     <img src="{{ asset(action.thumbnail) }}" alt="{{ action.label }}"/>
                 </button>
+            {% elseif action.type in ['dialog'] %}
+                <a href="{{ path('app_game_screen_' ~ action.type, {'id': action.slug}) }}" class="app-button cta" title="{{ action.label }}">
+                    <img src="{{ asset(action.thumbnail) }}" alt="{{ action.label }}"/>
+                </a>
             {% else %}
                 <a href="{{ path('app_game_screen_' ~ action.type, {'slug': action.slug}) }}" class="app-button cta" title="{{ action.label }}">
                     <img src="{{ asset(action.thumbnail) }}" alt="{{ action.label }}"/>

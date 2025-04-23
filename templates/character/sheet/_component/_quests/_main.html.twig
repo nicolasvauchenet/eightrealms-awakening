@@ -3,7 +3,7 @@
         <h2 class="quest-type">Quête Principale</h2>
         <div class="content">
             <h3 class="quest-name">{{ mainQuest.quest.name }}</h3>
-            {% for playerQuestStep in this.character.questSteps %}
+            {% for playerQuestStep in this.character.playerQuestSteps %}
                 {% if playerQuestStep.questStep.quest  == mainQuest.quest %}
                     {{ playerQuestStep.questStep.description | raw }}
                 {% endif %}

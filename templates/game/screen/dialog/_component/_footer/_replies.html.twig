@@ -1,0 +1,9 @@
+{% if this.screen.dialogStep.dialogReplies is defined and this.screen.dialogStep.dialogReplies | length > 0 %}
+    <div class="reply-actions">
+        {% for reply in this.screen.dialogStep.dialogReplies %}
+            <button class="reply-action" {{ live_action('reply', {replyId: reply.id}) }}>
+                {{ reply.text | raw }}
+            </button>
+        {% endfor %}
+    </div>
+{% endif %}

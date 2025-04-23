@@ -1,0 +1,30 @@
+<?php
+
+namespace App\DataFixtures\Dialog\DialogReply\PortSaintDoux;
+
+trait BiloLePassantTrait
+{
+    const BILO_LE_PASSANT_DIALOG_REPLIES = [
+        [
+            'text' => "Où se trouve le Vieux Port&nbsp;?",
+            'conditions' => [
+                'location_unknown' => 'anciens-docks',
+            ],
+            'dialogStep' => 'quest_step_bilo_le_passant_1',
+            'nextStep' => 'quest_step_bilo_le_passant_2',
+            'reference' => 'quest_reply_bilo_le_passant_1_1',
+        ],
+        [
+            'text' => "Je m'en occupe",
+            'dialogStep' => 'quest_step_bilo_le_passant_2',
+            'nextStep' => 'quest_step_bilo_le_passant_3',
+            'reference' => 'quest_reply_bilo_le_passant_2_1',
+        ],
+        [
+            'text' => "Je ne suis pas un exterminateur",
+            'dialogStep' => 'quest_step_bilo_le_passant_2',
+            'nextStep' => 'quest_step_bilo_le_passant_4',
+            'reference' => 'quest_reply_bilo_le_passant_2_2',
+        ],
+    ];
+}

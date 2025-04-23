@@ -5,12 +5,14 @@ namespace App\Service\Game\Screen\Interaction;
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Screen\InteractionScreen;
+use App\Service\Dialog\DialogService;
 use App\Service\Game\Navigation\ExitActionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class InteractionScreenService
 {
     public function __construct(private EntityManagerInterface $entityManager,
+                                private DialogService          $dialogService,
                                 private ExitActionResolver     $exitActionResolver)
     {
     }
@@ -27,17 +29,39 @@ readonly class InteractionScreenService
                 ->setCharacter($character);
         }
 
-        $this->createScreenActions($screen);
+        $this->createScreenActions($screen, $player);
         $this->entityManager->persist($screen);
         $this->entityManager->flush();
 
         return $screen;
     }
 
-    private function createScreenActions(InteractionScreen $screen): void
+    private function createScreenActions(InteractionScreen $screen, Player $player): void
     {
         $footerActions = [];
         $character = $screen->getCharacter();
+
+        // Actions de dialogue
+        $dialog = $this->dialogService->findFirstDialogStep($character, $player);
+        if($dialog) {
+            $footerActions[] = [
+                'type' => 'dialog',
+                'slug' => $dialog->getId(),
+                'label' => 'Discuter avec ' . $character->getName(),
+                'thumbnail' => 'img/core/action/talk.png',
+            ];
+        }
+
+        // Actions de ragots
+        $rumor = $this->dialogService->findFirstRumorStep($character, $player);
+        if($rumor) {
+            $footerActions[] = [
+                'type' => 'dialog',
+                'slug' => $rumor->getId(),
+                'label' => 'Ragots de ' . $character->getName(),
+                'thumbnail' => 'img/core/action/rumor.png',
+            ];
+        }
 
         // Actions métier
         $profession = $character->getProfession();

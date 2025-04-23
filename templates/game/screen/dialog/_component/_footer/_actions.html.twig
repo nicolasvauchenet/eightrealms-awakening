@@ -1,0 +1,9 @@
+{% if this.screen.actions.footer is defined and this.screen.actions.footer | length > 0 %}
+    <div class="footer-actions">
+        {% for action in this.screen.actions.footer %}
+            <a href="{{ path('app_game_screen_' ~ action.type, {'slug': action.slug}) }}" class="app-button cta" title="{{ action.label }}">
+                <img src="{{ asset(action.thumbnail) }}" alt="{{ action.label }}"/>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

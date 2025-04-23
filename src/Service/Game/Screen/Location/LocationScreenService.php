@@ -5,13 +5,15 @@ namespace App\Service\Game\Screen\Location;
 use App\Entity\Character\Player;
 use App\Entity\Location\Location;
 use App\Entity\Screen\LocationScreen;
+use App\Service\Dialog\ConditionEvaluatorService;
 use App\Service\Game\Navigation\ExitActionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class LocationScreenService
 {
-    public function __construct(private EntityManagerInterface $entityManager,
-                                private ExitActionResolver     $exitActionResolver)
+    public function __construct(private EntityManagerInterface    $entityManager,
+                                private ConditionEvaluatorService $conditionEvaluatorService,
+                                private ExitActionResolver        $exitActionResolver)
     {
     }
 
@@ -72,7 +74,14 @@ readonly class LocationScreenService
                 // Interactions avec personnages
                 foreach($location->getCharacterLocations() as $characterLocation) {
                     $character = $characterLocation->getCharacter();
+
                     if($character instanceof Player) continue;
+
+                    $conditions = $characterLocation->getConditions();
+                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
+                        continue;
+                    }
+
                     $footerActions[] = [
                         'type' => 'interaction',
                         'slug' => $character->getSlug(),
@@ -128,6 +137,14 @@ readonly class LocationScreenService
                 // Interactions avec personnages
                 foreach($location->getCharacterLocations() as $characterLocation) {
                     $character = $characterLocation->getCharacter();
+
+                    if($character instanceof Player) continue;
+
+                    $conditions = $characterLocation->getConditions();
+                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
+                        continue;
+                    }
+
                     $footerActions[] = [
                         'type' => 'interaction',
                         'slug' => $character->getSlug(),

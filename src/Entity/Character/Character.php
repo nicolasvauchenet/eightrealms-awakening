@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Dialog\Dialog;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Screen\InteractionScreen;
@@ -105,10 +106,17 @@ abstract class Character
     #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
     private ?TradeScreen $tradeScreen = null;
 
+    /**
+     * @var Collection<int, Dialog>
+     */
+    #[ORM\OneToMany(targetEntity: Dialog::class, mappedBy: 'character', orphanRemoval: true)]
+    private Collection $dialogs;
+
     public function __construct()
     {
         $this->characterItems = new ArrayCollection();
         $this->characterSpells = new ArrayCollection();
+        $this->dialogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -428,6 +436,36 @@ abstract class Character
         }
 
         $this->tradeScreen = $tradeScreen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dialog>
+     */
+    public function getDialogs(): Collection
+    {
+        return $this->dialogs;
+    }
+
+    public function addDialog(Dialog $dialog): static
+    {
+        if (!$this->dialogs->contains($dialog)) {
+            $this->dialogs->add($dialog);
+            $dialog->setCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDialog(Dialog $dialog): static
+    {
+        if ($this->dialogs->removeElement($dialog)) {
+            // set the owning side to null (unless already changed)
+            if ($dialog->getCharacter() === $this) {
+                $dialog->setCharacter(null);
+            }
+        }
 
         return $this;
     }

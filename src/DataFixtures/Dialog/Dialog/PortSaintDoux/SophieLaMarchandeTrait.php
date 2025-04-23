@@ -1,0 +1,23 @@
+<?php
+
+namespace App\DataFixtures\Dialog\Dialog\PortSaintDoux;
+
+use App\Entity\Character\Npc;
+
+trait SophieLaMarchandeTrait
+{
+    const SOPHIE_LA_MARCHANDE_DIALOGS = [
+        [
+            'type' => 'dialog',
+            'character' => 'npc_sophie_la_marchande',
+            'characterClass' => Npc::class,
+            'reference' => 'dialog_sophie_la_marchande',
+        ],
+        [
+            'type' => 'rumor',
+            'character' => 'npc_sophie_la_marchande',
+            'characterClass' => Npc::class,
+            'reference' => 'rumor_sophie_la_marchande',
+        ],
+    ];
+}

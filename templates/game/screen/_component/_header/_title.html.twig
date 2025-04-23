@@ -16,6 +16,12 @@
     <h1>
         {% if this.screen.type == 'location' and this.screen.location.parent %}
             <small>{{ this.screen.location.parent.name }}</small>
+        {% elseif this.screen.type == 'dialog' %}
+            {% if this.screen.dialogStep.dialog.type == 'dialog' %}
+                <small>Discuter</small>
+            {% else %}
+                <small>Ragots</small>
+            {% endif %}
         {% elseif this.screen.type == 'trade' %}
             <small>Commercer</small>
         {% endif %}

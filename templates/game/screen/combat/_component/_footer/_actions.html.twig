@@ -1,0 +1,26 @@
+<div class="footer-actions">
+    {% for combatEnemy in this.playerCombat.playerCombatEnemies %}
+        <div class="combat-action {% if combatEnemy.health <= 0 %}disabled{% endif %}" data-controller="popup">
+            <a class="app-button cta" data-action="click->popup#open" title="{{ combatEnemy.enemy.name }} {{ combatEnemy.position }}">
+                <img src="{{ asset(combatEnemy.enemy.thumbnail) }}" alt="{{ combatEnemy.enemy.name }}"/>
+                <div class="gauge {% if combatEnemy.health == 0 %}disabled{% endif %}">
+                    <div class="gauge-fill success"
+                         style="--value: {{ combatEnemy.health / combatEnemy.enemy.healthMax }}">
+                    </div>
+                </div>
+            </a>
+            {% include 'game/screen/combat/_component/_footer/_combat_actions.html.twig' with {'combatEnemy': combatEnemy} %}
+        </div>
+    {% endfor %}
+
+    {% if app_characterItemService.equippedItems(this.character).potion %}
+        {% set characterItem = app_characterItemService.equippedItems(this.character).potion %}
+        <button class="app-button cta" title="Boire votre {{ characterItem.item.name }}" {{ live_action('useItem', {characterItemId: characterItem.id}) }}>
+            <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}" alt="{{ characterItem.item.name }}"/>
+        </button>
+    {% endif %}
+
+    <button class="app-button cta" title="Tenter de fuir" {{ live_action('flee') }}>
+        <img src="{{ asset('img/core/action/flee.png') }}" alt="Fuir"/>
+    </button>
+</div>

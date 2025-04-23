@@ -1,0 +1,146 @@
+<div class="header-infos">
+    <div class="left">
+        {% set bonus = app_characterBonusService.health(this.character) %}
+        <div class="header-info {% if bonus['extra'] %}text-success{% endif %}">
+            {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-fifth'}) }}
+            {{ this.character.health }}
+        </div>
+
+        {% if this.character.profession.type == 'magical' %}
+            {% set bonus = app_characterBonusService.mana(this.character) %}
+            <div class="header-info {% if bonus['extra'] %}text-success{% endif %}">
+                {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-third'}) }}
+                {{ this.character.mana }}
+            </div>
+        {% endif %}
+
+        {% set bonus = app_characterBonusService.defense(this.character) %}
+        <div class="header-info {% if bonus['extra'] %}text-success{% endif %}">
+            {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+            {% if bonus.amount < 0 %}
+                -{{ bonus.amount }}
+            {% elseif bonus.amount > 0 %}
+                +{{ bonus.amount }}
+            {% else %}
+                {{ bonus.amount }}
+            {% endif %}
+        </div>
+
+        {% set bonus = app_characterBonusService.damage(this.character) %}
+        <div class="header-info {% if bonus['extra'] %}text-success{% endif %}">
+            {% if bonus.magical %}
+                {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-fifth'}) }}
+            {% else %}
+                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+            {% endif %}
+            {% if bonus.amount < 0 %}
+                -{{ bonus.amount }}
+            {% elseif bonus.amount > 0 %}
+                +{{ bonus.amount }}
+            {% else %}
+                {{ bonus.amount }}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="app-grid two">
+            &nbsp;
+            {% if app_characterItemService.equippedItems(this.character).armor %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).armor %}
+                <div class="header-info" data-controller="tooltip">
+                    <a data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/armor/' ~ characterItem.item.picture) }}"
+                             class="{% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"
+                             alt="{{ characterItem.item.name }}"/>
+                        <div class="gauge {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %}">
+                            <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
+                                 style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
+                            </div>
+                        </div>
+                    </a>
+                    {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="app-grid two">
+            {% if app_characterItemService.equippedItems(this.character).righthand %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).righthand %}
+                <div class="header-info" data-controller="tooltip">
+                    <a data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"
+                             class="{% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"
+                             alt="{{ characterItem.item.name }}"/>
+                        <div class="gauge {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %}">
+                            <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
+                                 style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
+                            </div>
+                        </div>
+                    </a>
+                    {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+                </div>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).lefthand %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).lefthand %}
+                <div class="header-info" data-controller="tooltip">
+                    <a data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"
+                             class="{% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"
+                             alt="{{ characterItem.item.name }}"/>
+                        <div class="gauge {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %}">
+                            <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
+                                 style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
+                            </div>
+                        </div>
+                    </a>
+                    {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+                </div>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).shield %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).shield %}
+                <div class="header-info" data-controller="tooltip">
+                    <a data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/shield/' ~ characterItem.item.picture) }}"
+                             class="{% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"
+                             alt="{{ characterItem.item.name }}"/>
+                        <div class="gauge {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %}">
+                            <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
+                                 style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
+                            </div>
+                        </div>
+                    </a>
+                    {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="app-grid two">
+            {% if app_characterItemService.equippedItems(this.character).scroll %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).scroll %}
+                <div class="header-info" data-controller="tooltip">
+                    <a data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/scroll/' ~ characterItem.item.picture) }}"
+                             class="{% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"
+                             alt="{{ characterItem.item.name }}"/>
+                    </a>
+                    {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+                </div>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).potion %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).potion %}
+                <div class="header-info" data-controller="tooltip">
+                    <a data-action="click->tooltip#open">
+                        <img src="{{ asset('img/core/item/potion/' ~ characterItem.item.picture) }}"
+                             class="{% if characterItem.health is not null and characterItem.health <= 0 %}broken{% endif %}"
+                             alt="{{ characterItem.item.name }}"/>
+                    </a>
+                    {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

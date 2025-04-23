@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Combat\PlayerCombat;
 use App\Entity\Location\Location;
 use App\Entity\Quest\PlayerQuest;
 use App\Entity\Quest\PlayerQuestStep;
@@ -55,11 +56,18 @@ class Player extends Character
     #[ORM\ManyToOne]
     private ?Screen $currentScreen = null;
 
+    /**
+     * @var Collection<int, PlayerCombat>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerCombat::class, mappedBy: 'player', orphanRemoval: true)]
+    private Collection $playerCombats;
+
     public function __construct()
     {
         $this->playerNpcs = new ArrayCollection();
         $this->playerQuests = new ArrayCollection();
         $this->playerQuestSteps = new ArrayCollection();
+        $this->playerCombats = new ArrayCollection();
     }
 
     public function getExperience(): ?int
@@ -232,6 +240,36 @@ class Player extends Character
     public function setCurrentScreen(?Screen $currentScreen): static
     {
         $this->currentScreen = $currentScreen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerCombat>
+     */
+    public function getPlayerCombats(): Collection
+    {
+        return $this->playerCombats;
+    }
+
+    public function addPlayerCombat(PlayerCombat $playerCombat): static
+    {
+        if (!$this->playerCombats->contains($playerCombat)) {
+            $this->playerCombats->add($playerCombat);
+            $playerCombat->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerCombat(PlayerCombat $playerCombat): static
+    {
+        if ($this->playerCombats->removeElement($playerCombat)) {
+            // set the owning side to null (unless already changed)
+            if ($playerCombat->getPlayer() === $this) {
+                $playerCombat->setPlayer(null);
+            }
+        }
 
         return $this;
     }

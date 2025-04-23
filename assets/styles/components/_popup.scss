@@ -1,0 +1,83 @@
+.app-popup {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0.25rem;
+  right: 0.25rem;
+  bottom: 14.5rem;
+  z-index: 2;
+
+  @include respondTo(md) {
+    bottom: 15rem;
+  }
+
+  &.is-active {
+    @include displayFlex(center, flex-end);
+    @extend .anim-appears;
+    animation-delay: 0s;
+    animation-duration: 0.5s;
+  }
+
+  &.spellsbook {
+    position: fixed;
+    top: initial;
+    bottom: 18rem;
+    z-index: 3;
+
+    @include respondTo(md) {
+      bottom: 19rem;
+    }
+
+    .popup-body {
+      z-index: 5;
+      margin: 1rem auto;
+      max-width: 500px;
+
+      .actions {
+        @include displayGrid(repeat(3, 1fr), 1rem);
+        margin: 0 1rem;
+
+        .app-card {
+          &.spell {
+            z-index: 6;
+            background-color: $white;
+
+            .card-header {
+              .card-attributes {
+                background-color: $secondary;
+                border-top-left-radius: 0.25rem;
+                border-top-right-radius: 0.25rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .popup-body {
+    position: relative;
+    z-index: 4;
+    width: 100%;
+
+    .popup-title {
+      text-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+    }
+
+    .actions {
+      @include displayFlex(space-evenly, center, 0.25rem);
+      @extend .anim-appears;
+      animation-delay: 0s;
+
+      .app-button {
+        &.cta {
+          &:has(img) {
+            img {
+              object-fit: contain !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

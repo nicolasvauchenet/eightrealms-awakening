@@ -1,4 +1,4 @@
-<div class="footer-description">
+<div class="footer-description" {% if this.screen.type in ['trade', 'combat'] %}data-controller="autoscroll"{% endif %}>
     {% if this.description is defined %}
         {{ this.description | raw }}
     {% else %}

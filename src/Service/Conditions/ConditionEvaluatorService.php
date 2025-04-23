@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Service\Dialog;
+namespace App\Service\Conditions;
 
 use App\Entity\Character\Player;
+use App\Entity\Combat\Combat;
+use App\Entity\Combat\PlayerCombat;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Item;
 use App\Entity\Location\CharacterLocation;
@@ -43,6 +45,8 @@ readonly class ConditionEvaluatorService
             'quest_status' => $this->hasQuestStatus($player, $value),
             'quest_step_not_started' => $this->isQuestStepNotStarted($player, $value),
             'quest_step_status' => $this->hasQuestStepStatus($player, $value),
+            'combat_not_started' => $this->isCombatNotStarted($player, $value),
+            'combat_status' => $this->hasCombatStatus($player, $value),
             'inventory_has' => $this->hasItem($player, $value),
             'any' => $this->evaluateAny($value, $player),
             default => false,
@@ -152,13 +156,36 @@ readonly class ConditionEvaluatorService
             ]) !== null;
     }
 
+    private function isCombatNotStarted(Player $player, string $slug): bool
+    {
+        $combat = $this->entityManager->getRepository(Combat::class)->findOneBy(['slug' => $slug]);
+
+        return $this->entityManager->getRepository(PlayerCombat::class)->findOneBy([
+                'player' => $player,
+                'combat' => $combat,
+            ]) === null;
+    }
+
+    private function hasCombatStatus(Player $player, array $data): bool
+    {
+        if(!isset($data['combat'], $data['status'])) {
+            return false;
+        }
+
+        $combat = $this->entityManager->getRepository(Combat::class)->findOneBy(['slug' => $data['combat']]);
+        $playerCombat = $this->entityManager->getRepository(PlayerCombat::class)->findOneBy([
+            'player' => $player,
+            'combat' => $combat,
+        ]);
+
+        return $playerCombat && $playerCombat->getStatus() === $data['status'];
+    }
+
     private function evaluateAny(array $conditions, Player $player): bool
     {
-        foreach($conditions as $subCondition) {
-            foreach($subCondition as $type => $value) {
-                if($this->evaluate($type, $value, $player)) {
-                    return true;
-                }
+        foreach($conditions as $type => $value) {
+            if($this->evaluate($type, $value, $player)) {
+                return true;
             }
         }
 

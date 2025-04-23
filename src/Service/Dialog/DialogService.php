@@ -6,6 +6,7 @@ use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Dialog\Dialog;
 use App\Entity\Dialog\DialogStep;
+use App\Service\Conditions\ConditionEvaluatorService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class DialogService

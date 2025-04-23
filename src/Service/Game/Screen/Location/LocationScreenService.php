@@ -5,7 +5,7 @@ namespace App\Service\Game\Screen\Location;
 use App\Entity\Character\Player;
 use App\Entity\Location\Location;
 use App\Entity\Screen\LocationScreen;
-use App\Service\Dialog\ConditionEvaluatorService;
+use App\Service\Conditions\ConditionEvaluatorService;
 use App\Service\Game\Navigation\ExitActionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -87,6 +87,23 @@ readonly class LocationScreenService
                         'slug' => $character->getSlug(),
                         'label' => $character->getName(),
                         'thumbnail' => $character->getThumbnail(),
+                    ];
+                }
+
+                // Combat
+                $combats = $location->getCombats() ?? [];
+                foreach($combats as $combat) {
+                    $conditions = $combat->getConditions();
+
+                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
+                        continue;
+                    }
+
+                    $footerActions[] = [
+                        'type' => 'combat',
+                        'slug' => $combat->getSlug(),
+                        'label' => $combat->getName(),
+                        'thumbnail' => $combat->getThumbnail(),
                     ];
                 }
 

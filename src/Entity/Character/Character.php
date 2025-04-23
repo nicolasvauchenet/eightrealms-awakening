@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Combat\CombatEnemy;
 use App\Entity\Dialog\Dialog;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Location\CharacterLocation;
@@ -112,11 +113,18 @@ abstract class Character
     #[ORM\OneToMany(targetEntity: Dialog::class, mappedBy: 'character', orphanRemoval: true)]
     private Collection $dialogs;
 
+    /**
+     * @var Collection<int, CombatEnemy>
+     */
+    #[ORM\OneToMany(targetEntity: CombatEnemy::class, mappedBy: 'enemy', orphanRemoval: true)]
+    private Collection $combatEnemies;
+
     public function __construct()
     {
         $this->characterItems = new ArrayCollection();
         $this->characterSpells = new ArrayCollection();
         $this->dialogs = new ArrayCollection();
+        $this->combatEnemies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -431,7 +439,7 @@ abstract class Character
     public function setTradeScreen(TradeScreen $tradeScreen): static
     {
         // set the owning side of the relation if necessary
-        if ($tradeScreen->getCharacter() !== $this) {
+        if($tradeScreen->getCharacter() !== $this) {
             $tradeScreen->setCharacter($this);
         }
 
@@ -450,7 +458,7 @@ abstract class Character
 
     public function addDialog(Dialog $dialog): static
     {
-        if (!$this->dialogs->contains($dialog)) {
+        if(!$this->dialogs->contains($dialog)) {
             $this->dialogs->add($dialog);
             $dialog->setCharacter($this);
         }
@@ -460,10 +468,40 @@ abstract class Character
 
     public function removeDialog(Dialog $dialog): static
     {
-        if ($this->dialogs->removeElement($dialog)) {
+        if($this->dialogs->removeElement($dialog)) {
             // set the owning side to null (unless already changed)
-            if ($dialog->getCharacter() === $this) {
+            if($dialog->getCharacter() === $this) {
                 $dialog->setCharacter(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CombatEnemy>
+     */
+    public function getCombatEnemies(): Collection
+    {
+        return $this->combatEnemies;
+    }
+
+    public function addCombatEnemy(CombatEnemy $combatEnemy): static
+    {
+        if(!$this->combatEnemies->contains($combatEnemy)) {
+            $this->combatEnemies->add($combatEnemy);
+            $combatEnemy->setEnemy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnemyCombat(CombatEnemy $combatEnemy): static
+    {
+        if($this->combatEnemies->removeElement($combatEnemy)) {
+            // set the owning side to null (unless already changed)
+            if($combatEnemy->getEnemy() === $this) {
+                $combatEnemy->setEnemy(null);
             }
         }
 

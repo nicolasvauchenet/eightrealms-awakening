@@ -3,18 +3,23 @@
 namespace App\Service\Game\Player;
 
 use App\Entity\Character\Player;
+use App\Entity\Combat\Combat;
+use App\Entity\Combat\PlayerCombat;
+use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Location\Location;
 use App\Entity\Screen\Screen;
+use App\Service\Combat\InitiativeService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class UpdatePlayerService
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager,
+                                private InitiativeService      $initiativeService)
     {
     }
 
-    public function updatePlayerScreen(Player $player, Screen $screen, ?Location $location = null): void
+    public function updatePlayerScreen(Player $player, Screen $screen, ?Location $location = null, ?Combat $combat = null): void
     {
         $player->setCurrentScreen($screen);
         $this->entityManager->persist($player);
@@ -22,6 +27,10 @@ readonly class UpdatePlayerService
 
         if($location) {
             $this->updatePlayerLocations($player, $location);
+        }
+
+        if($combat) {
+            $this->updatePlayerCombat($player, $combat);
         }
 
     }
@@ -47,5 +56,59 @@ readonly class UpdatePlayerService
 
         $this->entityManager->persist($player);
         $this->entityManager->flush();
+    }
+
+    public function updatePlayerCombat(Player $player, Combat $combat): PlayerCombat
+    {
+        $playerCombat = $this->entityManager->getRepository(PlayerCombat::class)->findOneBy([
+            'player' => $player,
+            'combat' => $combat,
+        ]);
+
+        if(!$playerCombat) {
+            // Nouveau combat pour ce joueur
+            $playerCombat = (new PlayerCombat())
+                ->setPlayer($player)
+                ->setCombat($combat);
+
+            foreach($combat->getCombatEnemies() as $enemyCombat) {
+                $pce = (new PlayerCombatEnemy())
+                    ->setEnemy($enemyCombat->getEnemy())
+                    ->setHealth($enemyCombat->getHealth())
+                    ->setMana($enemyCombat->getMana())
+                    ->setPosition($enemyCombat->getPosition())
+                    ->setPlayerCombat($playerCombat);
+
+                $this->entityManager->persist($pce);
+            }
+        } else {
+            // Le combat existe déjà : on régénère tous les ennemis
+            foreach($playerCombat->getPlayerCombatEnemies() as $playerCombatEnemy) {
+                $enemyTemplate = $combat->getCombatEnemies()->filter(
+                    fn($ec) => $ec->getPosition() === $playerCombatEnemy->getPosition()
+                )->first();
+
+                if($enemyTemplate) {
+                    $playerCombatEnemy
+                        ->setHealth($enemyTemplate->getHealth())
+                        ->setMana($enemyTemplate->getMana());
+
+                    $this->entityManager->persist($playerCombatEnemy);
+                }
+            }
+        }
+
+        $playerCombat->setStatus('progress')
+            ->setCurrentRound(1)
+            ->setCurrentTurn(0);
+        $initiative = $this->initiativeService->getTurnOrder($playerCombat);
+        $playerCombat
+            ->setTurnOrder($initiative)
+            ->setCurrentRound(1)
+            ->setCurrentTurn(0);
+        $this->entityManager->persist($playerCombat);
+        $this->entityManager->flush();
+
+        return $playerCombat;
     }
 }

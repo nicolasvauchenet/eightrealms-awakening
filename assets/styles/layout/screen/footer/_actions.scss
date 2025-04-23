@@ -28,4 +28,20 @@
       }
     }
   }
+
+  .combat-action {
+    &:has(.app-popup.is-active) {
+      & > .app-button {
+        @extend .focus;
+      }
+    }
+  }
+
+  .spell-action {
+    &:has(.app-popup.is-active) {
+      & > .app-button {
+        @extend .focus;
+      }
+    }
+  }
 }

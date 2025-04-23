@@ -1,0 +1,74 @@
+<div class="app-popup" data-popup-target="popup" data-action="click->popup#closeAllPopups">
+    <div class="popup-background" data-popup-target="background"></div>
+
+    <div class="popup-body">
+        <div class="actions">
+            {% if app_characterItemService.equippedItems(this.character).bow %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).bow %}
+                <button class="app-button cta"
+                        title="Attaquer avec votre {{ characterItem.item.name }}"
+                        {{ live_action('doCombatAction', {
+                            combatAction: 'player_attack',
+                            enemyId: combatEnemy.id,
+                            mode: 'bow'
+                        }) }}>
+                    <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}" alt="Attaquer avec votre {{ characterItem.item.name }}"/>
+                </button>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).righthand %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).righthand %}
+                <button class="app-button cta"
+                        title="Attaquer avec votre {{ characterItem.item.name }}"
+                        {{ live_action('doCombatAction', {
+                            combatAction: 'player_attack',
+                            enemyId: combatEnemy.id,
+                            mode: 'righthand'
+                        }) }}>
+                    <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}" alt="Attaquer avec votre {{ characterItem.item.name }}"/>
+                </button>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).lefthand %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).lefthand %}
+                <button class="app-button cta"
+                        title="Attaquer avec votre {{ characterItem.item.name }}"
+                        {{ live_action('doCombatAction', {
+                            combatAction: 'player_attack',
+                            enemyId: combatEnemy.id,
+                            mode: 'lefthand'
+                        }) }}>
+                    <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}" alt="Attaquer avec votre {{ characterItem.item.name }}"/>
+                </button>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).righthand and app_characterItemService.equippedItems(this.character).lefthand %}
+                <button class="app-button cta"
+                        title="Attaquer avec les deux mains"
+                        {{ live_action('doCombatAction', {
+                            combatAction: 'player_attack',
+                            enemyId: combatEnemy.id,
+                            mode: 'twohands'
+                        }) }}>
+                    <img src="{{ asset('img/core/action/attack.png') }}" alt="Attaquer avec les deux mains"/>
+                </button>
+            {% endif %}
+
+            {% if this.character.characterSpells | length > 0 %}
+                <div class="spell-action" data-controller="popup">
+                    <button class="app-button cta" title="Lancer un sortilège" data-action="click->popup#open">
+                        <img src="{{ asset('img/core/action/cast.png') }}" alt="Lancer un Sort"/>
+                    </button>
+                    {% include 'game/screen/combat/_component/_footer/_combat_spells.html.twig' with {'combatEnemy': combatEnemy} %}
+                </div>
+            {% endif %}
+
+            {% if app_characterItemService.equippedItems(this.character).scroll %}
+                {% set characterItem = app_characterItemService.equippedItems(this.character).scroll %}
+                <button class="app-button cta" title="Lire votre {{ characterItem.item.name }}">
+                    <img src="{{ asset('img/core/item/scroll/' ~ characterItem.item.picture) }}" alt="Lire votre {{ characterItem.item.name }}"/>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>

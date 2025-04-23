@@ -1,9 +1,11 @@
 <div class="header-title">
     <div class="header-actions">
-        <a href="{{ path('app_character_sheet_player', {'back': app.request.pathInfo}) }}"
-           class="header-control">
-            {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
-        </a>
+        {% if this.screen.type != 'combat' %}
+            <a href="{{ path('app_character_sheet_player', {'back': app.request.pathInfo}) }}"
+               class="header-control">
+                {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
+            </a>
+        {% endif %}
 
         {% if this.screen.type == 'location' and this.character.currentLocation.type in ['location', 'zone'] %}
             <a href="{{ path('app_map_home', {'back': app.request.pathInfo}) }}"
@@ -24,6 +26,8 @@
             {% endif %}
         {% elseif this.screen.type == 'trade' %}
             <small>Commercer</small>
+        {% elseif this.screen.type == 'combat' %}
+            <small>Combat</small>
         {% endif %}
         {{ this.screen.name }}
     </h1>

@@ -2,6 +2,7 @@
 
 namespace App\Entity\Location;
 
+use App\Entity\Combat\Combat;
 use App\Entity\Item\Map;
 use App\Entity\Screen\LocationScreen;
 use App\Repository\Location\LocationRepository;
@@ -61,10 +62,17 @@ class Location
     #[ORM\OneToOne(mappedBy: 'location', cascade: ['persist', 'remove'])]
     private ?LocationScreen $locationScreen = null;
 
+    /**
+     * @var Collection<int, Combat>
+     */
+    #[ORM\OneToMany(targetEntity: Combat::class, mappedBy: 'location', orphanRemoval: true)]
+    private Collection $combats;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->characterLocations = new ArrayCollection();
+        $this->combats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -241,6 +249,36 @@ class Location
         }
 
         $this->locationScreen = $locationScreen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Combat>
+     */
+    public function getCombats(): Collection
+    {
+        return $this->combats;
+    }
+
+    public function addCombat(Combat $combat): static
+    {
+        if (!$this->combats->contains($combat)) {
+            $this->combats->add($combat);
+            $combat->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCombat(Combat $combat): static
+    {
+        if ($this->combats->removeElement($combat)) {
+            // set the owning side to null (unless already changed)
+            if ($combat->getLocation() === $this) {
+                $combat->setLocation(null);
+            }
+        }
 
         return $this;
     }

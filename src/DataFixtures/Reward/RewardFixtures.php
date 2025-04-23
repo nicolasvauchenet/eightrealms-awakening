@@ -14,6 +14,7 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $allRewards = [
+            // Introduction
             [
                 'items' => [
                     [
@@ -30,6 +31,40 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
                     ],
                 ],
                 'reference' => 'reward_introduction',
+            ],
+
+            // Quêtes
+            [
+                'items' => [
+                    [
+                        'item' => 'food_meat_rat',
+                        'itemClass' => Food::class,
+                    ],
+                    [
+                        'item' => 'food_meat_rat',
+                        'itemClass' => Food::class,
+                    ],
+                ],
+                'crowns' => 10,
+                'experience' => 50,
+                'reference' => 'reward_combat_port_saint_doux_des_rats_sur_les_docks',
+            ],
+
+            // Rencontres
+            [
+                'items' => [
+                    [
+                        'item' => 'food_meat_rat',
+                        'itemClass' => Food::class,
+                    ],
+                    [
+                        'item' => 'food_meat_rat',
+                        'itemClass' => Food::class,
+                    ],
+                ],
+                'crowns' => 100,
+                'experience' => 20,
+                'reference' => 'reward_combat_port_saint_doux_une_bande_de_rats_sur_les_docks',
             ],
         ];
 

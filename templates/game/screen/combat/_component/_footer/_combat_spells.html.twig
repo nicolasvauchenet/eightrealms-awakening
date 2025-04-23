@@ -1,0 +1,45 @@
+<div class="app-popup spellsbook" data-popup-target="popup" data-action="click->popup#closeAllPopups">
+    <div class="popup-background" data-popup-target="background"></div>
+
+    <div class="popup-body">
+        <div class="actions">
+            {% for characterSpell in app_characterSpellService.castableSpells(this.character) %}
+                <div class="app-card spell">
+                    <a data-action="click->popup#preventClose">
+                        <div class="card-header">
+                            {% set spellAttributes = get_spell_attributes(characterSpell) %}
+                            {% if spellAttributes is not empty %}
+                                <div class="card-attributes">
+                                    {% for attr in spellAttributes %}
+                                        <div class="card-attribute {{ attr.class }}">
+                                            {{ ux_icon(attr.icon, {'class': 'app-icon'}) }}
+                                            {% if attr.amount is not null %}
+                                                {% if 'simple' in attr.class %}
+                                                    {{ attr.amount }}
+                                                {% else %}
+                                                    +{{ attr.amount }}
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.category.picture) }}" class="card-image {% if (characterSpell.manaCost + characterSpell.spell.manaCost) > this.character.mana %}disabled{% endif %}" alt="{{ characterSpell.spell.name }}"/>
+                        </div>
+
+                        <div class="card-body">
+                            <h3 class="card-title">{{ characterSpell.spell.name }}</h3>
+                        </div>
+                    </a>
+
+                    <div class="card-footer">
+                        <button class="bg-success">
+                            {{ ux_icon('game-icons:bolt-spell-cast', {'class': 'app-icon'}) }}
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

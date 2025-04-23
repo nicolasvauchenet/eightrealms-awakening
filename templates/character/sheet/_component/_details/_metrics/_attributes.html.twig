@@ -3,7 +3,11 @@
         {% set bonus = app_characterBonusService.health(this.character) %}
         {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-fifth'}) }}
         <p class="{% if bonus['amount'] > 0 %}text-success{% endif %}">
-            {{ this.character.healthMax + bonus['amount'] }}
+            {% if this.characterType == 'pregenerated' %}
+                {{ this.character.healthMax + bonus['amount'] }}
+            {% else %}
+                {{ this.character.health }}
+            {% endif %}
         </p>
     </div>
 
@@ -11,7 +15,11 @@
         {% set bonus = app_characterBonusService.mana(this.character) %}
         {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-third'}) }}
         <p class="{% if bonus['amount'] > 0 %}text-success{% endif %}">
-            {{ this.character.manaMax + bonus['amount'] }}
+            {% if this.characterType == 'pregenerated' %}
+                {{ this.character.manaMax + bonus['amount'] }}
+            {% else %}
+                {{ this.character.mana }}
+            {% endif %}
         </p>
     </div>
 

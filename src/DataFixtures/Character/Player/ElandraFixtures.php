@@ -59,8 +59,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'class' => MagicalWeapon::class,
             ],
             [
-                'isEquipped' => true,
-                'slot' => 'armor',
+                'isEquipped' => false,
                 'character' => 'character_elandra',
                 'item' => 'armor_mage_apprentice',
                 'class' => Armor::class,
@@ -85,8 +84,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'class' => Potion::class,
             ],
             [
-                'isEquipped' => true,
-                'slot' => 'amulet',
+                'isEquipped' => false,
                 'character' => 'character_elandra',
                 'item' => 'amulet_mana',
                 'class' => Amulet::class,

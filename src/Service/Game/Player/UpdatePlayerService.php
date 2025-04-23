@@ -14,15 +14,14 @@ readonly class UpdatePlayerService
     {
     }
 
-    public function updatePlayerScreen(Player $player, Screen $screen, ?Location $location = null): void
+    public function updatePlayerScreen(Player $player, Screen $screen, Location $location): void
     {
         $player->setCurrentScreen($screen);
         $this->entityManager->persist($player);
         $this->entityManager->flush();
 
-        if($location) {
-            $this->updatePlayerLocations($player, $location);
-        }
+        $this->updatePlayerLocations($player, $location);
+
     }
 
     private function updatePlayerLocations(Player $player, Location $location): void

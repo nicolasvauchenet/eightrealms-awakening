@@ -1,6 +1,6 @@
 .footer-actions {
   @include displayFlex(space-evenly, initial, 0.5rem);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   .app-button {
     opacity: 1;

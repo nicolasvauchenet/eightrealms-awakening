@@ -5,7 +5,7 @@
             {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
         </a>
 
-        {% if this.screen.location.type != 'building' %}
+        {% if this.screen.type == 'location' and this.character.currentLocation.type in ['location', 'zone'] %}
             <a href="{{ path('app_map_home', {'back': app.request.pathInfo}) }}"
                class="header-control">
                 {{ ux_icon('solar:map-bold', {'class': 'app-icon'}) }}
@@ -14,7 +14,6 @@
     </div>
 
     <h1>
-        <small>{{ this.screen.location.parent.name }}</small>
         {{ this.screen.name }}
     </h1>
 

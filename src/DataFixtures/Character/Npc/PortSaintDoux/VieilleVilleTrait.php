@@ -27,7 +27,7 @@ trait VieilleVilleTrait
         [
             'name' => 'Gart le Forgeron',
             'picture' => 'img/chapter1/npc/gart-le-forgeron.png',
-            'thumbnail' => 'img/core/chapter1/gart-le-forgeron_thumb.png',
+            'thumbnail' => 'img/chapter1/npc/gart-le-forgeron_thumb.png',
             'description' => "<p>Devant vous, un colosse marqué par la chaleur de la forge. La suie sur ses bras ne cache pas ses muscles tendus ni son regard perçant. Il parle peu, mais frappe juste – sur l’enclume comme dans ses mots.</p><p><em>Arme, armure, ou silence&nbsp;? Ici, je ne forge que ce qu’on mérite.</em></p>",
             'strength' => 15,
             'dexterity' => 15,

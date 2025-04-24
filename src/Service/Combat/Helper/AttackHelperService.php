@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Combat;
+namespace App\Service\Combat\Helper;
 
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;

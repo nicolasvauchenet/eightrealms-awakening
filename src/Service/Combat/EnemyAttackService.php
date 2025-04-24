@@ -3,6 +3,7 @@
 namespace App\Service\Combat;
 
 use App\Entity\Combat\PlayerCombat;
+use App\Service\Combat\Helper\AttackHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class EnemyAttackService

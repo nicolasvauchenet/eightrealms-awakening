@@ -4,6 +4,7 @@ namespace App\Service\Combat;
 
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
+use App\Service\Combat\Helper\AttackHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class PlayerAttackService

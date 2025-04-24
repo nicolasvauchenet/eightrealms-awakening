@@ -34,7 +34,13 @@
                     </a>
 
                     <div class="card-footer">
-                        <button class="bg-success">
+                        <button class="bg-success"
+                                title="Lancer le sort {{ characterSpell.spell.name }}"
+                                {{ live_action('doCombatAction', {
+                                    combatAction: 'cast_spell',
+                                    enemyId: combatEnemy.id,
+                                    characterSpellId: characterSpell.id
+                                }) }}>
                             {{ ux_icon('game-icons:bolt-spell-cast', {'class': 'app-icon'}) }}
                         </button>
                     </div>

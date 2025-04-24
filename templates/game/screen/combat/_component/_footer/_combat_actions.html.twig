@@ -54,7 +54,7 @@
                 </button>
             {% endif %}
 
-            {% if this.character.characterSpells | length > 0 %}
+            {% if app_characterSpellService.castableSpells(this.character) | length > 0 %}
                 <div class="spell-action" data-controller="popup">
                     <button class="app-button cta" title="Lancer un sortilège" data-action="click->popup#open">
                         <img src="{{ asset('img/core/action/cast.png') }}" alt="Lancer un Sort"/>

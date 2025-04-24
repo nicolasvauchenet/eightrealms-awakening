@@ -6,6 +6,7 @@ use App\Entity\Character\Player;
 use App\Entity\Combat\PlayerCombat;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Screen\CombatScreen;
+use App\Service\Combat\CastSpellService;
 use App\Service\Combat\EnemyAttackService;
 use App\Service\Combat\FleeService;
 use App\Service\Combat\PlayerAttackService;
@@ -53,6 +54,7 @@ class CombatComponent extends AbstractController
                                 private readonly FleeService            $fleeService,
                                 private readonly PlayerAttackService    $playerAttackService,
                                 private readonly EnemyAttackService     $enemyAttackService,
+                                private readonly CastSpellService       $castSpellService,
                                 private readonly UseItemService         $useItemService,
                                 private readonly CharacterItemService   $characterItemService)
     {
@@ -173,9 +175,10 @@ class CombatComponent extends AbstractController
 
     #[LiveAction]
     public function doCombatAction(
-        #[LiveArg] string $combatAction,
-        #[LiveArg] int    $enemyId,
-        #[LiveArg] string $mode
+        #[LiveArg] string  $combatAction,
+        #[LiveArg] int     $enemyId,
+        #[LiveArg] ?string $mode = null,
+        #[LiveArg] ?int    $characterSpellId = null,
     ): void
     {
         $turnOrder = $this->playerCombat->getTurnOrder();
@@ -194,6 +197,14 @@ class CombatComponent extends AbstractController
                 $this->screen->getCombat(),
                 $enemyId,
                 $mode
+            );
+            $this->addLog($this->playerCombat->getCurrentRound(), $log);
+        } else if($combatAction === 'cast_spell') {
+            $log = $this->castSpellService->cast(
+                $this->character,
+                $this->screen->getCombat(),
+                $enemyId,
+                $characterSpellId
             );
             $this->addLog($this->playerCombat->getCurrentRound(), $log);
         }

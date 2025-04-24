@@ -65,7 +65,9 @@
 
             {% if app_characterItemService.equippedItems(this.character).scroll %}
                 {% set characterItem = app_characterItemService.equippedItems(this.character).scroll %}
-                <button class="app-button cta" title="Lire votre {{ characterItem.item.name }}" {{ live_action('useItem', {characterItemId: characterItem.id}) }}>
+                <button class="app-button cta"
+                        title="Lire votre {{ characterItem.item.name }}"
+                        {{ live_action('useItem', {characterItemId: characterItem.id, enemyId: combatEnemy.id}) }}>
                     <img src="{{ asset('img/core/item/scroll/' ~ characterItem.item.picture) }}" alt="Lire votre {{ characterItem.item.name }}"/>
                 </button>
             {% endif %}

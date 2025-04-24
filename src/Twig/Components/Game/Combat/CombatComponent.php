@@ -4,6 +4,7 @@ namespace App\Twig\Components\Game\Combat;
 
 use App\Entity\Character\Player;
 use App\Entity\Combat\PlayerCombat;
+use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Screen\CombatScreen;
 use App\Service\Combat\CastSpellService;
@@ -217,7 +218,7 @@ class CombatComponent extends AbstractController
     }
 
     #[LiveAction]
-    public function useItem(#[LiveArg] int $characterItemId): void
+    public function useItem(#[LiveArg] int $characterItemId, #[LiveArg] ?int $enemyId = null): void
     {
         $turnOrder = $this->playerCombat->getTurnOrder();
         $currentTurn = $this->playerCombat->getCurrentTurn();
@@ -230,6 +231,11 @@ class CombatComponent extends AbstractController
         }
 
         $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
+        if($enemyId) {
+            $enemy = $this->entityManager->getRepository(PlayerCombatEnemy::class)->find($enemyId);
+        } else {
+            $enemy = null;
+        }
 
         if(!$characterItem || !$characterItem->getItem()) {
             $this->addLog($this->playerCombat->getCurrentRound(), "<span class='text-danger'>Objet introuvable.</span>");
@@ -238,7 +244,7 @@ class CombatComponent extends AbstractController
         }
 
         // Délégation au UseItemService
-        $log = $this->useItemService->useItem($this->character, $characterItem);
+        $log = $this->useItemService->useItem($this->character, $characterItem, $enemy);
         $this->addLog($this->playerCombat->getCurrentRound(), $log);
 
         // Fin du tour

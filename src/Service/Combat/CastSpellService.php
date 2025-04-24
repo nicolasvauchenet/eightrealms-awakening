@@ -15,7 +15,6 @@ readonly class CastSpellService
 
     public function cast(Player $player, Combat $combat, int $enemyId, int $characterSpellId): string
     {
-        // Récupère le sort
         $characterSpell = $this->entityManager->getRepository(CharacterSpell::class)->find($characterSpellId);
 
         if(!$characterSpell || $characterSpell->getCharacter() !== $player) {
@@ -26,35 +25,72 @@ readonly class CastSpellService
         $cost = $spell->getManaCost() + $characterSpell->getManaCost();
 
         if($player->getMana() < $cost) {
-            return "<span class='text-warning'>Pas assez de mana pour lancer ce sort.</span>";
+            return "<span class='text-warning'>Vous n'avez pas assez de mana pour lancer ce sort.</span>";
         }
 
         $playerCombat = $player->getPlayerCombats()->filter(
             fn($pc) => $pc->getCombat() === $combat
         )->first();
 
-        $target = $playerCombat->getPlayerCombatEnemies()->filter(
-            fn($enemy) => $enemy->getId() === $enemyId
-        )->first();
+        $type = $spell->getType();
+        $targetStat = $spell->getTarget();
+        $amount = $spell->getAmount() + $characterSpell->getAmountBonus();
 
-        if(!$target || $target->getHealth() <= 0) {
-            return "<span class='text-muted'>Cible invalide.</span>";
-        }
-
-        // Applique l'effet
-        $damage = $spell->getAmount() + $characterSpell->getAmountBonus();
-        $target->setHealth(max(0, $target->getHealth() - $damage));
         $player->setMana($player->getMana() - $cost);
-
         $this->entityManager->persist($player);
-        $this->entityManager->persist($target);
-        $this->entityManager->flush();
 
-        $message = "<span class='text-primary'>Vous lancez {$spell->getName()} et infligez $damage points de dégâts à {$target->getEnemy()->getName()} !</span>";
-        if($target->getHealth() <= 0) {
-            $message .= "<br/><strong class='text-success'>{$target->getEnemy()->getName()} {$target->getPosition()} est vaincu&nbsp;!</strong>";
+        if($type === 'offensive') {
+            $target = $playerCombat->getPlayerCombatEnemies()->filter(
+                fn($enemy) => $enemy->getId() === $enemyId
+            )->first();
+
+            if(!$target || $target->getHealth() <= 0) {
+                return "<span class='text-danger'>Cible invalide.</span>";
+            }
+
+            if($targetStat === 'damage' || $targetStat === 'health') {
+                $target->setHealth(max(0, $target->getHealth() - $amount));
+                $targetStatName = 'dégâts';
+            } else if($targetStat === 'mana') {
+                $target->setMana(max(0, $target->getMana() - $amount));
+                $targetStatName = 'magie';
+            } else {
+                $targetStatName = $targetStat;
+            }
+
+            $this->entityManager->persist($target);
+            $this->entityManager->flush();
+
+            $log = "<span class='text-success'>Vous lancez {$spell->getName()} sur {$target->getEnemy()->getName()} et lui infligez $amount point" . ($amount > 1 ? 's' : '') . " de $targetStatName.</span>";
+
+            if($target->getHealth() <= 0) {
+                $log .= "<br/><strong class='text-success'>{$target->getEnemy()->getName()} {$target->getPosition()} est vaincu&nbsp;!</strong>";
+            }
+
+            return $log;
         }
 
-        return $message;
+        if($type === 'defensive') {
+            if($targetStat === 'health') {
+                $before = $player->getHealth();
+                $after = min($player->getHealthMax(), $before + $amount);
+                $player->setHealth($after);
+                $targetStatName = 'santé';
+            } else if($targetStat === 'mana') {
+                $before = $player->getMana();
+                $after = min($player->getManaMax(), $before + $amount);
+                $player->setMana($after);
+                $targetStatName = 'magie';
+            } else {
+                $targetStatName = $targetStat;
+            }
+
+            $this->entityManager->persist($player);
+            $this->entityManager->flush();
+
+            return "<span class='text-info'>Vous lancez {$spell->getName()} et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de $targetStatName.</span>";
+        }
+
+        return "<span class='text-danger'>Ce sort n’a pas d’effet implémenté.</span>";
     }
 }

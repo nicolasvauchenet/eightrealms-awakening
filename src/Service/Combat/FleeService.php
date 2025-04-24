@@ -3,6 +3,7 @@
 namespace App\Service\Combat;
 
 use App\Entity\Combat\PlayerCombat;
+use Random\RandomException;
 
 readonly class FleeService
 {
@@ -10,6 +11,9 @@ readonly class FleeService
     {
     }
 
+    /**
+     * @throws RandomException
+     */
     public function flee(PlayerCombat $playerCombat): bool
     {
         $player = $playerCombat->getPlayer();

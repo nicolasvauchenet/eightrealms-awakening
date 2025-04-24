@@ -166,6 +166,15 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'areaBonus' => 0,
                 'durationBonus' => 0,
             ],
+            [
+                'character' => 'character_elandra',
+                'spell' => 'spell_healrestore',
+                'level' => 1,
+                'manaCost' => 0,
+                'amountBonus' => 0,
+                'areaBonus' => 0,
+                'durationBonus' => 0,
+            ],
         ];
 
         foreach($characters as $data) {

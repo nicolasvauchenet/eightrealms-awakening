@@ -6,7 +6,7 @@ trait UtileTrait
 {
     const UTILE_SCROLLS = [
         [
-            'name' => 'Parchemin de Invisibilité',
+            'name' => "Parchemin d'Invisibilité",
             'picture' => 'scroll.png',
             'description' => "<p>Une fois activé, ce parchemin mystique enveloppe son utilisateur d’un voile d’ombre, le rendant invisible aux yeux de ses ennemis. Idéal pour les voleurs, les espions ou les aventuriers cherchant à échapper à des situations périlleuses, l’Invisibilité est une arme redoutable pour ceux qui savent l’utiliser à bon escient.</p>",
             'type' => 'utile',

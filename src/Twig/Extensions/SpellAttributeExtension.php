@@ -55,6 +55,8 @@ class SpellAttributeExtension extends AbstractExtension
                     $add('game-icons:egg-defense', 'text-third', "$amount");
                 } else if($target === 'defense') {
                     $add('game-icons:checked-shield', 'text-primary', "$amount");
+                } else if($target === 'damage') {
+                    $add('game-icons:crossed-swords', 'text-primary', "$amount");
                 }
             }
         }

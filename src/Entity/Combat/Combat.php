@@ -60,6 +60,7 @@ class Combat
      * @var Collection<int, CombatEnemy>
      */
     #[ORM\OneToMany(targetEntity: CombatEnemy::class, mappedBy: 'combat', orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $combatEnemies;
 
     #[ORM\OneToOne(mappedBy: 'combat', cascade: ['persist', 'remove'])]

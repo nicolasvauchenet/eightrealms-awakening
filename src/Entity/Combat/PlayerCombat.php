@@ -45,11 +45,19 @@ class PlayerCombat
      * @var Collection<int, PlayerCombatEnemy>
      */
     #[ORM\OneToMany(targetEntity: PlayerCombatEnemy::class, mappedBy: 'playerCombat', orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     private Collection $playerCombatEnemies;
+
+    /**
+     * @var Collection<int, PlayerCombatEffect>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerCombatEffect::class, mappedBy: 'playerCombat')]
+    private Collection $playerCombatEffects;
 
     public function __construct()
     {
         $this->playerCombatEnemies = new ArrayCollection();
+        $this->playerCombatEffects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -165,6 +173,36 @@ class PlayerCombat
             // set the owning side to null (unless already changed)
             if($playerCombatEnemy->getPlayerCombat() === $this) {
                 $playerCombatEnemy->setPlayerCombat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerCombatEffect>
+     */
+    public function getPlayerCombatEffects(): Collection
+    {
+        return $this->playerCombatEffects;
+    }
+
+    public function addPlayerCombatEffect(PlayerCombatEffect $playerCombatEffect): static
+    {
+        if(!$this->playerCombatEffects->contains($playerCombatEffect)) {
+            $this->playerCombatEffects->add($playerCombatEffect);
+            $playerCombatEffect->setPlayerCombat($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerCombatEffect(PlayerCombatEffect $playerCombatEffect): static
+    {
+        if($this->playerCombatEffects->removeElement($playerCombatEffect)) {
+            // set the owning side to null (unless already changed)
+            if($playerCombatEffect->getPlayerCombat() === $this) {
+                $playerCombatEffect->setPlayerCombat(null);
             }
         }
 

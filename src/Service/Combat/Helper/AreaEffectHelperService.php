@@ -34,10 +34,10 @@ readonly class AreaEffectHelperService
 
             $this->entityManager->persist($e);
 
-            $log .= "<br/><span class='text-success'>{$e->getEnemy()->getName()} {$e->getPosition()} est aussi touché et perd $aoeAmount point" . ($aoeAmount > 1 ? 's' : '') . " de $statName&nbsp;!</span>";
+            $log .= "<span class='text-success'>{$e->getEnemy()->getName()} {$e->getPosition()} est aussi touché et perd $aoeAmount point" . ($aoeAmount > 1 ? 's' : '') . " de $statName&nbsp;!</span><br/>";
 
             if($e->getHealth() <= 0) {
-                $log .= "<br/><strong class='text-success'>{$e->getEnemy()->getName()} {$e->getPosition()} est vaincu&nbsp;!</strong>";
+                $log .= "<strong class='text-success'>{$e->getEnemy()->getName()} {$e->getPosition()} est vaincu&nbsp;!</strong><br/>";
             }
         }
 

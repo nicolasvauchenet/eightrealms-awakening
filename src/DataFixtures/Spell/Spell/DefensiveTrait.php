@@ -5,7 +5,18 @@ namespace App\DataFixtures\Spell\Spell;
 trait DefensiveTrait
 {
     const DEFENSIVE_SPELLS = [
-        // Protection
+        // Buffs
+        [
+            'name' => 'Force de géant',
+            'description' => "<p>La Force de géant est un sort défensif qui augmente considérablement la force du lanceur pendant une courte durée. En canalisant l'énergie des géants, il permet au mage de porter des coups dévastateurs, rendant ses attaques presque irrésistibles. Un sort clé pour les mages désireux d'augmenter leur puissance offensive.</p>",
+            'type' => 'defensive',
+            'manaCost' => 10,
+            'target' => 'damage',
+            'amount' => 5,
+            'duration' => 1,
+            'category' => 'category_weapon',
+            'reference' => 'spell_giantstrength',
+        ],
         [
             'name' => 'Bouclier',
             'description' => "<p>Le Bouclier est un sort défensif qui augmente considérablement la défense du lanceur pendant une courte durée. En entourant le mage d’une énergie protectrice, il réduit les dégâts reçus, le rendant presque invulnérable face aux attaques les plus puissantes. Un sort clé pour survivre dans les moments de danger.</p>",

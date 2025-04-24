@@ -19,7 +19,7 @@ readonly class UsePotionService
 
         // Vérification de base
         if(!$item instanceof Potion) {
-            return "<span class='text-warning'>Cet objet ne peut pas être utilisé ici.</span>";
+            return "<span class='text-warning'>Cet objet ne peut pas être utilisé ici.</span><br/>";
         }
 
         $target = $item->getTarget();
@@ -34,7 +34,7 @@ readonly class UsePotionService
             $this->deleteItem($characterItem);
             $this->entityManager->flush();
 
-            return "<span class='text-success'>Vous buvez une potion de vie et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de santé.</span>";
+            return "<span class='text-success'>Vous buvez une potion de vie et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de santé.</span><br/>";
         }
 
         if($target === 'mana') {
@@ -46,10 +46,10 @@ readonly class UsePotionService
             $this->deleteItem($characterItem);
             $this->entityManager->flush();
 
-            return "<span class='text-info'>Vous buvez une potion de mana et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de magie.</span>";
+            return "<span class='text-info'>Vous buvez une potion de mana et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de magie.</span><br/>";
         }
 
-        return "<span class='text-warning'>Cette potion n'a pas d'effet connu.</span>";
+        return "<span class='text-warning'>Cette potion n'a pas d'effet connu.</span><br/>";
     }
 
     public function deleteItem(CharacterItem $characterItem): void

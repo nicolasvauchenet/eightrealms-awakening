@@ -153,6 +153,15 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'character' => 'player_elandra',
+                'spell' => 'spell_giantstrength',
+                'level' => 1,
+                'manaCost' => 0,
+                'amountBonus' => 0,
+                'areaBonus' => 0,
+                'durationBonus' => 0,
+            ],
+            [
+                'character' => 'player_elandra',
                 'spell' => 'spell_shield',
                 'level' => 1,
                 'manaCost' => 0,

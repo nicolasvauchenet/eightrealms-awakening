@@ -3,15 +3,17 @@
 namespace App\Service\Character;
 
 use App\Entity\Character\Character;
+use App\Service\Combat\Effect\CombatEffectService;
 use App\Service\Item\CharacterItemService;
 
 readonly class CharacterBonusService
 {
-    public function __construct(private CharacterItemService $characterItemService)
+    public function __construct(private CharacterItemService $characterItemService,
+                                private CombatEffectService  $combatEffectService)
     {
     }
 
-    public function getDamage(Character $character): array
+    public function getDamage(Character $character, string $screenType = null): array
     {
         $bonus = [
             'amount' => 0,
@@ -19,6 +21,7 @@ readonly class CharacterBonusService
             'magical' => false,
         ];
 
+        // Récupération des bonus offensifs via les armes et équipements
         $equippedWeapons = $this->characterItemService->getEquippedWeapons($character);
         foreach($equippedWeapons as $equippedWeapon) {
             $bonus['amount'] += $equippedWeapon->getHealth() <= 0 ? 1 : $equippedWeapon->getItem()->getDamage();
@@ -39,16 +42,28 @@ readonly class CharacterBonusService
             $bonus['extra'] = true;
         }
 
+        // Ajouter les effets temporaires de combat (si on est en combat)
+        if($screenType === 'Combat') {
+            $combatEffects = $this->combatEffectService->getActiveCombatEffects($character);
+            foreach($combatEffects as $effect) {
+                if($effect->getTarget() === 'damage') {
+                    $bonus['amount'] += $effect->getAmount();
+                    $bonus['extra'] = true;
+                }
+            }
+        }
+
         return $bonus;
     }
 
-    public function getDefense(Character $character): array
+    public function getDefense(Character $character, string $screenType = null): array
     {
         $bonus = [
             'amount' => 0,
             'extra' => false,
         ];
 
+        // Récupération des bonus défensifs via les armures et équipements
         $equippedArmors = $this->characterItemService->getEquippedArmors($character);
         foreach($equippedArmors as $equippedArmor) {
             $bonus['amount'] += $equippedArmor->getHealth() <= 0 ? 1 : $equippedArmor->getItem()->getDefense();
@@ -58,6 +73,17 @@ readonly class CharacterBonusService
         foreach($equippedItems as $equippedItem) {
             $bonus['amount'] += $equippedItem->getItem()->getAmount();
             $bonus['extra'] = true;
+        }
+
+        // Ajouter les effets temporaires de combat (si on est en combat)
+        if($screenType === 'Combat') {
+            $combatEffects = $this->combatEffectService->getActiveCombatEffects($character);
+            foreach($combatEffects as $effect) {
+                if($effect->getTarget() === 'defense') {
+                    $bonus['amount'] += $effect->getAmount();
+                    $bonus['extra'] = true;
+                }
+            }
         }
 
         return $bonus;

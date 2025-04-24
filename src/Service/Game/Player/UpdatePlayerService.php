@@ -5,6 +5,7 @@ namespace App\Service\Game\Player;
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
 use App\Entity\Combat\PlayerCombat;
+use App\Entity\Combat\PlayerCombatEffect;
 use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Location\Location;
@@ -60,6 +61,7 @@ readonly class UpdatePlayerService
 
     public function updatePlayerCombat(Player $player, Combat $combat): PlayerCombat
     {
+        // Récupérer l'entité PlayerCombat existante
         $playerCombat = $this->entityManager->getRepository(PlayerCombat::class)->findOneBy([
             'player' => $player,
             'combat' => $combat,
@@ -89,6 +91,9 @@ readonly class UpdatePlayerService
             }
             $this->entityManager->flush();
         } else {
+            // Supprimer les effets temporaires existants
+            $this->removeTemporaryEffects($playerCombat);
+
             // Le combat existe déjà pour le joueur
             $playerCombat->setStatus('progress')
                 ->setCurrentRound(1)
@@ -111,6 +116,7 @@ readonly class UpdatePlayerService
             $this->entityManager->flush();
         }
 
+        // Mettre à jour l'ordre des tours
         $initiative = $this->initiativeService->getTurnOrder($playerCombat);
         $playerCombat
             ->setTurnOrder($initiative)
@@ -120,5 +126,18 @@ readonly class UpdatePlayerService
         $this->entityManager->flush();
 
         return $playerCombat;
+    }
+
+    // Méthode pour supprimer les effets temporaires
+    private function removeTemporaryEffects(PlayerCombat $playerCombat): void
+    {
+        // Supprimer les effets temporaires pour ce PlayerCombat
+        $effects = $this->entityManager->getRepository(PlayerCombatEffect::class)
+            ->findBy(['playerCombat' => $playerCombat]);
+        foreach($effects as $effect) {
+            $this->entityManager->remove($effect);
+        }
+
+        $this->entityManager->flush();
     }
 }

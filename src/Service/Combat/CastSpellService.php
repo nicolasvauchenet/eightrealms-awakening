@@ -5,6 +5,7 @@ namespace App\Service\Combat;
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
 use App\Entity\Spell\CharacterSpell;
+use App\Service\Combat\Effect\CombatEffectService;
 use App\Service\Combat\Helper\AreaEffectHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -12,7 +13,8 @@ readonly class CastSpellService
 {
     public function __construct(
         private EntityManagerInterface  $entityManager,
-        private AreaEffectHelperService $areaEffectHelper
+        private AreaEffectHelperService $areaEffectHelper,
+        private CombatEffectService     $combatEffectService
     )
     {
     }
@@ -22,14 +24,14 @@ readonly class CastSpellService
         $characterSpell = $this->entityManager->getRepository(CharacterSpell::class)->find($characterSpellId);
 
         if(!$characterSpell || $characterSpell->getCharacter() !== $player) {
-            return "<span class='text-danger'>Sort introuvable ou non possédé.</span>";
+            return "<span class='text-danger'>Sort introuvable ou non possédé.</span><br/>";
         }
 
         $spell = $characterSpell->getSpell();
         $cost = $spell->getManaCost() + $characterSpell->getManaCost();
 
         if($player->getMana() < $cost) {
-            return "<span class='text-warning'>Vous n'avez pas assez de mana pour lancer ce sort.</span>";
+            return "<span class='text-warning'>Vous n'avez pas assez de mana pour lancer ce sort.</span><br/>";
         }
 
         $playerCombat = $player->getPlayerCombats()->filter(
@@ -37,20 +39,22 @@ readonly class CastSpellService
         )->first();
 
         $type = $spell->getType();
-        $targetStat = $spell->getTarget();
+        $targetStat = $spell->getTarget() ?? $spell->getEffect();
         $amount = $spell->getAmount() + $characterSpell->getAmountBonus();
         $area = $spell->getArea() + $characterSpell->getAreaBonus();
+        $duration = $spell->getDuration() ? $spell->getDuration() + $characterSpell->getDurationBonus() : null;
 
         $player->setMana($player->getMana() - $cost);
         $this->entityManager->persist($player);
 
+        // Effet offensif
         if($type === 'offensive') {
             $target = $playerCombat->getPlayerCombatEnemies()->filter(
                 fn($enemy) => $enemy->getId() === $enemyId
             )->first();
 
             if(!$target || $target->getHealth() <= 0) {
-                return "<span class='text-danger'>Cible invalide.</span>";
+                return "<span class='text-danger'>Cible invalide.</span><br/>";
             }
 
             $statName = match ($targetStat) {
@@ -67,10 +71,10 @@ readonly class CastSpellService
 
             $this->entityManager->persist($target);
 
-            $log = "<span class='text-success'>Vous lancez {$spell->getName()} sur {$target->getEnemy()->getName()} {$target->getPosition()} et lui infligez $amount point" . ($amount > 1 ? 's' : '') . " de $statName&nbsp;!</span>";
+            $log = "<span class='text-success'>Vous lancez {$spell->getName()} sur {$target->getEnemy()->getName()} {$target->getPosition()} et lui infligez $amount point" . ($amount > 1 ? 's' : '') . " de $statName&nbsp;!</span><br/>";
 
             if($target->getHealth() <= 0) {
-                $log .= "<br/><strong class='text-success'>{$target->getEnemy()->getName()} {$target->getPosition()} est vaincu&nbsp;!</strong>";
+                $log .= "<strong class='text-success'>{$target->getEnemy()->getName()} {$target->getPosition()} est vaincu&nbsp;!</strong><br/>";
             }
 
             if($area > 1) {
@@ -82,23 +86,64 @@ readonly class CastSpellService
             return $log;
         }
 
+        // Effet défensif (damage / defense)
         if($type === 'defensive') {
-            $before = $targetStat === 'health' ? $player->getHealth() : $player->getMana();
-            $max = $targetStat === 'health' ? $player->getHealthMax() : $player->getManaMax();
-            $after = min($max, $before + $amount);
+            if(in_array($targetStat, ['health', 'mana'])) {
+                $before = $targetStat === 'health' ? $player->getHealth() : $player->getMana();
+                $max = $targetStat === 'health' ? $player->getHealthMax() : $player->getManaMax();
+                $after = min($max, $before + $amount);
 
-            if($targetStat === 'health') {
-                $player->setHealth($after);
+                if($targetStat === 'health') {
+                    $player->setHealth($after);
+                } else {
+                    $player->setMana($after);
+                }
+
+                $statName = match ($targetStat) {
+                    'damage', 'health' => 'santé',
+                    'mana' => 'magie',
+                    default => $targetStat,
+                };
+
+                $this->entityManager->persist($player);
+                $this->entityManager->flush();
+
+                return "<span class='text-info'>Vous lancez {$spell->getName()} et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de $statName.</span><br/>";
             } else {
-                $player->setMana($after);
+                $this->combatEffectService->addEffect(
+                    type: $type,
+                    target: $targetStat,
+                    amount: $amount,
+                    duration: $duration,
+                    playerCombat: $playerCombat
+                );
+
+                $this->entityManager->flush();
+
+                // Personnalisation du log selon l'effet
+                if($targetStat === 'damage') {
+                    return "<span class='text-info'>Vous lancez {$spell->getName()} et vos dégâts sont augmentés pendant $duration tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
+                } else if($targetStat === 'defense') {
+                    return "<span class='text-info'>Vous lancez {$spell->getName()} et votre défense est augmentée pendant $duration tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
+                }
             }
-
-            $this->entityManager->persist($player);
-            $this->entityManager->flush();
-
-            return "<span class='text-info'>Vous lancez {$spell->getName()} et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de $targetStat.</span>";
         }
 
-        return "<span class='text-danger'>Ce sort n’a pas d’effet implémenté.</span>";
+        // Effet "utile" (invisibility)
+        if($type === 'utile') {
+            $this->combatEffectService->addEffect(
+                type: $type,
+                target: $targetStat,
+                amount: 1,
+                duration: $duration,
+                playerCombat: $playerCombat
+            );
+
+            $this->entityManager->flush();
+
+            return "<span class='text-info'>Vous lancez {$spell->getName()} et devenez intouchable pendant $duration tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
+        }
+
+        return "<span class='text-danger'>Ce sort n’a pas d’effet implémenté.</span><br/>";
     }
 }

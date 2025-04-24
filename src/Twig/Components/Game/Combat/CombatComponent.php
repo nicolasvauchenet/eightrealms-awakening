@@ -7,7 +7,9 @@ use App\Entity\Combat\PlayerCombat;
 use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Screen\CombatScreen;
+use App\Service\Character\CharacterBonusService;
 use App\Service\Combat\CastSpellService;
+use App\Service\Combat\Effect\CombatEffectService;
 use App\Service\Combat\EnemyAttackService;
 use App\Service\Combat\FleeService;
 use App\Service\Combat\PlayerAttackService;
@@ -21,6 +23,7 @@ use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
+use Symfony\UX\LiveComponent\Attribute\PreDehydrate;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\TwigComponent\Attribute\PostMount;
 
@@ -50,6 +53,12 @@ class CombatComponent extends AbstractController
     #[LiveProp]
     public string $intro = '';
 
+    #[LiveProp(writable: true)]
+    public array $damageBonus = [];
+
+    #[LiveProp(writable: true)]
+    public array $defenseBonus = [];
+
     public function __construct(private readonly EntityManagerInterface $entityManager,
                                 private readonly InitiativeService      $initiativeService,
                                 private readonly FleeService            $fleeService,
@@ -57,8 +66,16 @@ class CombatComponent extends AbstractController
                                 private readonly EnemyAttackService     $enemyAttackService,
                                 private readonly CastSpellService       $castSpellService,
                                 private readonly UseItemService         $useItemService,
-                                private readonly CharacterItemService   $characterItemService)
+                                private readonly CharacterItemService   $characterItemService,
+                                private readonly CombatEffectService    $combatEffectService,
+                                private CharacterBonusService           $characterBonusService)
     {
+    }
+
+    #[PreDehydrate]
+    public function hydrate(): void
+    {
+        $this->updateBonuses();
     }
 
     #[PostMount]
@@ -83,10 +100,39 @@ class CombatComponent extends AbstractController
             $this->entityManager->flush();
         }
 
+        $this->updateBonuses();
+
         $this->intro = $this->screen->getCombat()->getDescription() . "\n";
         $this->generateDescription();
 
         $this->advanceUntilPlayerTurn();
+    }
+
+    private function updateBonuses(): void
+    {
+        // Récupérer les effets actifs de type damage et defense pour le personnage dans le contexte de ce combat
+        $activeBonuses = $this->combatEffectService->getActiveBonuses($this->playerCombat, null);
+
+        // Récupérer les bonus d'effet temporaire pour damage et defense
+        $this->damageBonus = [
+            'amount' => $activeBonuses['damage'] ?? 0,
+            'extra' => $activeBonuses['damage'] > 0,
+            'magical' => false,
+        ];
+
+        $this->defenseBonus = [
+            'amount' => $activeBonuses['defense'] ?? 0,
+            'extra' => $activeBonuses['defense'] > 0,
+        ];
+
+        // Récupérer les bonus classiques (item-based)
+        $damageBonusItem = $this->characterBonusService->getDamage($this->character, $this->screen->getType());
+        $this->damageBonus['amount'] += $damageBonusItem['amount'];
+        $this->damageBonus['extra'] = $damageBonusItem['extra'];
+
+        $defenseBonusItem = $this->characterBonusService->getDefense($this->character, $this->screen->getType());
+        $this->defenseBonus['amount'] += $defenseBonusItem['amount'];
+        $this->defenseBonus['extra'] = $defenseBonusItem['extra'];
     }
 
     private function addLog(int $round, string $message): void
@@ -108,7 +154,7 @@ class CombatComponent extends AbstractController
 
             $html .= "<h2>Round " . ($index + 1) . "</h2>\n<p>\n";
             foreach($messages as $message) {
-                $html .= $message . "<br/>\n";
+                $html .= $message . "\n";
             }
             $html .= "</p>\n";
         }
@@ -130,7 +176,7 @@ class CombatComponent extends AbstractController
         $this->entityManager->persist($this->playerCombat);
         $this->entityManager->flush();
 
-        $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Votre tentative de fuite a échoué&nbsp;!</strong>");
+        $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Votre tentative de fuite a échoué&nbsp;!</strong><br/>");
         $this->advanceUntilPlayerTurn();
 
         return null;
@@ -150,7 +196,7 @@ class CombatComponent extends AbstractController
                 $this->addLog($this->playerCombat->getCurrentRound(), $log);
                 $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
             } else if($currentEntity['type'] === 'player' && $currentEntity['id'] === $this->character->getId()) {
-                $this->addLog($this->playerCombat->getCurrentRound(), "<strong>C’est votre tour d'agir…</strong>");
+                $this->addLog($this->playerCombat->getCurrentRound(), "<strong>C’est votre tour d'agir…</strong><br/>");
                 break;
             } else {
                 $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
@@ -158,6 +204,16 @@ class CombatComponent extends AbstractController
         }
 
         if($this->playerCombat->getCurrentTurn() >= $turnCount) {
+            // Gestion des effets temporaires : on décrémente les durées
+            $this->combatEffectService->tickEffects($this->playerCombat);
+
+            // Récupération des logs d’expiration
+            $expiredLogs = $this->combatEffectService->removeExpiredEffects($this->playerCombat);
+            foreach($expiredLogs as $log) {
+                $this->addLog($this->playerCombat->getCurrentRound(), $log);
+            }
+
+            // Passage au round suivant
             $this->playerCombat->setCurrentRound($this->playerCombat->getCurrentRound() + 1);
             $this->playerCombat->setCurrentTurn(0);
 

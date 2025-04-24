@@ -29,6 +29,6 @@ readonly class UseItemService
             return $this->useScrollService->useItem($player, $characterItem, $enemy);
         }
 
-        return "<span class='text-warning'>Cet objet ne peut pas être utilisé ici.</span>";
+        return "<span class='text-warning'>Cet objet ne peut pas être utilisé ici.</span><br/>";
     }
 }

@@ -14,40 +14,42 @@ readonly class AttackHelperService
     {
     }
 
-    public function resolveWeapons(Character $character): array
+    public function resolveWeapons(Character $character, bool $isMagicalWeapon = false): array
     {
         $equipped = $this->characterItemService->getEquippedItems($character);
-        $weaponName = 'de griffes';
+        $weaponName = $character instanceof Player ? 'vos poings' : 'de ses griffes';
         $baseDamage = 1;
         $hasMagicWeaponBonus = false;
 
-        $getWeaponDamage = function($item) use (&$hasMagicWeaponBonus): int {
-            $damage = $item->getDamage() ?? 1;
-            if($item instanceof Weapon && $item->getTarget() === 'damage') {
-                $bonus = $item->getAmount() ?? 0;
-                if(method_exists($item, 'isMagical') && $item->isMagical() && $bonus > 0) {
-                    $hasMagicWeaponBonus = true;
-                }
-                $damage += $bonus;
-            }
-
-            return $damage;
-        };
-
-        $damage = 0;
         $names = [];
+        $totalDamage = 0;
 
         foreach(['righthand', 'lefthand'] as $hand) {
-            if(!empty($equipped[$hand])) {
-                $item = $equipped[$hand]->getItem();
-                $damage += $getWeaponDamage($item);
-                $names[] = $character instanceof Player ? 'votre ' . $item->getName() : 'de ' . $item->getName();
+            if(!isset($equipped[$hand])) continue;
+
+            $item = $equipped[$hand]->getItem();
+            $name = $character instanceof Player ? 'votre ' . $item->getName() : 'de ' . $item->getName();
+            $names[] = $name;
+
+            if($isMagicalWeapon || $item->getCategory()?->getSlug() === 'arme-magique') {
+                $totalDamage += $item->getAmount() ?? 0;
+                $hasMagicWeaponBonus = true;
+            } else {
+                $damage = $item->getDamage() ?? 1;
+                if($item instanceof Weapon && $item->getTarget() === 'damage') {
+                    $bonus = $item->getAmount() ?? 0;
+                    $damage += $bonus;
+                    if(method_exists($item, 'isMagical') && $item->isMagical() && $bonus > 0) {
+                        $hasMagicWeaponBonus = true;
+                    }
+                }
+                $totalDamage += $damage;
             }
         }
 
-        if(count($names) > 0) {
+        if(!empty($names)) {
             $weaponName = implode(' et ', $names);
-            $baseDamage = $damage;
+            $baseDamage = $totalDamage;
         }
 
         return [$weaponName, $baseDamage, $hasMagicWeaponBonus];
@@ -67,17 +69,20 @@ readonly class AttackHelperService
                 ? 'votre ' . $item->getName()
                 : 'de ' . $item->getName();
 
-            $baseDamage = $item->getDamage() ?? 1;
-
-            if($item instanceof Weapon && $item->getTarget() === 'damage') {
-                $bonus = $item->getAmount() ?? 0;
-                if(method_exists($item, 'isMagical') && $item->isMagical() && $bonus > 0) {
-                    $hasMagicWeaponBonus = true;
+            if($item->getCategory()?->getSlug() === 'arme-magique') {
+                $baseDamage = $item->getAmount() ?? 0;
+                $isMagical = true;
+                $hasMagicWeaponBonus = true;
+            } else {
+                $baseDamage = $item->getDamage() ?? 1;
+                if($item instanceof Weapon && $item->getTarget() === 'damage') {
+                    $bonus = $item->getAmount() ?? 0;
+                    if(method_exists($item, 'isMagical') && $item->isMagical() && $bonus > 0) {
+                        $hasMagicWeaponBonus = true;
+                    }
+                    $baseDamage += $bonus;
                 }
-                $baseDamage += $bonus;
             }
-
-            $isMagical = method_exists($item, 'isMagical') && $item->isMagical();
         }
 
         return [$weaponName, $baseDamage, $isMagical, $hasMagicWeaponBonus];
@@ -100,8 +105,8 @@ readonly class AttackHelperService
 
         if($bonusAmount > 0) {
             $bonusText = $isPlayer
-                ? "<br/><small class='text-info'>(Bonus de dégâts appliqué grâce à vos équipements offensifs)</small>"
-                : "<br/><small class='text-info'>(Bonus de dégâts appliqué grâce à ses équipements offensifs)</small>";
+                ? "<small class='text-info'>(Bonus de dégâts appliqué grâce à vos équipements offensifs)</small><br/>"
+                : "<small class='text-info'>(Bonus de dégâts appliqué grâce à ses équipements offensifs)</small><br/>";
         }
 
         return [
@@ -116,19 +121,19 @@ readonly class AttackHelperService
         $position = $target->getPosition();
 
         $log = $isPlayer
-            ? "<span class='text-success'>Vous attaquez $name&nbsp;$position avec $weaponName et lui infligez $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span>"
-            : "<span class='text-warning'>$name&nbsp;$position vous attaque à coups $weaponName et vous inflige $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span>";
+            ? "<span class='text-success'>Vous attaquez $name&nbsp;$position avec $weaponName et lui infligez $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>"
+            : "<span class='text-warning'>$name&nbsp;$position vous attaque à coups $weaponName et vous inflige $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>";
 
         if($hasMagicWeaponBonus) {
             $log .= $isPlayer
-                ? "<br/><small class='text-info'>(Bonus magique appliqué par votre arme enchantée)</small>"
-                : "<br/><small class='text-info'>(Bonus magique appliqué par son arme enchantée)</small>";
+                ? "<small class='text-info'>(Bonus magique appliqué par votre arme enchantée)</small><br/>"
+                : "<small class='text-info'>(Bonus magique appliqué par son arme enchantée)</small><br/>";
         }
 
         $log .= $bonusText;
 
         if($isPlayer && $target->getHealth() <= 0) {
-            $log .= "<br/><strong class='text-success'>$name $position est vaincu&nbsp;!</strong>";
+            $log .= "<strong class='text-success'>$name $position est vaincu&nbsp;!</strong><br/>";
         }
 
         return $log;

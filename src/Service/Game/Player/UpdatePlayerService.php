@@ -66,10 +66,14 @@ readonly class UpdatePlayerService
         ]);
 
         if(!$playerCombat) {
-            // Nouveau combat pour ce joueur
+            // Nouveau combat pour le joueur
             $playerCombat = (new PlayerCombat())
                 ->setPlayer($player)
-                ->setCombat($combat);
+                ->setCombat($combat)
+                ->setStatus('progress')
+                ->setCurrentRound(1)
+                ->setCurrentTurn(0);
+            $this->entityManager->persist($playerCombat);
 
             foreach($combat->getCombatEnemies() as $enemyCombat) {
                 $pce = (new PlayerCombatEnemy())
@@ -78,11 +82,19 @@ readonly class UpdatePlayerService
                     ->setMana($enemyCombat->getMana())
                     ->setPosition($enemyCombat->getPosition())
                     ->setPlayerCombat($playerCombat);
-
                 $this->entityManager->persist($pce);
+
+                $playerCombat->addPlayerCombatEnemy($pce);
+                $this->entityManager->persist($playerCombat);
             }
+            $this->entityManager->flush();
         } else {
-            // Le combat existe déjà : on régénère tous les ennemis
+            // Le combat existe déjà pour le joueur
+            $playerCombat->setStatus('progress')
+                ->setCurrentRound(1)
+                ->setCurrentTurn(0);
+            $this->entityManager->persist($playerCombat);
+
             foreach($playerCombat->getPlayerCombatEnemies() as $playerCombatEnemy) {
                 $enemyTemplate = $combat->getCombatEnemies()->filter(
                     fn($ec) => $ec->getPosition() === $playerCombatEnemy->getPosition()
@@ -96,11 +108,9 @@ readonly class UpdatePlayerService
                     $this->entityManager->persist($playerCombatEnemy);
                 }
             }
+            $this->entityManager->flush();
         }
 
-        $playerCombat->setStatus('progress')
-            ->setCurrentRound(1)
-            ->setCurrentTurn(0);
         $initiative = $this->initiativeService->getTurnOrder($playerCombat);
         $playerCombat
             ->setTurnOrder($initiative)

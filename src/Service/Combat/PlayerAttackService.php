@@ -4,22 +4,12 @@ namespace App\Service\Combat;
 
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
-use App\Entity\Combat\PlayerCombat;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class CombatService
+readonly class PlayerAttackService
 {
-    public function __construct(private EntityManagerInterface $entityManager,
-                                private InitiativeService      $initiativeService)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-    }
-
-    public function flee(PlayerCombat $playerCombat): bool
-    {
-        $player = $playerCombat->getPlayer();
-        $initiative = $this->initiativeService->getTurnOrder($playerCombat);
-
-        return isset($initiative[0]) && $initiative[0]['type'] === 'player' && $initiative[0]['id'] === $player->getId();
     }
 
     public function playerAttack(Player $player, Combat $combat, int $enemyId, string $mode): string
@@ -54,29 +44,5 @@ readonly class CombatService
         }
 
         return $log;
-    }
-
-    public function enemyAttack(PlayerCombat $playerCombat, int $enemyId): string
-    {
-        $enemy = $playerCombat->getPlayerCombatEnemies()->filter(
-            fn($e) => $e->getId() === $enemyId
-        )->first();
-
-        if(!$enemy || $enemy->getHealth() <= 0) {
-            return '';
-        }
-
-        $player = $playerCombat->getPlayer();
-
-        // Dégâts simples (à affiner plus tard avec une vraie formule)
-        $damage = random_int(1, 10);
-        $player->setHealth(max(0, $player->getHealth() - $damage));
-
-        $this->entityManager->persist($player);
-        $this->entityManager->flush();
-
-        $enemyName = $enemy->getEnemy()->getName();
-
-        return "<span class='text-warning'>$enemyName {$enemy->getPosition()} vous attaque et vous inflige $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span>\n";
     }
 }

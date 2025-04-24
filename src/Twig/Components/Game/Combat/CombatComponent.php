@@ -4,9 +4,14 @@ namespace App\Twig\Components\Game\Combat;
 
 use App\Entity\Character\Player;
 use App\Entity\Combat\PlayerCombat;
+use App\Entity\Item\CharacterItem;
 use App\Entity\Screen\CombatScreen;
-use App\Service\Combat\CombatService;
+use App\Service\Combat\EnemyAttackService;
+use App\Service\Combat\FleeService;
+use App\Service\Combat\PlayerAttackService;
 use App\Service\Combat\InitiativeService;
+use App\Service\Combat\UseItemService;
+use App\Service\Item\CharacterItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -44,8 +49,12 @@ class CombatComponent extends AbstractController
     public string $intro = '';
 
     public function __construct(private readonly EntityManagerInterface $entityManager,
-                                private readonly CombatService          $combatService,
-                                private readonly InitiativeService      $initiativeService)
+                                private readonly InitiativeService      $initiativeService,
+                                private readonly FleeService            $fleeService,
+                                private readonly PlayerAttackService    $playerAttackService,
+                                private readonly EnemyAttackService     $enemyAttackService,
+                                private readonly UseItemService         $useItemService,
+                                private readonly CharacterItemService   $characterItemService)
     {
     }
 
@@ -107,7 +116,7 @@ class CombatComponent extends AbstractController
     #[LiveAction]
     public function flee(): ?RedirectResponse
     {
-        if($this->combatService->flee($this->playerCombat)) {
+        if($this->fleeService->flee($this->playerCombat)) {
             return $this->redirectToRoute('app_game_screen_location', [
                 'slug' => $this->character->getCurrentLocation()->getSlug(),
             ]);
@@ -134,7 +143,7 @@ class CombatComponent extends AbstractController
 
             if($currentEntity['type'] === 'enemy') {
                 $enemyId = $currentEntity['id'];
-                $log = $this->combatService->enemyAttack($this->playerCombat, $enemyId);
+                $log = $this->enemyAttackService->enemyAttack($this->playerCombat, $enemyId);
                 $this->addLog($this->playerCombat->getCurrentRound(), $log);
                 $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
             } else if($currentEntity['type'] === 'player' && $currentEntity['id'] === $this->character->getId()) {
@@ -180,7 +189,7 @@ class CombatComponent extends AbstractController
         }
 
         if($combatAction === 'player_attack') {
-            $log = $this->combatService->playerAttack(
+            $log = $this->playerAttackService->playerAttack(
                 $this->character,
                 $this->screen->getCombat(),
                 $enemyId,
@@ -189,6 +198,39 @@ class CombatComponent extends AbstractController
             $this->addLog($this->playerCombat->getCurrentRound(), $log);
         }
 
+        $this->playerCombat->setCurrentTurn($currentTurn + 1);
+        $this->entityManager->persist($this->playerCombat);
+        $this->entityManager->flush();
+
+        $this->advanceUntilPlayerTurn();
+    }
+
+    #[LiveAction]
+    public function useItem(#[LiveArg] int $characterItemId): void
+    {
+        $turnOrder = $this->playerCombat->getTurnOrder();
+        $currentTurn = $this->playerCombat->getCurrentTurn();
+        $currentEntity = $turnOrder[$currentTurn] ?? null;
+
+        if(!$currentEntity || $currentEntity['type'] !== 'player' || $currentEntity['id'] !== $this->character->getId()) {
+            $this->addLog($this->playerCombat->getCurrentRound(), "<em>Ce n’est pas votre tour&nbsp;!</em>");
+
+            return;
+        }
+
+        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
+
+        if(!$characterItem || !$characterItem->getItem()) {
+            $this->addLog($this->playerCombat->getCurrentRound(), "<span class='text-danger'>Objet introuvable.</span>");
+
+            return;
+        }
+
+        // Délégation au UseItemService
+        $log = $this->useItemService->useItem($this->character, $characterItem);
+        $this->addLog($this->playerCombat->getCurrentRound(), $log);
+
+        // Fin du tour
         $this->playerCombat->setCurrentTurn($currentTurn + 1);
         $this->entityManager->persist($this->playerCombat);
         $this->entityManager->flush();

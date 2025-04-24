@@ -5,7 +5,7 @@ namespace App\Service\Combat;
 use App\Entity\Combat\PlayerCombat;
 use Random\RandomException;
 
-class InitiativeService
+readonly class InitiativeService
 {
     /**
      * @throws RandomException

@@ -46,7 +46,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'race' => 'race_elfe',
                 'profession' => 'profession_mage',
                 'owner' => 'user_player',
-                'reference' => 'character_elandra',
+                'reference' => 'player_elandra',
             ],
         ];
 
@@ -54,66 +54,78 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'isEquipped' => true,
                 'slot' => 'righthand',
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'item' => 'magical_firestick',
                 'class' => MagicalWeapon::class,
             ],
             [
                 'isEquipped' => false,
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'item' => 'armor_mage_apprentice',
                 'class' => Armor::class,
             ],
             [
                 'isEquipped' => true,
                 'slot' => 'potion',
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'item' => 'potion_lightmana',
                 'class' => Potion::class,
             ],
             [
                 'isEquipped' => false,
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'item' => 'potion_lightmana',
                 'class' => Potion::class,
             ],
             [
                 'isEquipped' => false,
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'item' => 'potion_lightmana',
                 'class' => Potion::class,
             ],
             [
                 'isEquipped' => false,
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'item' => 'amulet_mana',
                 'class' => Amulet::class,
             ],
             [
                 'isEquipped' => false,
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'item' => 'armor_iron',
                 'class' => Armor::class,
             ],
             [
                 'isEquipped' => true,
                 'slot' => 'lefthand',
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'item' => 'weapon_dagger',
                 'class' => Weapon::class,
             ],
             [
+                'isEquipped' => false,
+                'character' => 'player_elandra',
+                'item' => 'scroll_heal',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'player_elandra',
+                'item' => 'scroll_fireball',
                 'isEquipped' => true,
                 'slot' => 'scroll',
-                'character' => 'character_elandra',
-                'item' => 'scroll_heal',
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'player_elandra',
+                'item' => 'scroll_barrier',
+                'isEquipped' => false,
                 'class' => Scroll::class,
             ],
         ];
 
         $characterSpells = [
             [
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'spell' => 'spell_fireball',
                 'level' => 2,
                 'manaCost' => 5,
@@ -122,7 +134,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'durationBonus' => 0,
             ],
             [
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'spell' => 'spell_iceball',
                 'level' => 1,
                 'manaCost' => 0,
@@ -131,7 +143,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'durationBonus' => 0,
             ],
             [
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'spell' => 'spell_arcane_nova',
                 'level' => 1,
                 'manaCost' => 0,
@@ -140,7 +152,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'durationBonus' => 0,
             ],
             [
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'spell' => 'spell_shield',
                 'level' => 1,
                 'manaCost' => 0,
@@ -149,7 +161,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'durationBonus' => 0,
             ],
             [
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'spell' => 'spell_invisibility',
                 'level' => 1,
                 'manaCost' => 0,
@@ -158,7 +170,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'durationBonus' => 0,
             ],
             [
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'spell' => 'spell_ice_wall',
                 'level' => 1,
                 'manaCost' => 0,
@@ -167,7 +179,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'durationBonus' => 0,
             ],
             [
-                'character' => 'character_elandra',
+                'character' => 'player_elandra',
                 'spell' => 'spell_healrestore',
                 'level' => 1,
                 'manaCost' => 0,

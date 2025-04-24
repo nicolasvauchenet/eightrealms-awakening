@@ -21,7 +21,7 @@ trait RatsTrait
             'character' => 'creature_gros_rat',
             'item' => 'weapon_claws',
             'equipped' => true,
-            'slot' => 'right_hand',
+            'slot' => 'righthand',
             'class' => Weapon::class,
         ],
         [
@@ -40,9 +40,16 @@ trait RatsTrait
         ],
         [
             'character' => 'creature_rat_geant',
+            'item' => 'weapon_claws',
+            'equipped' => true,
+            'slot' => 'righthand',
+            'class' => Weapon::class,
+        ],
+        [
+            'character' => 'creature_rat_geant',
             'item' => 'weapon_teeth',
             'equipped' => true,
-            'slot' => 'right_hand',
+            'slot' => 'lefthand',
             'class' => Weapon::class,
         ],
         [

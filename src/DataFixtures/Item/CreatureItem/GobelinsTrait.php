@@ -4,6 +4,7 @@ namespace App\DataFixtures\Item\CreatureItem;
 
 use App\Entity\Item\Armor;
 use App\Entity\Item\Food;
+use App\Entity\Item\Shield;
 use App\Entity\Item\Weapon;
 
 trait GobelinsTrait
@@ -21,7 +22,7 @@ trait GobelinsTrait
             'character' => 'creature_eclaireur_gobelin',
             'item' => 'weapon_dagger',
             'equipped' => true,
-            'slot' => 'right_hand',
+            'slot' => 'righthand',
             'class' => Weapon::class,
         ],
         [
@@ -33,16 +34,23 @@ trait GobelinsTrait
         // Guerrier gobelin
         [
             'character' => 'creature_guerrier_gobelin',
-            'item' => 'armor_leather',
+            'item' => 'armor_iron',
             'equipped' => true,
             'slot' => 'armor',
             'class' => Armor::class,
         ],
         [
+            'equipped' => true,
+            'slot' => 'shield',
+            'character' => 'creature_guerrier_gobelin',
+            'item' => 'shield_iron',
+            'class' => Shield::class,
+        ],
+        [
             'character' => 'creature_guerrier_gobelin',
             'item' => 'weapon_longsword',
             'equipped' => true,
-            'slot' => 'right_hand',
+            'slot' => 'righthand',
             'class' => Weapon::class,
         ],
         [
@@ -54,7 +62,7 @@ trait GobelinsTrait
         // Chef gobelin
         [
             'character' => 'creature_chef_gobelin',
-            'item' => 'armor_iron',
+            'item' => 'armor_steel',
             'equipped' => true,
             'slot' => 'armor',
             'class' => Armor::class,
@@ -63,7 +71,7 @@ trait GobelinsTrait
             'character' => 'creature_chef_gobelin',
             'item' => 'weapon_warax',
             'equipped' => true,
-            'slot' => 'right_hand',
+            'slot' => 'righthand',
             'class' => Weapon::class,
         ],
         [

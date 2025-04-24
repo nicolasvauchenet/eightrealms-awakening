@@ -73,6 +73,10 @@ trait PortSaintDouxTrait
                     'enemy' => 'creature_gros_rat',
                     'enemyClass' => Creature::class,
                 ],
+                [
+                    'enemy' => 'creature_rat_geant',
+                    'enemyClass' => Creature::class,
+                ],
             ],
             'reference' => 'combat_port_saint_doux_une_bande_de_rats_sur_les_docks',
         ],

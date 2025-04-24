@@ -7,31 +7,47 @@ use Doctrine\ORM\EntityManagerInterface;
 
 readonly class EnemyAttackService
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private AttackHelperService    $attackHelper
+    )
     {
     }
 
     public function enemyAttack(PlayerCombat $playerCombat, int $enemyId): string
     {
-        $enemy = $playerCombat->getPlayerCombatEnemies()->filter(
+        $enemyInstance = $playerCombat->getPlayerCombatEnemies()->filter(
             fn($e) => $e->getId() === $enemyId
         )->first();
 
-        if(!$enemy || $enemy->getHealth() <= 0) {
+        if(!$enemyInstance || $enemyInstance->getHealth() <= 0) {
             return '';
         }
 
+        $enemy = $enemyInstance->getEnemy();
         $player = $playerCombat->getPlayer();
 
-        // Dégâts simples (à affiner plus tard avec une vraie formule)
-        $damage = random_int(1, 10);
-        $player->setHealth(max(0, $player->getHealth() - $damage));
+        $equipped = $this->attackHelper->getCharacterItemService()->getEquippedItems($enemy);
+        $hasTwoWeapons = !empty($equipped['righthand']) && !empty($equipped['lefthand']);
 
+        [$weaponName, $baseDamage, $hasMagicWeaponBonus] = $hasTwoWeapons
+            ? $this->attackHelper->resolveWeapons($enemy)
+            : $this->attackHelper->resolveSingleWeapon($enemy, !empty($equipped['righthand']) ? 'righthand' : 'lefthand');
+
+        $bonus = $this->attackHelper->getOffensiveEquipmentBonus($enemy);
+        $totalDamage = $baseDamage + $bonus['amount'];
+
+        $player->setHealth(max(0, $player->getHealth() - $totalDamage));
         $this->entityManager->persist($player);
         $this->entityManager->flush();
 
-        $enemyName = $enemy->getEnemy()->getName();
-
-        return "<span class='text-warning'>$enemyName {$enemy->getPosition()} vous attaque et vous inflige $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span>\n";
+        return $this->attackHelper->generateAttackLog(
+            target: $enemyInstance,
+            weaponName: $weaponName,
+            damage: $totalDamage,
+            bonusText: $bonus['text'],
+            hasMagicWeaponBonus: $hasMagicWeaponBonus,
+            isPlayer: false
+        );
     }
 }

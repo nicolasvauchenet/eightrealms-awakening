@@ -115,14 +115,24 @@ readonly class AttackHelperService
         ];
     }
 
-    public function generateAttackLog(PlayerCombatEnemy $target, string $weaponName, int $damage, string $bonusText, bool $hasMagicWeaponBonus, bool $isPlayer): string
+    public function generateAttackLog(PlayerCombatEnemy $target, string $weaponName, int $damage, string $bonusText, bool $hasMagicWeaponBonus, bool $isPlayer, ?string $handUsed = null, bool $isCriticalSuccess = false): string
     {
         $name = $target->getEnemy()->getName();
         $position = $target->getPosition();
+        $handText = '';
+
+        if($handUsed) {
+            $handText = 'en ' . ($handUsed === 'righthand' ? 'main droite' : 'main gauche');
+        }
+
+        $criticalText = '';
+        if ($isCriticalSuccess) {
+            $criticalText = "<strong class='text-danger'>Coup critique&nbsp;!</strong><br/>";
+        }
 
         $log = $isPlayer
-            ? "<span class='text-success'>Vous attaquez $name&nbsp;$position avec $weaponName et lui infligez $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>"
-            : "<span class='text-warning'>$name&nbsp;$position vous attaque à coups $weaponName et vous inflige $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>";
+            ? "$criticalText<span class='text-success'>Vous attaquez $name&nbsp;$position avec $weaponName $handText et lui infligez $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>"
+            : "$criticalText<span class='text-warning'>$name&nbsp;$position vous attaque à coups $weaponName et vous inflige $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>";
 
         if($hasMagicWeaponBonus) {
             $log .= $isPlayer
@@ -137,6 +147,21 @@ readonly class AttackHelperService
         }
 
         return $log;
+    }
+
+    public function generateAttackFailLog(PlayerCombatEnemy $target, bool $isPlayer, ?string $handUsed = null): string
+    {
+        $name = $target->getEnemy()->getName();
+        $position = $target->getPosition();
+        $handText = '';
+
+        if($handUsed) {
+            $handText = ' avec votre ' . ($handUsed === 'righthand' ? 'main droite' : 'main gauche');
+        }
+
+        return $isPlayer
+            ? "<span class='text-warning'>Votre attaque$handText échoue contre $name $position.</span><br/>"
+            : "<span>$name $position rate son attaque$handText contre vous.</span><br/>";
     }
 
     public function getCharacterItemService(): CharacterItemService

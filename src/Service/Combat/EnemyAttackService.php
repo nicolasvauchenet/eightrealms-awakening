@@ -13,6 +13,7 @@ use App\Service\Combat\Helper\AreaEffectHelperService;
 use App\Service\Combat\Helper\DiceRollerHelperService;
 use App\Service\Combat\Helper\DamageCalculatorHelperService;
 use App\Service\Combat\Effect\CombatEffectService;
+use App\Service\Combat\Helper\DurabilityHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class EnemyAttackService
@@ -23,7 +24,8 @@ readonly class EnemyAttackService
         private CombatEffectService           $combatEffectService,
         private AreaEffectHelperService       $areaEffectHelper,
         private DiceRollerHelperService       $diceRollerHelperService,
-        private DamageCalculatorHelperService $damageCalculatorHelperService
+        private DamageCalculatorHelperService $damageCalculatorHelperService,
+        private DurabilityHelperService       $durabilityHelperService,
     )
     {
     }
@@ -38,72 +40,47 @@ readonly class EnemyAttackService
         $enemy = $enemyInstance->getEnemy();
         $player = $playerCombat->getPlayer();
         $playerEffects = $this->combatEffectService->getActiveBonuses($playerCombat);
-        $enemyEffects = $this->combatEffectService->getActiveBonuses($playerCombat, $enemyInstance);
         $equipped = $this->attackHelper->getCharacterItemService()->getEquippedItems($enemy);
 
         if($this->getPlayerInvisibility($playerEffects)) {
             return "<span class='text-info'>Vous êtes invisible. {$enemy->getName()} {$enemyInstance->getPosition()} ne vous voit pas et rate son attaque.</span><br/>";
         }
 
-        $weaponSlot = !empty($equipped['righthand']) ? 'righthand' : 'lefthand';
-        $characterItem = $equipped[$weaponSlot] ?? null;
-        $item = $characterItem?->getItem();
-
-        if($item && $item->getCategory()?->getSlug() === 'arme-magique') {
-            return $this->handleMagicalWeaponAttack($item, $characterItem, $enemy, $player, $enemyInstance);
-        }
-
-        return $this->handleClassicalWeaponAttack($playerCombat, $equipped, $enemy, $weaponSlot, $player, $enemyInstance);
+        return $this->handleClassicalWeaponAttack($playerCombat, $equipped, $enemy, $player, $enemyInstance);
     }
 
-    private function handleMagicalWeaponAttack(Item $item, CharacterItem $characterItem, Character $enemy, Player $player, PlayerCombatEnemy $enemyInstance): string
-    {
-        $targetStat = $item->getTarget() ?? $item->getEffect();
-        $amount = $item->getAmount() ?? 0;
-        $area = $item->getArea() ?? 1;
-
-        if($characterItem->getCharge() <= 0) {
-            return "<span class='text-muted'>{$enemy->getName()} tente d'utiliser {$item->getName()}, mais il n'a plus de charge.</span><br/>";
-        }
-
-        $characterItem->setCharge($characterItem->getCharge() - 1);
-        $this->entityManager->persist($characterItem);
-
-        if(in_array($targetStat, ['damage', 'health'])) {
-            $player->setHealth(max(0, $player->getHealth() - $amount));
-        } else if($targetStat === 'mana') {
-            $player->setMana(max(0, $player->getMana() - $amount));
-        }
-
-        $this->entityManager->persist($player);
-
-        $log = "<span class='text-warning'>{$enemy->getName()} utilise {$item->getName()} sur vous et inflige $amount point" . ($amount > 1 ? 's' : '') . " de dégâts.</span><br/>";
-
-        if($player->getHealth() <= 0) {
-            $log .= "<strong class='text-danger'>Vous êtes vaincu…</strong><br/>";
-        }
-
-        if($area > 1) {
-            $log .= $this->areaEffectHelper->applyAreaEffect($enemyInstance, $targetStat, $amount, $area);
-        }
-
-        $this->entityManager->flush();
-
-        return $log;
-    }
-
-    private function handleClassicalWeaponAttack(PlayerCombat $playerCombat, array $equipped, Character $enemy, string $weaponSlot, Player $player, PlayerCombatEnemy $enemyInstance): string
+    private function handleClassicalWeaponAttack(PlayerCombat $playerCombat, array $equipped, Character $enemy, Player $player, PlayerCombatEnemy $enemyInstance): string
     {
         $hasTwoWeapons = !empty($equipped['righthand']) && !empty($equipped['lefthand']);
-        [$weaponName, $baseDamage, $hasMagicWeaponBonus] = $hasTwoWeapons
-            ? $this->attackHelper->resolveWeapons($enemy)
-            : $this->attackHelper->resolveSingleWeapon($enemy, $weaponSlot);
+
+        if($hasTwoWeapons) {
+            $weaponsData = $this->attackHelper->resolveWeapons($enemy);
+            $weaponNames = $weaponsData['weaponNames'];
+            $damages = $weaponsData['damages'];
+            $hasMagicWeaponBonus = $weaponsData['hasMagicWeaponBonus'];
+
+            $weaponName = implode(' et ', $weaponNames);
+            $baseDamage = array_sum($damages);
+        } else {
+            [$weaponName, $baseDamage, , $hasMagicWeaponBonus] = $this->attackHelper->resolveSingleWeapon($enemy, !empty($equipped['righthand']) ? 'righthand' : 'lefthand');
+        }
+
+        $equippedItemsPlayer = $this->attackHelper->getCharacterItemService()->getEquippedItems($player);
 
         $attackRoll = $this->diceRollerHelperService->rollDice(20, $enemy->getDexterity());
         $defenseRoll = $this->diceRollerHelperService->rollDice(20, $player->getDexterity());
 
+        $logs = [];
+
         if($attackRoll['isCriticalSuccess'] && $defenseRoll['isCriticalSuccess']) {
-            return "<span class='text-warning'>Un choc brutal se produit entre l'attaque de {$enemy->getName()} et votre défense. Les armes sont mises à rude épreuve !</span><br/>";
+            $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
+                attackerWeapon: null,
+                defenderEquipments: $equippedItemsPlayer,
+                defenseIsCritical: true
+            );
+            $logs = array_merge($logs, $criticalLogs);
+
+            return "<span class='text-warning'>Un choc brutal se produit entre l'attaque de {$enemy->getName()} et votre défense. Les équipements sont mis à rude épreuve !</span><br/>" . implode('', $logs);
         }
 
         if($attackRoll['isCriticalSuccess'] || $attackRoll['total'] > $defenseRoll['total']) {
@@ -120,15 +97,24 @@ readonly class EnemyAttackService
             $this->entityManager->persist($player);
             $this->entityManager->flush();
 
+            if($attackRoll['isCriticalSuccess']) {
+                $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
+                    attackerWeapon: null,
+                    defenderEquipments: $equippedItemsPlayer,
+                    defenseIsCritical: false
+                );
+                $logs = array_merge($logs, $criticalLogs);
+            }
+
             return $this->attackHelper->generateAttackLog(
-                target: $enemyInstance,
-                weaponName: $weaponName,
-                damage: $totalDamage,
-                bonusText: '',
-                hasMagicWeaponBonus: $hasMagicWeaponBonus,
-                isPlayer: false,
-                isCriticalSuccess: $attackRoll['isCriticalSuccess']
-            );
+                    target: $enemyInstance,
+                    weaponName: $weaponName,
+                    damage: $totalDamage,
+                    bonusText: '',
+                    hasMagicWeaponBonus: $hasMagicWeaponBonus,
+                    isPlayer: false,
+                    isCriticalSuccess: $attackRoll['isCriticalSuccess']
+                ) . implode('', $logs);
         }
 
         return $this->attackHelper->generateAttackFailLog($enemyInstance, false);

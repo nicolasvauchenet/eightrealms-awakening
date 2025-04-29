@@ -14,31 +14,28 @@ readonly class DamageCalculatorHelperService
     {
     }
 
-    public function calculatePhysicalDamage(Character $attacker, Character $defender, PlayerCombat $playerCombat, int $baseDamage, bool $hasMagicWeaponBonus = false, bool $isCritical = false): int
+    public function calculatePhysicalDamage(
+        Character    $attacker,
+        Character    $defender,
+        PlayerCombat $playerCombat,
+        int          $baseDamage,
+        bool         $hasMagicWeaponBonus = false,
+        bool         $isCritical = false
+    ): int
     {
-        // Bonus de force
-        $strengthBonus = $this->calculateStrengthBonus($attacker->getStrength());
+        $baseDamage = max(1, $baseDamage);
 
-        // Bonus de défense de la cible
+        $strengthBonus = $this->calculateStrengthBonus($attacker->getStrength());
         $defenseBonus = $this->characterBonusService->getDefense($defender, $playerCombat, 'combat')['amount'];
         $constitutionBonus = $this->calculateConstitutionBonus($defender->getConstitution());
 
-        // Calcul brut
         $damage = $baseDamage + $strengthBonus;
 
-        // S'il y a un bonus magique sur une arme classique, il ne subit pas la réduction
-        if($hasMagicWeaponBonus) {
-            $damageWithoutReduction = $damage;
-            $damage = max(0, ($damage - $defenseBonus - $constitutionBonus));
-            $damage += ($damageWithoutReduction - ($damageWithoutReduction - $defenseBonus - $constitutionBonus));
-        } else {
-            $damage = max(0, $damage - $defenseBonus - $constitutionBonus);
-        }
-
-        // Coup critique => double dégâts
         if($isCritical) {
             $damage *= 2;
         }
+
+        $damage = max(0, $damage - $defenseBonus - $constitutionBonus);
 
         return max(1, $damage);
     }
@@ -58,7 +55,6 @@ readonly class DamageCalculatorHelperService
 
     public function calculateAreaDamage(int $baseAmount, int $areaSize): int
     {
-        // Dégâts à 75% sur les cibles secondaires
         if($areaSize <= 1) {
             return $baseAmount;
         }
@@ -68,11 +64,11 @@ readonly class DamageCalculatorHelperService
 
     public function calculateStrengthBonus(int $strength): int
     {
-        return (int)floor($strength / 5); // Exemple : 1 bonus tous les 5 points de force
+        return (int)floor($strength / 5);
     }
 
     public function calculateConstitutionBonus(int $constitution): int
     {
-        return (int)floor($constitution / 5); // Exemple : 1 réduction tous les 5 points de constitution
+        return (int)floor($constitution / 5);
     }
 }

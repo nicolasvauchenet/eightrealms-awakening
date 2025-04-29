@@ -17,22 +17,25 @@ readonly class AttackHelperService
     public function resolveWeapons(Character $character, bool $isMagicalWeapon = false): array
     {
         $equipped = $this->characterItemService->getEquippedItems($character);
-        $weaponName = $character instanceof Player ? 'vos poings' : 'de ses griffes';
-        $baseDamage = 1;
-        $hasMagicWeaponBonus = false;
 
         $names = [];
-        $totalDamage = 0;
+        $damages = [];
+        $hasMagicWeaponBonus = false;
 
         foreach(['righthand', 'lefthand'] as $hand) {
-            if(!isset($equipped[$hand])) continue;
+            if(!isset($equipped[$hand])) {
+                continue;
+            }
 
-            $item = $equipped[$hand]->getItem();
+            $characterItem = $equipped[$hand];
+            $item = $characterItem->getItem();
             $name = $character instanceof Player ? 'votre ' . $item->getName() : 'de ' . $item->getName();
             $names[] = $name;
 
-            if($isMagicalWeapon || $item->getCategory()?->getSlug() === 'arme-magique') {
-                $totalDamage += $item->getAmount() ?? 0;
+            if($characterItem->getHealth() <= 0) {
+                $damage = 1;
+            } else if($isMagicalWeapon || $item->getCategory()?->getSlug() === 'arme-magique') {
+                $damage = $item->getAmount() ?? 0;
                 $hasMagicWeaponBonus = true;
             } else {
                 $damage = $item->getDamage() ?? 1;
@@ -43,33 +46,42 @@ readonly class AttackHelperService
                         $hasMagicWeaponBonus = true;
                     }
                 }
-                $totalDamage += $damage;
             }
+
+            $damages[] = $damage;
         }
 
-        if(!empty($names)) {
-            $weaponName = implode(' et ', $names);
-            $baseDamage = $totalDamage;
+        if(empty($names)) {
+            $names[] = $character instanceof Player ? 'vos poings' : 'de ses griffes';
+            $damages[] = 1;
         }
 
-        return [$weaponName, $baseDamage, $hasMagicWeaponBonus];
+        return [
+            'weaponNames' => $names,
+            'damages' => $damages,
+            'hasMagicWeaponBonus' => $hasMagicWeaponBonus,
+        ];
     }
 
     public function resolveSingleWeapon(Character $character, string $slot): array
     {
         $equipped = $this->characterItemService->getEquippedItems($character);
-        $weaponName = $character instanceof Player ? 'vos poings' : 'de ses griffes';
+
+        $weaponName = $character instanceof Player ? 'vos poings' : 'de griffes';
         $baseDamage = 1;
         $isMagical = false;
         $hasMagicWeaponBonus = false;
 
         if(!empty($equipped[$slot])) {
-            $item = $equipped[$slot]->getItem();
+            $characterItem = $equipped[$slot];
+            $item = $characterItem->getItem();
             $weaponName = $character instanceof Player
                 ? 'votre ' . $item->getName()
                 : 'de ' . $item->getName();
 
-            if($item->getCategory()?->getSlug() === 'arme-magique') {
+            if($characterItem->getHealth() <= 0) {
+                $baseDamage = 1;
+            } else if($item->getCategory()?->getSlug() === 'arme-magique') {
                 $baseDamage = $item->getAmount() ?? 0;
                 $isMagical = true;
                 $hasMagicWeaponBonus = true;
@@ -88,50 +100,37 @@ readonly class AttackHelperService
         return [$weaponName, $baseDamage, $isMagical, $hasMagicWeaponBonus];
     }
 
-    public function getOffensiveEquipmentBonus(Character $character): array
+    public function getCharacterItemService(): CharacterItemService
     {
-        $bonusAmount = 0;
-        $bonusText = '';
-        $isPlayer = $character instanceof Player;
-
-        $equippedItems = $this->characterItemService->getEquippedBonus($character, 'offensive', 'damage');
-
-        foreach($equippedItems as $equippedItem) {
-            $category = $equippedItem->getItem()->getCategory()->getSlug();
-            if(!in_array($category, ['arme', 'arme-magique'])) {
-                $bonusAmount += $equippedItem->getItem()->getAmount();
-            }
-        }
-
-        if($bonusAmount > 0) {
-            $bonusText = $isPlayer
-                ? "<small class='text-info'>(Bonus de dégâts appliqué grâce à vos équipements offensifs)</small><br/>"
-                : "<small class='text-info'>(Bonus de dégâts appliqué grâce à ses équipements offensifs)</small><br/>";
-        }
-
-        return [
-            'amount' => $bonusAmount,
-            'text' => $bonusText,
-        ];
+        return $this->characterItemService;
     }
 
-    public function generateAttackLog(PlayerCombatEnemy $target, string $weaponName, int $damage, string $bonusText, bool $hasMagicWeaponBonus, bool $isPlayer, ?string $handUsed = null, bool $isCriticalSuccess = false): string
+    public function generateAttackLog(
+        PlayerCombatEnemy $target,
+        string            $weaponName,
+        int               $damage,
+        string            $bonusText,
+        bool              $hasMagicWeaponBonus,
+        bool              $isPlayer,
+        ?string           $handUsed = null,
+        bool              $isCriticalSuccess = false
+    ): string
     {
         $name = $target->getEnemy()->getName();
         $position = $target->getPosition();
         $handText = '';
 
         if($handUsed) {
-            $handText = 'en ' . ($handUsed === 'righthand' ? 'main droite' : 'main gauche');
+            $handText = ' avec votre ' . ($handUsed === 'righthand' ? 'main droite' : 'main gauche');
         }
 
         $criticalText = '';
-        if ($isCriticalSuccess) {
+        if($isCriticalSuccess) {
             $criticalText = "<strong class='text-danger'>Coup critique&nbsp;!</strong><br/>";
         }
 
         $log = $isPlayer
-            ? "$criticalText<span class='text-success'>Vous attaquez $name&nbsp;$position avec $weaponName $handText et lui infligez $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>"
+            ? "$criticalText<span class='text-success'>Vous attaquez $name&nbsp;$position avec $weaponName$handText et lui infligez $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>"
             : "$criticalText<span class='text-warning'>$name&nbsp;$position vous attaque à coups $weaponName et vous inflige $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>";
 
         if($hasMagicWeaponBonus) {
@@ -161,11 +160,6 @@ readonly class AttackHelperService
 
         return $isPlayer
             ? "<span class='text-warning'>Votre attaque$handText échoue contre $name $position.</span><br/>"
-            : "<span>$name $position rate son attaque$handText contre vous.</span><br/>";
-    }
-
-    public function getCharacterItemService(): CharacterItemService
-    {
-        return $this->characterItemService;
+            : "<span class='text-warning'>$name $position rate son attaque$handText contre vous.</span><br/>";
     }
 }

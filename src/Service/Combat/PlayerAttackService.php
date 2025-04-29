@@ -11,6 +11,7 @@ use App\Service\Combat\Helper\AttackHelperService;
 use App\Service\Combat\Helper\AreaEffectHelperService;
 use App\Service\Combat\Helper\DiceRollerHelperService;
 use App\Service\Combat\Helper\DamageCalculatorHelperService;
+use App\Service\Combat\Helper\DurabilityHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
 
@@ -22,7 +23,8 @@ readonly class PlayerAttackService
         private CombatEffectService           $combatEffectService,
         private AreaEffectHelperService       $areaEffectHelper,
         private DiceRollerHelperService       $diceRollerHelperService,
-        private DamageCalculatorHelperService $damageCalculatorHelperService
+        private DamageCalculatorHelperService $damageCalculatorHelperService,
+        private durabilityHelperService       $durabilityHelperService
     )
     {
     }
@@ -64,8 +66,18 @@ readonly class PlayerAttackService
         $attackRoll = $this->diceRollerHelperService->rollDice(20, $player->getDexterity() + ($mode === 'lefthand' ? -2 : 0));
         $defenseRoll = $this->diceRollerHelperService->rollDice(20, $target->getEnemy()->getDexterity());
 
+        $logs = [];
+
         if($attackRoll['isCriticalSuccess'] && $defenseRoll['isCriticalSuccess']) {
-            return "<span class='text-warning'>Un choc titanesque entre votre arme et celle de {$target->getEnemy()->getName()} ! Personne ne touche, mais les équipements souffrent.</span><br/>";
+            // → Gestion critique critique : arme VS arme
+            $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
+                attackerWeapon: $characterItem,
+                defenderEquipments: $this->attackHelper->getCharacterItemService()->getEquippedItems($target->getEnemy()),
+                defenseIsCritical: true
+            );
+            $logs = array_merge($logs, $criticalLogs);
+
+            return "<span class='text-warning'>Un choc titanesque entre votre arme et celle de {$target->getEnemy()->getName()} ! Personne ne touche, mais les équipements souffrent.</span><br/>" . implode('', $logs);
         }
 
         if($attackRoll['isCriticalSuccess'] || $attackRoll['total'] > $defenseRoll['total']) {
@@ -82,7 +94,25 @@ readonly class PlayerAttackService
             $this->entityManager->persist($target);
             $this->entityManager->flush();
 
-            return $this->attackHelper->generateAttackLog(
+            // Gestion usure arme normale
+            if($characterItem) {
+                $weaponLog = $this->durabilityHelperService->handleWeaponUsage($characterItem);
+                if($weaponLog) {
+                    $logs[] = $weaponLog;
+                }
+            }
+
+            // Si coup critique -> usure armure/bouclier
+            if($attackRoll['isCriticalSuccess']) {
+                $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
+                    attackerWeapon: $characterItem,
+                    defenderEquipments: $this->attackHelper->getCharacterItemService()->getEquippedItems($target->getEnemy()),
+                    defenseIsCritical: false
+                );
+                $logs = array_merge($logs, $criticalLogs);
+            }
+
+            $attackLog = $this->attackHelper->generateAttackLog(
                 target: $target,
                 weaponName: $weaponName,
                 damage: $totalDamage,
@@ -92,6 +122,8 @@ readonly class PlayerAttackService
                 handUsed: $mode,
                 isCriticalSuccess: $attackRoll['isCriticalSuccess']
             );
+
+            return $attackLog . implode('', $logs);
         }
 
         return $this->attackHelper->generateAttackFailLog($target, true, $mode);
@@ -104,7 +136,9 @@ readonly class PlayerAttackService
 
         foreach(['righthand', 'lefthand'] as $hand) {
             $characterItem = $equippedItems[$hand] ?? null;
-            if(!$characterItem) continue;
+            if(!$characterItem) {
+                continue;
+            }
 
             $item = $characterItem->getItem();
 
@@ -114,13 +148,24 @@ readonly class PlayerAttackService
             }
 
             $playerCombat = $this->getPlayerCombat($player, $combat);
+
             [$weaponName, $baseDamage, , $hasMagicWeaponBonus] = $this->attackHelper->resolveSingleWeapon($player, $hand);
 
             $attackRoll = $this->diceRollerHelperService->rollDice(20, $player->getDexterity() + ($hand === 'lefthand' ? -2 : 0));
             $defenseRoll = $this->diceRollerHelperService->rollDice(20, $target->getEnemy()->getDexterity());
 
+            $subLogs = [];
+
             if($attackRoll['isCriticalSuccess'] && $defenseRoll['isCriticalSuccess']) {
-                $logs[] = "<span class='text-warning'>Un choc brutal entre votre arme de la " . ($hand === 'righthand' ? 'main droite' : 'main gauche') . " et celle de {$target->getEnemy()->getName()} !</span><br/>";
+                // Critique critique -> usure sur arme et défense
+                $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
+                    attackerWeapon: $characterItem,
+                    defenderEquipments: [],
+                    defenseIsCritical: true
+                );
+                $subLogs = array_merge($subLogs, $criticalLogs);
+
+                $logs[] = "<span class='text-warning'>Un choc brutal entre votre arme de la " . ($hand === 'righthand' ? 'main droite' : 'main gauche') . " et celle de {$target->getEnemy()->getName()} !</span><br/>" . implode('', $subLogs);
                 continue;
             }
 
@@ -138,18 +183,38 @@ readonly class PlayerAttackService
                 $this->entityManager->persist($target);
                 $this->entityManager->flush();
 
-                $logs[] = $this->attackHelper->generateAttackLog(
-                    target: $target,
-                    weaponName: $weaponName,
-                    damage: $totalDamage,
-                    bonusText: '',
-                    hasMagicWeaponBonus: $hasMagicWeaponBonus,
-                    isPlayer: true,
-                    handUsed: $hand,
-                    isCriticalSuccess: $attackRoll['isCriticalSuccess']
-                );
+                // Gestion usure arme normale
+                if($characterItem) {
+                    $weaponLog = $this->durabilityHelperService->handleWeaponUsage($characterItem);
+                    if($weaponLog) {
+                        $subLogs[] = $weaponLog;
+                    }
+                }
 
-                if($target->getHealth() <= 0) break;
+                // Si critique -> usure armure/bouclier
+                if($attackRoll['isCriticalSuccess']) {
+                    $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
+                        attackerWeapon: $characterItem,
+                        defenderEquipments: $this->attackHelper->getCharacterItemService()->getEquippedItems($target->getEnemy()),
+                        defenseIsCritical: false
+                    );
+                    $subLogs = array_merge($subLogs, $criticalLogs);
+                }
+
+                $logs[] = $this->attackHelper->generateAttackLog(
+                        target: $target,
+                        weaponName: $weaponName,
+                        damage: $totalDamage,
+                        bonusText: '',
+                        hasMagicWeaponBonus: $hasMagicWeaponBonus,
+                        isPlayer: true,
+                        handUsed: $hand,
+                        isCriticalSuccess: $attackRoll['isCriticalSuccess']
+                    ) . implode('', $subLogs);
+
+                if($target->getHealth() <= 0) {
+                    break;
+                }
             } else {
                 $logs[] = $this->attackHelper->generateAttackFailLog($target, true, $hand);
             }

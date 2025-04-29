@@ -3,6 +3,7 @@
 namespace App\Service\Character;
 
 use App\Entity\Character\Character;
+use App\Entity\Combat\PlayerCombat;
 use App\Service\Combat\Effect\CombatEffectService;
 use App\Service\Item\CharacterItemService;
 
@@ -13,7 +14,7 @@ readonly class CharacterBonusService
     {
     }
 
-    public function getDamage(Character $character, string $screenType = null): array
+    public function getDamage(Character $character, ?PlayerCombat $playerCombat = null, string $screenType = null): array
     {
         $bonus = [
             'amount' => 0,
@@ -43,8 +44,8 @@ readonly class CharacterBonusService
         }
 
         // Ajouter les effets temporaires de combat (si on est en combat)
-        if($screenType === 'Combat') {
-            $combatEffects = $this->combatEffectService->getActiveCombatEffects($character);
+        if($screenType === 'combat') {
+            $combatEffects = $this->combatEffectService->getActiveCombatEffects($character, $playerCombat);
             foreach($combatEffects as $effect) {
                 if($effect->getTarget() === 'damage') {
                     $bonus['amount'] += $effect->getAmount();
@@ -56,7 +57,7 @@ readonly class CharacterBonusService
         return $bonus;
     }
 
-    public function getDefense(Character $character, string $screenType = null): array
+    public function getDefense(Character $character, ?PlayerCombat $playerCombat = null, string $screenType = null): array
     {
         $bonus = [
             'amount' => 0,
@@ -76,8 +77,8 @@ readonly class CharacterBonusService
         }
 
         // Ajouter les effets temporaires de combat (si on est en combat)
-        if($screenType === 'Combat') {
-            $combatEffects = $this->combatEffectService->getActiveCombatEffects($character);
+        if($screenType === 'combat') {
+            $combatEffects = $this->combatEffectService->getActiveCombatEffects($character, $playerCombat);
             foreach($combatEffects as $effect) {
                 if($effect->getTarget() === 'defense') {
                     $bonus['amount'] += $effect->getAmount();

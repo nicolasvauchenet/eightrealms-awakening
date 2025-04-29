@@ -11,17 +11,19 @@ use App\Entity\Item\Item;
 use App\Service\Combat\Helper\AttackHelperService;
 use App\Service\Combat\Helper\AreaEffectHelperService;
 use App\Service\Combat\Helper\DiceRollerHelperService;
+use App\Service\Combat\Helper\DamageCalculatorHelperService;
 use App\Service\Combat\Effect\CombatEffectService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class EnemyAttackService
 {
     public function __construct(
-        private EntityManagerInterface  $entityManager,
-        private AttackHelperService     $attackHelper,
-        private CombatEffectService     $combatEffectService,
-        private AreaEffectHelperService $areaEffectHelper,
-        private DiceRollerHelperService $diceRollerHelperService
+        private EntityManagerInterface        $entityManager,
+        private AttackHelperService           $attackHelper,
+        private CombatEffectService           $combatEffectService,
+        private AreaEffectHelperService       $areaEffectHelper,
+        private DiceRollerHelperService       $diceRollerHelperService,
+        private DamageCalculatorHelperService $damageCalculatorHelperService
     )
     {
     }
@@ -51,7 +53,7 @@ readonly class EnemyAttackService
             return $this->handleMagicalWeaponAttack($item, $characterItem, $enemy, $player, $enemyInstance);
         }
 
-        return $this->handleClassicalWeaponAttack($equipped, $enemy, $weaponSlot, $enemyEffects, $playerEffects, $player, $enemyInstance);
+        return $this->handleClassicalWeaponAttack($playerCombat, $equipped, $enemy, $weaponSlot, $player, $enemyInstance);
     }
 
     private function handleMagicalWeaponAttack(Item $item, CharacterItem $characterItem, Character $enemy, Player $player, PlayerCombatEnemy $enemyInstance): string
@@ -90,33 +92,29 @@ readonly class EnemyAttackService
         return $log;
     }
 
-    private function handleClassicalWeaponAttack(array $equipped, Character $enemy, string $weaponSlot, array $enemyEffects, array $playerEffects, Player $player, PlayerCombatEnemy $enemyInstance): string
+    private function handleClassicalWeaponAttack(PlayerCombat $playerCombat, array $equipped, Character $enemy, string $weaponSlot, Player $player, PlayerCombatEnemy $enemyInstance): string
     {
         $hasTwoWeapons = !empty($equipped['righthand']) && !empty($equipped['lefthand']);
         [$weaponName, $baseDamage, $hasMagicWeaponBonus] = $hasTwoWeapons
             ? $this->attackHelper->resolveWeapons($enemy)
             : $this->attackHelper->resolveSingleWeapon($enemy, $weaponSlot);
 
-        $equipmentBonus = $this->attackHelper->getOffensiveEquipmentBonus($enemy);
-        $bonusDamage = ($enemyEffects['damage'] ?? 0);
-        $malusDefense = ($playerEffects['defense'] ?? 0) * -1;
-
-        $attackerDexBonus = $enemy->getDexterity();
-        $defenderDexBonus = $player->getDexterity();
-
-        $attackRoll = $this->diceRollerHelperService->rollDice(20, $attackerDexBonus);
-        $defenseRoll = $this->diceRollerHelperService->rollDice(20, $defenderDexBonus);
+        $attackRoll = $this->diceRollerHelperService->rollDice(20, $enemy->getDexterity());
+        $defenseRoll = $this->diceRollerHelperService->rollDice(20, $player->getDexterity());
 
         if($attackRoll['isCriticalSuccess'] && $defenseRoll['isCriticalSuccess']) {
             return "<span class='text-warning'>Un choc brutal se produit entre l'attaque de {$enemy->getName()} et votre défense. Les armes sont mises à rude épreuve !</span><br/>";
         }
 
         if($attackRoll['isCriticalSuccess'] || $attackRoll['total'] > $defenseRoll['total']) {
-            $totalDamage = $baseDamage + $equipmentBonus['amount'] + $bonusDamage + $malusDefense;
-            if($attackRoll['isCriticalSuccess']) {
-                $totalDamage *= 2;
-            }
-            $totalDamage = max(0, $totalDamage);
+            $totalDamage = $this->damageCalculatorHelperService->calculatePhysicalDamage(
+                attacker: $enemy,
+                defender: $player,
+                playerCombat: $playerCombat,
+                baseDamage: $baseDamage,
+                hasMagicWeaponBonus: $hasMagicWeaponBonus,
+                isCritical: $attackRoll['isCriticalSuccess']
+            );
 
             $player->setHealth(max(0, $player->getHealth() - $totalDamage));
             $this->entityManager->persist($player);
@@ -126,7 +124,7 @@ readonly class EnemyAttackService
                 target: $enemyInstance,
                 weaponName: $weaponName,
                 damage: $totalDamage,
-                bonusText: $equipmentBonus['text'],
+                bonusText: '',
                 hasMagicWeaponBonus: $hasMagicWeaponBonus,
                 isPlayer: false,
                 isCriticalSuccess: $attackRoll['isCriticalSuccess']

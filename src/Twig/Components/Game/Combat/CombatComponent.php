@@ -111,7 +111,7 @@ class CombatComponent extends AbstractController
     private function updateBonuses(): void
     {
         // Récupérer les effets actifs de type damage et defense pour le personnage dans le contexte de ce combat
-        $activeBonuses = $this->combatEffectService->getActiveBonuses($this->playerCombat, null);
+        $activeBonuses = $this->combatEffectService->getActiveBonuses($this->playerCombat);
 
         // Récupérer les bonus d'effet temporaire pour damage et defense
         $this->damageBonus = [
@@ -126,11 +126,11 @@ class CombatComponent extends AbstractController
         ];
 
         // Récupérer les bonus classiques (item-based)
-        $damageBonusItem = $this->characterBonusService->getDamage($this->character, $this->screen->getType());
+        $damageBonusItem = $this->characterBonusService->getDamage($this->character, $this->playerCombat, $this->screen->getType());
         $this->damageBonus['amount'] += $damageBonusItem['amount'];
         $this->damageBonus['extra'] = $damageBonusItem['extra'];
 
-        $defenseBonusItem = $this->characterBonusService->getDefense($this->character, $this->screen->getType());
+        $defenseBonusItem = $this->characterBonusService->getDefense($this->character, $this->playerCombat, $this->screen->getType());
         $this->defenseBonus['amount'] += $defenseBonusItem['amount'];
         $this->defenseBonus['extra'] = $defenseBonusItem['extra'];
     }

@@ -145,17 +145,31 @@ readonly class CombatEffectService
         $this->entityManager->flush();
     }
 
-    public function getActiveCombatEffects(Character $character): array
+    public function getActiveCombatEffects(Character $character, PlayerCombat $playerCombat): array
     {
-        // Récupérer les effets actifs de type "damage" ou "defense"
         $qb = $this->entityManager->createQueryBuilder()
             ->select('effect')
-            ->from(PlayerCombatEffect::class, 'effect')
-            ->where('effect.character = :character')
-            ->andWhere('effect.expirationDate > CURRENT_TIMESTAMP()') // Si tu gères une date d'expiration pour les effets
-            ->setParameter('character', $character)
-            ->getQuery();
+            ->from(PlayerCombatEffect::class, 'effect');
 
-        return $qb->getResult();
+        if($playerCombat->getPlayer() === $character) {
+            // Cas du joueur
+            $qb->andWhere('effect.playerCombat = :playerCombat')
+                ->andWhere('effect.playerCombatEnemy IS NULL')
+                ->setParameter('playerCombat', $playerCombat);
+        } else {
+            // Cas d'un ennemi : trouver le PlayerCombatEnemy correspondant
+            $enemyInstance = $playerCombat->getPlayerCombatEnemies()->filter(
+                fn(PlayerCombatEnemy $e) => $e->getEnemy() === $character
+            )->first();
+
+            if(!$enemyInstance) {
+                throw new \LogicException('Cannot find PlayerCombatEnemy for this Character.');
+            }
+
+            $qb->andWhere('effect.playerCombatEnemy = :enemyInstance')
+                ->setParameter('enemyInstance', $enemyInstance);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

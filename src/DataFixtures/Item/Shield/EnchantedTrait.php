@@ -29,7 +29,7 @@ trait EnchantedTrait
             'healthMax' => 20,
             'defense' => 3,
             'target' => 'defense',
-            'amount' => 5,
+            'amount' => 2,
             'magical' => true,
             'reference' => 'shield_iron_defense',
         ],

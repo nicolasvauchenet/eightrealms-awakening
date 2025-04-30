@@ -2,7 +2,7 @@
 
 namespace App\Service\Combat;
 
-use App\Entity\Character\Player;
+use App\Entity\Character\Character;
 use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Scroll;
@@ -20,7 +20,7 @@ readonly class UseScrollService
     {
     }
 
-    public function useItem(Player $player, CharacterItem $characterItem, ?PlayerCombatEnemy $target = null): string
+    public function useItem(Character $player, CharacterItem $characterItem, ?PlayerCombatEnemy $target = null): string
     {
         $item = $characterItem->getItem();
 

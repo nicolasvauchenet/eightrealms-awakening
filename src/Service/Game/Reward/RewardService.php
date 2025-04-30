@@ -5,6 +5,7 @@ namespace App\Service\Game\Reward;
 use App\Entity\Character\Player;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Reward\PlayerReward;
+use App\Entity\Reward\Reward;
 use App\Entity\Reward\RewardItem;
 use App\Entity\Screen\Screen;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,7 +16,7 @@ readonly class RewardService
     {
     }
 
-    public function giveReward(Screen $screen, Player $player): bool
+    public function giveRewardByScreen(Screen $screen, Player $player): bool
     {
         $isRewarded = false;
 
@@ -54,6 +55,40 @@ readonly class RewardService
         }
 
         return $isRewarded;
+    }
+
+    public function giveReward(Reward $reward, Player $player): bool
+    {
+        $playerReward = $this->entityManager->getRepository(PlayerReward::class)->findOneBy([
+            'player' => $player,
+            'reward' => $reward,
+        ]);
+
+        if($playerReward) {
+            return false;
+        }
+
+        $playerReward = (new PlayerReward())
+            ->setPlayer($player)
+            ->setReward($reward);
+        $this->entityManager->persist($playerReward);
+
+        if($reward->getRewardItems()) {
+            $this->giveItems($reward->getRewardItems(), $player);
+        }
+
+        if($reward->getCrowns()) {
+            $player->setFortune($player->getFortune() + $reward->getCrowns());
+        }
+
+        if($reward->getExperience()) {
+            $player->setExperience($player->getExperience() + $reward->getExperience());
+        }
+
+        $this->entityManager->persist($player);
+        $this->entityManager->flush();
+
+        return true;
     }
 
     private function giveItems(iterable $rewardItems, Player $player): void

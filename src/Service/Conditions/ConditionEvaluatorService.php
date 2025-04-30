@@ -132,6 +132,7 @@ readonly class ConditionEvaluatorService
         $step = $quest->getQuestSteps()->filter(fn($s) => $s->getPosition() === $data['quest_step'])->first();
         if(!$step) return false;
 
+
         $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
             'player' => $player,
             'quest' => $quest,

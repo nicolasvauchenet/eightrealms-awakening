@@ -1,9 +1,34 @@
-<p class="reward">
-    {% if this.hasReward and not this.isRewarded %}
+{% if this.hasReward and not this.isRewarded %}
+    <p class="reward anim-step step-{{ stepCount + 1 }}">
         <button {{ live_action('getReward') }}>
             <img src="{{ asset('img/core/action/reward.png') }}" alt="Récompense"/>
         </button>
-    {% elseif this.hasReward %}
-        <small class="text-success">Récompense obtenue&nbsp;!</small>
-    {% endif %}
-</p>
+    </p>
+{% elseif this.hasReward %}
+    <div class="reward anim-step step-{{ stepCount + 1 }} {{ this.isRewarded ? 'is-revealed' }}">
+        <h3 class="text-success">
+            Récompense obtenue&nbsp;:
+        </h3>
+
+        <div class="reward-parts">
+            {% if this.screen.reward.experience %}
+                <span class="reward-part" title="Expérience">
+                    {{ ux_icon('healthicons:medium-level-outline', {'class': 'app-icon text-primary'}) }}
+                    {{ this.screen.reward.experience }}
+            </span>
+            {% endif %}
+            {% if this.screen.reward.crowns %}
+                <span class="reward-part" title="Couronnes">
+                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                    {{ this.screen.reward.crowns }}
+            </span>
+            {% endif %}
+            {% for rewardItem in this.screen.reward.rewardItems %}
+                <span class="reward-part" title="{{ rewardItem.item.name }}">
+                    <img src="{{ asset('img/core/item/' ~ rewardItem.item.category.folder ~ '/' ~ rewardItem.item.picture) }}" alt="{{ rewardItem.item.name }}"/>
+                    x {{ rewardItem.quantity }}
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

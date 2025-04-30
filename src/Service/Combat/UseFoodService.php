@@ -4,10 +4,10 @@ namespace App\Service\Combat;
 
 use App\Entity\Character\Character;
 use App\Entity\Item\CharacterItem;
-use App\Entity\Item\Potion;
+use App\Entity\Item\Food;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class UsePotionService
+readonly class UseFoodService
 {
     public function __construct(private EntityManagerInterface $entityManager)
     {
@@ -18,7 +18,7 @@ readonly class UsePotionService
         $item = $characterItem->getItem();
 
         // Vérification de base
-        if(!$item instanceof Potion) {
+        if(!$item instanceof Food) {
             return "<span class='text-warning'>Cet objet ne peut pas être utilisé ici.</span><br/>";
         }
 
@@ -34,22 +34,10 @@ readonly class UsePotionService
             $this->deleteItem($characterItem);
             $this->entityManager->flush();
 
-            return "<span class='text-success'>Vous buvez une potion de vie et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de santé.</span><br/>";
+            return "<span class='text-success'>Vous votre {$item->getName()} et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de santé.</span><br/>";
         }
 
-        if($target === 'mana') {
-            $before = $player->getMana();
-            $after = min($player->getManaMax(), $before + $amount);
-            $player->setMana($after);
-
-            $this->entityManager->persist($player);
-            $this->deleteItem($characterItem);
-            $this->entityManager->flush();
-
-            return "<span class='text-info'>Vous buvez une potion de mana et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de magie.</span><br/>";
-        }
-
-        return "<span class='text-warning'>Cette potion n'a pas d'effet connu.</span><br/>";
+        return "<span class='text-warning'>Cette nourriture n'a pas d'effet connu.</span><br/>";
     }
 
     public function deleteItem(CharacterItem $characterItem): void

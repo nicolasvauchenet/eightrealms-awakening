@@ -10,6 +10,7 @@ use App\DataFixtures\Quest\Secondary\LaSireneEtLeMarinTrait;
 use App\DataFixtures\Quest\Secondary\LivraisonEnCoursTrait;
 use App\Entity\Quest\Quest;
 use App\Entity\Quest\QuestStep;
+use App\Entity\Reward\Reward;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -43,7 +44,8 @@ class QuestStepFixtures extends Fixture implements OrderedFixtureInterface
                 $questStep->setDescription($data['description'])
                     ->setPosition($data['position'])
                     ->setLast($data['last'])
-                    ->setQuest($this->getReference($data['quest'], Quest::class));
+                    ->setQuest($this->getReference($data['quest'], Quest::class))
+                    ->setReward(isset($data['reward']) ? $this->getReference($data['reward'], Reward::class) : null);
                 $manager->persist($questStep);
                 $this->addReference($data['reference'], $questStep);
             }
@@ -54,6 +56,6 @@ class QuestStepFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 28;
+        return 29;
     }
 }

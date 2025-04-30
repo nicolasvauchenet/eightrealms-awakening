@@ -14,8 +14,9 @@ trait PortSaintDouxTrait
             'thumbnail' => 'img/chapter1/combat/port-saint-doux-des-rats-sur-les-docks_thumb.png',
             'description' => "<p>Un groupe de gros rats vous a repéré et vous attaque&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
             'conditions' => [
-                'quest_status' => [
+                'quest_step_status' => [
                     'quest' => 'des-rats-sur-les-docks',
+                    'quest_step' => 1,
                     'status' => 'progress',
                 ],
             ],

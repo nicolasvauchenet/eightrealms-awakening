@@ -4,6 +4,9 @@ namespace App\Twig\Components\Character;
 
 use App\Entity\Character\Character;
 use App\Entity\Item\CharacterItem;
+use App\Entity\Item\Food;
+use App\Entity\Item\Potion;
+use App\Service\Combat\UseItemService;
 use App\Service\Item\CharacterItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -30,7 +33,8 @@ class CharacterSheetComponent
     public string $activeContent = 'details';
 
     public function __construct(private readonly EntityManagerInterface $entityManager,
-                                private readonly CharacterItemService   $characterItemService)
+                                private readonly CharacterItemService   $characterItemService,
+                                private readonly UseItemService         $useItemService)
     {
     }
 
@@ -53,6 +57,29 @@ class CharacterSheetComponent
         }
 
         $this->characterItemService->toggleEquipItem($this->character, $characterItem);
+        $this->entityManager->flush();
+    }
+
+    #[LiveAction]
+    public function useItem(#[LiveArg] int $characterItemId): void
+    {
+        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
+
+        if(!$characterItem || !$characterItem->getItem()) {
+            return;
+        }
+
+        $item = $characterItem->getItem();
+        $itemClass = get_class($item);
+
+        // On ne permet que Potion ou Food
+        if(!in_array($itemClass, [Potion::class, Food::class])) {
+            return;
+        }
+
+        $this->useItemService->useItem($this->character, $characterItem);
+
+        $this->entityManager->persist($this->character);
         $this->entityManager->flush();
     }
 }

@@ -8,8 +8,6 @@
     {% include 'game/screen/cinematic/_header.html.twig' %}
 
     <section class="screen-section">
-        {{ screen.description | raw }}
-
         {{ component('CinematicScreen', {character: app.user.player, screen: screen}) }}
     </section>
 

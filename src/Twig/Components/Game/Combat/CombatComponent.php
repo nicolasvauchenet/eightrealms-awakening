@@ -6,6 +6,8 @@ use App\Entity\Character\Player;
 use App\Entity\Combat\PlayerCombat;
 use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Item\CharacterItem;
+use App\Entity\Quest\PlayerQuest;
+use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\Screen\CombatScreen;
 use App\Service\Character\CharacterBonusService;
 use App\Service\Combat\CastSpellService;
@@ -17,6 +19,7 @@ use App\Service\Combat\PlayerAttackService;
 use App\Service\Combat\UseItemService;
 use App\Service\Game\Screen\Cinematic\CinematicScreenService;
 use App\Service\Item\CharacterItemService;
+use App\Service\Quest\QuestService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -72,6 +75,7 @@ class CombatComponent extends AbstractController
         private readonly CombatEffectService    $combatEffectService,
         private readonly CharacterBonusService  $characterBonusService,
         private readonly CinematicScreenService $cinematicScreenService,
+        private readonly QuestService           $questService
     )
     {
     }
@@ -239,6 +243,42 @@ class CombatComponent extends AbstractController
         if(!$enemiesAlive) {
             $this->playerCombat->setStatus('completed');
             $this->entityManager->persist($this->playerCombat);
+            // Vérifie s’il y a une étape de quête liée au combat
+            $questStep = $this->screen->getCombat()->getQuestStep();
+            if($questStep) {
+                $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)
+                    ->findOneBy(['player' => $this->character, 'questStep' => $questStep]);
+
+                if($playerQuestStep && $playerQuestStep->getStatus() !== 'completed') {
+                    $playerQuestStep->setStatus('completed');
+                    $this->entityManager->persist($playerQuestStep);
+                }
+
+                if($questStep->isLast()) {
+                    $quest = $questStep->getQuest();
+                    $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)
+                        ->findOneBy(['player' => $this->character, 'quest' => $quest]);
+
+                    if($playerQuest && $playerQuest->getStatus() !== 'completed') {
+                        $playerQuest->setStatus('completed');
+                        $this->entityManager->persist($playerQuest);
+                    }
+                } else {
+                    $nextStep = $this->questService->getNextQuestStep($questStep);
+                    if($nextStep) {
+                        $existingNext = $this->entityManager->getRepository(PlayerQuestStep::class)
+                            ->findOneBy(['player' => $this->character, 'questStep' => $nextStep]);
+                        if(!$existingNext) {
+                            $newStep = (new PlayerQuestStep())
+                                ->setPlayer($this->character)
+                                ->setQuestStep($nextStep)
+                                ->setStatus('progress');
+                            $this->entityManager->persist($newStep);
+                        }
+                    }
+                }
+            }
+
             $this->entityManager->flush();
 
             $victoryScreen = $this->cinematicScreenService->getVictoryScreen(

@@ -1,14 +1,22 @@
 <div class="header-title">
     <div class="header-actions">
+        {% if this.screen.type == 'location' %}
+            {% set backUrl = path('app_game_screen_' ~ this.screen.type, {slug: this.screen.location.slug}) %}
+        {% elseif this.screen.type == 'interaction' %}
+            {% set backUrl = path('app_game_screen_' ~ this.screen.type, {slug: this.screen.character.slug}) %}
+        {% elseif this.screen.type == 'dialog' %}
+            {% set backUrl = path('app_game_screen_' ~ this.screen.type, {id: this.screen.dialogStep.id}) %}
+        {% endif %}
+
         {% if this.screen.type != 'combat' %}
-            <a href="{{ path('app_character_sheet_player', {'back': app.request.pathInfo}) }}"
+            <a href="{{ path('app_character_sheet_player', {'back': backUrl}) }}"
                class="header-control">
                 {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
             </a>
         {% endif %}
 
         {% if this.screen.type == 'location' and this.character.currentLocation.type in ['location', 'zone'] %}
-            <a href="{{ path('app_map_home', {'back': app.request.pathInfo}) }}"
+            <a href="{{ path('app_map_home', {'back': backUrl}) }}"
                class="header-control">
                 {{ ux_icon('solar:map-bold', {'class': 'app-icon'}) }}
             </a>

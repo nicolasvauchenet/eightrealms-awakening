@@ -46,6 +46,6 @@ class CinematicComponent
     #[LiveAction]
     public function getReward(): void
     {
-        $this->isRewarded = $this->rewardService->giveReward($this->screen, $this->character);
+        $this->isRewarded = $this->rewardService->giveRewardByScreen($this->screen, $this->character);
     }
 }

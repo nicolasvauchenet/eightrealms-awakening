@@ -8,12 +8,14 @@ use App\Entity\Quest\PlayerQuest;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\Quest\Quest;
+use App\Service\Game\Reward\RewardService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class DialogEffectApplierService
 {
     public function __construct(
-        private EntityManagerInterface $entityManager)
+        private EntityManagerInterface $entityManager,
+        private RewardService          $rewardService)
     {
     }
 
@@ -37,6 +39,7 @@ readonly class DialogEffectApplierService
             'start_quest' => $this->startQuest($player, $value),
             'edit_quest_step_status' => $this->editQuestStepStatus($player, $value),
             'start_quest_step' => $this->startQuestStep($player, $value),
+            'reward_quest' => $this->rewardQuest($player, $value),
             default => null,
         };
     }
@@ -154,5 +157,44 @@ readonly class DialogEffectApplierService
         }
 
         $playerQuestStep->setStatus($data['status']);
+    }
+
+    private function rewardQuest(Player $player, string $questSlug): void
+    {
+        $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $questSlug]);
+        if(!$quest) return;
+
+        $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
+            'player' => $player,
+            'quest' => $quest,
+        ]);
+        if(!$playerQuest || $playerQuest->getStatus() === 'rewarded') return;
+
+        // Marquer la quête comme récompensée
+        $playerQuest->setStatus('rewarded');
+        $this->entityManager->persist($playerQuest);
+
+        // Terminer la dernière étape si ce n’est pas déjà fait
+        $lastStep = $quest->getQuestSteps()->filter(fn($step) => $step->isLast())->first();
+        if($lastStep) {
+            $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
+                'player' => $player,
+                'questStep' => $lastStep,
+            ]);
+
+            if($playerQuestStep && $playerQuestStep->getStatus() !== 'completed') {
+                $playerQuestStep->setStatus('completed');
+                $this->entityManager->persist($playerQuestStep);
+            }
+        }
+
+        // Donner la récompense liée à la quête, si définie
+        $reward = $quest->getReward();
+
+        if($reward) {
+            $this->rewardService->giveReward($reward, $player);
+        }
+
+        $this->entityManager->flush();
     }
 }

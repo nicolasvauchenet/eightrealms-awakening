@@ -41,6 +41,12 @@ class InteractionComponent
     public function pray(#[LiveArg] string $characterSlug): void
     {
         $character = $this->entityManager->getRepository(Character::class)->findOneBy(['slug' => $characterSlug]);
+        $this->character->setHealth($this->character->getHealthMax())
+            ->setMana($this->character->getManaMax())
+            ->setFortune(max(0, $this->character->getFortune() - 15));
+        $this->entityManager->persist($this->character);
+        $this->entityManager->flush();
+
         $this->description .= "<p class='text-success'><strong>Vous priez avec {$character->getName()}.</strong></p>";
     }
 }

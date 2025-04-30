@@ -276,7 +276,7 @@ readonly class PlayerAttackService
     private function getTargetInvisibility(PlayerCombat $playerCombat): bool
     {
         return $playerCombat->getPlayerCombatEffects()->exists(
-            fn($effect) => $effect->getEffect()->getSlug() === 'invisibility' && $effect->getTarget() === 'enemy'
+            fn($key, $effect) => $effect->getTarget() === 'invisibility' && $effect->getPlayerCombatEnemy() !== null
         );
     }
 }

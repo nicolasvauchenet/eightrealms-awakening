@@ -63,8 +63,9 @@ trait BiloLePassantTrait
             'text' => "<p><em>Alors, ces rats&nbsp;? Vous les avez vus&nbsp;? Vous avez fait quelque chose&nbsp;?</em></p>",
             'first' => true,
             'conditions' => [
-                'quest_status' => [
+                'quest_step_status' => [
                     'quest' => 'des-rats-sur-les-docks',
+                    'quest_step' => 1,
                     'status' => 'progress',
                 ],
             ],
@@ -75,10 +76,14 @@ trait BiloLePassantTrait
             'text' => "<p><em>Bravo&nbsp;! Vous avez réussi à vous débarrasser de ces rats&nbsp;! C'est un soulagement pour tout le monde, et soyez sûr que je vais m'empresser d'aller raconter votre victoire&nbsp;! J'espère que vous ne vous êtes pas fait mordre trop fort…</em></p>",
             'first' => true,
             'conditions' => [
-                'quest_status' => [
+                'quest_step_status' => [
                     'quest' => 'des-rats-sur-les-docks',
-                    'status' => 'completed',
+                    'quest_step' => 2,
+                    'status' => 'progress',
                 ],
+            ],
+            'effects' => [
+                'reward_quest' => 'des-rats-sur-les-docks',
             ],
             'dialog' => 'quest_bilo_le_passant',
             'reference' => 'quest_step_bilo_le_passant_6',

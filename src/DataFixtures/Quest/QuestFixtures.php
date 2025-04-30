@@ -5,6 +5,7 @@ namespace App\DataFixtures\Quest;
 use App\DataFixtures\Quest\Main\MainQuestTrait;
 use App\DataFixtures\Quest\Secondary\SecondaryQuestTrait;
 use App\Entity\Quest\Quest;
+use App\Entity\Reward\Reward;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -28,7 +29,8 @@ class QuestFixtures extends Fixture implements OrderedFixtureInterface
             foreach($quests as $data) {
                 $quest = new Quest();
                 $quest->setName($data['name'])
-                    ->setType($data['type']);
+                    ->setType($data['type'])
+                    ->setReward(isset($data['reward']) ? $this->getReference($data['reward'], Reward::class) : null);
                 $manager->persist($quest);
                 $this->addReference($data['reference'], $quest);
             }
@@ -39,6 +41,6 @@ class QuestFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 27;
+        return 28;
     }
 }

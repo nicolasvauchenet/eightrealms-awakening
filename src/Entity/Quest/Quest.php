@@ -2,6 +2,7 @@
 
 namespace App\Entity\Quest;
 
+use App\Entity\Reward\Reward;
 use App\Repository\Quest\QuestRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -31,6 +32,9 @@ class Quest
      */
     #[ORM\OneToMany(targetEntity: QuestStep::class, mappedBy: 'quest', orphanRemoval: true)]
     private Collection $questSteps;
+
+    #[ORM\ManyToOne]
+    private ?Reward $reward = null;
 
     public function __construct()
     {
@@ -88,7 +92,7 @@ class Quest
 
     public function addQuestStep(QuestStep $questStep): static
     {
-        if (!$this->questSteps->contains($questStep)) {
+        if(!$this->questSteps->contains($questStep)) {
             $this->questSteps->add($questStep);
             $questStep->setQuest($this);
         }
@@ -98,12 +102,24 @@ class Quest
 
     public function removeQuestStep(QuestStep $questStep): static
     {
-        if ($this->questSteps->removeElement($questStep)) {
+        if($this->questSteps->removeElement($questStep)) {
             // set the owning side to null (unless already changed)
-            if ($questStep->getQuest() === $this) {
+            if($questStep->getQuest() === $this) {
                 $questStep->setQuest(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReward(): ?Reward
+    {
+        return $this->reward;
+    }
+
+    public function setReward(?Reward $reward): static
+    {
+        $this->reward = $reward;
 
         return $this;
     }

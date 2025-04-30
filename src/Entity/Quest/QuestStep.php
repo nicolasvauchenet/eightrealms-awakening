@@ -2,6 +2,7 @@
 
 namespace App\Entity\Quest;
 
+use App\Entity\Reward\Reward;
 use App\Repository\Quest\QuestStepRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,6 +27,9 @@ class QuestStep
     #[ORM\ManyToOne(inversedBy: 'questSteps')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Quest $quest = null;
+
+    #[ORM\ManyToOne]
+    private ?Reward $reward = null;
 
     public function getId(): ?int
     {
@@ -83,5 +87,17 @@ class QuestStep
     public function isFirst(): bool
     {
         return $this->position === 1;
+    }
+
+    public function getReward(): ?Reward
+    {
+        return $this->reward;
+    }
+
+    public function setReward(?Reward $reward): static
+    {
+        $this->reward = $reward;
+
+        return $this;
     }
 }

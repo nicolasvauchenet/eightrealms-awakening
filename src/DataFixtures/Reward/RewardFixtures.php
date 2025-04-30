@@ -3,8 +3,9 @@
 namespace App\DataFixtures\Reward;
 
 use App\DataFixtures\Reward\Combat\CombatTrait;
-use App\DataFixtures\Reward\Combat\QuestTrait;
+use App\DataFixtures\Reward\Combat\CombatQuestTrait;
 use App\DataFixtures\Reward\Misc\MiscTrait;
+use App\DataFixtures\Reward\Quest\QuestTrait;
 use App\Entity\Item\Food;
 use App\Entity\Item\Gift;
 use App\Entity\Reward\Reward;
@@ -17,6 +18,7 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
 {
     use MiscTrait;
     use CombatTrait;
+    use CombatQuestTrait;
     use QuestTrait;
 
     public function load(ObjectManager $manager): void
@@ -30,6 +32,7 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
 
             // Quest
             self::COMBAT_QUEST_REWARDS,
+            self::QUEST_REWARDS,
         ];
 
         foreach($allRewards as $rewards) {
@@ -63,6 +66,6 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 29;
+        return 27;
     }
 }

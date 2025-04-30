@@ -4,7 +4,7 @@ namespace App\DataFixtures\Reward\Combat;
 
 use App\Entity\Item\Food;
 
-trait QuestTrait
+trait CombatQuestTrait
 {
     const COMBAT_QUEST_REWARDS = [
         [

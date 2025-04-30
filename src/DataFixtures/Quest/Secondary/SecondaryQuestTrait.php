@@ -8,6 +8,7 @@ trait SecondaryQuestTrait
         [
             'name' => 'Des rats sur les Docks',
             'type' => 'Secondaire',
+            'reward' => 'reward_quest_des_rats_sur_les_docks',
             'reference' => 'quest_secondary_des_rats_sur_les_docks',
         ],
         [

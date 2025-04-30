@@ -1,9 +1,9 @@
 <p class="reward">
-    {% if not this.isRewarded %}
+    {% if this.hasReward and not this.isRewarded %}
         <button {{ live_action('getReward') }}>
             <img src="{{ asset('img/core/action/reward.png') }}" alt="Récompense"/>
         </button>
-    {% else %}
+    {% elseif this.hasReward %}
         <small class="text-success">Récompense obtenue&nbsp;!</small>
     {% endif %}
 </p>

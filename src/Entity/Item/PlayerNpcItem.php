@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Item;
 
 use App\Entity\Character\PlayerNpc;
-use App\Entity\Item\Item;
-use App\Repository\PlayerNpcItemRepository;
+use App\Repository\Item\PlayerNpcItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlayerNpcItemRepository::class)]

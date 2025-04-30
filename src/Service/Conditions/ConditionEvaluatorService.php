@@ -47,6 +47,7 @@ readonly class ConditionEvaluatorService
             'quest_step_status' => $this->hasQuestStepStatus($player, $value),
             'combat_not_started' => $this->isCombatNotStarted($player, $value),
             'combat_status' => $this->hasCombatStatus($player, $value),
+            'combat_status_not' => $this->hasNotCombatStatus($player, $value),
             'inventory_has' => $this->hasItem($player, $value),
             'any' => $this->evaluateAny($value, $player),
             default => false,
@@ -179,6 +180,21 @@ readonly class ConditionEvaluatorService
         ]);
 
         return $playerCombat && $playerCombat->getStatus() === $data['status'];
+    }
+
+    private function hasNotCombatStatus(Player $player, array $data): bool
+    {
+        if(!isset($data['combat'], $data['status'])) {
+            return false;
+        }
+
+        $combat = $this->entityManager->getRepository(Combat::class)->findOneBy(['slug' => $data['combat']]);
+        $playerCombat = $this->entityManager->getRepository(PlayerCombat::class)->findOneBy([
+            'player' => $player,
+            'combat' => $combat,
+        ]);
+
+        return $playerCombat && $playerCombat->getStatus() !== $data['status'];
     }
 
     private function evaluateAny(array $conditions, Player $player): bool

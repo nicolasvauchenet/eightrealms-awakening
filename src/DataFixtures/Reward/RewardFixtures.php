@@ -2,82 +2,60 @@
 
 namespace App\DataFixtures\Reward;
 
+use App\DataFixtures\Reward\Combat\CombatTrait;
+use App\DataFixtures\Reward\Combat\QuestTrait;
+use App\DataFixtures\Reward\Misc\MiscTrait;
 use App\Entity\Item\Food;
 use App\Entity\Item\Gift;
 use App\Entity\Reward\Reward;
+use App\Entity\Reward\RewardItem;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class RewardFixtures extends Fixture implements OrderedFixtureInterface
 {
+    use MiscTrait;
+    use CombatTrait;
+    use QuestTrait;
+
     public function load(ObjectManager $manager): void
     {
         $allRewards = [
-            // Introduction
-            [
-                'items' => [
-                    [
-                        'item' => 'food_bread',
-                        'itemClass' => Food::class,
-                    ],
-                    [
-                        'item' => 'food_beer',
-                        'itemClass' => Food::class,
-                    ],
-                    [
-                        'item' => 'gift_flowers',
-                        'itemClass' => Gift::class,
-                    ],
-                ],
-                'reference' => 'reward_introduction',
-            ],
+            // Misc
+            self::MISC_REWARDS,
 
-            // Quêtes
-            [
-                'items' => [
-                    [
-                        'item' => 'food_meat_rat',
-                        'itemClass' => Food::class,
-                    ],
-                    [
-                        'item' => 'food_meat_rat',
-                        'itemClass' => Food::class,
-                    ],
-                ],
-                'crowns' => 10,
-                'experience' => 50,
-                'reference' => 'reward_combat_port_saint_doux_des_rats_sur_les_docks',
-            ],
+            // Combat
+            self::COMBAT_REWARDS,
 
-            // Rencontres
-            [
-                'items' => [
-                    [
-                        'item' => 'food_meat_rat',
-                        'itemClass' => Food::class,
-                    ],
-                    [
-                        'item' => 'food_meat_rat',
-                        'itemClass' => Food::class,
-                    ],
-                ],
-                'crowns' => 100,
-                'experience' => 20,
-                'reference' => 'reward_combat_port_saint_doux_une_bande_de_rats_sur_les_docks',
-            ],
+            // Quest
+            self::COMBAT_QUEST_REWARDS,
         ];
 
-        foreach($allRewards as $data) {
-            $reward = new Reward();
-            if(isset($data['items'])) {
-                foreach($data['items'] as $rewardItem) {
-                    $item = $this->getReference($rewardItem['item'], $rewardItem['itemClass']);
-                    $reward->addItem($item);
+        foreach($allRewards as $rewards) {
+            foreach($rewards as $rewardData) {
+                $reward = new Reward();
+
+                if(isset($rewardData['items'])) {
+                    foreach($rewardData['items'] as $rewardItemData) {
+                        $item = $this->getReference($rewardItemData['item'], $rewardItemData['itemClass']);
+                        $quantity = $rewardItemData['quantity'] ?? 1;
+
+                        $rewardItem = new RewardItem();
+                        $rewardItem->setItem($item);
+                        $rewardItem->setQuantity($quantity);
+                        $reward->addRewardItem($rewardItem);
+
+                        $manager->persist($rewardItem);
+                    }
                 }
+
+                $reward->setCrowns($rewardData['crowns'] ?? null);
+                $reward->setExperience($rewardData['experience'] ?? null);
+
+                $manager->persist($reward);
+                $this->addReference($rewardData['reference'], $reward);
             }
-            $manager->persist($reward);
-            $this->addReference($data['reference'], $reward);
         }
 
         $manager->flush();

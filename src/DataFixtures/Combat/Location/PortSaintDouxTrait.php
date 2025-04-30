@@ -50,9 +50,9 @@ trait PortSaintDouxTrait
             'conditions' => [
                 'any' => [
                     'combat_not_started' => 'une-bande-de-rats-sur-les-docks',
-                    'combat_status' => [
+                    'combat_status_not' => [
                         'combat' => 'une-bande-de-rats-sur-les-docks',
-                        'status' => 'progress',
+                        'status' => 'completed',
                     ],
                 ],
             ],
@@ -71,10 +71,6 @@ trait PortSaintDouxTrait
                 ],
                 [
                     'enemy' => 'creature_gros_rat',
-                    'enemyClass' => Creature::class,
-                ],
-                [
-                    'enemy' => 'creature_rat_geant',
                     'enemyClass' => Creature::class,
                 ],
             ],

@@ -1,6 +1,6 @@
 {% extends 'game/_layout/_index.html.twig' %}
 
-{% block title %}{{ screen.name }} - Les Huit Royaumes - Chapitre I : L'Éveil{% endblock %}
+{% block title %}{{ screen.name|striptags|replace({'Défaite': 'Défaite - ', 'Victoire': 'Victoire - '}) }} - Les Huit Royaumes - Chapitre I : L'Éveil{% endblock %}
 
 {% block body_class %}game screen {{ screen.type }}{% endblock %}
 

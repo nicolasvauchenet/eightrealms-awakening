@@ -25,10 +25,13 @@ class CinematicComponent
     public CinematicScreen $screen;
 
     #[LiveProp(writable: true)]
+    public bool $hasReward = false;
+
+    #[LiveProp(writable: true)]
     public bool $isRewarded = false;
 
     public function __construct(private readonly EntityManagerInterface $entityManager,
-                                private RewardService                   $rewardService)
+                                private readonly RewardService          $rewardService)
     {
     }
 
@@ -36,7 +39,8 @@ class CinematicComponent
     public function postMount(): void
     {
         $playerReward = $this->entityManager->getRepository(PlayerReward::class)->findOneBy(['player' => $this->character, 'reward' => $this->screen->getReward()]);
-        $this->isRewarded = (bool)$playerReward;
+        $this->hasReward = $this->screen->getReward() === null ? false : true;
+        $this->isRewarded = $playerReward === null ? false : true;
     }
 
     #[LiveAction]

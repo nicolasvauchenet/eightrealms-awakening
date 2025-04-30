@@ -16,11 +16,11 @@ class Reward
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, Item>
-     */
-    #[ORM\ManyToMany(targetEntity: Item::class)]
-    private Collection $items;
+    #[ORM\Column(nullable: true)]
+    private ?int $crowns = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $experience = null;
 
     /**
      * @var Collection<int, PlayerReward>
@@ -28,10 +28,16 @@ class Reward
     #[ORM\OneToMany(targetEntity: PlayerReward::class, mappedBy: 'reward', orphanRemoval: true)]
     private Collection $playerRewards;
 
+    /**
+     * @var Collection<int, RewardItem>
+     */
+    #[ORM\OneToMany(targetEntity: RewardItem::class, mappedBy: 'reward', orphanRemoval: true)]
+    private Collection $rewardItems;
+
     public function __construct()
     {
-        $this->items = new ArrayCollection();
         $this->playerRewards = new ArrayCollection();
+        $this->rewardItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -39,26 +45,26 @@ class Reward
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Item>
-     */
-    public function getItems(): Collection
+    public function getCrowns(): ?int
     {
-        return $this->items;
+        return $this->crowns;
     }
 
-    public function addItem(Item $item): static
+    public function setCrowns(?int $crowns): static
     {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-        }
+        $this->crowns = $crowns;
 
         return $this;
     }
 
-    public function removeItem(Item $item): static
+    public function getExperience(): ?int
     {
-        $this->items->removeElement($item);
+        return $this->experience;
+    }
+
+    public function setExperience(?int $experience): static
+    {
+        $this->experience = $experience;
 
         return $this;
     }
@@ -73,7 +79,7 @@ class Reward
 
     public function addPlayerReward(PlayerReward $playerReward): static
     {
-        if (!$this->playerRewards->contains($playerReward)) {
+        if(!$this->playerRewards->contains($playerReward)) {
             $this->playerRewards->add($playerReward);
             $playerReward->setReward($this);
         }
@@ -83,10 +89,40 @@ class Reward
 
     public function removePlayerReward(PlayerReward $playerReward): static
     {
-        if ($this->playerRewards->removeElement($playerReward)) {
+        if($this->playerRewards->removeElement($playerReward)) {
             // set the owning side to null (unless already changed)
-            if ($playerReward->getReward() === $this) {
+            if($playerReward->getReward() === $this) {
                 $playerReward->setReward(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RewardItem>
+     */
+    public function getRewardItems(): Collection
+    {
+        return $this->rewardItems;
+    }
+
+    public function addRewardItem(RewardItem $rewardItem): static
+    {
+        if (!$this->rewardItems->contains($rewardItem)) {
+            $this->rewardItems->add($rewardItem);
+            $rewardItem->setReward($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRewardItem(RewardItem $rewardItem): static
+    {
+        if ($this->rewardItems->removeElement($rewardItem)) {
+            // set the owning side to null (unless already changed)
+            if ($rewardItem->getReward() === $this) {
+                $rewardItem->setReward(null);
             }
         }
 

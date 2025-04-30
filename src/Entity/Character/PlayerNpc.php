@@ -2,7 +2,7 @@
 
 namespace App\Entity\Character;
 
-use App\Entity\PlayerNpcItem;
+use App\Entity\Item\PlayerNpcItem;
 use App\Repository\Character\PlayerNpcRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

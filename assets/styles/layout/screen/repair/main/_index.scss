@@ -1,11 +1,70 @@
 .screen-main {
-  @include displayGrid(repeat(2, 1fr), 0.5rem);
   flex: 1;
-  margin: 0 1rem;
-  width: calc(100% - 2rem);
+  width: calc(100% - 1rem);
+  margin: 0 0.5rem;
 
-  p {
-    text-align: center;
-    color: $primary;
+  .repair-items {
+    @include displayFlex(space-between, center, 0.5rem, column);
+    padding: 0.5rem 0.25rem;
+    height: calc(100% - 1.5rem);
+    background-color: rgba($secondary, 0.95);
+    border: 0.25rem groove $secondary;
+    border-radius: 0.5rem;
+    box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+    & > h3 {
+      margin: 0 1rem;
+      line-height: 1.25rem;
+
+      @include respondTo(md) {
+        margin: 0 3rem 0.5rem;
+      }
+    }
+
+    .items {
+      @include displayGrid(repeat(2, 1fr), 1rem);
+      align-items: flex-start;
+      overflow-y: auto;
+      padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+      width: calc(100% - 1.5rem);
+      max-height: 34dvh;
+
+      @include respondTo(md) {
+        max-height: 38dvh;
+      }
+
+      .app-card {
+        &.item {
+          overflow: visible;
+        }
+
+        .card-header {
+          .card-image {
+            height: 6dvh;
+          }
+        }
+
+        .card-footer {
+          button {
+            gap: 0.25rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .app-button {
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem 0.5rem;
+      width: calc(100% - 1rem);
+      font-size: 1rem;
+      animation-delay: 0s;
+    }
+
+    p {
+      text-align: center;
+      color: $primary;
+    }
   }
 }

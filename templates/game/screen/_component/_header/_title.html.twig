@@ -38,6 +38,10 @@
             {% endif %}
         {% elseif this.screen.type == 'trade' %}
             <small>Commercer</small>
+        {% elseif this.screen.type == 'repair' %}
+            <small>Réparer</small>
+        {% elseif this.screen.type == 'reload' %}
+            <small>Recharger</small>
         {% elseif this.screen.type == 'combat' %}
             <small>Combat</small>
         {% endif %}

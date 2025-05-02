@@ -33,6 +33,32 @@ readonly class TradeService
         }));
     }
 
+    public function getRepairableItems(Player $player): Collection
+    {
+        $inventory = $player->getCharacterItems();
+
+        return new ArrayCollection(array_filter($inventory->toArray(), function($characterItem) {
+            $category = $characterItem->getItem()->getCategory()->getSlug();
+            $isRepairable = in_array($category, ['arme', 'armure', 'bouclier']);
+
+            return $isRepairable && $characterItem->getHealth() < $characterItem->getItem()->getHealthMax();
+        }));
+    }
+
+    public function getReloadableItems(Player $player): Collection
+    {
+        $inventory = $player->getCharacterItems();
+
+        return new ArrayCollection(array_filter($inventory->toArray(), function($characterItem) {
+            $item = $characterItem->getItem();
+            if(!method_exists($item, 'getChargeMax') || $item->getChargeMax() <= 0) {
+                return false;
+            }
+
+            return $characterItem->getCharge() < $item->getChargeMax();
+        }));
+    }
+
     public function getItemPrice(
         PlayerNpc                   $playerCharacter,
         CharacterItem|PlayerNpcItem $playerCharacterItem,

@@ -3,14 +3,24 @@
   width: calc(100% - 1rem);
   margin: 0 0.5rem;
 
+  &:has(.reload-items > p) {
+    @include displayFlex(center, center);
+  }
+
   .reload-items {
     @include displayFlex(space-between, center, 0.5rem, column);
     padding: 0.5rem 0.25rem;
+    width: calc(100% - 2rem);
     height: calc(100% - 1.5rem);
     background-color: rgba($secondary, 0.95);
     border: 0.25rem groove $secondary;
     border-radius: 0.5rem;
     box-shadow: 2px 2px 0.25rem rgba($black, 0.85);
+
+    &:has(> p) {
+      justify-content: center;
+      height: auto;
+    }
 
     & > h3 {
       margin: 0 1rem;

@@ -137,4 +137,26 @@ class PlayerNpc
 
         return $this;
     }
+
+    public function getDescription(): ?string
+    {
+        $npc = $this->getNpc();
+
+        if($this->reputation <= -10 && $npc->getDescriptionAngry()) {
+            return $npc->getDescriptionAngry();
+        }
+
+        return $npc->getDescription();
+    }
+
+    public function getPicture(): ?string
+    {
+        $npc = $this->getNpc();
+
+        if($this->reputation <= -10 && $npc->getPictureAngry()) {
+            return $npc->getPictureAngry();
+        }
+
+        return $npc->getPicture();
+    }
 }

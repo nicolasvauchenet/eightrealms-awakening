@@ -38,7 +38,7 @@ class InteractionComponent
     #[PostMount]
     public function postMount(): void
     {
-        $this->description = $this->screen->getDescription() ?? '';
+        $this->description = $this->playerNpc->getDescription() ?? '';
     }
 
     #[LiveAction]

@@ -40,8 +40,10 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                 $character = new Npc();
                 $character->setName($data['name'])
                     ->setPicture($data['picture'])
+                    ->setPictureAngry($data['picture_angry'] ?? null)
                     ->setThumbnail($data['thumbnail'])
                     ->setDescription($data['description'])
+                    ->setDescriptionAngry($data['description_angry'] ?? null)
                     ->setStrength($data['strength'])
                     ->setDexterity($data['dexterity'])
                     ->setConstitution($data['constitution'])

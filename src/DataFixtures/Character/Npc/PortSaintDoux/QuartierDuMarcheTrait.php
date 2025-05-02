@@ -8,8 +8,10 @@ trait QuartierDuMarcheTrait
         [
             'name' => 'Sophie La Marchande',
             'picture' => 'img/chapter1/npc/sophie-la-marchande.png',
+            'picture_angry' => 'img/chapter1/npc/sophie-la-marchande-angry.png',
             'thumbnail' => 'img/chapter1/npc/sophie-la-marchande_thumb.png',
             'description' => "<p>Vous êtes face à une marchande. Elle vous regarde avec un sourire bienveillant. Elle semble prête à vous aider si vous avez besoin de quelque chose.</p>",
+            'description_angry' => "<p>Vous êtes face à une marchande au regard dur. Les coins de sa bouche tirent à peine vers le bas, et son expression trahit une certaine lassitude. Elle vous observe en silence, les bras croisés sur sa balance, visiblement peu impressionnée.</p><p><em>Si c’est pour marchander à la baisse, vous avez perdu ton temps. Dites ce que vous voulez, je n’ai pas la journée.</em></p>",
             'strength' => 8,
             'dexterity' => 13,
             'constitution' => 10,
@@ -27,8 +29,10 @@ trait QuartierDuMarcheTrait
         [
             'name' => 'Robert Le Garde',
             'picture' => 'img/chapter1/npc/robert-le-garde.png',
+            'picture_angry' => 'img/chapter1/npc/robert-le-garde-angry.png',
             'thumbnail' => 'img/chapter1/npc/robert-le-garde_thumb.png',
             'description' => "<p>Vous êtes face à un garde de la ville. Il est en armure et son arme est prête à être dégainée. Il vous regarde avec méfiance.</p><p><em>Qu'y a-t-il, citoyen&nbsp;? Un problème&nbsp;? Faites vite&nbsp;!</em></p>",
+            'description_angry' => "<p>Vous êtes face à un garde de la ville. Sa mâchoire est crispée, son regard dur vous scrute comme si vous étiez déjà coupable. Sa main gantée serre la garde de son épée, prête à réagir au moindre faux pas.</p><p><em>Ça va être rapide j’espère. J’ai pas le temps pour les histoires aujourd’hui.</em></p>",
             'strength' => 12,
             'dexterity' => 11,
             'constitution' => 14,
@@ -46,8 +50,10 @@ trait QuartierDuMarcheTrait
         [
             'name' => 'Bilo le Passant',
             'picture' => 'img/chapter1/npc/bilo-le-passant.png',
+            'picture_angry' => 'img/chapter1/npc/bilo-le-passant-angry.png',
             'thumbnail' => 'img/chapter1/npc/bilo-le-passant_thumb.png',
             'description' => "<p>Vous croisez un passant qui semble désœuvré. Il vous regarde avec insistance, comme s'il avait quelque chose à vous dire.</p><p><em>Euh… Oui&nbsp;? Bonjour&nbsp;! Je m'appelle Bilo&nbsp;! Comment allez-vous&nbsp;?</em></p>",
+            'description_angry' => "<p>Vous croisez un passant à l’air contrarié. Il vous lance un regard appuyé, visiblement agacé, comme s’il attendait quelque chose depuis trop longtemps.</p><p><em>Quoi&nbsp;? Vous comptez rester planté là à me fixer, ou vous avez une vraie question&nbsp;?</em></p>",
             'strength' => 7,
             'dexterity' => 10,
             'constitution' => 10,

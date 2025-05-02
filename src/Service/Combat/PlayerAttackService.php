@@ -102,16 +102,6 @@ readonly class PlayerAttackService
                 }
             }
 
-            // Si coup critique -> usure armure/bouclier
-            if($attackRoll['isCriticalSuccess']) {
-                $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
-                    attackerWeapon: $characterItem,
-                    defenderEquipments: $this->attackHelper->getCharacterItemService()->getEquippedItems($target->getEnemy()),
-                    defenseIsCritical: false
-                );
-                $logs = array_merge($logs, $criticalLogs);
-            }
-
             $attackLog = $this->attackHelper->generateAttackLog(
                 target: $target,
                 weaponName: $weaponName,
@@ -189,16 +179,6 @@ readonly class PlayerAttackService
                     if($weaponLog) {
                         $subLogs[] = $weaponLog;
                     }
-                }
-
-                // Si critique -> usure armure/bouclier
-                if($attackRoll['isCriticalSuccess']) {
-                    $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
-                        attackerWeapon: $characterItem,
-                        defenderEquipments: $this->attackHelper->getCharacterItemService()->getEquippedItems($target->getEnemy()),
-                        defenseIsCritical: false
-                    );
-                    $subLogs = array_merge($subLogs, $criticalLogs);
                 }
 
                 $logs[] = $this->attackHelper->generateAttackLog(

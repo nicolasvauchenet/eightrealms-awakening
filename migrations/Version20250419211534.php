@@ -21,7 +21,7 @@ final class Version20250419211534 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE npc (id INT NOT NULL, level INT NOT NULL, PRIMARY KEY(id))
+            CREATE TABLE npc (id INT NOT NULL, level INT NOT NULL, picture_angry VARCHAR(255) DEFAULT NULL, description_angry TEXT DEFAULT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE npc ADD CONSTRAINT FK_468C762CBF396750 FOREIGN KEY (id) REFERENCES character (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE

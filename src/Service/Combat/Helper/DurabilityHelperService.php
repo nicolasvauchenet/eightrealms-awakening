@@ -26,7 +26,7 @@ readonly class DurabilityHelperService
             $this->entityManager->persist($characterItem);
             $this->entityManager->flush();
 
-            return "<small class='text-warning'>Votre arme {$characterItem->getItem()->getName()} montre des signes d'usure.</small><br/>";
+            return "<small class='text-warning'>Votre {$characterItem->getItem()->getName()} montre des signes d'usure.</small><br/>";
         }
 
         $this->entityManager->persist($characterItem);
@@ -74,7 +74,7 @@ readonly class DurabilityHelperService
             $damage = random_int(2, 5);
             $attackerWeapon->setHealth(max(0, $attackerWeapon->getHealth() - $damage));
 
-            $logs[] = "<small class='text-danger'>Votre arme {$attackerWeapon->getItem()->getName()} subit $damage point" . ($damage > 1 ? 's' : '') . " de dégâts critiques !</small><br/>";
+            $logs[] = "<small class='text-danger'>Votre {$attackerWeapon->getItem()->getName()} subit $damage point" . ($damage > 1 ? 's' : '') . " de dégâts critiques !</small><br/>";
             $this->entityManager->persist($attackerWeapon);
         }
 
@@ -84,7 +84,7 @@ readonly class DurabilityHelperService
                     $equipment = $defenderEquipments[$slot];
                     $damage = random_int(2, 5);
                     $equipment->setHealth(max(0, $equipment->getHealth() - $damage));
-                    $logs[] = "<small class='text-danger'>{$equipment->getItem()->getName()} montre des signes de détérioration ($damage point" . ($damage > 1 ? 's' : '') . ") !</small><br/>";
+                    $logs[] = "<small class='text-danger'>Votre {$equipment->getItem()->getName()} montre des signes de détérioration ($damage point" . ($damage > 1 ? 's' : '') . ") !</small><br/>";
                     $this->entityManager->persist($equipment);
                 }
             }

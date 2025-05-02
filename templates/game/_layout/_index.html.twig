@@ -2,10 +2,14 @@
 
 {% block body %}
     <figure class="app-wallpaper">
-        {% if screen.picture %}
-            <img src="{{ asset(screen.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
+        {% if screen.type in ['interaction', 'dialog', 'trade', 'repair', 'reload', 'pray'] %}
+            <img src="{{ asset(playerNpc.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
         {% else %}
-            <img src="{{ asset('img/core/cover.webp') }}" class="app-coverimg" alt="Les Huit Royaumes"/>
+            {% if screen.picture %}
+                <img src="{{ asset(screen.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
+            {% else %}
+                <img src="{{ asset('img/core/cover.webp') }}" class="app-coverimg" alt="Les Huit Royaumes"/>
+            {% endif %}
         {% endif %}
         <div class="app-overlay"></div>
     </figure>

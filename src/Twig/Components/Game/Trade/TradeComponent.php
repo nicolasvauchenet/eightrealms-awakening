@@ -149,7 +149,7 @@ class TradeComponent
                 ->setPlayerNpc($npc)
                 ->setOriginal(false)
                 ->setHealth($characterItem->getHealth() ?? 100)
-                ->setCharge($characterItem->getCharge() ?? 0);
+                ->setCharge($characterItem->getCharge() ?? 100);
 
             $this->entityManager->persist($npcItem);
         } else {

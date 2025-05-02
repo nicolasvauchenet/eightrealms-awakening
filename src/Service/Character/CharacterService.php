@@ -41,8 +41,8 @@ readonly class CharacterService
                     ->setItem($characterItem->getItem())
                     ->setPlayerNpc($playerNpc)
                     ->setOriginal(true)
-                    ->setHealth(100)
-                    ->setCharge(100);
+                    ->setHealth(method_exists($characterItem->getItem(), 'getHealthMax') ? $characterItem->getItem()->getHealthMax() : 100)
+                    ->setCharge(method_exists($characterItem->getItem(), 'getChargeMax') ? $characterItem->getItem()->getChargeMax() : 100);
                 $this->entityManager->persist($playerNpcItem);
             }
             $this->entityManager->flush();

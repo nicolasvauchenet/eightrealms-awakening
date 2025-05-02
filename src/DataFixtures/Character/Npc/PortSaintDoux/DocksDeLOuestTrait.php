@@ -9,8 +9,10 @@ trait DocksDeLOuestTrait
         [
             'name' => 'Jarrod le Tavernier',
             'picture' => 'img/chapter1/npc/jarrod-le-tavernier.png',
+            'picture_angry' => 'img/chapter1/npc/jarrod-le-tavernier-angry.png',
             'thumbnail' => 'img/chapter1/npc/jarrod-le-tavernier_thumb.png',
             'description' => "<p>Le Tavernier de la Flûte Moisie vous accueille avec un sourire franc, une chope à moitié vide dans une main, un torchon douteux dans l’autre. Son imposante carrure d’orque contraste avec la chaleur de son rire, et sa voix grave résonne dans toute la salle.</p><p><em>Bienvenue à la Flûte Moisie, étranger. Ici, les secrets coulent autant que la bière&nbsp;! Alors, on trinque ou on papote&nbsp;?</em></p>",
+            'description_angry' => "<p>Le Tavernier de la Flûte Moisie vous jette un regard noir, une chope dégoulinante de mousse fermement plantée sur le comptoir, son torchon crasseux malmené dans l’autre main. Sa carrure d’orque est encore plus intimidante quand ses sourcils se froncent et que son grognement sourd fait vibrer les bouteilles sur les étagères.</p><p><em>La Flûte Moisie n’est pas d’humeur aujourd’hui. T’as une bonne raison d’être là ou tu comptes juste gaspiller mon temps&nbsp;?</em></p>",
             'strength' => 15,
             'dexterity' => 11,
             'constitution' => 14,

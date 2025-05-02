@@ -73,6 +73,14 @@ readonly class InteractionScreenService
                     'label' => 'Marchander avec ' . $character->getName(),
                     'thumbnail' => 'img/core/action/trade.png',
                 ];
+                if($profession->getSlug() === 'forgeron') {
+                    $footerActions[] = [
+                        'type' => 'repair',
+                        'slug' => $character->getSlug(),
+                        'label' => 'Réparer avec ' . $character->getName(),
+                        'thumbnail' => 'img/core/action/repair.png',
+                    ];
+                }
             } else if($profession->getSlug() === 'pretre') {
                 $footerActions[] = [
                     'type' => 'pray',

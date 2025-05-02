@@ -45,7 +45,7 @@ readonly class ExitActionResolver
         }
 
         // Retour au lieu (zone, building...)
-        if(in_array($screen->getType(), ['interaction', 'trade'], true)) {
+        if(in_array($screen->getType(), ['interaction', 'trade', 'repair', 'reload'], true)) {
             $character = $screen->getCharacter();
             $charLoc = $this->characterLocationRepository->findOneBy(['character' => $character]);
 

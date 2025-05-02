@@ -1,0 +1,11 @@
+.screen-main {
+  @include displayGrid(repeat(2, 1fr), 0.5rem);
+  flex: 1;
+  margin: 0 1rem;
+  width: calc(100% - 2rem);
+
+  p {
+    text-align: center;
+    color: $primary;
+  }
+}

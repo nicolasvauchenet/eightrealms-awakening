@@ -9,6 +9,7 @@ use App\Entity\Location\CharacterLocation;
 use App\Entity\Quest\Quest;
 use App\Entity\Quest\QuestStep;
 use App\Entity\Screen\InteractionScreen;
+use App\Entity\Screen\RepairScreen;
 use App\Entity\Screen\TradeScreen;
 use App\Entity\Spell\CharacterSpell;
 use App\Repository\Character\CharacterRepository;
@@ -132,6 +133,9 @@ abstract class Character
      */
     #[ORM\OneToMany(targetEntity: QuestStep::class, mappedBy: 'giver')]
     private Collection $questSteps;
+
+    #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
+    private ?RepairScreen $repairScreen = null;
 
     public function __construct()
     {
@@ -580,6 +584,23 @@ abstract class Character
                 $questStep->setGiver(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRepairScreen(): ?RepairScreen
+    {
+        return $this->repairScreen;
+    }
+
+    public function setRepairScreen(RepairScreen $repairScreen): static
+    {
+        // set the owning side of the relation if necessary
+        if ($repairScreen->getCharacter() !== $this) {
+            $repairScreen->setCharacter($this);
+        }
+
+        $this->repairScreen = $repairScreen;
 
         return $this;
     }

@@ -1,0 +1,6 @@
+&.repair {
+  .app-main {
+    @import "../trade/header";
+    @import "./main";
+  }
+}

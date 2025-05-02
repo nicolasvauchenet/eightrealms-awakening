@@ -3,12 +3,22 @@
   border: 0.25rem groove $secondary;
 
   .card-header {
-    &:has(.card-attributes) {
-      position: relative;
+    position: relative;
 
+    &:has(.card-attributes) {
       .card-image {
         margin-top: 2rem;
       }
+    }
+
+    .equipped {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.25rem;
+      color: $white;
+      background-color: $primary;
+      border-bottom-left-radius: 0.5rem;
     }
 
     .card-image {

@@ -90,7 +90,6 @@ abstract class Character
      * @var Collection<int, CharacterItem>
      */
     #[ORM\OneToMany(targetEntity: CharacterItem::class, mappedBy: 'character', orphanRemoval: true)]
-    #[ORM\OrderBy(['equipped' => 'ASC', 'item' => 'ASC'])]
     private Collection $characterItems;
 
     /**
@@ -353,7 +352,22 @@ abstract class Character
      */
     public function getCharacterItems(): Collection
     {
-        return $this->characterItems;
+        $items = $this->characterItems->toArray();
+
+        usort($items, function($a, $b) {
+            // 1. Nom de la catégorie
+            $aCategory = $a->getItem()->getCategory()->getName();
+            $bCategory = $b->getItem()->getCategory()->getName();
+            $categoryCompare = strcmp($aCategory, $bCategory);
+            if($categoryCompare !== 0) {
+                return $categoryCompare;
+            }
+
+            // 2. Nom de l’item
+            return strcmp($a->getItem()->getName(), $b->getItem()->getName());
+        });
+
+        return new ArrayCollection($items);
     }
 
     public function addCharacterItem(CharacterItem $characterItem): static
@@ -542,7 +556,7 @@ abstract class Character
 
     public function addQuest(Quest $quest): static
     {
-        if (!$this->quests->contains($quest)) {
+        if(!$this->quests->contains($quest)) {
             $this->quests->add($quest);
             $quest->setGiver($this);
         }
@@ -552,9 +566,9 @@ abstract class Character
 
     public function removeQuest(Quest $quest): static
     {
-        if ($this->quests->removeElement($quest)) {
+        if($this->quests->removeElement($quest)) {
             // set the owning side to null (unless already changed)
-            if ($quest->getGiver() === $this) {
+            if($quest->getGiver() === $this) {
                 $quest->setGiver(null);
             }
         }
@@ -572,7 +586,7 @@ abstract class Character
 
     public function addQuestStep(QuestStep $questStep): static
     {
-        if (!$this->questSteps->contains($questStep)) {
+        if(!$this->questSteps->contains($questStep)) {
             $this->questSteps->add($questStep);
             $questStep->setGiver($this);
         }
@@ -582,9 +596,9 @@ abstract class Character
 
     public function removeQuestStep(QuestStep $questStep): static
     {
-        if ($this->questSteps->removeElement($questStep)) {
+        if($this->questSteps->removeElement($questStep)) {
             // set the owning side to null (unless already changed)
-            if ($questStep->getGiver() === $this) {
+            if($questStep->getGiver() === $this) {
                 $questStep->setGiver(null);
             }
         }
@@ -600,7 +614,7 @@ abstract class Character
     public function setRepairScreen(RepairScreen $repairScreen): static
     {
         // set the owning side of the relation if necessary
-        if ($repairScreen->getCharacter() !== $this) {
+        if($repairScreen->getCharacter() !== $this) {
             $repairScreen->setCharacter($this);
         }
 
@@ -617,7 +631,7 @@ abstract class Character
     public function setReloadScreen(ReloadScreen $reloadScreen): static
     {
         // set the owning side of the relation if necessary
-        if ($reloadScreen->getCharacter() !== $this) {
+        if($reloadScreen->getCharacter() !== $this) {
             $reloadScreen->setCharacter($this);
         }
 

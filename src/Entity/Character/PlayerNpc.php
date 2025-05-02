@@ -99,12 +99,26 @@ class PlayerNpc
      */
     public function getPlayerNpcItems(): Collection
     {
-        return $this->playerNpcItems;
+        $items = $this->playerNpcItems->toArray();
+
+        usort($items, function($a, $b) {
+            $catA = $a->getItem()->getCategory()->getName();
+            $catB = $b->getItem()->getCategory()->getName();
+
+            $categoryCompare = strcmp($catA, $catB);
+            if($categoryCompare !== 0) {
+                return $categoryCompare;
+            }
+
+            return strcmp($a->getItem()->getName(), $b->getItem()->getName());
+        });
+
+        return new ArrayCollection($items);
     }
 
     public function addPlayerNpcItem(PlayerNpcItem $playerNpcItem): static
     {
-        if (!$this->playerNpcItems->contains($playerNpcItem)) {
+        if(!$this->playerNpcItems->contains($playerNpcItem)) {
             $this->playerNpcItems->add($playerNpcItem);
             $playerNpcItem->setPlayerNpc($this);
         }
@@ -114,9 +128,9 @@ class PlayerNpc
 
     public function removePlayerNpcItem(PlayerNpcItem $playerNpcItem): static
     {
-        if ($this->playerNpcItems->removeElement($playerNpcItem)) {
+        if($this->playerNpcItems->removeElement($playerNpcItem)) {
             // set the owning side to null (unless already changed)
-            if ($playerNpcItem->getPlayerNpc() === $this) {
+            if($playerNpcItem->getPlayerNpc() === $this) {
                 $playerNpcItem->setPlayerNpc(null);
             }
         }

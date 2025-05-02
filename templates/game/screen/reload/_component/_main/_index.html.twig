@@ -1,22 +1,22 @@
 <main class="screen-main">
-    {% set repairableItems = app_tradeService.getRepairableItems(this.character) %}
-    {% set totalRepairCost = app_tradeService.totalPrice(this.playerNpc, repairableItems, 'repair') %}
+    {% set reloadableItems = app_tradeService.getReloadableItems(this.character) %}
+    {% set totalReloadCost = app_tradeService.totalPrice(this.playerNpc, reloadableItems, 'reload') %}
 
-    <div class="repair-items">
-        {% if repairableItems | length > 0 %}
+    <div class="reload-items">
+        {% if reloadableItems | length > 0 %}
             <div class="items">
-                {% for characterItem in repairableItems %}
+                {% for characterItem in reloadableItems %}
                     <div class="app-card item"
                          data-controller="tooltip">
                         <a href="#" data-action="click->tooltip#open">
                             <div class="card-header">
                                 {% if characterItem.item.thumbnail is defined %}
                                     <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
-                                         class="card-image {% if app_characterItemService.canRepairItem(this.playerNpc, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                                         class="card-image {% if app_characterItemService.canReloadItem(this.playerNpc, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
                                          alt="{{ characterItem.item.name }}"/>
                                 {% else %}
                                     <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
-                                         class="card-image {% if app_characterItemService.canRepairItem(this.playerNpc, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                                         class="card-image {% if app_characterItemService.canReloadItem(this.playerNpc, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
                                          alt="{{ characterItem.item.name }}"/>
                                 {% endif %}
                             </div>
@@ -28,27 +28,27 @@
                         {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
 
                         <div class="card-footer">
-                            <button class="bg-success {% if app_characterItemService.canRepairItem(this.playerNpc, characterItem) == false %}disabled{% endif %}"
+                            <button class="bg-success {% if app_characterItemService.canReloadItem(this.playerNpc, characterItem) == false %}disabled{% endif %}"
                                     {{ live_action('repairItem', {'characterItemId': characterItem.id }) }}>
-                                {{ ux_icon('f7:hammer-fill', {'class': 'app-icon text-warning'}) }}
-                                {{ app_tradeService.itemPrice(this.playerNpc, characterItem, 'repair') }}
+                                {{ ux_icon('game-icons:fire-gem', {'class': 'app-icon text-warning'}) }}
+                                {{ app_tradeService.itemPrice(this.playerNpc, characterItem, 'reload') }}
                             </button>
                         </div>
                     </div>
                 {% endfor %}
             </div>
 
-            <button class="app-button cta {% if totalRepairCost == 0 or totalRepairCost > this.character.fortune %}disabled{% endif %}"
-                    {{ live_action('repairAllItems', {'characterId': this.character.id}) }}>
-                <small>Tout réparer</small>
+            <button class="app-button cta {% if totalReloadCost == 0 or totalReloadCost > this.character.fortune %}disabled{% endif %}"
+                    {{ live_action('reloadAllItems', {'characterId': this.character.id}) }}>
+                <small>Tout recharger</small>
                 <span>
                     {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
-                    {{ totalRepairCost }}
+                    {{ totalReloadCost }}
                 </span>
             </button>
         {% else %}
             <p>
-                <strong>Vous n'avez rien à faire réparer par {{ this.playerNpc.npc.name }}&nbsp;!</strong>
+                <strong>Vous n'avez rien à faire recharger par {{ this.playerNpc.npc.name }}&nbsp;!</strong>
             </p>
         {% endif %}
     </div>

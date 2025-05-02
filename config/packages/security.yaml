@@ -43,6 +43,8 @@ security:
     - { path: ^/interaction, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/dialogue, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/commerce, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/reparer, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/recharger, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/combat, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/, roles: PUBLIC_ACCESS }
 

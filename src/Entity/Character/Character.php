@@ -9,6 +9,7 @@ use App\Entity\Location\CharacterLocation;
 use App\Entity\Quest\Quest;
 use App\Entity\Quest\QuestStep;
 use App\Entity\Screen\InteractionScreen;
+use App\Entity\Screen\ReloadScreen;
 use App\Entity\Screen\RepairScreen;
 use App\Entity\Screen\TradeScreen;
 use App\Entity\Spell\CharacterSpell;
@@ -136,6 +137,9 @@ abstract class Character
 
     #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
     private ?RepairScreen $repairScreen = null;
+
+    #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
+    private ?ReloadScreen $reloadScreen = null;
 
     public function __construct()
     {
@@ -601,6 +605,23 @@ abstract class Character
         }
 
         $this->repairScreen = $repairScreen;
+
+        return $this;
+    }
+
+    public function getReloadScreen(): ?ReloadScreen
+    {
+        return $this->reloadScreen;
+    }
+
+    public function setReloadScreen(ReloadScreen $reloadScreen): static
+    {
+        // set the owning side of the relation if necessary
+        if ($reloadScreen->getCharacter() !== $this) {
+            $reloadScreen->setCharacter($this);
+        }
+
+        $this->reloadScreen = $reloadScreen;
 
         return $this;
     }

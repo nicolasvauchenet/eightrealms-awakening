@@ -16,6 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'interaction' => InteractionScreen::class,
     'trade' => TradeScreen::class,
     'repair' => RepairScreen::class,
+    'reload' => ReloadScreen::class,
     'dialog' => DialogScreen::class,
     'combat' => CombatScreen::class,
 ])]

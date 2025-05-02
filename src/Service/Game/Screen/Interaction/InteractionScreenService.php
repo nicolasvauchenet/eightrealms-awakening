@@ -81,6 +81,14 @@ readonly class InteractionScreenService
                         'thumbnail' => 'img/core/action/repair.png',
                     ];
                 }
+                if($profession->getSlug() === 'arcaniste') {
+                    $footerActions[] = [
+                        'type' => 'reload',
+                        'slug' => $character->getSlug(),
+                        'label' => 'Recharger avec ' . $character->getName(),
+                        'thumbnail' => 'img/core/action/reload.png',
+                    ];
+                }
             } else if($profession->getSlug() === 'pretre') {
                 $footerActions[] = [
                     'type' => 'pray',

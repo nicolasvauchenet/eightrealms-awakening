@@ -10,6 +10,8 @@
             {% set backUrl = path('app_game_screen_' ~ this.screen.type, {slug: this.screen.character.slug}) %}
         {% elseif this.screen.type == 'repair' %}
             {% set backUrl = path('app_game_screen_' ~ this.screen.type, {slug: this.screen.character.slug}) %}
+        {% elseif this.screen.type == 'reload' %}
+            {% set backUrl = path('app_game_screen_' ~ this.screen.type, {slug: this.screen.character.slug}) %}
         {% endif %}
 
         {% if this.screen.type != 'combat' %}

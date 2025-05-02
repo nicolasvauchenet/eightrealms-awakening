@@ -29,7 +29,7 @@
 
                         <div class="card-footer">
                             <button class="bg-success {% if app_characterItemService.canReloadItem(this.playerNpc, characterItem) == false %}disabled{% endif %}"
-                                    {{ live_action('repairItem', {'characterItemId': characterItem.id }) }}>
+                                    {{ live_action('reloadItem', {'characterItemId': characterItem.id }) }}>
                                 {{ ux_icon('game-icons:fire-gem', {'class': 'app-icon text-warning'}) }}
                                 {{ app_tradeService.itemPrice(this.playerNpc, characterItem, 'reload') }}
                             </button>

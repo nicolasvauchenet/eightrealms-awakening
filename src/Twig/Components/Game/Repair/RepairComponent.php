@@ -49,5 +49,69 @@ class RepairComponent
         $this->description = "<p><strong>Vous demandez à {$this->screen->getCharacter()->getName()} de réparer vos objets usés.</strong></p>";
     }
 
+    #[LiveAction]
+    public function repairItem(#[LiveArg] int $characterItemId): void
+    {
+        $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
+        if(!$characterItem || $characterItem->getCharacter() !== $this->character) {
+            $this->description .= "<p>Objet introuvable ou invalide.</p>";
 
+            return;
+        }
+
+        $price = $this->tradeService->getItemPrice($this->playerNpc, $characterItem, 'repair');
+
+        if($this->character->getFortune() < $price) {
+            $this->description .= "<p>Pas assez de couronnes pour réparer <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
+
+            return;
+        }
+
+        $this->character->setFortune($this->character->getFortune() - $price);
+        $this->playerNpc->setFortune($this->playerNpc->getFortune() + $price);
+
+        if(method_exists($characterItem->getItem(), 'getHealthMax')) {
+            $characterItem->setHealth($characterItem->getItem()->getHealthMax());
+        }
+
+        $this->entityManager->persist($this->character);
+        $this->entityManager->persist($this->playerNpc);
+        $this->entityManager->persist($characterItem);
+        $this->entityManager->flush();
+
+        $this->description .= "<p><strong>{$characterItem->getItem()->getName()}</strong> a été réparé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</p>";
+    }
+
+    #[LiveAction]
+    public function repairAllItems(#[LiveArg] int $characterId): void
+    {
+        if($this->character->getId() !== $characterId) {
+            $this->description .= "<p>Erreur de personnage.</p>";
+
+            return;
+        }
+
+        $repairableItems = $this->tradeService->getRepairableItems($this->character);
+        $totalCost = $this->tradeService->getTotalPrice($this->playerNpc, $repairableItems, 'repair');
+
+        if($this->character->getFortune() < $totalCost) {
+            $this->description .= "<p>Pas assez de couronnes pour tout réparer (coût total : {$totalCost}).</p>";
+
+            return;
+        }
+
+        foreach($repairableItems as $item) {
+            $item->setHealth($item->getItem()->getHealthMax());
+            $this->entityManager->persist($item);
+        }
+
+        $this->character->setFortune($this->character->getFortune() - $totalCost);
+        $this->playerNpc->setFortune($this->playerNpc->getFortune() + $totalCost);
+        $this->entityManager->persist($this->character);
+        $this->entityManager->persist($this->playerNpc);
+
+        $this->entityManager->flush();
+
+        $this->description .= "<p>Tous les objets réparables ont été restaurés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
+    }
 }

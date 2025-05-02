@@ -30,7 +30,8 @@ class QuestFixtures extends Fixture implements OrderedFixtureInterface
                 $quest = new Quest();
                 $quest->setName($data['name'])
                     ->setType($data['type'])
-                    ->setReward(isset($data['reward']) ? $this->getReference($data['reward'], Reward::class) : null);
+                    ->setReward(isset($data['reward']) ? $this->getReference($data['reward'], Reward::class) : null)
+                    ->setGiver(isset($data['giver']) ? $this->getReference($data['giver'], $data['giverClass']) : null);
                 $manager->persist($quest);
                 $this->addReference($data['reference'], $quest);
             }

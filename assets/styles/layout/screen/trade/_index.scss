@@ -1,0 +1,6 @@
+&.trade {
+  .app-main {
+    @import "./header";
+    @import "./main";
+  }
+}

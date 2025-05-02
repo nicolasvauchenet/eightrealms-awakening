@@ -2,6 +2,7 @@
 
 namespace App\Entity\Quest;
 
+use App\Entity\Character\Character;
 use App\Entity\Reward\Reward;
 use App\Repository\Quest\QuestStepRepository;
 use Doctrine\DBAL\Types\Types;
@@ -30,6 +31,9 @@ class QuestStep
 
     #[ORM\ManyToOne]
     private ?Reward $reward = null;
+
+    #[ORM\ManyToOne(inversedBy: 'questSteps')]
+    private ?Character $giver = null;
 
     public function getId(): ?int
     {
@@ -97,6 +101,18 @@ class QuestStep
     public function setReward(?Reward $reward): static
     {
         $this->reward = $reward;
+
+        return $this;
+    }
+
+    public function getGiver(): ?Character
+    {
+        return $this->giver;
+    }
+
+    public function setGiver(?Character $giver): static
+    {
+        $this->giver = $giver;
 
         return $this;
     }

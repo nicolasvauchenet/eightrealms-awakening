@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures\Quest\Secondary;
 
+use App\Entity\Character\Npc;
+
 trait SecondaryQuestTrait
 {
     const SECONDARY_QUESTS = [
@@ -9,6 +11,8 @@ trait SecondaryQuestTrait
             'name' => 'Des rats sur les Docks',
             'type' => 'Secondaire',
             'reward' => 'reward_quest_des_rats_sur_les_docks',
+            'giver' => 'npc_bilo_le_passant',
+            'giverClass' => Npc::class,
             'reference' => 'quest_secondary_des_rats_sur_les_docks',
         ],
         [

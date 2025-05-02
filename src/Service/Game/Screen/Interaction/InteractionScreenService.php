@@ -28,7 +28,6 @@ readonly class InteractionScreenService
                 ->setType('interaction')
                 ->setCharacter($character);
         }
-
         $this->createScreenActions($screen, $player);
         $this->entityManager->persist($screen);
         $this->entityManager->flush();

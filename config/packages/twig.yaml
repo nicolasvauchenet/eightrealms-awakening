@@ -8,6 +8,7 @@ twig:
     app_characterSpellService: '@App\Service\Spell\CharacterSpellService'
     app_characterQuestService: '@App\Service\Quest\CharacterQuestService'
     app_mapService: '@App\Service\Map\MapService'
+    app_tradeService: '@App\Service\Trade\TradeService'
 
 when@test:
   twig:

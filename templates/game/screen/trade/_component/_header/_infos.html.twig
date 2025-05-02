@@ -1,0 +1,20 @@
+<div class="header-infos">
+    <div class="left">
+        <div class="header-info">
+            {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+            {{ this.character.fortune }}
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="header-info {% if this.playerNpc.reputation < 0 %}text-danger{% endif %}">
+            {{ ux_icon('mdi:head-heart-outline', {'class': 'app-icon ' ~ (this.playerNpc.reputation < 0 ? 'text-danger' : 'text-primary')}) }}
+            {{ this.playerNpc.reputation > 0 ? '+' : '' }}{{ this.playerNpc.reputation }}
+        </div>
+
+        <div class="header-info">
+            {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+            {{ this.playerNpc.fortune }}
+        </div>
+    </div>
+</div>

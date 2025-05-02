@@ -3,6 +3,7 @@
 namespace App\Controller\Game\Screen;
 
 use App\Entity\Character\Character;
+use App\Service\Character\CharacterService;
 use App\Service\Game\Screen\Trade\TradeScreenService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,12 +13,15 @@ final class TradeScreenController extends AbstractController
 {
     #[Route('/commerce/{slug}', name: 'app_game_screen_trade')]
     public function index(TradeScreenService $tradeScreenService,
+                          CharacterService   $characterService,
                           Character          $character): Response
     {
         $screen = $tradeScreenService->getScreen($character, $this->getUser()->getPlayer());
+        $playerNpc = $characterService->getPlayerNpc($this->getUser()->getPlayer(), $character);
 
         return $this->render('game/screen/trade/index.html.twig', [
             'screen' => $screen,
+            'playerNpc' => $playerNpc,
         ]);
     }
 }

@@ -6,6 +6,8 @@ use App\Entity\Combat\CombatEnemy;
 use App\Entity\Dialog\Dialog;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Location\CharacterLocation;
+use App\Entity\Quest\Quest;
+use App\Entity\Quest\QuestStep;
 use App\Entity\Screen\InteractionScreen;
 use App\Entity\Screen\TradeScreen;
 use App\Entity\Spell\CharacterSpell;
@@ -119,12 +121,26 @@ abstract class Character
     #[ORM\OneToMany(targetEntity: CombatEnemy::class, mappedBy: 'enemy', orphanRemoval: true)]
     private Collection $combatEnemies;
 
+    /**
+     * @var Collection<int, Quest>
+     */
+    #[ORM\OneToMany(targetEntity: Quest::class, mappedBy: 'giver')]
+    private Collection $quests;
+
+    /**
+     * @var Collection<int, QuestStep>
+     */
+    #[ORM\OneToMany(targetEntity: QuestStep::class, mappedBy: 'giver')]
+    private Collection $questSteps;
+
     public function __construct()
     {
         $this->characterItems = new ArrayCollection();
         $this->characterSpells = new ArrayCollection();
         $this->dialogs = new ArrayCollection();
         $this->combatEnemies = new ArrayCollection();
+        $this->quests = new ArrayCollection();
+        $this->questSteps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -502,6 +518,66 @@ abstract class Character
             // set the owning side to null (unless already changed)
             if($combatEnemy->getEnemy() === $this) {
                 $combatEnemy->setEnemy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quest>
+     */
+    public function getQuests(): Collection
+    {
+        return $this->quests;
+    }
+
+    public function addQuest(Quest $quest): static
+    {
+        if (!$this->quests->contains($quest)) {
+            $this->quests->add($quest);
+            $quest->setGiver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuest(Quest $quest): static
+    {
+        if ($this->quests->removeElement($quest)) {
+            // set the owning side to null (unless already changed)
+            if ($quest->getGiver() === $this) {
+                $quest->setGiver(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuestStep>
+     */
+    public function getQuestSteps(): Collection
+    {
+        return $this->questSteps;
+    }
+
+    public function addQuestStep(QuestStep $questStep): static
+    {
+        if (!$this->questSteps->contains($questStep)) {
+            $this->questSteps->add($questStep);
+            $questStep->setGiver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestStep(QuestStep $questStep): static
+    {
+        if ($this->questSteps->removeElement($questStep)) {
+            // set the owning side to null (unless already changed)
+            if ($questStep->getGiver() === $this) {
+                $questStep->setGiver(null);
             }
         }
 

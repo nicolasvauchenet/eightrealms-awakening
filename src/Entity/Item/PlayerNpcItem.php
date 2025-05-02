@@ -25,6 +25,12 @@ class PlayerNpcItem
     #[ORM\JoinColumn(nullable: false)]
     private ?Item $item = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $health = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $charge = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +68,30 @@ class PlayerNpcItem
     public function setItem(?Item $item): static
     {
         $this->item = $item;
+
+        return $this;
+    }
+
+    public function getHealth(): ?int
+    {
+        return $this->health;
+    }
+
+    public function setHealth(?int $health): static
+    {
+        $this->health = $health;
+
+        return $this;
+    }
+
+    public function getCharge(): ?int
+    {
+        return $this->charge;
+    }
+
+    public function setCharge(?int $charge): static
+    {
+        $this->charge = $charge;
 
         return $this;
     }

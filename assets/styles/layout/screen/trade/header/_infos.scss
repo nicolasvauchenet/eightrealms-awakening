@@ -1,0 +1,9 @@
+.header-infos {
+  .right {
+    @include displayFlex(center, center, 0.5rem);
+
+    .header-info {
+      margin-bottom: 0;
+    }
+  }
+}

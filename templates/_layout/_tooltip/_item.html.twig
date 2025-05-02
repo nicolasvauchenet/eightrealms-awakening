@@ -62,13 +62,13 @@
             </h3>
         {% endif %}
 
-        {% if characterItem.equipped and this.characterType != 'pregenerated' %}
+        {% if characterItem.equipped is defined and characterItem.equipped and this.characterType != 'pregenerated' %}
             <h3 class="tooltip-subtitle text-success">
                 Objet équipé
             </h3>
         {% endif %}
 
-        {% if characterItem.questItem %}
+        {% if characterItem.questItem is defined and characterItem.questItem %}
             <h3 class="tooltip-subtitle text-success">
                 Objet de Quête
             </h3>

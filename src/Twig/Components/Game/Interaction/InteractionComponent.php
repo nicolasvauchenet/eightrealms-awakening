@@ -4,6 +4,7 @@ namespace App\Twig\Components\Game\Interaction;
 
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
+use App\Entity\Character\PlayerNpc;
 use App\Entity\Screen\InteractionScreen;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -23,6 +24,9 @@ class InteractionComponent
 
     #[LiveProp(writable: true)]
     public InteractionScreen $screen;
+
+    #[LiveProp(writable: true)]
+    public PlayerNpc $playerNpc;
 
     #[LiveProp(writable: true)]
     public string $description = '';

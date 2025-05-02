@@ -2,6 +2,7 @@
 
 namespace App\Entity\Quest;
 
+use App\Entity\Character\Character;
 use App\Entity\Reward\Reward;
 use App\Repository\Quest\QuestRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -35,6 +36,9 @@ class Quest
 
     #[ORM\ManyToOne]
     private ?Reward $reward = null;
+
+    #[ORM\ManyToOne(inversedBy: 'quests')]
+    private ?Character $giver = null;
 
     public function __construct()
     {
@@ -120,6 +124,18 @@ class Quest
     public function setReward(?Reward $reward): static
     {
         $this->reward = $reward;
+
+        return $this;
+    }
+
+    public function getGiver(): ?Character
+    {
+        return $this->giver;
+    }
+
+    public function setGiver(?Character $giver): static
+    {
+        $this->giver = $giver;
 
         return $this;
     }

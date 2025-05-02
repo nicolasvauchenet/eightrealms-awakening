@@ -1,0 +1,33 @@
+<div class="items">
+    {% for characterItem in this.playerNpc.playerNpcItems %}
+        <div class="app-card item"
+             data-controller="tooltip">
+            <a href="#" data-action="click->tooltip#open">
+                <div class="card-header">
+                    {% if characterItem.item.thumbnail is defined %}
+                        <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
+                             class="card-image {% if app_characterItemService.canBuyItem(this.playerNpc, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                             alt="{{ characterItem.item.name }}"/>
+                    {% else %}
+                        <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                             class="card-image {% if app_characterItemService.canBuyItem(this.playerNpc, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                             alt="{{ characterItem.item.name }}"/>
+                    {% endif %}
+                </div>
+
+                <div class="card-body">
+                    <h4 class="card-title">{{ characterItem.item.name }}</h4>
+                </div>
+            </a>
+            {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+
+            <div class="card-footer">
+                <button class="bg-success {% if app_characterItemService.canBuyItem(this.playerNpc, characterItem) == false %}disabled{% endif %}"
+                        {{ live_action('buyItem', {'characterItemId': characterItem.id }) }}>
+                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                    {{ app_tradeService.itemPrice(this.playerNpc, characterItem) }} ({{ characterItem.item.price }})
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</div>

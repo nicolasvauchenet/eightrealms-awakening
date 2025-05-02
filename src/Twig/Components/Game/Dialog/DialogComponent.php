@@ -3,6 +3,7 @@
 namespace App\Twig\Components\Game\Dialog;
 
 use App\Entity\Character\Player;
+use App\Entity\Character\PlayerNpc;
 use App\Entity\Dialog\DialogReply;
 use App\Entity\Dialog\DialogStep;
 use App\Entity\Screen\DialogScreen;
@@ -26,6 +27,9 @@ class DialogComponent extends AbstractController
 
     #[LiveProp(writable: true)]
     public DialogScreen $screen;
+
+    #[LiveProp(writable: true)]
+    public PlayerNpc $playerNpc;
 
     #[LiveProp(writable: true)]
     public string $description = '';

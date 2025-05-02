@@ -45,7 +45,8 @@ class QuestStepFixtures extends Fixture implements OrderedFixtureInterface
                     ->setPosition($data['position'])
                     ->setLast($data['last'])
                     ->setQuest($this->getReference($data['quest'], Quest::class))
-                    ->setReward(isset($data['reward']) ? $this->getReference($data['reward'], Reward::class) : null);
+                    ->setReward(isset($data['reward']) ? $this->getReference($data['reward'], Reward::class) : null)
+                    ->setGiver(isset($data['giver']) ? $this->getReference($data['giver'], $data['giverClass']) : null);
                 $manager->persist($questStep);
                 $this->addReference($data['reference'], $questStep);
             }

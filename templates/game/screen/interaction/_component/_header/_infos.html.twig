@@ -1,0 +1,24 @@
+<div class="header-infos">
+    <div class="left">
+        {% set bonus = app_characterBonusService.health(this.character) %}
+        <div class="header-info {% if bonus['extra'] %}text-success{% endif %}">
+            {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-fifth'}) }}
+            {{ this.character.health }}
+        </div>
+
+        {% if this.character.profession.type == 'magical' %}
+            {% set bonus = app_characterBonusService.mana(this.character) %}
+            <div class="header-info {% if bonus['extra'] %}text-success{% endif %}">
+                {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-third'}) }}
+                {{ this.character.mana }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="right">
+        <div class="header-info">
+            {{ ux_icon('mdi:head-heart-outline', {'class': 'app-icon ' ~ (this.playerNpc.reputation < 0 ? 'text-danger' : 'text-primary')}) }}
+            {{ this.playerNpc.reputation }}
+        </div>
+    </div>
+</div>

@@ -8,14 +8,16 @@ use App\Entity\Quest\PlayerQuest;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\Quest\Quest;
+use App\Service\Character\CharacterReputationService;
 use App\Service\Game\Reward\RewardService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class DialogEffectApplierService
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private RewardService          $rewardService)
+        private EntityManagerInterface     $entityManager,
+        private RewardService              $rewardService,
+        private CharacterReputationService $characterReputationService)
     {
     }
 
@@ -170,11 +172,9 @@ readonly class DialogEffectApplierService
         ]);
         if(!$playerQuest || $playerQuest->getStatus() === 'rewarded') return;
 
-        // Marquer la quête comme récompensée
         $playerQuest->setStatus('rewarded');
         $this->entityManager->persist($playerQuest);
 
-        // Terminer la dernière étape si ce n’est pas déjà fait
         $lastStep = $quest->getQuestSteps()->filter(fn($step) => $step->isLast())->first();
         if($lastStep) {
             $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
@@ -188,11 +188,15 @@ readonly class DialogEffectApplierService
             }
         }
 
-        // Donner la récompense liée à la quête, si définie
         $reward = $quest->getReward();
-
         if($reward) {
             $this->rewardService->giveReward($reward, $player);
+        }
+
+        // Réputation : trouver le giver (Quest > fallback QuestStep)
+        $giver = $quest->getGiver() ?? $lastStep?->getGiver();
+        if($giver) {
+            $this->characterReputationService->increaseReputationFromQuestReward($player, $giver);
         }
 
         $this->entityManager->flush();

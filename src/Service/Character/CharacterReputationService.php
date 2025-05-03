@@ -3,8 +3,8 @@
 namespace App\Service\Character;
 
 use App\Entity\Character\Player;
-use App\Entity\Character\Npc;
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Character\Character;
+use App\Entity\Character\PlayerCharacter;
 use App\Entity\Location\CharacterLocation;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -14,72 +14,44 @@ class CharacterReputationService
         'humain' => [
             'elfe' => 5,   // Respect pour leur magie et leur sagesse
             'nain' => 4,   // Alliés commerciaux et guerriers
-            'orque' => -10, // Ennemis historiques
+            'orque' => -7, // Ennemis historiques
             'halfelin' => 3,   // Sympas mais peu fiables en guerre
             'gnome' => 2,   // Mal compris, mais utiles en ingénierie
-            'rat' => -15, // Nuisibles, vecteurs de maladie
-            'gobelin' => -8,  // Trop instables pour être dignes de confiance
-            'sirene' => -2,  // Méfiance teintée de fascination
         ],
         'elfe' => [
-            'humain' => 4,   // Curiosité et admiration modérée
-            'nain' => -4,  // Trop bruyants et rustres
+            'humain' => 5,   // Curiosité et admiration modérée
+            'nain' => -5,  // Trop bruyants et rustres
             'orque' => -15, // Haine ancestrale
-            'halfelin' => 5,   // Les trouvent doux et équilibrés
-            'gnome' => 2,   // Amusants mais fatigants
-            'rat' => -20, // Créatures abjectes
-            'gobelin' => -12, // Incontrôlables et chaotiques
-            'sirene' => 6,   // Connexion naturelle et magique
+            'halfelin' => 7,   // Les trouvent doux et équilibrés
+            'gnome' => 5,   // Amusants mais fatigants
         ],
         'nain' => [
-            'humain' => 3,   // Bonnes affaires, bons alliés
+            'humain' => 5,   // Bonnes affaires, bons alliés
             'elfe' => -5,  // Trop hautains et fragiles
-            'orque' => -12, // Ennemis brutaux
-            'halfelin' => 4,   // Gens simples, appréciés
-            'gnome' => 6,   // Cousins bricoleurs
-            'rat' => -10, // Infestations de tunnels
-            'gobelin' => -15, // Hantent les cavernes et volent les outils
-            'sirene' => -3,  // Pas dignes de confiance
+            'orque' => -10, // Ennemis brutaux
+            'halfelin' => 5,   // Gens simples, appréciés
+            'gnome' => 7,   // Cousins bricoleurs
         ],
         'orque' => [
-            'humain' => -10, // Trop fragiles et arrogants
+            'humain' => -5, // Trop fragiles et arrogants
             'elfe' => -20, // Haine profonde
-            'nain' => -15, // Guerres de territoire
+            'nain' => -10, // Guerres de territoire
             'halfelin' => -5,  // Aucune utilité en combat
             'gnome' => -3,  // Comprennent rien à leurs machines
-            'rat' => 6,   // Respect pour leur ruse et survie
-            'gobelin' => 10,  // Partagent une culture de guerre et de chaos
-            'sirene' => 2,   // Intrigantes, mais faibles
         ],
         'halfelin' => [
             'humain' => 5,   // Bons voisins
-            'elfe' => 6,   // Inspiration et paix
-            'nain' => 4,   // Bons buveurs, compagnons solides
-            'orque' => -12, // Les terrorisent
-            'gnome' => 3,   // Drôles et fascinants
-            'rat' => -10, // Mangent les provisions
-            'gobelin' => -7,  // Trop dangereux et imprévisibles
-            'sirene' => 1,   // Légendaires, rarement vues
+            'elfe' => 7,   // Inspiration et paix
+            'nain' => 5,   // Bons buveurs, compagnons solides
+            'orque' => -10, // Les terrorisent
+            'gnome' => 5,   // Drôles et fascinants
         ],
         'gnome' => [
-            'humain' => 2,   // Bonnes opportunités commerciales
-            'elfe' => 4,   // Apprécient leur vision artistique
-            'nain' => 7,   // Partenaires de création technique
-            'orque' => -8,  // Détruisent leurs inventions
+            'humain' => 5,   // Bonnes opportunités commerciales
+            'elfe' => 7,   // Apprécient leur vision artistique
+            'nain' => 10,   // Partenaires de création technique
+            'orque' => -10,  // Détruisent leurs inventions
             'halfelin' => 5,   // Bons camarades de fête
-            'rat' => -6,  // Bouffent les câbles
-            'gobelin' => -9,  // Copient sans comprendre
-            'sirene' => 3,   // Objets d’étude magico-scientifique
-        ],
-        'rat' => [
-            'humain' => -15, // Odeur de bottes et de poison
-            'elfe' => -18, // Les pourchassent comme des bêtes
-            'nain' => -10, // Collapsent les tunnels
-            'orque' => 5,   // Alliés de circonstance
-            'halfelin' => -12, // Trop gentils, donc dangereux
-            'gnome' => -6,  // Machines qui font "piège"
-            'gobelin' => 8,   // Frères de chaos et de souterrain
-            'sirene' => -4,  // Odeur d’eau salée, incompréhensible
         ],
         'gobelin' => [
             'humain' => -10, // Trop sérieux, pas assez de feu
@@ -88,8 +60,6 @@ class CharacterReputationService
             'orque' => 7,   // Les respectent comme chefs de guerre
             'halfelin' => -5,  // Bon à taquiner
             'gnome' => -2,  // Amusants mais coincés
-            'rat' => 10,  // Meilleurs potes de tunnels
-            'sirene' => -3,  // Trop calmes
         ],
         'sirene' => [
             'humain' => 1,   // Séduction et méfiance
@@ -97,9 +67,7 @@ class CharacterReputationService
             'nain' => -4,  // Trop terre à terre
             'orque' => -6,  // Trop brutaux
             'halfelin' => 2,   // Peu menaçants, sympathiques
-            'gnome' => 4,   // Intrigués par leur technologie
-            'rat' => -12, // Contaminent les eaux
-            'gobelin' => -5,  // Trop chaotiques
+            'gnome' => 4,   // Intriguée par leur technologie
         ],
     ];
 
@@ -234,38 +202,39 @@ class CharacterReputationService
     {
     }
 
-    public function calculateInitialReputation(Player $player, Npc $npc): int
+    public function calculateInitialReputation(Player $player, Character $character): int
     {
         $playerRace = $player->getRace()->getSlug();
-        $npcRace = $npc->getRace()->getSlug();
+        $characterRace = $character->getRace()->getSlug();
+        $raceRep = $this->raceAffinities[$characterRace][$playerRace] ?? 0;
 
-        $playerProfession = $player->getProfession()->getSlug();
-        $npcProfession = $npc->getProfession()->getSlug();
-
-        $raceRep = $this->raceAffinities[$npcRace][$playerRace] ?? 0;
-        $professionRep = $this->professionAffinities[$npcProfession][$playerProfession] ?? 0;
+        if($character->getProfession()) {
+            $playerProfession = $player->getProfession()->getSlug();
+            $characterProfession = $character->getProfession()->getSlug();
+            $professionRep = $this->professionAffinities[$characterProfession][$playerProfession] ?? 0;
+        } else {
+            $professionRep = 0;
+        }
 
         return max(-20, min(20, $raceRep + $professionRep));
     }
 
-    public function increaseReputationFromQuestReward(Player $player, Npc $giver, int $mainBonus = 2, int $locationBonus = 1): void
+    public function increaseReputationFromQuestReward(Player $player, Character $giver, int $mainBonus = 2, int $locationBonus = 1): void
     {
-        $em = $this->entityManager;
-
         // Bonus principal pour le donneur de quête
-        $playerNpc = $em->getRepository(PlayerNpc::class)->findOneBy([
+        $playerCharacter = $this->entityManager->getRepository(PlayerCharacter::class)->findOneBy([
             'player' => $player,
-            'npc' => $giver,
+            'character' => $giver,
         ]);
 
-        if($playerNpc) {
-            $rep = $playerNpc->getReputation() ?? 0;
-            $playerNpc->setReputation(min(20, $rep + $mainBonus));
-            $em->persist($playerNpc);
+        if($playerCharacter) {
+            $rep = $playerCharacter->getReputation() ?? 0;
+            $playerCharacter->setReputation(min(20, $rep + $mainBonus));
+            $this->entityManager->persist($playerCharacter);
         }
 
         // Trouver le lieu du PNJ via CharacterLocation
-        $giverCharacterLocation = $em->getRepository(CharacterLocation::class)->findOneBy([
+        $giverCharacterLocation = $this->entityManager->getRepository(CharacterLocation::class)->findOneBy([
             'character' => $giver,
         ]);
 
@@ -276,25 +245,25 @@ class CharacterReputationService
         $location = $giverCharacterLocation->getLocation();
 
         // Trouver tous les PNJ du joueur dans ce lieu
-        $playerNpcs = $em->getRepository(PlayerNpc::class)->findBy([
+        $playerCharacters = $this->entityManager->getRepository(PlayerCharacter::class)->findBy([
             'player' => $player,
         ]);
 
-        foreach($playerNpcs as $otherPlayerNpc) {
-            $npc = $otherPlayerNpc->getNpc();
+        foreach($playerCharacters as $otherPlayerCharacter) {
+            $character = $otherPlayerCharacter->getCharacter();
 
-            if($npc->getId() === $giver->getId()) {
+            if($character->getId() === $giver->getId()) {
                 continue;
             }
 
-            $npcLocation = $em->getRepository(CharacterLocation::class)->findOneBy([
-                'character' => $npc,
+            $characterLocation = $this->entityManager->getRepository(CharacterLocation::class)->findOneBy([
+                'character' => $character,
             ]);
 
-            if($npcLocation && $npcLocation->getLocation()?->getId() === $location->getId()) {
-                $rep = $otherPlayerNpc->getReputation() ?? 0;
-                $otherPlayerNpc->setReputation(min(20, $rep + $locationBonus));
-                $em->persist($otherPlayerNpc);
+            if($characterLocation && $characterLocation->getLocation()?->getId() === $location->getId()) {
+                $rep = $otherPlayerCharacter->getReputation() ?? 0;
+                $otherPlayerCharacter->setReputation(min(20, $rep + $locationBonus));
+                $this->entityManager->persist($otherPlayerCharacter);
             }
         }
     }

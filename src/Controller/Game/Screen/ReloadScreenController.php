@@ -17,11 +17,11 @@ final class ReloadScreenController extends AbstractController
                           Character           $character): Response
     {
         $screen = $reloadScreenService->getScreen($character, $this->getUser()->getPlayer());
-        $playerNpc = $characterService->getPlayerNpc($this->getUser()->getPlayer(), $character);
+        $playerCharacter = $characterService->getPlayerCharacter($this->getUser()->getPlayer(), $character);
 
         return $this->render('game/screen/reload/index.html.twig', [
             'screen' => $screen,
-            'playerNpc' => $playerNpc,
+            'playerCharacter' => $playerCharacter,
         ]);
     }
 }

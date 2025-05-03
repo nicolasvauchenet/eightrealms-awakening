@@ -2,12 +2,12 @@
 
 namespace App\Entity\Item;
 
-use App\Entity\Character\PlayerNpc;
-use App\Repository\Item\PlayerNpcItemRepository;
+use App\Entity\Character\PlayerCharacter;
+use App\Repository\Item\PlayerCharacterItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PlayerNpcItemRepository::class)]
-class PlayerNpcItem
+#[ORM\Entity(repositoryClass: PlayerCharacterItemRepository::class)]
+class PlayerCharacterItem
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -17,9 +17,9 @@ class PlayerNpcItem
     #[ORM\Column]
     private ?bool $original = null;
 
-    #[ORM\ManyToOne(inversedBy: 'playerNpcItems')]
+    #[ORM\ManyToOne(inversedBy: 'playerCharacterItems')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?PlayerNpc $playerNpc = null;
+    private ?PlayerCharacter $playerCharacter = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -48,14 +48,14 @@ class PlayerNpcItem
         return $this;
     }
 
-    public function getPlayerNpc(): ?PlayerNpc
+    public function getPlayerCharacter(): ?PlayerCharacter
     {
-        return $this->playerNpc;
+        return $this->playerCharacter;
     }
 
-    public function setPlayerNpc(?PlayerNpc $playerNpc): static
+    public function setPlayerCharacter(?PlayerCharacter $playerCharacter): static
     {
-        $this->playerNpc = $playerNpc;
+        $this->playerCharacter = $playerCharacter;
 
         return $this;
     }

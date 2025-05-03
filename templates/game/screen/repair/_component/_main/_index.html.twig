@@ -1,6 +1,6 @@
 <main class="screen-main">
     {% set repairableItems = app_tradeService.getRepairableItems(this.character) %}
-    {% set totalRepairCost = app_tradeService.totalPrice(this.playerNpc, repairableItems, 'repair') %}
+    {% set totalRepairCost = app_tradeService.totalPrice(this.playerCharacter, repairableItems, 'repair') %}
 
     <div class="repair-items">
         {% if repairableItems | length > 0 %}
@@ -12,11 +12,11 @@
                             <div class="card-header">
                                 {% if characterItem.item.thumbnail is defined %}
                                     <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
-                                         class="card-image {% if app_characterItemService.canRepairItem(this.playerNpc, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                                         class="card-image {% if app_characterItemService.canRepairItem(this.playerCharacter, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
                                          alt="{{ characterItem.item.name }}"/>
                                 {% else %}
                                     <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
-                                         class="card-image {% if app_characterItemService.canRepairItem(this.playerNpc, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                                         class="card-image {% if app_characterItemService.canRepairItem(this.playerCharacter, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
                                          alt="{{ characterItem.item.name }}"/>
                                 {% endif %}
                             </div>
@@ -28,10 +28,10 @@
                         {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
 
                         <div class="card-footer">
-                            <button class="bg-success {% if app_characterItemService.canRepairItem(this.playerNpc, characterItem) == false %}disabled{% endif %}"
+                            <button class="bg-success {% if app_characterItemService.canRepairItem(this.playerCharacter, characterItem) == false %}disabled{% endif %}"
                                     {{ live_action('repairItem', {'characterItemId': characterItem.id }) }}>
                                 {{ ux_icon('f7:hammer-fill', {'class': 'app-icon text-warning'}) }}
-                                {{ app_tradeService.itemPrice(this.playerNpc, characterItem, 'repair') }}
+                                {{ app_tradeService.itemPrice(this.playerCharacter, characterItem, 'repair') }}
                             </button>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
             </button>
         {% else %}
             <p>
-                <strong>Vous n'avez rien à faire réparer par {{ this.playerNpc.npc.name }}&nbsp;!</strong>
+                <strong>Vous n'avez rien à faire réparer par {{ this.playerCharacter.character.name }}&nbsp;!</strong>
             </p>
         {% endif %}
     </div>

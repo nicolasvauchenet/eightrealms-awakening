@@ -3,7 +3,7 @@
 {% block body %}
     <figure class="app-wallpaper">
         {% if screen.type in ['interaction', 'dialog', 'trade', 'repair', 'reload', 'pray'] %}
-            <img src="{{ asset(playerNpc.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
+            <img src="{{ asset(playerCharacter.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
         {% else %}
             {% if screen.picture %}
                 <img src="{{ asset(screen.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>

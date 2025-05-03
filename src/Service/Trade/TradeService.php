@@ -4,9 +4,9 @@ namespace App\Service\Trade;
 
 use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Character\PlayerCharacter;
 use App\Entity\Item\CharacterItem;
-use App\Entity\Item\PlayerNpcItem;
+use App\Entity\Item\PlayerCharacterItem;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -60,15 +60,15 @@ readonly class TradeService
     }
 
     public function getItemPrice(
-        PlayerNpc                   $playerCharacter,
-        CharacterItem|PlayerNpcItem $playerCharacterItem,
-        string                      $mode = 'buy'
+        PlayerCharacter                   $playerCharacter,
+        CharacterItem|PlayerCharacterItem $playerCharacterItem,
+        string                            $mode = 'buy'
     ): int
     {
         return $this->itemPriceCalculator->calculatePrice($playerCharacter, $playerCharacterItem, $mode);
     }
 
-    public function getTotalPrice(PlayerNpc $playerCharacter, Collection $items, string $mode): int
+    public function getTotalPrice(PlayerCharacter $playerCharacter, Collection $items, string $mode): int
     {
         $total = 0;
 

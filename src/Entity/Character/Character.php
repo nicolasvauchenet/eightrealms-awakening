@@ -47,10 +47,16 @@ abstract class Character
     private ?string $picture = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pictureAngry = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $thumbnail = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descriptionAngry = null;
 
     #[ORM\Column]
     private ?int $strength = null;
@@ -191,6 +197,18 @@ abstract class Character
         return $this;
     }
 
+    public function getPictureAngry(): ?string
+    {
+        return $this->pictureAngry;
+    }
+
+    public function setPictureAngry(?string $pictureAngry): static
+    {
+        $this->pictureAngry = $pictureAngry;
+
+        return $this;
+    }
+
     public function getThumbnail(): ?string
     {
         return $this->thumbnail;
@@ -211,6 +229,18 @@ abstract class Character
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDescriptionAngry(): ?string
+    {
+        return $this->descriptionAngry;
+    }
+
+    public function setDescriptionAngry(?string $descriptionAngry): static
+    {
+        $this->descriptionAngry = $descriptionAngry;
 
         return $this;
     }

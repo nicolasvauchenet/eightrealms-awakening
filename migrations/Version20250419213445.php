@@ -21,19 +21,19 @@ final class Version20250419213445 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE player_npc (id SERIAL NOT NULL, player_id INT NOT NULL, npc_id INT NOT NULL, fortune INT NOT NULL, reputation INT NOT NULL, PRIMARY KEY(id))
+            CREATE TABLE player_character (id SERIAL NOT NULL, player_id INT NOT NULL, character_id INT NOT NULL, fortune INT NOT NULL, reputation INT NOT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE INDEX IDX_3BAD370F99E6F5DF ON player_npc (player_id)
+            CREATE INDEX IDX_3BAD370F99E6F5DF ON player_character (player_id)
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE INDEX IDX_3BAD370FCA7D6B89 ON player_npc (npc_id)
+            CREATE INDEX IDX_3BAD370FCA7D6B89 ON player_character (character_id)
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE player_npc ADD CONSTRAINT FK_3BAD370F99E6F5DF FOREIGN KEY (player_id) REFERENCES player (id) NOT DEFERRABLE INITIALLY IMMEDIATE
+            ALTER TABLE player_character ADD CONSTRAINT FK_3BAD370F99E6F5DF FOREIGN KEY (player_id) REFERENCES player (id) NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE player_npc ADD CONSTRAINT FK_3BAD370FCA7D6B89 FOREIGN KEY (npc_id) REFERENCES npc (id) NOT DEFERRABLE INITIALLY IMMEDIATE
+            ALTER TABLE player_character ADD CONSTRAINT FK_3BAD370FCA7D6B89 FOREIGN KEY (character_id) REFERENCES character (id) NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
     }
 
@@ -44,13 +44,13 @@ final class Version20250419213445 extends AbstractMigration
             CREATE SCHEMA public
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE player_npc DROP CONSTRAINT FK_3BAD370F99E6F5DF
+            ALTER TABLE player_character DROP CONSTRAINT FK_3BAD370F99E6F5DF
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE player_npc DROP CONSTRAINT FK_3BAD370FCA7D6B89
+            ALTER TABLE player_character DROP CONSTRAINT FK_3BAD370FCA7D6B89
         SQL);
         $this->addSql(<<<'SQL'
-            DROP TABLE player_npc
+            DROP TABLE player_character
         SQL);
     }
 }

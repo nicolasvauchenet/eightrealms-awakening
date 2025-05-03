@@ -33,10 +33,10 @@ class Player extends Character
     private ?User $owner = null;
 
     /**
-     * @var Collection<int, PlayerNpc>
+     * @var Collection<int, PlayerCharacter>
      */
-    #[ORM\OneToMany(targetEntity: PlayerNpc::class, mappedBy: 'player', orphanRemoval: true)]
-    private Collection $playerNpcs;
+    #[ORM\OneToMany(targetEntity: PlayerCharacter::class, mappedBy: 'player', orphanRemoval: true)]
+    private Collection $playerCharacters;
 
     #[ORM\ManyToOne]
     private ?Location $currentLocation = null;
@@ -64,7 +64,7 @@ class Player extends Character
 
     public function __construct()
     {
-        $this->playerNpcs = new ArrayCollection();
+        $this->playerCharacters = new ArrayCollection();
         $this->playerQuests = new ArrayCollection();
         $this->playerQuestSteps = new ArrayCollection();
         $this->playerCombats = new ArrayCollection();
@@ -131,29 +131,29 @@ class Player extends Character
     }
 
     /**
-     * @return Collection<int, PlayerNpc>
+     * @return Collection<int, PlayerCharacter>
      */
-    public function getPlayerNpcs(): Collection
+    public function getPlayerCharacters(): Collection
     {
-        return $this->playerNpcs;
+        return $this->playerCharacters;
     }
 
-    public function addPlayerNpc(PlayerNpc $playerNpc): static
+    public function addPlayerCharacter(PlayerCharacter $playerCharacter): static
     {
-        if(!$this->playerNpcs->contains($playerNpc)) {
-            $this->playerNpcs->add($playerNpc);
-            $playerNpc->setPlayer($this);
+        if(!$this->playerCharacters->contains($playerCharacter)) {
+            $this->playerCharacters->add($playerCharacter);
+            $playerCharacter->setPlayer($this);
         }
 
         return $this;
     }
 
-    public function removePlayerNpc(PlayerNpc $playerNpc): static
+    public function removePlayerCharacter(PlayerCharacter $playerCharacter): static
     {
-        if($this->playerNpcs->removeElement($playerNpc)) {
+        if($this->playerCharacters->removeElement($playerCharacter)) {
             // set the owning side to null (unless already changed)
-            if($playerNpc->getPlayer() === $this) {
-                $playerNpc->setPlayer(null);
+            if($playerCharacter->getPlayer() === $this) {
+                $playerCharacter->setPlayer(null);
             }
         }
 
@@ -182,7 +182,7 @@ class Player extends Character
 
     public function addPlayerQuest(PlayerQuest $playerQuest): static
     {
-        if (!$this->playerQuests->contains($playerQuest)) {
+        if(!$this->playerQuests->contains($playerQuest)) {
             $this->playerQuests->add($playerQuest);
             $playerQuest->setPlayer($this);
         }
@@ -192,9 +192,9 @@ class Player extends Character
 
     public function removePlayerQuest(PlayerQuest $playerQuest): static
     {
-        if ($this->playerQuests->removeElement($playerQuest)) {
+        if($this->playerQuests->removeElement($playerQuest)) {
             // set the owning side to null (unless already changed)
-            if ($playerQuest->getPlayer() === $this) {
+            if($playerQuest->getPlayer() === $this) {
                 $playerQuest->setPlayer(null);
             }
         }
@@ -212,7 +212,7 @@ class Player extends Character
 
     public function addPlayerQuestStep(PlayerQuestStep $playerQuestStep): static
     {
-        if (!$this->playerQuestSteps->contains($playerQuestStep)) {
+        if(!$this->playerQuestSteps->contains($playerQuestStep)) {
             $this->playerQuestSteps->add($playerQuestStep);
             $playerQuestStep->setPlayer($this);
         }
@@ -222,9 +222,9 @@ class Player extends Character
 
     public function removePlayerQuestStep(PlayerQuestStep $playerQuestStep): static
     {
-        if ($this->playerQuestSteps->removeElement($playerQuestStep)) {
+        if($this->playerQuestSteps->removeElement($playerQuestStep)) {
             // set the owning side to null (unless already changed)
-            if ($playerQuestStep->getPlayer() === $this) {
+            if($playerQuestStep->getPlayer() === $this) {
                 $playerQuestStep->setPlayer(null);
             }
         }
@@ -254,7 +254,7 @@ class Player extends Character
 
     public function addPlayerCombat(PlayerCombat $playerCombat): static
     {
-        if (!$this->playerCombats->contains($playerCombat)) {
+        if(!$this->playerCombats->contains($playerCombat)) {
             $this->playerCombats->add($playerCombat);
             $playerCombat->setPlayer($this);
         }
@@ -264,9 +264,9 @@ class Player extends Character
 
     public function removePlayerCombat(PlayerCombat $playerCombat): static
     {
-        if ($this->playerCombats->removeElement($playerCombat)) {
+        if($this->playerCombats->removeElement($playerCombat)) {
             // set the owning side to null (unless already changed)
-            if ($playerCombat->getPlayer() === $this) {
+            if($playerCombat->getPlayer() === $this) {
                 $playerCombat->setPlayer(null);
             }
         }

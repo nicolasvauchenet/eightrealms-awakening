@@ -3,7 +3,7 @@
 namespace App\Twig\Extensions;
 
 use App\Entity\Item\CharacterItem;
-use App\Entity\Item\PlayerNpcItem;
+use App\Entity\Item\PlayerCharacterItem;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -16,7 +16,7 @@ class ItemAttributeExtension extends AbstractExtension
         ];
     }
 
-    public function getItemAttributes(CharacterItem|PlayerNpcItem $characterItem, ?bool $allInfos = false): ?array
+    public function getItemAttributes(CharacterItem|PlayerCharacterItem $characterItem, ?bool $allInfos = false): ?array
     {
         if(in_array($characterItem->getItem()->getCategory()->getSlug(), ['carte', 'cadeau'])) {
             return null;

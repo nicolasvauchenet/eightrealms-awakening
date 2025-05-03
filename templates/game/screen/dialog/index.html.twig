@@ -5,5 +5,5 @@
 {% block body_class %}game screen {{ screen.type }}{% endblock %}
 
 {% block main %}
-    {{ component('DialogScreen', {character: app.user.player, screen: screen, playerNpc: playerNpc}) }}
+    {{ component('DialogScreen', {character: app.user.player, screen: screen, playerCharacter: playerCharacter}) }}
 {% endblock %}

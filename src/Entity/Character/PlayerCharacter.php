@@ -2,14 +2,14 @@
 
 namespace App\Entity\Character;
 
-use App\Entity\Item\PlayerNpcItem;
-use App\Repository\Character\PlayerNpcRepository;
+use App\Entity\Item\PlayerCharacterItem;
+use App\Repository\Character\PlayerCharacterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PlayerNpcRepository::class)]
-class PlayerNpc
+#[ORM\Entity(repositoryClass: PlayerCharacterRepository::class)]
+class PlayerCharacter
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,23 +22,23 @@ class PlayerNpc
     #[ORM\Column]
     private ?int $reputation = null;
 
-    #[ORM\ManyToOne(inversedBy: 'playerNpcs')]
+    #[ORM\ManyToOne(inversedBy: 'playerCharacters')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Player $player = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Npc $npc = null;
+    private ?Character $character = null;
 
     /**
-     * @var Collection<int, PlayerNpcItem>
+     * @var Collection<int, PlayerCharacterItem>
      */
-    #[ORM\OneToMany(targetEntity: PlayerNpcItem::class, mappedBy: 'playerNpc', orphanRemoval: true)]
-    private Collection $playerNpcItems;
+    #[ORM\OneToMany(targetEntity: PlayerCharacterItem::class, mappedBy: 'playerCharacter', orphanRemoval: true)]
+    private Collection $playerCharacterItems;
 
     public function __construct()
     {
-        $this->playerNpcItems = new ArrayCollection();
+        $this->playerCharacterItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,24 +82,24 @@ class PlayerNpc
         return $this;
     }
 
-    public function getNpc(): ?Npc
+    public function getCharacter(): ?Character
     {
-        return $this->npc;
+        return $this->character;
     }
 
-    public function setNpc(?Npc $npc): static
+    public function setCharacter(?Character $character): static
     {
-        $this->npc = $npc;
+        $this->character = $character;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, PlayerNpcItem>
+     * @return Collection<int, PlayerCharacterItem>
      */
-    public function getPlayerNpcItems(): Collection
+    public function getPlayerCharacterItems(): Collection
     {
-        $items = $this->playerNpcItems->toArray();
+        $items = $this->playerCharacterItems->toArray();
 
         usort($items, function($a, $b) {
             $catA = $a->getItem()->getCategory()->getName();
@@ -116,22 +116,22 @@ class PlayerNpc
         return new ArrayCollection($items);
     }
 
-    public function addPlayerNpcItem(PlayerNpcItem $playerNpcItem): static
+    public function addPlayerCharacterItem(PlayerCharacterItem $playerCharacterItem): static
     {
-        if(!$this->playerNpcItems->contains($playerNpcItem)) {
-            $this->playerNpcItems->add($playerNpcItem);
-            $playerNpcItem->setPlayerNpc($this);
+        if(!$this->playerCharacterItems->contains($playerCharacterItem)) {
+            $this->playerCharacterItems->add($playerCharacterItem);
+            $playerCharacterItem->setPlayerCharacter($this);
         }
 
         return $this;
     }
 
-    public function removePlayerNpcItem(PlayerNpcItem $playerNpcItem): static
+    public function removePlayerCharacterItem(PlayerCharacterItem $playerCharacterItem): static
     {
-        if($this->playerNpcItems->removeElement($playerNpcItem)) {
+        if($this->playerCharacterItems->removeElement($playerCharacterItem)) {
             // set the owning side to null (unless already changed)
-            if($playerNpcItem->getPlayerNpc() === $this) {
-                $playerNpcItem->setPlayerNpc(null);
+            if($playerCharacterItem->getPlayerCharacter() === $this) {
+                $playerCharacterItem->setPlayerCharacter(null);
             }
         }
 
@@ -140,23 +140,23 @@ class PlayerNpc
 
     public function getDescription(): ?string
     {
-        $npc = $this->getNpc();
+        $character = $this->getCharacter();
 
-        if($this->reputation <= -10 && $npc->getDescriptionAngry()) {
-            return $npc->getDescriptionAngry();
+        if($this->reputation <= -10 && $character->getDescriptionAngry()) {
+            return $character->getDescriptionAngry();
         }
 
-        return $npc->getDescription();
+        return $character->getDescription();
     }
 
     public function getPicture(): ?string
     {
-        $npc = $this->getNpc();
+        $character = $this->getCharacter();
 
-        if($this->reputation <= -10 && $npc->getPictureAngry()) {
-            return $npc->getPictureAngry();
+        if($this->reputation <= -10 && $character->getPictureAngry()) {
+            return $character->getPictureAngry();
         }
 
-        return $npc->getPicture();
+        return $character->getPicture();
     }
 }

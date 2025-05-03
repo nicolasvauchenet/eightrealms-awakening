@@ -3,11 +3,11 @@
 namespace App\Service\Item;
 
 use App\Entity\Character\Character;
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Character\PlayerCharacter;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\MagicalWeapon;
-use App\Entity\Item\PlayerNpcItem;
+use App\Entity\Item\PlayerCharacterItem;
 use App\Entity\Item\Shield;
 use App\Service\Trade\TradeService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -60,7 +60,7 @@ readonly class CharacterItemService
         return $this->entityManager->getRepository(CharacterItem::class)->findEquippedItemsWithBonuses($character, $type, $target);
     }
 
-    public function canEquipItem(Character $character, CharacterItem|PlayerNpcItem $characterItem): bool
+    public function canEquipItem(Character $character, CharacterItem|PlayerCharacterItem $characterItem): bool
     {
         if($characterItem->getItem() instanceof MagicalWeapon) {
             return ($character->getProfession()->getType() === 'magical' || in_array($character->getProfession()->getSlug(), ['mecaniste', 'moine']));
@@ -73,7 +73,7 @@ readonly class CharacterItemService
         return true;
     }
 
-    public function getHealth(CharacterItem|PlayerNpcItem $characterItem): array
+    public function getHealth(CharacterItem|PlayerCharacterItem $characterItem): array
     {
         $item = $characterItem->getItem();
 
@@ -248,7 +248,7 @@ readonly class CharacterItemService
         $this->entityManager->remove($characterItem);
     }
 
-    public function canSellItem(PlayerNpc $playerCharacter, CharacterItem|PlayerNpcItem $characterItem): bool
+    public function canSellItem(PlayerCharacter $playerCharacter, CharacterItem|PlayerCharacterItem $characterItem): bool
     {
         if($playerCharacter->getFortune() >= $this->tradeService->getItemPrice($playerCharacter, $characterItem, 'sell')) {
             return true;
@@ -257,7 +257,7 @@ readonly class CharacterItemService
         return false;
     }
 
-    public function canBuyItem(PlayerNpc $playerCharacter, CharacterItem|PlayerNpcItem $characterItem): bool
+    public function canBuyItem(PlayerCharacter $playerCharacter, CharacterItem|PlayerCharacterItem $characterItem): bool
     {
         if($playerCharacter->getPlayer()->getFortune() >= $this->tradeService->getItemPrice($playerCharacter, $characterItem)) {
             return true;
@@ -266,7 +266,7 @@ readonly class CharacterItemService
         return false;
     }
 
-    public function canRepairItem(PlayerNpc $playerCharacter, CharacterItem|PlayerNpcItem $characterItem): bool
+    public function canRepairItem(PlayerCharacter $playerCharacter, CharacterItem|PlayerCharacterItem $characterItem): bool
     {
         if($playerCharacter->getPlayer()->getFortune() >= $this->tradeService->getItemPrice($playerCharacter, $characterItem, 'repair')) {
             return true;
@@ -275,7 +275,7 @@ readonly class CharacterItemService
         return false;
     }
 
-    public function canReloadItem(PlayerNpc $playerCharacter, CharacterItem|PlayerNpcItem $characterItem): bool
+    public function canReloadItem(PlayerCharacter $playerCharacter, CharacterItem|PlayerCharacterItem $characterItem): bool
     {
         if($playerCharacter->getPlayer()->getFortune() >= $this->tradeService->getItemPrice($playerCharacter, $characterItem, 'reload')) {
             return true;

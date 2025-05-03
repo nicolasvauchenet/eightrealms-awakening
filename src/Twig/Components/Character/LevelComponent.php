@@ -8,6 +8,7 @@ use App\Service\Item\CharacterItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
@@ -64,7 +65,7 @@ class LevelComponent extends AbstractController
 
     public function __construct(private readonly EntityManagerInterface $entityManager,
                                 private readonly CharacterItemService   $characterItemService,
-                                private readonly CharacterBonusService  $characterBonusService)
+                                private readonly CharacterBonusService  $characterBonusService, private readonly RouterInterface $router)
     {
     }
 
@@ -218,6 +219,10 @@ class LevelComponent extends AbstractController
         $this->entityManager->persist($this->character);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('app_character_sheet_player');
+        $this->addFlash('success', "{$this->character->getName()} passe au niveau {$this->character->getLevel()}&nbsp;!");
+
+        return $this->redirectToRoute('app_character_sheet_player', [
+            'back' => $this->router->generate('app_home'),
+        ]);
     }
 }

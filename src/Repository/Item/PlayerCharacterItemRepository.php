@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Repository\Character;
+namespace App\Repository\Item;
 
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Item\PlayerCharacterItem;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PlayerNpc>
+ * @extends ServiceEntityRepository<PlayerCharacterItem>
  */
-class PlayerNpcRepository extends ServiceEntityRepository
+class PlayerCharacterItemRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PlayerNpc::class);
+        parent::__construct($registry, PlayerCharacterItem::class);
     }
 
 //    /**
-//     * @return PlayerNpc[] Returns an array of PlayerNpc objects
+//     * @return PlayerCharacterItem[] Returns an array of PlayerCharacterItem objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -31,7 +31,7 @@ class PlayerNpcRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?PlayerNpc
+//    public function findOneBySomeField($value): ?PlayerCharacterItem
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

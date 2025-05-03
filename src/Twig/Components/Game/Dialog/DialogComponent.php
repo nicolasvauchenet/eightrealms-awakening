@@ -3,9 +3,8 @@
 namespace App\Twig\Components\Game\Dialog;
 
 use App\Entity\Character\Player;
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Character\PlayerCharacter;
 use App\Entity\Dialog\DialogReply;
-use App\Entity\Dialog\DialogStep;
 use App\Entity\Screen\DialogScreen;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +28,7 @@ class DialogComponent extends AbstractController
     public DialogScreen $screen;
 
     #[LiveProp(writable: true)]
-    public PlayerNpc $playerNpc;
+    public PlayerCharacter $playerCharacter;
 
     #[LiveProp(writable: true)]
     public string $description = '';

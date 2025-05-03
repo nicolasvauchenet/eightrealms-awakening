@@ -3,11 +3,10 @@
 namespace App\Service\Character;
 
 use App\Entity\Character\Character;
-use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Character\PlayerCharacter;
 use App\Entity\Character\PreGenerated;
-use App\Entity\Item\PlayerNpcItem;
+use App\Entity\Item\PlayerCharacterItem;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class CharacterService
@@ -22,32 +21,30 @@ readonly class CharacterService
         return $this->entityManager->getRepository(PreGenerated::class)->findBy([], ['name' => 'ASC']);
     }
 
-    public function getPlayerNpc(Player $player, Character $character): PlayerNpc
+    public function getPlayerCharacter(Player $player, Character $character): PlayerCharacter
     {
-        $playerNpc = $this->entityManager->getRepository(PlayerNpc::class)->findOneBy(['player' => $player, 'npc' => $character]);
-        if(!$playerNpc) {
-            if($character instanceof Npc) {
-                $character = $this->entityManager->getRepository(Npc::class)->find($character->getId());
-            }
-            $playerNpc = (new PlayerNpc())
+        $playerCharacter = $this->entityManager->getRepository(PlayerCharacter::class)->findOneBy(['player' => $player, 'character' => $character]);
+        if(!$playerCharacter) {
+            $character = $this->entityManager->getRepository(Character::class)->find($character->getId());
+            $playerCharacter = (new PlayerCharacter())
                 ->setPlayer($player)
-                ->setNpc($character)
+                ->setCharacter($character)
                 ->setFortune($character->getFortune())
                 ->setReputation($this->characterReputationService->calculateInitialReputation($player, $character));
-            $this->entityManager->persist($playerNpc);
+            $this->entityManager->persist($playerCharacter);
 
             foreach($character->getCharacterItems() as $characterItem) {
-                $playerNpcItem = (new PlayerNpcItem())
+                $playerCharacterItem = (new PlayerCharacterItem())
                     ->setItem($characterItem->getItem())
-                    ->setPlayerNpc($playerNpc)
+                    ->setPlayerCharacter($playerCharacter)
                     ->setOriginal(true)
                     ->setHealth(method_exists($characterItem->getItem(), 'getHealthMax') ? $characterItem->getItem()->getHealthMax() : 100)
                     ->setCharge(method_exists($characterItem->getItem(), 'getChargeMax') ? $characterItem->getItem()->getChargeMax() : 100);
-                $this->entityManager->persist($playerNpcItem);
+                $this->entityManager->persist($playerCharacterItem);
             }
             $this->entityManager->flush();
         }
 
-        return $playerNpc;
+        return $playerCharacter;
     }
 }

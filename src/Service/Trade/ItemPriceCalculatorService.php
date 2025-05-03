@@ -2,16 +2,16 @@
 
 namespace App\Service\Trade;
 
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Character\PlayerCharacter;
 use App\Entity\Item\CharacterItem;
-use App\Entity\Item\PlayerNpcItem;
+use App\Entity\Item\PlayerCharacterItem;
 
 class ItemPriceCalculatorService
 {
     public function calculatePrice(
-        PlayerNpc                   $playerCharacter,
-        CharacterItem|PlayerNpcItem $playerCharacterItem,
-        string                      $mode = 'buy'
+        PlayerCharacter                   $playerCharacter,
+        CharacterItem|PlayerCharacterItem $playerCharacterItem,
+        string                            $mode = 'buy'
     ): int
     {
         $item = $playerCharacterItem->getItem();
@@ -24,8 +24,8 @@ class ItemPriceCalculatorService
             default => 1.0,
         };
 
-        $npc = $playerCharacter->getNpc();
-        $professionMod = match ($npc->getProfession()?->getSlug()) {
+        $character = $playerCharacter->getCharacter();
+        $professionMod = match ($character->getProfession()?->getSlug()) {
             'forgeron' => match ($mode) {
                 'buy' => 1.05,
                 'sell' => 0.75,

@@ -17,11 +17,11 @@ final class DialogScreenController extends AbstractController
                           DialogStep          $dialogStep): Response
     {
         $screen = $dialogScreenService->getScreen($dialogStep, $this->getUser()->getPlayer());
-        $playerNpc = $characterService->getPlayerNpc($this->getUser()->getPlayer(), $screen->getDialogStep()->getDialog()->getCharacter());
+        $playerCharacter = $characterService->getPlayerCharacter($this->getUser()->getPlayer(), $screen->getDialogStep()->getDialog()->getCharacter());
 
         return $this->render('game/screen/dialog/index.html.twig', [
             'screen' => $screen,
-            'playerNpc' => $playerNpc,
+            'playerCharacter' => $playerCharacter,
         ]);
     }
 }

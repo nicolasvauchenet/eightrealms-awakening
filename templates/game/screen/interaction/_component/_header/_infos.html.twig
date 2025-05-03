@@ -17,8 +17,8 @@
 
     <div class="right">
         <div class="header-info">
-            {{ ux_icon('mdi:head-heart-outline', {'class': 'app-icon ' ~ (this.playerNpc.reputation < 0 ? 'text-danger' : 'text-primary')}) }}
-            {{ this.playerNpc.reputation }}
+            {{ ux_icon('mdi:head-heart-outline', {'class': 'app-icon ' ~ (this.playerCharacter.reputation < 0 ? 'text-danger' : 'text-primary')}) }}
+            {{ this.playerCharacter.reputation > 0 ? '+' : '' }}{{ this.playerCharacter.reputation }}
         </div>
     </div>
 </div>

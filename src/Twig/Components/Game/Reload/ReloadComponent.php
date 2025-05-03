@@ -3,9 +3,9 @@
 namespace App\Twig\Components\Game\Reload;
 
 use App\Entity\Character\Player;
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Character\PlayerCharacter;
 use App\Entity\Item\CharacterItem;
-use App\Entity\Item\PlayerNpcItem;
+use App\Entity\Item\PlayerCharacterItem;
 use App\Entity\Screen\ReloadScreen;
 use App\Service\Item\CharacterItemService;
 use App\Service\Trade\TradeService;
@@ -32,7 +32,7 @@ class ReloadComponent
     public ReloadScreen $screen;
 
     #[LiveProp(writable: true)]
-    public PlayerNpc $playerNpc;
+    public PlayerCharacter $playerCharacter;
 
     #[LiveProp(writable: true)]
     public string $description = '';
@@ -59,7 +59,7 @@ class ReloadComponent
             return;
         }
 
-        $price = $this->tradeService->getItemPrice($this->playerNpc, $characterItem, 'reload');
+        $price = $this->tradeService->getItemPrice($this->playerCharacter, $characterItem, 'reload');
 
         if($this->character->getFortune() < $price) {
             $this->description .= "<p>Pas assez de couronnes pour recharger <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
@@ -68,14 +68,14 @@ class ReloadComponent
         }
 
         $this->character->setFortune($this->character->getFortune() - $price);
-        $this->playerNpc->setFortune($this->playerNpc->getFortune() + $price);
+        $this->playerCharacter->setFortune($this->playerCharacter->getFortune() + $price);
 
         if(method_exists($characterItem->getItem(), 'getChargeMax')) {
             $characterItem->setCharge($characterItem->getItem()->getChargeMax());
         }
 
         $this->entityManager->persist($this->character);
-        $this->entityManager->persist($this->playerNpc);
+        $this->entityManager->persist($this->playerCharacter);
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();
 
@@ -92,7 +92,7 @@ class ReloadComponent
         }
 
         $reloadableItems = $this->tradeService->getReloadableItems($this->character);
-        $totalCost = $this->tradeService->getTotalPrice($this->playerNpc, $reloadableItems, 'reload');
+        $totalCost = $this->tradeService->getTotalPrice($this->playerCharacter, $reloadableItems, 'reload');
 
         if($this->character->getFortune() < $totalCost) {
             $this->description .= "<p>Pas assez de couronnes pour tout recharger (coût total : {$totalCost}).</p>";
@@ -106,9 +106,9 @@ class ReloadComponent
         }
 
         $this->character->setFortune($this->character->getFortune() - $totalCost);
-        $this->playerNpc->setFortune($this->playerNpc->getFortune() + $totalCost);
+        $this->playerCharacter->setFortune($this->playerCharacter->getFortune() + $totalCost);
         $this->entityManager->persist($this->character);
-        $this->entityManager->persist($this->playerNpc);
+        $this->entityManager->persist($this->playerCharacter);
 
         $this->entityManager->flush();
 

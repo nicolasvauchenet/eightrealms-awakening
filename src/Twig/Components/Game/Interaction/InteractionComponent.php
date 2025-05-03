@@ -4,7 +4,7 @@ namespace App\Twig\Components\Game\Interaction;
 
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Character\PlayerCharacter;
 use App\Entity\Screen\InteractionScreen;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -26,7 +26,7 @@ class InteractionComponent
     public InteractionScreen $screen;
 
     #[LiveProp(writable: true)]
-    public PlayerNpc $playerNpc;
+    public PlayerCharacter $playerCharacter;
 
     #[LiveProp(writable: true)]
     public string $description = '';
@@ -38,7 +38,7 @@ class InteractionComponent
     #[PostMount]
     public function postMount(): void
     {
-        $this->description = $this->playerNpc->getDescription() ?? '';
+        $this->description = $this->playerCharacter->getDescription() ?? '';
     }
 
     #[LiveAction]

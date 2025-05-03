@@ -3,9 +3,9 @@
 namespace App\Twig\Components\Game\Trade;
 
 use App\Entity\Character\Player;
-use App\Entity\Character\PlayerNpc;
+use App\Entity\Character\PlayerCharacter;
 use App\Entity\Item\CharacterItem;
-use App\Entity\Item\PlayerNpcItem;
+use App\Entity\Item\PlayerCharacterItem;
 use App\Entity\Screen\TradeScreen;
 use App\Service\Item\CharacterItemService;
 use App\Service\Trade\TradeService;
@@ -32,7 +32,7 @@ class TradeComponent
     public TradeScreen $screen;
 
     #[LiveProp(writable: true)]
-    public PlayerNpc $playerNpc;
+    public PlayerCharacter $playerCharacter;
 
     #[LiveProp(writable: true)]
     public string $description = '';
@@ -52,20 +52,20 @@ class TradeComponent
     #[LiveAction]
     public function buyItem(#[LiveArg] int $characterItemId): void
     {
-        $npcItem = $this->entityManager->getRepository(PlayerNpcItem::class)->find($characterItemId);
+        $npcItem = $this->entityManager->getRepository(PlayerCharacterItem::class)->find($characterItemId);
         if(!$npcItem) {
             $this->description .= "<p>Objet introuvable.</p>";
 
             return;
         }
 
-        if(!$this->characterItemService->canBuyItem($this->playerNpc, $npcItem)) {
+        if(!$this->characterItemService->canBuyItem($this->playerCharacter, $npcItem)) {
             $this->description .= "<p>Vous n'avez pas assez d'argent pour acheter cet objet.</p>";
 
             return;
         }
 
-        $price = $this->tradeService->getItemPrice($this->playerNpc, $npcItem);
+        $price = $this->tradeService->getItemPrice($this->playerCharacter, $npcItem);
 
         // Débit joueur
         $player = $this->character;
@@ -73,7 +73,7 @@ class TradeComponent
         $this->entityManager->persist($player);
 
         // Crédit NPC
-        $npc = $this->playerNpc;
+        $npc = $this->playerCharacter;
         $npc->setFortune($npc->getFortune() + $price);
         $this->entityManager->persist($npc);
 
@@ -114,13 +114,13 @@ class TradeComponent
             return;
         }
 
-        if(!$this->characterItemService->canSellItem($this->playerNpc, $characterItem)) {
+        if(!$this->characterItemService->canSellItem($this->playerCharacter, $characterItem)) {
             $this->description .= "<p>Le marchand ne peut pas vous acheter cet objet.</p>";
 
             return;
         }
 
-        $price = $this->tradeService->getItemPrice($this->playerNpc, $characterItem, 'sell');
+        $price = $this->tradeService->getItemPrice($this->playerCharacter, $characterItem, 'sell');
 
         // Crédit joueur
         $player = $this->character;
@@ -128,32 +128,30 @@ class TradeComponent
         $this->entityManager->persist($player);
 
         // Débit du NPC
-        $npc = $this->playerNpc;
+        $npc = $this->playerCharacter;
         $npc->setFortune($npc->getFortune() - $price);
         $this->entityManager->persist($npc);
 
         $item = $characterItem->getItem();
 
-        // Vérifie si un PlayerNpcItem existe déjà pour cet item et ce NPC
-        $existingNpcItem = $this->entityManager->getRepository(PlayerNpcItem::class)
+        // Vérifie si un PlayerCharacterItem existe déjà pour cet item et ce NPC
+        $existingNpcItem = $this->entityManager->getRepository(PlayerCharacterItem::class)
             ->findOneBy([
                 'item' => $item,
-                'playerNpc' => $npc,
+                'playerCharacter' => $npc,
                 'original' => true,
             ]);
 
         // Si aucun, on en crée un nouveau (non original)
         if(!$existingNpcItem) {
-            $npcItem = (new PlayerNpcItem())
+            $npcItem = (new PlayerCharacterItem())
                 ->setItem($item)
-                ->setPlayerNpc($npc)
+                ->setPlayerCharacter($npc)
                 ->setOriginal(false)
                 ->setHealth($characterItem->getHealth() ?? 100)
                 ->setCharge($characterItem->getCharge() ?? 100);
 
             $this->entityManager->persist($npcItem);
-        } else {
-            // Sinon, on peut ignorer : il a déjà une copie vendable
         }
 
         // Suppression de l'objet chez le joueur

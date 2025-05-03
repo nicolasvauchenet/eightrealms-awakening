@@ -21,7 +21,7 @@ final class Version20250419210121 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE character (id SERIAL NOT NULL, race_id INT NOT NULL, profession_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, picture VARCHAR(255) NOT NULL, thumbnail VARCHAR(255) DEFAULT NULL, description TEXT NOT NULL, strength INT NOT NULL, dexterity INT NOT NULL, constitution INT NOT NULL, wisdom INT NOT NULL, intelligence INT NOT NULL, charisma INT NOT NULL, health_max INT NOT NULL, mana_max INT NOT NULL, fortune INT NOT NULL, derivative VARCHAR(255) NOT NULL, PRIMARY KEY(id))
+            CREATE TABLE character (id SERIAL NOT NULL, race_id INT NOT NULL, profession_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, picture VARCHAR(255) NOT NULL, picture_angry VARCHAR(255) DEFAULT NULL, thumbnail VARCHAR(255) DEFAULT NULL, description TEXT NOT NULL, description_angry TEXT DEFAULT NULL, strength INT NOT NULL, dexterity INT NOT NULL, constitution INT NOT NULL, wisdom INT NOT NULL, intelligence INT NOT NULL, charisma INT NOT NULL, health_max INT NOT NULL, mana_max INT NOT NULL, fortune INT NOT NULL, derivative VARCHAR(255) NOT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_937AB0346E59D40D ON character (race_id)

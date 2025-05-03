@@ -17,11 +17,11 @@ final class TradeScreenController extends AbstractController
                           Character          $character): Response
     {
         $screen = $tradeScreenService->getScreen($character, $this->getUser()->getPlayer());
-        $playerNpc = $characterService->getPlayerNpc($this->getUser()->getPlayer(), $character);
+        $playerCharacter = $characterService->getPlayerCharacter($this->getUser()->getPlayer(), $character);
 
         return $this->render('game/screen/trade/index.html.twig', [
             'screen' => $screen,
-            'playerNpc' => $playerNpc,
+            'playerCharacter' => $playerCharacter,
         ]);
     }
 }

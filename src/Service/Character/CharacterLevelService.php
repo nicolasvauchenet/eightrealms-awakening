@@ -68,10 +68,7 @@ readonly class CharacterLevelService
 
     public function canLevelUp(Player $character): bool
     {
-        $level = $character->getLevel();
-        $xp = $character->getExperience();
-
-        return isset(self::XP_TABLE[$level + 1]) && $xp >= self::XP_TABLE[$level + 1];
+        return $this->getPendingLevelUps($character) > 0;
     }
 
     public function getRequiredXP(int $level): ?int
@@ -102,12 +99,32 @@ readonly class CharacterLevelService
             return;
         }
 
-        // TODO: Offrir le choix entre augmenter un sort ou en apprendre un nouveau
-        // TODO: Appliquer le plafond de +50 sur les caractéristiques
-
         $character->setLevel($newLevel);
 
         $this->entityManager->persist($character);
         $this->entityManager->flush();
+    }
+
+    public function getLevelUpStatGain(int $level): array
+    {
+        return match (true) {
+            $level <= 4 => ['count' => 1, 'points' => 1],
+            $level <= 9 => ['count' => 1, 'points' => 2],
+            $level <= 14 => ['count' => 2, 'points' => 1],
+            $level <= 24 => ['count' => 2, 'points' => 2],
+            $level <= 34 => ['count' => 3, 'points' => 1],
+            $level <= 44 => ['count' => 3, 'points' => 2],
+            $level <= 50 => ['count' => 3, 'points' => 3],
+        };
+    }
+
+    public function getPendingLevelUps(Player $character): int
+    {
+        $currentLevel = $character->getLevel();
+        $xp = $character->getExperience();
+
+        $maxReachableLevel = $this->getLevelForXP($xp);
+
+        return max(0, $maxReachableLevel - $currentLevel);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Twig\Components\Character;
 
 use App\Entity\Character\Player;
 use App\Service\Character\CharacterBonusService;
+use App\Service\Character\CharacterLevelService;
 use App\Service\Item\CharacterItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,11 +65,16 @@ class LevelComponent extends AbstractController
     public string $description = '';
 
     #[LiveProp(writable: true)]
+    public int $characteristicBonusCap = 1;
+
+    #[LiveProp(writable: true)]
     public ?string $back = null;
 
     public function __construct(private readonly EntityManagerInterface $entityManager,
                                 private readonly CharacterItemService   $characterItemService,
-                                private readonly CharacterBonusService  $characterBonusService, private readonly RouterInterface $router)
+                                private readonly CharacterBonusService  $characterBonusService,
+                                private readonly CharacterLevelService  $characterLevelService,
+                                private readonly RouterInterface        $router)
     {
     }
 
@@ -85,10 +91,15 @@ class LevelComponent extends AbstractController
         $this->wisdom = $this->character->getWisdom();
         $this->intelligence = $this->character->getIntelligence();
         $this->charisma = $this->character->getCharisma();
-        $this->health = $this->character->getHealthMax() + $this->characterBonusService->getHealth($this->character)['amount'];
-        $this->mana = $this->character->getManaMax() + $this->characterBonusService->getMana($this->character)['amount'];
+        $this->health = $this->constitution * 10 + $this->characterBonusService->getHealth($this->character)['amount'];
+        $this->mana = $this->intelligence * 5 + $this->characterBonusService->getMana($this->character)['amount'];
 
-        $this->description = strip_tags($this->character->getDescription());
+        $description = str_replace('<br>', "\n", $this->character->getDescription());
+        $this->description = strip_tags($description);
+
+        $gain = $this->characterLevelService->getLevelUpStatGain($this->character->getLevel() + 1);
+        $this->characteristicBonusMax = $gain['count'] * $gain['points'];
+        $this->characteristicBonusCap = $gain['points'];
     }
 
     #[LiveAction]
@@ -103,46 +114,42 @@ class LevelComponent extends AbstractController
         if($this->characteristicBonus < $this->characteristicBonusMax) {
             switch($characteristic) {
                 case 'strength':
-                    if($this->strength === $this->character->getStrength()) {
+                    if(($this->strength - $this->character->getStrength()) < $this->characteristicBonusCap) {
                         $this->strength++;
                         $this->characteristicBonus++;
                     }
                     break;
                 case 'dexterity':
-                    if($this->dexterity === $this->character->getDexterity()) {
+                    if(($this->dexterity - $this->character->getDexterity()) < $this->characteristicBonusCap) {
                         $this->dexterity++;
                         $this->characteristicBonus++;
                     }
                     break;
                 case 'constitution':
-                    if($this->constitution === $this->character->getConstitution()) {
+                    if(($this->constitution - $this->character->getConstitution()) < $this->characteristicBonusCap) {
                         $this->constitution++;
-                        $this->health = $this->constitution * 10;
-                        $this->health = $this->health + $this->characterBonusService->getHealth($this->character)['amount'];
+                        $this->health = $this->constitution * 10 + $this->characterBonusService->getHealth($this->character)['amount'];
                         $this->characteristicBonus++;
                     }
                     break;
                 case 'wisdom':
-                    if($this->wisdom === $this->character->getWisdom()) {
+                    if(($this->wisdom - $this->character->getWisdom()) < $this->characteristicBonusCap) {
                         $this->wisdom++;
                         $this->characteristicBonus++;
                     }
                     break;
                 case 'intelligence':
-                    if($this->intelligence === $this->character->getIntelligence()) {
+                    if(($this->intelligence - $this->character->getIntelligence()) < $this->characteristicBonusCap) {
                         $this->intelligence++;
-                        $this->mana = $this->intelligence * 5;
-                        $this->mana = $this->mana + $this->characterBonusService->getMana($this->character)['amount'];
+                        $this->mana = $this->intelligence * 5 + $this->characterBonusService->getMana($this->character)['amount'];
                         $this->characteristicBonus++;
                     }
                     break;
                 case 'charisma':
-                    if($this->charisma === $this->character->getCharisma()) {
+                    if(($this->charisma - $this->character->getCharisma()) < $this->characteristicBonusCap) {
                         $this->charisma++;
                         $this->characteristicBonus++;
                     }
-                    break;
-                default:
                     break;
             }
         }
@@ -153,46 +160,42 @@ class LevelComponent extends AbstractController
     {
         switch($characteristic) {
             case 'strength':
-                if($this->strength === $this->character->getStrength() + 1) {
+                if($this->strength > $this->character->getStrength()) {
                     $this->strength--;
                     $this->characteristicBonus--;
                 }
                 break;
             case 'dexterity':
-                if($this->dexterity === $this->character->getDexterity() + 1) {
+                if($this->dexterity > $this->character->getDexterity()) {
                     $this->dexterity--;
                     $this->characteristicBonus--;
                 }
                 break;
             case 'constitution':
-                if($this->constitution === $this->character->getConstitution() + 1) {
+                if($this->constitution > $this->character->getConstitution()) {
                     $this->constitution--;
-                    $this->health = $this->constitution * 10;
-                    $this->health = $this->health + $this->characterBonusService->getHealth($this->character)['amount'];
+                    $this->health = $this->constitution * 10 + $this->characterBonusService->getHealth($this->character)['amount'];
                     $this->characteristicBonus--;
                 }
                 break;
             case 'wisdom':
-                if($this->wisdom === $this->character->getWisdom() + 1) {
+                if($this->wisdom > $this->character->getWisdom()) {
                     $this->wisdom--;
                     $this->characteristicBonus--;
                 }
                 break;
             case 'intelligence':
-                if($this->intelligence === $this->character->getIntelligence() + 1) {
+                if($this->intelligence > $this->character->getIntelligence()) {
                     $this->intelligence--;
-                    $this->mana = $this->intelligence * 5;
-                    $this->mana = $this->mana + $this->characterBonusService->getMana($this->character)['amount'];
+                    $this->mana = $this->intelligence * 5 + $this->characterBonusService->getMana($this->character)['amount'];
                     $this->characteristicBonus--;
                 }
                 break;
             case 'charisma':
-                if($this->charisma === $this->character->getCharisma() + 1) {
+                if($this->charisma > $this->character->getCharisma()) {
                     $this->charisma--;
                     $this->characteristicBonus--;
                 }
-                break;
-            default:
                 break;
         }
     }
@@ -217,7 +220,7 @@ class LevelComponent extends AbstractController
         $this->character->setHealth($this->health);
         $this->character->setManaMax($this->mana);
         $this->character->setMana($this->mana);
-        $this->character->setDescription($this->description);
+        $this->character->setDescription(str_replace("\n", '<br>', $this->description));
 
         $this->entityManager->persist($this->character);
         $this->entityManager->flush();

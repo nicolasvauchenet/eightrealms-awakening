@@ -16,7 +16,7 @@
     {% endif %}
 
     <a href="#"
-       class="bg-primary" {{ live_action('validateLevel') }}>
+       class="bg-primary {% if this.characteristicBonus < this.characteristicBonusMax %}disabled{% endif %}" {{ live_action('validateLevel') }}>
         {{ ux_icon('material-symbols:diamond', {'class': 'app-icon'}) }}
     </a>
 </div>

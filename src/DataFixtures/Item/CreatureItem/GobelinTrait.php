@@ -7,7 +7,7 @@ use App\Entity\Item\Food;
 use App\Entity\Item\Shield;
 use App\Entity\Item\Weapon;
 
-trait GobelinsTrait
+trait GobelinTrait
 {
     const GOBELINS_ITEMS = [
         // Éclaireur gobelin

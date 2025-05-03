@@ -2,8 +2,9 @@
 
 namespace App\DataFixtures\Item;
 
-use App\DataFixtures\Item\CreatureItem\GobelinsTrait;
-use App\DataFixtures\Item\CreatureItem\RatsTrait;
+use App\DataFixtures\Item\CreatureItem\GobelinTrait;
+use App\DataFixtures\Item\CreatureItem\RatTrait;
+use App\DataFixtures\Item\CreatureItem\SireneTrait;
 use App\Entity\Character\Creature;
 use App\Entity\Item\Armor;
 use App\Entity\Item\CharacterItem;
@@ -16,8 +17,9 @@ use Doctrine\Persistence\ObjectManager;
 
 class CreatureItemFixtures extends Fixture implements OrderedFixtureInterface
 {
-    use RatsTrait;
-    use GobelinsTrait;
+    use RatTrait;
+    use GobelinTrait;
+    use SireneTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -27,6 +29,9 @@ class CreatureItemFixtures extends Fixture implements OrderedFixtureInterface
 
             // Gobelins
             self::GOBELINS_ITEMS,
+
+            // Sirènes
+            self::SIRENES_ITEMS,
         ];
 
         foreach($allCharacterItems as $characterItems) {

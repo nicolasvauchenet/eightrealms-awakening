@@ -6,7 +6,7 @@ use App\Entity\Item\Armor;
 use App\Entity\Item\Food;
 use App\Entity\Item\Weapon;
 
-trait RatsTrait
+trait RatTrait
 {
     const RATS_ITEMS = [
         // Gros rat

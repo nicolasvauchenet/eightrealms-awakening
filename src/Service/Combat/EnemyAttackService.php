@@ -6,10 +6,7 @@ use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Combat\PlayerCombat;
 use App\Entity\Combat\PlayerCombatEnemy;
-use App\Entity\Item\CharacterItem;
-use App\Entity\Item\Item;
 use App\Service\Combat\Helper\AttackHelperService;
-use App\Service\Combat\Helper\AreaEffectHelperService;
 use App\Service\Combat\Helper\DiceRollerHelperService;
 use App\Service\Combat\Helper\DamageCalculatorHelperService;
 use App\Service\Combat\Effect\CombatEffectService;
@@ -22,7 +19,6 @@ readonly class EnemyAttackService
         private EntityManagerInterface        $entityManager,
         private AttackHelperService           $attackHelper,
         private CombatEffectService           $combatEffectService,
-        private AreaEffectHelperService       $areaEffectHelper,
         private DiceRollerHelperService       $diceRollerHelperService,
         private DamageCalculatorHelperService $damageCalculatorHelperService,
         private DurabilityHelperService       $durabilityHelperService,
@@ -51,9 +47,20 @@ readonly class EnemyAttackService
 
     private function handleClassicalWeaponAttack(PlayerCombat $playerCombat, array $equipped, Character $enemy, Player $player, PlayerCombatEnemy $enemyInstance): string
     {
-        $hasTwoWeapons = !empty($equipped['righthand']) && !empty($equipped['lefthand']);
+        $hasRight = !empty($equipped['righthand']);
+        $hasLeft = !empty($equipped['lefthand']);
 
-        if($hasTwoWeapons) {
+        if($hasRight && $hasLeft) {
+            $attackMode = ['righthand', 'lefthand', 'twohands'][random_int(0, 2)];
+        } else if($hasRight) {
+            $attackMode = 'righthand';
+        } else if($hasLeft) {
+            $attackMode = 'lefthand';
+        } else {
+            return "<span class='text-info'>{$enemy->getName()} {$enemyInstance->getPosition()} n’a pas d’arme pour attaquer.</span><br/>";
+        }
+
+        if($attackMode === 'twohands') {
             $weaponsData = $this->attackHelper->resolveWeapons($enemy);
             $weaponNames = $weaponsData['weaponNames'];
             $damages = $weaponsData['damages'];
@@ -62,7 +69,7 @@ readonly class EnemyAttackService
             $weaponName = implode(' et ', $weaponNames);
             $baseDamage = array_sum($damages);
         } else {
-            [$weaponName, $baseDamage, , $hasMagicWeaponBonus] = $this->attackHelper->resolveSingleWeapon($enemy, !empty($equipped['righthand']) ? 'righthand' : 'lefthand');
+            [$weaponName, $baseDamage, , $hasMagicWeaponBonus] = $this->attackHelper->resolveSingleWeapon($enemy, $attackMode);
         }
 
         $equippedItemsPlayer = $this->attackHelper->getCharacterItemService()->getEquippedItems($player);

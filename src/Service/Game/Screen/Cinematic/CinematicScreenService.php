@@ -2,52 +2,56 @@
 
 namespace App\Service\Game\Screen\Cinematic;
 
+use App\Entity\Character\Character;
 use App\Entity\Character\Player;
+use App\Entity\Combat\Combat;
 use App\Entity\Screen\CinematicScreen;
 use App\Entity\Location\Location;
-use App\Entity\Reward\Reward;
+use App\Service\Game\Screen\Interaction\InteractionScreenService;
 use App\Service\Game\Screen\Location\LocationScreenService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class CinematicScreenService
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private LocationScreenService  $locationScreenService,
+        private EntityManagerInterface   $entityManager,
+        private LocationScreenService    $locationScreenService,
+        private InteractionScreenService $interactionScreenService
     )
     {
     }
 
-    public function getVictoryScreen(string $combatName, string $description, string $picture, ?Reward $reward, Location $redirectLocation, Player $player): CinematicScreen
+    public function getVictoryScreen(Combat $combat, Player $player): CinematicScreen
     {
-        $slug = 'victory_' . strtolower(str_replace(' ', '_', $combatName));
+        $slug = 'victory_' . strtolower(str_replace(' ', '_', $combat->getName()));
 
-        $screen = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy([
-            'slug' => $slug,
-        ]);
-
+        $screen = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy(['slug' => $slug]);
         if($screen) {
             return $screen;
         }
 
-        $redirectScreen = $this->locationScreenService->getScreen($redirectLocation, $player);
+        // Choix de redirection dynamique
+        if($combat->getRedirectToInteraction()) {
+            $character = $this->entityManager->getRepository(Character::class)->findOneBy(['slug' => $combat->getRedirectToInteraction()]);
+            $redirectSlug = $this->interactionScreenService->getScreen($character, $player)->getSlug();
+        } else {
+            $redirectSlug = $this->locationScreenService->getScreen($combat->getLocation(), $player)->getSlug();
+        }
 
         $screen = (new CinematicScreen())
-            ->setName("<small class='text-success'>Victoire</small>$combatName")
+            ->setName("<small class='text-success'>Victoire</small>" . $combat->getName())
             ->setSlug($slug)
-            ->setPicture($picture)
-            ->setDescription($description)
+            ->setPicture($combat->getPicture())
+            ->setDescription($combat->getVictoryDescription())
             ->setType('cinematic')
-            ->setReward($reward)
+            ->setReward($combat->getReward())
             ->setActions([
-                'footer' => [
-                    [
-                        'type' => 'location',
-                        'slug' => $redirectScreen->getSlug(),
-                        'label' => 'Continuer',
-                        'thumbnail' => 'img/core/action/continue.png',
-                    ],
-                ],
+                'footer' => [[
+                    'type' => ($combat->getRedirectToInteraction() ? 'interaction' : 'location'),
+                    'slug' => $redirectSlug,
+                    'label' => 'Continuer',
+                    'thumbnail' => 'img/core/action/continue.png',
+                ]],
             ]);
 
         $this->entityManager->persist($screen);

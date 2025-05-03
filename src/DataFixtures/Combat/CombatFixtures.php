@@ -32,6 +32,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
                     ->setConditions($data['conditions'] ?? null)
                     ->setVictoryDescription($data['victoryDescription'] ?? null)
                     ->setDefeatDescription($data['defeatDescription'] ?? null)
+                    ->setRedirectToInteraction($data['redirectToInteraction'] ?? null)
                     ->setReward(isset($data['reward']) ? $this->getReference($data['reward'], Reward::class) : null)
                     ->setLocation(isset($data['location']) ? $this->getReference($data['location'], Location::class) : null)
                     ->setQuestStep(isset($data['questStep']) ? $this->getReference($data['questStep'], QuestStep::class) : null);

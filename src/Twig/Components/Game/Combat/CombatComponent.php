@@ -289,11 +289,7 @@ class CombatComponent extends AbstractController
             $this->entityManager->flush();
 
             $victoryScreen = $this->cinematicScreenService->getVictoryScreen(
-                $this->screen->getCombat()->getName(),
-                $this->screen->getCombat()->getVictoryDescription(),
-                $this->screen->getCombat()->getPicture(),
-                $this->screen->getCombat()->getReward(),
-                $this->screen->getCombat()->getLocation(),
+                $this->screen->getCombat(),
                 $this->character
             );
 

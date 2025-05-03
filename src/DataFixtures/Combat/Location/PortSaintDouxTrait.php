@@ -12,7 +12,7 @@ trait PortSaintDouxTrait
             'name' => 'Des Rats sur les Docks',
             'picture' => 'img/chapter1/combat/port-saint-doux-des-rats-sur-les-docks.webp',
             'thumbnail' => 'img/chapter1/combat/port-saint-doux-des-rats-sur-les-docks_thumb.png',
-            'description' => "<p>Un groupe de gros rats vous a repéré et vous attaque&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
+            'description' => "<p>Un grincement sinistre résonne entre les caisses abandonnées… Une nuée de rats surgit des ombres, les yeux brillants de rage et de faim. Le plus gros d’entre eux grogne, prêt à en découdre. Il va falloir vous battre pour nettoyer ces docks infestés&nbsp;!</p>",
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'des-rats-sur-les-docks',
@@ -21,8 +21,8 @@ trait PortSaintDouxTrait
                 ],
             ],
             'reward' => 'reward_combat_port_saint_doux_des_rats_sur_les_docks',
-            'victoryDescription' => "<p>Vous sortez vainqueur de ce combat acharné et glorieux.</p><p>Profitez de votre récompense et remettez-vous vite, car d'autres défis vous attendent&nbsp;!</p>",
-            'defeatDescription' => "<p>Vous avez été vaincu.</p><p>Mais rassurez-vous&nbsp;:&nbsp;Vous n'en avez pas encore terminé avec les Huit Royaumes&nbsp;! Dans leur grande magnaminité, les Dieux vous offrent une autre chance de sauver le Monde.</p><p>Vous serez ressuscité dans le Temple de la Capitale. Mais cela vous coûtera un peu de Couronnes… Il faut bien que le Grand Prêtre gagne sa vie.</p><p>Maintenant, relevez-vous et entraînez-vous pour être plus fort cette fois-ci&nbsp;!</p>",
+            'victoryDescription' => "<p>Les rats gisent autour de vous, repoussés par votre détermination et vos coups bien placés. Les docks sont un peu plus sûrs grâce à vous.</p><p>Mais le repos sera de courte durée. Récupérez votre dû, soignez vos plaies… d'autres épreuves approchent.</p>",
+            'defeatDescription' => "<p>Le combat vous échappe… Vos forces vous trahissent et l’ombre vous engloutit.</p><p>Mais ce n’est pas la fin. Les Dieux, dans leur mystérieuse clémence, vous offrent une seconde chance. Une résurrection au Temple de la Capitale… contre quelques Couronnes.</p><p>Relevez-vous, affûtez vos armes, et souvenez-vous&nbsp;: la mort n’est qu’un détour dans les Huit Royaumes.</p>",
             'location' => 'location_zone_anciens_docks',
             'questStep' => 'quest_secondary_des_rats_sur_les_docks_step_1',
             'enemies' => [
@@ -45,7 +45,7 @@ trait PortSaintDouxTrait
             'name' => 'La Sirène des Docks',
             'picture' => 'img/core/creature/sirene-angry.png',
             'thumbnail' => 'img/core/creature/sirene_thumb.png',
-            'description' => "<p>Une sirène émerge de l'eau et vous attaque&nbsp;! Surpris, vous n'avez pas le temps de fuir. Vous devez vous battre pour vous en sortir.</p>",
+            'description' => "<p>L’eau clapote étrangement, puis une silhouette féminine émerge des flots. Ses yeux scintillent d’un éclat hypnotique. Une sirène, envoûtante et létale, fond sur vous sans un mot. Votre cœur hésite, mais vos mains saisissent déjà vos armes…</p>",
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
@@ -54,8 +54,8 @@ trait PortSaintDouxTrait
                 ],
             ],
             'reward' => 'reward_combat_port_saint_doux_la_sirene_des_docks',
-            'victoryDescription' => "<p>Vous sortez vainqueur de ce combat acharné et glorieux.</p><p>Profitez de votre récompense et remettez-vous vite, car d'autres défis vous attendent&nbsp;!</p>",
-            'defeatDescription' => "<p>Vous avez été vaincu.</p><p>Mais rassurez-vous&nbsp;:&nbsp;Vous n'en avez pas encore terminé avec les Huit Royaumes&nbsp;! Dans leur grande magnaminité, les Dieux vous offrent une autre chance de sauver le Monde.</p><p>Vous serez ressuscité dans le Temple de la Capitale. Mais cela vous coûtera un peu de Couronnes… Il faut bien que le Grand Prêtre gagne sa vie.</p><p>Maintenant, relevez-vous et entraînez-vous pour être plus fort cette fois-ci&nbsp;!</p>",
+            'victoryDescription' => "<p>La sirène pousse un cri déchirant, puis s’enfonce dans les flots. Un instant de silence… avant qu’elle ne réapparaisse lentement à la surface.</p><p>Son regard a changé. Plus doux, presque humain. Elle vous observe sans hostilité, comme si le combat avait brisé un sort ou dissipé un malentendu.</p><p>Peut-être est-il temps de parler.</p>",
+            'defeatDescription' => "<p>Le combat vous échappe… Vos forces vous trahissent et l’ombre vous engloutit.</p><p>Mais ce n’est pas la fin. Les Dieux, dans leur mystérieuse clémence, vous offrent une seconde chance. Une résurrection au Temple de la Capitale… contre quelques Couronnes.</p><p>Relevez-vous, affûtez vos armes, et souvenez-vous&nbsp;: la mort n’est qu’un détour dans les Huit Royaumes.</p>",
             'location' => 'location_zone_docks_de_l_ouest',
             'questStep' => 'quest_secondary_la_sirene_et_le_marin_step_1',
             'enemies' => [
@@ -64,6 +64,7 @@ trait PortSaintDouxTrait
                     'enemyClass' => Creature::class,
                 ],
             ],
+            'redirectToInteraction' => 'sirene',
             'reference' => 'combat_port_saint_doux_la_sirene_des_docks',
         ],
 
@@ -72,7 +73,7 @@ trait PortSaintDouxTrait
             'name' => 'Une bande de Rats sur les Docks',
             'picture' => 'img/chapter1/combat/port-saint-doux-une-bande-de-rats-sur-les-docks.webp',
             'thumbnail' => 'img/chapter1/combat/port-saint-doux-une-bande-de-rats-sur-les-docks_thumb.png',
-            'description' => "<p>Un groupe de gros rats vous a repéré et vous attaque&nbsp;! Vous êtes encerclé. Vous devez vous battre pour vous en sortir.</p>",
+            'description' => "<p>Des couinements stridents vous encerclent. Trois rats énormes vous barrent le chemin, les crocs luisants et l’attitude agressive. C’est une embuscade, et vous êtes la cible. Il va falloir vous battre pour leur échapper vivant&nbsp;!</p>",
             'conditions' => [
                 'any' => [
                     'combat_not_started' => 'une-bande-de-rats-sur-les-docks',
@@ -83,8 +84,8 @@ trait PortSaintDouxTrait
                 ],
             ],
             'reward' => 'reward_combat_port_saint_doux_une_bande_de_rats_sur_les_docks',
-            'victoryDescription' => "<p>Vous sortez vainqueur de ce combat acharné et glorieux.</p><p>Profitez de votre récompense et remettez-vous vite, car d'autres défis vous attendent&nbsp;!</p>",
-            'defeatDescription' => "<p>Vous avez été vaincu.</p><p>Mais rassurez-vous&nbsp;:&nbsp;Vous n'en avez pas encore terminé avec les Huit Royaumes&nbsp;! Dans leur grande magnaminité, les Dieux vous offrent une autre chance de sauver le Monde.</p><p>Vous serez ressuscité dans le Temple de la Capitale. Mais cela vous coûtera un peu de Couronnes… Il faut bien que le Grand Prêtre gagne sa vie.</p><p>Maintenant, relevez-vous et entraînez-vous pour être plus fort cette fois-ci&nbsp;!</p>",
+            'victoryDescription' => "<p>Les assaillants sont vaincus. Vous reprenez votre souffle, entouré des corps poilus des rats terrassés.</p><p>Les habitants des docks pourront peut-être dormir un peu plus tranquilles ce soir…</p>",
+            'defeatDescription' => "<p>Le combat vous échappe… Vos forces vous trahissent et l’ombre vous engloutit.</p><p>Mais ce n’est pas la fin. Les Dieux, dans leur mystérieuse clémence, vous offrent une seconde chance. Une résurrection au Temple de la Capitale… contre quelques Couronnes.</p><p>Relevez-vous, affûtez vos armes, et souvenez-vous&nbsp;: la mort n’est qu’un détour dans les Huit Royaumes.</p>",
             'location' => 'location_zone_anciens_docks',
             'enemies' => [
                 [

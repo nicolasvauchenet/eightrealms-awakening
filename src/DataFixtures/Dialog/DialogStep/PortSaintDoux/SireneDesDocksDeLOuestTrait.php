@@ -12,14 +12,14 @@ trait SireneDesDocksDeLOuestTrait
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 1,
+                    'quest_step' => 2,
                     'status' => 'progress',
                 ],
             ],
             'effects' => [
                 'edit_quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 1,
+                    'quest_step' => 2,
                     'status' => 'completed',
                 ],
                 'reveal_location' => 'sables-chauds',

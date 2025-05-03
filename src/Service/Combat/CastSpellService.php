@@ -88,6 +88,14 @@ readonly class CastSpellService
 
         // Effet défensif (damage / defense)
         if($type === 'defensive') {
+            $statName = match ($targetStat) {
+                'health' => 'santé',
+                'mana' => 'magie',
+                'damage' => 'puissance',
+                'defense' => 'défense',
+                default => $targetStat,
+            };
+
             if(in_array($targetStat, ['health', 'mana'])) {
                 $before = $targetStat === 'health' ? $player->getHealth() : $player->getMana();
                 $max = $targetStat === 'health' ? $player->getHealthMax() : $player->getManaMax();
@@ -99,49 +107,52 @@ readonly class CastSpellService
                     $player->setMana($after);
                 }
 
-                $statName = match ($targetStat) {
-                    'damage', 'health' => 'santé',
-                    'mana' => 'magie',
-                    default => $targetStat,
-                };
-
                 $this->entityManager->persist($player);
-                $this->entityManager->flush();
-
-                return "<span class='text-info'>Vous lancez {$spell->getName()} et récupérez $amount point" . ($amount > 1 ? 's' : '') . " de $statName.</span><br/>";
+                $log = "<span class='text-info'>Vous utilisez {$item->getName()} et récupérez <strong>$amount</strong> point" . ($amount > 1 ? 's' : '') . " de $statName.</span><br/>";
             } else {
+                $playerCombat = $player->getPlayerCombats()->last();
+                if($playerCombat) {
+                    $this->combatEffectService->addEffect(
+                        type: $type,
+                        target: $targetStat,
+                        amount: $amount,
+                        duration: $duration,
+                        playerCombat: $playerCombat
+                    );
+
+                    $label = match ($targetStat) {
+                        'damage' => "vos dégâts sont augmentés",
+                        'defense' => "votre défense est renforcée",
+                        'invisibility' => "vous devenez invisible",
+                        'charmed' => "vous charmez l’ennemi",
+                        default => "vous bénéficiez d’un effet spécial",
+                    };
+
+                    $log = "<span class='text-info'>Vous utilisez {$item->getName()} et $label pendant " . ($duration ?? 'une durée indéterminée') . ".</span><br/>";
+                } else {
+                    $log = "<span class='text-warning'>Effet non appliqué&nbsp;: aucun combat actif.</span><br/>";
+                }
+            }
+        } else if($type === 'utile') {
+            $statName = match ($targetStat) {
+                'invisibility' => 'invisibilité',
+                default => $targetStat,
+            };
+
+            $playerCombat = $player->getPlayerCombats()->last();
+            if($playerCombat) {
                 $this->combatEffectService->addEffect(
-                    type: $type,
+                    type: 'utile',
                     target: $targetStat,
-                    amount: $amount,
+                    amount: 1,
                     duration: $duration,
                     playerCombat: $playerCombat
                 );
 
-                $this->entityManager->flush();
-
-                // Personnalisation du log selon l'effet
-                if($targetStat === 'damage') {
-                    return "<span class='text-info'>Vous lancez {$spell->getName()} et vos dégâts sont augmentés pendant $duration tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
-                } else if($targetStat === 'defense') {
-                    return "<span class='text-info'>Vous lancez {$spell->getName()} et votre défense est augmentée pendant $duration tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
-                }
+                $log = "<span class='text-info'>Vous utilisez {$item->getName()} et gagnez l’effet <strong>$statName</strong> pour " . ($duration ?? 'une durée indéterminée') . ".</span><br/>";
+            } else {
+                $log = "<span class='text-warning'>Effet non appliqué&nbsp;: aucun combat actif.</span><br/>";
             }
-        }
-
-        // Effet "utile" (invisibility)
-        if($type === 'utile') {
-            $this->combatEffectService->addEffect(
-                type: $type,
-                target: $targetStat,
-                amount: 1,
-                duration: $duration,
-                playerCombat: $playerCombat
-            );
-
-            $this->entityManager->flush();
-
-            return "<span class='text-info'>Vous lancez {$spell->getName()} et devenez intouchable pendant $duration tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
         }
 
         return "<span class='text-danger'>Ce sort n’a pas d’effet implémenté.</span><br/>";

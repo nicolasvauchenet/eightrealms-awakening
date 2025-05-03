@@ -46,6 +46,9 @@ class Combat
     #[ORM\Column(type: Types::TEXT)]
     private ?string $defeatDescription = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $redirectToInteraction = null;
+
     #[ORM\ManyToOne]
     private ?Reward $reward = null;
 
@@ -168,6 +171,18 @@ class Combat
     public function setDefeatDescription(string $defeatDescription): static
     {
         $this->defeatDescription = $defeatDescription;
+
+        return $this;
+    }
+
+    public function getRedirectToInteraction(): ?string
+    {
+        return $this->redirectToInteraction;
+    }
+
+    public function setRedirectToInteraction(?string $redirectToInteraction): static
+    {
+        $this->redirectToInteraction = $redirectToInteraction;
 
         return $this;
     }

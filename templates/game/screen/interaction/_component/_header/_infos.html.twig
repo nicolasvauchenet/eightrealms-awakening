@@ -13,6 +13,11 @@
                 {{ this.character.mana }}
             </div>
         {% endif %}
+
+        <div class="header-info">
+            {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+            {{ this.character.fortune }}
+        </div>
     </div>
 
     <div class="right">

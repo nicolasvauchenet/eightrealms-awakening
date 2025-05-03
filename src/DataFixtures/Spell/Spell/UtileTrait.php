@@ -26,6 +26,16 @@ trait UtileTrait
             'category' => 'category_water',
             'reference' => 'spell_ice_wall',
         ],
+        [
+            'name' => 'Charme hypnotique',
+            'description' => "<p>Un sort de contrôle mental qui charme une cible et l’empêche d’agir contre vous pendant un tour. Elle vous perçoit comme une alliée temporaire.</p>",
+            'type' => 'utile',
+            'manaCost' => 15,
+            'effect' => 'charmed',
+            'duration' => 1,
+            'category' => 'category_illusion',
+            'reference' => 'spell_charm_hypnotic',
+        ],
 
         // Nature
         [

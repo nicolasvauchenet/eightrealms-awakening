@@ -118,7 +118,7 @@ class CombatComponent extends AbstractController
 
     private function updateBonuses(): void
     {
-        $activeBonuses = $this->combatEffectService->getActiveBonuses($this->playerCombat);
+        $activeBonuses = $this->combatEffectService->getActiveBonusesForTarget($this->playerCombat, $this->character);
 
         $this->damageBonus = [
             'amount' => $activeBonuses['damage'] ?? 0,
@@ -200,6 +200,13 @@ class CombatComponent extends AbstractController
                 $this->addLog($this->playerCombat->getCurrentRound(), $log);
                 $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
             } else if($currentEntity['type'] === 'player' && $currentEntity['id'] === $this->character->getId()) {
+                $playerEffects = $this->combatEffectService->getActiveBonusesForTarget($this->playerCombat, $this->character);
+                if(!empty($playerEffects['charmed'])) {
+                    $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Vous êtes sous l’emprise d’un charme et perdez votre tour.</strong><br/>");
+                    $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
+                    continue;
+                }
+
                 $this->addLog($this->playerCombat->getCurrentRound(), "<strong>C’est votre tour d'agir…</strong><br/>");
                 break;
             } else {
@@ -333,6 +340,16 @@ class CombatComponent extends AbstractController
         $turnOrder = $this->playerCombat->getTurnOrder();
         $currentTurn = $this->playerCombat->getCurrentTurn();
         $currentEntity = $turnOrder[$currentTurn] ?? null;
+        $playerEffects = $this->combatEffectService->getActiveBonusesForTarget($this->playerCombat, $this->character);
+        if(!empty($playerEffects['charmed'])) {
+            $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Vous êtes sous l’effet d’un charme mental et ne pouvez pas agir ce tour-ci.</strong><br/>");
+
+            $this->playerCombat->setCurrentTurn($currentTurn + 1);
+            $this->entityManager->persist($this->playerCombat);
+            $this->entityManager->flush();
+
+            return $this->advanceUntilPlayerTurn();
+        }
 
         if(!$currentEntity || $currentEntity['type'] !== 'player' || $currentEntity['id'] !== $this->character->getId()) {
             $this->addLog($this->playerCombat->getCurrentRound(), "<em>Ce n’est pas votre tour&nbsp;!</em>");

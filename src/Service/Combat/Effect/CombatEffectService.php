@@ -38,37 +38,44 @@ readonly class CombatEffectService
         $this->entityManager->persist($effect);
     }
 
-    public function getActiveBonuses(PlayerCombat $playerCombat, ?PlayerCombatEnemy $playerCombatEnemy = null): array
+    public function getActiveBonusesForTarget(PlayerCombat $playerCombat, Character $target): array
     {
         $repo = $this->entityManager->getRepository(PlayerCombatEffect::class);
-        $criteria = ['playerCombat' => $playerCombat];
 
-        $effects = $repo->findBy($criteria);
+        if($playerCombat->getPlayer() === $target) {
+            $effects = $repo->findBy([
+                'playerCombat' => $playerCombat,
+                'playerCombatEnemy' => null,
+            ]);
+        } else {
+            $enemyInstance = $playerCombat->getPlayerCombatEnemies()->filter(
+                fn(PlayerCombatEnemy $e) => $e->getEnemy() === $target
+            )->first();
+
+            if(!$enemyInstance) {
+                throw new \LogicException('Cannot find PlayerCombatEnemy for this Character.');
+            }
+
+            $effects = $repo->findBy([
+                'playerCombatEnemy' => $enemyInstance,
+            ]);
+        }
+
         $bonuses = [
             'damage' => 0,
             'defense' => 0,
-            'invisibility' => 0,
+            'invisibility' => false,
+            'charmed' => false,
         ];
 
         foreach($effects as $effect) {
-            if($playerCombatEnemy && $effect->getPlayerCombatEnemy() && $effect->getPlayerCombatEnemy() !== $playerCombatEnemy) {
-                continue;
-            }
-
-            if(!$playerCombatEnemy && $effect->getPlayerCombatEnemy() !== null) {
-                continue;
-            }
-
-            $target = $effect->getTarget();
-            if($target === 'damage') {
-                $bonuses['damage'] += $effect->getAmount();
-            }
-            if($target === 'defense') {
-                $bonuses['defense'] += $effect->getAmount();
-            }
-            if($target === 'invisibility') {
-                $bonuses['invisibility'] = true;
-            }
+            match ($effect->getTarget()) {
+                'damage' => $bonuses['damage'] += $effect->getAmount(),
+                'defense' => $bonuses['defense'] += $effect->getAmount(),
+                'invisibility' => $bonuses['invisibility'] = true,
+                'charmed' => $bonuses['charmed'] = true,
+                default => null,
+            };
         }
 
         return $bonuses;
@@ -97,33 +104,29 @@ readonly class CombatEffectService
 
         foreach($effects as $effect) {
             if($effect->getDuration() !== null && $effect->getDuration() <= 0) {
-                // Déterminer le label cible
                 $targetLabel = $effect->getPlayerCombatEnemy()
                     ? $effect->getPlayerCombatEnemy()->getEnemy()->getName() . ' ' . $effect->getPlayerCombatEnemy()->getPosition()
                     : 'vous';
 
-                // Déterminer quel type d'effet s'est dissipé
                 $effectType = $effect->getTarget();
                 $effectName = match ($effectType) {
                     'invisibility' => "d'invisibilité",
                     'damage' => "d'augmentation des dégâts",
                     'defense' => "d'augmentation de la défense",
+                    'charmed' => 'de charme',
                     default => "effet inconnu",
                 };
 
-                // Personnaliser le message selon la cible
                 if($targetLabel === 'vous') {
                     $logs[] = "<em class='text-info'>Votre effet {$effectName} s’est dissipé.</em><br/>";
                 } else {
                     $logs[] = "<em class='text-info'>L’effet {$effectName} s’est dissipé sur $targetLabel.</em><br/>";
                 }
 
-                // Supprimer l'effet expiré
                 $this->entityManager->remove($effect);
             }
         }
 
-        // Enregistrer les modifications dans la base de données
         $this->entityManager->flush();
 
         return $logs;
@@ -152,12 +155,10 @@ readonly class CombatEffectService
             ->from(PlayerCombatEffect::class, 'effect');
 
         if($playerCombat->getPlayer() === $character) {
-            // Cas du joueur
             $qb->andWhere('effect.playerCombat = :playerCombat')
                 ->andWhere('effect.playerCombatEnemy IS NULL')
                 ->setParameter('playerCombat', $playerCombat);
         } else {
-            // Cas d'un ennemi : trouver le PlayerCombatEnemy correspondant
             $enemyInstance = $playerCombat->getPlayerCombatEnemies()->filter(
                 fn(PlayerCombatEnemy $e) => $e->getEnemy() === $character
             )->first();

@@ -13,6 +13,13 @@
                 {{ this.character.mana }}
             </div>
         {% endif %}
+
+        {% if screen.type == 'location' and screen.location.type == 'building' %}
+            <div class="header-info">
+                {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                {{ this.character.fortune }}
+            </div>
+        {% endif %}
     </div>
 
     <div class="right">

@@ -24,7 +24,7 @@ readonly class PlayerAttackService
         private AreaEffectHelperService       $areaEffectHelper,
         private DiceRollerHelperService       $diceRollerHelperService,
         private DamageCalculatorHelperService $damageCalculatorHelperService,
-        private durabilityHelperService       $durabilityHelperService
+        private DurabilityHelperService       $durabilityHelperService
     )
     {
     }
@@ -34,7 +34,8 @@ readonly class PlayerAttackService
         $playerCombat = $this->getPlayerCombat($player, $combat);
         $target = $this->getTarget($playerCombat, $enemyId);
 
-        if($this->getTargetInvisibility($playerCombat)) {
+        $targetEffects = $this->combatEffectService->getActiveBonusesForTarget($playerCombat, $target->getEnemy());
+        if(!empty($targetEffects['invisibility'])) {
             return "<span class='text-info'>{$target->getEnemy()->getName()} {$target->getPosition()} est invisible. Vous ratez votre attaque.</span><br/>";
         }
 
@@ -42,8 +43,10 @@ readonly class PlayerAttackService
             return $this->handleTwoWeaponsAttack($player, $combat, $enemyId, $target);
         }
 
-        $playerEffects = $this->combatEffectService->getActiveBonuses($playerCombat);
-        $targetEffects = $this->combatEffectService->getActiveBonuses($playerCombat, $target);
+        $playerEffects = $this->combatEffectService->getActiveBonusesForTarget($playerCombat, $player);
+        if(!empty($playerEffects['charmed'])) {
+            return "<span class='text-warning'>Vous êtes charmé(e) et incapable d’attaquer ce tour-ci.</span><br/>";
+        }
 
         return $this->handleSingleWeaponAttack($player, $target, $playerCombat, $mode, $playerEffects, $targetEffects);
     }
@@ -69,7 +72,6 @@ readonly class PlayerAttackService
         $logs = [];
 
         if($attackRoll['isCriticalSuccess'] && $defenseRoll['isCriticalSuccess']) {
-            // → Gestion critique critique : arme VS arme
             $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
                 attackerWeapon: $characterItem,
                 defenderEquipments: $this->attackHelper->getCharacterItemService()->getEquippedItems($target->getEnemy()),
@@ -94,7 +96,6 @@ readonly class PlayerAttackService
             $this->entityManager->persist($target);
             $this->entityManager->flush();
 
-            // Gestion usure arme normale
             if($characterItem) {
                 $weaponLog = $this->durabilityHelperService->handleWeaponUsage($characterItem);
                 if($weaponLog) {
@@ -147,7 +148,6 @@ readonly class PlayerAttackService
             $subLogs = [];
 
             if($attackRoll['isCriticalSuccess'] && $defenseRoll['isCriticalSuccess']) {
-                // Critique critique -> usure sur arme et défense
                 $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(
                     attackerWeapon: $characterItem,
                     defenderEquipments: [],
@@ -173,7 +173,6 @@ readonly class PlayerAttackService
                 $this->entityManager->persist($target);
                 $this->entityManager->flush();
 
-                // Gestion usure arme normale
                 if($characterItem) {
                     $weaponLog = $this->durabilityHelperService->handleWeaponUsage($characterItem);
                     if($weaponLog) {
@@ -251,12 +250,5 @@ readonly class PlayerAttackService
         return $playerCombat->getPlayerCombatEnemies()->filter(
             fn($pce) => $pce->getId() === $enemyId
         )->first();
-    }
-
-    private function getTargetInvisibility(PlayerCombat $playerCombat): bool
-    {
-        return $playerCombat->getPlayerCombatEffects()->exists(
-            fn($key, $effect) => $effect->getTarget() === 'invisibility' && $effect->getPlayerCombatEnemy() !== null
-        );
     }
 }

@@ -2,11 +2,14 @@
 
 namespace App\DataFixtures\Spell\PreGeneratedSpell;
 
+use App\Entity\Character\PreGenerated;
+
 trait IsileaTrait
 {
     const ISILEA_SPELLS = [
         [
             'character' => 'character_isilea',
+            'characterClass' => PreGenerated::class,
             'spell' => 'spell_healrestore',
             'level' => 1,
             'manaCost' => 0,
@@ -16,6 +19,7 @@ trait IsileaTrait
         ],
         [
             'character' => 'character_isilea',
+            'characterClass' => PreGenerated::class,
             'spell' => 'spell_manarestore',
             'level' => 1,
             'manaCost' => 0,
@@ -25,6 +29,7 @@ trait IsileaTrait
         ],
         [
             'character' => 'character_isilea',
+            'characterClass' => PreGenerated::class,
             'spell' => 'spell_entangling_roots',
             'level' => 1,
             'manaCost' => 0,
@@ -34,6 +39,7 @@ trait IsileaTrait
         ],
         [
             'character' => 'character_isilea',
+            'characterClass' => PreGenerated::class,
             'spell' => 'spell_metamorphosis_wolf',
             'level' => 2,
             'manaCost' => 5,

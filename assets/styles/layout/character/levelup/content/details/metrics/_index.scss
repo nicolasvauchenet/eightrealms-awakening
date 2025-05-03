@@ -1,0 +1,7 @@
+.metrics {
+  @include displayGrid(1fr 8.5rem, 0.5rem);
+  margin: 0.5rem 0.5rem 1rem 0;
+
+  @import "./characteristics";
+  @import "./attributes";
+}

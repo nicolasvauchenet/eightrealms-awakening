@@ -106,6 +106,10 @@
   transition: opacity 2s;
 }
 
+.text-blink {
+  animation: text-blink 3s infinite;
+}
+
 /* VISIBILITY */
 .scrollable {
   overflow-y: auto;

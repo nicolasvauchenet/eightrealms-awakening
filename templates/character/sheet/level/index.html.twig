@@ -1,0 +1,9 @@
+{% extends '_layout/_index.html.twig' %}
+
+{% block title %}Montée de niveau - Les Huit Royaumes - Chapitre I : L'Éveil{% endblock %}
+
+{% block body_class %}character sheet levelup{% endblock %}
+
+{% block main %}
+    {{ component('PlayerLevel', { character: app.user.player, characterType: 'player', back: path('app_character_sheet_player') }) }}
+{% endblock %}

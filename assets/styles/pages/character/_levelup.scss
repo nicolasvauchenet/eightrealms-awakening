@@ -1,0 +1,10 @@
+&.levelup {
+  .app-main {
+    & > div {
+      @include displayFlex(null, null, null, column);
+      flex: 1;
+      width: 100%;
+      @import "../../layout/character/levelup";
+    }
+  }
+}

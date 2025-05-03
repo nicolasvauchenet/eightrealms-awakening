@@ -1,0 +1,9 @@
+.app-sheet {
+  @include displayFlex(space-between, center, null, column);
+  width: 100%;
+  flex: 1;
+
+  @import "../sheet/header";
+  @import "./content";
+  @import "../sheet/footer";
+}

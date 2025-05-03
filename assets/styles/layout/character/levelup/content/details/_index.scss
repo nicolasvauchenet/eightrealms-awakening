@@ -1,0 +1,15 @@
+&.details {
+  @import "./level";
+  @import "./metrics";
+  @import "./description";
+
+  &:not(:has(.level)) {
+    .description {
+      max-height: 19dvh;
+
+      @include respondTo('md') {
+        max-height: 19.5dvh;
+      }
+    }
+  }
+}

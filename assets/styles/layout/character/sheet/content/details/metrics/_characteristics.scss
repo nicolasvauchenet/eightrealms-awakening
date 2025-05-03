@@ -7,7 +7,7 @@
   border-radius: 0.5rem;
   box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
 
-  .app-icon {
+  & > .app-icon {
     position: absolute;
     top: 50%;
     left: 50%;

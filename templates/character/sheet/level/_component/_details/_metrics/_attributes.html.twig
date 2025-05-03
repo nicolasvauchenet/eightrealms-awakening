@@ -1,0 +1,26 @@
+<div class="attributes">
+    <div class="attribute">
+        {% set bonus = app_characterBonusService.health(this.character) %}
+        {{ ux_icon('game-icons:health-potion', {'class': 'app-icon text-fifth'}) }}
+        <p class="{% if bonus['amount'] > 0 %}text-success{% endif %}">
+            {{ this.health }}
+        </p>
+    </div>
+
+    <div class="attribute">
+        {% set bonus = app_characterBonusService.mana(this.character) %}
+        {{ ux_icon('game-icons:egg-defense', {'class': 'app-icon text-third'}) }}
+        <p class="{% if bonus['amount'] > 0 %}text-success{% endif %}">
+            {{ this.mana }}
+        </p>
+    </div>
+
+    <p class="level-bonus">
+        <span>
+            Bonus
+            <br/>
+            répartis&nbsp;:
+        </span>
+        {{ this.characteristicBonus }} / {{ this.characteristicBonusMax }}
+    </p>
+</div>

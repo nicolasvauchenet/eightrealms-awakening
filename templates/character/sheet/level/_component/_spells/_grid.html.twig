@@ -1,0 +1,34 @@
+<div class="app-grid three">
+    {% for characterSpell in characterSpells %}
+        <div class="app-card spell" data-controller="tooltip">
+            <a href="#" data-action="click->tooltip#open">
+                <div class="card-header">
+                    {% set spellAttributes = get_spell_attributes(characterSpell) %}
+                    {% if spellAttributes is not empty %}
+                        <div class="card-attributes">
+                            {% for attr in spellAttributes %}
+                                <div class="card-attribute {{ attr.class }}">
+                                    {{ ux_icon(attr.icon, {'class': 'app-icon'}) }}
+                                    {% if attr.amount is not null %}
+                                        {% if 'simple' in attr.class %}
+                                            {{ attr.amount }}
+                                        {% else %}
+                                            +{{ attr.amount }}
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <img src="{{ asset('img/core/spell/' ~ characterSpell.spell.category.picture) }}" class="card-image" alt="{{ characterSpell.spell.name }}"/>
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">{{ characterSpell.spell.name }}</h3>
+                </div>
+            </a>
+            {% include '_layout/_tooltip/_spell.html.twig' with {characterSpell: characterSpell} %}
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,9 @@
+<div class="sheet-content spells {% if this.activeContent == 'spells' %}active{% endif %}" data-loading="addClass(loading)">
+    <div class="categories">
+        {% for category, characterSpells in app_characterSpellService.characterSpells(this.character) %}
+            <h4 class="category-name">{{ category }}</h4>
+
+            {% include 'character/sheet/_component/_spells/_grid.html.twig' %}
+        {% endfor %}
+    </div>
+</div>

@@ -1,20 +1,10 @@
 <header class="sheet-header">
-    {% if this.characterType == 'pregenerated' %}
-        <a href="{{ path('app_character_sheet_player', {'back': path('app_home')}) }}" class="app-button back">
-            {{ ux_icon('icon-park-solid:back', {'class': 'app-icon'}) }}
-        </a>
-    {% else %}
-        <a href="{{ path('app_character_sheet_player', {'back': path('app_home')}) }}" class="app-button back">
-            {{ ux_icon('icon-park-solid:back', {'class': 'app-icon'}) }}
-        </a>
-    {% endif %}
+    <a href="{{ path('app_character_sheet_player', {'back': back}) }}" class="app-button back">
+        {{ ux_icon('icon-park-solid:back', {'class': 'app-icon'}) }}
+    </a>
 
     <figure class="sheet-picture">
-        {% if this.characterType == 'pregenerated' %}
-            <img src="{{ asset('img/core/pregenerated/' ~ character.picture) }}" alt="{{ character.name }}"/>
-        {% else %}
-            <img src="{{ asset('uploads/character/' ~ character.picture) }}" alt="{{ character.name }}"/>
-        {% endif %}
+        <img src="{{ asset('uploads/character/' ~ character.picture) }}" alt="{{ character.name }}"/>
     </figure>
 
     <h1>{{ character.name }}</h1>

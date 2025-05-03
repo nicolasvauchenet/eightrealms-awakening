@@ -63,6 +63,9 @@ class LevelComponent extends AbstractController
     #[LiveProp(writable: true)]
     public string $description = '';
 
+    #[LiveProp(writable: true)]
+    public ?string $back = null;
+
     public function __construct(private readonly EntityManagerInterface $entityManager,
                                 private readonly CharacterItemService   $characterItemService,
                                 private readonly CharacterBonusService  $characterBonusService, private readonly RouterInterface $router)
@@ -222,7 +225,7 @@ class LevelComponent extends AbstractController
         $this->addFlash('success', "{$this->character->getName()} passe au niveau {$this->character->getLevel()}&nbsp;!");
 
         return $this->redirectToRoute('app_character_sheet_player', [
-            'back' => $this->router->generate('app_home'),
+            'back' => $this->back,
         ]);
     }
 }

@@ -6,7 +6,7 @@
 
     <p>
         {% if app_characterLevelService.canLevelUp(this.character) %}
-            <a href="{{ path('app_game_character_level_home') }}"
+            <a href="{{ path('app_game_character_level_home', {'back': back}) }}"
                class="{% if app_characterLevelService.canLevelUp(this.character) %}text-blink{% endif %}"
                title="{{ this.character.name }} peut passer au niveau {{ app_characterLevelService.getLevelForXP(this.character.experience) }} !">
                 {{ ux_icon('healthicons:medium-level-outline', {'class': 'app-icon levelicon text-primary'}) }}

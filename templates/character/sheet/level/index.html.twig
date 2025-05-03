@@ -5,5 +5,5 @@
 {% block body_class %}character sheet levelup{% endblock %}
 
 {% block main %}
-    {{ component('PlayerLevel', { character: app.user.player, characterType: 'player', back: path('app_character_sheet_player') }) }}
+    {{ component('PlayerLevel', { character: app.user.player, characterType: 'player', back: back }) }}
 {% endblock %}

@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures\Character;
 
+use App\DataFixtures\Character\Npc\BoisDuPendu\BoisDuPenduTrait;
+use App\DataFixtures\Character\Npc\MontsTerribles\MontsTerriblesTrait;
 use App\DataFixtures\Character\Npc\Plouc\PloucTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\DocksDeLOuestTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\QuartierDesPloucsTrait;
@@ -21,6 +23,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
     use QuartierDuMarcheTrait;
     use VieilleVilleTrait;
     use PloucTrait;
+    use BoisDuPenduTrait;
+    use MontsTerriblesTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -33,6 +37,12 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
 
             // Plouc
             self::PLOUC_NPCS,
+
+            // Bois du Pendu
+            self::BOIS_DU_PENDU_NPCS,
+
+            // Monts Terribles
+            self::MONTS_TERRIBLES__NPCS,
         ];
 
         foreach($allCharacters as $characters) {

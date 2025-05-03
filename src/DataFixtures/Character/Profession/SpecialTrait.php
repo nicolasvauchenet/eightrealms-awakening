@@ -38,5 +38,11 @@ trait SpecialTrait
             'playable' => false,
             'reference' => 'profession_devineresse',
         ],
+        [
+            'name' => 'Mineur',
+            'type' => 'specialized',
+            'playable' => false,
+            'reference' => 'profession_mineur',
+        ],
     ];
 }

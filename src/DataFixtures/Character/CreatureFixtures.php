@@ -2,7 +2,12 @@
 
 namespace App\DataFixtures\Character;
 
+use App\DataFixtures\Character\Creature\BouquetinTrait;
+use App\DataFixtures\Character\Creature\DragonTrait;
+use App\DataFixtures\Character\Creature\FantomeTrait;
 use App\DataFixtures\Character\Creature\GobelinTrait;
+use App\DataFixtures\Character\Creature\HarpieTrait;
+use App\DataFixtures\Character\Creature\LoupTrait;
 use App\DataFixtures\Character\Creature\RatTrait;
 use App\DataFixtures\Character\Creature\SireneTrait;
 use App\Entity\Character\Creature;
@@ -16,6 +21,11 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
     use GobelinTrait;
     use RatTrait;
     use SireneTrait;
+    use LoupTrait;
+    use FantomeTrait;
+    use HarpieTrait;
+    use BouquetinTrait;
+    use DragonTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -28,6 +38,21 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
 
             // Sirènes
             self::SIRENE_CREATURES,
+
+            // Loups
+            self::LOUP_CREATURES,
+
+            // Fantômes
+            self::FANTOME_CREATURES,
+
+            // Harpies
+            self::HARPIE_CREATURES,
+
+            // Bouquetins
+            self::BOUQUETIN_CREATURES,
+
+            // Dragons
+            self::DRAGON_CREATURES,
         ];
 
         foreach($allCreatures as $creatures) {

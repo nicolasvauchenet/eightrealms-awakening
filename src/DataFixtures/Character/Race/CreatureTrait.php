@@ -20,5 +20,30 @@ trait CreatureTrait
             'playable' => false,
             'reference' => 'race_sirene',
         ],
+        [
+            'name' => 'Bouquetin',
+            'playable' => false,
+            'reference' => 'race_bouquetin',
+        ],
+        [
+            'name' => 'Dragon',
+            'playable' => false,
+            'reference' => 'race_dragon',
+        ],
+        [
+            'name' => 'Fantôme',
+            'playable' => false,
+            'reference' => 'race_fantome',
+        ],
+        [
+            'name' => 'Harpie',
+            'playable' => false,
+            'reference' => 'race_harpie',
+        ],
+        [
+            'name' => 'Loup',
+            'playable' => false,
+            'reference' => 'race_loup',
+        ],
     ];
 }

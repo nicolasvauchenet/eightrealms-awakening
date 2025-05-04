@@ -18,6 +18,8 @@ trait SecondaryQuestTrait
         [
             'name' => 'La Fiole perdue',
             'type' => 'Secondaire',
+            'giver' => 'npc_wilbert_larcaniste',
+            'giverClass' => Npc::class,
             'reference' => 'quest_secondary_la_fiole_perdue',
         ],
         [
@@ -28,6 +30,8 @@ trait SecondaryQuestTrait
         [
             'name' => 'Livraison en cours',
             'type' => 'Secondaire',
+            'giver' => 'npc_gart_le_forgeron',
+            'giverClass' => Npc::class,
             'reference' => 'quest_secondary_livraison_en_cours',
         ],
         [

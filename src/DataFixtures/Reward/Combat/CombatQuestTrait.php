@@ -26,5 +26,12 @@ trait CombatQuestTrait
             'experience' => 50,
             'reference' => 'reward_combat_port_saint_doux_la_sirene_des_docks',
         ],
+
+        // Les Druides du Bois du Pendu
+        [
+            'crowns' => 100,
+            'experience' => 150,
+            'reference' => 'reward_combat_bois_du_pendu_druides_du_cercle',
+        ],
     ];
 }

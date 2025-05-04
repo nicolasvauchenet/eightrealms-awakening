@@ -83,5 +83,18 @@ trait MeleeTrait
             'magical' => false,
             'reference' => 'weapon_pickaxe',
         ],
+        [
+            'name' => 'Bâton de Combat',
+            'picture' => 'fight-stick.png',
+            'description' => "<p>Taillé dans une branche tombée d’un vieil arbre, ce bâton n’a rien de raffiné. Il est tordu, rugueux, marqué par le temps et les éléments. Et pourtant, entre des mains expérimentées, il devient une arme redoutable. Utilisé par les ermites, les druides ou les vagabonds, il sert autant à frapper qu’à marcher. Il grince, il cogne, il ne paie pas de mine — mais il a vu plus d’un bandit mordre la poussière.</p>",
+            'type' => 'Arme de mêlée',
+            'price' => 25,
+            'category' => 'category_weapon',
+            'healthMax' => 20,
+            'damage' => 6,
+            'range' => 1,
+            'magical' => false,
+            'reference' => 'weapon_fight_stick',
+        ],
     ];
 }

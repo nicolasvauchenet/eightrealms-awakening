@@ -44,5 +44,11 @@ trait SpecialTrait
             'playable' => false,
             'reference' => 'profession_mineur',
         ],
+        [
+            'name' => 'Érudit',
+            'type' => 'specialized',
+            'playable' => false,
+            'reference' => 'profession_erudit',
+        ],
     ];
 }

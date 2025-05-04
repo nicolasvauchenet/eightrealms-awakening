@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures\Quest\Secondary;
 
+use App\Entity\Character\Npc;
+
 trait BagarreBizarreTrait
 {
     const BAGARRE_BIZARRE_QUEST_STEPS = [
@@ -10,6 +12,8 @@ trait BagarreBizarreTrait
             'position' => 1,
             'last' => false,
             'quest' => 'quest_secondary_bagarre_bizarre',
+            'giver' => 'npc_robert_le_garde',
+            'giverClass' => Npc::class,
             'reference' => 'quest_secondary_bagarre_bizarre_step_1',
         ],
         [
@@ -17,7 +21,23 @@ trait BagarreBizarreTrait
             'position' => 2,
             'last' => false,
             'quest' => 'quest_secondary_bagarre_bizarre',
+            'giver' => 'npc_jarrod_le_tavernier',
+            'giverClass' => Npc::class,
             'reference' => 'quest_secondary_bagarre_bizarre_step_2',
+        ],
+        [
+            'description' => "<p>Je me suis aventuré dans le Bois du Pendu. L’endroit est encore plus sinistre que les rumeurs le laissaient penser. Dans une clairière, j’ai aperçu une silhouette recroquevillée… C’était Théobald. Il semblait m’attendre.</p><p>Mais avant que je puisse l’approcher, des murmures ont surgi des arbres. Plusieurs druides en sont sortis, visiblement décidés à l’éliminer… et moi avec.</p>",
+            'position' => 3,
+            'last' => false,
+            'quest' => 'quest_secondary_bagarre_bizarre',
+            'reference' => 'quest_secondary_bagarre_bizarre_step_3',
+        ],
+        [
+            'description' => "<p>Après la bataille, Théobald m’a expliqué qu’il avait autrefois appartenu à un cercle druidique. Il en est parti après une divergence sur un rituel ancien que le Prince Alaric voulait comprendre avant d’entrer dans le Donjon de l’Âme. Théobald pense que ce rituel pourrait être la clé de sa disparition…</p><p>Il m’a donné un objet scellé, en me disant : &laquo;&nbsp;Quand le moment viendra, ce sera à toi d’en découvrir le sens&nbsp;&raquo;.</p>",
+            'position' => 4,
+            'last' => true,
+            'quest' => 'quest_secondary_bagarre_bizarre',
+            'reference' => 'quest_secondary_bagarre_bizarre_step_4',
         ],
     ];
 }

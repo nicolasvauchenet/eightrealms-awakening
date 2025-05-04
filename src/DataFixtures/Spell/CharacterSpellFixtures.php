@@ -3,7 +3,7 @@
 namespace App\DataFixtures\Spell;
 
 use App\DataFixtures\Spell\CharacterSpell\CreatureTrait;
-use App\DataFixtures\Spell\CharacterSpell\DruidTrait;
+use App\DataFixtures\Spell\CharacterSpell\NpcTrait;
 use App\Entity\Spell\CharacterSpell;
 use App\Entity\Spell\Spell;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -13,7 +13,7 @@ use Doctrine\Persistence\ObjectManager;
 class CharacterSpellFixtures extends Fixture implements OrderedFixtureInterface
 {
     use CreatureTrait;
-    use DruidTrait;
+    use NpcTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -22,7 +22,7 @@ class CharacterSpellFixtures extends Fixture implements OrderedFixtureInterface
             self::CREATURES_SPELLS,
 
             // Druides
-            self::DRUID_SPELLS,
+            self::NPC_SPELLS,
         ];
 
         foreach($allCharacterSpells as $characterSpell) {

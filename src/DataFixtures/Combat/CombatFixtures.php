@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Combat;
 
+use App\DataFixtures\Combat\Location\BoisDuPenduTrait;
 use App\DataFixtures\Combat\Location\PortSaintDouxTrait;
 use App\Entity\Combat\Combat;
 use App\Entity\Combat\CombatEnemy;
@@ -15,11 +16,16 @@ use Doctrine\Persistence\ObjectManager;
 class CombatFixtures extends Fixture implements OrderedFixtureInterface
 {
     use PortSaintDouxTrait;
+    use BoisDuPenduTrait;
 
     public function load(ObjectManager $manager): void
     {
         $combatLocations = [
+            // Port Saint-Doux
             self::PORT_SAINT_DOUX_COMBATS,
+
+            // Bois du Pendu
+            self::BOIS_DU_PENDU_COMBATS,
         ];
 
         foreach($combatLocations as $combats) {

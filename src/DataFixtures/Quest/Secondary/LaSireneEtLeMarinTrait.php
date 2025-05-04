@@ -2,6 +2,9 @@
 
 namespace App\DataFixtures\Quest\Secondary;
 
+use App\Entity\Character\Creature;
+use App\Entity\Character\Npc;
+
 trait LaSireneEtLeMarinTrait
 {
     const LA_SIRENE_ET_LE_MARIN_QUEST_STEPS = [
@@ -10,6 +13,8 @@ trait LaSireneEtLeMarinTrait
             'position' => 1,
             'last' => false,
             'quest' => 'quest_secondary_la_sirene_et_le_marin',
+            'giver' => 'npc_myra_la_vieille',
+            'giverClass' => Npc::class,
             'reference' => 'quest_secondary_la_sirene_et_le_marin_step_1',
         ],
         [
@@ -31,6 +36,8 @@ trait LaSireneEtLeMarinTrait
             'position' => 4,
             'last' => true,
             'quest' => 'quest_secondary_la_sirene_et_le_marin',
+            'giver' => 'creature_sirene',
+            'giverClass' => Creature::class,
             'reference' => 'quest_secondary_la_sirene_et_le_marin_step_4',
         ],
     ];

@@ -13,11 +13,18 @@ trait MainQuestStepTrait
             'reference' => 'quest_main_step_1',
         ],
         [
-            'description' => "<p>J'ai retrouvé un médaillon en or, orné de motifs étranges et de pierres précieuses. Il semble avoir une certaine importance, mais je ne sais pas encore laquelle.</p>",
+            'description' => "<p>Un ancien druide du Bois du Pendu m’a révélé que le Prince Alaric avait consulté leur cercle avant sa disparition. Il cherchait un ancien rituel en lien avec le Donjon de l’Âme. Une piste… enfin.</p>",
             'position' => 2,
             'last' => false,
             'quest' => 'quest_main',
             'reference' => 'quest_main_step_2',
+        ],
+        [
+            'description' => "<p>J'ai retrouvé un médaillon en or, orné de motifs étranges et de pierres précieuses. Il semble avoir une certaine importance, mais je ne sais pas encore laquelle.</p>",
+            'position' => 3,
+            'last' => false,
+            'quest' => 'quest_main',
+            'reference' => 'quest_main_step_3',
         ],
     ];
 }

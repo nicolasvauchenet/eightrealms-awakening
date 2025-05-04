@@ -9,6 +9,7 @@ use App\DataFixtures\Item\NpcItem\GartTrait;
 use App\DataFixtures\Item\NpcItem\JarrodTrait;
 use App\DataFixtures\Item\NpcItem\MinionsTrait;
 use App\DataFixtures\Item\NpcItem\SophieTrait;
+use App\DataFixtures\Item\NpcItem\TheobaldTrait;
 use App\DataFixtures\Item\NpcItem\ThugsTrait;
 use App\DataFixtures\Item\NpcItem\WilbertTrait;
 use App\Entity\Character\Npc;
@@ -27,6 +28,7 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
     use JarrodTrait;
     use GartTrait;
     use WilbertTrait;
+    use TheobaldTrait;
     use FishermenTrait;
     use ThugsTrait;
     use MinionsTrait;
@@ -47,6 +49,9 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
 
             // Wilbert l'Arcaniste
             self::WILBERT_ITEMS,
+
+            // Théobald le Gris-Murmure
+            self::THEOBALD_ITEMS,
 
             // Pêcheurs
             self::FISHERMEN_ITEMS,
@@ -84,7 +89,7 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
                     ->setCharge($itemCharge ?? null)
                     ->setEquipped($data['equipped'] ?? false)
                     ->setSlot($data['slot'] ?? null)
-                    ->setQuestItem(false)
+                    ->setQuestItem($data['questItem'] ?? false)
                     ->setCharacter($this->getReference($data['character'], Npc::class))
                     ->setItem($item);
                 $manager->persist($characterItem);

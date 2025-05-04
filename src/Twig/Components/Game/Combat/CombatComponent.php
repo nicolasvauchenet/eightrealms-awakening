@@ -10,6 +10,7 @@ use App\Entity\Quest\PlayerQuest;
 use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\Screen\CombatScreen;
 use App\Service\Character\CharacterBonusService;
+use App\Service\Character\CharacterReputationService;
 use App\Service\Combat\CastSpellService;
 use App\Service\Combat\Effect\CombatEffectService;
 use App\Service\Combat\EnemyAttackService;
@@ -64,18 +65,19 @@ class CombatComponent extends AbstractController
     public array $defenseBonus = [];
 
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly InitiativeService      $initiativeService,
-        private readonly FleeService            $fleeService,
-        private readonly PlayerAttackService    $playerAttackService,
-        private readonly EnemyAttackService     $enemyAttackService,
-        private readonly CastSpellService       $castSpellService,
-        private readonly UseItemService         $useItemService,
-        private readonly CharacterItemService   $characterItemService,
-        private readonly CombatEffectService    $combatEffectService,
-        private readonly CharacterBonusService  $characterBonusService,
-        private readonly CinematicScreenService $cinematicScreenService,
-        private readonly QuestService           $questService
+        private readonly EntityManagerInterface     $entityManager,
+        private readonly InitiativeService          $initiativeService,
+        private readonly FleeService                $fleeService,
+        private readonly PlayerAttackService        $playerAttackService,
+        private readonly EnemyAttackService         $enemyAttackService,
+        private readonly CastSpellService           $castSpellService,
+        private readonly UseItemService             $useItemService,
+        private readonly CharacterItemService       $characterItemService,
+        private readonly CombatEffectService        $combatEffectService,
+        private readonly CharacterBonusService      $characterBonusService,
+        private readonly CinematicScreenService     $cinematicScreenService,
+        private readonly QuestService               $questService,
+        private readonly CharacterReputationService $characterReputationService
     )
     {
     }
@@ -259,6 +261,11 @@ class CombatComponent extends AbstractController
                 if($playerQuestStep && $playerQuestStep->getStatus() !== 'completed') {
                     $playerQuestStep->setStatus('completed');
                     $this->entityManager->persist($playerQuestStep);
+
+                    $giver = $playerQuestStep->getQuestStep()->getGiver();
+                    if($giver) {
+                        $this->characterReputationService->increaseReputationFromQuestReward($this->character, $giver);
+                    }
                 }
 
                 if($questStep->isLast()) {
@@ -269,6 +276,11 @@ class CombatComponent extends AbstractController
                     if($playerQuest && $playerQuest->getStatus() !== 'completed') {
                         $playerQuest->setStatus('completed');
                         $this->entityManager->persist($playerQuest);
+
+                        $giver = $playerQuest->getQuest()->getGiver();
+                        if($giver) {
+                            $this->characterReputationService->increaseReputationFromQuestReward($this->character, $giver);
+                        }
                     }
                 } else {
                     $nextStep = $this->questService->getNextQuestStep($questStep);

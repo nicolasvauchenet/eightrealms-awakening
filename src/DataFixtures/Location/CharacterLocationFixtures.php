@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Location;
 
+use App\DataFixtures\Location\CharacterLocation\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Location\CharacterLocation\Plouc\PloucTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\DocksDeLOuestTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\QuartierDesPloucsTrait;
@@ -20,6 +21,7 @@ class CharacterLocationFixtures extends Fixture implements OrderedFixtureInterfa
     use DocksDeLOuestTrait;
     use QuartierDesPloucsTrait;
     use PloucTrait;
+    use ClairiereDeLOublieTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -32,6 +34,9 @@ class CharacterLocationFixtures extends Fixture implements OrderedFixtureInterfa
 
             // Plouc
             self::PLOUC_NPCS,
+
+            // Bois du Pendu
+            self::CLAIRIERE_DE_L_OUBLIE_NPCS,
         ];
 
         foreach($locationCharacters as $locationCharacter) {

@@ -70,5 +70,18 @@ trait MeleeTrait
             'magical' => false,
             'reference' => 'weapon_warhammer',
         ],
+        [
+            'name' => 'Pic de Mineur',
+            'picture' => 'pickaxe.png',
+            'description' => "<p>Un pic de mine robuste, forgé en fer brut et en bois de chêne, poli par des années d’efforts dans les entrailles de la terre. Sa double tête émoussée brille faiblement, capable d’entailler la roche… ou un crâne, selon les besoins. Simple en apparence, il porte pourtant le poids de tunnels oubliés et de secrets enfouis. Outil des nains, menace pour les imprudents.</p>",
+            'type' => 'Arme de mêlée',
+            'price' => 50,
+            'category' => 'category_weapon',
+            'healthMax' => 20,
+            'damage' => 6,
+            'range' => 1,
+            'magical' => false,
+            'reference' => 'weapon_pickaxe',
+        ],
     ];
 }

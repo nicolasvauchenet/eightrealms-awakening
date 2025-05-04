@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures\Item;
 
+use App\DataFixtures\Item\NpcItem\DruidTrait;
+use App\DataFixtures\Item\NpcItem\DwarfTrait;
 use App\DataFixtures\Item\NpcItem\FishermenTrait;
 use App\DataFixtures\Item\NpcItem\GartTrait;
 use App\DataFixtures\Item\NpcItem\JarrodTrait;
@@ -28,6 +30,8 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
     use FishermenTrait;
     use ThugsTrait;
     use MinionsTrait;
+    use DwarfTrait;
+    use DruidTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -52,6 +56,12 @@ class NpcItemFixtures extends Fixture implements OrderedFixtureInterface
 
             // Sbires
             self::MINIONS_ITEMS,
+
+            // Nains
+            self::DWARF_ITEMS,
+
+            // Druides
+            self::DRUID_ITEMS,
         ];
 
         foreach($allCharacterItems as $characterItems) {

@@ -43,8 +43,8 @@ readonly class DialogEffectApplierService
             'start_quest' => $this->startQuest($player, $value),
             'edit_quest_step_status' => $this->editQuestStepStatus($player, $value),
             'start_quest_step' => $this->startQuestStep($player, $value),
-            'reward_quest' => $this->rewardQuest($player, $value),
             'remove_items' => $this->removeItems($player, $value),
+            'reward_quest' => $this->rewardQuest($player, $value),
             default => null,
         };
     }
@@ -184,6 +184,8 @@ readonly class DialogEffectApplierService
                 }
             }
         }
+
+        $this->entityManager->flush();
     }
 
     private function rewardQuest(Player $player, string $questSlug): void
@@ -197,16 +199,20 @@ readonly class DialogEffectApplierService
         ]);
         if(!$playerQuest || $playerQuest->getStatus() === 'rewarded') return;
 
-        $lastStep = $quest->getQuestSteps()->filter(fn($step) => $step->isLast())->first();
-        if($lastStep) {
+        foreach($quest->getQuestSteps() as $step) {
             $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
                 'player' => $player,
-                'questStep' => $lastStep,
+                'questStep' => $step,
             ]);
-            if($playerQuestStep && $playerQuestStep->getStatus() !== 'completed') {
-                $playerQuestStep->setStatus('completed');
-                $this->entityManager->persist($playerQuestStep);
+
+            if(!$playerQuestStep) {
+                $playerQuestStep = (new PlayerQuestStep())
+                    ->setPlayer($player)
+                    ->setQuestStep($step);
             }
+
+            $playerQuestStep->setStatus('completed');
+            $this->entityManager->persist($playerQuestStep);
         }
 
         $reward = $quest->getReward();
@@ -214,8 +220,10 @@ readonly class DialogEffectApplierService
             $this->rewardService->giveReward($reward, $player);
         }
 
-        // Réputation : trouver le giver (Quest > fallback QuestStep)
+        // Réputation : trouver le donneur de quête
+        $lastStep = $quest->getQuestSteps()->filter(fn($s) => $s->isLast())->first();
         $giver = $quest->getGiver() ?? $lastStep?->getGiver();
+
         if($giver) {
             $this->characterReputationService->increaseReputationFromQuestReward($player, $giver);
         }

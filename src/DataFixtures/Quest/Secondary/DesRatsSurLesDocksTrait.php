@@ -15,9 +15,16 @@ trait DesRatsSurLesDocksTrait
         [
             'description' => "<p>J'ai trouvé les rats et je les ai vaincus. Les autres ont pris la fuite. Je devrais retourner voir Bilo…</p>",
             'position' => 2,
-            'last' => true,
+            'last' => false,
             'quest' => 'quest_secondary_des_rats_sur_les_docks',
             'reference' => 'quest_secondary_des_rats_sur_les_docks_step_2',
+        ],
+        [
+            'description' => "<p>Bilo m'a remercié d'avoir débarrassé les Anciens Docks de ces rats. Il m'a même offert une modique récompense. Je devrais peut-être lui parler de l'odeur de poisson qui règne dans le coin.</p>",
+            'position' => 3,
+            'last' => true,
+            'quest' => 'quest_secondary_des_rats_sur_les_docks',
+            'reference' => 'quest_secondary_des_rats_sur_les_docks_step_3',
         ],
     ];
 }

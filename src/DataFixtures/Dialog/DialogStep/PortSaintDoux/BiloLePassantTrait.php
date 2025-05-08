@@ -69,6 +69,11 @@ trait BiloLePassantTrait
                 ],
             ],
             'effects' => [
+                'edit_quest_step_status' => [
+                    'quest' => 'des-rats-sur-les-docks',
+                    'quest_step' => 2,
+                    'status' => 'completed',
+                ],
                 'reward_quest' => 'des-rats-sur-les-docks',
             ],
             'dialog' => 'quest_bilo_le_passant',

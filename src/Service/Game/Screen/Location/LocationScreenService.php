@@ -104,6 +104,7 @@ readonly class LocationScreenService
                         'slug' => $combat->getSlug(),
                         'label' => $combat->getName(),
                         'thumbnail' => $combat->getThumbnail(),
+                        'isQuest' => $combat->getQuestStep() ? true : false,
                     ];
                 }
 

@@ -41,7 +41,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'healthMax' => 90,
                 'health' => 90,
                 'manaMax' => 80,
-                'mana' => 80,
+                'mana' => 110,
                 'fortune' => 200,
                 'race' => 'race_elfe',
                 'profession' => 'profession_mage',
@@ -59,7 +59,8 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'class' => MagicalWeapon::class,
             ],
             [
-                'isEquipped' => false,
+                'isEquipped' => true,
+                'slot' => 'armor',
                 'character' => 'player_elandra',
                 'item' => 'armor_mage_apprentice',
                 'class' => Armor::class,
@@ -84,7 +85,8 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'class' => Potion::class,
             ],
             [
-                'isEquipped' => false,
+                'isEquipped' => true,
+                'slot' => 'amulet',
                 'character' => 'player_elandra',
                 'item' => 'amulet_mana',
                 'class' => Amulet::class,

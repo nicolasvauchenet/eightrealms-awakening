@@ -39,7 +39,8 @@ readonly class CharacterService
                     ->setPlayerCharacter($playerCharacter)
                     ->setOriginal(true)
                     ->setHealth(method_exists($characterItem->getItem(), 'getHealthMax') ? $characterItem->getItem()->getHealthMax() : 100)
-                    ->setCharge(method_exists($characterItem->getItem(), 'getChargeMax') ? $characterItem->getItem()->getChargeMax() : 100);
+                    ->setCharge(method_exists($characterItem->getItem(), 'getChargeMax') ? $characterItem->getItem()->getChargeMax() : 100)
+                    ->setQuestItem($characterItem->isQuestItem());
                 $this->entityManager->persist($playerCharacterItem);
             }
             $this->entityManager->flush();

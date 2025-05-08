@@ -149,7 +149,8 @@ class TradeComponent
                 ->setPlayerCharacter($npc)
                 ->setOriginal(false)
                 ->setHealth($characterItem->getHealth() ?? 100)
-                ->setCharge($characterItem->getCharge() ?? 100);
+                ->setCharge($characterItem->getCharge() ?? 100)
+                ->setQuestItem($characterItem->isQuestItem());
 
             $this->entityManager->persist($npcItem);
         }

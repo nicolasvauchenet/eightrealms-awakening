@@ -21,7 +21,7 @@ final class Version20250419231219 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE player_character_item (id SERIAL NOT NULL, player_character_id INT NOT NULL, item_id INT NOT NULL, original BOOLEAN NOT NULL, health INT DEFAULT NULL, charge INT DEFAULT NULL, PRIMARY KEY(id))
+            CREATE TABLE player_character_item (id SERIAL NOT NULL, player_character_id INT NOT NULL, item_id INT NOT NULL, original BOOLEAN NOT NULL, health INT DEFAULT NULL, charge INT DEFAULT NULL, quest_item BOOLEAN NOT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_408023C7557DFD57 ON player_character_item (player_character_id)

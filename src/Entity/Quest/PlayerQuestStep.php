@@ -25,6 +25,10 @@ class PlayerQuestStep
     #[ORM\JoinColumn(nullable: false)]
     private ?QuestStep $questStep = null;
 
+    #[ORM\ManyToOne(inversedBy: 'playerQuestSteps')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?PlayerQuest $playerQuest = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +66,18 @@ class PlayerQuestStep
     public function setQuestStep(?QuestStep $questStep): static
     {
         $this->questStep = $questStep;
+
+        return $this;
+    }
+
+    public function getPlayerQuest(): ?PlayerQuest
+    {
+        return $this->playerQuest;
+    }
+
+    public function setPlayerQuest(?PlayerQuest $playerQuest): static
+    {
+        $this->playerQuest = $playerQuest;
 
         return $this;
     }

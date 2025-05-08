@@ -13,6 +13,7 @@ use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\SophieLaMarchandeTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\WilbertLArcanisteTrait;
 use App\DataFixtures\Dialog\DialogReply\SablesChauds\FaroukLeNomadeTrait;
 use App\DataFixtures\Dialog\DialogReply\SablesChauds\FauxDjinnTrait;
+use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\SireneDesDocksDeLOuestTrait;
 use App\Entity\Dialog\DialogReply;
 use App\Entity\Dialog\DialogStep;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -26,6 +27,7 @@ class DialogReplyFixtures extends Fixture implements OrderedFixtureInterface
     use GrandPretreDePortSaintDouxTrait;
     use JarrodLeTavernierTrait;
     use MyraLaVieilleTrait;
+    use SireneDesDocksDeLOuestTrait;
     use PecheurDuQuartierDesPloucsTrait;
     use RobertLeGardeTrait;
     use SophieLaMarchandeTrait;
@@ -42,6 +44,7 @@ class DialogReplyFixtures extends Fixture implements OrderedFixtureInterface
             self::GRAND_PRETRE_DE_PORT_SAINT_DOUX_DIALOG_REPLIES,
             self::JARROD_LE_TAVERNIER_DIALOG_REPLIES,
             self::MYRA_LA_VIEILLE_DIALOG_REPLIES,
+            self::SIRENE_DES_DOCKS_DE_L_OUEST_DIALOG_REPLIES,
             self::PECHEUR_DU_QUARTIER_DES_PLOUCS_DIALOG_REPLIES,
             self::ROBERT_LE_GARDE_DIALOG_REPLIES,
             self::SOPHIE_LA_MARCHANDE_DIALOG_REPLIES,
@@ -70,6 +73,6 @@ class DialogReplyFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 33;
+        return 34;
     }
 }

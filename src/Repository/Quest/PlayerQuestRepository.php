@@ -39,6 +39,9 @@ class PlayerQuestRepository extends ServiceEntityRepository
     public function findSideQuests(Player $player, ?bool $isRewarded = false): array
     {
         $qb = $this->createQueryBuilder('pq')
+            ->join('pq.playerQuestSteps', 'pqs')
+            ->join('pqs.questStep', 'qs')
+            ->addSelect('pqs', 'qs')
             ->join('pq.quest', 'q')
             ->where('pq.player = :player')
             ->andWhere('q.type = :type')
@@ -50,7 +53,9 @@ class PlayerQuestRepository extends ServiceEntityRepository
         } else {
             $qb->andWhere('pq.status != :status');
         }
-        $qb->setParameter('status', 'rewarded');
+
+        $qb->setParameter('status', 'rewarded')
+            ->orderBy('qs.position', 'ASC');
 
         return $qb->getQuery()->getResult();
     }

@@ -66,6 +66,6 @@ class CharacterLocationFixtures extends Fixture implements OrderedFixtureInterfa
 
     public function getOrder(): int
     {
-        return 26;
+        return 27;
     }
 }

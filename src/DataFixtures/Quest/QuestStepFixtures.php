@@ -57,6 +57,6 @@ class QuestStepFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 29;
+        return 30;
     }
 }

@@ -6,15 +6,15 @@ trait QuestTrait
 {
     const QUEST_AMULETS = [
         [
-            'name' => "Médaillon d'Eryl",
-            'picture' => 'amulet.png',
-            'description' => "<p>Ce médaillon ancien, orné d’une pierre opaline et gravé du nom &laquo;&nbsp;Eryl&nbsp;&raquo;, semble avoir traversé les âges. Il dégage une chaleur étrange, presque apaisante, comme s’il contenait les derniers fragments d’un souvenir oublié. Malgré le sable incrusté dans ses gravures, il brille doucement lorsque vous le tenez en main.</p>",
-            'type' => 'defensive',
-            'price' => 500,
+            'name' => "Cœur d'Écume",
+            'picture' => 'coeur-decume.png',
+            'description' => "<p>Cette amulette bleutée semble vibrer doucement au contact de l’air humide. Offerte par une Sirène en guise d'amitié ou d'amour, elle relie son porteur aux forces tranquilles des abysses. Tant qu’elle est portée, les créatures aquatiques hésitent à lever la main.</p><p>Elle permet aussi de respirer sous l’eau là où l’air ne passe plus.</p>",
+            'type' => 'utile',
+            'price' => 1500,
             'category' => 'category_amulet',
-            'target' => 'charisma',
-            'amount' => 2,
-            'reference' => 'amulet_medaillon_d_eryl',
+            'target' => 'aquatics',
+            'effect' => 'charmed',
+            'reference' => 'amulet_coeur_d_ecume',
         ],
         [
             'name' => 'Médaillon des Vents',

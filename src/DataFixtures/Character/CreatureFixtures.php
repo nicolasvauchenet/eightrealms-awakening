@@ -10,6 +10,7 @@ use App\DataFixtures\Character\Creature\HarpieTrait;
 use App\DataFixtures\Character\Creature\LoupTrait;
 use App\DataFixtures\Character\Creature\RatTrait;
 use App\DataFixtures\Character\Creature\SireneTrait;
+use App\DataFixtures\Character\Creature\SqueletteTrait;
 use App\Entity\Character\Creature;
 use App\Entity\Character\Race;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -26,6 +27,7 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
     use HarpieTrait;
     use BouquetinTrait;
     use DragonTrait;
+    use SqueletteTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -53,6 +55,9 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
 
             // Dragons
             self::DRAGON_CREATURES,
+
+            // Squelettes
+            self::SQUELETTE_CREATURES,
         ];
 
         foreach($allCreatures as $creatures) {

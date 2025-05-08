@@ -45,6 +45,6 @@ class PreGeneratedSpellFixtures extends Fixture implements OrderedFixtureInterfa
 
     public function getOrder(): int
     {
-        return 24;
+        return 25;
     }
 }

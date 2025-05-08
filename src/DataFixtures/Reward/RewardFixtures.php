@@ -62,6 +62,6 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 27;
+        return 28;
     }
 }

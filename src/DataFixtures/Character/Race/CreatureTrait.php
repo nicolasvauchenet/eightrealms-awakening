@@ -45,5 +45,10 @@ trait CreatureTrait
             'playable' => false,
             'reference' => 'race_loup',
         ],
+        [
+            'name' => 'Squelette',
+            'playable' => false,
+            'reference' => 'race_squelette',
+        ],
     ];
 }

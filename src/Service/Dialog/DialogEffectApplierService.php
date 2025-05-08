@@ -43,6 +43,7 @@ readonly class DialogEffectApplierService
             'start_quest' => $this->startQuest($player, $value),
             'edit_quest_step_status' => $this->editQuestStepStatus($player, $value),
             'start_quest_step' => $this->startQuestStep($player, $value),
+            'add_items' => $this->addItems($player, $value),
             'remove_items' => $this->removeItems($player, $value),
             'reward_quest' => $this->rewardQuest($player, $value),
             default => null,
@@ -90,6 +91,7 @@ readonly class DialogEffectApplierService
                     $playerQuestStep = (new PlayerQuestStep())
                         ->setPlayer($player)
                         ->setQuestStep($step)
+                        ->setPlayerQuest($playerQuest)
                         ->setStatus('progress');
 
                     $this->entityManager->persist($playerQuestStep);
@@ -101,86 +103,129 @@ readonly class DialogEffectApplierService
 
     private function startQuestStep(Player $player, array $data): void
     {
-        if(!isset($data['quest'], $data['quest_step'])) {
-            return;
+        $entries = isset($data['quest']) ? [$data] : $data;
+
+        foreach($entries as $entry) {
+            if(!isset($entry['quest'], $entry['quest_step'])) {
+                continue;
+            }
+
+            $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $entry['quest']]);
+            if(!$quest) {
+                continue;
+            }
+
+            $step = $quest->getQuestSteps()->filter(fn($s) => $s->getPosition() === $entry['quest_step'])->first();
+            if(!$step) {
+                continue;
+            }
+
+            $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
+                'player' => $player,
+                'quest' => $quest,
+            ]);
+            if(!$playerQuest) {
+                continue;
+            }
+
+            $existing = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
+                'player' => $player,
+                'questStep' => $step,
+            ]);
+            if($existing) {
+                continue;
+            }
+
+            $playerQuestStep = (new PlayerQuestStep())
+                ->setPlayer($player)
+                ->setQuestStep($step)
+                ->setPlayerQuest($playerQuest)
+                ->setStatus($entry['status'] ?? 'progress');
+
+            $this->entityManager->persist($playerQuestStep);
         }
-
-        $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $data['quest']]);
-        if(!$quest) return;
-
-        $step = $quest->getQuestSteps()->filter(fn($s) => $s->getPosition() === $data['quest_step'])->first();
-        if(!$step) return;
-
-        $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
-            'player' => $player,
-            'quest' => $quest,
-        ]);
-        if(!$playerQuest) return;
-
-        $existing = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
-            'player' => $player,
-            'questStep' => $step,
-        ]);
-        if($existing) return;
-
-        $playerQuestStep = (new PlayerQuestStep())
-            ->setPlayer($player)
-            ->setQuestStep($step)
-            ->setStatus('progress');
-
-        $this->entityManager->persist($playerQuestStep);
     }
 
     private function editQuestStepStatus(Player $player, array $data): void
     {
-        if(!isset($data['quest'], $data['quest_step'], $data['status'])) {
-            return;
+        $entries = isset($data['quest']) ? [$data] : $data;
+
+        // On prépare une map des statuts explicitement demandés
+        $manualStatuses = [];
+        foreach($entries as $entry) {
+            if(isset($entry['quest'], $entry['quest_step'], $entry['status'])) {
+                $manualStatuses[$entry['quest']][$entry['quest_step']] = $entry['status'];
+            }
         }
 
-        $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $data['quest']]);
-        if(!$quest) return;
+        foreach($entries as $entry) {
+            if(!isset($entry['quest'], $entry['quest_step'], $entry['status'])) {
+                continue;
+            }
 
-        $currentStep = $quest->getQuestSteps()->filter(fn($s) => $s->getPosition() === $data['quest_step'])->first();
-        if(!$currentStep) return;
+            $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $entry['quest']]);
+            if(!$quest) continue;
 
-        $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
-            'player' => $player,
-            'quest' => $quest,
-        ]);
-        if(!$playerQuest) return;
+            $step = $quest->getQuestSteps()->filter(fn($s) => $s->getPosition() === $entry['quest_step'])->first();
+            if(!$step) continue;
 
-        $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
-            'player' => $player,
-            'questStep' => $currentStep,
-        ]);
+            $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
+                'player' => $player,
+                'quest' => $quest,
+            ]);
+            if(!$playerQuest) continue;
 
-        if(!$playerQuestStep) {
-            $playerQuestStep = (new PlayerQuestStep())
-                ->setPlayer($player)
-                ->setQuestStep($currentStep);
-            $this->entityManager->persist($playerQuestStep);
-        }
+            $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
+                'player' => $player,
+                'questStep' => $step,
+            ]);
 
-        $playerQuestStep->setStatus($data['status']);
+            if(!$playerQuestStep) {
+                $playerQuestStep = (new PlayerQuestStep())
+                    ->setPlayer($player)
+                    ->setQuestStep($step)
+                    ->setPlayerQuest($playerQuest);
+                $this->entityManager->persist($playerQuestStep);
+            }
 
-        // Si on termine l'étape, on prépare la suivante
-        if($data['status'] === 'completed') {
-            $nextStep = $quest->getQuestSteps()->filter(
-                fn($s) => $s->getPosition() === $currentStep->getPosition() + 1
-            )->first();
+            $playerQuestStep->setStatus($entry['status']);
 
-            if($nextStep) {
-                $existing = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
-                    'player' => $player,
-                    'questStep' => $nextStep,
-                ]);
+            // Si cette étape est complétée, on cherche la suivante non manuelle et non skippée
+            if($entry['status'] === 'completed') {
+                $currentPos = $step->getPosition();
+                $steps = $quest->getQuestSteps();
+                $maxPos = $steps->last()?->getPosition() ?? $currentPos;
 
-                if(!$existing) {
-                    $newStep = (new PlayerQuestStep())
-                        ->setPlayer($player)
-                        ->setQuestStep($nextStep)
-                        ->setStatus('progress');
-                    $this->entityManager->persist($newStep);
+                for($i = $currentPos + 1; $i <= $maxPos; $i++) {
+                    $candidate = $steps->filter(fn($s) => $s->getPosition() === $i)->first();
+                    if(!$candidate) continue;
+
+                    // Vérifie si une instruction manuelle prévoit un statut
+                    if(isset($manualStatuses[$entry['quest']][$i])) {
+                        // On laisse le statut manuel gérer cette étape
+                        break;
+                    }
+
+                    // Sinon on vérifie la base
+                    $existing = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
+                        'player' => $player,
+                        'questStep' => $candidate,
+                    ]);
+
+                    if($existing && $existing->getStatus() === 'skipped') {
+                        continue;
+                    }
+
+                    if(!$existing) {
+                        $newStep = (new PlayerQuestStep())
+                            ->setPlayer($player)
+                            ->setQuestStep($candidate)
+                            ->setPlayerQuest($playerQuest)
+                            ->setStatus('progress');
+                        $this->entityManager->persist($newStep);
+                    }
+
+                    break; // on s'arrête dès qu'on a trouvé une étape à activer
                 }
             }
         }
@@ -206,21 +251,23 @@ readonly class DialogEffectApplierService
             ]);
 
             if(!$playerQuestStep) {
-                $playerQuestStep = (new PlayerQuestStep())
-                    ->setPlayer($player)
-                    ->setQuestStep($step);
+                // on ignore les steps jamais entamées
+                continue;
+            }
+
+            if($playerQuestStep->getStatus() === 'skipped') {
+                // on ne touche pas aux steps volontairement ignorées
+                continue;
             }
 
             $playerQuestStep->setStatus('completed');
             $this->entityManager->persist($playerQuestStep);
         }
 
-        $reward = $quest->getReward();
-        if($reward) {
+        if($reward = $quest->getReward()) {
             $this->rewardService->giveReward($reward, $player);
         }
 
-        // Réputation : trouver le donneur de quête
         $lastStep = $quest->getQuestSteps()->filter(fn($s) => $s->isLast())->first();
         $giver = $quest->getGiver() ?? $lastStep?->getGiver();
 
@@ -233,10 +280,41 @@ readonly class DialogEffectApplierService
         $this->entityManager->flush();
     }
 
-    private function removeItems(Player $player, array|string $itemSlugs): void
+    private function addItems(Player $player, array $items): void
     {
-        $slugs = is_array($itemSlugs) ? $itemSlugs : [$itemSlugs];
-        foreach($slugs as $slug) {
+        foreach($items as $data) {
+            if(!isset($data['item'])) {
+                continue;
+            }
+
+            $item = $this->entityManager->getRepository(Item::class)->findOneBy(['slug' => $data['item']]);
+            if(!$item) {
+                continue;
+            }
+
+            $existing = $this->entityManager->getRepository(CharacterItem::class)->findOneBy([
+                'character' => $player,
+                'item' => $item,
+            ]);
+
+            if($existing) {
+                continue;
+            }
+
+            $characterItem = (new CharacterItem())
+                ->setCharacter($player)
+                ->setItem($item)
+                ->setEquipped(false)
+                ->setQuestItem($data['questItem'] ?? false);
+            $this->entityManager->persist($characterItem);
+        }
+
+        $this->entityManager->flush();
+    }
+
+    private function removeItems(Player $player, array $items): void
+    {
+        foreach($items as $slug) {
             $item = $this->entityManager->getRepository(Item::class)->findOneBy(['slug' => $slug]);
             if(!$item) {
                 continue;

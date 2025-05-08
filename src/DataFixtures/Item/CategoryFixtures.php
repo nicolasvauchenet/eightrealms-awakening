@@ -73,9 +73,15 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'category_map',
             ],
             [
+                'name' => 'Livres',
+                'folder' => 'book',
+                'position' => 11,
+                'reference' => 'category_book',
+            ],
+            [
                 'name' => 'Cadeau',
                 'folder' => 'gift',
-                'position' => 11,
+                'position' => 12,
                 'reference' => 'category_gift',
             ],
         ];

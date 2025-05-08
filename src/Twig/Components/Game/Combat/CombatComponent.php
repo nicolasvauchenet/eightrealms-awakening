@@ -268,11 +268,10 @@ class CombatComponent extends AbstractController
                     }
                 }
 
+                $quest = $questStep->getQuest();
+                $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)
+                    ->findOneBy(['player' => $this->character, 'quest' => $quest]);
                 if($questStep->isLast()) {
-                    $quest = $questStep->getQuest();
-                    $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)
-                        ->findOneBy(['player' => $this->character, 'quest' => $quest]);
-
                     if($playerQuest && $playerQuest->getStatus() !== 'completed') {
                         $playerQuest->setStatus('completed');
                         $this->entityManager->persist($playerQuest);
@@ -284,16 +283,30 @@ class CombatComponent extends AbstractController
                     }
                 } else {
                     $nextStep = $this->questService->getNextQuestStep($questStep);
-                    if($nextStep) {
-                        $existingNext = $this->entityManager->getRepository(PlayerQuestStep::class)
-                            ->findOneBy(['player' => $this->character, 'questStep' => $nextStep]);
+
+                    // Boucle pour sauter les étapes "skipped"
+                    while($nextStep) {
+                        $existingNext = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
+                            'player' => $this->character,
+                            'questStep' => $nextStep,
+                        ]);
+
+                        // Si l’étape suivante existe déjà et est marquée comme "skipped", on passe à la suivante
+                        if($existingNext && $existingNext->getStatus() === 'skipped') {
+                            $nextStep = $this->questService->getNextQuestStep($nextStep);
+                            continue;
+                        }
+
+                        // Sinon, on crée l’étape si elle n’existe pas
                         if(!$existingNext) {
                             $newStep = (new PlayerQuestStep())
                                 ->setPlayer($this->character)
                                 ->setQuestStep($nextStep)
+                                ->setPlayerQuest($playerQuest)
                                 ->setStatus('progress');
                             $this->entityManager->persist($newStep);
                         }
+                        break;
                     }
                 }
             }

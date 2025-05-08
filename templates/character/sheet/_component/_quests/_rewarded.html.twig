@@ -2,10 +2,11 @@
     <div class="completed-quests">
         <h2 class="quest-type">Quêtes Terminées</h2>
         {% for sideQuest in sideQuests %}
-            <div class="content completed">
+            <div class="content">
                 <h3 class="quest-name">{{ sideQuest.quest.name }}</h3>
-                {% for step in sideQuest.quest.questSteps %}
-                    {{ step.description | raw }}
+                {% set sortedSteps = sideQuest.playerQuestSteps|filter(s => s.status != 'skipped')|sort((a, b) => a.questStep.position <=> b.questStep.position) %}
+                {% for step in sortedSteps %}
+                    {{ step.questStep.description | raw }}
                 {% endfor %}
             </div>
         {% endfor %}

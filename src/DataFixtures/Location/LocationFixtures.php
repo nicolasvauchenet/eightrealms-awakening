@@ -57,6 +57,6 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 25;
+        return 26;
     }
 }

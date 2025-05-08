@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'gift' => Gift::class,
     'magicalWeapon' => MagicalWeapon::class,
     'map' => Map::class,
+    'book' => Book::class,
     'potion' => Potion::class,
     'ring' => Ring::class,
     'scroll' => Scroll::class,

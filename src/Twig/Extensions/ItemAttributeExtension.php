@@ -18,7 +18,7 @@ class ItemAttributeExtension extends AbstractExtension
 
     public function getItemAttributes(CharacterItem|PlayerCharacterItem $characterItem, ?bool $allInfos = false): ?array
     {
-        if(in_array($characterItem->getItem()->getCategory()->getSlug(), ['carte', 'cadeau'])) {
+        if(in_array($characterItem->getItem()->getCategory()->getSlug(), ['carte', 'cadeau']) || $characterItem->isQuestItem()) {
             return null;
         }
 

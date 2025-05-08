@@ -6,6 +6,7 @@ use App\DataFixtures\Combat\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Combat\PortSaintDoux\AnciensDocksTrait;
 use App\DataFixtures\Combat\PortSaintDoux\DocksDeLOuestTrait;
 use App\DataFixtures\Combat\SablesChauds\OasisSansNomTrait;
+use App\DataFixtures\Combat\SablesChauds\PlageDeLaSireneTrait;
 use App\Entity\Combat\Combat;
 use App\Entity\Combat\CombatEnemy;
 use App\Entity\Location\Location;
@@ -21,6 +22,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
     use DocksDeLOuestTrait;
     use ClairiereDeLOublieTrait;
     use OasisSansNomTrait;
+    use PlageDeLaSireneTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -34,6 +36,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
 
             // Sables Chauds
             self::OASIS_SANS_NOM_COMBATS,
+            self::PLAGE_DE_LA_SIRENE_COMBATS,
         ];
 
         foreach($combatLocations as $combats) {
@@ -72,6 +75,6 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 34;
+        return 35;
     }
 }

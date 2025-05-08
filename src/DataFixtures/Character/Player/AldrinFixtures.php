@@ -57,7 +57,7 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
                 'character' => 'player_aldrin',
                 'item' => 'weapon_longsword',
                 'isEquipped' => true,
-                'slot' => 'righthand',
+                'slot' => 'lefthand',
                 'class' => Weapon::class,
             ],
             [
@@ -70,8 +70,7 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'character' => 'player_aldrin',
                 'item' => 'shield_iron',
-                'isEquipped' => true,
-                'slot' => 'shield',
+                'isEquipped' => false,
                 'class' => Shield::class,
             ],
             [
@@ -114,7 +113,8 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'character' => 'player_aldrin',
                 'item' => 'ring_knight',
-                'isEquipped' => false,
+                'isEquipped' => true,
+                'slot' => 'ring',
                 'class' => Ring::class,
             ],
             [
@@ -132,14 +132,14 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'character' => 'player_aldrin',
                 'item' => 'scroll_fireball',
-                'isEquipped' => false,
+                'isEquipped' => true,
+                'slot' => 'scroll',
                 'class' => Scroll::class,
             ],
             [
                 'character' => 'player_aldrin',
                 'item' => 'scroll_barrier',
-                'isEquipped' => true,
-                'slot' => 'scroll',
+                'isEquipped' => false,
                 'class' => Scroll::class,
             ],
             [
@@ -163,7 +163,8 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'character' => 'player_aldrin',
                 'item' => 'amulet_protection',
-                'isEquipped' => false,
+                'isEquipped' => true,
+                'slot' => 'amulet',
                 'class' => Amulet::class,
             ],
             [
@@ -205,7 +206,8 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
             [
                 'character' => 'player_aldrin',
                 'item' => 'weapon_longsword_storm',
-                'isEquipped' => false,
+                'isEquipped' => true,
+                'slot' => 'righthand',
                 'class' => Weapon::class,
             ],
             [

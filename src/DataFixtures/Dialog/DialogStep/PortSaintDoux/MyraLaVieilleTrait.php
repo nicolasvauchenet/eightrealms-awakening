@@ -16,7 +16,7 @@ trait MyraLaVieilleTrait
             'reference' => 'quest_step_myra_la_vieille_1',
         ],
         [
-            'text' => "<p>Myra se remet à fredonner doucement, si doucement qu’il vous faut tendre l’oreille pour capter le fil fragile de sa voix rauque.</p><p><em>&laquo;&nbsp;Sous les quais où l’écho s’endort<br/>Un marin perdit son serment<br/>Pour une voix née dans le nord<br/>Et morte au chant du firmament.</em></p><p><em>Verse à mes lèvres l’oubli salé<br/>Étreins mon âme et retiens ton vœu<br/>Car l’amour chanté sous la jetée<br/>Ressuscite ce qui dort sous les cieux.</em></p><p><em>Et la vieille Flûte Moisie soupire<br/>Quand le vin se mêle au soupir<br/>Le chant revient, parfois à tort<br/>Et emporte ceux qui l’aiment trop fort.&nbsp;&raquo;</em></p><p>Une fois la chanson terminée, Myra baisse les yeux sur son tricot, et semble vous avoir oublié…</p>",
+            'text' => "<p>Myra se met à fredonner doucement, si doucement qu’il vous faut tendre l’oreille pour capter le fil fragile de sa voix rauque.</p><p><em>&laquo;&nbsp;Sous les quais où l’écho s’endort<br/>Un marin perdit son serment<br/>Pour une voix née dans le nord<br/>Et morte au chant du firmament.</em></p><p><em>Verse à mes lèvres l’oubli salé<br/>Étreins mon âme et retiens ton vœu<br/>Car l’amour chanté sous la jetée<br/>Ressuscite ce qui dort sous les cieux.</em></p><p><em>Et la vieille Flûte Moisie soupire<br/>Quand le vin se mêle au soupir<br/>Le chant revient, parfois à tort<br/>Et emporte ceux qui l’aiment trop fort.&nbsp;&raquo;</em></p><p>Une fois la chanson terminée, Myra baisse les yeux sur son tricot, et semble vous avoir oublié…</p>",
             'conditions' => [
                 'quest_not_started' => 'la-sirene-et-le-marin',
             ],
@@ -38,13 +38,60 @@ trait MyraLaVieilleTrait
             'text' => "<p><em>La mer vous a chanté son secret, hein&nbsp;? Elle vous a promis des vérités noyées, des baisers salés et des larmes oubliées. Mais prenez garde…</em></p><p>Elle lève son aiguille à tricoter comme une vieille prêtresse brandissant un talisman rouillé.</p><p><em>Ceux qui cherchent les chants perdus trouvent parfois le silence éternel. Et les sirènes, elles, ne chantent jamais pour rien.</em></p>",
             'first' => true,
             'conditions' => [
-                'quest_status' => [
+                'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
+                    'quest_step' => 1,
                     'status' => 'progress',
                 ],
             ],
             'dialog' => 'quest_myra_la_vieille',
             'reference' => 'quest_step_myra_la_vieille_4',
+        ],
+        [
+            'text' => "<p>Myra relève à peine les yeux de son tricot quand vous entrez, mais vous sentez qu’elle sait déjà.</p><p><em>Elle est partie, hein&nbsp;? Je l’ai sentie dans les vagues… un silence lourd, comme un adieu qui a mis des années à se décider.</em></p><p>Elle marque une pause, puis reprend son tricot avec une lenteur rituelle.</p><p><em>Je lui avais dit de ne pas lui faire confiance. Mais je comprends… Quand le cœur chante, les oreilles se ferment.</em></p><p>Elle vous adresse un regard plus doux, presque maternel.</p><p><em>Tu as bien fait. Les vérités salées sont les plus dures à avaler. Mais elles guérissent mieux que les mensonges doux.</em></p>",
+            'first' => true,
+            'conditions' => [
+                'quest_step_status' => [
+                    'quest' => 'la-sirene-et-le-marin',
+                    'quest_step' => 4,
+                    'status' => 'progress',
+                ],
+            ],
+            'effects' => [
+                'start_quest_step' => [
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 6,
+                        'status' => 'completed',
+                    ],
+                ],
+                'reward_quest' => 'la-sirene-et-le-marin',
+            ],
+            'dialog' => 'quest_myra_la_vieille',
+            'reference' => 'quest_step_myra_la_vieille_5_1',
+        ],
+        [
+            'text' => "<p>Myra vous regarde un long moment, ses aiguilles suspendues dans l'air. Son regard n'est ni dur, ni tendre… juste lourd.</p><p><em>Tu n'as rien dit, hein&nbsp;? Tu as préféré le silence au chant.</em></p><p>Elle reprend son tricot avec un soupir las.</p><p><em>Peut-être que c'était mieux ainsi. Peut-être… Mais souviens-toi&nbsp;:&nbsp;parfois, c'est dans les mensonges qu'on enterre les vérités les plus profondes.</em></p><p>Elle vous adresse un dernier regard, fatigué mais sans colère.</p><p><em>Qu'elle t'oublie, qu'elle te bénisse… ou qu'elle te chante dans ses larmes. Allez, va. Le vin refroidit, et les souvenirs aussi.</em></p>",
+            'first' => true,
+            'conditions' => [
+                'quest_step_status' => [
+                    'quest' => 'la-sirene-et-le-marin',
+                    'quest_step' => 5,
+                    'status' => 'progress',
+                ],
+            ],
+            'effects' => [
+                'start_quest_step' => [
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 7,
+                        'status' => 'completed',
+                    ],
+                ],
+                'reward_quest' => 'la-sirene-et-le-marin',
+            ],
+            'dialog' => 'quest_myra_la_vieille',
+            'reference' => 'quest_step_myra_la_vieille_5_2',
         ],
 
         // Dialogue normal

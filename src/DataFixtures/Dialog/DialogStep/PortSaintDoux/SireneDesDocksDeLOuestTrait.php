@@ -17,18 +17,26 @@ trait SireneDesDocksDeLOuestTrait
                 ],
             ],
             'effects' => [
-                'edit_quest_step_status' => [
-                    'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 2,
-                    'status' => 'completed',
-                ],
                 'reveal_location' => 'sables-chauds',
             ],
             'dialog' => 'quest_sirene_des_docks_de_louest',
             'reference' => 'quest_step_sirene_des_docks_de_louest_1',
         ],
         [
-            'text' => "<p>La sirène regarde fixement le médaillon que vous lui brandissez. Elle semble hésiter un instant, puis elle se redresse, la voix tremblante.</p><p><em>Il est là. Le souvenir du serment. La promesse oubliée. Mais il n’est pas venu… C'est terminé.</em></p><p>Elle plonge alors dans l’eau, disparaissant dans les profondeurs, vous laissant le médaillon dans la main.</p>",
+            'text' => "<p>La Sirène vous fixe longuement. Elle semble percevoir le poids de ce que vous avez découvert.</p><p><em>Alors&nbsp;? Dis-moi… qu’as-tu vu dans les sables&nbsp;? La vérité, ou un souvenir trop doux pour être vrai&nbsp;?</em></p>",
+            'first' => true,
+            'conditions' => [
+                'quest_step_status' => [
+                    'quest' => 'la-sirene-et-le-marin',
+                    'quest_step' => 3,
+                    'status' => 'progress',
+                ],
+            ],
+            'dialog' => 'quest_sirene_des_docks_de_louest',
+            'reference' => 'quest_step_sirene_des_docks_de_louest_2',
+        ],
+        [
+            'text' => "<p>La Sirène observe le journal avec une intensité presque douloureuse. Chaque mot semble l’atteindre comme une lame. Lorsqu’elle lève les yeux vers vous, ses traits sont figés dans une tristesse muette.</p><p><em>Je l’aimais. Et il riait…</em></p><p>Un long silence.</p><p><em>Merci. D’avoir chanté la vérité. Apporte mes regrets à Myra. Dis-lui… qu’elle avait raison.</em></p><p>Elle vous tend le médaillon sans un mot de plus, puis plonge lentement, disparaissant dans les profondeurs, paisible pour la première fois.</p>",
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
@@ -37,15 +45,68 @@ trait SireneDesDocksDeLOuestTrait
                 ],
             ],
             'effects' => [
-                'remove_item' => 'medaillon-deryl',
-                'add_item' => [
-                    'slug' => 'medaillon-deryl',
-                    'isQuestItem' => false,
+                'remove_items' => [
+                    'journal-deryl',
+                    'coeur-decume',
                 ],
-                'end_quest' => 'la-sirene-et-le-marin',
+                'add_items' => [
+                    [
+                        'item' => 'coeur-decume',
+                        'questItem' => false,
+                    ],
+                ],
+                'edit_quest_step_status' => [
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 3,
+                        'status' => 'completed',
+                    ],
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 5,
+                        'status' => 'skipped',
+                    ],
+                ],
             ],
             'dialog' => 'quest_sirene_des_docks_de_louest',
-            'reference' => 'quest_step_sirene_des_docks_de_louest_2',
+            'reference' => 'quest_step_sirene_des_docks_de_louest_3',
+        ],
+        [
+            'text' => "<p>La Sirène fixe le médaillon que vous tendez. Sa main l’effleure, hésitante, puis elle le prend doucement contre elle.</p><p><em>Alors… il m’aimait encore…</em></p><p>Elle ferme les yeux, un sourire presque imperceptible aux lèvres.</p><p><em>C’est suffisant.</em></p><p>Elle vous tourne le dos, et disparaît dans les flots, ne laissant derrière elle qu’une brise salée.</p>",
+            'conditions' => [
+                'quest_step_status' => [
+                    'quest' => 'la-sirene-et-le-marin',
+                    'quest_step' => 3,
+                    'status' => 'progress',
+                ],
+            ],
+            'effects' => [
+                'remove_items' => [
+                    'journal-deryl',
+                    'coeur-decume',
+                ],
+                'edit_quest_step_status' => [
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 3,
+                        'status' => 'completed',
+                    ],
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 4,
+                        'status' => 'skipped',
+                    ],
+                ],
+                'start_quest_step' => [
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 5,
+                        'status' => 'progress',
+                    ],
+                ],
+            ],
+            'dialog' => 'quest_sirene_des_docks_de_louest',
+            'reference' => 'quest_step_sirene_des_docks_de_louest_4',
         ],
     ];
 }

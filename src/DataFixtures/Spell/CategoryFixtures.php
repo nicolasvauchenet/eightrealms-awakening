@@ -88,6 +88,6 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 22;
+        return 23;
     }
 }

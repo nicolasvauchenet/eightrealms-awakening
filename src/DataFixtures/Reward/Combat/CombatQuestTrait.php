@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Reward\Combat;
 
 use App\Entity\Item\Amulet;
+use App\Entity\Item\Book;
 use App\Entity\Item\Food;
 use App\Entity\Item\Potion;
 
@@ -55,6 +56,27 @@ trait CombatQuestTrait
             'crowns' => 250,
             'experience' => 250,
             'reference' => 'reward_combat_oasis_sans_nom_faux_djinn',
+        ],
+
+        // Eryl le Traître
+        [
+            'items' => [
+                [
+                    'item' => 'amulet_coeur_d_ecume',
+                    'itemClass' => Amulet::class,
+                    'quantity' => 1,
+                    'questItem' => true,
+                ],
+                [
+                    'item' => 'journal_d_eryl',
+                    'itemClass' => Book::class,
+                    'quantity' => 1,
+                    'questItem' => true,
+                ],
+            ],
+            'crowns' => 250,
+            'experience' => 250,
+            'reference' => 'reward_combat_plage_de_la_sirene_eryl_le_traitre',
         ],
     ];
 }

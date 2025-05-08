@@ -132,7 +132,6 @@ readonly class ConditionEvaluatorService
         $step = $quest->getQuestSteps()->filter(fn($s) => $s->getPosition() === $data['quest_step'])->first();
         if(!$step) return false;
 
-
         $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
             'player' => $player,
             'quest' => $quest,
@@ -198,11 +197,22 @@ readonly class ConditionEvaluatorService
         return $playerCombat && $playerCombat->getStatus() !== $data['status'];
     }
 
-    private function evaluateAny(array $conditions, Player $player): bool
+    private function evaluateAny(mixed $conditions, Player $player): bool
     {
-        foreach($conditions as $type => $value) {
-            if($this->evaluate($type, $value, $player)) {
-                return true;
+        if(!is_array($conditions)) {
+            return false;
+        }
+
+        // Si c'est un seul bloc (ex : ['quest_started' => 'machin']) on l'encapsule
+        if(array_keys($conditions) === array_filter(array_keys($conditions), 'is_string')) {
+            $conditions = [$conditions];
+        }
+
+        foreach($conditions as $subCondition) {
+            foreach($subCondition as $type => $value) {
+                if($this->evaluate($type, $value, $player)) {
+                    return true;
+                }
             }
         }
 

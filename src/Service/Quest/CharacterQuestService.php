@@ -5,6 +5,7 @@ namespace App\Service\Quest;
 use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Quest\PlayerQuest;
+use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\Quest\Quest;
 use App\Entity\Quest\QuestStep;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,8 +25,6 @@ readonly class CharacterQuestService
 
     public function getPlayerSideQuests(Player $character, ?bool $isRewarded = false): array
     {
-        $playerQuests = $this->entityManager->getRepository(PlayerQuest::class)->findSideQuests($character, $isRewarded);
-
-        return $playerQuests;
+        return $this->entityManager->getRepository(PlayerQuest::class)->findSideQuests($character, $isRewarded);
     }
 }

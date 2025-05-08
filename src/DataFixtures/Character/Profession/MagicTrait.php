@@ -17,5 +17,11 @@ trait MagicTrait
             'playable' => true,
             'reference' => 'profession_druide',
         ],
+        [
+            'name' => 'Ensorceleur',
+            'type' => 'magical',
+            'playable' => true,
+            'reference' => 'profession_ensorceleur',
+        ],
     ];
 }

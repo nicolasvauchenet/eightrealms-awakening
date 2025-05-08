@@ -6,8 +6,6 @@ use App\DataFixtures\Reward\Combat\CombatTrait;
 use App\DataFixtures\Reward\Combat\CombatQuestTrait;
 use App\DataFixtures\Reward\Misc\MiscTrait;
 use App\DataFixtures\Reward\Quest\QuestTrait;
-use App\Entity\Item\Food;
-use App\Entity\Item\Gift;
 use App\Entity\Reward\Reward;
 use App\Entity\Reward\RewardItem;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -44,18 +42,16 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
                         $item = $this->getReference($rewardItemData['item'], $rewardItemData['itemClass']);
                         $quantity = $rewardItemData['quantity'] ?? 1;
 
-                        $rewardItem = new RewardItem();
-                        $rewardItem->setItem($item);
-                        $rewardItem->setQuantity($quantity);
+                        $rewardItem = (new RewardItem())
+                            ->setItem($item)
+                            ->setQuantity($quantity)
+                            ->setQuestItem($rewardItemData['questItem'] ?? false);
                         $reward->addRewardItem($rewardItem);
-
                         $manager->persist($rewardItem);
                     }
                 }
-
                 $reward->setCrowns($rewardData['crowns'] ?? null);
                 $reward->setExperience($rewardData['experience'] ?? null);
-
                 $manager->persist($reward);
                 $this->addReference($rewardData['reference'], $reward);
             }

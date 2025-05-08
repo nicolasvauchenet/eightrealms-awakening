@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures\Reward\Combat;
 
+use App\Entity\Item\Amulet;
 use App\Entity\Item\Food;
+use App\Entity\Item\Potion;
 
 trait CombatQuestTrait
 {
@@ -31,7 +33,28 @@ trait CombatQuestTrait
         [
             'crowns' => 100,
             'experience' => 150,
-            'reference' => 'reward_combat_bois_du_pendu_druides_du_cercle',
+            'reference' => 'reward_combat_bois_du_pendu_druides_de_la_clairiere',
+        ],
+
+        // Le Faux Djinn
+        [
+            'items' => [
+                [
+                    'item' => 'amulet_medaillon_des_vents',
+                    'itemClass' => Amulet::class,
+                    'quantity' => 1,
+                    'questItem' => true,
+                ],
+                [
+                    'item' => 'broken_vial',
+                    'itemClass' => Potion::class,
+                    'quantity' => 1,
+                    'questItem' => true,
+                ],
+            ],
+            'crowns' => 250,
+            'experience' => 250,
+            'reference' => 'reward_combat_oasis_sans_nom_faux_djinn',
         ],
     ];
 }

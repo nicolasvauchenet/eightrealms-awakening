@@ -7,7 +7,6 @@ use App\Entity\Character\Npc;
 trait ClairiereDeLOublieTrait
 {
     const CLAIRIERE_DE_L_OUBLIE_NPCS = [
-        // Npcs
         [
             'character' => 'npc_theobald_le_gris_murmure',
             'characterClass' => Npc::class,

@@ -25,7 +25,6 @@ trait SophieLaMarchandeTrait
         ],
         [
             'text' => "<p><em>Dans le Quartier de la Vieille Ville, bien sûr&nbsp;! Vous n'avez pas vu la flèche du temple&nbsp;? C'est le plus grand bâtiment de la ville, en plein centre. Vous ne pouvez pas le manquer, il suffit de lever la tête.</em></p>",
-            'first' => false,
             'conditions' => [
                 'location_unknown' => 'vieille-ville',
             ],

@@ -21,7 +21,7 @@ final class Version20250429120039 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE reward_item (id SERIAL NOT NULL, reward_id INT NOT NULL, item_id INT NOT NULL, quantity INT NOT NULL, PRIMARY KEY(id))
+            CREATE TABLE reward_item (id SERIAL NOT NULL, reward_id INT NOT NULL, item_id INT NOT NULL, quantity INT NOT NULL, quest_item BOOLEAN NOT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_1E0AB585E466ACA1 ON reward_item (reward_id)

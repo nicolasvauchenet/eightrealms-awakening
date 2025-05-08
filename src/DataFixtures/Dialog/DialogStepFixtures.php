@@ -12,6 +12,8 @@ use App\DataFixtures\Dialog\DialogStep\PortSaintDoux\RobertLeGardeTrait;
 use App\DataFixtures\Dialog\DialogStep\PortSaintDoux\SireneDesDocksDeLOuestTrait;
 use App\DataFixtures\Dialog\DialogStep\PortSaintDoux\SophieLaMarchandeTrait;
 use App\DataFixtures\Dialog\DialogStep\PortSaintDoux\WilbertLArcanisteTrait;
+use App\DataFixtures\Dialog\DialogStep\SablesChauds\FaroukLeNomadeTrait;
+use App\DataFixtures\Dialog\DialogStep\SablesChauds\FauxDjinnTrait;
 use App\Entity\Dialog\Dialog;
 use App\Entity\Dialog\DialogStep;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -30,6 +32,8 @@ class DialogStepFixtures extends Fixture implements OrderedFixtureInterface
     use RobertLeGardeTrait;
     use SophieLaMarchandeTrait;
     use WilbertLArcanisteTrait;
+    use FaroukLeNomadeTrait;
+    use FauxDjinnTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -45,13 +49,17 @@ class DialogStepFixtures extends Fixture implements OrderedFixtureInterface
             self::ROBERT_LE_GARDE_DIALOG_STEPS,
             self::SOPHIE_LA_MARCHANDE_DIALOG_STEPS,
             self::WILBERT_L_ARCANISTE_DIALOG_STEPS,
+
+            // Sables Chauds
+            self::FAROUK_LE_NOMADE_DIALOG_STEPS,
+            self::FAUX_DJINN_DIALOG_STEPS,
         ];
 
         foreach($dialogSteps as $dialogStepData) {
             foreach($dialogStepData as $data) {
                 $dialogStep = new DialogStep();
                 $dialogStep->setText($data['text'])
-                    ->setFirst($data['first'])
+                    ->setFirst($data['first'] ?? false)
                     ->setConditions($data['conditions'] ?? null)
                     ->setEffects($data['effects'] ?? null)
                     ->setDialog($this->getReference($data['dialog'], Dialog::class));

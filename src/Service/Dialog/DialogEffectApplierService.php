@@ -3,6 +3,8 @@
 namespace App\Service\Dialog;
 
 use App\Entity\Character\Player;
+use App\Entity\Item\CharacterItem;
+use App\Entity\Item\Item;
 use App\Entity\Location\Location;
 use App\Entity\Quest\PlayerQuest;
 use App\Entity\Location\CharacterLocation;
@@ -42,6 +44,7 @@ readonly class DialogEffectApplierService
             'edit_quest_step_status' => $this->editQuestStepStatus($player, $value),
             'start_quest_step' => $this->startQuestStep($player, $value),
             'reward_quest' => $this->rewardQuest($player, $value),
+            'remove_items' => $this->removeItems($player, $value),
             default => null,
         };
     }
@@ -137,8 +140,8 @@ readonly class DialogEffectApplierService
         $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $data['quest']]);
         if(!$quest) return;
 
-        $step = $quest->getQuestSteps()->filter(fn($s) => $s->getPosition() === $data['quest_step'])->first();
-        if(!$step) return;
+        $currentStep = $quest->getQuestSteps()->filter(fn($s) => $s->getPosition() === $data['quest_step'])->first();
+        if(!$currentStep) return;
 
         $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
             'player' => $player,
@@ -148,17 +151,39 @@ readonly class DialogEffectApplierService
 
         $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
             'player' => $player,
-            'questStep' => $step,
+            'questStep' => $currentStep,
         ]);
 
         if(!$playerQuestStep) {
             $playerQuestStep = (new PlayerQuestStep())
                 ->setPlayer($player)
-                ->setQuestStep($step);
+                ->setQuestStep($currentStep);
             $this->entityManager->persist($playerQuestStep);
         }
 
         $playerQuestStep->setStatus($data['status']);
+
+        // Si on termine l'étape, on prépare la suivante
+        if($data['status'] === 'completed') {
+            $nextStep = $quest->getQuestSteps()->filter(
+                fn($s) => $s->getPosition() === $currentStep->getPosition() + 1
+            )->first();
+
+            if($nextStep) {
+                $existing = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
+                    'player' => $player,
+                    'questStep' => $nextStep,
+                ]);
+
+                if(!$existing) {
+                    $newStep = (new PlayerQuestStep())
+                        ->setPlayer($player)
+                        ->setQuestStep($nextStep)
+                        ->setStatus('progress');
+                    $this->entityManager->persist($newStep);
+                }
+            }
+        }
     }
 
     private function rewardQuest(Player $player, string $questSlug): void
@@ -172,16 +197,12 @@ readonly class DialogEffectApplierService
         ]);
         if(!$playerQuest || $playerQuest->getStatus() === 'rewarded') return;
 
-        $playerQuest->setStatus('rewarded');
-        $this->entityManager->persist($playerQuest);
-
         $lastStep = $quest->getQuestSteps()->filter(fn($step) => $step->isLast())->first();
         if($lastStep) {
             $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
                 'player' => $player,
                 'questStep' => $lastStep,
             ]);
-
             if($playerQuestStep && $playerQuestStep->getStatus() !== 'completed') {
                 $playerQuestStep->setStatus('completed');
                 $this->entityManager->persist($playerQuestStep);
@@ -199,6 +220,27 @@ readonly class DialogEffectApplierService
             $this->characterReputationService->increaseReputationFromQuestReward($player, $giver);
         }
 
+        $playerQuest->setStatus('rewarded');
+        $this->entityManager->persist($playerQuest);
         $this->entityManager->flush();
+    }
+
+    private function removeItems(Player $player, array|string $itemSlugs): void
+    {
+        $slugs = is_array($itemSlugs) ? $itemSlugs : [$itemSlugs];
+        foreach($slugs as $slug) {
+            $item = $this->entityManager->getRepository(Item::class)->findOneBy(['slug' => $slug]);
+            if(!$item) {
+                continue;
+            }
+            $characterItem = $this->entityManager->getRepository(CharacterItem::class)->findOneBy([
+                'character' => $player,
+                'item' => $item,
+            ]);
+            if($characterItem) {
+                $this->entityManager->remove($characterItem);
+                $this->entityManager->flush();
+            }
+        }
     }
 }

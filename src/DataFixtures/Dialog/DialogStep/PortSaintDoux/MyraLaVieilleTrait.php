@@ -25,7 +25,6 @@ trait MyraLaVieilleTrait
         ],
         [
             'text' => "<p>Myra se remet à fredonner doucement, si doucement qu’il vous faut tendre l’oreille pour capter le fil fragile de sa voix rauque.</p><p><em>&laquo;&nbsp;Sous les quais où l’écho s’endort<br/>Un marin perdit son serment<br/>Pour une voix née dans le nord<br/>Et morte au chant du firmament.</em></p><p><em>Verse à mes lèvres l’oubli salé<br/>Étreins mon âme et retiens ton vœu<br/>Car l’amour chanté sous la jetée<br/>Ressuscite ce qui dort sous les cieux.</em></p><p><em>Et la vieille Flûte Moisie soupire<br/>Quand le vin se mêle au soupir<br/>Le chant revient, parfois à tort<br/>Et emporte ceux qui l’aiment trop fort.&nbsp;&raquo;</em></p><p>Une fois la chanson terminée, Myra baisse les yeux sur son tricot, et semble vous avoir oublié…</p>",
-            'first' => false,
             'conditions' => [
                 'quest_not_started' => 'la-sirene-et-le-marin',
             ],
@@ -37,7 +36,6 @@ trait MyraLaVieilleTrait
         ],
         [
             'text' => "<p>Myra se remet à tricoter, sans rien dire. Elle ne vous prête plus aucune attention.</p>",
-            'first' => false,
             'conditions' => [
                 'quest_not_started' => 'la-sirene-et-le-marin',
             ],

@@ -2,13 +2,16 @@
 
 namespace App\DataFixtures\Character;
 
-use App\DataFixtures\Character\Npc\BoisDuPendu\BoisDuPenduTrait;
-use App\DataFixtures\Character\Npc\MontsTerribles\MontsTerriblesTrait;
+use App\DataFixtures\Character\Npc\BoisDuPendu\BosquetDesDruidesTrait;
+use App\DataFixtures\Character\Npc\BoisDuPendu\ClairiereDeLOublieTrait;
+use App\DataFixtures\Character\Npc\MontsTerribles\ColDuVentNoirTrait;
 use App\DataFixtures\Character\Npc\Plouc\PloucTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\DocksDeLOuestTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\QuartierDesPloucsTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\QuartierDuMarcheTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\VieilleVilleTrait;
+use App\DataFixtures\Character\Npc\SablesChauds\CampAbandonneTrait;
+use App\DataFixtures\Character\Npc\SablesChauds\OasisSansNomTrait;
 use App\Entity\Character\Npc;
 use App\Entity\Character\Profession;
 use App\Entity\Character\Race;
@@ -23,8 +26,11 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
     use QuartierDuMarcheTrait;
     use VieilleVilleTrait;
     use PloucTrait;
-    use BoisDuPenduTrait;
-    use MontsTerriblesTrait;
+    use ClairiereDeLOublieTrait;
+    use BosquetDesDruidesTrait;
+    use ColDuVentNoirTrait;
+    use CampAbandonneTrait;
+    use OasisSansNomTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -39,10 +45,15 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             self::PLOUC_NPCS,
 
             // Bois du Pendu
-            self::BOIS_DU_PENDU_NPCS,
+            self::CLAIRIERE_DE_L_OUBLIE_NPCS,
+            self::BOSQUET_DES_DRUIDES_NPCS,
 
             // Monts Terribles
-            self::MONTS_TERRIBLES__NPCS,
+            self::COL_DU_VENT_NOIR_NPCS,
+
+            // Sables Chauds
+            self::CAMP_ABANDONNE_NPCS,
+            self::OASIS_SANS_NOM_NPCS,
         ];
 
         foreach($allCharacters as $characters) {

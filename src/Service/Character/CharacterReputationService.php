@@ -168,6 +168,19 @@ class CharacterReputationService
             'voleur' => -10,    // À arrêter à vue
             'assassin' => -12,  // Priorité numéro 1
         ],
+        'ensorceleur' => [
+            'barbare' => -6,    // Trop subtils pour ces bêtes enragées, qui préfèrent casser ce qu’ils ne comprennent pas
+            'guerrier' => -3,    // Défiance : ils n’aiment pas les tours de passe-passe en pleine mêlée
+            'chevalier' => -10,  // Considérés comme manipulateurs, sans honneur, sans loyauté
+            'archer' => -2,      // Pas hostiles, mais les évitent comme la peste : un regard suffit à troubler la visée
+            'rodeur' => -4,      // Leurs pratiques perturbent l’équilibre naturel, leur présence est dérangeante
+            'moine' => -8,       // Antithèse spirituelle : illusion, domination, corruption
+            'mage' => -5,        // Ils les voient comme des dégénérés, des hérétiques de l’Art
+            'druide' => -10,     // Pervertissent les énergies du vivant pour asservir et séduire
+            'mecaniste' => -3,   // Incompréhension totale : ils n’aiment ni le flou, ni les voix dans la tête
+            'voleur' => 5,       // Fascination réciproque : ils partagent le goût du contournement et du danger
+            'assassin' => 7,     // Partenaires efficaces : la manipulation avant le sang, l’art du contrôle
+        ],
 
         // Vie rurale ou mystique
         'pecheur' => [

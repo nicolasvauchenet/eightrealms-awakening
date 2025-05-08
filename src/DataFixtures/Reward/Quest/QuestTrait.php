@@ -18,5 +18,12 @@ trait QuestTrait
             'experience' => 100,
             'reference' => 'reward_quest_des_rats_sur_les_docks',
         ],
+
+        // Quête secondaire : La Fiole Perdue
+        [
+            'crowns' => 200,
+            'experience' => 200,
+            'reference' => 'reward_quest_la_fiole_perdue',
+        ],
     ];
 }

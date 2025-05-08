@@ -2,12 +2,15 @@
 
 namespace App\DataFixtures\Location;
 
+use App\DataFixtures\Location\CharacterLocation\BoisDuPendu\BosquetDesDruidesTrait;
 use App\DataFixtures\Location\CharacterLocation\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Location\CharacterLocation\Plouc\PloucTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\DocksDeLOuestTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\QuartierDesPloucsTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\QuartierDuMarcheTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\VieilleVilleTrait;
+use App\DataFixtures\Location\CharacterLocation\SablesChauds\CampAbandonneTrait;
+use App\DataFixtures\Location\CharacterLocation\SablesChauds\OasisSansNomTrait;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Location\Location;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -22,6 +25,9 @@ class CharacterLocationFixtures extends Fixture implements OrderedFixtureInterfa
     use QuartierDesPloucsTrait;
     use PloucTrait;
     use ClairiereDeLOublieTrait;
+    use BosquetDesDruidesTrait;
+    use CampAbandonneTrait;
+    use OasisSansNomTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -37,6 +43,11 @@ class CharacterLocationFixtures extends Fixture implements OrderedFixtureInterfa
 
             // Bois du Pendu
             self::CLAIRIERE_DE_L_OUBLIE_NPCS,
+            self::BOSQUET_DES_DRUIDES_NPCS,
+
+            // Sables Chauds
+            self::CAMP_ABANDONNE_NPCS,
+            self::OASIS_SANS_NOM_NPCS,
         ];
 
         foreach($locationCharacters as $locationCharacter) {

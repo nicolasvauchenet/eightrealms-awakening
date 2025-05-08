@@ -5,5 +5,15 @@
 
             {% include 'character/sheet/_component/_inventory/_grid.html.twig' %}
         {% endfor %}
+
+        {% set characterQuestItems = app_characterItemService.characterItems(this.character, true) %}
+        {% if characterQuestItems | length > 0 %}
+            <h4 class="category-name">Objets de quête</h4>
+            <div class="app-grid">
+                {% for characterItems in characterQuestItems %}
+                    {% include 'character/sheet/_component/_inventory/_grid_quest.html.twig' %}
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 </div>

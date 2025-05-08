@@ -28,7 +28,6 @@ trait BiloLePassantTrait
         ],
         [
             'text' => "<p><em>C'est dans les Anciens Docks, au sud-est de la ville. C'est l'ancien quartier des pêcheurs et des marins, mais surtout des vieux qui se sont pas fait à la modernité des Docks de l'Ouest. C'est un endroit calme, mais avec ces rats, ça devient un peu plus animé… enfin, si on peut dire.</em></p>",
-            'first' => false,
             'conditions' => [
                 'quest_not_started' => 'des-rats-sur-les-docks',
             ],
@@ -40,7 +39,6 @@ trait BiloLePassantTrait
         ],
         [
             'text' => "<p><em>Super&nbsp;! Enfin quelqu'un qui s'occupe des problèmes du peuple&nbsp;! C'est pas tous les jours qu'on voit ça. Bonne chance à vous&nbsp;!</em></p>",
-            'first' => false,
             'conditions' => [
                 'quest_not_started' => 'des-rats-sur-les-docks',
             ],
@@ -52,7 +50,6 @@ trait BiloLePassantTrait
         ],
         [
             'text' => "<p><em>Oh, vous savez moi, ce que j'en dis… Si ce n'est le problème de personne, et que les gardes sont trop occupés, alors qui va s'en occuper de ces rats&nbsp;?</em></p>",
-            'first' => false,
             'conditions' => [
                 'quest_not_started' => 'des-rats-sur-les-docks',
             ],

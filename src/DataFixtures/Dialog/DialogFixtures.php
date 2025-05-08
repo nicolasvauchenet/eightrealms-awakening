@@ -12,6 +12,8 @@ use App\DataFixtures\Dialog\Dialog\PortSaintDoux\RobertLeGardeTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\SireneDesDocksDeLOuestTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\SophieLaMarchandeTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\WilbertLArcanisteTrait;
+use App\DataFixtures\Dialog\Dialog\SablesChauds\FaroukLeNomadeTrait;
+use App\DataFixtures\Dialog\Dialog\SablesChauds\FauxDjinnTrait;
 use App\Entity\Dialog\Dialog;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -29,6 +31,8 @@ class DialogFixtures extends Fixture implements OrderedFixtureInterface
     use RobertLeGardeTrait;
     use SophieLaMarchandeTrait;
     use WilbertLArcanisteTrait;
+    use FaroukLeNomadeTrait;
+    use FauxDjinnTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -44,6 +48,10 @@ class DialogFixtures extends Fixture implements OrderedFixtureInterface
             self::ROBERT_LE_GARDE_DIALOGS,
             self::SOPHIE_LA_MARCHANDE_DIALOGS,
             self::WILBERT_L_ARCANISTE_DIALOGS,
+
+            // Sables Chauds
+            self::FAROUK_LE_NOMADE_DIALOGS,
+            self::FAUX_DJINN_DIALOGS,
         ];
 
         foreach($dialogs as $dialogData) {

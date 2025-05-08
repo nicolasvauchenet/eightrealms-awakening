@@ -32,7 +32,6 @@ trait JarrodLeTavernierTrait
         ],
         [
             'text' => "<p><em>Oui, le Bois du Pendu. Un endroit maudit. On dit qu’on y entend les branches craquer même quand il n’y a pas de vent. Et que certains arbres saignent quand on les touche… Mais bon, j’dis ça, j’y mets jamais les pieds. Si vous y allez, faites gaffe à vous. Et évitez de répondre si quelqu’un vous appelle par votre nom.</em></p>",
-            'first' => false,
             'conditions' => [
                 'quest_status' => [
                     'quest' => 'bagarre-bizarre',
@@ -51,7 +50,6 @@ trait JarrodLeTavernierTrait
         ],
         [
             'text' => "<p><em>Vous êtes courageux, ou alors inconscient… mais j’aime ça. Si vous trouvez ce vieux fou, peut-être qu’il vous dira pourquoi il s’est battu comme un diable ce soir-là. Et s’il trouve que vous chantez faux… eh bien, j’aurai toujours une bière pour vous à votre retour.</em></p>",
-            'first' => false,
             'conditions' => [
                 'quest_status' => [
                     'quest' => 'bagarre-bizarre',
@@ -78,7 +76,6 @@ trait JarrodLeTavernierTrait
         ],
         [
             'text' => "<p><em>Vous savez quoi ? Vous avez bien raison. Trop de gens curieux finissent par nourrir les racines de ce bois. Et moi, je préfère servir des vivants que leur rendre hommage. Revenez quand vous serez prêt… ou pas.</em></p>",
-            'first' => false,
             'conditions' => [
                 'quest_status' => [
                     'quest' => 'bagarre-bizarre',

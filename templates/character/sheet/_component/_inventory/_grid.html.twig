@@ -5,7 +5,7 @@
             <a href="#" data-action="click->tooltip#open">
                 <div class="card-header">
                     {% set attributes = get_item_attributes(characterItem) %}
-                    {% if attributes is not null %}
+                    {% if attributes is not null and attributes is not empty %}
                         <div class="card-attributes">
                             {% for attr in attributes %}
                                 <div class="card-attribute {{ attr.class }}">

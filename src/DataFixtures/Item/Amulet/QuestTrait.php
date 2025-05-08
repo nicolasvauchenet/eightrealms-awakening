@@ -19,12 +19,12 @@ trait QuestTrait
         [
             'name' => 'Médaillon des Vents',
             'picture' => 'amulet.png',
-            'description' => "<p>Un médaillon ancestral orné de symboles runiques liés aux esprits des vents. On raconte qu'il permet à son porteur d'invoquer une brise salvatrice en cas de danger, et qu'il pourrait être la clé pour pénétrer le Donjon de l’Âme.</p>",
-            'type' => 'defensive',
+            'description' => "<p>Un médaillon ancestral orné de symboles runiques liés aux esprits des vents. On raconte qu'il permet à son porteur d'invoquer une brise salvatrice en cas de danger, et qu'il pourrait rendre son porteur invisible.</p>",
+            'type' => 'utile',
             'price' => 2000,
             'category' => 'category_amulet',
-            'target' => 'defense',
-            'amount' => 20,
+            'effect' => 'invisibility',
+            'duration' => 3,
             'reference' => 'amulet_medaillon_des_vents',
         ],
         [

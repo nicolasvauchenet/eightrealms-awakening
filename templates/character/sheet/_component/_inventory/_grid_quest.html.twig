@@ -1,0 +1,70 @@
+{% for characterItem in characterItems %}
+    <div class="app-card item"
+         data-controller="tooltip">
+        <a href="#" data-action="click->tooltip#open">
+            <div class="card-header">
+                {% set attributes = get_item_attributes(characterItem) %}
+                {% if attributes is not null and attributes is not empty %}
+                    <div class="card-attributes">
+                        {% for attr in attributes %}
+                            <div class="card-attribute {{ attr.class }}">
+                                {{ ux_icon(attr.icon, {'class': 'app-icon'}) }}
+                                {% if attr.amount is not null %}
+                                    {% if 'simple' in attr.class %}
+                                        {{ attr.amount }}
+                                    {% else %}
+                                        +{{ attr.amount }}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if characterItem.item.thumbnail is defined %}
+                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
+                         class="card-image {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                         alt="{{ characterItem.item.name }}"/>
+                {% else %}
+                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                         class="card-image {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                         alt="{{ characterItem.item.name }}"/>
+                {% endif %}
+
+                {% if characterItem.item.category.slug in ['armure', 'bouclier', 'arme', 'arme-magique'] %}
+                    <div class="gauge {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %}">
+                        <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
+                             style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="card-body">
+                <h4 class="card-title">{{ characterItem.item.name }}</h4>
+            </div>
+        </a>
+        {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+
+        {% if this.characterType == 'player' %}
+            <div class="card-footer">
+                {% if characterItem.item.category.slug != 'carte' and characterItem.item.category.slug != 'cadeau' and characterItem.item.category.slug != 'nourriture' %}
+                    {% if characterItem.equipped %}
+                        <button class="bg-warning" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
+                            {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}
+                        </button>
+                    {% else %}
+                        <button class="bg-success {% if not app_characterItemService.canEquipItem(this.character, characterItem) %}disabled{% endif %}" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
+                            {{ ux_icon('mdi:arrow-up-drop-circle-outline', {'class': 'app-icon'}) }}
+                        </button>
+                    {% endif %}
+                {% endif %}
+                {% if characterItem.item.category.slug == 'nourriture' or (characterItem.item.category.slug == 'potion' and characterItem.item.type != 'utile') %}
+                    <button class="bg-info" {{ live_action('useItem', {'characterItemId': characterItem.id }) }}>
+                        {{ ux_icon('ic:baseline-back-hand', {'class': 'app-icon lower'}) }}
+                    </button>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}

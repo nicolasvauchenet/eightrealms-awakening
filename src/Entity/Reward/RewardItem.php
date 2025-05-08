@@ -17,6 +17,9 @@ class RewardItem
     #[ORM\Column]
     private ?int $quantity = null;
 
+    #[ORM\Column]
+    private ?bool $questItem = null;
+
     #[ORM\ManyToOne(inversedBy: 'rewardItems')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Reward $reward = null;
@@ -38,6 +41,18 @@ class RewardItem
     public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function isQuestItem(): ?bool
+    {
+        return $this->questItem;
+    }
+
+    public function setQuestItem(bool $questItem): static
+    {
+        $this->questItem = $questItem;
 
         return $this;
     }

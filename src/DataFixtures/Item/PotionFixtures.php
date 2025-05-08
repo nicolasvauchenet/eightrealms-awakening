@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Item;
 
 use App\DataFixtures\Item\Potion\DefensiveTrait;
+use App\DataFixtures\Item\Potion\QuestTrait;
 use App\DataFixtures\Item\Potion\UtileTrait;
 use App\Entity\Item\Category;
 use App\Entity\Item\Potion;
@@ -14,6 +15,7 @@ class PotionFixtures extends Fixture implements OrderedFixtureInterface
 {
     use DefensiveTrait;
     use UtileTrait;
+    use QuestTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -23,6 +25,9 @@ class PotionFixtures extends Fixture implements OrderedFixtureInterface
 
             // Utile
             self::UTILE_POTIONS,
+
+            // Quête
+            self::QUEST_POTIONS,
         ];
 
         foreach($allPotions as $potions) {

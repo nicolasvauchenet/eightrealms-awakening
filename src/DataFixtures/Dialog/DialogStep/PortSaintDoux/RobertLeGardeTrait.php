@@ -22,7 +22,6 @@ trait RobertLeGardeTrait
         ],
         [
             'text' => "<p><em>Aux Docks de l'Ouest. C'est vers la mer. Ça s'appelle comme ça mais c'est au nord-est de la ville. Me demandez pas pourquoi, j'en sais rien. Chus point géographiste. Chuis garde.</em></p>",
-            'first' => false,
             'conditions' => [
                 'quest_not_started' => 'bagarre-bizarre',
             ],
@@ -34,7 +33,6 @@ trait RobertLeGardeTrait
         ],
         [
             'text' => "<p><em>Qu'on aille pas dire que je vous avais pas prévenu… En même temps c'est bien et ça m'arrange. Mais si vous trouvez quoi que ce soit, je veux que vous veniez m'en parler avant de faire n'importe quoi&nbsp;! On est bien d'accord&nbsp;?</em></p>",
-            'first' => false,
             'conditions' => [
                 'quest_not_started' => 'bagarre-bizarre',
             ],
@@ -46,7 +44,6 @@ trait RobertLeGardeTrait
         ],
         [
             'text' => "<p><em>Hé ben, c'est point vos affaires, c'est vrai. Heureusement qu'y a encore des gardes dans c'te ville… Allez circulez&nbsp;!</em></p>",
-            'first' => false,
             'conditions' => [
                 'quest_not_started' => 'bagarre-bizarre',
             ],

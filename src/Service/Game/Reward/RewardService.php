@@ -103,7 +103,7 @@ readonly class RewardService
                     ->setCharacter($player)
                     ->setItem($item)
                     ->setEquipped(false)
-                    ->setQuestItem(false);
+                    ->setQuestItem($rewardItem->isQuestItem());
                 $this->entityManager->persist($characterItem);
             }
         }

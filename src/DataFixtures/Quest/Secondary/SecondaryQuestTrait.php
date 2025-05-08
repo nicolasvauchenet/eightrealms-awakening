@@ -18,6 +18,7 @@ trait SecondaryQuestTrait
         [
             'name' => 'La Fiole perdue',
             'type' => 'Secondaire',
+            'reward' => 'reward_quest_la_fiole_perdue',
             'giver' => 'npc_wilbert_larcaniste',
             'giverClass' => Npc::class,
             'reference' => 'quest_secondary_la_fiole_perdue',

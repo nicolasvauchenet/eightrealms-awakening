@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures\Character\Npc\MontsTerribles;
 
-trait MontsTerriblesTrait
+trait ColDuVentNoirTrait
 {
-    const MONTS_TERRIBLES__NPCS = [
+    const COL_DU_VENT_NOIR_NPCS = [
         [
             'name' => 'Nain mineur',
             'picture' => 'img/core/npc/nain-mineur.png',

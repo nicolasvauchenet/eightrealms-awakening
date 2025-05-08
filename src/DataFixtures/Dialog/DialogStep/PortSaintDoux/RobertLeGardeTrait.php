@@ -5,12 +5,7 @@ namespace App\DataFixtures\Dialog\DialogStep\PortSaintDoux;
 trait RobertLeGardeTrait
 {
     const ROBERT_LE_GARDE_DIALOG_STEPS = [
-        [
-            'text' => "<p><em>Bon. Là en ce moment, chus occupé. Chuis en service au cas où z'auriez point remarqué. Alors salut.</em></p>",
-            'first' => true,
-            'dialog' => 'dialog_robert_le_garde',
-            'reference' => 'dialog_step_robert_le_garde_1',
-        ],
+        // Quête : Bagarre bizarre
         [
             'text' => "<p><em>Il y a eu une \"bagarre\" à la taverne de la Flûte Moisie… Je sais pas si vous avez entendu parler de ça… Mais je vous conseille de pas trop traîner par là-bas à la nuit tombée… Cet endroit peut être dangereux. Vous feriez mieux de rester là où c'est sûr.</em></p>",
             'first' => true,
@@ -74,6 +69,8 @@ trait RobertLeGardeTrait
             'dialog' => 'quest_robert_le_garde',
             'reference' => 'quest_step_robert_le_garde_6',
         ],
+
+        // Dialogue normal
         [
             'text' => "<p><em>Attendez que je l'attrape ce sale petit voleur… Y perd rien pour attendre, et moi, chus patient&nbsp;!</em></p>",
             'first' => true,
@@ -83,6 +80,14 @@ trait RobertLeGardeTrait
                     'status' => 'rewarded',
                 ],
             ],
+            'dialog' => 'dialog_robert_le_garde',
+            'reference' => 'dialog_step_robert_le_garde_1',
+        ],
+
+        // Ragots
+        [
+            'text' => "<p><em>Bon. Là en ce moment, chus occupé. Chuis en service au cas où z'auriez point remarqué. Alors salut.</em></p>",
+            'first' => true,
             'dialog' => 'rumor_robert_le_garde',
             'reference' => 'rumor_step_robert_le_garde_1',
         ],

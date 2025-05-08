@@ -7,6 +7,7 @@ use App\Entity\Character\Npc;
 trait FaroukLeNomadeTrait
 {
     const FAROUK_LE_NOMADE_DIALOGS = [
+        // Quête: La Fiole Perdue
         [
             'type' => 'dialog',
             'conditions' => [

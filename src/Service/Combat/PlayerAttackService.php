@@ -33,10 +33,14 @@ readonly class PlayerAttackService
     {
         $playerCombat = $this->getPlayerCombat($player, $combat);
         $target = $this->getTarget($playerCombat, $enemyId);
+        $targetName = $target->getEnemy()->getName();
+        if(sizeof($combat->getCombatEnemies()) > 1) {
+            $targetName .= ' ' . $target->getPosition();
+        }
 
         $targetEffects = $this->combatEffectService->getActiveBonusesForTarget($playerCombat, $target->getEnemy());
         if(!empty($targetEffects['invisibility'])) {
-            return "<span class='text-info'>{$target->getEnemy()->getName()} {$target->getPosition()} est invisible. Vous ratez votre attaque.</span><br/>";
+            return "<span class='text-info'>$targetName est invisible. Vous ratez votre attaque.</span><br/>";
         }
 
         if($mode === 'twohands') {
@@ -59,6 +63,10 @@ readonly class PlayerAttackService
         $equippedItems = $this->attackHelper->getCharacterItemService()->getEquippedItems($player);
         $characterItem = $equippedItems[$mode] ?? null;
         $item = $characterItem?->getItem();
+        $targetName = $target->getEnemy()->getName();
+        if(sizeof($playerCombat->getCombat()->getCombatEnemies()) > 1) {
+            $targetName .= ' ' . $target->getPosition();
+        }
 
         if($item && $item->getCategory()?->getSlug() === 'arme-magique') {
             return $this->handleMagicalAttack($player, $target, $characterItem, $item, $mode);
@@ -79,7 +87,7 @@ readonly class PlayerAttackService
             );
             $logs = array_merge($logs, $criticalLogs);
 
-            return "<span class='text-warning'>Un choc titanesque entre votre arme et celle de {$target->getEnemy()->getName()} ! Personne ne touche, mais les équipements souffrent.</span><br/>" . implode('', $logs);
+            return "<span class='text-warning'>Un choc titanesque se produit entre votre arme et celle de $targetName&nbsp;! Personne ne touche, mais les équipements souffrent.</span><br/>" . implode('', $logs);
         }
 
         if($attackRoll['isCriticalSuccess'] || $attackRoll['total'] > $defenseRoll['total']) {
@@ -105,6 +113,7 @@ readonly class PlayerAttackService
 
             $attackLog = $this->attackHelper->generateAttackLog(
                 target: $target,
+                targetName: $targetName,
                 weaponName: $weaponName,
                 damage: $totalDamage,
                 bonusText: '',
@@ -117,12 +126,16 @@ readonly class PlayerAttackService
             return $attackLog . implode('', $logs);
         }
 
-        return $this->attackHelper->generateAttackFailLog($target, true, $mode);
+        return $this->attackHelper->generateAttackFailLog($target, $targetName, true, $mode);
     }
 
     private function handleTwoWeaponsAttack(Player $player, Combat $combat, int $enemyId, PlayerCombatEnemy $target): string
     {
         $equippedItems = $this->attackHelper->getCharacterItemService()->getEquippedItems($player);
+        $targetName = $target->getEnemy()->getName();
+        if(sizeof($combat->getCombatEnemies()) > 1) {
+            $targetName .= ' ' . $target->getPosition();
+        }
         $logs = [];
 
         foreach(['righthand', 'lefthand'] as $hand) {
@@ -155,7 +168,7 @@ readonly class PlayerAttackService
                 );
                 $subLogs = array_merge($subLogs, $criticalLogs);
 
-                $logs[] = "<span class='text-warning'>Un choc brutal entre votre arme de la " . ($hand === 'righthand' ? 'main droite' : 'main gauche') . " et celle de {$target->getEnemy()->getName()} !</span><br/>" . implode('', $subLogs);
+                $logs[] = "<span class='text-warning'>Un choc brutal se produit entre votre arme de la " . ($hand === 'righthand' ? 'main droite' : 'main gauche') . " et celle de $targetName&nbsp;!</span><br/>" . implode('', $subLogs);
                 continue;
             }
 
@@ -182,6 +195,7 @@ readonly class PlayerAttackService
 
                 $logs[] = $this->attackHelper->generateAttackLog(
                         target: $target,
+                        targetName: $targetName,
                         weaponName: $weaponName,
                         damage: $totalDamage,
                         bonusText: '',
@@ -195,7 +209,7 @@ readonly class PlayerAttackService
                     break;
                 }
             } else {
-                $logs[] = $this->attackHelper->generateAttackFailLog($target, true, $hand);
+                $logs[] = $this->attackHelper->generateAttackFailLog($target, $targetName, true, $hand);
             }
         }
 
@@ -211,6 +225,10 @@ readonly class PlayerAttackService
         $characterItem->setCharge($characterItem->getCharge() - 1);
         $this->entityManager->persist($characterItem);
 
+        $targetName = $target->getEnemy()->getName();
+        if(sizeof($target->getPlayerCombat()->getCombat()->getCombatEnemies()) > 1) {
+            $targetName .= ' ' . $target->getPosition();
+        }
         $targetStat = $item->getTarget() ?? $item->getEffect();
         $amount = $item->getAmount() ?? 0;
         $area = $item->getArea() ?? 1;
@@ -223,10 +241,10 @@ readonly class PlayerAttackService
 
         $this->entityManager->persist($target);
 
-        $log = "<span class='text-success'>Vous utilisez votre <strong>{$item->getName()}</strong> avec votre " . ($hand === 'righthand' ? 'main droite' : 'main gauche') . " sur {$target->getEnemy()->getName()} {$target->getPosition()} et lui infligez $amount point" . ($amount > 1 ? 's' : '') . " de dégâts.</span><br/>";
+        $log = "<span class='text-success'>Vous utilisez votre <strong>{$item->getName()}</strong> avec votre " . ($hand === 'righthand' ? 'main droite' : 'main gauche') . " sur $targetName et lui infligez $amount point" . ($amount > 1 ? 's' : '') . " de dégâts.</span><br/>";
 
         if($target->getHealth() <= 0) {
-            $log .= "<strong class='text-success'>{$target->getEnemy()->getName()} {$target->getPosition()} est vaincu&nbsp;!</strong><br/>";
+            $log .= "<strong class='text-success'>$targetName est vaincu&nbsp;!</strong><br/>";
         }
 
         if($area > 1) {

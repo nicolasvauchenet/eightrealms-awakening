@@ -7,11 +7,12 @@ use App\Entity\Character\Npc;
 trait GartLeForgeronTrait
 {
     const GART_LE_FORGERON_DIALOGS = [
+        // Ragots
         [
-            'type' => 'dialog',
+            'type' => 'rumor',
             'character' => 'npc_gart_le_forgeron',
             'characterClass' => Npc::class,
-            'reference' => 'dialog_gart_le_forgeron',
+            'reference' => 'rumor_gart_le_forgeron',
         ],
     ];
 }

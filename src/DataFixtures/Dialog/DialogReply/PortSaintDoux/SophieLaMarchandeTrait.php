@@ -10,9 +10,9 @@ trait SophieLaMarchandeTrait
             'conditions' => [
                 'location_unknown' => 'vieille-ville',
             ],
-            'dialogStep' => 'rumor_step_sophie_la_marchande_1',
-            'nextStep' => 'rumor_step_sophie_la_marchande_2',
-            'reference' => 'rumor_reply_sophie_la_marchande_1_1',
+            'dialogStep' => 'dialog_step_sophie_la_marchande_1',
+            'nextStep' => 'dialog_step_sophie_la_marchande_2',
+            'reference' => 'dialog_reply_sophie_la_marchande_1_1',
         ],
     ];
 }

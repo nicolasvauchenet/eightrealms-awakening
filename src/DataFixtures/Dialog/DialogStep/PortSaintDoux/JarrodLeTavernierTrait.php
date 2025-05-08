@@ -5,15 +5,7 @@ namespace App\DataFixtures\Dialog\DialogStep\PortSaintDoux;
 trait JarrodLeTavernierTrait
 {
     const JARROD_LE_TAVERNIER_DIALOG_STEPS = [
-        // Discuter
-        [
-            'text' => "<p><em>Vous savez qui me fait le plus peur ici ? Pas le Donjon. Pas les brigands. Non. C’est la vieille Myra, là, qui tricote dans le coin. J’vous jure, elle m’a une fois prédit que j’allais renverser ma bière. Trois jours plus tard… paf. Bref. Ici, on parle, on écoute, on oublie. C’est ça, le quartier des Docks&nbsp;!</em></p>",
-            'first' => true,
-            'dialog' => 'dialog_jarrod_le_tavernier',
-            'reference' => 'dialog_step_jarrod_le_tavernier_1',
-        ],
-
-        // Quête
+        // Quête : Bagarre bizarre
         [
             'text' => "<p><em>Ah oui, je m’en souviens de ce vieux… silencieux, poli, pas le genre à faire des vagues. Jusqu’à ce que trois idiots essayent de lui voler sa bourse. Il les a envoyés au sol en moins de temps qu’il m’en faut pour servir une pinte. Puis il s’est tourné vers moi, et il m’a regardé avec des yeux… bizarres. Il a dit&nbsp;:&nbsp;&laquo;Je dois retourner là où les pendus rêvent encore.&raquo; Et il est parti, comme ça. Moi j’crois qu’il parlait du Bois du Pendu. Un coin à éviter, si vous voulez mon avis…</em></p>",
             'first' => true,
@@ -124,7 +116,7 @@ trait JarrodLeTavernierTrait
             'reference' => 'quest_step_jarrod_le_tavernier_6',
         ],
 
-        // Ragots
+        // Dialogue normal
         [
             'text' => "<p><em>Vous saviez qu’un gars du Vieux Port a essayé de dresser un crabe pour en faire un messager&nbsp;? Il lui accrochait des petits parchemins sur la carapace et le laissait courir. Résultat&nbsp;:&nbsp;le crabe a livré une déclaration d’amour à un tonneau de hareng. C’est beau, la magie… quand on sait pas s’en servir.</em></p>",
             'first' => true,
@@ -137,6 +129,14 @@ trait JarrodLeTavernierTrait
                     ]],
                 ],
             ],
+            'dialog' => 'dialog_jarrod_le_tavernier',
+            'reference' => 'dialog_step_jarrod_le_tavernier_1',
+        ],
+
+        // Ragots
+        [
+            'text' => "<p><em>Vous savez qui me fait le plus peur ici ? Pas le Donjon. Pas les brigands. Non. C’est la vieille Myra, là, qui tricote dans le coin. J’vous jure, elle m’a une fois prédit que j’allais renverser ma bière. Trois jours plus tard… paf. Bref. Ici, on parle, on écoute, on oublie. C’est ça, le quartier des Docks&nbsp;!</em></p>",
+            'first' => true,
             'dialog' => 'rumor_jarrod_le_tavernier',
             'reference' => 'rumor_step_jarrod_le_tavernier_1',
         ],

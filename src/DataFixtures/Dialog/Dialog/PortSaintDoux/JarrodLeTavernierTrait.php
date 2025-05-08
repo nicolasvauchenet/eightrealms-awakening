@@ -7,14 +7,9 @@ use App\Entity\Character\Npc;
 trait JarrodLeTavernierTrait
 {
     const JARROD_LE_TAVERNIER_DIALOGS = [
+        // Quête : Bagarre bizarre
         [
             'type' => 'dialog',
-            'character' => 'npc_jarrod_le_tavernier',
-            'characterClass' => Npc::class,
-            'reference' => 'dialog_jarrod_le_tavernier',
-        ],
-        [
-            'type' => 'rumor',
             'conditions' => [
                 'quest_status' => [
                     'quest' => 'bagarre-bizarre',
@@ -25,6 +20,16 @@ trait JarrodLeTavernierTrait
             'characterClass' => Npc::class,
             'reference' => 'quest_jarrod_le_tavernier',
         ],
+
+        // Dialogue normal
+        [
+            'type' => 'dialog',
+            'character' => 'npc_jarrod_le_tavernier',
+            'characterClass' => Npc::class,
+            'reference' => 'dialog_jarrod_le_tavernier',
+        ],
+
+        // Ragots
         [
             'type' => 'rumor',
             'character' => 'npc_jarrod_le_tavernier',

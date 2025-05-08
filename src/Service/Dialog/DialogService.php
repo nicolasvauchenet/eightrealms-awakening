@@ -12,25 +12,24 @@ use Doctrine\ORM\EntityManagerInterface;
 readonly class DialogService
 {
     public function __construct(
-        private EntityManagerInterface     $entityManager,
-        private ConditionEvaluatorService  $conditionEvaluatorService,
-        private DialogEffectApplierService $dialogEffectApplierService,
+        private EntityManagerInterface    $entityManager,
+        private ConditionEvaluatorService $conditionEvaluatorService
     )
     {
     }
 
     public function findFirstDialogStep(Character $character, Player $player): ?DialogStep
     {
-        $dialog = $this->entityManager->getRepository(Dialog::class)->findOneBy([
+        $dialogs = $this->entityManager->getRepository(Dialog::class)->findBy([
             'character' => $character,
             'type' => 'dialog',
         ]);
 
-        if(!$dialog) return null;
-
-        foreach($dialog->getDialogSteps() as $step) {
-            if($step->isFirst() && $this->conditionEvaluatorService->isValid($step->getConditions(), $player)) {
-                return $step;
+        foreach($dialogs as $dialog) {
+            foreach($dialog->getDialogSteps() as $step) {
+                if($step->isFirst() && $this->conditionEvaluatorService->isValid($step->getConditions(), $player)) {
+                    return $step;
+                }
             }
         }
 

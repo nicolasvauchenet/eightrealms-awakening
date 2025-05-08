@@ -7,6 +7,7 @@ use App\Entity\Character\Npc;
 trait FauxDjinnTrait
 {
     const FAUX_DJINN_DIALOGS = [
+        // Quête: La Fiole Perdue
         [
             'type' => 'dialog',
             'conditions' => [

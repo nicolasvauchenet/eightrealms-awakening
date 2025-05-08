@@ -107,6 +107,7 @@ readonly class AttackHelperService
 
     public function generateAttackLog(
         PlayerCombatEnemy $target,
+        string            $targetName,
         string            $weaponName,
         int               $damage,
         string            $bonusText,
@@ -130,8 +131,8 @@ readonly class AttackHelperService
         }
 
         $log = $isPlayer
-            ? "$criticalText<span class='text-success'>Vous attaquez $name&nbsp;$position avec $weaponName$handText et lui infligez $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>"
-            : "$criticalText<span class='text-warning'>$name&nbsp;$position vous attaque à coups $weaponName et vous inflige $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>";
+            ? "$criticalText<span class='text-success'>Vous attaquez $targetName avec $weaponName$handText et lui infligez $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>"
+            : "$criticalText<span class='text-warning'>$targetName vous attaque à coups $weaponName et vous inflige $damage point" . ($damage > 1 ? 's' : '') . " de dégâts&nbsp;!</span><br/>";
 
         if($hasMagicWeaponBonus) {
             $log .= $isPlayer
@@ -142,13 +143,13 @@ readonly class AttackHelperService
         $log .= $bonusText;
 
         if($isPlayer && $target->getHealth() <= 0) {
-            $log .= "<strong class='text-success'>$name $position est vaincu&nbsp;!</strong><br/>";
+            $log .= "<strong class='text-success'>$targetName est vaincu&nbsp;!</strong><br/>";
         }
 
         return $log;
     }
 
-    public function generateAttackFailLog(PlayerCombatEnemy $target, bool $isPlayer, ?string $handUsed = null): string
+    public function generateAttackFailLog(PlayerCombatEnemy $target, string $targetName, bool $isPlayer, ?string $handUsed = null): string
     {
         $name = $target->getEnemy()->getName();
         $position = $target->getPosition();
@@ -159,7 +160,7 @@ readonly class AttackHelperService
         }
 
         return $isPlayer
-            ? "<span class='text-warning'>Votre attaque$handText échoue contre $name $position.</span><br/>"
-            : "<span class='text-warning'>$name $position rate son attaque$handText contre vous.</span><br/>";
+            ? "<span class='text-warning'>Votre attaque$handText échoue contre $targetName.</span><br/>"
+            : "<span class='text-warning'>$targetName rate son attaque$handText contre vous.</span><br/>";
     }
 }

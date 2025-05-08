@@ -7,11 +7,12 @@ use App\Entity\Character\Npc;
 trait PecheurDuQuartierDesPloucsTrait
 {
     const PECHEUR_DU_QUARTIER_DES_PLOUCS_DIALOGS = [
+        // Ragots
         [
-            'type' => 'dialog',
+            'type' => 'rumor',
             'character' => 'npc_pecheur',
             'characterClass' => Npc::class,
-            'reference' => 'dialog_pecheur',
+            'reference' => 'rumor_pecheur',
         ],
     ];
 }

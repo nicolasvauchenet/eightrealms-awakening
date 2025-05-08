@@ -12,6 +12,7 @@ use App\Service\Combat\Helper\DamageCalculatorHelperService;
 use App\Service\Combat\Effect\CombatEffectService;
 use App\Service\Combat\Helper\DurabilityHelperService;
 use Doctrine\ORM\EntityManagerInterface;
+use Random\RandomException;
 
 readonly class EnemyAttackService
 {
@@ -34,16 +35,20 @@ readonly class EnemyAttackService
         }
 
         $enemy = $enemyInstance->getEnemy();
+        $enemyName = $enemy->getName();
+        if(sizeof($playerCombat->getCombat()->getCombatEnemies()) > 1) {
+            $enemyName .= ' ' . $enemyInstance->getPosition();
+        }
         $player = $playerCombat->getPlayer();
         $playerEffects = $this->combatEffectService->getActiveBonusesForTarget($playerCombat, $player);
         $enemyEffects = $this->combatEffectService->getActiveBonusesForTarget($playerCombat, $enemy);
 
         if(!empty($enemyEffects['charmed'])) {
-            return "<span class='text-muted'>{$enemy->getName()} {$enemyInstance->getPosition()} vous regarde avec des yeux doux et n’attaque pas.</span><br/>";
+            return "<span class='text-muted'>$enemyName vous regarde avec des yeux doux et n’attaque pas.</span><br/>";
         }
 
         if(!empty($playerEffects['invisibility'])) {
-            return "<span class='text-info'>Vous êtes invisible. {$enemy->getName()} {$enemyInstance->getPosition()} ne vous voit pas et rate son attaque.</span><br/>";
+            return "<span class='text-info'>Vous êtes invisible. $enemyName ne vous voit pas et rate son attaque.</span><br/>";
         }
 
         // Récupère les sorts que l’ennemi peut lancer (suffisamment de mana)
@@ -81,7 +86,7 @@ readonly class EnemyAttackService
 
                 $this->entityManager->persist($player);
 
-                $log = "<span class='text-danger'>{$enemy->getName()} {$enemyInstance->getPosition()} lance {$spell->getName()} sur vous et vous inflige $amount point" . ($amount > 1 ? 's' : '') . " de $statName !</span><br/>";
+                $log = "<span class='text-danger'>$enemyName lance {$spell->getName()} sur vous et vous inflige $amount point" . ($amount > 1 ? 's' : '') . " de $statName&nbsp;!</span><br/>";
             } else {
                 $this->combatEffectService->addEffect(
                     type: $type,
@@ -100,7 +105,7 @@ readonly class EnemyAttackService
                     default => 'bénéficie d’un effet inconnu',
                 };
 
-                $log = "<span class='text-info'>{$enemy->getName()} {$enemyInstance->getPosition()} lance {$spell->getName()} et {$label} pendant $duration tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
+                $log = "<span class='text-info'>$enemyName lance {$spell->getName()} et {$label} pendant $duration tour" . ($duration > 1 ? 's' : '') . ".</span><br/>";
             }
 
             $this->entityManager->flush();
@@ -117,7 +122,7 @@ readonly class EnemyAttackService
         if(!empty($equipped['righthand']) && !empty($equipped['lefthand'])) $modes[] = 'twohands';
 
         if(empty($modes)) {
-            return "<span class='text-info'>{$enemy->getName()} {$enemyInstance->getPosition()} n’a pas d’arme pour attaquer.</span><br/>";
+            return "<span class='text-info'>$enemyName n’a pas d’arme pour attaquer.</span><br/>";
         }
 
         $attackMode = $modes[random_int(0, count($modes) - 1)];
@@ -125,9 +130,16 @@ readonly class EnemyAttackService
         return $this->handleClassicalWeaponAttack($playerCombat, $equipped, $enemy, $player, $enemyInstance, $attackMode);
     }
 
+    /**
+     * @throws RandomException
+     */
     private function handleClassicalWeaponAttack(PlayerCombat $playerCombat, array $equipped, Character $enemy, Player $player, PlayerCombatEnemy $enemyInstance, ?string $forcedMode = null): string
     {
         $attackMode = $forcedMode;
+        $enemyName = $enemy->getName();
+        if(sizeof($playerCombat->getCombat()->getCombatEnemies()) > 1) {
+            $enemyName .= ' ' . $enemyInstance->getPosition();
+        }
 
         if($attackMode === 'twohands') {
             $weaponsData = $this->attackHelper->resolveWeapons($enemy);
@@ -148,7 +160,7 @@ readonly class EnemyAttackService
             $criticalLogs = $this->durabilityHelperService->handleCriticalHitDamage(null, $equippedItemsPlayer, true);
             $logs = array_merge($logs, $criticalLogs);
 
-            return "<span class='text-warning'>Un choc brutal se produit entre l'attaque de {$enemy->getName()} et votre défense. Les équipements sont mis à rude épreuve !</span><br/>" . implode('', $logs);
+            return "<span class='text-warning'>Un choc brutal se produit entre l'attaque de $enemyName et votre défense. Les équipements sont mis à rude épreuve&nbsp;!</span><br/>" . implode('', $logs);
         }
 
         if($attackRoll['isCriticalSuccess'] || $attackRoll['total'] > $defenseRoll['total']) {
@@ -172,6 +184,7 @@ readonly class EnemyAttackService
 
             return $this->attackHelper->generateAttackLog(
                     target: $enemyInstance,
+                    targetName: $enemyName,
                     weaponName: $weaponName,
                     damage: $totalDamage,
                     bonusText: '',
@@ -181,7 +194,7 @@ readonly class EnemyAttackService
                 ) . implode('', $logs);
         }
 
-        return $this->attackHelper->generateAttackFailLog($enemyInstance, false);
+        return $this->attackHelper->generateAttackFailLog($enemyInstance, $enemyName, false);
     }
 
     private function getEnemyInstance(PlayerCombat $playerCombat, int $enemyId): PlayerCombatEnemy

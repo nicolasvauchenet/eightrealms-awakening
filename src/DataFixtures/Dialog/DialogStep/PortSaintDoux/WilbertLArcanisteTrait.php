@@ -5,15 +5,7 @@ namespace App\DataFixtures\Dialog\DialogStep\PortSaintDoux;
 trait WilbertLArcanisteTrait
 {
     const WILBERT_L_ARCANISTE_DIALOG_STEPS = [
-        // Discours général
-        [
-            'text' => "<p><em>Port Saint-Doux est aveugle. Les gens rient, commercent, prient… pendant que des forces invisibles tirent les ficelles. Mais je les vois, moi. Je les entends. Et si vous ouvrez votre esprit, vous entendrez aussi… Oh, mais j’en oublie mes manières. Vous voulez un sort de lévitation ou une infusion pour la mémoire&nbsp;?</em></p>",
-            'first' => true,
-            'dialog' => 'dialog_wilbert_larcaniste',
-            'reference' => 'dialog_step_wilbert_larcaniste_1',
-        ],
-
-        // Quête
+        // Quête : La Fiole Perdue
         [
             'text' => "<p><em>Ma fiole&nbsp;! Une concoction d’essence de feu pur, stabilisée à grand-peine… envolée&nbsp;! Pas de traces de pas, pas d’empreintes… juste de petits tas de sable épars, comme déposés par le vent lui-même.</em></p><p><em>Quel genre de voleur laisse du désert derrière lui&nbsp;? Hmmm… Si vous avez l’esprit vif et le pas léger, suivez la piste. Vers les Sables Chauds…</em></p>",
             'first' => true,
@@ -106,7 +98,7 @@ trait WilbertLArcanisteTrait
             'reference' => 'quest_step_wilbert_larcaniste_7',
         ],
 
-        // Ragots
+        // Dialogue normal
         [
             'text' => "<p><em>Vous m’avez bien aidé, l’ami. Depuis, mes recherches avancent à pas de géant. J’espère que le désert vous a enseigné quelque chose… ou au moins appris à boire lentement.</em></p>",
             'first' => true,
@@ -116,6 +108,14 @@ trait WilbertLArcanisteTrait
                     'status' => 'rewarded',
                 ],
             ],
+            'dialog' => 'dialog_wilbert_larcaniste',
+            'reference' => 'dialog_step_wilbert_larcaniste_1',
+        ],
+
+        // Ragots
+        [
+            'text' => "<p><em>Port Saint-Doux est aveugle. Les gens rient, commercent, prient… pendant que des forces invisibles tirent les ficelles. Mais je les vois, moi. Je les entends. Et si vous ouvrez votre esprit, vous entendrez aussi… Oh, mais j’en oublie mes manières. Vous voulez un sort de lévitation ou une infusion pour la mémoire&nbsp;?</em></p>",
+            'first' => true,
             'dialog' => 'rumor_wilbert_larcaniste',
             'reference' => 'rumor_step_wilbert_larcaniste_1',
         ],

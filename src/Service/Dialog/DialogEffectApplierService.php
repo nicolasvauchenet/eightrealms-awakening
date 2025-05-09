@@ -190,7 +190,7 @@ readonly class DialogEffectApplierService
 
             $playerQuestStep->setStatus($entry['status']);
 
-            // Si cette étape est complétée, on cherche la suivante non manuelle et non skippée
+            // Si cette étape est complétée, on cherche la suivante
             if($entry['status'] === 'completed') {
                 $currentPos = $step->getPosition();
                 $steps = $quest->getQuestSteps();
@@ -200,32 +200,31 @@ readonly class DialogEffectApplierService
                     $candidate = $steps->filter(fn($s) => $s->getPosition() === $i)->first();
                     if(!$candidate) continue;
 
-                    // Vérifie si une instruction manuelle prévoit un statut
+                    // Vérifie si une instruction manuelle prévoit un statut pour cette étape
                     if(isset($manualStatuses[$entry['quest']][$i])) {
-                        // On laisse le statut manuel gérer cette étape
+                        // On laisse la version manuelle gérer cette étape
                         break;
                     }
 
-                    // Sinon on vérifie la base
+                    // Sinon, on crée l'étape avec le statut donné par 'next' (ou 'progress' par défaut)
                     $existing = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
                         'player' => $player,
                         'questStep' => $candidate,
                     ]);
 
-                    if($existing && $existing->getStatus() === 'skipped') {
-                        continue;
-                    }
-
                     if(!$existing) {
+                        $nextStatus = $entry['next'] ?? 'progress';
+
                         $newStep = (new PlayerQuestStep())
                             ->setPlayer($player)
                             ->setQuestStep($candidate)
                             ->setPlayerQuest($playerQuest)
-                            ->setStatus('progress');
+                            ->setStatus($nextStatus);
+
                         $this->entityManager->persist($newStep);
                     }
 
-                    break; // on s'arrête dès qu'on a trouvé une étape à activer
+                    break; // on ne traite qu'une seule étape suivante
                 }
             }
         }

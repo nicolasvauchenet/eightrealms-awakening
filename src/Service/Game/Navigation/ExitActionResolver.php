@@ -2,23 +2,26 @@
 
 namespace App\Service\Game\Navigation;
 
+use App\Entity\Character\Player;
 use App\Entity\Screen\Screen;
 use App\Repository\Location\CharacterLocationRepository;
+use App\Service\Dialog\DialogService;
 
 readonly class ExitActionResolver
 {
-    public function __construct(private CharacterLocationRepository $characterLocationRepository)
+    public function __construct(private CharacterLocationRepository $characterLocationRepository,
+                                private DialogService               $dialogService)
     {
     }
 
-    public function getExitAction(Screen $screen): ?array
+    public function getExitAction(Screen $screen, ?Player $player = null): ?array
     {
-        $actions = $this->getExitActions($screen);
+        $actions = $this->getExitActions($screen, $player);
 
         return $actions[0] ?? null;
     }
 
-    public function getExitActions(Screen $screen): array
+    public function getExitActions(Screen $screen, ?Player $player = null): array
     {
         $actions = [];
 
@@ -36,12 +39,14 @@ readonly class ExitActionResolver
         // Retour au personnage (depuis un écran dialogue)
         if($screen->getType() === 'dialog') {
             $character = $screen->getDialogStep()->getDialog()->getCharacter();
-            $actions[] = $this->buildAction(
-                type: 'interaction',
-                slug: $character->getSlug(),
-                label: $character->getName(),
-                thumbnail: $character->getThumbnail()
-            );
+            if($player && $this->dialogService->findFirstDialogStep($character, $player)) {
+                $actions[] = $this->buildAction(
+                    type: 'interaction',
+                    slug: $character->getSlug(),
+                    label: $character->getName(),
+                    thumbnail: $character->getThumbnail()
+                );
+            }
         }
 
         // Retour au lieu (zone, building...)

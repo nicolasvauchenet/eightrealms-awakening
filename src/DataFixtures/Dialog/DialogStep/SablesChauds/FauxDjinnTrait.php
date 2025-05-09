@@ -15,8 +15,8 @@ trait FauxDjinnTrait
                     'status' => 'progress',
                 ],
             ],
-            'dialog' => 'dialog_faux_djinn',
-            'reference' => 'dialog_step_faux_djinn_1',
+            'dialog' => 'quest_faux_djinn',
+            'reference' => 'quest_step_faux_djinn_1',
         ],
         [
             'text' => "<p><em>Ils m’ont appelé voleur. Imposteur. Mais moi seul ai compris. Cette fiole… ce bijou… Ils me parlent, vois-tu&nbsp;? Ils m’ont choisi. Ils me brûlent, oui… mais c’est le prix du savoir&nbsp;!</em></p>",
@@ -27,8 +27,8 @@ trait FauxDjinnTrait
                     'status' => 'progress',
                 ],
             ],
-            'dialog' => 'dialog_faux_djinn',
-            'reference' => 'dialog_step_faux_djinn_2',
+            'dialog' => 'quest_faux_djinn',
+            'reference' => 'quest_step_faux_djinn_2',
         ],
         [
             'text' => "<p><em>Tu veux la reprendre&nbsp;? Tu veux éteindre la lumière&nbsp;? Alors viens. Approche. Et embrasse le feu&nbsp;!</em></p>",
@@ -47,8 +47,8 @@ trait FauxDjinnTrait
                 ],
             ],
             'redirectToCombat' => 'le-faux-djinn',
-            'dialog' => 'dialog_faux_djinn',
-            'reference' => 'dialog_step_faux_djinn_3',
+            'dialog' => 'quest_faux_djinn',
+            'reference' => 'quest_step_faux_djinn_3',
         ],
         [
             'text' => "<p>Un ricanement sinistre semble monter du fond de sa gorge.</p><p><em>Tu es raisonnable, à défaut d'être courageux. Ne reviens plus ici, ou l'air que tu expires actuellement sera ton dernier souffle.</em></p>",
@@ -59,8 +59,8 @@ trait FauxDjinnTrait
                     'status' => 'progress',
                 ],
             ],
-            'dialog' => 'dialog_faux_djinn',
-            'reference' => 'dialog_step_faux_djinn_4',
+            'dialog' => 'quest_faux_djinn',
+            'reference' => 'quest_step_faux_djinn_4',
         ],
     ];
 }

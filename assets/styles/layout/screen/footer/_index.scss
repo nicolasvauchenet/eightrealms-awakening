@@ -5,4 +5,10 @@
   @import "./actions";
   @import "./replies";
   @import "./description";
+
+  &:has(.reply-actions) {
+    .footer-description {
+      margin-bottom: 0.5rem;
+    }
+  }
 }

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Dialog;
 
+use App\DataFixtures\Dialog\DialogReply\BoisDuPendu\TheobaldGrisMurmureTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\BiloLePassantTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\GartLeForgeronTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\GrandPretreDePortSaintDouxTrait;
@@ -34,6 +35,7 @@ class DialogReplyFixtures extends Fixture implements OrderedFixtureInterface
     use WilbertLArcanisteTrait;
     use FaroukLeNomadeTrait;
     use FauxDjinnTrait;
+    use TheobaldGrisMurmureTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -53,6 +55,9 @@ class DialogReplyFixtures extends Fixture implements OrderedFixtureInterface
             // Sables chauds
             self::FAROUK_LE_NOMADE_DIALOG_REPLIES,
             self::FAUX_DJINN_DIALOG_REPLIES,
+
+            // Bois du Pendu
+            self::THEOBALD_GRIS_MURMURE_DIALOG_REPLIES,
         ];
 
         foreach($dialogReplies as $dialogReplyData) {

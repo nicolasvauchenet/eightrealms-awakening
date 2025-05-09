@@ -45,6 +45,7 @@ readonly class ConditionEvaluatorService
             'quest_status' => $this->hasQuestStatus($player, $value),
             'quest_step_not_started' => $this->isQuestStepNotStarted($player, $value),
             'quest_step_status' => $this->hasQuestStepStatus($player, $value),
+            'quest_step_status_not' => !$this->hasQuestStepStatus($player, $value),
             'combat_not_started' => $this->isCombatNotStarted($player, $value),
             'combat_status' => $this->hasCombatStatus($player, $value),
             'combat_status_not' => $this->hasNotCombatStatus($player, $value),

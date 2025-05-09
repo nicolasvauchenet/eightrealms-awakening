@@ -18,7 +18,7 @@ trait FauxDjinnTrait
             ],
             'character' => 'npc_faux_djinn',
             'characterClass' => Npc::class,
-            'reference' => 'dialog_faux_djinn',
+            'reference' => 'quest_faux_djinn',
         ],
     ];
 }

@@ -1,6 +1,5 @@
 .reply-actions {
-  @include displayGrid(1fr, 1rem);
-  margin-bottom: 0.5rem;
+  @include displayGrid(1fr, 0.5rem);
   width: 100%;
 
   .reply-action {

@@ -7,7 +7,7 @@ trait RobertLeGardeTrait
     const ROBERT_LE_GARDE_DIALOG_STEPS = [
         // Quête : Bagarre bizarre
         [
-            'text' => "<p><em>Il y a eu une \"bagarre\" à la taverne de la Flûte Moisie… Je sais pas si vous avez entendu parler de ça… Mais je vous conseille de pas trop traîner par là-bas à la nuit tombée… Cet endroit peut être dangereux. Vous feriez mieux de rester là où c'est sûr.</em></p>",
+            'text' => "<p><em>Il y a eu une &laquo;bagarre&raquo; à la taverne de la Flûte Moisie… Je sais pas si vous avez entendu parler de ça. Mais je vous conseille de pas trop traîner par là-bas à la nuit tombée… Cet endroit peut être dangereux. Vous feriez mieux de rester là où c'est sûr.</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_not_started' => 'bagarre-bizarre',
@@ -53,6 +53,11 @@ trait RobertLeGardeTrait
                     'quest' => 'bagarre-bizarre',
                     'status' => 'progress',
                 ],
+                'quest_step_status_not' => [
+                    'quest' => 'bagarre-bizarre',
+                    'quest_step' => 5,
+                    'status' => 'progress',
+                ],
             ],
             'dialog' => 'quest_robert_le_garde',
             'reference' => 'quest_step_robert_le_garde_5',
@@ -61,10 +66,14 @@ trait RobertLeGardeTrait
             'text' => "<p><em>Bien joué. J'dois avouer que j'aurais pas misé un sou sur vous. Mais vous avez réussi. J'vous félicite. Et j'vous remercie. J'vais pouvoir me sortir ça de la tête.</em></p>",
             'first' => true,
             'conditions' => [
-                'quest_status' => [
+                'quest_step_status' => [
                     'quest' => 'bagarre-bizarre',
-                    'status' => 'completed',
+                    'quest_step' => 5,
+                    'status' => 'progress',
                 ],
+            ],
+            'effects' => [
+                'reward_quest' => 'bagarre-bizarre',
             ],
             'dialog' => 'quest_robert_le_garde',
             'reference' => 'quest_step_robert_le_garde_6',

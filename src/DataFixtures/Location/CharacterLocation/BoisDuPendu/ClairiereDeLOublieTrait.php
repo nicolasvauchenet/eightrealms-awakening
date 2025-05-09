@@ -12,10 +12,9 @@ trait ClairiereDeLOublieTrait
             'characterClass' => Npc::class,
             'location' => 'location_zone_clairiere_de_loublie',
             'conditions' => [
-                'quest_step_status' => [
+                'quest_status' => [
                     'quest' => 'bagarre-bizarre',
-                    'quest_step' => 2,
-                    'status' => 'completed',
+                    'status' => 'progress',
                 ],
             ],
             'reference' => 'location_zone_clairiere_de_loublie_theobald_le_gris_murmure',

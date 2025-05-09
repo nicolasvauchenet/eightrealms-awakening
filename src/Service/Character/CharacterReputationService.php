@@ -6,6 +6,7 @@ use App\Entity\Character\Player;
 use App\Entity\Character\Character;
 use App\Entity\Character\PlayerCharacter;
 use App\Entity\Location\CharacterLocation;
+use App\Entity\Location\Location;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CharacterReputationService
@@ -239,45 +240,27 @@ class CharacterReputationService
             'player' => $player,
             'character' => $giver,
         ]);
-
-        if($playerCharacter) {
-            $rep = $playerCharacter->getReputation() ?? 0;
-            $playerCharacter->setReputation(min(20, $rep + $mainBonus));
-            $this->entityManager->persist($playerCharacter);
-        }
-
-        // Trouver le lieu du PNJ via CharacterLocation
-        $giverCharacterLocation = $this->entityManager->getRepository(CharacterLocation::class)->findOneBy([
-            'character' => $giver,
-        ]);
-
-        if(!$giverCharacterLocation) {
+        if(!$playerCharacter) {
             return;
         }
+        $rep = $playerCharacter->getReputation() ?? 0;
+        $playerCharacter->setReputation(min(20, $rep + $mainBonus));
+        $this->entityManager->persist($playerCharacter);
 
-        $location = $giverCharacterLocation->getLocation();
-
-        // Trouver tous les PNJ du joueur dans ce lieu
+        // Bonus secondaire pour les autres personnages du joueur
         $playerCharacters = $this->entityManager->getRepository(PlayerCharacter::class)->findBy([
             'player' => $player,
         ]);
-
         foreach($playerCharacters as $otherPlayerCharacter) {
             $character = $otherPlayerCharacter->getCharacter();
-
             if($character->getId() === $giver->getId()) {
                 continue;
             }
-
-            $characterLocation = $this->entityManager->getRepository(CharacterLocation::class)->findOneBy([
-                'character' => $character,
-            ]);
-
-            if($characterLocation && $characterLocation->getLocation()?->getId() === $location->getId()) {
-                $rep = $otherPlayerCharacter->getReputation() ?? 0;
-                $otherPlayerCharacter->setReputation(min(20, $rep + $locationBonus));
-                $this->entityManager->persist($otherPlayerCharacter);
-            }
+            $rep = $otherPlayerCharacter->getReputation() ?? 0;
+            $otherPlayerCharacter->setReputation(min(20, $rep + $locationBonus));
+            $this->entityManager->persist($otherPlayerCharacter);
         }
+
+        $this->entityManager->flush();
     }
 }

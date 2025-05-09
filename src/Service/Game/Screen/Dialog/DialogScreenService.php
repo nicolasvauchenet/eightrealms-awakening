@@ -8,7 +8,6 @@ use App\Entity\Dialog\DialogStep;
 use App\Entity\Screen\DialogScreen;
 use App\Service\Dialog\DialogEffectApplierService;
 use App\Service\Game\Navigation\ExitActionResolver;
-use App\Service\Game\Screen\Combat\CombatScreenService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class DialogScreenService
@@ -16,8 +15,7 @@ readonly class DialogScreenService
     public function __construct(
         private EntityManagerInterface     $entityManager,
         private ExitActionResolver         $exitActionResolver,
-        private DialogEffectApplierService $dialogEffectApplierService,
-        private CombatScreenService        $combatScreenService
+        private DialogEffectApplierService $dialogEffectApplierService
     )
     {
     }
@@ -35,16 +33,16 @@ readonly class DialogScreenService
         }
         $this->dialogEffectApplierService->applyEffects($dialogStep->getEffects(), $player);
 
-        $this->createScreenActions($screen);
+        $this->createScreenActions($screen, $player);
         $this->entityManager->persist($screen);
         $this->entityManager->flush();
 
         return $screen;
     }
 
-    private function createScreenActions(DialogScreen $screen): void
+    private function createScreenActions(DialogScreen $screen, Player $player): void
     {
-        $footerActions = $this->exitActionResolver->getExitActions($screen);
+        $footerActions = $this->exitActionResolver->getExitActions($screen, $player);
 
         // Ajout d’un combat si redirection
         if($slug = $screen->getDialogStep()->getRedirectToCombat()) {

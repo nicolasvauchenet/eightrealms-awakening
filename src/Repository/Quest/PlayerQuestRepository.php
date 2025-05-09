@@ -45,8 +45,10 @@ class PlayerQuestRepository extends ServiceEntityRepository
             ->join('pq.quest', 'q')
             ->where('pq.player = :player')
             ->andWhere('q.type = :type')
+            ->andWhere('pqs.status != :progressStatus')
             ->setParameter('player', $player)
-            ->setParameter('type', 'Secondaire');
+            ->setParameter('type', 'Secondaire')
+            ->setParameter('progressStatus', 'progress');
 
         if($isRewarded) {
             $qb->andWhere('pq.status = :status');

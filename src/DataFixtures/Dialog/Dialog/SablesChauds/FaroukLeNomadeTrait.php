@@ -18,7 +18,7 @@ trait FaroukLeNomadeTrait
             ],
             'character' => 'npc_farouk_le_nomade',
             'characterClass' => Npc::class,
-            'reference' => 'dialog_farouk_le_nomade',
+            'reference' => 'quest_farouk_le_nomade',
         ],
     ];
 }

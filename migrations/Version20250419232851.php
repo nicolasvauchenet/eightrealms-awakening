@@ -21,7 +21,7 @@ final class Version20250419232851 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE character_spell (id SERIAL NOT NULL, character_id INT NOT NULL, spell_id INT NOT NULL, level INT NOT NULL, mana_cost INT NOT NULL, amount_bonus INT DEFAULT NULL, area_bonus INT DEFAULT NULL, duration_bonus INT DEFAULT NULL, PRIMARY KEY(id))
+            CREATE TABLE character_spell (id SERIAL NOT NULL, character_id INT NOT NULL, spell_id INT NOT NULL, level INT NOT NULL, mana_cost INT DEFAULT NULL, amount_bonus INT DEFAULT NULL, area_bonus INT DEFAULT NULL, duration_bonus INT DEFAULT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_2EFC2AEF1136BE75 ON character_spell (character_id)

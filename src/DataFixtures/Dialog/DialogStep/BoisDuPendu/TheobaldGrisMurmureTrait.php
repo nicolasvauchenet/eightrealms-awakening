@@ -27,7 +27,7 @@ trait TheobaldGrisMurmureTrait
             'reference' => 'quest_step_theobald_gris_murmure_1',
         ],
         [
-            'text' => "<p><em>Vous vous battez bien. Je m'appelle Théobald, et on me surnommait autrefois le Gris-Murmure. Le Cercle m’a banni pour avoir voulu apprendre le Rituel de l’Âme. Un savoir qu’ils jugent trop sacré pour être transmis, même entre leurs pairs. Moi, je craignais qu’il se perde, qu’il disparaisse avec le Grand Druide s’il venait à mourir.</em></p><p><em>Ils ont cru que je voulais le renverser. Ils ont crié au voleur, au traître. Et me voilà seul à présent.</em></p>",
+            'text' => "<p><em>Vous vous battez bien. Je m'appelle Théobald, et on me surnommait autrefois le Gris-Murmure. Le Cercle m’a banni pour avoir voulu apprendre le Rituel de l’Âme. Un savoir qu’ils jugent trop sacré pour être transmis, même entre leurs pairs. Moi, je craignais qu’il se perde, qu’il disparaisse avec le Grand Druide s’il venait à mourir.</em></p><p><em>Ils ont cru que je voulais le renverser. Ils ont crié au voleur, au traître. Et me voilà seul à présent. Êtes-vous venu jusqu'ici pour m'arrêter&nbsp;?</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_step_status' => [
@@ -61,6 +61,11 @@ trait TheobaldGrisMurmureTrait
                 ],
             ],
             'effects' => [
+                'edit_quest_step_status' => [
+                    'quest' => 'bagarre-bizarre',
+                    'quest_step' => 4,
+                    'status' => 'completed',
+                ],
                 'add_items' => [
                     [
                         'item' => 'amulette-du-cercle',
@@ -101,13 +106,12 @@ trait TheobaldGrisMurmureTrait
             ],
             'effects' => [
                 'edit_quest_step_status' => [
-                    'quest' => 'bagarre-bizarre',
-                    'quest_step' => 4,
-                    'status' => 'skipped',
-                ],
-                'start_quest_step' => [
-                    'quest' => 'bagarre-bizarre',
-                    'quest_step' => 5,
+                    [
+                        'quest' => 'bagarre-bizarre',
+                        'quest_step' => 4,
+                        'status' => 'completed',
+                        'next' => 'skipped',
+                    ],
                 ],
             ],
             'dialog' => 'quest_theobald_gris_murmure',

@@ -31,7 +31,7 @@ class CharacterSpellFixtures extends Fixture implements OrderedFixtureInterface
                 $characterSpell->setCharacter($this->getReference($data['character'], $data['characterClass']))
                     ->setSpell($this->getReference($data['spell'], Spell::class))
                     ->setLevel($data['level'])
-                    ->setManaCost($data['manaCost'])
+                    ->setManaCost($data['manaCost'] ?? null)
                     ->setAmountBonus($data['amountBonus'] ?? null)
                     ->setAreaBonus($data['areaBonus'] ?? null)
                     ->setDurationBonus($data['durationBonus'] ?? null);

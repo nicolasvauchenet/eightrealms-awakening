@@ -34,8 +34,15 @@
       max-width: 500px;
 
       .actions {
+        overflow-y: auto;
         @include displayGrid(repeat(3, 1fr), 1rem);
         margin: 0 1rem;
+        padding: 0 0.5rem 0.5rem 0;
+        max-height: 52dvh;
+
+        @include respondTo(md) {
+          max-height: 55dvh;
+        }
 
         .app-card {
           &.spell {

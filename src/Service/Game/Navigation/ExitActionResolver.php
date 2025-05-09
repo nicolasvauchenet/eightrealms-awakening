@@ -39,7 +39,7 @@ readonly class ExitActionResolver
         // Retour au personnage (depuis un écran dialogue)
         if($screen->getType() === 'dialog') {
             $character = $screen->getDialogStep()->getDialog()->getCharacter();
-            if($player && $this->dialogService->findFirstDialogStep($character, $player)) {
+            if($player && ($this->dialogService->findFirstDialogStep($character, $player)) || $this->dialogService->findFirstRumorStep($character, $player)) {
                 $actions[] = $this->buildAction(
                     type: 'interaction',
                     slug: $character->getSlug(),

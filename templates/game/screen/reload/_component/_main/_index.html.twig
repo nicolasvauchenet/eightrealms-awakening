@@ -1,4 +1,4 @@
-<main class="screen-main">
+<main class="screen-main" data-loading="addClass(loading)">
     {% set reloadableItems = app_tradeService.getReloadableItems(this.character) %}
     {% set totalReloadCost = app_tradeService.totalPrice(this.playerCharacter, reloadableItems, 'reload') %}
 

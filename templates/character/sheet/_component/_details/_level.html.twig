@@ -4,19 +4,25 @@
         {{ this.character.level }}
     </p>
 
-    <p>
-        {% set pendingLevels = app_characterLevelService.getPendingLevelUps(this.character) %}
-        {% if pendingLevels > 0 %}
+    {% set pendingLevels = app_characterLevelService.getPendingLevelUps(this.character) %}
+    {% if pendingLevels > 0 %}
+        <p>
             <a href="{{ path('app_game_character_level_home', {'back': back}) }}"
                class="text-blink"
                title="{{ this.character.name }} peut gagner {{ pendingLevels }} niveau{{ pendingLevels > 1 ? 'x' : '' }} !">
                 {{ ux_icon('healthicons:medium-level-outline', {'class': 'app-icon levelicon text-primary'}) }}
                 {{ this.character.experience }}
             </a>
-        {% else %}
+        </p>
+    {% else %}
+        {% set nextLevel = this.character.level + 1 %}
+        {% set nextLevelXp = app_characterLevelService.getRequiredXP(nextLevel) %}
+        {% set missingXp = nextLevelXp is not null ? max(0, nextLevelXp - this.character.experience) : 0 %}
+
+        <p title="Encore {{ missingXp }} XP pour passer au niveau {{ nextLevel }}">
             {{ ux_icon('healthicons:medium-level-outline', {'class': 'app-icon levelicon text-primary'}) }}
             {{ this.character.experience }}
-        {% endif %}
+        </p>
+    {% endif %}
 
-    </p>
 </div>

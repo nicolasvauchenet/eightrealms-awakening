@@ -46,18 +46,29 @@ trait RobertLeGardeTrait
             'reference' => 'quest_step_robert_le_garde_4',
         ],
         [
-            'text' => "<p><em>Il vous a dit quoi le tavernier&nbsp;? Allez, dites-moi&nbsp;! Faut quand même que je sache ce qui se passe dans ma ville…</em></p>",
+            'text' => "<p><em>Il vous a dit quoi le tavernier&nbsp;? Vous en savez plus sur cette bagarre&nbsp;? Allez, dites-moi&nbsp;! Faut quand même que je sache ce qui se passe dans ma ville…</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_status' => [
                     'quest' => 'bagarre-bizarre',
                     'status' => 'progress',
                 ],
-                'quest_step_status_not' => [
-                    'quest' => 'bagarre-bizarre',
-                    'quest_step' => 5,
-                    'status' => 'progress',
-                ],
+                'all' => [
+                    [
+                        'quest_step_status_not' => [
+                            'quest' => 'bagarre-bizarre',
+                            'quest_step' => 5,
+                            'status' => 'progress',
+                        ]
+                    ],
+                    [
+                        'quest_step_status_not' => [
+                            'quest' => 'bagarre-bizarre',
+                            'quest_step' => 5,
+                            'status' => 'skipped',
+                        ]
+                    ]
+                ]
             ],
             'dialog' => 'quest_robert_le_garde',
             'reference' => 'quest_step_robert_le_garde_5',
@@ -66,13 +77,30 @@ trait RobertLeGardeTrait
             'text' => "<p><em>Bien joué. J'dois avouer que j'aurais pas misé un sou sur vous. Mais vous avez réussi. J'vous félicite. Et j'vous remercie. J'vais pouvoir me sortir ça de la tête.</em></p>",
             'first' => true,
             'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'bagarre-bizarre',
-                    'quest_step' => 5,
-                    'status' => 'progress',
+                'any' => [
+                    [
+                        'quest_step_status' =>
+                            [
+                                'quest' => 'bagarre-bizarre',
+                                'quest_step' => 5,
+                                'status' => 'progress',
+                            ],
+                    ],
+                    [
+                        'quest_step_status' =>
+                            [
+                                'quest' => 'bagarre-bizarre',
+                                'quest_step' => 5,
+                                'status' => 'skipped',
+                            ],
+                    ],
                 ],
             ],
             'effects' => [
+                'start_quest_step' => [
+                    'quest' => 'bagarre-bizarre',
+                    'quest_step' => 6,
+                ],
                 'reward_quest' => 'bagarre-bizarre',
             ],
             'dialog' => 'quest_robert_le_garde',

@@ -17,7 +17,7 @@ class CharacterSpell
     #[ORM\Column]
     private ?int $level = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $manaCost = null;
 
     #[ORM\Column(nullable: true)]
@@ -59,7 +59,7 @@ class CharacterSpell
         return $this->manaCost;
     }
 
-    public function setManaCost(int $manaCost): static
+    public function setManaCost(?int $manaCost): static
     {
         $this->manaCost = $manaCost;
 

@@ -1,4 +1,4 @@
-<main class="screen-main">
+<main class="screen-main" data-loading="addClass(loading)">
     {% set repairableItems = app_tradeService.getRepairableItems(this.character) %}
     {% set totalRepairCost = app_tradeService.totalPrice(this.playerCharacter, repairableItems, 'repair') %}
 

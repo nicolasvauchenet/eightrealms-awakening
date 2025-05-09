@@ -51,6 +51,7 @@ readonly class ConditionEvaluatorService
             'combat_status_not' => $this->hasNotCombatStatus($player, $value),
             'inventory_has' => $this->hasItem($player, $value),
             'any' => $this->evaluateAny($value, $player),
+            'all' => $this->evaluateAll($value, $player),
             default => false,
         };
     }
@@ -218,5 +219,27 @@ readonly class ConditionEvaluatorService
         }
 
         return false;
+    }
+
+    private function evaluateAll(mixed $conditions, Player $player): bool
+    {
+        if(!is_array($conditions)) {
+            return false;
+        }
+
+        // Si c'est un seul bloc (ex : ['quest_started' => 'machin']) on l'encapsule
+        if(array_keys($conditions) === array_filter(array_keys($conditions), 'is_string')) {
+            $conditions = [$conditions];
+        }
+
+        foreach($conditions as $subCondition) {
+            foreach($subCondition as $type => $value) {
+                if(!$this->evaluate($type, $value, $player)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

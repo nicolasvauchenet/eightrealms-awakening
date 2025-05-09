@@ -122,11 +122,16 @@ trait JarrodLeTavernierTrait
             'first' => true,
             'conditions' => [
                 'any' => [
-                    ['quest_not_started' => 'bagarre-bizarre'],
-                    ['quest_status' => [
-                        'quest' => 'bagarre-bizarre',
-                        'status' => 'rewarded',
-                    ]],
+                    [
+                        'quest_not_started' => 'bagarre-bizarre',
+                    ],
+                    [
+                        'quest_status' =>
+                            [
+                                'quest' => 'bagarre-bizarre',
+                                'status' => 'rewarded',
+                            ],
+                    ],
                 ],
             ],
             'dialog' => 'dialog_jarrod_le_tavernier',

@@ -84,10 +84,7 @@ readonly class CastSpellService
             $this->entityManager->flush();
 
             return $log;
-        }
-
-        // Effet défensif (damage / defense)
-        if($type === 'defensive') {
+        } else if($type === 'defensive') {
             $statName = match ($targetStat) {
                 'health' => 'santé',
                 'mana' => 'magie',
@@ -108,7 +105,7 @@ readonly class CastSpellService
                 }
 
                 $this->entityManager->persist($player);
-                $log = "<span class='text-info'>Vous utilisez {$item->getName()} et récupérez <strong>$amount</strong> point" . ($amount > 1 ? 's' : '') . " de $statName.</span><br/>";
+                $log = "<span class='text-info'>Vous lancez {$spell->getName()} et récupérez <strong>$amount</strong> point" . ($amount > 1 ? 's' : '') . " de $statName.</span><br/>";
             } else {
                 $playerCombat = $player->getPlayerCombats()->last();
                 if($playerCombat) {
@@ -128,15 +125,17 @@ readonly class CastSpellService
                         default => "vous bénéficiez d’un effet spécial",
                     };
 
-                    $log = "<span class='text-info'>Vous utilisez {$item->getName()} et $label pendant " . ($duration ?? 'une durée indéterminée') . ".</span><br/>";
+                    $log = "<span class='text-info'>Vous lancez {$spell->getName()} et $label pendant " . ($duration ? $duration . ' tour' . ($duration > 1 ? 's' : '') : 'une durée indéterminée') . ".</span><br/>";
                 } else {
                     $log = "<span class='text-warning'>Effet non appliqué&nbsp;: aucun combat actif.</span><br/>";
                 }
             }
+
+            return $log;
         } else if($type === 'utile') {
             $statName = match ($targetStat) {
-                'invisibility' => 'invisibilité',
-                default => $targetStat,
+                'invisibility' => 'devenez invisible',
+                default => "gagnez l'effet " . $targetStat,
             };
 
             $playerCombat = $player->getPlayerCombats()->last();
@@ -149,10 +148,12 @@ readonly class CastSpellService
                     playerCombat: $playerCombat
                 );
 
-                $log = "<span class='text-info'>Vous utilisez {$item->getName()} et gagnez l’effet <strong>$statName</strong> pour " . ($duration ?? 'une durée indéterminée') . ".</span><br/>";
+                $log = "<span class='text-info'>Vous lancez {$spell->getName()} et $statName pour " . ($duration ? $duration . ' tour' . ($duration > 1 ? 's' : '') : 'une durée indéterminée') . ".</span><br/>";
             } else {
                 $log = "<span class='text-warning'>Effet non appliqué&nbsp;: aucun combat actif.</span><br/>";
             }
+
+            return $log;
         }
 
         return "<span class='text-danger'>Ce sort n’a pas d’effet implémenté.</span><br/>";

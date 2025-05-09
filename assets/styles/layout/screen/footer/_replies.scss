@@ -17,7 +17,6 @@
     @extend .anim-appears;
     animation-delay: 0.25s;
 
-    &:hover,
     &:active {
       box-shadow: inset 2px 2px 0.25rem rgba($black, 0.85);
     }

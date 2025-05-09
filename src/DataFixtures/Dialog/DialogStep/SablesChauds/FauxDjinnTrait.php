@@ -46,6 +46,7 @@ trait FauxDjinnTrait
                     'status' => 'completed',
                 ],
             ],
+            'redirectToCombat' => 'le-faux-djinn',
             'dialog' => 'dialog_faux_djinn',
             'reference' => 'dialog_step_faux_djinn_3',
         ],

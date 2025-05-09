@@ -6,7 +6,7 @@ trait FaroukLeNomadeTrait
 {
     const FAROUK_LE_NOMADE_DIALOG_REPLIES = [
         [
-            'text' => "Vous avez vu passer un homme étrange&nbsp;?",
+            'text' => "Avez-vous vu passer un homme étrange&nbsp;?",
             'dialogStep' => 'dialog_step_farouk_le_nomade_1',
             'nextStep' => 'dialog_step_farouk_le_nomade_2',
             'reference' => 'quest_reply_farouk_le_nomade_1_1',

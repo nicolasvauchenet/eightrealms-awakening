@@ -21,7 +21,7 @@ final class Version20250423134407 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE dialog_step (id SERIAL NOT NULL, dialog_id INT NOT NULL, text TEXT NOT NULL, first BOOLEAN NOT NULL, conditions JSON DEFAULT NULL, effects JSON DEFAULT NULL, PRIMARY KEY(id))
+            CREATE TABLE dialog_step (id SERIAL NOT NULL, dialog_id INT NOT NULL, text TEXT NOT NULL, first BOOLEAN NOT NULL, conditions JSON DEFAULT NULL, effects JSON DEFAULT NULL, redirect_to_combat VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_DA95212B5E46C4E2 ON dialog_step (dialog_id)

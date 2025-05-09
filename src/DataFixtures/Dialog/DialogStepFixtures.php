@@ -62,6 +62,7 @@ class DialogStepFixtures extends Fixture implements OrderedFixtureInterface
                     ->setFirst($data['first'] ?? false)
                     ->setConditions($data['conditions'] ?? null)
                     ->setEffects($data['effects'] ?? null)
+                    ->setRedirectToCombat($data['redirectToCombat'] ?? null)
                     ->setDialog($this->getReference($data['dialog'], Dialog::class));
                 $manager->persist($dialogStep);
                 $this->addReference($data['reference'], $dialogStep);

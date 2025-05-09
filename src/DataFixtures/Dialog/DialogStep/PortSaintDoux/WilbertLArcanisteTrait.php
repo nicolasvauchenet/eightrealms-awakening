@@ -59,7 +59,7 @@ trait WilbertLArcanisteTrait
             'reference' => 'quest_step_wilbert_larcaniste_5',
         ],
         [
-            'text' => "<p><em>Vous êtes revenu vivant… C’est déjà une victoire. Quant à ma fiole… elle n'est peut-être pas tout à fait perdue, mais au moins, le désert ne brûlera pas avec elle.</em></p><p><em>Voici votre récompense, comme promis. Je garde mes serments, même quand mes objets me trahissent.</em></p>",
+            'text' => "<p><em>Vous êtes revenu vivant… C’est déjà une victoire. Quant à ma fiole… elle n'est peut-être pas tout à fait perdue… Peut-être que si je…</em></p><p>Il se perd dans ses pensées un instant, puis se reprend en sursautant :</p><p><em>Au moins, le désert ne brûlera pas avec elle. Voici votre récompense, comme promis. Je garde mes serments, même quand mes objets me trahissent.</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_step_status' => [
@@ -69,6 +69,9 @@ trait WilbertLArcanisteTrait
                 ],
             ],
             'effects' => [
+                'remove_items' => [
+                    'fiole-brisee',
+                ],
                 'edit_quest_step_status' => [
                     'quest' => 'la-fiole-perdue',
                     'quest_step' => 4,
@@ -89,9 +92,6 @@ trait WilbertLArcanisteTrait
                 ],
             ],
             'effects' => [
-                'remove_items' => [
-                    'fiole-brisee',
-                ],
                 'reward_quest' => 'la-fiole-perdue',
             ],
             'dialog' => 'quest_wilbert_larcaniste',

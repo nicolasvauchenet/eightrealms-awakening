@@ -28,14 +28,38 @@ trait DocksDeLOuestTrait
             'characterClass' => Creature::class,
             'location' => 'location_zone_docks_de_l_ouest',
             'conditions' => [
-                'quest_status' => [
-                    'quest' => 'la-sirene-et-le-marin',
-                    'status' => 'progress',
-                ],
-                'quest_step_status' => [
-                    'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 1,
-                    'status' => 'completed',
+                'all' => [
+                    [
+                        'quest_status' =>
+                            [
+                                'quest' => 'la-sirene-et-le-marin',
+                                'status' => 'progress',
+                            ],
+                    ],
+                    [
+                        'quest_step_status' =>
+                            [
+                                'quest' => 'la-sirene-et-le-marin',
+                                'quest_step' => 1,
+                                'status' => 'completed',
+                            ],
+                    ],
+                    [
+                        'quest_step_status_not' =>
+                            [
+                                'quest' => 'la-sirene-et-le-marin',
+                                'quest_step' => 4,
+                                'status' => 'progress',
+                            ],
+                    ],
+                    [
+                        'quest_step_status_not' =>
+                            [
+                                'quest' => 'la-sirene-et-le-marin',
+                                'quest_step' => 5,
+                                'status' => 'progress',
+                            ],
+                    ],
                 ],
             ],
             'reference' => 'location_zone_docks_de_l_ouest_sirene',

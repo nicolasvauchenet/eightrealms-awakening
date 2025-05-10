@@ -8,7 +8,7 @@ trait QuestTrait
         [
             'name' => "Cœur d'Écume",
             'picture' => 'coeur-decume.png',
-            'description' => "<p>Cette amulette bleutée semble vibrer doucement au contact de l’air humide. Offerte par une Sirène en guise d'amitié ou d'amour, elle relie son porteur aux forces tranquilles des abysses. Tant qu’elle est portée, les créatures aquatiques hésitent à lever la main.</p><p>Elle permet aussi de respirer sous l’eau là où l’air ne passe plus.</p>",
+            'description' => "<p>Cette amulette bleutée semble vibrer doucement au contact de l’air humide. Offerte par une Sirène en guise de reconnaissance ou d'amitié, elle relie son porteur aux forces tranquilles des abysses. Tant qu’elle est portée, les créatures aquatiques hésitent à lever la main.</p><p>Elle permet aussi de respirer sous l’eau là où l’air ne passe plus.</p>",
             'type' => 'utile',
             'price' => 1500,
             'category' => 'category_amulet',

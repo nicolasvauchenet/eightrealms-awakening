@@ -3,18 +3,18 @@
 namespace App\Service\Game\Dialog;
 
 use App\Entity\Character\Player;
-use App\Entity\Item\CharacterItem;
-use App\Entity\Item\Item;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Location\Location;
+use App\Service\Item\CharacterInventoryService;
 use App\Service\Quest\QuestProgressionService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class DialogEffectApplierService
 {
     public function __construct(
-        private EntityManagerInterface  $entityManager,
-        private QuestProgressionService $questProgressionService
+        private EntityManagerInterface    $entityManager,
+        private QuestProgressionService   $questProgressionService,
+        private CharacterInventoryService $inventoryService
     )
     {
     }
@@ -71,48 +71,17 @@ readonly class DialogEffectApplierService
                 continue;
             }
 
-            $item = $this->entityManager->getRepository(Item::class)->findOneBy(['slug' => $data['item']]);
-            if(!$item) {
-                continue;
-            }
+            $itemSlug = $data['item'];
+            $isQuestItem = $data['questItem'] ?? false;
 
-            $existing = $this->entityManager->getRepository(CharacterItem::class)->findOneBy([
-                'character' => $player,
-                'item' => $item,
-            ]);
-
-            if($existing) {
-                continue;
-            }
-
-            $characterItem = (new CharacterItem())
-                ->setCharacter($player)
-                ->setItem($item)
-                ->setEquipped(false)
-                ->setQuestItem($data['questItem'] ?? false);
-            $this->entityManager->persist($characterItem);
+            $this->inventoryService->addItem($player, $itemSlug, $isQuestItem);
         }
-
-        $this->entityManager->flush();
     }
 
     private function removeItems(Player $player, array $items): void
     {
         foreach($items as $slug) {
-            $item = $this->entityManager->getRepository(Item::class)->findOneBy(['slug' => $slug]);
-            if(!$item) {
-                continue;
-            }
-
-            $characterItem = $this->entityManager->getRepository(CharacterItem::class)->findOneBy([
-                'character' => $player,
-                'item' => $item,
-            ]);
-
-            if($characterItem) {
-                $this->entityManager->remove($characterItem);
-                $this->entityManager->flush();
-            }
+            $this->inventoryService->removeItem($player, $slug);
         }
     }
 }

@@ -29,7 +29,7 @@
                 {{ characterItem.item.category.name }}
             {% endif %}
 
-            {% if characterItem.item.target is defined and characterItem.item.type not in ['offensive', 'Arme de mêlée enchantée', 'Arme de jet enchantée'] and characterItem.item.target is not null %}
+            {% if characterItem.item.target is defined and characterItem.item.type not in ['offensive', 'Arme de mêlée enchantée', 'Arme de jet enchantée'] and (characterItem.item.target is not null or characterItem.item.effect is not null) %}
                 •
                 {% if characterItem.item.target == 'health' %}
                     augmente la Santé
@@ -39,6 +39,8 @@
                     augmente la Magie
                 {% elseif characterItem.item.target == 'charisma' %}
                     augmente la Sagesse
+                {% elseif characterItem.item.target == 'aquatics' and characterItem.item.effect == 'charmed' %}
+                    amitié avec les créatures aquatiques
                 {% endif %}
             {% endif %}
 

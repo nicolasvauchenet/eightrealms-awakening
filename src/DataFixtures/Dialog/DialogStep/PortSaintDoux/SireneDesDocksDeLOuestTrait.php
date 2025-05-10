@@ -36,7 +36,7 @@ trait SireneDesDocksDeLOuestTrait
             'reference' => 'quest_step_sirene_des_docks_de_louest_2',
         ],
         [
-            'text' => "<p>La Sirène observe le journal avec une intensité presque douloureuse. Chaque mot semble l’atteindre comme une lame. Lorsqu’elle lève les yeux vers vous, ses traits sont figés dans une tristesse muette.</p><p><em>Je l’aimais. Et il riait…</em></p><p>Un long silence.</p><p><em>Merci. D’avoir chanté la vérité. Apporte mes regrets à Myra. Dis-lui… qu’elle avait raison.</em></p><p>Elle vous tend le médaillon sans un mot de plus, puis plonge lentement, disparaissant dans les profondeurs, paisible pour la première fois.</p>",
+            'text' => "<p>La Sirène observe le journal avec une intensité presque douloureuse. Chaque mot semble l’atteindre comme une lame. Lorsqu’elle lève les yeux vers vous, ses traits sont figés dans une tristesse muette.</p><p><em>Je l’aimais. Et il riait… Il s'est servi de mon précieux cadeau pour… pour décimer mon peuple.</em></p><p>Un long silence.</p><p><em>Merci. D’avoir chanté la vérité. Apporte mes regrets à Myra. Dis-lui qu’elle avait raison. J'en ai terminé avec les tiens.</em></p><p>Elle vous tend le médaillon sans un mot de plus, puis plonge lentement, disparaissant dans les profondeurs, l'air apaisé pour la première fois depuis longtemps.</p>",
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',

@@ -15,22 +15,21 @@ readonly class QuestProgressionService
     public function __construct(
         private EntityManagerInterface     $entityManager,
         private RewardService              $rewardService,
-        private CharacterReputationService $characterReputationService,
-    )
+        private CharacterReputationService $characterReputationService)
     {
     }
 
-    public function startQuest(Player $player, string $slug): void
+    public function startQuest(Player $player, string $slug): ?PlayerQuest
     {
         $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $slug]);
-        if(!$quest) return;
+        if(!$quest) return null;
 
-        $existing = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
+        $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
             'player' => $player,
             'quest' => $quest,
         ]);
 
-        if(!$existing) {
+        if(!$playerQuest) {
             $playerQuest = (new PlayerQuest())
                 ->setPlayer($player)
                 ->setQuest($quest)
@@ -53,6 +52,8 @@ readonly class QuestProgressionService
 
             $this->entityManager->flush();
         }
+
+        return $playerQuest;
     }
 
     public function startQuestStep(Player $player, array $data): void
@@ -79,7 +80,7 @@ readonly class QuestProgressionService
                 'quest' => $quest,
             ]);
             if(!$playerQuest) {
-                continue;
+                $playerQuest = $this->startQuest($player, $entry['quest']);
             }
 
             $existing = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([

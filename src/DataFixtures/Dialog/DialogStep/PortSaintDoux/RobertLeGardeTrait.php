@@ -7,6 +7,7 @@ trait RobertLeGardeTrait
     const ROBERT_LE_GARDE_DIALOG_STEPS = [
         // Quête : Bagarre bizarre
         [
+            'name' => 'Robert - Quête',
             'text' => "<p><em>Il y a eu une &laquo;bagarre&raquo; à la taverne de la Flûte Moisie… Je sais pas si vous avez entendu parler de ça. Mais je vous conseille de pas trop traîner par là-bas à la nuit tombée… Cet endroit peut être dangereux. Vous feriez mieux de rester là où c'est sûr.</em></p>",
             'first' => true,
             'conditions' => [
@@ -16,6 +17,7 @@ trait RobertLeGardeTrait
             'reference' => 'quest_step_robert_le_garde_1',
         ],
         [
+            'name' => "Robert - Docks de l'Ouest",
             'text' => "<p><em>Aux Docks de l'Ouest. C'est vers la mer. Ça s'appelle comme ça mais c'est au nord-est de la ville. Me demandez pas pourquoi, j'en sais rien. Chus point géographiste. Chuis garde.</em></p>",
             'conditions' => [
                 'quest_not_started' => 'bagarre-bizarre',
@@ -27,6 +29,7 @@ trait RobertLeGardeTrait
             'reference' => 'quest_step_robert_le_garde_2',
         ],
         [
+            'name' => 'Robert - Accepter la quête',
             'text' => "<p><em>Qu'on aille pas dire que je vous avais pas prévenu… En même temps c'est bien et ça m'arrange. Mais si vous trouvez quoi que ce soit, je veux que vous veniez m'en parler avant de faire n'importe quoi&nbsp;! On est bien d'accord&nbsp;?</em></p>",
             'conditions' => [
                 'quest_not_started' => 'bagarre-bizarre',
@@ -38,6 +41,7 @@ trait RobertLeGardeTrait
             'reference' => 'quest_step_robert_le_garde_3',
         ],
         [
+            'name' => 'Robert - Refuser la quête',
             'text' => "<p><em>Hé ben, c'est point vos affaires, c'est vrai. Heureusement qu'y a encore des gardes dans c'te ville… Allez circulez&nbsp;!</em></p>",
             'conditions' => [
                 'quest_not_started' => 'bagarre-bizarre',
@@ -46,6 +50,7 @@ trait RobertLeGardeTrait
             'reference' => 'quest_step_robert_le_garde_4',
         ],
         [
+            'name' => 'Robert - Quête en cours',
             'text' => "<p><em>Il vous a dit quoi le tavernier&nbsp;? Vous en savez plus sur cette bagarre&nbsp;? Allez, dites-moi&nbsp;! Faut quand même que je sache ce qui se passe dans ma ville…</em></p>",
             'first' => true,
             'conditions' => [
@@ -74,6 +79,7 @@ trait RobertLeGardeTrait
             'reference' => 'quest_step_robert_le_garde_5',
         ],
         [
+            'name' => 'Robert - Quête terminée',
             'text' => "<p><em>Bien joué. J'dois avouer que j'aurais pas misé un sou sur vous. Mais vous avez réussi. J'vous félicite. Et j'vous remercie. J'vais pouvoir me sortir ça de la tête.</em></p>",
             'first' => true,
             'conditions' => [
@@ -109,6 +115,7 @@ trait RobertLeGardeTrait
 
         // Dialogue normal
         [
+            'name' => 'Robert - Dialogue',
             'text' => "<p><em>Attendez que je l'attrape ce sale petit voleur… Y perd rien pour attendre, et moi, chus patient&nbsp;!</em></p>",
             'first' => true,
             'conditions' => [
@@ -123,6 +130,7 @@ trait RobertLeGardeTrait
 
         // Ragots
         [
+            'name' => 'Robert - Ragots',
             'text' => "<p><em>Bon. Là en ce moment, chus occupé. Chuis en service au cas où z'auriez point remarqué. Alors salut.</em></p>",
             'first' => true,
             'dialog' => 'rumor_robert_le_garde',

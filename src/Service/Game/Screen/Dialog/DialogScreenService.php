@@ -6,16 +6,19 @@ use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
 use App\Entity\Dialog\DialogStep;
 use App\Entity\Screen\DialogScreen;
+use App\Event\DialogStepReachedEvent;
 use App\Service\Game\Dialog\DialogEffectApplierService;
 use App\Service\Game\Navigation\ExitActionResolver;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 readonly class DialogScreenService
 {
     public function __construct(
         private EntityManagerInterface     $entityManager,
         private ExitActionResolver         $exitActionResolver,
-        private DialogEffectApplierService $dialogEffectApplierService
+        private DialogEffectApplierService $dialogEffectApplierService,
+        private EventDispatcherInterface   $eventDispatcher,
     )
     {
     }
@@ -36,6 +39,9 @@ readonly class DialogScreenService
         $this->createScreenActions($screen, $player);
         $this->entityManager->persist($screen);
         $this->entityManager->flush();
+
+        // Le dialogue peut déclencher une étape de la quête principale
+        $this->eventDispatcher->dispatch(new DialogStepReachedEvent($player->getId(), $dialogStep->getSlug()));
 
         return $screen;
     }

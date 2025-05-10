@@ -6,6 +6,7 @@ trait TheobaldGrisMurmureTrait
 {
     const THEOBALD_GRIS_MURMURE_DIALOG_STEPS = [
         [
+            'name' => 'Théobald - Rencontre',
             'text' => "<p><em>Alors comme ça, vous m’avez suivi depuis la capitale, jusqu'ici. Je n’ai rien volé, rien provoqué… mais personne ne veut rien entendre. Et ils me retrouveront toujours…</em></p><p><em>Préparez-vous. Ils viennent pour moi — et maintenant, pour vous aussi.</em></p>",
             'first' => true,
             'conditions' => [
@@ -27,6 +28,7 @@ trait TheobaldGrisMurmureTrait
             'reference' => 'quest_step_theobald_gris_murmure_1',
         ],
         [
+            'name' => 'Théobald - Combat',
             'text' => "<p><em>Vous vous battez bien. Je m'appelle Théobald, et on me surnommait autrefois le Gris-Murmure. Le Cercle m’a banni pour avoir voulu apprendre le Rituel de l’Âme. Un savoir qu’ils jugent trop sacré pour être transmis, même entre leurs pairs. Moi, je craignais qu’il se perde, qu’il disparaisse avec le Grand Druide s’il venait à mourir.</em></p><p><em>Ils ont cru que je voulais le renverser. Ils ont crié au voleur, au traître. Et me voilà seul à présent. Êtes-vous venu jusqu'ici pour m'arrêter&nbsp;?</em></p>",
             'first' => true,
             'conditions' => [
@@ -40,6 +42,7 @@ trait TheobaldGrisMurmureTrait
             'reference' => 'quest_step_theobald_gris_murmure_2',
         ],
         [
+            'name' => 'Théobald - Alaric',
             'text' => "<p><em>Un Druide n'est pas solitaire dans la forêt, et mon errance était planifiée par les Dieux. J’ai croisé le Prince Alaric, jadis. Il cherchait le Rituel. Il pensait que cela l’aiderait à franchir les portes du Donjon de l’Âme. Il croyait pouvoir convaincre les Druides. Il croyait encore en l’humanité.</em></p><p><em>J’ai essayé de l’aider… mais moi aussi, j’étais déjà un paria.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
@@ -52,6 +55,7 @@ trait TheobaldGrisMurmureTrait
             'reference' => 'quest_step_theobald_gris_murmure_3',
         ],
         [
+            'name' => 'Théobald - Grand Druide',
             'text' => "<p><em>Vous comptez approcher le Grand Druide ? Hm… c’est noble. Et terriblement dangereux. Les cercles se referment vite sur les intrus. Même un mot mal placé peut suffire à vous condamner.</em></p><p><em>Alors prenez ceci. L’Amulette du Cercle. Elle marque celui qui a appartenu à la Forêt. Même bannis, nous portons encore son empreinte. Peut-être qu’en la voyant, ils écouteront… avant de frapper.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
@@ -77,6 +81,7 @@ trait TheobaldGrisMurmureTrait
             'reference' => 'quest_step_theobald_gris_murmure_4',
         ],
         [
+            'name' => 'Théobald - Clé',
             'text' => "<p><em>Attendez. Le Rituel seul ne suffit pas. Il faut une clé. Une vraie. Symbolique ou matérielle, je l’ignore. Mais sans elle… le Tombeau reste clos.</em></p><p><em>Je vous ai donné tout ce que je sais. Le reste… appartient aux morts.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
@@ -96,6 +101,7 @@ trait TheobaldGrisMurmureTrait
             'reference' => 'quest_step_theobald_gris_murmure_5',
         ],
         [
+            'name' => 'Théobald - Fin',
             'text' => "<p><em>Vous êtes pressé. Que les âmes vous protègent. Merci encore pour votre aide.</em></p><p>Théobald se retourne et s'enfonce dans la pénombre des bois.</p>",
             'conditions' => [
                 'quest_step_status' => [

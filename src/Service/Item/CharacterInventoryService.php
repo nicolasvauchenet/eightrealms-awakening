@@ -5,13 +5,14 @@ namespace App\Service\Item;
 use App\Entity\Character\Player;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Item;
+use App\Event\ItemReceivedEvent;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 readonly class CharacterInventoryService
 {
-    public function __construct(
-        private EntityManagerInterface $entityManager
-    )
+    public function __construct(private EntityManagerInterface   $entityManager,
+                                private EventDispatcherInterface $eventDispatcher)
     {
     }
 
@@ -26,18 +27,19 @@ readonly class CharacterInventoryService
             'character' => $player,
             'item' => $item,
         ]);
-
         if($existing) {
             return;
         }
-
         $characterItem = (new CharacterItem())
             ->setCharacter($player)
             ->setItem($item)
             ->setEquipped(false)
             ->setQuestItem($isQuestItem);
-
         $this->entityManager->persist($characterItem);
+        $this->entityManager->flush();
+
+        // L'ajout de l'item peut déclencher une étape de la quête principale
+        $this->eventDispatcher->dispatch(new ItemReceivedEvent($player->getId(), $item->getSlug()));
     }
 
     public function removeItem(Player $player, string $itemSlug): void
@@ -54,6 +56,7 @@ readonly class CharacterInventoryService
 
         if($characterItem) {
             $this->entityManager->remove($characterItem);
+            $this->entityManager->flush();
         }
     }
 }

@@ -7,6 +7,7 @@ trait BiloLePassantTrait
     const BILO_LE_PASSANT_DIALOG_STEPS = [
         // Quête : Des Rats sur les Docks
         [
+            'name' => 'Bilo - Quête',
             'text' => "<p><em>Vous avez entendu parler des rats qui envahissent les rues du Vieux Port&nbsp;? Il y en a partout&nbsp;! Et ils sortent même le jour maintenant… C’est inquiétant.</em></p>",
             'first' => true,
             'conditions' => [
@@ -16,6 +17,7 @@ trait BiloLePassantTrait
             'reference' => 'quest_step_bilo_le_passant_1',
         ],
         [
+            'name' => 'Bilo - Anciens Docks',
             'text' => "<p><em>C'est dans les Anciens Docks, au sud-est de la ville. C'est l'ancien quartier des pêcheurs et des marins, mais surtout des vieux qui se sont pas fait à la modernité des Docks de l'Ouest. C'est un endroit calme, mais avec ces rats, ça devient un peu plus animé… enfin, si on peut dire.</em></p>",
             'conditions' => [
                 'quest_not_started' => 'des-rats-sur-les-docks',
@@ -27,6 +29,7 @@ trait BiloLePassantTrait
             'reference' => 'quest_step_bilo_le_passant_2',
         ],
         [
+            'name' => 'Bilo - Accepter la quête',
             'text' => "<p><em>Super&nbsp;! Enfin quelqu'un qui s'occupe des problèmes du peuple&nbsp;! C'est pas tous les jours qu'on voit ça. Bonne chance à vous&nbsp;!</em></p>",
             'conditions' => [
                 'quest_not_started' => 'des-rats-sur-les-docks',
@@ -38,6 +41,7 @@ trait BiloLePassantTrait
             'reference' => 'quest_step_bilo_le_passant_3',
         ],
         [
+            'name' => 'Bilo - Refuser la quête',
             'text' => "<p><em>Oh, vous savez moi, ce que j'en dis… Si ce n'est le problème de personne, et que les gardes sont trop occupés, alors qui va s'en occuper de ces rats&nbsp;?</em></p>",
             'conditions' => [
                 'quest_not_started' => 'des-rats-sur-les-docks',
@@ -46,6 +50,7 @@ trait BiloLePassantTrait
             'reference' => 'quest_step_bilo_le_passant_4',
         ],
         [
+            'name' => 'Bilo - Quête en cours',
             'text' => "<p><em>Alors, ces rats&nbsp;? Vous les avez vus&nbsp;? Vous avez fait quelque chose&nbsp;?</em></p>",
             'first' => true,
             'conditions' => [
@@ -59,6 +64,7 @@ trait BiloLePassantTrait
             'reference' => 'quest_step_bilo_le_passant_5',
         ],
         [
+            'name' => 'Bilo - Quête terminée',
             'text' => "<p><em>Bravo&nbsp;! Vous avez réussi à vous débarrasser de ces rats&nbsp;! C'est un soulagement pour tout le monde, et soyez sûr que je vais m'empresser d'aller raconter votre victoire&nbsp;! J'espère que vous ne vous êtes pas fait mordre trop fort…</em></p>",
             'first' => true,
             'conditions' => [
@@ -82,6 +88,7 @@ trait BiloLePassantTrait
 
         // Dialogue normal
         [
+            'name' => 'Bilo - Dialogue',
             'text' => "<p><em>Vous savez que si vous mangez trois pommes, une carotte et un vieux fromage de chèvre avant de dormir, vous rêverez du futur&nbsp;? Enfin… moi, j’ai rêvé que j’étais un poisson qui chantait des berceuses à des dragons. Alors bon, ce n’est peut-être pas le futur-futur. Mais c'est une preuve, vous ne pensez pas&nbsp;?</em></p>",
             'first' => true,
             'conditions' => [
@@ -96,6 +103,7 @@ trait BiloLePassantTrait
 
         // Ragots
         [
+            'name' => 'Bilo - Ragots',
             'text' => "<p><em>Le Roi Galdric a disparu depuis maintenant trois jours, et le Prince Alaric depuis une semaine et demi. Je ne sais pas ce qu'il y a au Donjon de l'Âme, mais si deux groupes de soldats en armes n'ont pas réussi à en ressortir, qui pourra bien nous aider&nbsp;?</em></p>",
             'first' => true,
             'effects' => [

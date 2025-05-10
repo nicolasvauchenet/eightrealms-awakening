@@ -13,7 +13,7 @@ trait DesRatsSurLesDocksTrait
             'reference' => 'quest_secondary_des_rats_sur_les_docks_step_1',
         ],
         [
-            'description' => "<p>J'ai trouvé les rats et je les ai vaincus. Les autres ont pris la fuite. Je devrais retourner voir Bilo…</p>",
+            'description' => "<p>J'ai trouvé les rats et je les ai vaincus. Les autres ont pris la fuite.</p><p>En fouillant les lieux, j'ai trouvé une note étrange, signée du Prince lui-même. Elle parle de druides, et de clé qui ouvre des portes… Peut-être est-ce en rapport avec sa disparition.</p><p>Je devrais retourner voir Bilo, déjà…</p>",
             'position' => 2,
             'last' => false,
             'quest' => 'quest_secondary_des_rats_sur_les_docks',

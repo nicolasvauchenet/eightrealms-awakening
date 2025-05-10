@@ -63,7 +63,8 @@ class DialogStepFixtures extends Fixture implements OrderedFixtureInterface
         foreach($dialogSteps as $dialogStepData) {
             foreach($dialogStepData as $data) {
                 $dialogStep = new DialogStep();
-                $dialogStep->setText($data['text'])
+                $dialogStep->setName($data['name'])
+                    ->setText($data['text'])
                     ->setFirst($data['first'] ?? false)
                     ->setConditions($data['conditions'] ?? null)
                     ->setEffects($data['effects'] ?? null)

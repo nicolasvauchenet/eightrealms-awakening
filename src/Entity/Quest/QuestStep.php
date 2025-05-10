@@ -5,6 +5,8 @@ namespace App\Entity\Quest;
 use App\Entity\Character\Character;
 use App\Entity\Reward\Reward;
 use App\Repository\Quest\QuestStepRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,17 @@ class QuestStep
 
     #[ORM\ManyToOne(inversedBy: 'questSteps')]
     private ?Character $giver = null;
+
+    /**
+     * @var Collection<int, QuestStepTrigger>
+     */
+    #[ORM\OneToMany(targetEntity: QuestStepTrigger::class, mappedBy: 'questStep', orphanRemoval: true)]
+    private Collection $questStepTriggers;
+
+    public function __construct()
+    {
+        $this->questStepTriggers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -113,6 +126,36 @@ class QuestStep
     public function setGiver(?Character $giver): static
     {
         $this->giver = $giver;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuestStepTrigger>
+     */
+    public function getQuestStepTriggers(): Collection
+    {
+        return $this->questStepTriggers;
+    }
+
+    public function addQuestStepTrigger(QuestStepTrigger $questStepTrigger): static
+    {
+        if (!$this->questStepTriggers->contains($questStepTrigger)) {
+            $this->questStepTriggers->add($questStepTrigger);
+            $questStepTrigger->setQuestStep($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestStepTrigger(QuestStepTrigger $questStepTrigger): static
+    {
+        if ($this->questStepTriggers->removeElement($questStepTrigger)) {
+            // set the owning side to null (unless already changed)
+            if ($questStepTrigger->getQuestStep() === $this) {
+                $questStepTrigger->setQuestStep(null);
+            }
+        }
 
         return $this;
     }

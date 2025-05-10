@@ -7,6 +7,7 @@ trait WilbertLArcanisteTrait
     const WILBERT_L_ARCANISTE_DIALOG_STEPS = [
         // Quête : La Fiole Perdue
         [
+            'name' => "Wilbert - Quête",
             'text' => "<p><em>Ma fiole&nbsp;! Une concoction d’essence de feu pur, stabilisée à grand-peine… envolée&nbsp;! Pas de traces de pas, pas d’empreintes… juste de petits tas de sable épars, comme déposés par le vent lui-même.</em></p><p><em>Quel genre de voleur laisse du désert derrière lui&nbsp;? Hmmm… Si vous avez l’esprit vif et le pas léger, suivez la piste. Vers les Sables Chauds…</em></p>",
             'first' => true,
             'conditions' => [
@@ -16,6 +17,7 @@ trait WilbertLArcanisteTrait
             'reference' => 'quest_step_wilbert_larcaniste_1',
         ],
         [
+            'name' => "Wilbert - Sable Chauds",
             'text' => "<p><em>Les Sables Chauds&nbsp;? À l’extrême sud-est de l’île. On y accède par les dunes au-delà des falaises rouges. Peu osent s’y aventurer, sauf les fous… et les désespérés.</em></p><p><em>Si ce voleur est ce que je crois, il n’a pas fui au hasard. Le désert attire ceux qui veulent disparaître… ou ceux qui cherchent à réveiller ce qui ne devrait pas l’être.</em></p>",
             'conditions' => [
                 'quest_not_started' => 'la-fiole-perdue',
@@ -27,6 +29,7 @@ trait WilbertLArcanisteTrait
             'reference' => 'quest_step_wilbert_larcaniste_2',
         ],
         [
+            'name' => "Wilbert - Accepter la quête",
             'text' => "<p><em>Bonne chance. Et souvenez-vous&nbsp;:&nbsp;tout ce qui brille dans le sable n’est pas or… parfois, c’est pire. Revenez si vous survivez, je vous paierai pour vos efforts.</em></p>",
             'conditions' => [
                 'quest_not_started' => 'la-fiole-perdue',
@@ -38,6 +41,7 @@ trait WilbertLArcanisteTrait
             'reference' => 'quest_step_wilbert_larcaniste_3',
         ],
         [
+            'name' => "Wilbert - Refuser la quête",
             'text' => "<p><em>Je vois. Je ne vous en tiens pas rigueur. Peu sont prêts à affronter le désert. Mais si un jour vous changez d’avis… ma porte est ouverte.</em></p>",
             'conditions' => [
                 'quest_not_started' => 'la-fiole-perdue',
@@ -46,6 +50,7 @@ trait WilbertLArcanisteTrait
             'reference' => 'quest_step_wilbert_larcaniste_4',
         ],
         [
+            'name' => "Wilbert - Quête en cours",
             'text' => "<p><em>Si ma fiole tombait entre de mauvaises mains, elle pourrait provoquer une catastrophe. Le désert est déjà assez dangereux sans ça. Restez sur vos gardes&nbsp;!</em></p>",
             'first' => true,
             'conditions' => [
@@ -59,6 +64,7 @@ trait WilbertLArcanisteTrait
             'reference' => 'quest_step_wilbert_larcaniste_5',
         ],
         [
+            'name' => "Wilbert - Quête terminée",
             'text' => "<p><em>Vous êtes revenu vivant… C’est déjà une victoire. Quant à ma fiole… elle n'est peut-être pas tout à fait perdue… Peut-être que si je…</em></p><p>Il se perd dans ses pensées un instant, puis se reprend en sursautant :</p><p><em>Au moins, le désert ne brûlera pas avec elle. Voici votre récompense, comme promis. Je garde mes serments, même quand mes objets me trahissent.</em></p>",
             'first' => true,
             'conditions' => [
@@ -82,6 +88,7 @@ trait WilbertLArcanisteTrait
             'reference' => 'quest_step_wilbert_larcaniste_6',
         ],
         [
+            'name' => "Wilbert - Médaillon des Vents",
             'text' => "<p><em>Ce… ce n’est pas un simple bijou. Il pulse… Il respire. C’est un artefact ancien, chargé d’énergie élémentaire. Je crois… je crois que c’est l’un des deux fragments de la clé… Oui c'est ça&nbsp;:&nbsp; le Médaillons des Vents. Incroyable&nbsp;! Un fragment du Sceau&nbsp;! On les croyait perdus, dispersés… ou détruits.</em></p><p><em>Conservez-le. Il pourrait vous ouvrir des portes que nul ne voit encore.</em></p>",
             'first' => true,
             'conditions' => [
@@ -100,6 +107,7 @@ trait WilbertLArcanisteTrait
 
         // Dialogue normal
         [
+            'name' => "Wilbert - Dialogue",
             'text' => "<p><em>Vous m’avez bien aidé, l’ami. Depuis, mes recherches avancent à pas de géant. J’espère que le désert vous a enseigné quelque chose… ou au moins appris à boire lentement.</em></p>",
             'first' => true,
             'conditions' => [
@@ -114,6 +122,7 @@ trait WilbertLArcanisteTrait
 
         // Ragots
         [
+            'name' => "Wilbert - Ragots",
             'text' => "<p><em>Port Saint-Doux est aveugle. Les gens rient, commercent, prient… pendant que des forces invisibles tirent les ficelles. Mais je les vois, moi. Je les entends. Et si vous ouvrez votre esprit, vous entendrez aussi… Oh, mais j’en oublie mes manières. Vous voulez un sort de lévitation ou une infusion pour la mémoire&nbsp;?</em></p>",
             'first' => true,
             'dialog' => 'rumor_wilbert_larcaniste',

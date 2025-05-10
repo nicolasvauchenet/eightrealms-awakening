@@ -6,6 +6,7 @@ trait FaroukLeNomadeTrait
 {
     const FAROUK_LE_NOMADE_DIALOG_STEPS = [
         [
+            'name' => 'Farouk - Rencontre',
             'text' => "<p>Farouk vous accueille d’un geste ample, comme s’il saluait un ancien roi. Son sourire est large, ses yeux vifs, et sa voix grave a le timbre de celui qui a vendu bien plus que des objets.</p><p><em>Bienvenue, voyageur. Mes marchandises n’existent sur aucune carte et changent de main plus vite que le vent. Jette un œil si tu veux, mais ne tarde pas trop… le désert ne pardonne pas l’hésitation.</em></p>",
             'first' => true,
             'conditions' => [
@@ -19,6 +20,7 @@ trait FaroukLeNomadeTrait
             'reference' => 'quest_step_farouk_le_nomade_1',
         ],
         [
+            'name' => 'Farouk - Quête',
             'text' => "<p><em>Un homme étrange, oui. Sable dans les bottes, mais pas une goutte de sueur. Il est passé ici, m’a volé un objet avant même que je le voie bouger. Je l’ai suivi un moment… jusqu’à ce qu’il disparaisse dans l’Oasis Sans Nom.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
@@ -31,6 +33,7 @@ trait FaroukLeNomadeTrait
             'reference' => 'quest_step_farouk_le_nomade_2',
         ],
         [
+            'name' => 'Farouk - Oasis',
             'text' => "<p><em>Tu veux suivre ses traces&nbsp;? L’Oasis Sans Nom dort au sud, cachée entre les dunes. Si tu vois les palmiers danser sans vent, c’est que tu es proche. Et si tu entends chanter… ne réponds pas.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
@@ -46,6 +49,7 @@ trait FaroukLeNomadeTrait
             'reference' => 'quest_step_farouk_le_nomade_3',
         ],
         [
+            'name' => 'Farouk - Accepter la quête',
             'text' => "<p><em>Surprenante décision. Mais si tu veux traverser le sable, équipe-toi. Le désert ne respecte que les âmes bien préparées… et les bourses pleines.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
@@ -65,6 +69,7 @@ trait FaroukLeNomadeTrait
             'reference' => 'quest_step_farouk_le_nomade_4',
         ],
         [
+            'name' => 'Farouk - Refuser la quête',
             'text' => "<p><em>Tu choisis la prudence&nbsp;? Je comprends. Mais sache que ce que je vends ici ne repassera peut-être jamais. Le désert garde ses secrets… et moi aussi.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
@@ -77,6 +82,7 @@ trait FaroukLeNomadeTrait
             'reference' => 'quest_step_farouk_le_nomade_5',
         ],
         [
+            'name' => 'Farouk - Quête en cours',
             'text' => "<p><em>Tu as trouvé ton voleur&nbsp;? Tu as besoin de t'équiper mieux que… ça, afin de l'affronter dignement&nbsp;?</em></p>",
             'first' => true,
             'conditions' => [

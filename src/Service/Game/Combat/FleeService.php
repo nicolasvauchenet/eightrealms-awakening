@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service\Combat;
+namespace App\Service\Game\Combat;
 
 use App\Entity\Combat\PlayerCombat;
-use App\Service\Combat\Effect\CombatEffectService;
+use App\Service\Game\Combat\Effect\CombatEffectService;
 use Random\RandomException;
 
 readonly class FleeService

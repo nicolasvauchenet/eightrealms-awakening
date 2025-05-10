@@ -5,7 +5,7 @@ namespace App\Service\Game\Navigation;
 use App\Entity\Character\Player;
 use App\Entity\Screen\Screen;
 use App\Repository\Location\CharacterLocationRepository;
-use App\Service\Dialog\DialogService;
+use App\Service\Game\Dialog\DialogService;
 
 readonly class ExitActionResolver
 {

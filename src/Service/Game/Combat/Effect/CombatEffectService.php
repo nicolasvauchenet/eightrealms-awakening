@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Combat\Effect;
+namespace App\Service\Game\Combat\Effect;
 
 use App\Entity\Character\Character;
 use App\Entity\Combat\PlayerCombat;

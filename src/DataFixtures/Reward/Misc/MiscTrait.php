@@ -9,6 +9,7 @@ trait MiscTrait
 {
     const MISC_REWARDS = [
         [
+            'picture' => 'gift.png',
             'items' => [
                 ['item' => 'food_bread', 'itemClass' => Food::class],
                 ['item' => 'food_beer', 'itemClass' => Food::class],

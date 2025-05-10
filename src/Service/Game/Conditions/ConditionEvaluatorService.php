@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Conditions;
+namespace App\Service\Game\Conditions;
 
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;

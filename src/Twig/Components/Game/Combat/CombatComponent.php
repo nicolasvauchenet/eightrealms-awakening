@@ -6,21 +6,20 @@ use App\Entity\Character\Player;
 use App\Entity\Combat\PlayerCombat;
 use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Item\CharacterItem;
-use App\Entity\Quest\PlayerQuest;
-use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\Screen\CombatScreen;
 use App\Service\Character\CharacterBonusService;
 use App\Service\Character\CharacterReputationService;
-use App\Service\Combat\CastSpellService;
-use App\Service\Combat\Effect\CombatEffectService;
-use App\Service\Combat\EnemyAttackService;
-use App\Service\Combat\FleeService;
-use App\Service\Combat\InitiativeService;
-use App\Service\Combat\PlayerAttackService;
-use App\Service\Combat\UseItemService;
+use App\Service\Game\Combat\CastSpellService;
+use App\Service\Game\Combat\Effect\CombatEffectService;
+use App\Service\Game\Combat\EnemyAttackService;
+use App\Service\Game\Combat\FleeService;
+use App\Service\Game\Combat\InitiativeService;
+use App\Service\Game\Combat\PlayerAttackService;
+use App\Service\Game\Combat\UseItemService;
 use App\Service\Game\Screen\Cinematic\CinematicScreenService;
 use App\Service\Item\CharacterItemService;
-use App\Service\Quest\QuestService;
+use App\Service\Quest\QuestProgressionService;
+use App\Service\Quest\QuestSelectorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,8 +28,8 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\Attribute\PreDehydrate;
-use Symfony\UX\TwigComponent\Attribute\PostMount;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\PostMount;
 
 #[AsLiveComponent('CombatScreen', template: 'game/screen/combat/_component/_index.html.twig')]
 class CombatComponent extends AbstractController
@@ -76,8 +75,9 @@ class CombatComponent extends AbstractController
         private readonly CombatEffectService        $combatEffectService,
         private readonly CharacterBonusService      $characterBonusService,
         private readonly CinematicScreenService     $cinematicScreenService,
-        private readonly QuestService               $questService,
-        private readonly CharacterReputationService $characterReputationService
+        private readonly QuestSelectorService       $questService,
+        private readonly CharacterReputationService $characterReputationService,
+        private readonly QuestProgressionService    $questProgressionService,
     )
     {
     }
@@ -252,63 +252,16 @@ class CombatComponent extends AbstractController
         if(!$enemiesAlive) {
             $this->playerCombat->setStatus('completed');
             $this->entityManager->persist($this->playerCombat);
-            // Vérifie s’il y a une étape de quête liée au combat
+
+            // Gestion de la quête liée au combat
             $questStep = $this->screen->getCombat()->getQuestStep();
             if($questStep) {
-                $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)
-                    ->findOneBy(['player' => $this->character, 'questStep' => $questStep]);
-
-                if($playerQuestStep && $playerQuestStep->getStatus() !== 'completed') {
-                    $playerQuestStep->setStatus('completed');
-                    $this->entityManager->persist($playerQuestStep);
-
-                    $giver = $playerQuestStep->getQuestStep()->getGiver();
-                    if($giver) {
-                        $this->characterReputationService->increaseReputationFromQuestReward($this->character, $giver);
-                    }
-                }
-
-                $quest = $questStep->getQuest();
-                $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)
-                    ->findOneBy(['player' => $this->character, 'quest' => $quest]);
-                if($questStep->isLast()) {
-                    if($playerQuest && $playerQuest->getStatus() !== 'completed') {
-                        $playerQuest->setStatus('completed');
-                        $this->entityManager->persist($playerQuest);
-
-                        $giver = $playerQuest->getQuest()->getGiver();
-                        if($giver) {
-                            $this->characterReputationService->increaseReputationFromQuestReward($this->character, $giver);
-                        }
-                    }
-                } else {
-                    $nextStep = $this->questService->getNextQuestStep($questStep);
-
-                    // Boucle pour sauter les étapes "skipped"
-                    while($nextStep) {
-                        $existingNext = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
-                            'player' => $this->character,
-                            'questStep' => $nextStep,
-                        ]);
-
-                        // Si l’étape suivante existe déjà et est marquée comme "skipped", on passe à la suivante
-                        if($existingNext && $existingNext->getStatus() === 'skipped') {
-                            $nextStep = $this->questService->getNextQuestStep($nextStep);
-                            continue;
-                        }
-
-                        // Sinon, on crée l’étape si elle n’existe pas
-                        if(!$existingNext) {
-                            $newStep = (new PlayerQuestStep())
-                                ->setPlayer($this->character)
-                                ->setQuestStep($nextStep)
-                                ->setPlayerQuest($playerQuest)
-                                ->setStatus('progress');
-                            $this->entityManager->persist($newStep);
-                        }
-                        break;
-                    }
-                }
+                $this->questProgressionService->editQuestStepStatus($this->character, [[
+                    'quest' => $questStep->getQuest()->getSlug(),
+                    'quest_step' => $questStep->getPosition(),
+                    'status' => 'completed',
+                    'next' => 'progress',
+                ]]);
             }
 
             $this->entityManager->flush();

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service\Combat\Helper;
+namespace App\Service\Game\Combat\Helper;
 
+use App\Entity\Character\Character;
 use App\Entity\Combat\PlayerCombat;
 use App\Service\Character\CharacterBonusService;
-use App\Entity\Character\Character;
 
 readonly class DamageCalculatorHelperService
 {

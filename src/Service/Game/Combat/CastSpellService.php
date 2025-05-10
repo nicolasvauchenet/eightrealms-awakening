@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Service\Combat;
+namespace App\Service\Game\Combat;
 
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
 use App\Entity\Spell\CharacterSpell;
-use App\Service\Combat\Effect\CombatEffectService;
-use App\Service\Combat\Helper\AreaEffectHelperService;
+use App\Service\Game\Combat\Effect\CombatEffectService;
+use App\Service\Game\Combat\Helper\AreaEffectHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class CastSpellService

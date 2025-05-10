@@ -10,7 +10,7 @@ use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Location\Location;
 use App\Entity\Screen\Screen;
-use App\Service\Combat\InitiativeService;
+use App\Service\Game\Combat\InitiativeService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class UpdatePlayerService

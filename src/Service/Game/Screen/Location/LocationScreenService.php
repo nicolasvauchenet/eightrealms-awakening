@@ -5,7 +5,7 @@ namespace App\Service\Game\Screen\Location;
 use App\Entity\Character\Player;
 use App\Entity\Location\Location;
 use App\Entity\Screen\LocationScreen;
-use App\Service\Conditions\ConditionEvaluatorService;
+use App\Service\Game\Conditions\ConditionEvaluatorService;
 use App\Service\Game\Navigation\ExitActionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 

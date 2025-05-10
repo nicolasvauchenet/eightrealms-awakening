@@ -4,7 +4,7 @@ namespace App\Service\Character;
 
 use App\Entity\Character\Character;
 use App\Entity\Combat\PlayerCombat;
-use App\Service\Combat\Effect\CombatEffectService;
+use App\Service\Game\Combat\Effect\CombatEffectService;
 use App\Service\Item\CharacterItemService;
 
 readonly class CharacterBonusService

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Game\Reward;
+namespace App\Service\Reward;
 
 use App\Entity\Character\Player;
 use App\Entity\Item\CharacterItem;

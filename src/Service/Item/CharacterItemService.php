@@ -9,7 +9,7 @@ use App\Entity\Item\CharacterItem;
 use App\Entity\Item\MagicalWeapon;
 use App\Entity\Item\PlayerCharacterItem;
 use App\Entity\Item\Shield;
-use App\Service\Trade\TradeService;
+use App\Service\Game\Trade\TradeService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class CharacterItemService

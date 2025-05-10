@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Trade;
+namespace App\Service\Game\Trade;
 
 use App\Entity\Character\PlayerCharacter;
 use App\Entity\Item\CharacterItem;

@@ -9,7 +9,7 @@ use App\Entity\Quest\Quest;
 use App\Entity\Quest\QuestStep;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class QuestService
+readonly class QuestSelectorService
 {
     public function __construct(private EntityManagerInterface $entityManager)
     {

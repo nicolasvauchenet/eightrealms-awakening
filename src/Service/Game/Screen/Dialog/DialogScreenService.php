@@ -6,7 +6,7 @@ use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
 use App\Entity\Dialog\DialogStep;
 use App\Entity\Screen\DialogScreen;
-use App\Service\Dialog\DialogEffectApplierService;
+use App\Service\Game\Dialog\DialogEffectApplierService;
 use App\Service\Game\Navigation\ExitActionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 

@@ -34,6 +34,7 @@ class PlayerCharacter
      * @var Collection<int, PlayerCharacterItem>
      */
     #[ORM\OneToMany(targetEntity: PlayerCharacterItem::class, mappedBy: 'playerCharacter', orphanRemoval: true)]
+    #[ORM\OrderBy(['original' => 'DESC'])]
     private Collection $playerCharacterItems;
 
     public function __construct()
@@ -108,6 +109,14 @@ class PlayerCharacter
             $categoryCompare = strcmp($catA, $catB);
             if($categoryCompare !== 0) {
                 return $categoryCompare;
+            }
+
+            $originalA = $a->isOriginal() ? 1 : 0;
+            $originalB = $b->isOriginal() ? 1 : 0;
+
+            if($originalA !== $originalB) {
+                // Tri décroissant : les originaux (1) en premier
+                return $originalB - $originalA;
             }
 
             return strcmp($a->getItem()->getName(), $b->getItem()->getName());

@@ -5,7 +5,7 @@ namespace App\Twig\Components\Game\Cinematic;
 use App\Entity\Character\Player;
 use App\Entity\Reward\PlayerReward;
 use App\Entity\Screen\CinematicScreen;
-use App\Service\Game\Reward\RewardService;
+use App\Service\Reward\RewardService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;

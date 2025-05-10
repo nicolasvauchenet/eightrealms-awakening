@@ -6,7 +6,7 @@ use App\Entity\Character\Character;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Food;
 use App\Entity\Item\Potion;
-use App\Service\Combat\UseItemService;
+use App\Service\Game\Combat\UseItemService;
 use App\Service\Item\CharacterItemService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Combat;
+namespace App\Service\Game\Combat;
 
 use App\Entity\Combat\PlayerCombat;
 use Random\RandomException;

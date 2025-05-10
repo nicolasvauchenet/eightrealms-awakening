@@ -5,7 +5,7 @@ namespace App\Service\Game\Screen\Interaction;
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Screen\InteractionScreen;
-use App\Service\Dialog\DialogService;
+use App\Service\Game\Dialog\DialogService;
 use App\Service\Game\Navigation\ExitActionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 

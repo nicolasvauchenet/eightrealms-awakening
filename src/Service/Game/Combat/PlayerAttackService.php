@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Service\Combat;
+namespace App\Service\Game\Combat;
 
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
 use App\Entity\Combat\PlayerCombat;
 use App\Entity\Combat\PlayerCombatEnemy;
-use App\Service\Combat\Effect\CombatEffectService;
-use App\Service\Combat\Helper\AttackHelperService;
-use App\Service\Combat\Helper\AreaEffectHelperService;
-use App\Service\Combat\Helper\DiceRollerHelperService;
-use App\Service\Combat\Helper\DamageCalculatorHelperService;
-use App\Service\Combat\Helper\DurabilityHelperService;
+use App\Service\Game\Combat\Effect\CombatEffectService;
+use App\Service\Game\Combat\Helper\AreaEffectHelperService;
+use App\Service\Game\Combat\Helper\AttackHelperService;
+use App\Service\Game\Combat\Helper\DamageCalculatorHelperService;
+use App\Service\Game\Combat\Helper\DiceRollerHelperService;
+use App\Service\Game\Combat\Helper\DurabilityHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
 

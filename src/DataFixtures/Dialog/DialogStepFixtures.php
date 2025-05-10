@@ -79,6 +79,6 @@ class DialogStepFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 33;
+        return 34;
     }
 }

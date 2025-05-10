@@ -73,7 +73,7 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
                 'reference' => 'category_map',
             ],
             [
-                'name' => 'Livres',
+                'name' => 'Livre',
                 'folder' => 'book',
                 'position' => 11,
                 'reference' => 'category_book',
@@ -83,6 +83,12 @@ class CategoryFixtures extends Fixture implements OrderedFixtureInterface
                 'folder' => 'gift',
                 'position' => 12,
                 'reference' => 'category_gift',
+            ],
+            [
+                'name' => 'Divers',
+                'folder' => 'misc',
+                'position' => 13,
+                'reference' => 'category_misc',
             ],
         ];
 

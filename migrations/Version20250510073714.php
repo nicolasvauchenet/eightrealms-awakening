@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250422201754 extends AbstractMigration
+final class Version20250510073714 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,7 +21,10 @@ final class Version20250422201754 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE reward (id SERIAL NOT NULL, picture VARCHAR(255) NOT NULL, crowns INT DEFAULT NULL, experience INT DEFAULT NULL, PRIMARY KEY(id))
+            CREATE TABLE misc (id INT NOT NULL, PRIMARY KEY(id))
+        SQL);
+        $this->addSql(<<<'SQL'
+            ALTER TABLE misc ADD CONSTRAINT FK_7FA71ABABF396750 FOREIGN KEY (id) REFERENCES item (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE
         SQL);
     }
 
@@ -32,7 +35,10 @@ final class Version20250422201754 extends AbstractMigration
             CREATE SCHEMA public
         SQL);
         $this->addSql(<<<'SQL'
-            DROP TABLE reward
+            ALTER TABLE misc DROP CONSTRAINT FK_7FA71ABABF396750
+        SQL);
+        $this->addSql(<<<'SQL'
+            DROP TABLE misc
         SQL);
     }
 }

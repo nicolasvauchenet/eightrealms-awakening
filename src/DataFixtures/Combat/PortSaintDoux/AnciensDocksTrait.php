@@ -21,7 +21,7 @@ trait AnciensDocksTrait
                 ],
             ],
             'reward' => 'reward_combat_port_saint_doux_des_rats_sur_les_docks',
-            'victoryDescription' => "<p>Les rats gisent autour de vous, repoussés par votre détermination et vos coups bien placés. Les docks sont un peu plus sûrs grâce à vous.</p><p>Mais le repos sera de courte durée. Récupérez votre dû, soignez vos plaies… d'autres épreuves approchent.</p>",
+            'victoryDescription' => "<p>Les rats gisent autour de vous, repoussés par votre détermination et vos coups bien placés. Les docks sont un peu plus sûrs grâce à vous.</p><p>Alors que vous reprenez votre souffle, votre regard est attiré par une caisse éventrée, partiellement dissimulée sous des débris. En vous approchant, vous remarquez un symbole royal gravé à la hâte sur le bois. À l'intérieur, la caisse est vide… sauf pour une note manuscrite, oubliée au fond, comme glissée là à la va-vite.</p>",
             'defeatDescription' => "<p>Le combat vous échappe… Vos forces vous trahissent et l’ombre vous engloutit.</p><p>Mais ce n’est pas la fin. Les Dieux, dans leur mystérieuse clémence, vous offrent une seconde chance. Une résurrection au Temple de la Capitale… contre quelques Couronnes.</p><p>Relevez-vous, affûtez vos armes, et souvenez-vous&nbsp;: la mort n’est qu’un détour dans les Huit Royaumes.</p>",
             'location' => 'location_zone_anciens_docks',
             'questStep' => 'quest_secondary_des_rats_sur_les_docks_step_1',

@@ -16,6 +16,9 @@ class Reward
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $picture = null;
+
     #[ORM\Column(nullable: true)]
     private ?int $crowns = null;
 
@@ -43,6 +46,18 @@ class Reward
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): static
+    {
+        $this->picture = $picture;
+
+        return $this;
     }
 
     public function getCrowns(): ?int
@@ -109,7 +124,7 @@ class Reward
 
     public function addRewardItem(RewardItem $rewardItem): static
     {
-        if (!$this->rewardItems->contains($rewardItem)) {
+        if(!$this->rewardItems->contains($rewardItem)) {
             $this->rewardItems->add($rewardItem);
             $rewardItem->setReward($this);
         }
@@ -119,9 +134,9 @@ class Reward
 
     public function removeRewardItem(RewardItem $rewardItem): static
     {
-        if ($this->rewardItems->removeElement($rewardItem)) {
+        if($this->rewardItems->removeElement($rewardItem)) {
             // set the owning side to null (unless already changed)
-            if ($rewardItem->getReward() === $this) {
+            if($rewardItem->getReward() === $this) {
                 $rewardItem->setReward(null);
             }
         }

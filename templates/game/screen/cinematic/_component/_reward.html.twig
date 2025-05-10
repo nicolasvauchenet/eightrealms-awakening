@@ -1,7 +1,7 @@
 {% if this.hasReward and not this.isRewarded %}
     <p class="reward anim-step step-{{ stepCount + 1 }}">
         <button {{ live_action('getReward') }}>
-            <img src="{{ asset('img/core/action/reward.png') }}" alt="Récompense"/>
+            <img src="{{ asset('img/core/reward/' ~ this.screen.reward.picture) }}" alt="Récompense"/>
         </button>
     </p>
 {% elseif this.hasReward %}

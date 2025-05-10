@@ -23,6 +23,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'scroll' => Scroll::class,
     'shield' => Shield::class,
     'weapon' => Weapon::class,
+    'misc' => Misc::class,
 ])]
 abstract class Item
 {

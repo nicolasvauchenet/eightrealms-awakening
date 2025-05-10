@@ -78,6 +78,6 @@ class DialogReplyFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 34;
+        return 35;
     }
 }

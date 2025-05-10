@@ -25,7 +25,7 @@
         <h3 class="tooltip-subtitle">
             {% if characterItem.item.category.slug in ['armure', 'bouclier', 'arme'] %}
                 {{ characterItem.item.type }}
-            {% else %}
+            {% elseif characterItem.item.category.slug != 'livre' %}
                 {{ characterItem.item.category.name }}
             {% endif %}
 

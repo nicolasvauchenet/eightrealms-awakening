@@ -53,6 +53,6 @@ class SpellFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 24;
+        return 25;
     }
 }

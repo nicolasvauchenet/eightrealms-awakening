@@ -12,11 +12,18 @@ trait CombatQuestTrait
     const COMBAT_QUEST_REWARDS = [
         // Des Rats sur les Docks
         [
+            'picture' => 'royal_box.png',
             'items' => [
                 [
                     'item' => 'food_meat_rat',
                     'itemClass' => Food::class,
                     'quantity' => 3,
+                ],
+                [
+                    'item' => 'note_d_alaric',
+                    'itemClass' => Book::class,
+                    'quantity' => 1,
+                    'questItem' => true,
                 ],
             ],
             'crowns' => 50,

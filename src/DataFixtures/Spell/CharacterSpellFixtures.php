@@ -44,6 +44,6 @@ class CharacterSpellFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 36;
+        return 37;
     }
 }

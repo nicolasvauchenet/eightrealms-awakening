@@ -75,6 +75,6 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 35;
+        return 36;
     }
 }

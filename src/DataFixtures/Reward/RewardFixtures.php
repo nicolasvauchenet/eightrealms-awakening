@@ -34,11 +34,12 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
         ];
 
         foreach($allRewards as $rewards) {
-            foreach($rewards as $rewardData) {
-                $reward = new Reward();
+            foreach($rewards as $data) {
+                $reward = (new Reward())
+                    ->setPicture($data['picture'] ?? 'chest.png');
 
-                if(isset($rewardData['items'])) {
-                    foreach($rewardData['items'] as $rewardItemData) {
+                if(isset($data['items'])) {
+                    foreach($data['items'] as $rewardItemData) {
                         $item = $this->getReference($rewardItemData['item'], $rewardItemData['itemClass']);
                         $quantity = $rewardItemData['quantity'] ?? 1;
 
@@ -50,10 +51,10 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
                         $manager->persist($rewardItem);
                     }
                 }
-                $reward->setCrowns($rewardData['crowns'] ?? null);
-                $reward->setExperience($rewardData['experience'] ?? null);
+                $reward->setCrowns($data['crowns'] ?? null);
+                $reward->setExperience($data['experience'] ?? null);
                 $manager->persist($reward);
-                $this->addReference($rewardData['reference'], $reward);
+                $this->addReference($data['reference'], $reward);
             }
         }
 
@@ -62,6 +63,6 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 28;
+        return 29;
     }
 }

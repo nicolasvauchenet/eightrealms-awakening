@@ -7,6 +7,7 @@ use App\DataFixtures\Character\Npc\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Character\Npc\MontsTerribles\ColDuVentNoirTrait;
 use App\DataFixtures\Character\Npc\Plouc\PloucTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\DocksDeLOuestTrait;
+use App\DataFixtures\Character\Npc\PortSaintDoux\QuartierDesChauvesTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\QuartierDesPloucsTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\QuartierDuMarcheTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\VieilleVilleTrait;
@@ -25,6 +26,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
     use QuartierDesPloucsTrait;
     use QuartierDuMarcheTrait;
     use VieilleVilleTrait;
+    use QuartierDesChauvesTrait;
     use PloucTrait;
     use ClairiereDeLOublieTrait;
     use BosquetDesDruidesTrait;
@@ -36,10 +38,11 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
     {
         $allCharacters = [
             // Port Saint-Doux
-            self::DOCKS_DE_L_OUEST_NPCS,
-            self::QUARTIER_DES_PLOUCS_NPCS,
             self::QUARTIER_DU_MARCHE_NPCS,
+            self::DOCKS_DE_L_OUEST_NPCS,
             self::VIEILLE_VILLE_NPCS,
+            self::QUARTIER_DES_CHAUVES_NPCS,
+            self::QUARTIER_DES_PLOUCS_NPCS,
 
             // Plouc
             self::PLOUC_NPCS,

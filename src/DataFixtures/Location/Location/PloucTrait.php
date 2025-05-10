@@ -19,7 +19,7 @@ trait PloucTrait
         // Zone
         [
             'name' => 'Maison de Gérard le Pêcheur',
-            'picture' => 'img/core/location/maison-pecheur.webp',
+            'picture' => 'img/chapter1/location/maison-de-gerard-le-pecheur.webp',
             'description' => "<p>Cette bicoque en bois est la maison de Gérard, un pêcheur du village de Plouc. Les murs sont couverts de filets de pêche et de trophées de pêche, et une odeur de poisson rance flotte dans l'air. Gérard vous accueille avec un sourire timide, et vous invite à entrer…</p>",
             'type' => 'building',
             'thumbnail' => 'img/core/location/maison_thumb.png',

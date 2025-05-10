@@ -6,6 +6,7 @@ use App\DataFixtures\Location\CharacterLocation\BoisDuPendu\BosquetDesDruidesTra
 use App\DataFixtures\Location\CharacterLocation\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Location\CharacterLocation\Plouc\PloucTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\DocksDeLOuestTrait;
+use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\QuartierDesChauvesTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\QuartierDesPloucsTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\QuartierDuMarcheTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\VieilleVilleTrait;
@@ -23,6 +24,7 @@ class CharacterLocationFixtures extends Fixture implements OrderedFixtureInterfa
     use VieilleVilleTrait;
     use DocksDeLOuestTrait;
     use QuartierDesPloucsTrait;
+    use QuartierDesChauvesTrait;
     use PloucTrait;
     use ClairiereDeLOublieTrait;
     use BosquetDesDruidesTrait;
@@ -34,8 +36,9 @@ class CharacterLocationFixtures extends Fixture implements OrderedFixtureInterfa
         $locationCharacters = [
             // Port Saint-Doux
             self::QUARTIER_DU_MARCHE_NPCS,
-            self::VIEILLE_VILLE_NPCS,
             self::DOCKS_DE_L_OUEST_NPCS,
+            self::VIEILLE_VILLE_NPCS,
+            self::QUARTIER_DES_CHAUVES_NPCS,
             self::QUARTIER_DES_PLOUCS_NPCS,
 
             // Plouc

@@ -50,6 +50,14 @@ trait PortSaintDouxTrait
             'reference' => 'location_zone_vieille_ville',
         ],
         [
+            'name' => 'Quartier des Chauves',
+            'picture' => 'img/chapter1/location/quartier-des-chauves.webp',
+            'description' => "<p>Le Quartier des Chauves est le joyau scintillant de Port Saint-Doux, là où les pierres sont polies, les fontaines chantent à l’unisson et les gardes ont des plumes au casque — pas pour le style, mais parce qu’ils en ont les moyens. Derrière les balcons ouvragés et les grilles dorées se dissimulent les puissants de la ville&nbsp;:&nbsp;nobles, conseillers, diplomates… et quelques intrigants au sourire trop parfait pour être honnête.</p><p>Le Palais Royal trône fièrement sur la grande place, flanqué de l'Hôtel de Ville, où l’actuel maire exerce un pouvoir sans partage sous couvert de démocratie locale. Le marbre y est plus fréquent que le pavé, et on vous regarde de travers si vos bottes portent encore un peu de boue des ruelles du Marché.</p><p>Pas un mendiant à l’horizon, pas un gamin en loques. Juste des murmures feutrés, des regards en coin, et des secrets qui valent plus que l’or.</p>",
+            'type' => 'zone',
+            'parent' => 'location_port_saint_doux',
+            'reference' => 'location_zone_quartier_des_chauves',
+        ],
+        [
             'name' => 'Quartier des Ploucs',
             'picture' => 'img/chapter1/location/quartier-des-ploucs.webp',
             'description' => "<p>Le quartier des Ploucs s'appelle ainsi parce qu'il a été bâti par les pêcheurs du village de Plouc, qui ont émigré à Port Saint-Doux pour fuir la misère. Les maisons sont modestes, construites en bois et en torchis, et les ruelles sont étroites et mal entretenues. Les habitants, pas toujours très richement vêtus, se pressent autour des étals des marchands, cherchant à troquer leur maigre pêche contre quelques pièces d'argent.</p>",
@@ -94,6 +102,24 @@ trait PortSaintDouxTrait
             'thumbnail' => 'img/core/location/taverne_thumb.webp',
             'parent' => 'location_zone_docks_de_l_ouest',
             'reference' => 'location_building_taverne_de_la_flute_moisie',
+        ],
+        [
+            'name' => 'Palais Royal',
+            'picture' => 'img/chapter1/location/palais-royal.webp',
+            'description' => "<p>Vestige éclatant d’une royauté désormais révolue, le Palais Royal surplombe le Quartier des Chauves avec une majesté hautaine. Ses hautes colonnes de marbre, ses jardins parfaitement taillés et ses vitraux aux armes du royaume témoignent d’un passé glorieux.</p><p>Bien que le trône soit désormais désert, le palais reste impeccablement entretenu, gardé jour et nuit par des soldats à l’armure aussi brillante que leurs moustaches sont taillées. Les curieux sont poliment refoulés&nbsp;—&nbsp;ou moins poliment, selon leur accoutrement.</p>",
+            'type' => 'building',
+            'thumbnail' => 'img/chapter1/location/palais-royal_thumb.webp',
+            'parent' => 'location_zone_quartier_des_chauves',
+            'reference' => 'location_building_palais_royal',
+        ],
+        [
+            'name' => 'Hôtel de Ville',
+            'picture' => 'img/chapter1/location/hotel-de-ville.webp',
+            'description' => "<p>L’Hôtel de Ville, siège de l’administration de Port Saint-Doux, affiche une austérité luxueuse&nbsp;:&nbsp;murs en pierre claire, tapisseries tissées à l’effigie du blason municipal, et escaliers en colimaçon qui grincent juste assez pour faire fuir les comploteurs discrets. C’est ici que siège le Maire, entouré d’une armée de secrétaires, scribes et courtisans zélés, tous bien plus occupés à brasser du vent qu’à le canaliser.</p><p>La salle du Conseil, interdite au public, est réputée pour ses débats enflammés… et ses plateaux de fromages d’exception. La bureaucratie y est une forme d’art, et il n’est pas rare qu’un simple formulaire doive être signé par trois personnes et tamponné à la cire pour être validé.</p><p>Un lieu où les décisions se prennent à huis clos, entre deux verres de vin et trois conseils d’anciens aux cheveux bien peignés.</p>",
+            'type' => 'building',
+            'thumbnail' => 'img/chapter1/location/hotel-de-ville_thumb.webp',
+            'parent' => 'location_zone_quartier_des_chauves',
+            'reference' => 'location_building_hotel_de_ville',
         ],
     ];
 }

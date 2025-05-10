@@ -50,5 +50,17 @@ trait SpecialTrait
             'playable' => false,
             'reference' => 'profession_erudit',
         ],
+        [
+            'name' => 'Serviteur',
+            'type' => 'specialized',
+            'playable' => false,
+            'reference' => 'profession_serviteur',
+        ],
+        [
+            'name' => 'Notable',
+            'type' => 'specialized',
+            'playable' => false,
+            'reference' => 'profession_notable',
+        ],
     ];
 }

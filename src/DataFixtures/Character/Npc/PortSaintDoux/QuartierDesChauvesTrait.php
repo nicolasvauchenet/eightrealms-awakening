@@ -1,0 +1,66 @@
+<?php
+
+namespace App\DataFixtures\Character\Npc\PortSaintDoux;
+
+trait QuartierDesChauvesTrait
+{
+    const QUARTIER_DES_CHAUVES_NPCS = [
+        [
+            'name' => 'Servante du Palais',
+            'picture' => 'img/chapter1/npc/servante-du-palais.png',
+            'thumbnail' => 'img/chapter1/npc/servante-du-palais_thumb.png',
+            'description' => "<p>Silencieuse et discrète, la servante arpente les couloirs du palais avec un torchon dans une main et mille secrets dans l’autre. Elle a tout vu, tout entendu, mais ne dira rien&nbsp;—&nbsp;sauf peut-être à celui qui saura gagner sa confiance. Sous ses airs effacés se cache un regard vif et une mémoire redoutable.</p>",
+            'strength' => 6,
+            'dexterity' => 10,
+            'constitution' => 8,
+            'wisdom' => 11,
+            'intelligence' => 10,
+            'charisma' => 9,
+            'healthMax' => 80,
+            'manaMax' => 50,
+            'fortune' => 3,
+            'level' => 1,
+            'race' => 'race_humain',
+            'profession' => 'profession_serviteur',
+            'reference' => 'npc_servante_du_palais',
+        ],
+        [
+            'name' => 'Garde du Palais',
+            'picture' => 'img/chapter1/npc/garde-du-palais.png',
+            'thumbnail' => 'img/chapter1/npc/garde-du-palais_thumb.png',
+            'description' => "<p>Casque à plume, moustache taillée au cordeau et lance toujours prête, le garde du palais incarne la discipline et la loyauté. Il ne rit jamais, ne parle que par monosyllabes, et considère que laisser passer un inconnu sans autorisation est un crime passible d’exécution. Il n’est peut-être pas très fin, mais il frappe droit.</p>",
+            'strength' => 13,
+            'dexterity' => 10,
+            'constitution' => 12,
+            'wisdom' => 8,
+            'intelligence' => 7,
+            'charisma' => 6,
+            'healthMax' => 120,
+            'manaMax' => 35,
+            'fortune' => 5,
+            'level' => 2,
+            'race' => 'race_humain',
+            'profession' => 'profession_garde',
+            'reference' => 'npc_garde_du_palais',
+        ],
+        [
+            'name' => 'Maire de Port Saint-Doux',
+            'picture' => 'img/chapter1/npc/maire-de-port-saint-doux.png',
+            'thumbnail' => 'img/chapter1/npc/maire-de-port-saint-doux_thumb.png',
+            'description' => "<p>Bedonnant, engoncé dans ses riches habits et constamment flanqué de courtisans serviles, le Maire de Port Saint-Doux règne d’un œil torve sur le Quartier des Chauves. Hautain, sûr de lui, il parade plus qu’il ne gouverne… du moins en apparence.</p><p>Car derrière les sourires moqueurs et les critiques feutrées, chacun sait qu’il tire les ficelles de la ville comme un marionnettiste avisé. Nul décret ne passe sans son sceau, nul marché ne prospère sans son aval.</p><p>Et ceux qui l’oublient finissent, étrangement, sans voix&nbsp;—&nbsp;ou sans toit.</p>",
+            'strength' => 6,
+            'dexterity' => 5,
+            'constitution' => 9,
+            'wisdom' => 10,
+            'intelligence' => 13,
+            'charisma' => 15,
+            'healthMax' => 90,
+            'manaMax' => 65,
+            'fortune' => 2500,
+            'level' => 4,
+            'race' => 'race_humain',
+            'profession' => 'profession_notable',
+            'reference' => 'npc_maire_de_port_saint_doux',
+        ],
+    ];
+}

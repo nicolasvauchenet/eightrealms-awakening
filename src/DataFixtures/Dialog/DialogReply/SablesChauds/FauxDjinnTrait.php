@@ -18,7 +18,7 @@ trait FauxDjinnTrait
             'reference' => 'quest_reply_faux_djinn_2_1',
         ],
         [
-            'text' => "Je n’ai rien à faire ici",
+            'text' => 'Heu… Tant mieux pour vous. Au revoir&nbsp;!',
             'dialogStep' => 'quest_step_faux_djinn_2',
             'nextStep' => 'quest_step_faux_djinn_4',
             'reference' => 'quest_reply_faux_djinn_2_2',

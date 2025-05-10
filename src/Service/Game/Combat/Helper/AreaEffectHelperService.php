@@ -7,7 +7,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 readonly class AreaEffectHelperService
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface  $entityManager,
+                                private EnemyLabelHelperService $enemyLabelHelperService,)
     {
     }
 
@@ -25,19 +26,20 @@ readonly class AreaEffectHelperService
             fn($e) => $e->getHealth() > 0 && $e !== $target
         )->slice(0, $area - 1);
 
-        foreach($enemies as $e) {
+        foreach($enemies as $enemy) {
+            $enemyName = $this->enemyLabelHelperService->getDisplayName($enemy);
             if($targetStat === 'health' || $targetStat === 'damage') {
-                $e->setHealth(max(0, $e->getHealth() - $aoeAmount));
+                $enemy->setHealth(max(0, $enemy->getHealth() - $aoeAmount));
             } else if($targetStat === 'mana') {
-                $e->setMana(max(0, $e->getMana() - $aoeAmount));
+                $enemy->setMana(max(0, $enemy->getMana() - $aoeAmount));
             }
 
-            $this->entityManager->persist($e);
+            $this->entityManager->persist($enemy);
 
-            $log .= "<span class='text-success'>{$e->getEnemy()->getName()} {$e->getPosition()} est aussi touché et perd $aoeAmount point" . ($aoeAmount > 1 ? 's' : '') . " de $statName&nbsp;!</span><br/>";
+            $log .= "<span class='text-success'>$enemyName est aussi touché et perd $aoeAmount point" . ($aoeAmount > 1 ? 's' : '') . " de $statName&nbsp;!</span><br/>";
 
-            if($e->getHealth() <= 0) {
-                $log .= "<strong class='text-success'>{$e->getEnemy()->getName()} {$e->getPosition()} est vaincu&nbsp;!</strong><br/>";
+            if($enemy->getHealth() <= 0) {
+                $log .= "<strong class='text-success'>$enemyName est vaincu&nbsp;!</strong><br/>";
             }
         }
 

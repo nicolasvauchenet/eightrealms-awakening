@@ -2,7 +2,7 @@
     <img src="{{ asset('img/core/equipment/shield.png') }}" class="placeholder" alt="Bouclier"/>
     {% set characterItem = app_characterItemService.equippedItems(character).shield %}
     {% if characterItem %}
-        <a href="#" data-action="click->tooltip#open">
+        <a href="#" data-action="click->tooltip#open" title="{{ characterItem.item.name }}">
             <img src="{{ asset('img/core/item/shield/' ~ characterItem.item.picture) }}"
                  class="equip {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
                  alt="{{ characterItem.item.name }}"/>

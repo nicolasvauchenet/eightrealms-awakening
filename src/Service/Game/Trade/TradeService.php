@@ -29,7 +29,7 @@ readonly class TradeService
         };
 
         return new ArrayCollection(array_filter($inventory->toArray(), function($characterItem) use ($allowedTypes) {
-            return in_array($characterItem->getItem()->getCategory()->getSlug(), $allowedTypes);
+            return in_array($characterItem->getItem()->getCategory()->getSlug(), $allowedTypes) && !$characterItem->isQuestItem();
         }));
     }
 

@@ -18,7 +18,7 @@ trait QuestTrait
         ],
         [
             'name' => 'Médaillon des Vents',
-            'picture' => 'amulet.png',
+            'picture' => 'medaillon-des-vents.png',
             'description' => "<p>Un médaillon ancestral orné de symboles runiques liés aux esprits des vents. On raconte qu'il permet à son porteur d'invoquer une brise salvatrice en cas de danger, et qu'il pourrait rendre son porteur invisible.</p>",
             'type' => 'utile',
             'price' => 2000,
@@ -29,13 +29,13 @@ trait QuestTrait
         ],
         [
             'name' => 'Amulette du Cercle',
-            'picture' => 'circle-amulet.png',
+            'picture' => 'amulette-du-cercle.png',
             'description' => "<p>Forgée non par le feu, mais par le temps et la nature, cette amulette est composée de bois sacré, de fibres végétales et d’un fragment de pierre lunaire enchâssé en son centre. Elle sert de signe de reconnaissance entre les membres du Cercle, un ordre ancien qui veille sur les bois sacrés et parle aux esprits des arbres. Le symbole gravé représente l’harmonie entre les cycles de la vie et les forces de la forêt.</p>",
-            'type' => 'defensive',
+            'type' => 'utile',
             'price' => 200,
             'category' => 'category_amulet',
-            'target' => 'defense',
-            'amount' => 5,
+            'target' => 'druids',
+            'effect' => 'charmed',
             'reference' => 'amulet_amulette_du_cercle',
         ],
     ];

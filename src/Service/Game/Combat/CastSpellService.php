@@ -7,6 +7,7 @@ use App\Entity\Combat\Combat;
 use App\Entity\Spell\CharacterSpell;
 use App\Service\Game\Combat\Effect\CombatEffectService;
 use App\Service\Game\Combat\Helper\AreaEffectHelperService;
+use App\Service\Game\Combat\Helper\EnemyLabelHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class CastSpellService
@@ -14,7 +15,8 @@ readonly class CastSpellService
     public function __construct(
         private EntityManagerInterface  $entityManager,
         private AreaEffectHelperService $areaEffectHelper,
-        private CombatEffectService     $combatEffectService
+        private CombatEffectService     $combatEffectService,
+        private EnemyLabelHelperService $enemyLabelHelperService,
     )
     {
     }
@@ -22,14 +24,12 @@ readonly class CastSpellService
     public function cast(Player $player, Combat $combat, int $enemyId, int $characterSpellId): string
     {
         $characterSpell = $this->entityManager->getRepository(CharacterSpell::class)->find($characterSpellId);
-
         if(!$characterSpell || $characterSpell->getCharacter() !== $player) {
             return "<span class='text-danger'>Sort introuvable ou non possédé.</span><br/>";
         }
 
         $spell = $characterSpell->getSpell();
         $cost = $spell->getManaCost() + $characterSpell->getManaCost();
-
         if($player->getMana() < $cost) {
             return "<span class='text-warning'>Vous n'avez pas assez de mana pour lancer ce sort.</span><br/>";
         }
@@ -52,11 +52,11 @@ readonly class CastSpellService
             $target = $playerCombat->getPlayerCombatEnemies()->filter(
                 fn($enemy) => $enemy->getId() === $enemyId
             )->first();
-
             if(!$target || $target->getHealth() <= 0) {
                 return "<span class='text-danger'>Cible invalide.</span><br/>";
             }
 
+            $enemyName = $this->enemyLabelHelperService->getDisplayName($target);
             $statName = match ($targetStat) {
                 'damage', 'health' => 'dégâts',
                 'mana' => 'magie',
@@ -71,10 +71,10 @@ readonly class CastSpellService
 
             $this->entityManager->persist($target);
 
-            $log = "<span class='text-success'>Vous lancez {$spell->getName()} sur {$target->getEnemy()->getName()} {$target->getPosition()} et lui infligez $amount point" . ($amount > 1 ? 's' : '') . " de $statName&nbsp;!</span><br/>";
+            $log = "<span class='text-success'>Vous lancez {$spell->getName()} sur $enemyName et lui infligez $amount point" . ($amount > 1 ? 's' : '') . " de $statName&nbsp;!</span><br/>";
 
             if($target->getHealth() <= 0) {
-                $log .= "<strong class='text-success'>{$target->getEnemy()->getName()} {$target->getPosition()} est vaincu&nbsp;!</strong><br/>";
+                $log .= "<strong class='text-success'>$enemyName est vaincu&nbsp;!</strong><br/>";
             }
 
             if($area > 1) {

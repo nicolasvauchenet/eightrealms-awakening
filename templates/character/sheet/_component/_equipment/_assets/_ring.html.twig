@@ -2,7 +2,7 @@
     <img src="{{ asset('img/core/equipment/ring.png') }}" class="placeholder" alt="Anneau"/>
     {% set characterItem = app_characterItemService.equippedItems(character).ring %}
     {% if characterItem %}
-        <a href="#" data-action="click->tooltip#open">
+        <a href="#" data-action="click->tooltip#open" title="{{ characterItem.item.name }}">
             <img src="{{ asset('img/core/item/ring/' ~ characterItem.item.picture) }}"
                  class="equip"
                  alt="{{ characterItem.item.name }}"/>

@@ -39,8 +39,14 @@
                     augmente la Magie
                 {% elseif characterItem.item.target == 'charisma' %}
                     augmente la Sagesse
-                {% elseif characterItem.item.target == 'aquatics' and characterItem.item.effect == 'charmed' %}
-                    amitié avec les créatures aquatiques
+                {% elseif characterItem.item.effect == 'charmed' %}
+                    {% if characterItem.item.target == 'aquatics' %}
+                        amitié avec les créatures aquatiques
+                    {% elseif characterItem.item.target == 'druids' %}
+                        signe de reconnaissance druidique
+                    {% endif %}
+                {% elseif characterItem.item.effect == 'invisibility' %}
+                    rend invisible
                 {% endif %}
             {% endif %}
 

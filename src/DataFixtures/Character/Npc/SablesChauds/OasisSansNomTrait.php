@@ -7,7 +7,7 @@ trait OasisSansNomTrait
     const OASIS_SANS_NOM_NPCS = [
         // Ennemies
         [
-            'name' => 'Le Faux Djinn',
+            'name' => 'Faux Djinn',
             'picture' => 'img/chapter1/npc/faux-djinn.png',
             'thumbnail' => 'img/chapter1/npc/faux-djinn_thumb.png',
             'description' => "<p>Une silhouette drapée de voiles soulevés par une brise chaude, les yeux brillants d’un feu surnaturel. Sa voix résonne comme un écho, tantôt calme, tantôt grondante, comme s’il parlait depuis deux plans différents. On devine la silhouette d’un homme derrière le masque… ou ce qu’il en reste.</p>",

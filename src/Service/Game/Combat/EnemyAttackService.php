@@ -11,6 +11,7 @@ use App\Service\Game\Combat\Helper\AttackHelperService;
 use App\Service\Game\Combat\Helper\DamageCalculatorHelperService;
 use App\Service\Game\Combat\Helper\DiceRollerHelperService;
 use App\Service\Game\Combat\Helper\DurabilityHelperService;
+use App\Service\Game\Combat\Helper\EnemyLabelHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
 
@@ -23,10 +24,14 @@ readonly class EnemyAttackService
         private DiceRollerHelperService       $diceRollerHelperService,
         private DamageCalculatorHelperService $damageCalculatorHelperService,
         private DurabilityHelperService       $durabilityHelperService,
+        private EnemyLabelHelperService       $enemyLabelHelperService,
     )
     {
     }
 
+    /**
+     * @throws RandomException
+     */
     public function enemyAttack(PlayerCombat $playerCombat, int $enemyId): string
     {
         $enemyInstance = $this->getEnemyInstance($playerCombat, $enemyId);
@@ -35,10 +40,7 @@ readonly class EnemyAttackService
         }
 
         $enemy = $enemyInstance->getEnemy();
-        $enemyName = $enemy->getName();
-        if(sizeof($playerCombat->getCombat()->getCombatEnemies()) > 1) {
-            $enemyName .= ' ' . $enemyInstance->getPosition();
-        }
+        $enemyName = $this->enemyLabelHelperService->getDisplayName($enemyInstance);
         $player = $playerCombat->getPlayer();
         $playerEffects = $this->combatEffectService->getActiveBonusesForTarget($playerCombat, $player);
         $enemyEffects = $this->combatEffectService->getActiveBonusesForTarget($playerCombat, $enemy);
@@ -136,10 +138,7 @@ readonly class EnemyAttackService
     private function handleClassicalWeaponAttack(PlayerCombat $playerCombat, array $equipped, Character $enemy, Player $player, PlayerCombatEnemy $enemyInstance, ?string $forcedMode = null): string
     {
         $attackMode = $forcedMode;
-        $enemyName = $enemy->getName();
-        if(sizeof($playerCombat->getCombat()->getCombatEnemies()) > 1) {
-            $enemyName .= ' ' . $enemyInstance->getPosition();
-        }
+        $enemyName = $this->enemyLabelHelperService->getDisplayName($enemyInstance);
 
         if($attackMode === 'twohands') {
             $weaponsData = $this->attackHelper->resolveWeapons($enemy);

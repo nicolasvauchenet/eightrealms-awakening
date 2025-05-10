@@ -154,12 +154,9 @@ readonly class CharacterItemService
             case 'anneau':
             case 'parchemin':
             case 'potion':
+            case 'amulette':
                 $this->unequipSlot($equippedItems, $categoryCode);
                 $item->setSlot($categoryCode);
-                break;
-
-            case 'amulette':
-                $item->setSlot('amulet');
                 break;
 
             case 'bouclier':

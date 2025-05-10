@@ -12,6 +12,7 @@ use App\Service\Game\Combat\Helper\AttackHelperService;
 use App\Service\Game\Combat\Helper\DamageCalculatorHelperService;
 use App\Service\Game\Combat\Helper\DiceRollerHelperService;
 use App\Service\Game\Combat\Helper\DurabilityHelperService;
+use App\Service\Game\Combat\Helper\EnemyLabelHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
 
@@ -24,7 +25,8 @@ readonly class PlayerAttackService
         private AreaEffectHelperService       $areaEffectHelper,
         private DiceRollerHelperService       $diceRollerHelperService,
         private DamageCalculatorHelperService $damageCalculatorHelperService,
-        private DurabilityHelperService       $durabilityHelperService
+        private DurabilityHelperService       $durabilityHelperService,
+        private EnemyLabelHelperService       $enemyLabelHelperService,
     )
     {
     }
@@ -33,10 +35,7 @@ readonly class PlayerAttackService
     {
         $playerCombat = $this->getPlayerCombat($player, $combat);
         $target = $this->getTarget($playerCombat, $enemyId);
-        $targetName = $target->getEnemy()->getName();
-        if(sizeof($combat->getCombatEnemies()) > 1) {
-            $targetName .= ' ' . $target->getPosition();
-        }
+        $targetName = $this->enemyLabelHelperService->getDisplayName($target);
 
         $targetEffects = $this->combatEffectService->getActiveBonusesForTarget($playerCombat, $target->getEnemy());
         if(!empty($targetEffects['invisibility'])) {
@@ -63,10 +62,7 @@ readonly class PlayerAttackService
         $equippedItems = $this->attackHelper->getCharacterItemService()->getEquippedItems($player);
         $characterItem = $equippedItems[$mode] ?? null;
         $item = $characterItem?->getItem();
-        $targetName = $target->getEnemy()->getName();
-        if(sizeof($playerCombat->getCombat()->getCombatEnemies()) > 1) {
-            $targetName .= ' ' . $target->getPosition();
-        }
+        $targetName = $this->enemyLabelHelperService->getDisplayName($target);
 
         if($item && $item->getCategory()?->getSlug() === 'arme-magique') {
             return $this->handleMagicalAttack($player, $target, $characterItem, $item, $mode);
@@ -132,10 +128,7 @@ readonly class PlayerAttackService
     private function handleTwoWeaponsAttack(Player $player, Combat $combat, int $enemyId, PlayerCombatEnemy $target): string
     {
         $equippedItems = $this->attackHelper->getCharacterItemService()->getEquippedItems($player);
-        $targetName = $target->getEnemy()->getName();
-        if(sizeof($combat->getCombatEnemies()) > 1) {
-            $targetName .= ' ' . $target->getPosition();
-        }
+        $targetName = $this->enemyLabelHelperService->getDisplayName($target);
         $logs = [];
 
         foreach(['righthand', 'lefthand'] as $hand) {
@@ -225,10 +218,7 @@ readonly class PlayerAttackService
         $characterItem->setCharge($characterItem->getCharge() - 1);
         $this->entityManager->persist($characterItem);
 
-        $targetName = $target->getEnemy()->getName();
-        if(sizeof($target->getPlayerCombat()->getCombat()->getCombatEnemies()) > 1) {
-            $targetName .= ' ' . $target->getPosition();
-        }
+        $targetName = $this->enemyLabelHelperService->getDisplayName($target);
         $targetStat = $item->getTarget() ?? $item->getEffect();
         $amount = $item->getAmount() ?? 0;
         $area = $item->getArea() ?? 1;

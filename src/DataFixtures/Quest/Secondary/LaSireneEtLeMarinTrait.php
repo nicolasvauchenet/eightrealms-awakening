@@ -57,7 +57,7 @@ trait LaSireneEtLeMarinTrait
             'reference' => 'quest_secondary_la_sirene_et_le_marin_step_6',
         ],
         [
-            'description' => "<p>Je suis retourné à la Taverne sans avoir dit la vérité à la Sirène. Myra m’a regardé longuement, sans poser de questions. Elle savait. Ses mots étaient doux, mais leur poids m’est resté dans la gorge. J’ai compris que les mensonges peuvent être des refuges… ou des tombes pour les vérités que l’on n’ose pas affronter.</p><p>Elle a repris son tricot. Et moi, j’ai commandé un verre. Peut-être deux. Le silence, parfois, vaut toutes les chansons du monde.</p>",
+            'description' => "<p>Je suis retourné voir Myra à la Taverne. Elle m’a regardé longuement, sans poser de questions. Elle savait. Ses mots étaient doux, mais leur poids m’est resté dans la gorge. J’ai compris que les mensonges peuvent être des refuges… ou des tombes pour les vérités que l’on n’ose pas affronter.</p><p>Elle a repris son tricot. Et moi, j’ai commandé un verre. Peut-être deux. Le silence, parfois, vaut toutes les chansons du monde.</p>",
             'position' => 7,
             'last' => true,
             'quest' => 'quest_secondary_la_sirene_et_le_marin',

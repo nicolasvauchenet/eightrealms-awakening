@@ -117,8 +117,6 @@ readonly class AttackHelperService
         bool              $isCriticalSuccess = false
     ): string
     {
-        $name = $target->getEnemy()->getName();
-        $position = $target->getPosition();
         $handText = '';
 
         if($handUsed) {

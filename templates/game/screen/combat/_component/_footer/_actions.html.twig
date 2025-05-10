@@ -1,7 +1,7 @@
 <div class="footer-actions">
     {% for combatEnemy in this.playerCombat.playerCombatEnemies %}
         <div class="combat-action {% if combatEnemy.health <= 0 %}disabled{% endif %}" data-controller="popup">
-            <a class="app-button cta" data-action="click->popup#open" title="{{ combatEnemy.enemy.name }} {{ combatEnemy.position }}">
+            <a class="app-button cta" data-action="click->popup#open" title="{{ app_enemyLabelService.displayName(combatEnemy) }}">
                 <img src="{{ asset(combatEnemy.enemy.thumbnail) }}" alt="{{ combatEnemy.enemy.name }}"/>
                 <div class="gauge {% if combatEnemy.health == 0 %}disabled{% endif %}">
                     <div class="gauge-fill success"

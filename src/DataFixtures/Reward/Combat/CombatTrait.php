@@ -12,7 +12,7 @@ trait CombatTrait
                 [
                     'item' => 'food_meat_rat',
                     'itemClass' => Food::class,
-                    'quantity' => 2,
+                    'quantity' => 3,
                 ],
             ],
             'crowns' => 20,

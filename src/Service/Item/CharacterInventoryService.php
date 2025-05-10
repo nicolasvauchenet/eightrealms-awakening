@@ -27,7 +27,7 @@ readonly class CharacterInventoryService
             'character' => $player,
             'item' => $item,
         ]);
-        if($existing) {
+        if($isQuestItem && $existing) {
             return;
         }
         $characterItem = (new CharacterItem())

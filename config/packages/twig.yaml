@@ -10,6 +10,7 @@ twig:
     app_characterLevelService: '@App\Service\Character\CharacterLevelService'
     app_mapService: '@App\Service\Map\MapService'
     app_tradeService: '@App\Service\Game\Trade\TradeService'
+    app_enemyLabelService: '@App\Service\Game\Combat\Helper\EnemyLabelHelperService'
 
 when@test:
   twig:

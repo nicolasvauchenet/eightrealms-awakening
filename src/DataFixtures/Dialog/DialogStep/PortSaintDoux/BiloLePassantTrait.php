@@ -104,13 +104,38 @@ trait BiloLePassantTrait
         // Ragots
         [
             'name' => 'Bilo - Ragots',
-            'text' => "<p><em>Le Roi Galdric a disparu depuis maintenant trois jours, et le Prince Alaric depuis une semaine et demi. Je ne sais pas ce qu'il y a au Donjon de l'Âme, mais si deux groupes de soldats en armes n'ont pas réussi à en ressortir, qui pourra bien nous aider&nbsp;?</em></p>",
+            'text' => "<p><em>Je reviens de chez Wilbert, l'Arcaniste. Il en a des trucs magiques&nbsp;! Ça fait rêver… Mais qu'est-ce que c'est cher, la magie&nbsp;!</em></p>",
             'first' => true,
-            'effects' => [
-                'start_quest' => 'quest_main',
+            'conditions' => [
+                'location_unknown' => 'quartier-des-ploucs',
             ],
             'dialog' => 'rumor_bilo_le_passant',
             'reference' => 'rumor_step_bilo_le_passant_1',
+        ],
+        [
+            'name' => "Bilo - Quartier des Ploucs",
+            'text' => "<p><em>Dans le Quartier des Ploucs. Ça s'appelle comme ça parce que c'est en grande partie les pêcheurs du village de Plouc qui y habitent. Enfin, qui ont déménagé à la ville. Sûrement à cause des rhumes…</em></p>",
+            'conditions' => [
+                'location_unknown' => 'quartier-des-ploucs',
+            ],
+            'effects' => [
+                'reveal_location' => 'quartier-des-ploucs',
+            ],
+            'dialog' => 'rumor_bilo_le_passant',
+            'reference' => 'rumor_step_bilo_le_passant_2',
+        ],
+        [
+            'name' => 'Bilo - Ragots',
+            'text' => "<p><em>Le Roi Galdric a disparu depuis maintenant trois jours, et le Prince Alaric depuis une semaine et demi. Je ne sais pas ce qu'il y a au Donjon de l'Âme, mais si deux groupes de soldats en armes n'ont pas réussi à en ressortir, qui pourra bien nous aider&nbsp;?</em></p>",
+            'first' => true,
+            'conditions' => [
+                'location_known' => 'quartier-des-ploucs',
+            ],
+            'effects' => [
+                'start_quest' => 'les-disparus-du-donjon',
+            ],
+            'dialog' => 'rumor_bilo_le_passant',
+            'reference' => 'rumor_step_bilo_le_passant_3',
         ],
     ];
 }

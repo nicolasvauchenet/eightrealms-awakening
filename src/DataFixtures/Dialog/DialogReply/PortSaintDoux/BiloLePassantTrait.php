@@ -5,6 +5,7 @@ namespace App\DataFixtures\Dialog\DialogReply\PortSaintDoux;
 trait BiloLePassantTrait
 {
     const BILO_LE_PASSANT_DIALOG_REPLIES = [
+        // Quête
         [
             'text' => "Où se trouve le Vieux Port&nbsp;?",
             'conditions' => [
@@ -25,6 +26,17 @@ trait BiloLePassantTrait
             'dialogStep' => 'quest_step_bilo_le_passant_2',
             'nextStep' => 'quest_step_bilo_le_passant_4',
             'reference' => 'quest_reply_bilo_le_passant_2_2',
+        ],
+
+        // Ragots
+        [
+            'text' => "Où habite cet arcaniste&nbsp;?",
+            'conditions' => [
+                'location_unknown' => 'quartier-des-ploucs',
+            ],
+            'dialogStep' => 'rumor_step_bilo_le_passant_1',
+            'nextStep' => 'rumor_step_bilo_le_passant_2',
+            'reference' => 'dialog_reply_bilo_le_passant_1_1',
         ],
     ];
 }

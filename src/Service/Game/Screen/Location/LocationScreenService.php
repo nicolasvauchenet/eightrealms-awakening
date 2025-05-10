@@ -122,7 +122,7 @@ readonly class LocationScreenService
 
                 // Zone suivante
                 $parent = $location->getParent();
-                if($parent) {
+                if($parent && $parent->getSlug() !== 'port-saint-doux') {
                     $siblings = $parent->getChildren()->filter(
                         fn(Location $child) => $child->getType() === 'zone'
                     )->getValues();

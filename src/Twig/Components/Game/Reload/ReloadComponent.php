@@ -45,7 +45,7 @@ class ReloadComponent
     #[PostMount]
     public function postMount(): void
     {
-        $this->description = "<p><strong>Vous demandez à {$this->screen->getCharacter()->getName()} de recharger vos objets usés.</strong></p>";
+        $this->description = "<p><strong>Vous demandez à {$this->screen->getCharacter()->getName()} de recharger vos objets magiques.</strong></p>";
     }
 
     #[LiveAction]
@@ -111,6 +111,6 @@ class ReloadComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p>Tous les objets à charge ont été rechargés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p>Tous les objets magiques ont été rechargés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
     }
 }

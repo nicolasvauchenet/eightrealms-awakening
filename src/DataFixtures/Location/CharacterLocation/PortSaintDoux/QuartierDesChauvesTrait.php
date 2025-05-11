@@ -8,6 +8,12 @@ trait QuartierDesChauvesTrait
 {
     const QUARTIER_DES_CHAUVES_NPCS = [
         [
+            'character' => 'npc_garde_du_quartier_des_chauves',
+            'characterClass' => Npc::class,
+            'location' => 'location_zone_quartier_des_chauves',
+            'reference' => 'location_zone_quartier_des_chauves_garde_du_quartier_des_chauves',
+        ],
+        [
             'character' => 'npc_servante_du_palais',
             'characterClass' => Npc::class,
             'location' => 'location_building_palais_royal',

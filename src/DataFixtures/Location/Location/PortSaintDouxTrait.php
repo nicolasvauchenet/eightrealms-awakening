@@ -113,6 +113,15 @@ trait PortSaintDouxTrait
             'reference' => 'location_building_palais_royal',
         ],
         [
+            'name' => 'Appartements Royaux',
+            'picture' => 'img/chapter1/location/appartements-royaux.webp',
+            'description' => "<p>Situés à l’étage du Palais Royal, les Appartements Royaux mêlent faste et silence dans une atmosphère figée hors du temps. Cette immense pièce, à la fois chambre et bureau, était jadis le cœur des décisions du royaume.</p><p>Le lit à baldaquin trône dans un coin, drapé de velours bleu nuit brodé d’or, tandis qu’au centre, un vaste bureau en bois sombre croule sous les parchemins, les cartes et les plumes figées dans l’encrier sec. Au mur, des portraits de souverains oubliés observent les visiteurs d’un regard sévère, comme s’ils jugeaient encore les affaires du royaume.</p><p>Tout semble prêt pour le retour d’un roi… mais aucun pas ne résonne sur le parquet ciré.</p>",
+            'type' => 'building',
+            'thumbnail' => 'img/chapter1/location/appartements-royaux_thumb.webp',
+            'parent' => 'location_building_palais_royal',
+            'reference' => 'location_building_appartements_royaux',
+        ],
+        [
             'name' => 'Hôtel de Ville',
             'picture' => 'img/chapter1/location/hotel-de-ville.webp',
             'description' => "<p>L’Hôtel de Ville, siège de l’administration de Port Saint-Doux, affiche une austérité luxueuse&nbsp;:&nbsp;murs en pierre claire, tapisseries tissées à l’effigie du blason municipal, et escaliers en colimaçon qui grincent juste assez pour faire fuir les comploteurs discrets. C’est ici que siège le Maire, entouré d’une armée de secrétaires, scribes et courtisans zélés, tous bien plus occupés à brasser du vent qu’à le canaliser.</p><p>La salle du Conseil, interdite au public, est réputée pour ses débats enflammés… et ses plateaux de fromages d’exception. La bureaucratie y est une forme d’art, et il n’est pas rare qu’un simple formulaire doive être signé par trois personnes et tamponné à la cire pour être validé.</p><p>Un lieu où les décisions se prennent à huis clos, entre deux verres de vin et trois conseils d’anciens aux cheveux bien peignés.</p>",

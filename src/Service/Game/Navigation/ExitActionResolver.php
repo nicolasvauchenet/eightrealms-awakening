@@ -76,7 +76,7 @@ readonly class ExitActionResolver
             }
         }
 
-        if($screen->getType() === 'location') {
+        if(in_array($screen->getType(), ['location', 'building'], true)) {
             $location = $screen->getLocation();
 
             if($location->getType() === 'building') {
@@ -86,7 +86,7 @@ readonly class ExitActionResolver
                         type: 'location',
                         slug: $parent->getSlug(),
                         label: $parent->getName(),
-                        thumbnail: 'img/core/action/exit.png'
+                        thumbnail: 'img/core/action/' . (in_array($location->getParent()->getType(), ['location', 'zone'], true) ? 'exit' : 'leave') . '.png'
                     );
                 }
             }

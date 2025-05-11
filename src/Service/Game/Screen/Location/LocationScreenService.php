@@ -171,6 +171,18 @@ readonly class LocationScreenService
                     ];
                 }
 
+                // Accès aux bâtiments enfants
+                foreach($location->getChildren() as $childLocation) {
+                    if($childLocation->getType() === 'building') {
+                        $footerActions[] = [
+                            'type' => 'location',
+                            'slug' => $childLocation->getSlug(),
+                            'label' => $childLocation->getName(),
+                            'thumbnail' => $childLocation->getThumbnail(),
+                        ];
+                    }
+                }
+
                 // Retour vers la zone
                 $exitAction = $this->exitActionResolver->getExitAction($screen);
                 if($exitAction) {

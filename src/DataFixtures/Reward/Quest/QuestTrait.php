@@ -25,5 +25,12 @@ trait QuestTrait
             'experience' => 200,
             'reference' => 'reward_quest_la_fiole_perdue',
         ],
+
+        // Quête secondaire : Livraison en Cours
+        [
+            'crowns' => 200,
+            'experience' => 200,
+            'reference' => 'reward_quest_livraison_en_cours',
+        ],
     ];
 }

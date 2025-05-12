@@ -31,6 +31,7 @@ trait SecondaryQuestTrait
         [
             'name' => 'Livraison en cours',
             'type' => 'Secondaire',
+            'reward' => 'reward_quest_livraison_en_cours',
             'giver' => 'npc_gart_le_forgeron',
             'giverClass' => Npc::class,
             'reference' => 'quest_secondary_livraison_en_cours',

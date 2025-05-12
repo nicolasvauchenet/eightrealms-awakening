@@ -46,21 +46,26 @@ readonly class DialogEffectApplierService
         };
     }
 
-    private function revealLocation(Player $player, string $slug): void
+    private function revealLocation(Player $player, string|array $slugOrPath): void
     {
-        $location = $this->entityManager->getRepository(Location::class)->findOneBy(['slug' => $slug]);
-        if(!$location) return;
+        $slugs = is_array($slugOrPath) ? $slugOrPath : [$slugOrPath];
+        foreach($slugs as $slug) {
+            $location = $this->entityManager->getRepository(Location::class)->findOneBy(['slug' => $slug]);
+            if(!$location) {
+                continue;
+            }
 
-        $existing = $this->entityManager->getRepository(CharacterLocation::class)->findOneBy([
-            'character' => $player,
-            'location' => $location,
-        ]);
+            $existing = $this->entityManager->getRepository(CharacterLocation::class)->findOneBy([
+                'character' => $player,
+                'location' => $location,
+            ]);
 
-        if(!$existing) {
-            $characterLocation = (new CharacterLocation())
-                ->setCharacter($player)
-                ->setLocation($location);
-            $this->entityManager->persist($characterLocation);
+            if(!$existing) {
+                $characterLocation = (new CharacterLocation())
+                    ->setCharacter($player)
+                    ->setLocation($location);
+                $this->entityManager->persist($characterLocation);
+            }
         }
     }
 

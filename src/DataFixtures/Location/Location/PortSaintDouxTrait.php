@@ -69,7 +69,7 @@ trait PortSaintDouxTrait
         // Bâtiment
         [
             'name' => 'Temple de Port Saint-Doux',
-            'picture' => 'img/core/location/temple.webp',
+            'picture' => 'img/chapter1/location/temple-de-port-saint-doux.webp',
             'description' => "<p>Le Temple de Port Saint-Doux est un édifice imposant, construit en pierre blanche. Les colonnes doriques soutiennent un fronton sculpté, représentant les dieux du panthéon local. À l'intérieur, les fidèles se recueillent devant les autels, déposant offrandes et prières aux pieds des statues divines. Le Grand Prêtre ne semble pas très occupé…</p>",
             'type' => 'building',
             'thumbnail' => 'img/core/location/temple_thumb.webp',
@@ -78,7 +78,7 @@ trait PortSaintDouxTrait
         ],
         [
             'name' => 'Forge de Port Saint-Doux',
-            'picture' => 'img/core/location/forge.webp',
+            'picture' => 'img/chapter1/location/forge-de-port-saint-doux.webp',
             'description' => "<p>La Forge est un bâtiment en pierre, surmonté d'une haute cheminée d'où s'échappe une épaisse fumée noire. À l'intérieur, le forgeron travaille le métal avec adresse, martelant et polissant les armes et armures des guerriers de passage. Le bruit de l'enclume résonne dans la pièce, couvrant à peine les jurons du forgeron…</p>",
             'type' => 'building',
             'thumbnail' => 'img/core/location/forge_thumb.webp',
@@ -87,7 +87,7 @@ trait PortSaintDouxTrait
         ],
         [
             'name' => 'Arcanes de Port Saint-Doux',
-            'picture' => 'img/core/location/arcanes.webp',
+            'picture' => 'img/chapter1/location/arcanes-de-port-saint-doux.webp',
             'description' => "<p>Les arcanes de Port Saint-Doux sont un lieu mystérieux, où les arcanistes étudient les secrets de la magie. Les étagères croulent sous les grimoires et les fioles d'élixirs, tandis que les apprentis s'entraînent à lancer des sorts. L'Arcaniste a toujours l'air affairé, et qu'il s'adresse à vous ou pas, il a un souvent sourire malicieux aux lèvres…</p>",
             'type' => 'building',
             'thumbnail' => 'img/core/location/arcanes_thumb.webp',
@@ -96,7 +96,7 @@ trait PortSaintDouxTrait
         ],
         [
             'name' => 'Taverne de la Flûte Moisie',
-            'picture' => 'img/core/location/taverne.webp',
+            'picture' => 'img/chapter1/location/taverne-de-la-flute-moisie.webp',
             'description' => "<p>La Taverne de la Flûte Moisie est un lieu bruyant et chaleureux, où les marins et les aventuriers viennent se détendre après une longue journée de travail. Les tables en bois massif sont couvertes de chopes de bière et de plats fumants, et l'odeur de la soupe au poisson flotte dans l'air. Le Tavernier vous adresse un sourire cordial…</p>",
             'type' => 'building',
             'thumbnail' => 'img/core/location/taverne_thumb.webp',

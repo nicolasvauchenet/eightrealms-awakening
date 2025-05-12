@@ -100,7 +100,7 @@ readonly class InteractionScreenService
         }
 
         // Bouton retour
-        $exitAction = $this->exitActionResolver->getExitAction($screen);
+        $exitAction = $this->exitActionResolver->getExitAction($screen, $player);
         if($exitAction) {
             $footerActions[] = $exitAction;
         }

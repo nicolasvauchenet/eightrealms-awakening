@@ -43,6 +43,7 @@ readonly class ConditionEvaluatorService
             'quest_started' => $this->hasStartedQuest($player, $value),
             'quest_not_started' => !$this->hasStartedQuest($player, $value),
             'quest_status' => $this->hasQuestStatus($player, $value),
+            'quest_status_not' => $this->hasQuestStatusNot($player, $value),
             'quest_step_not_started' => $this->isQuestStepNotStarted($player, $value),
             'quest_step_status' => $this->hasQuestStepStatus($player, $value),
             'quest_step_status_not' => !$this->hasQuestStepStatus($player, $value),
@@ -93,6 +94,25 @@ readonly class ConditionEvaluatorService
         if(!$playerQuest) return false;
 
         return $playerQuest->getStatus() === $data['status'];
+    }
+
+    private function hasQuestStatusNot(Player $player, array $data): bool
+    {
+        if(!isset($data['quest'], $data['status'])) {
+            return false;
+        }
+
+        $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $data['quest']]);
+        if(!$quest) return false;
+
+        $playerQuest = $this->entityManager->getRepository(PlayerQuest::class)->findOneBy([
+            'player' => $player,
+            'quest' => $quest,
+        ]);
+
+        if(!$playerQuest) return false;
+
+        return $playerQuest->getStatus() !== $data['status'];
     }
 
     private function isQuestStepNotStarted(Player $player, array $data): bool

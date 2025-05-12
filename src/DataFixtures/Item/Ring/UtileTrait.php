@@ -15,5 +15,15 @@ trait UtileTrait
             'effect' => 'nightVision',
             'reference' => 'ring_night_vision',
         ],
+        [
+            'name' => "Anneau d'invisibilité",
+            'picture' => 'ring.png',
+            'description' => "<p>Cet anneau, orné d'une pierre précieuse scintillante, permet à son porteur de devenir invisible. Parfait pour les voleurs ou les aventuriers cherchant à éviter les combats, cet anneau est un atout majeur pour ceux qui préfèrent la discrétion à la confrontation.</p>",
+            'type' => 'utile',
+            'price' => 800,
+            'category' => 'category_ring',
+            'effect' => 'invisibility',
+            'reference' => 'ring_invisibility',
+        ],
     ];
 }

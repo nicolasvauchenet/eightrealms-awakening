@@ -40,5 +40,12 @@ trait MainQuestStepTrait
             'quest' => 'quest_main',
             'reference' => 'quest_main_step_5',
         ],
+        [
+            'description' => "<p>Un gobelin que j'ai croisé aux abords du village de Plouc m'a livré une information surprenante&nbsp;:&nbsp;il a vu un vieil homme, apparemment un noble, peut-être même un roi… Il se dirigeait vers le Col du Vent Noir, aux portes des Monts Terribles. Il parlait tout seul et il avait l'air en colère contre son fils qui allait faire une grosse bêtise. Le vieil homme aurait également mentionné un nom, mais je n'ai pas pu le comprendre. Cela commençait par &laquo;Nash&raquo;… Et si ce gobelin avait croisé la route du Roi Galdric ?</p>",
+            'position' => 6,
+            'last' => false,
+            'quest' => 'quest_main',
+            'reference' => 'quest_main_step_6',
+        ],
     ];
 }

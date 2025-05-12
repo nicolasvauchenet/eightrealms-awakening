@@ -3,6 +3,8 @@
 namespace App\DataFixtures\Dialog;
 
 use App\DataFixtures\Dialog\DialogStep\BoisDuPendu\TheobaldGrisMurmureTrait;
+use App\DataFixtures\Dialog\DialogStep\Plouc\ChefGobelinTrait;
+use App\DataFixtures\Dialog\DialogStep\Plouc\GerardLePecheurTrait;
 use App\DataFixtures\Dialog\DialogStep\PortSaintDoux\BiloLePassantTrait;
 use App\DataFixtures\Dialog\DialogStep\PortSaintDoux\GartLeForgeronTrait;
 use App\DataFixtures\Dialog\DialogStep\PortSaintDoux\GrandPretreDePortSaintDouxTrait;
@@ -36,6 +38,8 @@ class DialogStepFixtures extends Fixture implements OrderedFixtureInterface
     use FaroukLeNomadeTrait;
     use FauxDjinnTrait;
     use TheobaldGrisMurmureTrait;
+    use GerardLePecheurTrait;
+    use ChefGobelinTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -58,6 +62,10 @@ class DialogStepFixtures extends Fixture implements OrderedFixtureInterface
 
             // Bois du Pendu
             self::THEOBALD_GRIS_MURMURE_DIALOG_STEPS,
+
+            // Plouc
+            self::GERARD_LE_PECHEUR_DIALOG_STEPS,
+            self::CHEF_GOBELIN_DIALOG_STEPS,
         ];
 
         foreach($dialogSteps as $dialogStepData) {

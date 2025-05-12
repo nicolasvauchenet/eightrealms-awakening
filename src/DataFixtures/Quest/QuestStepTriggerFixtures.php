@@ -53,6 +53,16 @@ class QuestStepTriggerFixtures extends Fixture implements OrderedFixtureInterfac
                 'questStep' => 'quest_main_step_5',
                 'reference' => 'trigger_dialog_step_wilbert_larcaniste_medaillon_des_vents',
             ],
+
+            // Dialogue : Chef Gobelin - Le Roi Galdric
+            [
+                'type' => 'dialog_step',
+                'payload' => [
+                    'slug' => 'chef-gobelin-quete-indice',
+                ],
+                'questStep' => 'quest_main_step_6',
+                'reference' => 'trigger_dialog_step_chef_gobelin_le_roi_galdric',
+            ],
         ];
 
         foreach($questStepTriggers as $data) {

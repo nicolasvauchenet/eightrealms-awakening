@@ -8,9 +8,6 @@ trait BiloLePassantTrait
         // Quête
         [
             'text' => "Où se trouve le Vieux Port&nbsp;?",
-            'conditions' => [
-                'location_unknown' => 'anciens-docks',
-            ],
             'dialogStep' => 'quest_step_bilo_le_passant_1',
             'nextStep' => 'quest_step_bilo_le_passant_2',
             'reference' => 'quest_reply_bilo_le_passant_1_1',
@@ -31,9 +28,6 @@ trait BiloLePassantTrait
         // Ragots
         [
             'text' => "Où habite cet arcaniste&nbsp;?",
-            'conditions' => [
-                'location_unknown' => 'quartier-des-ploucs',
-            ],
             'dialogStep' => 'rumor_step_bilo_le_passant_1',
             'nextStep' => 'rumor_step_bilo_le_passant_2',
             'reference' => 'dialog_reply_bilo_le_passant_1_1',

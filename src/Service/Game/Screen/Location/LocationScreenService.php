@@ -38,10 +38,30 @@ readonly class LocationScreenService
 
     private function createScreenActions(LocationScreen $screen, Location $location, Player $player): void
     {
+        $screen->setActions([]);
         $footerActions = [];
 
         switch($location->getType()) {
             case 'location':
+                // Interactions avec personnages
+                foreach($location->getCharacterLocations() as $characterLocation) {
+                    $character = $characterLocation->getCharacter();
+
+                    if($character instanceof Player) continue;
+
+                    $conditions = $characterLocation->getConditions();
+                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
+                        continue;
+                    }
+
+                    $footerActions[] = [
+                        'type' => 'interaction',
+                        'slug' => $character->getSlug(),
+                        'label' => $character->getName(),
+                        'thumbnail' => $character->getThumbnail(),
+                    ];
+                }
+
                 // Accès aux bâtiments enfants
                 $hasBuildings = false;
                 foreach($location->getChildren() as $childLocation) {

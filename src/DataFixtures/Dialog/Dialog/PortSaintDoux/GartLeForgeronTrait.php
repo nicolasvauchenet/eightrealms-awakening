@@ -7,6 +7,22 @@ use App\Entity\Character\Npc;
 trait GartLeForgeronTrait
 {
     const GART_LE_FORGERON_DIALOGS = [
+        // Quête : Livraison en cours
+        [
+            'type' => 'dialog',
+            'character' => 'npc_gart_le_forgeron',
+            'characterClass' => Npc::class,
+            'reference' => 'quest_gart_le_forgeron',
+        ],
+
+        // Dialogue normal
+        [
+            'type' => 'dialog',
+            'character' => 'npc_gart_le_forgeron',
+            'characterClass' => Npc::class,
+            'reference' => 'dialog_gart_le_forgeron',
+        ],
+
         // Ragots
         [
             'type' => 'rumor',

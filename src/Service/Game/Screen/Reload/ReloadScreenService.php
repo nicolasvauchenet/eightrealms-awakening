@@ -27,16 +27,16 @@ readonly class ReloadScreenService
                 ->setCharacter($character);
         }
 
-        $this->createScreenActions($screen);
+        $this->createScreenActions($screen, $player);
         $this->entityManager->persist($screen);
         $this->entityManager->flush();
 
         return $screen;
     }
 
-    private function createScreenActions(ReloadScreen $screen): void
+    private function createScreenActions(ReloadScreen $screen, Player $player): void
     {
-        $footerActions = $this->exitActionResolver->getExitActions($screen);
+        $footerActions = $this->exitActionResolver->getExitActions($screen, $player);
 
         if(!empty($footerActions)) {
             $screen->setActions(['footer' => $footerActions]);

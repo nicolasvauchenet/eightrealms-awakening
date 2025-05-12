@@ -4,6 +4,7 @@ namespace App\DataFixtures\Item;
 
 use App\DataFixtures\Item\Shield\ClassicalTrait;
 use App\DataFixtures\Item\Shield\EnchantedTrait;
+use App\DataFixtures\Item\Shield\QuestTrait;
 use App\Entity\Item\Category;
 use App\Entity\Item\Shield;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -14,6 +15,7 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
 {
     use ClassicalTrait;
     use EnchantedTrait;
+    use QuestTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -23,6 +25,9 @@ class ShieldFixtures extends Fixture implements OrderedFixtureInterface
 
             // Enchanté
             self::ENCHANTED_SHIELDS,
+
+            // Objets de quête
+            self::QUEST_SHIELDS,
         ];
 
         foreach($allShields as $shields) {

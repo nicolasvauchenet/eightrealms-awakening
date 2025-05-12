@@ -84,6 +84,8 @@ class TradeComponent
             ->setItem($item)
             ->setEquipped(false)
             ->setSlot(null)
+            ->setHealth($npcItem->getHealth() ?? 100)
+            ->setCharge($npcItem->getCharge() ?? 100)
             ->setQuestItem(false);
 
         if(method_exists($item, 'getHealthMax')) {

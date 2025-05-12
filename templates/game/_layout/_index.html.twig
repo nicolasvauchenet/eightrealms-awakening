@@ -3,10 +3,20 @@
 {% block body %}
     <figure class="app-wallpaper">
         {% if screen.type in ['interaction', 'dialog', 'trade', 'repair', 'reload', 'pray'] %}
-            <img src="{{ asset(playerCharacter.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
+            {% if screen.type == 'interaction' %}
+                <img src="{{ asset(variant_picture_for_character(app.user.player, screen.character)) }}" class="app-coverimg" alt="{{ screen.character.name }}"/>
+            {% elseif screen.type == 'dialog' %}
+                <img src="{{ asset(variant_picture_for_character(app.user.player, screen.dialogStep.dialog.character)) }}" class="app-coverimg" alt="{{ screen.dialogStep.dialog.character.name }}"/>
+            {% else %}
+                <img src="{{ asset(playerCharacter.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
+            {% endif %}
         {% else %}
             {% if screen.picture %}
-                <img src="{{ asset(screen.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
+                {% if screen.type == 'location' %}
+                    <img src="{{ asset(variant_picture_for_location(app.user.player, screen.location)) }}" class="app-coverimg" alt="{{ screen.location.name }}">
+                {% else %}
+                    <img src="{{ asset(screen.picture) }}" class="app-coverimg" alt="{{ screen.name }}"/>
+                {% endif %}
             {% else %}
                 <img src="{{ asset('img/core/cover.webp') }}" class="app-coverimg" alt="Les Huit Royaumes"/>
             {% endif %}

@@ -34,6 +34,8 @@ readonly class CharacterInventoryService
             ->setCharacter($player)
             ->setItem($item)
             ->setEquipped(false)
+            ->setHealth(method_exists($item, 'getHealth') ? $item->getHealth() : 100)
+            ->setCharge(method_exists($item, 'getCharge') ? $item->getCharge() : 100)
             ->setQuestItem($isQuestItem);
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();

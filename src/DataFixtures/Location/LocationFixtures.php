@@ -2,13 +2,31 @@
 
 namespace App\DataFixtures\Location;
 
-use App\DataFixtures\Location\Location\BoisDuPenduTrait;
+use App\DataFixtures\Location\Location\BoisDuPendu\BoisDuPenduTrait;
+use App\DataFixtures\Location\Location\BoisDuPendu\BosquetDesDruidesTrait;
+use App\DataFixtures\Location\Location\BoisDuPendu\ClairiereDeLOublieTrait;
+use App\DataFixtures\Location\Location\BoisDuPendu\CriqueDuPenduTrait;
 use App\DataFixtures\Location\Location\ExternalTrait;
-use App\DataFixtures\Location\Location\MontsTerriblesTrait;
-use App\DataFixtures\Location\Location\PloucTrait;
-use App\DataFixtures\Location\Location\PortSaintDouxTrait;
+use App\DataFixtures\Location\Location\MontsTerribles\ColDuVentNoirTrait;
+use App\DataFixtures\Location\Location\MontsTerribles\GouffreDAskalorTrait;
+use App\DataFixtures\Location\Location\MontsTerribles\GrotteDesEchosTrait;
+use App\DataFixtures\Location\Location\MontsTerribles\MontsTerriblesTrait;
+use App\DataFixtures\Location\Location\MontsTerribles\RefugeDuBoucBoiteuxTrait;
+use App\DataFixtures\Location\Location\MontsTerribles\RocherDuDragonTrait;
+use App\DataFixtures\Location\Location\Plouc\CampementGobelinTrait;
+use App\DataFixtures\Location\Location\Plouc\PloucTrait;
+use App\DataFixtures\Location\Location\PortSaintDoux\AnciensDocksTrait;
+use App\DataFixtures\Location\Location\PortSaintDoux\DocksDeLOuestTrait;
+use App\DataFixtures\Location\Location\PortSaintDoux\PortSaintDouxTrait;
+use App\DataFixtures\Location\Location\PortSaintDoux\QuartierDesChauvesTrait;
+use App\DataFixtures\Location\Location\PortSaintDoux\QuartierDesPloucsTrait;
+use App\DataFixtures\Location\Location\PortSaintDoux\QuartierDuMarcheTrait;
+use App\DataFixtures\Location\Location\PortSaintDoux\VieilleVilleTrait;
 use App\DataFixtures\Location\Location\RealmTrait;
-use App\DataFixtures\Location\Location\SablesChaudsTrait;
+use App\DataFixtures\Location\Location\SablesChauds\CampAbandonneTrait;
+use App\DataFixtures\Location\Location\SablesChauds\OasisSansNomTrait;
+use App\DataFixtures\Location\Location\SablesChauds\PlageDeLaSireneTrait;
+use App\DataFixtures\Location\Location\SablesChauds\SablesChaudsTrait;
 use App\Entity\Item\Map;
 use App\Entity\Location\Location;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -19,21 +37,70 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
 {
     use RealmTrait;
     use PortSaintDouxTrait;
+    use AnciensDocksTrait;
+    use DocksDeLOuestTrait;
+    use QuartierDesChauvesTrait;
+    use QuartierDesPloucsTrait;
+    use QuartierDuMarcheTrait;
+    use VieilleVilleTrait;
     use PloucTrait;
+    use CampementGobelinTrait;
     use BoisDuPenduTrait;
+    use ClairiereDeLOublieTrait;
+    use BosquetDesDruidesTrait;
+    use CriqueDuPenduTrait;
     use SablesChaudsTrait;
+    use CampAbandonneTrait;
+    use OasisSansNomTrait;
+    use PlageDeLaSireneTrait;
     use MontsTerriblesTrait;
+    use ColDuVentNoirTrait;
+    use GouffreDAskalorTrait;
+    use GrotteDesEchosTrait;
+    use RefugeDuBoucBoiteuxTrait;
+    use RocherDuDragonTrait;
     use ExternalTrait;
 
     public function load(ObjectManager $manager): void
     {
         $locations = [
+            // Royaume
             self::REALM_LOCATION,
+
+            // Port Saint-Doux
             self::PORT_SAINT_DOUX_LOCATIONS,
+            self::QUARTIER_DU_MARCHE_LOCATIONS,
+            self::QUARTIER_DES_PLOUCS_LOCATIONS,
+            self::VIEILLE_VILLE_LOCATIONS,
+            self::QUARTIER_DES_CHAUVES_LOCATIONS,
+            self::DOCKS_DE_L_OUEST_LOCATIONS,
+            self::ANCIENS_DOCKS_LOCATIONS,
+
+            // Plouc
             self::PLOUC_LOCATIONS,
-            self::BOIS_DU_PENDU_LOCATIONS,
+            self::CAMPEMENT_GOBELIN_LOCATIONS,
+
+            // Sables Chauds
             self::SABLES_CHAUDS_LOCATIONS,
+            self::CAMP_ABANDONNE_LOCATIONS,
+            self::OASIS_SANS_NOM_LOCATIONS,
+            self::PLAGE_DE_LA_SIRENE_LOCATIONS,
+
+            // Bois du Pendu
+            self::BOIS_DU_PENDU_LOCATIONS,
+            self::CLAIRIERE_DE_L_OUBLIE_LOCATIONS,
+            self::CRIQUE_DU_PENDU_LOCATIONS,
+            self::BOSQUET_DES_DRUIDES_LOCATIONS,
+
+            // Monts Terribles
             self::MONTS_TERRIBLES_LOCATIONS,
+            self::COL_DU_VENT_NOIR_LOCATIONS,
+            self::GROTTE_DES_ECHOS_LOCATIONS,
+            self::REFUGE_DU_BOUC_BOITEUX_LOCATIONS,
+            self::GOUFFRE_D_ASKALOR_LOCATIONS,
+            self::ROCHER_DU_DRAGON_LOCATIONS,
+
+            // Externes - Rencontres
             self::EXTERNAL_LOCATIONS,
         ];
 

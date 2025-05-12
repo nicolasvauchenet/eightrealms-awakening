@@ -22,7 +22,9 @@
             {% include 'map/_component/_location/_index.html.twig' %}
         {% endif %}
 
-        {% include 'map/_component/_walk/_index.html.twig' %}
+        {% if app_mapService.zones(this.character) | length > 0 %}
+            {% include 'map/_component/_walk/_index.html.twig' %}
+        {% endif %}
 
         {% include 'map/_component/_travel/_index.html.twig' %}
 

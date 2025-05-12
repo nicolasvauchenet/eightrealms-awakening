@@ -40,7 +40,7 @@ trait PloucTrait
         [
             'character' => 'creature_chef_gobelin',
             'characterClass' => Creature::class,
-            'location' => 'location_zone_campement_gobelin',
+            'location' => 'location_campement_gobelin',
             'conditions' => [
                 'quest_status' => [
                     'quest' => 'livraison-en-cours',

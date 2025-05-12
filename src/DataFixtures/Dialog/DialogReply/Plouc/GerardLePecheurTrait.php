@@ -43,7 +43,7 @@ trait GerardLePecheurTrait
             'reference' => 'quest_reply_gerard_le_pecheur_8_1',
         ],
         [
-            'text' => "Ils sont des dizaines. Le village brûlera, vous tous avec",
+            'text' => "Ils sont des dizaines. Le village brûlera et vous avec",
             'dialogStep' => 'quest_step_gerard_le_pecheur_9',
             'nextStep' => 'quest_step_gerard_le_pecheur_10',
             'reference' => 'quest_reply_gerard_le_pecheur_9_1',

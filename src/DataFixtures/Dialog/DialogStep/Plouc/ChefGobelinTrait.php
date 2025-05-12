@@ -22,7 +22,7 @@ trait ChefGobelinTrait
         ],
         [
             'name' => 'Chef Gobelin - Quête',
-            'text' => "<p>Il lève les mains au ciel, d'un air théâtral.</p><p><em>On attaque pas&nbsp;! On… on fouille un peu. On s’sert. On est pas des monstres, nous. Les pêcheurs, eux, y nous balancent des pierres&nbsp;! Khhhk… Même un poisson moisi, ils veulent pas partager.</em></p>",
+            'text' => "<p>Il lève les mains au ciel, d'un air théâtral.</p><p><em>On l'attaque pas&nbsp;! On… on fouille un peu. On s’sert. On est pas des monstres, nous. Les pêcheurs, eux, y nous balancent des pierres&nbsp;! Khhhk… Même un poisson moisi, ils veulent pas partager.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'livraison-en-cours',

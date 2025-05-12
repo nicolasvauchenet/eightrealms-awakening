@@ -8,6 +8,7 @@ use App\Entity\Item\Gift;
 trait MiscTrait
 {
     const MISC_REWARDS = [
+        // Cadeau de bienvenue
         [
             'picture' => 'gift.png',
             'items' => [

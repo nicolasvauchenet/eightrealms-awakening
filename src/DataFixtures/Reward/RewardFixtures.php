@@ -2,10 +2,16 @@
 
 namespace App\DataFixtures\Reward;
 
-use App\DataFixtures\Reward\Combat\CombatTrait;
-use App\DataFixtures\Reward\Combat\CombatQuestTrait;
+use App\DataFixtures\Reward\Combat\Plouc\OreeDuBoisCombatTrait;
+use App\DataFixtures\Reward\Combat\PortSaintDoux\AnciensDocksCombatTrait;
 use App\DataFixtures\Reward\Misc\MiscTrait;
-use App\DataFixtures\Reward\Quest\QuestTrait;
+use App\DataFixtures\Reward\Quest\MainQuestTrait;
+use App\DataFixtures\Reward\Quest\SideQuestTrait;
+use App\DataFixtures\Reward\QuestCombat\BoisDuPendu\ClairiereDeLOublieQuestCombatTrait;
+use App\DataFixtures\Reward\QuestCombat\Plouc\CampementGobelinQuestCombatTrait;
+use App\DataFixtures\Reward\QuestCombat\PortSaintDoux\AnciensDocksQuestCombatTrait;
+use App\DataFixtures\Reward\QuestCombat\PortSaintDoux\DocksDeLOuestQuestCombatTrait;
+use App\DataFixtures\Reward\QuestCombat\SablesChauds\OasisSansNomQuestCombatTrait;
 use App\Entity\Reward\Reward;
 use App\Entity\Reward\RewardItem;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -14,23 +20,41 @@ use Doctrine\Persistence\ObjectManager;
 
 class RewardFixtures extends Fixture implements OrderedFixtureInterface
 {
+    use AnciensDocksCombatTrait;
+    use AnciensDocksQuestCombatTrait;
+    use DocksDeLOuestQuestCombatTrait;
+    use OreeDuBoisCombatTrait;
+    use CampementGobelinQuestCombatTrait;
+    use ClairiereDeLOublieQuestCombatTrait;
+    use OasisSansNomQuestCombatTrait;
+    use MainQuestTrait;
+    use SideQuestTrait;
     use MiscTrait;
-    use CombatTrait;
-    use CombatQuestTrait;
-    use QuestTrait;
 
     public function load(ObjectManager $manager): void
     {
         $allRewards = [
-            // Misc
+            // Divers
             self::MISC_REWARDS,
 
-            // Combat
-            self::COMBAT_REWARDS,
+            // Quêtes
+            self::MAIN_QUEST_REWARDS,
+            self::SIDE_QUEST_REWARDS,
 
-            // Quest
-            self::COMBAT_QUEST_REWARDS,
-            self::QUEST_REWARDS,
+            // Port Saint-Doux
+            self::ANCIENS_DOCKS_COMBAT_REWARDS,
+            self::ANCIENS_DOCKS_COMBAT_QUEST_REWARDS,
+            self::DOCKS_DE_L_OUEST_COMBAT_QUEST_REWARDS,
+
+            // Plouc
+            self::OREE_DU_BOIS_COMBAT_REWARDS,
+            self::CAMPEMENT_GOBELIN_COMBAT_QUEST_REWARDS,
+
+            // Bois du Pendu
+            self::CLAIRIERE_DE_L_OUBLIE_COMBAT_QUEST_REWARDS,
+
+            // Sables Chauds
+            self::OASIS_SANS_NOM_COMBAT_QUEST_REWARDS,
         ];
 
         foreach($allRewards as $rewards) {

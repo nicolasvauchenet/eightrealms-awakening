@@ -3,8 +3,10 @@
 namespace App\Twig\Components\Map;
 
 use App\Entity\Character\Character;
+use App\Entity\Character\Player;
 use App\Entity\Location\Location;
 use App\Entity\Screen\LocationScreen;
+use App\Service\Map\MapService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,6 +15,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\TwigComponent\Attribute\PostMount;
 
 #[AsLiveComponent('Map', template: 'map/_component/_index.html.twig')]
 class MapComponent extends AbstractController
@@ -20,7 +23,7 @@ class MapComponent extends AbstractController
     use DefaultActionTrait;
 
     #[LiveProp(writable: true)]
-    public Character $character;
+    public Player $character;
 
     #[LiveProp(writable: true)]
     public ?string $back = null;
@@ -28,8 +31,17 @@ class MapComponent extends AbstractController
     #[LiveProp(writable: true)]
     public string $activeContent = 'walk';
 
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager,
+                                private readonly MapService             $mapService)
     {
+    }
+
+    #[PostMount]
+    public function postMount(): void
+    {
+        if(sizeof($this->mapService->getZones($this->character)) === 0) {
+            $this->activeContent = 'travel';
+        }
     }
 
     #[LiveAction]

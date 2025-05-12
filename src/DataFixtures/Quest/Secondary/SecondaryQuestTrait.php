@@ -26,6 +26,9 @@ trait SecondaryQuestTrait
         [
             'name' => 'Bagarre bizarre',
             'type' => 'Secondaire',
+            'reward' => 'reward_quest_bagarre_bizarre',
+            'giver' => 'npc_robert_le_garde',
+            'giverClass' => Npc::class,
             'reference' => 'quest_secondary_bagarre_bizarre',
         ],
         [
@@ -39,6 +42,9 @@ trait SecondaryQuestTrait
         [
             'name' => 'La Sirène et le Marin',
             'type' => 'Secondaire',
+            'reward' => 'reward_quest_la_sirene_et_le_marin',
+            'giver' => 'npc_myra_la_vieille',
+            'giverClass' => Npc::class,
             'reference' => 'quest_secondary_la_sirene_et_le_marin',
         ],
     ];

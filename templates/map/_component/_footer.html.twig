@@ -17,12 +17,14 @@
         </a>
     {% endif %}
 
-    <a href="#"
-       class="{% if this.activeContent == 'walk' %}active{% endif %}"
-            {{ live_action('setActiveContent', {'content': 'walk'}) }}
-       onclick="return false">
-        {{ ux_icon('zondicons:travel-walk', {'class': 'app-icon'}) }}
-    </a>
+    {% if app_mapService.zones(this.character) | length > 0 %}
+        <a href="#"
+           class="{% if this.activeContent == 'walk' %}active{% endif %}"
+                {{ live_action('setActiveContent', {'content': 'walk'}) }}
+           onclick="return false">
+            {{ ux_icon('zondicons:travel-walk', {'class': 'app-icon'}) }}
+        </a>
+    {% endif %}
 
     <a href="#"
        class="{% if this.activeContent == 'travel' %}active{% endif %}"

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\DataFixtures\Reward\Combat;
+namespace App\DataFixtures\Reward\Combat\PortSaintDoux;
 
 use App\Entity\Item\Food;
 
-trait CombatTrait
+trait AnciensDocksCombatTrait
 {
-    const COMBAT_REWARDS = [
+    const ANCIENS_DOCKS_COMBAT_REWARDS = [
+        // Une bande de rats sur les Docks
         [
             'items' => [
                 [

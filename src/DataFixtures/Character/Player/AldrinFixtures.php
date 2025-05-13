@@ -205,6 +205,12 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'character' => 'player_aldrin',
+                'item' => 'map_donjon_de_l_ame',
+                'isEquipped' => false,
+                'class' => Map::class,
+            ],
+            [
+                'character' => 'player_aldrin',
                 'item' => 'weapon_longsword_storm',
                 'isEquipped' => true,
                 'slot' => 'righthand',

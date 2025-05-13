@@ -6,6 +6,7 @@ use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Location\Location;
 use App\Entity\Quest\PlayerQuest;
+use App\Service\Character\CharacterReputationService;
 use App\Service\Game\Conditions\ConditionEvaluatorService;
 use App\Service\Quest\CharacterQuestService;
 use Twig\Extension\AbstractExtension;
@@ -13,8 +14,10 @@ use Twig\TwigFunction;
 
 class ImageVariantExtension extends AbstractExtension
 {
-    public function __construct(private readonly CharacterQuestService     $questService,
-                                private readonly ConditionEvaluatorService $conditionEvaluatorService,)
+    public function __construct(private readonly CharacterQuestService      $questService,
+                                private readonly ConditionEvaluatorService  $conditionEvaluatorService,
+                                private readonly CharacterReputationService $characterReputationService
+    )
     {
     }
 
@@ -28,13 +31,19 @@ class ImageVariantExtension extends AbstractExtension
 
     public function getCharacterPicture(Player $player, Character $character): string
     {
-        if($character->getSlug() !== 'chef-gobelin') {
-            return $character->getPicture();
+        switch($character->getSlug()) {
+            case 'chef-gobelin':
+                $quest = $this->getLivraisonQuest($player);
+                if($quest && $quest->getStatus() === 'rewarded') {
+                    return $this->insertAltSuffix($character->getPicture());
+                }
+                break;
+            default:
+                break;
         }
 
-        $quest = $this->getLivraisonQuest($player);
-        if($quest && $quest->getStatus() === 'rewarded') {
-            return $this->insertAltSuffix($character->getPicture());
+        if($this->characterReputationService->getReputation($player, $character) < -5) {
+            return $character->getPictureAngry();
         }
 
         return $character->getPicture();

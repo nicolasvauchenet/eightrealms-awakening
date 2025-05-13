@@ -4,6 +4,8 @@ namespace App\DataFixtures\Character;
 
 use App\DataFixtures\Character\Npc\BoisDuPendu\BosquetDesDruidesTrait;
 use App\DataFixtures\Character\Npc\BoisDuPendu\ClairiereDeLOublieTrait;
+use App\DataFixtures\Character\Npc\DonjonDeLAme\AntichambreDuRoiTrait;
+use App\DataFixtures\Character\Npc\DonjonDeLAme\SalleDesMurmuresTrait;
 use App\DataFixtures\Character\Npc\MontsTerribles\ColDuVentNoirTrait;
 use App\DataFixtures\Character\Npc\Plouc\PloucTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\DocksDeLOuestTrait;
@@ -33,6 +35,8 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
     use ColDuVentNoirTrait;
     use CampAbandonneTrait;
     use OasisSansNomTrait;
+    use SalleDesMurmuresTrait;
+    use AntichambreDuRoiTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -57,6 +61,10 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
             // Sables Chauds
             self::CAMP_ABANDONNE_NPCS,
             self::OASIS_SANS_NOM_NPCS,
+
+            // Donjon de l'Âme
+            self::SALLE_DES_MURMURES_NPCS,
+            self::ANTICHAMBRE_DU_ROI_NPCS,
         ];
 
         foreach($allCharacters as $characters) {

@@ -6,6 +6,15 @@ use App\DataFixtures\Location\Location\BoisDuPendu\BoisDuPenduTrait;
 use App\DataFixtures\Location\Location\BoisDuPendu\BosquetDesDruidesTrait;
 use App\DataFixtures\Location\Location\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Location\Location\BoisDuPendu\CriqueDuPenduTrait;
+use App\DataFixtures\Location\Location\DonjonDeLAme\AntichambreDuRoiTrait;
+use App\DataFixtures\Location\Location\DonjonDeLAme\CrypteInverseeTrait;
+use App\DataFixtures\Location\Location\DonjonDeLAme\DonjonDeLAmeTrait;
+use App\DataFixtures\Location\Location\DonjonDeLAme\EntreeDuDonjonTrait;
+use App\DataFixtures\Location\Location\DonjonDeLAme\HallDEntreeTrait;
+use App\DataFixtures\Location\Location\DonjonDeLAme\SalleDesChainesTrait;
+use App\DataFixtures\Location\Location\DonjonDeLAme\SalleDesMurmuresTrait;
+use App\DataFixtures\Location\Location\DonjonDeLAme\SalleDuMiroirTrait;
+use App\DataFixtures\Location\Location\DonjonDeLAme\TombeauDeGaldricPremierTrait;
 use App\DataFixtures\Location\Location\ExternalTrait;
 use App\DataFixtures\Location\Location\MontsTerribles\ColDuVentNoirTrait;
 use App\DataFixtures\Location\Location\MontsTerribles\GouffreDAskalorTrait;
@@ -19,6 +28,7 @@ use App\DataFixtures\Location\Location\Plouc\BoisDesRelents\OreeDuBoisTrait;
 use App\DataFixtures\Location\Location\Plouc\PloucTrait;
 use App\DataFixtures\Location\Location\PortSaintDoux\AnciensDocksTrait;
 use App\DataFixtures\Location\Location\PortSaintDoux\DocksDeLOuestTrait;
+use App\DataFixtures\Location\Location\PortSaintDoux\NouvelleVilleTrait;
 use App\DataFixtures\Location\Location\PortSaintDoux\PortSaintDouxTrait;
 use App\DataFixtures\Location\Location\PortSaintDoux\QuartierDesChauvesTrait;
 use App\DataFixtures\Location\Location\PortSaintDoux\QuartierDesPloucsTrait;
@@ -45,6 +55,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
     use QuartierDesPloucsTrait;
     use QuartierDuMarcheTrait;
     use VieilleVilleTrait;
+    use NouvelleVilleTrait;
     use PloucTrait;
     use BoisDesRelentsTrait;
     use OreeDuBoisTrait;
@@ -63,6 +74,15 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
     use GrotteDesEchosTrait;
     use RefugeDuBoucBoiteuxTrait;
     use RocherDuDragonTrait;
+    use DonjonDeLAmeTrait;
+    use EntreeDuDonjonTrait;
+    use HallDEntreeTrait;
+    use SalleDesChainesTrait;
+    use SalleDuMiroirTrait;
+    use SalleDesMurmuresTrait;
+    use CrypteInverseeTrait;
+    use AntichambreDuRoiTrait;
+    use TombeauDeGaldricPremierTrait;
     use ExternalTrait;
 
     public function load(ObjectManager $manager): void
@@ -79,6 +99,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
             self::QUARTIER_DES_CHAUVES_LOCATIONS,
             self::DOCKS_DE_L_OUEST_LOCATIONS,
             self::ANCIENS_DOCKS_LOCATIONS,
+            self::NOUVELLE_VILLE_LOCATIONS,
 
             // Plouc
             self::PLOUC_LOCATIONS,
@@ -106,6 +127,17 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
             self::GOUFFRE_D_ASKALOR_LOCATIONS,
             self::ROCHER_DU_DRAGON_LOCATIONS,
 
+            // Donjon de l'Âme
+            self::DONJON_DE_L_AME_LOCATIONS,
+            self::ENTREE_DU_DONJON_LOCATIONS,
+            self::HALL_D_ENTREE_LOCATIONS,
+            self::SALLE_DES_CHAINES_LOCATIONS,
+            self::SALLE_DU_MIROIR_LOCATIONS,
+            self::SALLE_DES_MURMURES_LOCATIONS,
+            self::CRYPTE_INVERSEE_LOCATIONS,
+            self::ANTICHAMBRE_DU_ROI_LOCATIONS,
+            self::TOMBEAU_DE_GALDRIC_PREMIER_LOCATIONS,
+
             // Externes - Rencontres
             self::EXTERNAL_LOCATIONS,
         ];
@@ -116,6 +148,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                 $location->setName($data['name'])
                     ->setPicture($data['picture'] ?? null)
                     ->setDescription($data['description'])
+                    ->setDescriptionAlt($data['descriptionAlt'] ?? null)
                     ->setType($data['type'])
                     ->setThumbnail($data['thumbnail'] ?? null)
                     ->setParent(isset($data['parent']) ? $this->getReference($data['parent'], Location::class) : null)

@@ -5,8 +5,6 @@ namespace App\Service\Character;
 use App\Entity\Character\Player;
 use App\Entity\Character\Character;
 use App\Entity\Character\PlayerCharacter;
-use App\Entity\Location\CharacterLocation;
-use App\Entity\Location\Location;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CharacterReputationService
@@ -262,5 +260,18 @@ class CharacterReputationService
         }
 
         $this->entityManager->flush();
+    }
+
+    public function getReputation(Player $player, Character $character): int
+    {
+        $playerCharacter = $this->entityManager->getRepository(PlayerCharacter::class)->findOneBy([
+            'player' => $player,
+            'character' => $character,
+        ]);
+        if(!$playerCharacter) {
+            return 0;
+        }
+
+        return $playerCharacter->getReputation() ?? 0;
     }
 }

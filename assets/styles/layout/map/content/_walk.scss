@@ -1,7 +1,7 @@
 &.walk {
   .locations {
     @include displayGrid(repeat(2, 1fr), 1.5rem);
-    grid-template-rows: repeat(3, 1fr);
+    /*grid-template-rows: repeat(4, 1fr);*/
     overflow-y: auto;
     margin: 0 0.5rem 1rem;
     padding: 0.5rem;
@@ -12,6 +12,7 @@
       &.outline {
         position: relative;
         padding: 0.25rem;
+        height: calc(25dvh - 0.5rem);
         font-size: 1.25rem;
         background-color: rgba($black, 0.75);
         border: 0.25rem groove $secondary;

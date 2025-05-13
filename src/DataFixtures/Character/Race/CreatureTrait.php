@@ -50,5 +50,10 @@ trait CreatureTrait
             'playable' => false,
             'reference' => 'race_squelette',
         ],
+        [
+            'name' => 'Démon',
+            'playable' => false,
+            'reference' => 'race_demon',
+        ],
     ];
 }

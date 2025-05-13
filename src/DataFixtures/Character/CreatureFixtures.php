@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Character;
 
 use App\DataFixtures\Character\Creature\BouquetinTrait;
+use App\DataFixtures\Character\Creature\DemonTrait;
 use App\DataFixtures\Character\Creature\DragonTrait;
 use App\DataFixtures\Character\Creature\FantomeTrait;
 use App\DataFixtures\Character\Creature\GobelinTrait;
@@ -28,6 +29,7 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
     use BouquetinTrait;
     use DragonTrait;
     use SqueletteTrait;
+    use DemonTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -58,6 +60,9 @@ class CreatureFixtures extends Fixture implements OrderedFixtureInterface
 
             // Squelettes
             self::SQUELETTE_CREATURES,
+
+            // Démons
+            self::DEMON_CREATURES,
         ];
 
         foreach($allCreatures as $creatures) {

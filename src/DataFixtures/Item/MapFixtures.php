@@ -76,6 +76,16 @@ class MapFixtures extends Fixture implements OrderedFixtureInterface
                 'thumbnail' => 'mountain.png',
                 'reference' => 'map_monts_terribles',
             ],
+            [
+                'name' => "Donjon de l'Âme",
+                'description' => "<p>Ce plan ancien dévoile les sinistres entrailles du Donjon de l’Âme. On y distingue plusieurs salles reliées par de petits couloirs, comme un enchaînement de pièges conçu pour mener les imprudents à leur perte.</p><p>La carte ne révèle ni comment y entrer, ni ce qui s’y cache vraiment. Mais les noms suffisent à glacer le sang. Un avertissement, ou une invitation…</p>",
+                'picture' => 'donjon-de-lame.png',
+                'type' => 'location',
+                'price' => 5000,
+                'category' => 'category_map',
+                'thumbnail' => 'dungeon.png',
+                'reference' => 'map_donjon_de_l_ame',
+            ],
         ];
 
         foreach($maps as $data) {

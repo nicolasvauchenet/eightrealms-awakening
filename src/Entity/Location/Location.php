@@ -36,6 +36,9 @@ class Location
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descriptionAlt = null;
+
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
@@ -136,6 +139,18 @@ class Location
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDescriptionAlt(): ?string
+    {
+        return $this->descriptionAlt;
+    }
+
+    public function setDescriptionAlt(?string $descriptionAlt): static
+    {
+        $this->descriptionAlt = $descriptionAlt;
 
         return $this;
     }
@@ -244,7 +259,7 @@ class Location
     public function setLocationScreen(LocationScreen $locationScreen): static
     {
         // set the owning side of the relation if necessary
-        if ($locationScreen->getLocation() !== $this) {
+        if($locationScreen->getLocation() !== $this) {
             $locationScreen->setLocation($this);
         }
 
@@ -263,7 +278,7 @@ class Location
 
     public function addCombat(Combat $combat): static
     {
-        if (!$this->combats->contains($combat)) {
+        if(!$this->combats->contains($combat)) {
             $this->combats->add($combat);
             $combat->setLocation($this);
         }
@@ -273,9 +288,9 @@ class Location
 
     public function removeCombat(Combat $combat): static
     {
-        if ($this->combats->removeElement($combat)) {
+        if($this->combats->removeElement($combat)) {
             // set the owning side to null (unless already changed)
-            if ($combat->getLocation() === $this) {
+            if($combat->getLocation() === $this) {
                 $combat->setLocation(null);
             }
         }

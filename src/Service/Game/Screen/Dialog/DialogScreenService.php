@@ -18,7 +18,7 @@ readonly class DialogScreenService
         private EntityManagerInterface     $entityManager,
         private ExitActionResolver         $exitActionResolver,
         private DialogEffectApplierService $dialogEffectApplierService,
-        private EventDispatcherInterface   $eventDispatcher,
+        private EventDispatcherInterface   $eventDispatcher
     )
     {
     }

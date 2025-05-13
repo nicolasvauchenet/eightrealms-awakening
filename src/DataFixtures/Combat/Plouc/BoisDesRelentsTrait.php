@@ -9,7 +9,7 @@ trait BoisDesRelentsTrait
     const BOIS_DES_RELENTS_COMBATS = [
         // Quêtes
         [
-            'name' => 'Livraison en Cours',
+            'name' => 'Le campement Gobelin',
             'picture' => 'img/chapter1/combat/plouc-campement-gobelin.webp',
             'thumbnail' => 'img/chapter1/combat/plouc-campement-gobelin_thumb.png',
             'description' => "<p>Alertes et vifs comme l'éclair, les guerriers gobelins brandissent leurs armes, un sourire féroce aux lèvres. Leur chef, encore plus massif et mieux équipé, pousse un cri guttural qui rassemble ses troupes autour de lui. Leurs yeux brillent d’une haine vive et d’une soif de sang&nbsp;:&nbsp;ils ne cherchent plus à parlementer. Ils veulent se battre. Et ils comptent bien cogner dur, jusqu’au dernier souffle.</p>",

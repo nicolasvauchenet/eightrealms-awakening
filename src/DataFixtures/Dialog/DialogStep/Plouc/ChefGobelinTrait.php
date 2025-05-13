@@ -13,7 +13,7 @@ trait ChefGobelinTrait
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'livraison-en-cours',
-                    'quest_step' => 3,
+                    'quest_step' => 5,
                     'status' => 'progress',
                 ],
             ],
@@ -86,51 +86,7 @@ trait ChefGobelinTrait
                     'status' => 'progress',
                 ],
             ],
-            'effects' => [
-                'edit_quest_step_status' => [
-                    [
-                        'quest' => 'livraison-en-cours',
-                        'quest_step' => 3,
-                        'status' => 'completed',
-                    ],
-                    [
-                        'quest' => 'livraison-en-cours',
-                        'quest_step' => 4,
-                        'status' => 'skipped',
-                    ],
-                    [
-                        'quest' => 'livraison-en-cours',
-                        'quest_step' => 5,
-                        'status' => 'completed',
-                    ],
-                    [
-                        'quest' => 'livraison-en-cours',
-                        'quest_step' => 7,
-                        'status' => 'skipped',
-                    ],
-                    [
-                        'quest' => 'livraison-en-cours',
-                        'quest_step' => 8,
-                        'status' => 'skipped',
-                    ],
-                    [
-                        'quest' => 'livraison-en-cours',
-                        'quest_step' => 9,
-                        'status' => 'skipped',
-                    ],
-                    [
-                        'quest' => 'livraison-en-cours',
-                        'quest_step' => 10,
-                        'status' => 'skipped',
-                    ],
-                ],
-                'start_quest_step' => [
-                    [
-                        'quest' => 'livraison-en-cours',
-                        'quest_step' => 6,
-                    ],
-                ],
-            ],
+            'redirectToCombat' => 'le-campement-gobelin',
             'dialog' => 'quest_chef_gobelin',
             'reference' => 'quest_step_chef_gobelin_4',
         ],
@@ -200,7 +156,7 @@ trait ChefGobelinTrait
         // Dialogue normal
         [
             'name' => 'Chef Gobelin - Dialogue',
-            'text' => "<p>Le Chef Gobelin vous accueille avec un grand sourire.</p><p><em>On y est bien ici, avec les pêcheurs. Y sont pas si cruels que j'pensais, et on commence à s'connaître.</em></p>",
+            'text' => "<p>Le Chef Gobelin vous accueille avec un grand sourire.</p><p><em>On y est bien ici, avec les pêcheurs. Y sont pas si cruels que j'pensais, et on commence à s'connaître.</em></p><p>Il pose les mains sur son ventre rebondi et prend un air émerveillé.</p><p><em>Et maint'nant, on graille à not'faim&nbsp;!</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_status' => [

@@ -91,7 +91,7 @@ trait GartLeForgeronTrait
                     [
                         'quest_step_status_not' => [
                             'quest' => 'livraison-en-cours',
-                            'quest_step' => 10,
+                            'quest_step' => 11,
                             'status' => 'progress',
                         ],
                     ],
@@ -123,7 +123,7 @@ trait GartLeForgeronTrait
                     [
                         'quest_step_status' => [
                             'quest' => 'livraison-en-cours',
-                            'quest_step' => 10,
+                            'quest_step' => 11,
                             'status' => 'progress',
                         ],
                     ],
@@ -131,9 +131,16 @@ trait GartLeForgeronTrait
             ],
             'effects' => [
                 'edit_quest_step_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'quest_step' => 11,
-                    'status' => 'completed',
+                    [
+                        'quest' => 'livraison-en-cours',
+                        'quest_step' => 11,
+                        'status' => 'completed',
+                    ],
+                    [
+                        'quest' => 'livraison-en-cours',
+                        'quest_step' => 12,
+                        'status' => 'completed',
+                    ],
                 ],
                 'reward_quest' => 'livraison-en-cours',
             ],

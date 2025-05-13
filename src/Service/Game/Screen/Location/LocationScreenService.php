@@ -3,6 +3,7 @@
 namespace App\Service\Game\Screen\Location;
 
 use App\Entity\Character\Player;
+use App\Entity\Location\CharacterLocation;
 use App\Entity\Location\Location;
 use App\Entity\Screen\LocationScreen;
 use App\Service\Game\Conditions\ConditionEvaluatorService;
@@ -62,6 +63,24 @@ readonly class LocationScreenService
                     ];
                 }
 
+                // Combat
+                $combats = $location->getCombats() ?? [];
+                foreach($combats as $combat) {
+                    $conditions = $combat->getConditions();
+
+                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
+                        continue;
+                    }
+
+                    $footerActions[] = [
+                        'type' => 'combat',
+                        'slug' => $combat->getSlug(),
+                        'label' => $combat->getName(),
+                        'thumbnail' => $combat->getThumbnail(),
+                        'isQuest' => $combat->getQuestStep() ? true : false,
+                    ];
+                }
+
                 // Accès aux bâtiments enfants
                 $hasBuildings = false;
                 foreach($location->getChildren() as $childLocation) {
@@ -76,16 +95,28 @@ readonly class LocationScreenService
                     }
                 }
 
-                // Explorer
+                // Explorer uniquement si aucun enfant n'a été visité
                 if(!$hasBuildings) {
-                    $firstChild = $location->getChildren()->first();
-                    if($firstChild) {
-                        $footerActions[] = [
-                            'type' => 'location',
-                            'slug' => $firstChild->getSlug(),
-                            'label' => 'Explorer',
-                            'thumbnail' => 'img/core/action/walk.png',
-                        ];
+                    $hasVisitedChild = false;
+                    foreach($location->getChildren() as $child) {
+                        $visited = $this->entityManager->getRepository(CharacterLocation::class)
+                            ->findOneBy(['character' => $player, 'location' => $child]);
+                        if($visited) {
+                            $hasVisitedChild = true;
+                            break;
+                        }
+                    }
+
+                    if(!$hasVisitedChild) {
+                        $firstChild = $location->getChildren()->first();
+                        if($firstChild) {
+                            $footerActions[] = [
+                                'type' => 'location',
+                                'slug' => $firstChild->getSlug(),
+                                'label' => 'Explorer',
+                                'thumbnail' => 'img/core/action/walk.png',
+                            ];
+                        }
                     }
                 }
                 break;
@@ -114,7 +145,6 @@ readonly class LocationScreenService
                 $combats = $location->getCombats() ?? [];
                 foreach($combats as $combat) {
                     $conditions = $combat->getConditions();
-
                     if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
                         continue;
                     }
@@ -141,7 +171,7 @@ readonly class LocationScreenService
                 }
 
                 // Zone suivante
-                $parent = $location->getParent();
+                /*$parent = $location->getParent();
                 if($parent && $parent->getSlug() !== 'port-saint-doux') {
                     $siblings = $parent->getChildren()->filter(
                         fn(Location $child) => $child->getType() === 'zone'
@@ -155,7 +185,6 @@ readonly class LocationScreenService
                         if(isset($siblings[$nextIndex])) {
                             $nextZone = $siblings[$nextIndex];
                         } else {
-                            // Boucle : retour à la première zone
                             $nextZone = $siblings[0] ?? null;
                         }
 
@@ -168,7 +197,7 @@ readonly class LocationScreenService
                             ];
                         }
                     }
-                }
+                }*/
                 break;
 
             case 'building':

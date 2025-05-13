@@ -37,10 +37,17 @@ class Reward
     #[ORM\OneToMany(targetEntity: RewardItem::class, mappedBy: 'reward', orphanRemoval: true)]
     private Collection $rewardItems;
 
+    /**
+     * @var Collection<int, RewardLocation>
+     */
+    #[ORM\OneToMany(targetEntity: RewardLocation::class, mappedBy: 'reward', orphanRemoval: true)]
+    private Collection $rewardLocations;
+
     public function __construct()
     {
         $this->playerRewards = new ArrayCollection();
         $this->rewardItems = new ArrayCollection();
+        $this->rewardLocations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,6 +145,36 @@ class Reward
             // set the owning side to null (unless already changed)
             if($rewardItem->getReward() === $this) {
                 $rewardItem->setReward(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RewardLocation>
+     */
+    public function getRewardLocations(): Collection
+    {
+        return $this->rewardLocations;
+    }
+
+    public function addRewardLocation(RewardLocation $rewardLocation): static
+    {
+        if (!$this->rewardLocations->contains($rewardLocation)) {
+            $this->rewardLocations->add($rewardLocation);
+            $rewardLocation->setReward($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRewardLocation(RewardLocation $rewardLocation): static
+    {
+        if ($this->rewardLocations->removeElement($rewardLocation)) {
+            // set the owning side to null (unless already changed)
+            if ($rewardLocation->getReward() === $this) {
+                $rewardLocation->setReward(null);
             }
         }
 

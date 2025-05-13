@@ -40,11 +40,29 @@ trait PloucTrait
         [
             'character' => 'creature_chef_gobelin',
             'characterClass' => Creature::class,
-            'location' => 'location_campement_gobelin',
+            'location' => 'location_zone_campement_gobelin',
             'conditions' => [
-                'quest_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'status' => 'progress',
+                'all' => [
+                    [
+                        'quest_status' => [
+                            'quest' => 'livraison-en-cours',
+                            'status' => 'progress',
+                        ],
+                    ],
+                    [
+                        'quest_step_status_not' => [
+                            'quest' => 'livraison-en-cours',
+                            'quest_step' => 6,
+                            'status' => 'progress',
+                        ],
+                    ],
+                    [
+                        'quest_step_status_not' => [
+                            'quest' => 'livraison-en-cours',
+                            'quest_step' => 11,
+                            'status' => 'progress',
+                        ],
+                    ],
                 ],
             ],
             'reference' => 'location_zone_campement_gobelin_chef_gobelin',
@@ -54,9 +72,20 @@ trait PloucTrait
             'characterClass' => Creature::class,
             'location' => 'location_plouc',
             'conditions' => [
-                'quest_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'status' => 'rewarded',
+                'all' => [
+                    [
+                        'quest_status' => [
+                            'quest' => 'livraison-en-cours',
+                            'status' => 'rewarded',
+                        ],
+                    ],
+                    [
+                        'quest_step_status' => [
+                            'quest' => 'livraison-en-cours',
+                            'quest_step' => 6,
+                            'status' => 'skipped',
+                        ],
+                    ],
                 ],
             ],
             'reference' => 'location_plouc_chef_gobelin',

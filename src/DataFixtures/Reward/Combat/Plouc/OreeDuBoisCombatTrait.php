@@ -16,6 +16,9 @@ trait OreeDuBoisCombatTrait
                     'quantity' => 3,
                 ],
             ],
+            'locations' => [
+                'location_zone_campement_gobelin',
+            ],
             'crowns' => 0,
             'experience' => 30,
             'reference' => 'reward_combat_plouc_eclaireurs_gobelins',

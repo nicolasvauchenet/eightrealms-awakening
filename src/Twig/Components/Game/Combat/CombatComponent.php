@@ -6,6 +6,7 @@ use App\Entity\Character\Player;
 use App\Entity\Combat\PlayerCombat;
 use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Item\CharacterItem;
+use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\Screen\CombatScreen;
 use App\Service\Character\CharacterBonusService;
 use App\Service\Character\CharacterReputationService;
@@ -253,15 +254,36 @@ class CombatComponent extends AbstractController
             $this->playerCombat->setStatus('completed');
             $this->entityManager->persist($this->playerCombat);
 
-            // Gestion de la quête liée au combat
             $questStep = $this->screen->getCombat()->getQuestStep();
             if($questStep) {
-                $this->questProgressionService->editQuestStepStatus($this->character, [[
-                    'quest' => $questStep->getQuest()->getSlug(),
+                $quest = $questStep->getQuest();
+                $stepsToUnlock = [[
+                    'quest' => $quest->getSlug(),
                     'quest_step' => $questStep->getPosition(),
                     'status' => 'completed',
-                    'next' => 'progress',
-                ]]);
+                ]];
+
+                $nextStep = $this->questService->getNextQuestStep($questStep);
+                while($nextStep) {
+                    $playerStep = $this->entityManager->getRepository(PlayerQuestStep::class)
+                        ->findOneBy(['player' => $this->character, 'questStep' => $nextStep]);
+
+                    if(!$playerStep) {
+                        $stepsToUnlock[] = [
+                            'quest' => $quest->getSlug(),
+                            'quest_step' => $nextStep->getPosition(),
+                            'status' => 'progress',
+                        ];
+                        break;
+                    }
+
+                    if($playerStep->getStatus() !== 'skipped') {
+                        break;
+                    }
+
+                    $nextStep = $this->questService->getNextQuestStep($nextStep);
+                }
+                $this->questProgressionService->editQuestStepStatus($this->character, $stepsToUnlock);
             }
 
             $this->entityManager->flush();

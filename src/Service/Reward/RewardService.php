@@ -8,13 +8,15 @@ use App\Entity\Reward\Reward;
 use App\Entity\Reward\RewardItem;
 use App\Entity\Screen\Screen;
 use App\Service\Item\CharacterInventoryService;
+use App\Service\Location\LocationService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class RewardService
 {
     public function __construct(
         private EntityManagerInterface    $entityManager,
-        private CharacterInventoryService $inventoryService
+        private CharacterInventoryService $inventoryService,
+        private LocationService           $locationService,
     )
     {
     }
@@ -49,6 +51,10 @@ readonly class RewardService
             $this->giveItems($reward->getRewardItems(), $player);
         }
 
+        if($reward->getRewardLocations()) {
+            $this->revealLocations($reward->getRewardLocations(), $player);
+        }
+
         if($reward->getCrowns()) {
             $player->setFortune($player->getFortune() + $reward->getCrowns());
         }
@@ -74,6 +80,13 @@ readonly class RewardService
             for($i = 0; $i < $quantity; $i++) {
                 $this->inventoryService->addItem($player, $item->getSlug(), $isQuestItem);
             }
+        }
+    }
+
+    private function revealLocations(iterable $rewardLocations, Player $player): void
+    {
+        foreach($rewardLocations as $rewardLocation) {
+            $this->locationService->revealLocation($player, $rewardLocation->getLocation()->getSlug());
         }
     }
 }

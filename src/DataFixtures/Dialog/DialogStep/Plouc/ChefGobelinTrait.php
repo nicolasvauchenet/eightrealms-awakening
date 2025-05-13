@@ -50,7 +50,6 @@ trait ChefGobelinTrait
                         'quest_step' => 3,
                         'status' => 'completed',
                     ],
-                    // TEMP>
                     [
                         'quest' => 'livraison-en-cours',
                         'quest_step' => 4,
@@ -61,7 +60,6 @@ trait ChefGobelinTrait
                         'quest_step' => 5,
                         'status' => 'completed',
                     ],
-                    // <TEMP
                     [
                         'quest' => 'livraison-en-cours',
                         'quest_step' => 6,
@@ -95,7 +93,6 @@ trait ChefGobelinTrait
                         'quest_step' => 3,
                         'status' => 'completed',
                     ],
-                    // TEMP>
                     [
                         'quest' => 'livraison-en-cours',
                         'quest_step' => 4,
@@ -106,7 +103,6 @@ trait ChefGobelinTrait
                         'quest_step' => 5,
                         'status' => 'completed',
                     ],
-                    // <TEMP
                     [
                         'quest' => 'livraison-en-cours',
                         'quest_step' => 7,
@@ -186,10 +182,15 @@ trait ChefGobelinTrait
                         'quest_step' => 9,
                         'status' => 'skipped',
                     ],
+                    [
+                        'quest' => 'livraison-en-cours',
+                        'quest_step' => 10,
+                        'status' => 'completed',
+                    ],
                 ],
                 'start_quest_step' => [
                     'quest' => 'livraison-en-cours',
-                    'quest_step' => 10,
+                    'quest_step' => 11,
                 ],
             ],
             'dialog' => 'quest_chef_gobelin',

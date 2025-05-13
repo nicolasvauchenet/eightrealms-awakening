@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Character;
+namespace App\Service\Location;
 
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;

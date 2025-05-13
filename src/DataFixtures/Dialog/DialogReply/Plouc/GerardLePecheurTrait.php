@@ -19,7 +19,7 @@ trait GerardLePecheurTrait
             'reference' => 'quest_reply_gerard_le_pecheur_2_1',
         ],
         [
-            'text' => "Je peux vous aider si vous voulez",
+            'text' => "Restez ici. Je vais y aller",
             'dialogStep' => 'quest_step_gerard_le_pecheur_3',
             'nextStep' => 'quest_step_gerard_le_pecheur_4',
             'reference' => 'quest_reply_gerard_le_pecheur_3_1',

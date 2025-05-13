@@ -60,7 +60,7 @@ trait GerardLePecheurTrait
         ],
         [
             'name' => 'Gérard - Accepter la quête',
-            'text' => "<p>Il vous fixe, surpris, puis baisse les yeux sur le bouclier. Soupire.</p><p><em>Vous feriez ça&nbsp;? Bon sang… J’ai beau faire le fier, je sais bien que j’ai plus vingt ans. Prenez-le, le bouclier. Suivez le sentier derrière les vieux chênes, à l’orée du bois. Ça devrait vous mener tout droit à leur planque. Et méfiez-vous, ces saletés sont rusées comme des rats d’égout.</em></p>",
+            'text' => "<p>Il vous fixe, surpris, puis baisse les yeux sur le bouclier. Soupire.</p><p><em>Vous feriez ça&nbsp;? Bon sang… J’ai beau faire le fier, je sais bien que j’ai plus vingt ans. Prenez-le, le bouclier. Suivez le sentier derrière les vieux chênes, à l’orée du Bois des Relents. Ça devrait vous mener tout droit à leur planque. Et méfiez-vous, ces saletés sont rusées comme des rats d’égout.</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_step_status' => [
@@ -70,7 +70,9 @@ trait GerardLePecheurTrait
                 ],
             ],
             'effects' => [
-                'reveal_location' => 'campement-gobelin',
+                'reveal_location' => [
+                    'bois-des-relents',
+                ],
                 'add_items' => [
                     [
                         'item' => 'bouclier-en-fer',
@@ -160,6 +162,7 @@ trait GerardLePecheurTrait
         [
             'name' => 'Gérard - Quête terminée',
             'text' => "<p>Gérard ouvre la porte, l'air fatigué, puis sourit en vous voyant.</p><p><em>C’est fait&nbsp;? Par tous les diables du large, vous l’avez fait&nbsp;? Merci… Vraiment. Gardez le bouclier. Il est à vous. Et prenez ces poissons, c’est pas grand-chose, mais c’est de bon cœur. Et dites à l'enclumeur que j'viendrai lui apporter son tonneau, même qu'on l'boira ensemble&nbsp;!</em></p>",
+            'first' => true,
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'livraison-en-cours',
@@ -168,7 +171,23 @@ trait GerardLePecheurTrait
                 ],
             ],
             'effects' => [
+                'add_items' => [
+                    [
+                        'item' => 'poisson-grille',
+                    ],
+                    [
+                        'item' => 'poisson-grille',
+                    ],
+                    [
+                        'item' => 'poisson-grille',
+                    ],
+                ],
                 'edit_quest_step_status' => [
+                    [
+                        'quest' => 'livraison-en-cours',
+                        'quest_step' => 6,
+                        'status' => 'completed',
+                    ],
                     [
                         'quest' => 'livraison-en-cours',
                         'quest_step' => 7,
@@ -190,6 +209,12 @@ trait GerardLePecheurTrait
                         'status' => 'skipped',
                     ],
                 ],
+                'start_quest_step' => [
+                    [
+                        'quest' => 'livraison-en-cours',
+                        'quest_step' => 11,
+                    ],
+                ],
             ],
             'dialog' => 'quest_gerard_le_pecheur',
             'reference' => 'quest_step_gerard_le_pecheur_6',
@@ -197,6 +222,7 @@ trait GerardLePecheurTrait
         [
             'name' => 'Gérard - Quête en négociation',
             'text' => "<p>Gérard ouvre la porte, l'air fatigué, puis sourit en vous voyant.</p><p><em>C’est fait&nbsp;? Vous les avez exterminés&nbsp;?</em></p>",
+            'first' => true,
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'livraison-en-cours',
@@ -219,7 +245,6 @@ trait GerardLePecheurTrait
         [
             'name' => 'Gérard - Quête en négociation 2',
             'text' => "<p>Gérard prend son air le plus sombre et renfrogné, crache par terre et vous regarde sévèrement.</p><p><em>Vous voulez qu’on papote avec ces fouilles-merde&nbsp;? Qu’on leur offre le gîte tant qu’on y est&nbsp;? Jamais&nbsp;! Des voleurs, des parasites, des enflures, voilà ce qu’ils sont&nbsp;! Si c'est pour ça qu'vous êtes revenu, c'était pas la peine de… heu… de revenir&nbsp;! Fallait rester papoter avec vos nouveaux amis.</em></p>",
-            'first' => true,
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'livraison-en-cours',
@@ -315,16 +340,51 @@ trait GerardLePecheurTrait
         // Dialogue normal
         [
             'name' => 'Gérard - Dialogue',
-            'text' => "<p><em>Vous savez quoi&nbsp;? Je m'étais trompé sur le compte des gobelins… Ouais, je l'avoue.</em></p><p>Gérard vous regarde d'un air radieux et reconnaissant.</p><p><em>Y sont travailleurs ces fumi… ces p'tits gars&nbsp;! Bon ils puent comme pas permis, mais l'odeur du poisson leur fait rien, au moins. Et y arrivent même à me surprendre par leur gentillesse, quand on est bien avec eux.</em></p><p>Il se gratte menton, pensif.</p><p><em>Et j'dois avouer… On se sent plus en sécurité maintenant qu'y sont au village.</em></p>",
+            'text' => "<p><em>On se sent bien mieux maintenant, grâce à vous. Y'a encore des braves dans c'te royaume, et vous en êtes, pour sûr&nbsp;!</em></p>",
             'first' => true,
             'conditions' => [
-                'quest_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'status' => 'rewarded',
+                'all' => [
+                    [
+                        'quest_status' => [
+                            'quest' => 'livraison-en-cours',
+                            'status' => 'rewarded',
+                        ],
+                    ],
+                    [
+                        'quest_step_status_not' => [
+                            'quest' => 'livraison-en-cours',
+                            'quest_step' => 6,
+                            'status' => 'skipped',
+                        ],
+                    ],
                 ],
             ],
             'dialog' => 'dialog_gerard_le_pecheur',
             'reference' => 'dialog_step_gerard_le_pecheur_1',
+        ],
+        [
+            'name' => 'Gérard - Dialogue',
+            'text' => "<p><em>Vous savez quoi&nbsp;? Je m'étais trompé sur le compte des gobelins… Ouais, je l'avoue.</em></p><p>Gérard vous regarde d'un air radieux et reconnaissant.</p><p><em>Y sont travailleurs ces fumi… ces p'tits gars&nbsp;! Bon ils puent comme pas permis, mais l'odeur du poisson leur fait rien, au moins. Et y arrivent même à me surprendre par leur gentillesse, quand on est bien avec eux.</em></p><p>Il se gratte menton, pensif.</p><p><em>Et j'dois avouer… On se sent plus en sécurité maintenant qu'y sont au village.</em></p>",
+            'first' => true,
+            'conditions' => [
+                'all' => [
+                    [
+                        'quest_status' => [
+                            'quest' => 'livraison-en-cours',
+                            'status' => 'rewarded',
+                        ],
+                    ],
+                    [
+                        'quest_step_status_not' => [
+                            'quest' => 'livraison-en-cours',
+                            'quest_step' => 6,
+                            'status' => 'completed',
+                        ],
+                    ],
+                ],
+            ],
+            'dialog' => 'dialog_gerard_le_pecheur',
+            'reference' => 'dialog_step_gerard_le_pecheur_2',
         ],
 
         // Ragots

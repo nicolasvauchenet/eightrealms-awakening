@@ -13,7 +13,9 @@ use App\DataFixtures\Location\Location\MontsTerribles\GrotteDesEchosTrait;
 use App\DataFixtures\Location\Location\MontsTerribles\MontsTerriblesTrait;
 use App\DataFixtures\Location\Location\MontsTerribles\RefugeDuBoucBoiteuxTrait;
 use App\DataFixtures\Location\Location\MontsTerribles\RocherDuDragonTrait;
-use App\DataFixtures\Location\Location\Plouc\CampementGobelinTrait;
+use App\DataFixtures\Location\Location\Plouc\BoisDesRelents\BoisDesRelentsTrait;
+use App\DataFixtures\Location\Location\Plouc\BoisDesRelents\CampementGobelinTrait;
+use App\DataFixtures\Location\Location\Plouc\BoisDesRelents\OreeDuBoisTrait;
 use App\DataFixtures\Location\Location\Plouc\PloucTrait;
 use App\DataFixtures\Location\Location\PortSaintDoux\AnciensDocksTrait;
 use App\DataFixtures\Location\Location\PortSaintDoux\DocksDeLOuestTrait;
@@ -44,6 +46,8 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
     use QuartierDuMarcheTrait;
     use VieilleVilleTrait;
     use PloucTrait;
+    use BoisDesRelentsTrait;
+    use OreeDuBoisTrait;
     use CampementGobelinTrait;
     use BoisDuPenduTrait;
     use ClairiereDeLOublieTrait;
@@ -78,6 +82,8 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
 
             // Plouc
             self::PLOUC_LOCATIONS,
+            self::BOIS_DES_RELENTS_LOCATIONS,
+            self::OREE_DU_BOIS_LOCATIONS,
             self::CAMPEMENT_GOBELIN_LOCATIONS,
 
             // Sables Chauds

@@ -27,7 +27,7 @@ trait LivraisonEnCoursTrait
             'reference' => 'quest_secondary_livraison_en_cours_step_3',
         ],
         [
-            'description' => "<p>J'ai discuté avec Gérard, et j'ai vite compris qu'il comptait utiliser le bouclier pour un mission suicide&nbsp;:&nbsp;allez chasser une bande de gobelins… Ils sont fous ces pêcheurs. Je retourne en ville.</p>",
+            'description' => "<p>J'ai discuté avec Gérard, et j'ai vite compris qu'il comptait utiliser le bouclier pour un mission suicide&nbsp;:&nbsp;allez chasser une bande de gobelins… Ils sont fous ces pêcheurs.</p>",
             'position' => 4,
             'last' => false,
             'quest' => 'quest_secondary_livraison_en_cours',
@@ -62,25 +62,32 @@ trait LivraisonEnCoursTrait
             'reference' => 'quest_secondary_livraison_en_cours_step_8',
         ],
         [
-            'description' => "<p>Gérard est têtu et ne veut pas entendre parler de paix avec les gobelins. Tant pis, je n'ai pas le temps de discuter. Je lui ai rendu le bouclier et j'ai quitté ce village de fous. Je vais retourner voir Gart le Forgeron à Port Saint-Doux.</p>",
+            'description' => "<p>Gérard est têtu et ne veut pas entendre parler de paix avec les gobelins. Tant pis, je n'ai pas le temps de discuter. Je lui ai rendu le bouclier et j'ai quitté ce village de fous.</p>",
             'position' => 9,
             'last' => false,
             'quest' => 'quest_secondary_livraison_en_cours',
             'reference' => 'quest_secondary_livraison_en_cours_step_9',
         ],
         [
-            'description' => "<p>Je suis retourné au campement gobelin, pour les informer et les mettre en garde. Le chef gobelin m’a remercié, il m'a offert un anneau magique et une information étrange sur un vieil homme qu’ils ont aperçu dans la forêt, qui parlait seul et se dirigeait vers le Col du Vent Noir. Était-ce le Roi&nbsp;? Je n'en sais pas plus. Je retournerai peut-être à Plouc un jour, pour voir si tout se passe bien… En attendant, je vais retourner informer Gart que la livraison s'est bien passée.</p>",
+            'description' => "<p>Je suis retourné au campement gobelin, pour les informer et les mettre en garde. Le chef gobelin m’a remercié, il m'a offert un anneau magique et une information étrange sur un vieil homme qu’ils ont aperçu dans la forêt, qui parlait seul et se dirigeait vers le Col du Vent Noir. Était-ce le Roi&nbsp;? Je n'en sais pas plus. Je retournerai peut-être à Plouc un jour, pour voir si tout se passe bien…</p>",
             'position' => 10,
             'last' => false,
             'quest' => 'quest_secondary_livraison_en_cours',
             'reference' => 'quest_secondary_livraison_en_cours_step_10',
         ],
         [
-            'description' => "<p>Je suis retourné voir Gart le Forgeron à Port Saint-Doux. Il m’a remercié pour la livraison et m'a offert une belle récompense. Cette course m'aura permis de découvrir le Royaume un peu plus.</p>",
+            'description' => "<p> Je vais retourner voir Gart à Port Saint-Doux.</p>",
             'position' => 11,
-            'last' => true,
+            'last' => false,
             'quest' => 'quest_secondary_livraison_en_cours',
             'reference' => 'quest_secondary_livraison_en_cours_step_11',
+        ],
+        [
+            'description' => "<p>Je suis retourné voir le forgeron. Il m’a remercié pour la livraison et m'a offert une belle récompense. Cette course m'aura permis de découvrir le Royaume un peu plus.</p>",
+            'position' => 12,
+            'last' => true,
+            'quest' => 'quest_secondary_livraison_en_cours',
+            'reference' => 'quest_secondary_livraison_en_cours_step_12',
         ],
     ];
 }

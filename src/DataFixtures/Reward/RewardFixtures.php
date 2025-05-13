@@ -12,8 +12,10 @@ use App\DataFixtures\Reward\QuestCombat\Plouc\CampementGobelinQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\PortSaintDoux\AnciensDocksQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\PortSaintDoux\DocksDeLOuestQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\SablesChauds\OasisSansNomQuestCombatTrait;
+use App\Entity\Location\Location;
 use App\Entity\Reward\Reward;
 use App\Entity\Reward\RewardItem;
+use App\Entity\Reward\RewardLocation;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -61,18 +63,25 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
             foreach($rewards as $data) {
                 $reward = (new Reward())
                     ->setPicture($data['picture'] ?? 'chest.png');
-
                 if(isset($data['items'])) {
                     foreach($data['items'] as $rewardItemData) {
                         $item = $this->getReference($rewardItemData['item'], $rewardItemData['itemClass']);
                         $quantity = $rewardItemData['quantity'] ?? 1;
-
                         $rewardItem = (new RewardItem())
                             ->setItem($item)
                             ->setQuantity($quantity)
                             ->setQuestItem($rewardItemData['questItem'] ?? false);
                         $reward->addRewardItem($rewardItem);
                         $manager->persist($rewardItem);
+                    }
+                }
+                if(isset($data['locations'])) {
+                    foreach($data['locations'] as $rewardLocation) {
+                        $location = $this->getReference($rewardLocation, Location::class);
+                        $rewardLocation = (new RewardLocation())
+                            ->setLocation($location);
+                        $reward->addRewardLocation($rewardLocation);
+                        $manager->persist($rewardLocation);
                     }
                 }
                 $reward->setCrowns($data['crowns'] ?? null);

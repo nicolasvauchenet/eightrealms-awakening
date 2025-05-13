@@ -8,6 +8,7 @@
 
     &.cta {
       &:has(img) {
+        position: relative;
         padding: 0;
         width: auto;
         height: initial;
@@ -18,6 +19,18 @@
           height: 3rem;
           width: 3rem;
           object-fit: cover;
+
+          &.combat {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 75%;
+            height: 75%;
+            z-index: 1;
+            opacity: 0.85;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 0 0.25rem rgba($secondary, 0.5)) drop-shadow(0 0 0.5rem rgba($secondary, 0.5));
+          }
         }
 
         .gauge {

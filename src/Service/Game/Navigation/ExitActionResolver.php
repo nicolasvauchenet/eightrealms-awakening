@@ -6,8 +6,8 @@ use App\Entity\Character\Player;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Screen\Screen;
 use App\Repository\Location\CharacterLocationRepository;
-use App\Service\Character\CharacterLocationSelectorService;
 use App\Service\Game\Dialog\DialogService;
+use App\Service\Location\CharacterLocationSelectorService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class ExitActionResolver

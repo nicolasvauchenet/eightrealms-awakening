@@ -42,7 +42,7 @@ class ImageVariantExtension extends AbstractExtension
                 break;
         }
 
-        if($this->characterReputationService->getReputation($player, $character) < -5) {
+        if($character->getPictureAngry() && $this->characterReputationService->getReputation($player, $character) < -5) {
             return $character->getPictureAngry();
         }
 

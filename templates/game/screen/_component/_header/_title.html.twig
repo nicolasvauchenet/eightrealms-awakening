@@ -5,7 +5,7 @@
         {% elseif this.screen.type == 'interaction' %}
             {% set backUrl = path('app_game_screen_' ~ this.screen.type, {slug: this.screen.character.slug}) %}
         {% elseif this.screen.type == 'dialog' %}
-            {% set backUrl = path('app_game_screen_' ~ this.screen.type, {id: this.screen.dialogStep.id}) %}
+            {% set backUrl = path('app_game_screen_' ~ this.screen.type, {slug: this.screen.dialogStep.slug}) %}
         {% elseif this.screen.type == 'trade' %}
             {% set backUrl = path('app_game_screen_' ~ this.screen.type, {slug: this.screen.character.slug}) %}
         {% elseif this.screen.type == 'repair' %}

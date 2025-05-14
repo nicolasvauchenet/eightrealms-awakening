@@ -47,7 +47,7 @@ class Combat
     private ?string $defeatDescription = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $redirectToInteraction = null;
+    private ?string $redirectToDialog = null;
 
     #[ORM\ManyToOne]
     private ?Reward $reward = null;
@@ -175,14 +175,14 @@ class Combat
         return $this;
     }
 
-    public function getRedirectToInteraction(): ?string
+    public function getRedirectToDialog(): ?string
     {
-        return $this->redirectToInteraction;
+        return $this->redirectToDialog;
     }
 
-    public function setRedirectToInteraction(?string $redirectToInteraction): static
+    public function setRedirectToDialog(?string $redirectToDialog): static
     {
-        $this->redirectToInteraction = $redirectToInteraction;
+        $this->redirectToDialog = $redirectToDialog;
 
         return $this;
     }

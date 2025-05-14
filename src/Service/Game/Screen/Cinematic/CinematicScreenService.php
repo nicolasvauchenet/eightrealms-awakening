@@ -2,21 +2,21 @@
 
 namespace App\Service\Game\Screen\Cinematic;
 
-use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
+use App\Entity\Dialog\DialogStep;
 use App\Entity\Screen\CinematicScreen;
 use App\Entity\Location\Location;
-use App\Service\Game\Screen\Interaction\InteractionScreenService;
+use App\Service\Game\Screen\Dialog\DialogScreenService;
 use App\Service\Game\Screen\Location\LocationScreenService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class CinematicScreenService
 {
     public function __construct(
-        private EntityManagerInterface   $entityManager,
-        private LocationScreenService    $locationScreenService,
-        private InteractionScreenService $interactionScreenService
+        private EntityManagerInterface $entityManager,
+        private LocationScreenService  $locationScreenService,
+        private DialogScreenService    $dialogScreenService
     )
     {
     }
@@ -31,9 +31,9 @@ readonly class CinematicScreenService
         }
 
         // Choix de redirection dynamique
-        if($combat->getRedirectToInteraction()) {
-            $character = $this->entityManager->getRepository(Character::class)->findOneBy(['slug' => $combat->getRedirectToInteraction()]);
-            $redirectSlug = $this->interactionScreenService->getScreen($character, $player)->getSlug();
+        if($combat->getRedirectToDialog()) {
+            $dialogStep = $this->entityManager->getRepository(DialogStep::class)->findOneBy(['slug' => $combat->getRedirectToDialog()]);
+            $redirectSlug = $this->dialogScreenService->getScreen($dialogStep, $player)->getSlug();
         } else {
             $redirectSlug = $this->locationScreenService->getScreen($combat->getLocation(), $player)->getSlug();
         }
@@ -47,7 +47,7 @@ readonly class CinematicScreenService
             ->setReward($combat->getReward())
             ->setActions([
                 'footer' => [[
-                    'type' => ($combat->getRedirectToInteraction() ? 'interaction' : 'location'),
+                    'type' => ($combat->getRedirectToDialog() ? 'dialog' : 'location'),
                     'slug' => $redirectSlug,
                     'label' => 'Continuer',
                     'thumbnail' => 'img/core/action/continue.png',

@@ -65,6 +65,7 @@ trait TheobaldGrisMurmureTrait
                 ],
             ],
             'effects' => [
+                'reveal_location' => 'bosquet-des-druides',
                 'edit_quest_step_status' => [
                     'quest' => 'bagarre-bizarre',
                     'quest_step' => 4,

@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class DialogScreenController extends AbstractController
 {
-    #[Route('/dialogue/{id}', name: 'app_game_screen_dialog')]
+    #[Route('/dialogue/{slug}', name: 'app_game_screen_dialog')]
     public function index(DialogScreenService $dialogScreenService,
                           CharacterService    $characterService,
                           DialogStep          $dialogStep): Response

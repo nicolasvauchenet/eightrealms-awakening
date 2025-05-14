@@ -49,7 +49,7 @@ class DialogComponent extends AbstractController
         $reply = $this->entityManager->getRepository(DialogReply::class)->find($replyId);
 
         return $this->redirectToRoute('app_game_screen_dialog', [
-            'id' => $reply->getNextStep()->getId(),
+            'slug' => $reply->getNextStep()->getSlug(),
         ]);
     }
 }

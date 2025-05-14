@@ -28,7 +28,7 @@ trait QuartierDesPloucsTrait
             'name' => 'Pêcheur',
             'picture' => 'img/core/npc/pecheur.png',
             'thumbnail' => 'img/core/npc/pecheur_thumb.png',
-            'description' => "<p>Cet homme a l'air pauvre et plutôt mal nourri. Il s'arrête néanmoins en vous voyant vous approcher, et vous regarde avec un sourire timide.</p><p><em>Bonjour, étranger. Vous cherchez du poisson frais&nbsp;? Je peux vous en vendre à un bon prix.</em></p>",
+            'description' => "<p>Cet homme a l'air pauvre et plutôt mal nourri. Il s'arrête néanmoins en vous voyant vous approcher, et vous regarde avec un sourire timide.</p><p><em>Bonjour, étranger. Belle journée pour la pêche, pas vrai&nbsp;? Vous cherchez du poisson frais&nbsp;? Je peux vous en vendre à un bon prix&nbsp;!</em></p>",
             'strength' => 10,
             'dexterity' => 12,
             'constitution' => 8,

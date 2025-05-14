@@ -9,6 +9,7 @@ use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\BiloLePassantTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\GartLeForgeronTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\GrandPretreDePortSaintDouxTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\JarrodLeTavernierTrait;
+use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\MaireDePortSaintDouxTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\MyraLaVieilleTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\PecheurDuQuartierDesPloucsTrait;
 use App\DataFixtures\Dialog\DialogReply\PortSaintDoux\RobertLeGardeTrait;
@@ -35,6 +36,7 @@ class DialogReplyFixtures extends Fixture implements OrderedFixtureInterface
     use RobertLeGardeTrait;
     use SophieLaMarchandeTrait;
     use WilbertLArcanisteTrait;
+    use MaireDePortSaintDouxTrait;
     use FaroukLeNomadeTrait;
     use FauxDjinnTrait;
     use TheobaldGrisMurmureTrait;
@@ -55,6 +57,7 @@ class DialogReplyFixtures extends Fixture implements OrderedFixtureInterface
             self::ROBERT_LE_GARDE_DIALOG_REPLIES,
             self::SOPHIE_LA_MARCHANDE_DIALOG_REPLIES,
             self::WILBERT_L_ARCANISTE_DIALOG_REPLIES,
+            self::MAIRE_DE_PORT_SAINT_DOUX_DIALOG_REPLIES,
 
             // Sables chauds
             self::FAROUK_LE_NOMADE_DIALOG_REPLIES,

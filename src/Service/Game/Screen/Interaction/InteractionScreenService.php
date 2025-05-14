@@ -45,7 +45,7 @@ readonly class InteractionScreenService
         if($dialog) {
             $footerActions[] = [
                 'type' => 'dialog',
-                'slug' => $dialog->getId(),
+                'slug' => $dialog->getSlug(),
                 'label' => 'Discuter avec ' . $character->getName(),
                 'thumbnail' => 'img/core/action/talk.png',
             ];
@@ -56,7 +56,7 @@ readonly class InteractionScreenService
         if($rumor) {
             $footerActions[] = [
                 'type' => 'dialog',
-                'slug' => $rumor->getId(),
+                'slug' => $rumor->getSlug(),
                 'label' => 'Ragots de ' . $character->getName(),
                 'thumbnail' => 'img/core/action/rumor.png',
             ];

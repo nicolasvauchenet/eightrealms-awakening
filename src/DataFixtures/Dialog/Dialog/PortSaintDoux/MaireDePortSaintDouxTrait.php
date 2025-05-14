@@ -4,23 +4,23 @@ namespace App\DataFixtures\Dialog\Dialog\PortSaintDoux;
 
 use App\Entity\Character\Npc;
 
-trait PecheurDuQuartierDesPloucsTrait
+trait MaireDePortSaintDouxTrait
 {
-    const PECHEUR_DU_QUARTIER_DES_PLOUCS_DIALOGS = [
+    const MAIRE_DE_PORT_SAINT_DOUX_DIALOGS = [
         // Dialogue normal
         [
             'type' => 'dialog',
-            'character' => 'npc_pecheur',
+            'character' => 'npc_maire_de_port_saint_doux',
             'characterClass' => Npc::class,
-            'reference' => 'dialog_pecheur_du_quartier_des_ploucs',
+            'reference' => 'dialog_maire_de_port_saint_doux',
         ],
 
         // Ragots
         [
             'type' => 'rumor',
-            'character' => 'npc_pecheur',
+            'character' => 'npc_maire_de_port_saint_doux',
             'characterClass' => Npc::class,
-            'reference' => 'rumor_pecheur_du_quartier_des_ploucs',
+            'reference' => 'rumor_maire_de_port_saint_doux',
         ],
     ];
 }

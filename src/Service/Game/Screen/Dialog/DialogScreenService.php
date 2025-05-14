@@ -28,7 +28,7 @@ readonly class DialogScreenService
         $screen = $this->entityManager->getRepository(DialogScreen::class)->findOneBy(['dialogStep' => $dialogStep]);
         if(!$screen) {
             $screen = (new DialogScreen())
-                ->setName($dialogStep->getDialog()->getCharacter()->getName())
+                ->setName($dialogStep->getName())
                 ->setPicture($dialogStep->getDialog()->getCharacter()->getPicture())
                 ->setDescription($dialogStep->getDialog()->getCharacter()->getDescription())
                 ->setType('dialog')

@@ -10,16 +10,16 @@ trait DocksDeLOuestTrait
     const DOCKS_DE_L_OUEST_NPCS = [
         // Npcs
         [
-            'character' => 'npc_myra_la_vieille',
-            'characterClass' => Npc::class,
-            'location' => 'location_building_taverne_de_la_flute_moisie',
-            'reference' => 'location_building_taverne_de_la_flute_moisie_myra_la_vieille',
-        ],
-        [
             'character' => 'npc_jarrod_le_tavernier',
             'characterClass' => Npc::class,
             'location' => 'location_building_taverne_de_la_flute_moisie',
             'reference' => 'location_building_taverne_de_la_flute_moisie_jarrod_le_tavernier',
+        ],
+        [
+            'character' => 'npc_myra_la_vieille',
+            'characterClass' => Npc::class,
+            'location' => 'location_building_taverne_de_la_flute_moisie',
+            'reference' => 'location_building_taverne_de_la_flute_moisie_myra_la_vieille',
         ],
 
         // Creatures
@@ -37,18 +37,10 @@ trait DocksDeLOuestTrait
                             ],
                     ],
                     [
-                        'quest_step_status' =>
-                            [
-                                'quest' => 'la-sirene-et-le-marin',
-                                'quest_step' => 1,
-                                'status' => 'completed',
-                            ],
-                    ],
-                    [
                         'quest_step_status_not' =>
                             [
                                 'quest' => 'la-sirene-et-le-marin',
-                                'quest_step' => 4,
+                                'quest_step' => 3,
                                 'status' => 'progress',
                             ],
                     ],
@@ -57,6 +49,14 @@ trait DocksDeLOuestTrait
                             [
                                 'quest' => 'la-sirene-et-le-marin',
                                 'quest_step' => 5,
+                                'status' => 'progress',
+                            ],
+                    ],
+                    [
+                        'quest_step_status_not' =>
+                            [
+                                'quest' => 'la-sirene-et-le-marin',
+                                'quest_step' => 6,
                                 'status' => 'progress',
                             ],
                     ],

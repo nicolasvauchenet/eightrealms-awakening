@@ -42,7 +42,7 @@ trait RobertLeGardeTrait
         ],
         [
             'name' => 'Robert - Refuser la quête',
-            'text' => "<p><em>Hé ben, c'est point vos affaires, c'est vrai. Heureusement qu'y a encore des gardes dans c'te ville… Allez circulez&nbsp;!</em></p>",
+            'text' => "<p><em>Hé ben, c'est pas vos affaires, c'est vrai. Heureusement qu'y a encore des gardes dans c'te ville… Allez circulez&nbsp;!</em></p>",
             'conditions' => [
                 'quest_not_started' => 'bagarre-bizarre',
             ],

@@ -4,6 +4,11 @@
              data-controller="tooltip">
             <a href="#" data-action="click->tooltip#open">
                 <div class="card-header">
+                    {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}
+                        <span class="warning">
+                            {{ ux_icon('fe:disabled', {'class': 'app-icon'}) }}
+                        </span>
+                    {% endif %}
                     {% if characterItem.item.thumbnail is defined %}
                         <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
                              class="card-image {% if app_characterItemService.canBuyItem(this.playerCharacter, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"

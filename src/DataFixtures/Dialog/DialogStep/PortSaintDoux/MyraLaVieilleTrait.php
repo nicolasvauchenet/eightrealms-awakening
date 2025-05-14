@@ -44,7 +44,7 @@ trait MyraLaVieilleTrait
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 1,
+                    'quest_step' => 2,
                     'status' => 'progress',
                 ],
             ],
@@ -58,7 +58,7 @@ trait MyraLaVieilleTrait
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 4,
+                    'quest_step' => 5,
                     'status' => 'progress',
                 ],
             ],
@@ -66,7 +66,7 @@ trait MyraLaVieilleTrait
                 'start_quest_step' => [
                     [
                         'quest' => 'la-sirene-et-le-marin',
-                        'quest_step' => 6,
+                        'quest_step' => 7,
                         'status' => 'completed',
                     ],
                 ],
@@ -82,7 +82,7 @@ trait MyraLaVieilleTrait
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 5,
+                    'quest_step' => 6,
                     'status' => 'progress',
                 ],
             ],
@@ -90,7 +90,7 @@ trait MyraLaVieilleTrait
                 'start_quest_step' => [
                     [
                         'quest' => 'la-sirene-et-le-marin',
-                        'quest_step' => 7,
+                        'quest_step' => 6,
                         'status' => 'completed',
                     ],
                 ],

@@ -11,11 +11,6 @@ trait SophieTrait
     const SOPHIE_ITEMS = [
         [
             'character' => 'npc_sophie_la_marchande',
-            'item' => 'food_fish',
-            'class' => Food::class,
-        ],
-        [
-            'character' => 'npc_sophie_la_marchande',
             'item' => 'gift_flowers',
             'class' => Gift::class,
         ],

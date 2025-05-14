@@ -364,7 +364,7 @@ trait GerardLePecheurTrait
         ],
         [
             'name' => 'Gérard - Dialogue',
-            'text' => "<p><em>Vous savez quoi&nbsp;? Je m'étais trompé sur le compte des gobelins… Ouais, je l'avoue.</em></p><p>Gérard vous regarde d'un air radieux et reconnaissant.</p><p><em>Y sont travailleurs ces fumi… ces p'tits gars&nbsp;! Bon ils puent comme pas permis, mais l'odeur du poisson leur fait rien, au moins. Et y arrivent même à me surprendre par leur gentillesse, quand on est bien avec eux.</em></p><p>Il se gratte menton, pensif.</p><p><em>Et j'dois avouer… On se sent plus en sécurité maintenant qu'y sont au village.</em></p>",
+            'text' => "<p><em>Vous savez quoi&nbsp;? Je m'étais trompé sur le compte des gobelins… Ouais, je l'avoue.</em></p><p>Gérard vous regarde d'un air radieux et reconnaissant.</p><p><em>Y sont travailleurs ces fumi… ces p'tits gars&nbsp;! Bon ils puent comme pas permis, mais l'odeur du poisson leur fait rien, au moins. Et y arrivent même à me surprendre par leur gentillesse, quand on est bien avec eux.</em></p><p>Il se gratte le menton, pensif.</p><p><em>Et j'dois dire… On se sent plus en sécurité maintenant qu'y sont au village.</em></p>",
             'first' => true,
             'conditions' => [
                 'all' => [

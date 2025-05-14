@@ -29,7 +29,7 @@
                 {{ characterItem.item.category.name }}
             {% endif %}
 
-            {% if characterItem.item.target is defined and characterItem.item.type not in ['offensive', 'Arme de mêlée enchantée', 'Arme de jet enchantée'] and (characterItem.item.target is not null or characterItem.item.effect is not null) %}
+            {% if not characterItem.isQuestItem and characterItem.item.target is defined and characterItem.item.type not in ['offensive', 'Arme de mêlée enchantée', 'Arme de jet enchantée'] and (characterItem.item.target is not null or characterItem.item.effect is not null) %}
                 •
                 {% if characterItem.item.target == 'health' %}
                     augmente la Santé

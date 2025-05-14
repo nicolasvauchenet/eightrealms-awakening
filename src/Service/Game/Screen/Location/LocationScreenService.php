@@ -45,6 +45,7 @@ readonly class LocationScreenService
         switch($location->getType()) {
             case 'location':
                 // Interactions avec personnages
+                $hasNpcs = false;
                 foreach($location->getCharacterLocations() as $characterLocation) {
                     $character = $characterLocation->getCharacter();
 
@@ -61,9 +62,11 @@ readonly class LocationScreenService
                         'label' => $character->getName(),
                         'thumbnail' => $character->getThumbnail(),
                     ];
+                    $hasNpcs = true;
                 }
 
                 // Combat
+                $hasCombats = false;
                 $combats = $location->getCombats() ?? [];
                 foreach($combats as $combat) {
                     $conditions = $combat->getConditions();
@@ -79,35 +82,31 @@ readonly class LocationScreenService
                         'thumbnail' => $combat->getThumbnail(),
                         'isQuest' => $combat->getQuestStep() ? true : false,
                     ];
+                    $hasCombats = true;
                 }
 
                 // Accès aux bâtiments enfants
                 $hasBuildings = false;
                 foreach($location->getChildren() as $childLocation) {
                     if($childLocation->getType() === 'building') {
-                        $hasBuildings = true;
                         $footerActions[] = [
                             'type' => 'location',
                             'slug' => $childLocation->getSlug(),
                             'label' => $childLocation->getName(),
                             'thumbnail' => $childLocation->getThumbnail(),
                         ];
+                        $hasBuildings = true;
                     }
                 }
 
-                // Explorer uniquement si aucun enfant n'a été visité
-                if(!$hasBuildings) {
-                    $hasVisitedChild = false;
+                // Explorer uniquement si la zone est vide
+                if(!$hasNpcs && !$hasCombats && !$hasBuildings) {
+                    $hasChild = false;
                     foreach($location->getChildren() as $child) {
-                        $visited = $this->entityManager->getRepository(CharacterLocation::class)
-                            ->findOneBy(['character' => $player, 'location' => $child]);
-                        if($visited) {
-                            $hasVisitedChild = true;
-                            break;
-                        }
+                        $hasChild = true;
                     }
 
-                    if(!$hasVisitedChild) {
+                    if($hasChild) {
                         $firstChild = $location->getChildren()->first();
                         if($firstChild) {
                             $footerActions[] = [
@@ -123,6 +122,7 @@ readonly class LocationScreenService
 
             case 'zone':
                 // Interactions avec personnages
+                $hasNpcs = false;
                 foreach($location->getCharacterLocations() as $characterLocation) {
                     $character = $characterLocation->getCharacter();
 
@@ -139,9 +139,11 @@ readonly class LocationScreenService
                         'label' => $character->getName(),
                         'thumbnail' => $character->getThumbnail(),
                     ];
+                    $hasNpcs = true;
                 }
 
                 // Combat
+                $hasCombats = false;
                 $combats = $location->getCombats() ?? [];
                 foreach($combats as $combat) {
                     $conditions = $combat->getConditions();
@@ -156,9 +158,11 @@ readonly class LocationScreenService
                         'thumbnail' => $combat->getThumbnail(),
                         'isQuest' => $combat->getQuestStep() ? true : false,
                     ];
+                    $hasCombats = true;
                 }
 
                 // Accès aux bâtiments enfants
+                $hasBuildings = false;
                 foreach($location->getChildren() as $childLocation) {
                     if($childLocation->getType() === 'building') {
                         $footerActions[] = [
@@ -167,12 +171,13 @@ readonly class LocationScreenService
                             'label' => $childLocation->getName(),
                             'thumbnail' => $childLocation->getThumbnail(),
                         ];
+                        $hasBuildings = true;
                     }
                 }
 
-                // Zone suivante
-                /*$parent = $location->getParent();
-                if($parent && $parent->getSlug() !== 'port-saint-doux') {
+                // Zone suivante uniquement si la zone est vide
+                $parent = $location->getParent();
+                if($parent && !$hasNpcs && !$hasCombats && !$hasBuildings) {
                     $siblings = $parent->getChildren()->filter(
                         fn(Location $child) => $child->getType() === 'zone'
                     )->getValues();
@@ -197,7 +202,7 @@ readonly class LocationScreenService
                             ];
                         }
                     }
-                }*/
+                }
                 break;
 
             case 'building':

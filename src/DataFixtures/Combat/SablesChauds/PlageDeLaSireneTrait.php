@@ -16,7 +16,7 @@ trait PlageDeLaSireneTrait
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 2,
+                    'quest_step' => 3,
                     'status' => 'progress',
                 ],
             ],
@@ -24,7 +24,7 @@ trait PlageDeLaSireneTrait
             'victoryDescription' => "<p>Les os retombent sur le sable, inertes à nouveau. Le médaillon brille encore au cou du squelette d’Eryl. À ses côtés, un vieux journal trempé émerge de ses effets. Le silence s’installe à nouveau sur la plage, lourd de regrets.</p>",
             'defeatDescription' => "<p>Alors que vos forces vous abandonnent, les deux squelettes vous encerclent. Le sable devient froid et hostile. Votre dernière vision est celle du médaillon se balançant doucement, comme un cœur moqué par le vent.</p>",
             'location' => 'location_zone_plage_de_la_sirene',
-            'questStep' => 'quest_secondary_la_sirene_et_le_marin_step_2',
+            'questStep' => 'quest_secondary_la_sirene_et_le_marin_step_3',
             'enemies' => [
                 [
                     'enemy' => 'creature_squelette_de_marin',

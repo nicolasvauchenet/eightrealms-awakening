@@ -34,7 +34,7 @@ trait MainQuestStepTrait
             'reference' => 'quest_main_step_4',
         ],
         [
-            'description' => "<p>J'ai trouvé un médaillon étrange, orné de motifs runiques. Il semble avoir une certaine importance, alors j'en ai parlé à Wilbert, l'Arcaniste de Port Saint-Doux. Il m'a dit que ce médaillon était lié à un ancien rituel druidique, et qu'il pourrait être une partie de la clé pour ouvrir le Tombeau. Je dois en apprendre davantage sur ce rituel et sur ce &laquo;Sceau&raquo;.</p>",
+            'description' => "<p>J'ai trouvé un médaillon étrange, orné de motifs runiques. Il semble avoir une certaine importance, alors j'en ai parlé à Wilbert, l'Arcaniste de Port Saint-Doux. Il m'a dit que ce médaillon était lié à un ancien rituel druidique, et qu'il pourrait être une partie de la clé, qu'il a appelée &laquo;le Sceau&raquo;, pour ouvrir le &laquo;Tombeau&raquo;. Je dois en apprendre davantage sur ce rituel et sur cette amulette.</p>",
             'position' => 5,
             'last' => false,
             'quest' => 'quest_main',

@@ -8,7 +8,7 @@ trait QuestTrait
         [
             'name' => "Cœur d'Écume",
             'picture' => 'coeur-decume.png',
-            'description' => "<p>Cette amulette bleutée semble vibrer doucement au contact de l’air humide. Offerte par une Sirène en guise de reconnaissance ou d'amitié, elle relie son porteur aux forces tranquilles des abysses. Tant qu’elle est portée, les créatures aquatiques hésitent à lever la main.</p><p>Elle permet aussi de respirer sous l’eau là où l’air ne passe plus.</p>",
+            'description' => "<p>Cette amulette bleutée semble vibrer doucement au contact de l’air humide. Offerte par une Sirène en guise de reconnaissance ou d'amitié, elle relie son porteur aux forces tranquilles des abysses.</p>",
             'type' => 'utile',
             'price' => 1500,
             'category' => 'category_amulet',
@@ -19,7 +19,7 @@ trait QuestTrait
         [
             'name' => 'Médaillon des Vents',
             'picture' => 'medaillon-des-vents.png',
-            'description' => "<p>Un médaillon ancestral orné de symboles runiques liés aux esprits des vents. On raconte qu'il permet à son porteur d'invoquer une brise salvatrice en cas de danger, et qu'il pourrait rendre son porteur invisible.</p>",
+            'description' => "<p>Un médaillon ancestral orné de symboles runiques liés aux esprits des vents. Il semble tout à fait fonctionnel, mais en l'observant attentivement, on pourrait croire qu'il a été cassé, ou séparé de quelque chose…</p>",
             'type' => 'utile',
             'price' => 2000,
             'category' => 'category_amulet',

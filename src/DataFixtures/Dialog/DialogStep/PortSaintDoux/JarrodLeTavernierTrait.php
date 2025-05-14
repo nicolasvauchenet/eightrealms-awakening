@@ -148,7 +148,7 @@ trait JarrodLeTavernierTrait
         // Ragots
         [
             'name' => 'Jarrod - Ragots',
-            'text' => "<p><em>Vous savez qui me fait le plus peur ici ? Pas le Donjon. Pas les brigands. Non. C’est la vieille Myra, là, qui tricote dans le coin. J’vous jure, elle m’a une fois prédit que j’allais renverser ma bière. Trois jours plus tard… paf. Bref. Ici, on parle, on écoute, on oublie. C’est ça, le quartier des Docks&nbsp;!</em></p>",
+            'text' => "<p><em>Vous savez qui me fait le plus peur ici ? Pas le Donjon. Pas les brigands. Non. C’est la vieille Myra, là, qui tricote dans le coin. J’vous jure, une fois elle m’a prédit que j’allais renverser ma bière. Trois jours plus tard… paf. Bref. Ici, on parle, on écoute, on oublie. C’est ça, le quartier des Docks&nbsp;!</em></p>",
             'first' => true,
             'dialog' => 'rumor_jarrod_le_tavernier',
             'reference' => 'rumor_step_jarrod_le_tavernier_1',

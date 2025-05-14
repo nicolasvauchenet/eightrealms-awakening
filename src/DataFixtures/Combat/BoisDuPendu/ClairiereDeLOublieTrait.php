@@ -39,6 +39,7 @@ trait ClairiereDeLOublieTrait
                     'enemyClass' => Npc::class,
                 ],
             ],
+            'redirectToInteraction' => 'theobald-le-gris-murmure',
             'reference' => 'combat_bois_du_pendu_druides_de_la_clairiere',
         ],
     ];

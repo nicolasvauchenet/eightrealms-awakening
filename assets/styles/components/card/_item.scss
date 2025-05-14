@@ -11,14 +11,23 @@
       }
     }
 
-    .equipped {
+    .equipped,
+    .warning {
       position: absolute;
       top: 0;
       right: 0;
       padding: 0.25rem;
+      border-bottom-left-radius: 0.5rem;
+    }
+
+    .equipped {
       color: $white;
       background-color: $primary;
-      border-bottom-left-radius: 0.5rem;
+    }
+
+    .warning {
+      color: $white;
+      background-color: $warning;
     }
 
     .card-image {

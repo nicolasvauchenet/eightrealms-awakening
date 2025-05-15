@@ -7,6 +7,7 @@ use App\Entity\Combat\PlayerCombat;
 use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Quest\PlayerQuestStep;
+use App\Entity\Quest\QuestStep;
 use App\Entity\Screen\CombatScreen;
 use App\Service\Character\CharacterBonusService;
 use App\Service\Character\CharacterReputationService;
@@ -119,212 +120,6 @@ class CombatComponent extends AbstractController
         $this->advanceUntilPlayerTurn();
     }
 
-    private function updateBonuses(): void
-    {
-        $activeBonuses = $this->combatEffectService->getActiveBonusesForTarget($this->playerCombat, $this->character);
-
-        $this->damageBonus = [
-            'amount' => $activeBonuses['damage'] ?? 0,
-            'extra' => $activeBonuses['damage'] > 0,
-            'magical' => false,
-        ];
-
-        $this->defenseBonus = [
-            'amount' => $activeBonuses['defense'] ?? 0,
-            'extra' => $activeBonuses['defense'] > 0,
-        ];
-
-        $damageBonusItem = $this->characterBonusService->getDamage($this->character, $this->playerCombat, $this->screen->getType());
-        $this->damageBonus['amount'] += $damageBonusItem['amount'];
-        $this->damageBonus['extra'] = $damageBonusItem['extra'];
-
-        $defenseBonusItem = $this->characterBonusService->getDefense($this->character, $this->playerCombat, $this->screen->getType());
-        $this->defenseBonus['amount'] += $defenseBonusItem['amount'];
-        $this->defenseBonus['extra'] = $defenseBonusItem['extra'];
-    }
-
-    private function addLog(int $round, string $message): void
-    {
-        if(!isset($this->roundLogs[$round - 1])) {
-            $this->roundLogs[$round - 1] = [];
-        }
-
-        $this->roundLogs[$round - 1][] = $message;
-        $this->generateDescription();
-    }
-
-    private function generateDescription(): void
-    {
-        $html = $this->intro;
-
-        foreach($this->roundLogs as $index => $messages) {
-            if(empty($messages)) continue;
-
-            $html .= "<h2>Round " . ($index + 1) . "</h2>\n<p>\n";
-            foreach($messages as $message) {
-                $html .= $message . "\n";
-            }
-            $html .= "</p>\n";
-        }
-
-        $this->description = $html;
-    }
-
-    #[LiveAction]
-    public function flee(): ?RedirectResponse
-    {
-        if($this->fleeService->flee($this->playerCombat)) {
-            return $this->redirectToRoute('app_game_screen_location', [
-                'slug' => $this->character->getCurrentLocation()->getSlug(),
-            ]);
-        }
-
-        $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
-        $this->entityManager->persist($this->playerCombat);
-        $this->entityManager->flush();
-
-        $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Votre tentative de fuite a échoué&nbsp;!</strong><br/>");
-        $this->advanceUntilPlayerTurn();
-
-        return $this->advanceUntilPlayerTurn();
-    }
-
-    private function advanceUntilPlayerTurn(): ?RedirectResponse
-    {
-        $turnOrder = $this->playerCombat->getTurnOrder();
-        $turnCount = count($turnOrder);
-
-        while($this->playerCombat->getCurrentTurn() < $turnCount) {
-            $currentEntity = $turnOrder[$this->playerCombat->getCurrentTurn()];
-
-            if($currentEntity['type'] === 'enemy') {
-                $enemyId = $currentEntity['id'];
-                $log = $this->enemyAttackService->enemyAttack($this->playerCombat, $enemyId);
-                $this->addLog($this->playerCombat->getCurrentRound(), $log);
-                $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
-            } else if($currentEntity['type'] === 'player' && $currentEntity['id'] === $this->character->getId()) {
-                $playerEffects = $this->combatEffectService->getActiveBonusesForTarget($this->playerCombat, $this->character);
-                if(!empty($playerEffects['charmed'])) {
-                    $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Vous êtes sous l’emprise d’un charme et perdez votre tour.</strong><br/>");
-                    $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
-                    continue;
-                }
-
-                $this->addLog($this->playerCombat->getCurrentRound(), "<strong>C’est votre tour d'agir…</strong><br/>");
-                break;
-            } else {
-                $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
-            }
-        }
-
-        if($this->playerCombat->getCurrentTurn() >= $turnCount) {
-            $redirect = $this->isCombatFinished();
-            if($redirect) {
-                return $redirect;
-            }
-
-            $this->combatEffectService->tickEffects($this->playerCombat);
-
-            $expiredLogs = $this->combatEffectService->removeExpiredEffects($this->playerCombat);
-            foreach($expiredLogs as $log) {
-                $this->addLog($this->playerCombat->getCurrentRound(), $log);
-            }
-
-            $this->playerCombat->setCurrentRound($this->playerCombat->getCurrentRound() + 1);
-            $this->playerCombat->setCurrentTurn(0);
-
-            $newOrder = $this->initiativeService->getTurnOrder($this->playerCombat);
-            $this->playerCombat->setTurnOrder($newOrder);
-            $this->roundLogs[] = [];
-
-            return $this->advanceUntilPlayerTurn();
-        }
-
-        $this->entityManager->persist($this->playerCombat);
-        $this->entityManager->flush();
-
-        return null;
-    }
-
-    private function isCombatFinished(): ?RedirectResponse
-    {
-        $enemiesAlive = $this->playerCombat->getPlayerCombatEnemies()->exists(fn($key, $enemy) => $enemy->getHealth() > 0);
-
-        if(!$enemiesAlive) {
-            $this->playerCombat->setStatus('completed');
-            $this->entityManager->persist($this->playerCombat);
-
-            $questStep = $this->screen->getCombat()->getQuestStep();
-            if($questStep) {
-                $quest = $questStep->getQuest();
-                $stepsToUnlock = [[
-                    'quest' => $quest->getSlug(),
-                    'quest_step' => $questStep->getPosition(),
-                    'status' => 'completed',
-                ]];
-
-                $nextStep = $this->questService->getNextQuestStep($questStep);
-                while($nextStep) {
-                    $playerStep = $this->entityManager->getRepository(PlayerQuestStep::class)
-                        ->findOneBy(['player' => $this->character, 'questStep' => $nextStep]);
-
-                    if(!$playerStep) {
-                        $stepsToUnlock[] = [
-                            'quest' => $quest->getSlug(),
-                            'quest_step' => $nextStep->getPosition(),
-                            'status' => 'progress',
-                        ];
-                        break;
-                    }
-
-                    if($playerStep->getStatus() !== 'skipped') {
-                        break;
-                    }
-
-                    $nextStep = $this->questService->getNextQuestStep($nextStep);
-                }
-                $this->questProgressionService->editQuestStepStatus($this->character, $stepsToUnlock);
-            }
-
-            $this->entityManager->flush();
-
-            $victoryScreen = $this->cinematicScreenService->getVictoryScreen(
-                $this->screen->getCombat(),
-                $this->character
-            );
-
-            return $this->redirectToRoute('app_game_screen_cinematic', [
-                'slug' => $victoryScreen->getSlug(),
-            ]);
-        }
-
-        if($this->character->getHealth() <= 0) {
-            if($this->character->getFortune() >= 50) {
-                $this->character->setFortune($this->character->getFortune() - 50);
-                $this->character->setHealth($this->character->getHealthMax());
-                $this->character->setMana($this->character->getManaMax());
-                $this->entityManager->persist($this->character);
-            }
-
-            $this->playerCombat->setStatus('defeat');
-            $this->entityManager->persist($this->playerCombat);
-            $this->entityManager->flush();
-
-            $defeatScreen = $this->cinematicScreenService->getDefeatScreen(
-                $this->screen->getCombat()->getName(),
-                $this->screen->getCombat()->getDefeatDescription(),
-                $this->screen->getCombat()->getPicture(),
-                $this->character
-            );
-
-            return $this->redirectToRoute('app_game_screen_cinematic', [
-                'slug' => $defeatScreen->getSlug(),
-            ]);
-        }
-
-        return null;
-    }
-
     #[LiveAction]
     public function doCombatAction(
         #[LiveArg] string  $combatAction,
@@ -398,5 +193,231 @@ class CombatComponent extends AbstractController
         $this->entityManager->flush();
 
         return $this->advanceUntilPlayerTurn();
+    }
+
+    #[LiveAction]
+    public function flee(): ?RedirectResponse
+    {
+        if($this->fleeService->flee($this->playerCombat)) {
+            return $this->redirectToRoute('app_game_screen_location', [
+                'slug' => $this->character->getCurrentLocation()->getSlug(),
+            ]);
+        }
+
+        $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
+        $this->entityManager->persist($this->playerCombat);
+        $this->entityManager->flush();
+
+        $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Votre tentative de fuite a échoué&nbsp;!</strong><br/>");
+        $this->advanceUntilPlayerTurn();
+
+        return $this->advanceUntilPlayerTurn();
+    }
+
+    private function updateBonuses(): void
+    {
+        $activeBonuses = $this->combatEffectService->getActiveBonusesForTarget($this->playerCombat, $this->character);
+
+        $this->damageBonus = [
+            'amount' => $activeBonuses['damage'] ?? 0,
+            'extra' => $activeBonuses['damage'] > 0,
+            'magical' => false,
+        ];
+
+        $this->defenseBonus = [
+            'amount' => $activeBonuses['defense'] ?? 0,
+            'extra' => $activeBonuses['defense'] > 0,
+        ];
+
+        $damageBonusItem = $this->characterBonusService->getDamage($this->character, $this->playerCombat, $this->screen->getType());
+        $this->damageBonus['amount'] += $damageBonusItem['amount'];
+        $this->damageBonus['extra'] = $damageBonusItem['extra'];
+
+        $defenseBonusItem = $this->characterBonusService->getDefense($this->character, $this->playerCombat, $this->screen->getType());
+        $this->defenseBonus['amount'] += $defenseBonusItem['amount'];
+        $this->defenseBonus['extra'] = $defenseBonusItem['extra'];
+    }
+
+    private function addLog(int $round, string $message): void
+    {
+        if(!isset($this->roundLogs[$round - 1])) {
+            $this->roundLogs[$round - 1] = [];
+        }
+
+        $this->roundLogs[$round - 1][] = $message;
+        $this->generateDescription();
+    }
+
+    private function generateDescription(): void
+    {
+        $html = $this->intro;
+
+        foreach($this->roundLogs as $index => $messages) {
+            if(empty($messages)) continue;
+
+            $html .= "<h2>Round " . ($index + 1) . "</h2>\n<p>\n";
+            foreach($messages as $message) {
+                $html .= $message . "\n";
+            }
+            $html .= "</p>\n";
+        }
+
+        $this->description = $html;
+    }
+
+    private function advanceUntilPlayerTurn(): ?RedirectResponse
+    {
+        $turnOrder = $this->playerCombat->getTurnOrder();
+        $turnCount = count($turnOrder);
+
+        while($this->playerCombat->getCurrentTurn() < $turnCount) {
+            $currentEntity = $turnOrder[$this->playerCombat->getCurrentTurn()];
+
+            if($currentEntity['type'] === 'enemy') {
+                $enemyId = $currentEntity['id'];
+                $log = $this->enemyAttackService->enemyAttack($this->playerCombat, $enemyId);
+                $this->addLog($this->playerCombat->getCurrentRound(), $log);
+                $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
+            } else if($currentEntity['type'] === 'player' && $currentEntity['id'] === $this->character->getId()) {
+                $playerEffects = $this->combatEffectService->getActiveBonusesForTarget($this->playerCombat, $this->character);
+                if(!empty($playerEffects['charmed'])) {
+                    $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Vous êtes sous l’emprise d’un charme et perdez votre tour.</strong><br/>");
+                    $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
+                    continue;
+                }
+
+                $this->addLog($this->playerCombat->getCurrentRound(), "<strong>C’est votre tour d'agir…</strong><br/>");
+                break;
+            } else {
+                $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
+            }
+        }
+
+        if($this->playerCombat->getCurrentTurn() >= $turnCount) {
+            $redirect = $this->isCombatFinished();
+            if($redirect) {
+                return $redirect;
+            }
+
+            $this->combatEffectService->tickEffects($this->playerCombat);
+
+            $expiredLogs = $this->combatEffectService->removeExpiredEffects($this->playerCombat);
+            foreach($expiredLogs as $log) {
+                $this->addLog($this->playerCombat->getCurrentRound(), $log);
+            }
+
+            $this->playerCombat->setCurrentRound($this->playerCombat->getCurrentRound() + 1);
+            $this->playerCombat->setCurrentTurn(0);
+
+            $newOrder = $this->initiativeService->getTurnOrder($this->playerCombat);
+            $this->playerCombat->setTurnOrder($newOrder);
+            $this->roundLogs[] = [];
+
+            return $this->advanceUntilPlayerTurn();
+        }
+
+        $this->entityManager->persist($this->playerCombat);
+        $this->entityManager->flush();
+
+        return null;
+    }
+
+    private function isCombatFinished(): ?RedirectResponse
+    {
+        if($this->areAllEnemiesDead()) {
+            return $this->handleCombatVictory();
+        }
+
+        if($this->character->getHealth() <= 0) {
+            return $this->handleCombatDefeat();
+        }
+
+        return null;
+    }
+
+    private function areAllEnemiesDead(): bool
+    {
+        return !$this->playerCombat->getPlayerCombatEnemies()
+            ->exists(fn($key, $enemy) => $enemy->getHealth() > 0);
+    }
+
+    private function handleCombatVictory(): RedirectResponse
+    {
+        $this->playerCombat->setStatus('completed');
+        $this->entityManager->persist($this->playerCombat);
+
+        $questStep = $this->screen->getCombat()->getQuestStep();
+        if($questStep) {
+            $stepsToUnlock = $this->buildQuestStepsToUnlock($questStep);
+            $this->questProgressionService->editQuestStepStatus($this->character, $stepsToUnlock);
+        }
+
+        $this->entityManager->flush();
+
+        $victoryScreen = $this->cinematicScreenService->getVictoryScreen(
+            $this->screen->getCombat(),
+            $this->character
+        );
+
+        return $this->redirectToRoute('app_game_screen_cinematic', [
+            'slug' => $victoryScreen->getSlug(),
+        ]);
+    }
+
+    private function buildQuestStepsToUnlock(QuestStep $questStep): array
+    {
+        $steps = [[
+            'quest' => $questStep->getQuest()->getSlug(),
+            'quest_step' => $questStep->getPosition(),
+            'status' => 'completed',
+        ]];
+
+        $nextStep = $this->questService->getNextQuestStep($questStep);
+        while($nextStep) {
+            $playerStep = $this->entityManager->getRepository(PlayerQuestStep::class)
+                ->findOneBy(['player' => $this->character, 'questStep' => $nextStep]);
+
+            if(!$playerStep) {
+                $steps[] = [
+                    'quest' => $questStep->getQuest()->getSlug(),
+                    'quest_step' => $nextStep->getPosition(),
+                    'status' => 'progress',
+                ];
+                break;
+            }
+
+            if($playerStep->getStatus() !== 'skipped') {
+                break;
+            }
+
+            $nextStep = $this->questService->getNextQuestStep($nextStep);
+        }
+
+        return $steps;
+    }
+
+    private function handleCombatDefeat(): RedirectResponse
+    {
+        if($this->character->getFortune() >= 50) {
+            $this->character->setFortune($this->character->getFortune() - 50);
+            $this->character->setHealth($this->character->getHealthMax());
+            $this->character->setMana($this->character->getManaMax());
+            $this->entityManager->persist($this->character);
+        }
+
+        $this->playerCombat->setStatus('defeat');
+        $this->entityManager->persist($this->playerCombat);
+        $this->entityManager->flush();
+
+        $defeatScreen = $this->cinematicScreenService->getDefeatScreen(
+            $this->screen->getCombat()->getName(),
+            $this->screen->getCombat()->getDefeatDescription(),
+            $this->screen->getCombat()->getPicture(),
+            $this->character
+        );
+
+        return $this->redirectToRoute('app_game_screen_cinematic', [
+            'slug' => $defeatScreen->getSlug(),
+        ]);
     }
 }

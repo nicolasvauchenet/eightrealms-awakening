@@ -6,7 +6,7 @@
     text-align: center;
 
     @include respondTo(md) {
-      height: 59dvh;
+      height: 58dvh;
     }
 
     & > img {

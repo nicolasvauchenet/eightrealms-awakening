@@ -111,6 +111,6 @@ class ReloadComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p>Tous les objets magiques ont été rechargés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p>Tous vos objets magiques ont été rechargés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
     }
 }

@@ -105,7 +105,7 @@ trait JarrodLeTavernierTrait
         ],
         [
             'name' => 'Jarrod - Quête terminée',
-            'text' => "<p><em>Tiens donc, vous voilà… Alors, vous l’avez retrouvé, ce vieux fou du Bois du Pendu&nbsp;? Pas trop de branches qui grincent dans vos cauchemars, j’espère&nbsp;? Ha&nbsp;! Allez, prenez une bière, c’est moi qui régale. Vous l’avez méritée.</em></p>",
+            'text' => "<p><em>Tiens donc, vous voilà… Alors, vous l’avez retrouvé, votre vieux dans le Bois du Pendu&nbsp;? Pas trop de branches qui grincent dans vos cauchemars, j’espère&nbsp;? Ha&nbsp;! Allez, prenez une bière, c’est moi qui régale. Vous l’avez méritée.</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_status' => [
@@ -116,6 +116,14 @@ trait JarrodLeTavernierTrait
                     'quest' => 'bagarre-bizarre',
                     'quest_step' => 2,
                     'status' => 'completed',
+                ],
+            ],
+            'effects' => [
+                'add_items' => [
+                    [
+                        'item' => 'food_beer',
+                        'questItem' => false,
+                    ],
                 ],
             ],
             'dialog' => 'quest_jarrod_le_tavernier',

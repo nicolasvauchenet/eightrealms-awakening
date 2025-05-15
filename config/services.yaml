@@ -28,5 +28,11 @@ services:
     arguments:
       $uploadsDirectory: '%uploads_directory%'
       $assetsDirectory: '%assets_directory%'
+
+  App\Service\Game\Conditions\Handler\:
+    resource: '../src/Service/Game/Conditions/Handler'
+    tags: [ 'condition.handler' ]
+    autowire: true
+    autoconfigure: false
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones

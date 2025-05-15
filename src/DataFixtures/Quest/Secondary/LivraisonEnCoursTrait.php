@@ -20,7 +20,7 @@ trait LivraisonEnCoursTrait
             'reference' => 'quest_secondary_livraison_en_cours_step_2',
         ],
         [
-            'description' => "<p>J'ai discuté avec Gérard, et j'ai vite compris qu'il comptait utiliser le bouclier pour un mission suicide&nbsp;:&nbsp;allez chasser une bande de gobelins… Je ne sais pas combien ils sont, mais je ne peux pas laisser cet homme y aller comme ça. Je vais trouver ces gobelins.</p>",
+            'description' => "<p>J'ai discuté avec Gérard, et j'ai vite compris qu'il comptait utiliser le bouclier pour un mission suicide&nbsp;:&nbsp;allez chasser une bande de gobelins qui campent dans le Bois de Relents, aux abords du village… Je ne sais pas combien ils sont, mais je ne peux pas laisser cet homme y aller comme ça. Je vais trouver ces gobelins.</p>",
             'position' => 3,
             'last' => false,
             'quest' => 'quest_secondary_livraison_en_cours',

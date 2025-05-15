@@ -44,7 +44,7 @@ trait MyraLaVieilleTrait
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 2,
+                    'quest_step' => 3,
                     'status' => 'progress',
                 ],
             ],

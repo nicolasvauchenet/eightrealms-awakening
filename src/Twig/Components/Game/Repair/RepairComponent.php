@@ -112,6 +112,6 @@ class RepairComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p>Tous les objets réparables ont été restaurés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p>Tous vos objets usés ont été réparés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
     }
 }

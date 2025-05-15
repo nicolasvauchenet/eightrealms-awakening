@@ -48,7 +48,7 @@
 
         {% if this.characterType == 'player' %}
             <div class="card-footer">
-                {% if characterItem.item.category.slug != 'carte' and characterItem.item.category.slug != 'cadeau' and characterItem.item.category.slug != 'nourriture' %}
+                {% if characterItem.item.category.slug not in ['carte', 'cadeau', 'nourriture', 'livre'] %}
                     {% if characterItem.equipped %}
                         <button class="bg-warning" {{ live_action('equipItem', {'characterItemId': characterItem.id }) }}>
                             {{ ux_icon('mdi:arrow-down-drop-circle-outline', {'class': 'app-icon'}) }}

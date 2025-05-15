@@ -7,7 +7,7 @@ trait TheobaldGrisMurmureTrait
     const THEOBALD_GRIS_MURMURE_DIALOG_STEPS = [
         [
             'name' => 'Théobald - Rencontre',
-            'text' => "<p><em>Alors comme ça, vous m’avez suivi depuis la capitale, jusqu'ici. Je n’ai rien volé, rien provoqué… mais personne ne veut rien entendre. Et ils me retrouveront toujours…</em></p><p><em>Préparez-vous. Ils viennent pour moi — et maintenant, pour vous aussi.</em></p>",
+            'text' => "<p><em>Alors comme ça, vous m’avez suivi depuis la capitale, jusqu'ici. Je n’ai rien volé, rien provoqué… mais personne ne veut rien entendre. Et ils me retrouveront toujours…</em></p><p>Un léger bruissement le met soudain en alerte, il se redresse et serre son bâton dans sa main noueuse.</p><p><em>Préparez-vous. Ils viennent pour moi — et maintenant, pour vous aussi.</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_step_status' => [

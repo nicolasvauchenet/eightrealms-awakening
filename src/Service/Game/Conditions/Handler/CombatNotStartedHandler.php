@@ -7,7 +7,7 @@ use App\Entity\Combat\Combat;
 use App\Entity\Combat\PlayerCombat;
 use Doctrine\ORM\EntityManagerInterface;
 
-class CombatNotStartedHandler implements ConditionHandlerInterface
+readonly class CombatNotStartedHandler implements ConditionHandlerInterface
 {
     public function __construct(private EntityManagerInterface $em)
     {

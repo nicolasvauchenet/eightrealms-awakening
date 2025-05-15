@@ -34,5 +34,11 @@ services:
     tags: [ 'condition.handler' ]
     autowire: true
     autoconfigure: false
+
+  App\Service\Game\Dialog\Handler\:
+    resource: '../src/Service/Game/Dialog/Handler'
+    tags: [ 'dialog_effect.handler' ]
+    autowire: true
+    autoconfigure: false
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones

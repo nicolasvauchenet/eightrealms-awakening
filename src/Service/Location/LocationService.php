@@ -32,6 +32,7 @@ readonly class LocationService
                     ->setCharacter($player)
                     ->setLocation($location);
                 $this->entityManager->persist($characterLocation);
+                $this->entityManager->flush();
             }
         }
     }

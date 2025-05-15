@@ -3,7 +3,7 @@
 namespace App\Service\Game\Dialog;
 
 use App\Entity\Character\Player;
-use App\Service\Game\Dialog\Handler\DialogEffectHandlerInterface;
+use App\Service\Game\Effect\Handler\DialogEffectHandlerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
 
 readonly class DialogEffectApplierService

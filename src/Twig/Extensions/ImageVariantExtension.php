@@ -7,7 +7,7 @@ use App\Entity\Character\Player;
 use App\Entity\Location\Location;
 use App\Entity\Quest\PlayerQuest;
 use App\Service\Character\CharacterReputationService;
-use App\Service\Game\Conditions\ConditionEvaluatorService;
+use App\Service\Game\Condition\ConditionEvaluatorService;
 use App\Service\Quest\CharacterQuestService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;

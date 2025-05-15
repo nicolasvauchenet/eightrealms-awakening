@@ -6,7 +6,7 @@ use App\Entity\Character\Player;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Location\Location;
 use App\Entity\Screen\LocationScreen;
-use App\Service\Game\Conditions\ConditionEvaluatorService;
+use App\Service\Game\Condition\ConditionEvaluatorService;
 use App\Service\Game\Navigation\ExitActionResolver;
 use Doctrine\ORM\EntityManagerInterface;
 

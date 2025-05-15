@@ -6,7 +6,7 @@ use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Location\CharacterLocation;
 use App\Repository\Location\CharacterLocationRepository;
-use App\Service\Game\Conditions\ConditionEvaluatorService;
+use App\Service\Game\Condition\ConditionEvaluatorService;
 
 readonly class CharacterLocationSelectorService
 {

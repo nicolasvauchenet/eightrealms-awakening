@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service\Game\Conditions;
+namespace App\Service\Game\Condition;
 
 use App\Entity\Character\Player;
-use App\Service\Game\Conditions\Handler\ConditionHandlerInterface;
+use App\Service\Game\Condition\Handler\ConditionHandlerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
 
 readonly class ConditionEvaluatorService

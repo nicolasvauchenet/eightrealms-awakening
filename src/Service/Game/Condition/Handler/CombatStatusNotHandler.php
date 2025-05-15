@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Service\Game\Conditions\Handler;
+namespace App\Service\Game\Condition\Handler;
 
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
 use App\Entity\Combat\PlayerCombat;
 use Doctrine\ORM\EntityManagerInterface;
 
-class CombatStatusHandler implements ConditionHandlerInterface
+class CombatStatusNotHandler implements ConditionHandlerInterface
 {
     public function __construct(private EntityManagerInterface $em)
     {
@@ -15,7 +15,7 @@ class CombatStatusHandler implements ConditionHandlerInterface
 
     public function supports(string $type): bool
     {
-        return $type === 'combat_status';
+        return $type === 'combat_status_not';
     }
 
     public function evaluate(Player $player, mixed $value): bool
@@ -26,6 +26,6 @@ class CombatStatusHandler implements ConditionHandlerInterface
             'combat' => $combat,
         ]);
 
-        return $pc && $pc->getStatus() === ($value['status'] ?? null);
+        return !$pc || $pc->getStatus() !== ($value['status'] ?? null);
     }
 }

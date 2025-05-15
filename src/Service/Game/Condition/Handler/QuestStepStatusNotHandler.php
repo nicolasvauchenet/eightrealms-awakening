@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Service\Game\Conditions\Handler;
+namespace App\Service\Game\Condition\Handler;
 
 use App\Entity\Character\Player;
 use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\Quest\Quest;
 use Doctrine\ORM\EntityManagerInterface;
 
-class QuestStepStatusHandler implements ConditionHandlerInterface
+class QuestStepStatusNotHandler implements ConditionHandlerInterface
 {
     public function __construct(private EntityManagerInterface $em)
     {
@@ -15,7 +15,7 @@ class QuestStepStatusHandler implements ConditionHandlerInterface
 
     public function supports(string $type): bool
     {
-        return $type === 'quest_step_status';
+        return $type === 'quest_step_status_not';
     }
 
     public function evaluate(Player $player, mixed $value): bool
@@ -27,6 +27,6 @@ class QuestStepStatusHandler implements ConditionHandlerInterface
 
         $pqs = $this->em->getRepository(PlayerQuestStep::class)->findOneBy(['player' => $player, 'questStep' => $step]);
 
-        return $pqs && $pqs->getStatus() === ($value['status'] ?? null);
+        return !$pqs || $pqs->getStatus() !== ($value['status'] ?? null);
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Service\Game\Conditions\Handler;
+namespace App\Service\Game\Condition\Handler;
 
 use App\Entity\Character\Player;
-use App\Entity\Location\Location;
 use App\Entity\Location\CharacterLocation;
+use App\Entity\Location\Location;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class LocationKnownHandler implements ConditionHandlerInterface
+class LocationUnknownHandler implements ConditionHandlerInterface
 {
     public function __construct(private EntityManagerInterface $em)
     {
@@ -15,7 +15,7 @@ readonly class LocationKnownHandler implements ConditionHandlerInterface
 
     public function supports(string $type): bool
     {
-        return $type === 'location_known';
+        return $type === 'location_unknown';
     }
 
     public function evaluate(Player $player, mixed $value): bool
@@ -25,6 +25,6 @@ readonly class LocationKnownHandler implements ConditionHandlerInterface
         return $this->em->getRepository(CharacterLocation::class)->findOneBy([
                 'character' => $player,
                 'location' => $location,
-            ]) !== null;
+            ]) === null;
     }
 }

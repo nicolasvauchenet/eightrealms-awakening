@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Game\Dialog\Handler;
+namespace App\Service\Game\Effect\Handler;
 
 use App\Entity\Character\Player;
 

@@ -29,14 +29,14 @@ services:
       $uploadsDirectory: '%uploads_directory%'
       $assetsDirectory: '%assets_directory%'
 
-  App\Service\Game\Conditions\Handler\:
-    resource: '../src/Service/Game/Conditions/Handler'
+  App\Service\Game\Condition\Handler\:
+    resource: '../src/Service/Game/Condition/Handler'
     tags: [ 'condition.handler' ]
     autowire: true
     autoconfigure: false
 
-  App\Service\Game\Dialog\Handler\:
-    resource: '../src/Service/Game/Dialog/Handler'
+  App\Service\Game\Effect\Handler\:
+    resource: '../src/Service/Game/Effect/Handler'
     tags: [ 'dialog_effect.handler' ]
     autowire: true
     autoconfigure: false

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Game\Conditions\Handler;
+namespace App\Service\Game\Condition\Handler;
 
 use App\Entity\Character\Player;
 use App\Entity\Item\CharacterItem;

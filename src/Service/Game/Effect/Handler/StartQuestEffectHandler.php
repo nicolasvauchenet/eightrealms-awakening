@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service\Game\Dialog\Handler;
+namespace App\Service\Game\Effect\Handler;
 
 use App\Entity\Character\Player;
 use App\Service\Quest\QuestProgressionService;
 
-readonly class StartQuestStepEffectHandler implements DialogEffectHandlerInterface
+readonly class StartQuestEffectHandler implements DialogEffectHandlerInterface
 {
     public function __construct(private QuestProgressionService $questProgressionService)
     {
@@ -13,11 +13,11 @@ readonly class StartQuestStepEffectHandler implements DialogEffectHandlerInterfa
 
     public function supports(string $type): bool
     {
-        return $type === 'start_quest_step';
+        return $type === 'start_quest';
     }
 
     public function apply(Player $player, mixed $value): void
     {
-        $this->questProgressionService->startQuestStep($player, $value);
+        $this->questProgressionService->startQuest($player, $value);
     }
 }

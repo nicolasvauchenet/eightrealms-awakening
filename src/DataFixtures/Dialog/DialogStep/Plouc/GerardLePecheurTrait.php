@@ -97,7 +97,7 @@ trait GerardLePecheurTrait
         [
             'name' => 'Gérard - Refuser la quête',
             'first' => true,
-            'text' => "<p>Il serre le bouclier et la canne à pêche dans ses mains, et s'arrête un instant à l'entrée de la cabane, comme pour apprécier un dernier regard sur son village.</p><p><em>Allez. Quelqu’un doit le faire. S’ils me plantent, j’espère que ce sera vite fait</em></p><p>Puis il s'en va.</p>",
+            'text' => "<p>Il serre le bouclier et la canne à pêche dans ses mains, et s'arrête un instant à l'entrée de la cabane, comme pour apprécier un dernier regard sur son village.</p><p><em>Allez. Quelqu’un doit le faire. S’ils me plantent, j’espère que ce sera vite fait</em></p>",
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'livraison-en-cours',
@@ -116,6 +116,11 @@ trait GerardLePecheurTrait
                         'quest' => 'livraison-en-cours',
                         'quest_step' => 3,
                         'status' => 'skipped',
+                    ],
+                    [
+                        'quest' => 'livraison-en-cours',
+                        'quest_step' => 4,
+                        'status' => 'completed',
                     ],
                     [
                         'quest' => 'livraison-en-cours',
@@ -151,7 +156,7 @@ trait GerardLePecheurTrait
                 'start_quest_step' => [
                     [
                         'quest' => 'livraison-en-cours',
-                        'quest_step' => 4,
+                        'quest_step' => 11,
                         'status' => 'progress',
                     ],
                 ],
@@ -243,7 +248,7 @@ trait GerardLePecheurTrait
             'reference' => 'quest_step_gerard_le_pecheur_7',
         ],
         [
-            'name' => 'Gérard - Quête en négociation 2',
+            'name' => 'Gérard - Quête en négociation 3',
             'text' => "<p>Gérard prend son air le plus sombre et renfrogné, crache par terre et vous regarde sévèrement.</p><p><em>Vous voulez qu’on papote avec ces fouilles-merde&nbsp;? Qu’on leur offre le gîte tant qu’on y est&nbsp;? Jamais&nbsp;! Des voleurs, des parasites, des enflures, voilà ce qu’ils sont&nbsp;! Si c'est pour ça qu'vous êtes revenu, c'était pas la peine de… heu… de revenir&nbsp;! Fallait rester papoter avec vos nouveaux amis.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
@@ -296,6 +301,19 @@ trait GerardLePecheurTrait
             'reference' => 'quest_step_gerard_le_pecheur_10',
         ],
         [
+            'name' => 'Gérard - Quête en négociation 2',
+            'text' => "<p>Gérard vous regarde partir, sans rien dire, l'air impassible.</p>",
+            'conditions' => [
+                'quest_step_status' => [
+                    'quest' => 'livraison-en-cours',
+                    'quest_step' => 7,
+                    'status' => 'progress',
+                ],
+            ],
+            'dialog' => 'quest_gerard_le_pecheur',
+            'reference' => 'quest_step_gerard_le_pecheur_11',
+        ],
+        [
             'name' => 'Gérard - Quête négociée',
             'text' => "<p>Gérard reprend son bouclier, puis il sort d'un pas décidé et part vers le bois en marmonnant.</p><p><em>Ça va pas s'faire tout seul, allez&nbsp;! Au carnage&nbsp;!</em></p>",
             'conditions' => [
@@ -322,6 +340,11 @@ trait GerardLePecheurTrait
                     ],
                     [
                         'quest' => 'livraison-en-cours',
+                        'quest_step' => 9,
+                        'status' => 'completed',
+                    ],
+                    [
+                        'quest' => 'livraison-en-cours',
                         'quest_step' => 10,
                         'status' => 'skipped',
                     ],
@@ -329,12 +352,12 @@ trait GerardLePecheurTrait
                 'start_quest_step' => [
                     [
                         'quest' => 'livraison-en-cours',
-                        'quest_step' => 9,
+                        'quest_step' => 11,
                     ],
                 ],
             ],
             'dialog' => 'quest_gerard_le_pecheur',
-            'reference' => 'quest_step_gerard_le_pecheur_11',
+            'reference' => 'quest_step_gerard_le_pecheur_12',
         ],
 
         // Dialogue normal

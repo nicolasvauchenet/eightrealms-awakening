@@ -89,7 +89,7 @@ trait BiloLePassantTrait
         // Dialogue normal
         [
             'name' => 'Bilo - Dialogue',
-            'text' => "<p><em>Vous savez que si vous mangez trois pommes, une carotte et un vieux fromage de chèvre avant de dormir, vous rêverez du futur&nbsp;? Enfin… moi, j’ai rêvé que j’étais un poisson qui chantait des berceuses à des dragons. Alors bon, ce n’est peut-être pas le futur-futur. Mais c'est une preuve, vous ne pensez pas&nbsp;?</em></p>",
+            'text' => "<p><em>Le Roi Galdric a disparu depuis maintenant trois semaines, et le Prince Alaric depuis un mois et demi. Je ne sais pas ce qui se terre dans ce donjon, mais si deux groupes de soldats en armes n'ont pas réussi à en ressortir, qui pourra bien aller secourir nos souverains&nbsp;?</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_status' => [
@@ -97,13 +97,16 @@ trait BiloLePassantTrait
                     'status' => 'rewarded',
                 ],
             ],
+            'effects' => [
+                'start_quest' => 'les-disparus-du-donjon',
+            ],
             'dialog' => 'dialog_bilo_le_passant',
             'reference' => 'dialog_step_bilo_le_passant_1',
         ],
 
         // Ragots
         [
-            'name' => 'Bilo - Ragots',
+            'name' => 'Bilo - Rencontre',
             'text' => "<p><em>Je reviens de chez Wilbert, l'Arcaniste. Il en a des trucs magiques&nbsp;! Ça fait rêver… Mais qu'est-ce que c'est cher, la magie&nbsp;!</em></p>",
             'first' => true,
             'conditions' => [
@@ -126,14 +129,11 @@ trait BiloLePassantTrait
         ],
         [
             'name' => 'Bilo - Ragots',
-            'text' => "<p><em>Le Roi Galdric a disparu depuis maintenant trois jours, et le Prince Alaric depuis une semaine et demi. Je ne sais pas ce qu'il y a au Donjon de l'Âme, mais si deux groupes de soldats en armes n'ont pas réussi à en ressortir, qui pourra bien nous aider&nbsp;?</em></p>",
-            'first' => true,
+            'text' => "<p><em>Vous savez que si vous mangez trois pommes, une carotte et un vieux fromage de chèvre avant de dormir, vous rêverez du futur&nbsp;? Enfin… moi, j’ai rêvé que j’étais un poisson qui chantait des berceuses à des dragons. Alors bon, ce n’est peut-être pas le futur-futur. Mais c'est une preuve, vous ne pensez pas&nbsp;?</em></p>",
             'conditions' => [
                 'location_known' => 'quartier-des-ploucs',
             ],
-            'effects' => [
-                'start_quest' => 'les-disparus-du-donjon',
-            ],
+            'first' => true,
             'dialog' => 'rumor_bilo_le_passant',
             'reference' => 'rumor_step_bilo_le_passant_3',
         ],

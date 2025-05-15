@@ -30,7 +30,7 @@ trait BiloLePassantTrait
             'text' => "Où habite cet arcaniste&nbsp;?",
             'dialogStep' => 'rumor_step_bilo_le_passant_1',
             'nextStep' => 'rumor_step_bilo_le_passant_2',
-            'reference' => 'dialog_reply_bilo_le_passant_1_1',
+            'reference' => 'rumor_reply_bilo_le_passant_1_1',
         ],
     ];
 }

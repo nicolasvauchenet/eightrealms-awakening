@@ -31,6 +31,14 @@ trait PloucTrait
                                 'status' => 'progress',
                             ],
                     ],
+                    [
+                        'quest_step_status_not' =>
+                            [
+                                'quest' => 'livraison-en-cours',
+                                'quest_step' => 11,
+                                'status' => 'progress',
+                            ],
+                    ],
                 ],
             ],
             'reference' => 'location_building_maison_de_gerard_le_pecheur_gerard_le_pecheur',
@@ -59,7 +67,7 @@ trait PloucTrait
                     [
                         'quest_step_status_not' => [
                             'quest' => 'livraison-en-cours',
-                            'quest_step' => 11,
+                            'quest_step' => 12,
                             'status' => 'progress',
                         ],
                     ],

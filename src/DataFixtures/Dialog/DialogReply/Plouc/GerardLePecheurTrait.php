@@ -49,10 +49,16 @@ trait GerardLePecheurTrait
             'reference' => 'quest_reply_gerard_le_pecheur_9_1',
         ],
         [
-            'text' => "Tant pis. Je laisse tomber",
+            'text' => "Comme vous voudrez. J'y retourne",
             'dialogStep' => 'quest_step_gerard_le_pecheur_9',
             'nextStep' => 'quest_step_gerard_le_pecheur_11',
             'reference' => 'quest_reply_gerard_le_pecheur_9_2',
+        ],
+        [
+            'text' => "Tant pis. Je laisse tomber",
+            'dialogStep' => 'quest_step_gerard_le_pecheur_9',
+            'nextStep' => 'quest_step_gerard_le_pecheur_12',
+            'reference' => 'quest_reply_gerard_le_pecheur_9_3',
         ],
     ];
 }

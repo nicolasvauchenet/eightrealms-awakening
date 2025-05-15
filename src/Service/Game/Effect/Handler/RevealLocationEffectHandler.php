@@ -5,7 +5,7 @@ namespace App\Service\Game\Effect\Handler;
 use App\Entity\Character\Player;
 use App\Service\Location\LocationService;
 
-readonly class RevealLocationEffectHandler implements DialogEffectHandlerInterface
+readonly class RevealLocationEffectHandler implements EffectHandlerInterface
 {
     public function __construct(private LocationService $locationService)
     {

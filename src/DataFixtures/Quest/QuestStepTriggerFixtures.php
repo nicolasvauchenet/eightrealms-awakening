@@ -2,6 +2,10 @@
 
 namespace App\DataFixtures\Quest;
 
+use App\DataFixtures\Quest\QuestStepTrigger\BoisDuPendu\ClairiereDeLOublieTrait;
+use App\DataFixtures\Quest\QuestStepTrigger\Plouc\CampementGobelinTrait;
+use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\AnciensDocksTrait;
+use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\QuartierDesPloucsTrait;
 use App\Entity\Quest\QuestStep;
 use App\Entity\Quest\QuestStepTrigger;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -11,68 +15,35 @@ use Doctrine\Persistence\ObjectManager;
 class QuestStepTriggerFixtures extends Fixture implements OrderedFixtureInterface
 {
 
+    use AnciensDocksTrait;
+    use QuartierDesPloucsTrait;
+    use CampementGobelinTrait;
+    use ClairiereDeLOublieTrait;
+
     public function load(ObjectManager $manager): void
     {
-        $questStepTriggers = [
-            // Objet de quête : Lettre d'Alaric
-            [
-                'type' => 'add_item',
-                'payload' => [
-                    'slug' => 'note-dalaric',
-                ],
-                'questStep' => 'quest_main_step_2',
-                'reference' => 'trigger_add_item_lettre_d_alaric',
-            ],
+        $allQuestStepTriggers = [
+            // Port Saint-Doux
+            self::ANCIENS_DOCKS_QUEST_STEP_TRIGGERS,
+            self::QUARTIER_DES_PLOUCS_QUEST_STEP_TRIGGERS,
 
-            // Dialogue : Théobald Gris-Murmure - Alaric
-            [
-                'type' => 'dialog_step',
-                'payload' => [
-                    'slug' => 'theobald-alaric',
-                ],
-                'questStep' => 'quest_main_step_3',
-                'reference' => 'trigger_dialog_step_theobald_gris_murmure_alaric',
-            ],
+            // Plouc
+            self::CAMPEMENT_GOBELIN_QUEST_STEP_TRIGGERS,
 
-            // Dialogue : Théobald Gris-Murmure - Clé
-            [
-                'type' => 'dialog_step',
-                'payload' => [
-                    'slug' => 'theobald-cle',
-                ],
-                'questStep' => 'quest_main_step_4',
-                'reference' => 'trigger_dialog_step_theobald_gris_murmure_cle',
-            ],
-
-            // Dialogue : Wilbert L'Arcaniste - Médaillon des Vents
-            [
-                'type' => 'dialog_step',
-                'payload' => [
-                    'slug' => 'wilbert-medaillon-des-vents',
-                ],
-                'questStep' => 'quest_main_step_5',
-                'reference' => 'trigger_dialog_step_wilbert_larcaniste_medaillon_des_vents',
-            ],
-
-            // Dialogue : Chef Gobelin - Le Roi Galdric
-            [
-                'type' => 'dialog_step',
-                'payload' => [
-                    'slug' => 'chef-gobelin-quete-indice',
-                ],
-                'questStep' => 'quest_main_step_6',
-                'reference' => 'trigger_dialog_step_chef_gobelin_le_roi_galdric',
-            ],
+            // Bois du Pendu
+            self::CLAIRIERE_DE_L_OUBLIE_QUEST_STEP_TRIGGERS,
         ];
 
-        foreach($questStepTriggers as $data) {
-            $questStepTrigger = (new QuestStepTrigger())
-                ->setType($data['type'])
-                ->setPayload($data['payload'])
-                ->setConditions($data['conditions'] ?? null)
-                ->setQuestStep($this->getReference($data['questStep'], QuestStep::class));
-            $manager->persist($questStepTrigger);
-            $this->addReference($data['reference'], $questStepTrigger);
+        foreach($allQuestStepTriggers as $questStepTriggers) {
+            foreach($questStepTriggers as $data) {
+                $questStepTrigger = (new QuestStepTrigger())
+                    ->setType($data['type'])
+                    ->setPayload($data['payload'])
+                    ->setConditions($data['conditions'] ?? null)
+                    ->setQuestStep($this->getReference($data['questStep'], QuestStep::class));
+                $manager->persist($questStepTrigger);
+                $this->addReference($data['reference'], $questStepTrigger);
+            }
         }
 
         $manager->flush();

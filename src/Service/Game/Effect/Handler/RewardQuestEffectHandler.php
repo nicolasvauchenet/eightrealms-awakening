@@ -5,7 +5,7 @@ namespace App\Service\Game\Effect\Handler;
 use App\Entity\Character\Player;
 use App\Service\Quest\QuestProgressionService;
 
-readonly class RewardQuestEffectHandler implements DialogEffectHandlerInterface
+readonly class RewardQuestEffectHandler implements EffectHandlerInterface
 {
     public function __construct(private QuestProgressionService $questProgressionService)
     {

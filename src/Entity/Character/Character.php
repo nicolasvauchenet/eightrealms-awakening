@@ -669,4 +669,17 @@ abstract class Character
 
         return $this;
     }
+
+    public function getCharacteristicValue(string $characteristic): int
+    {
+        return match ($characteristic) {
+            'strength' => $this->getStrength(),
+            'dexterity' => $this->getDexterity(),
+            'constitution' => $this->getConstitution(),
+            'intelligence' => $this->getIntelligence(),
+            'wisdom' => $this->getWisdom(),
+            'charisma' => $this->getCharisma(),
+            default => 0,
+        };
+    }
 }

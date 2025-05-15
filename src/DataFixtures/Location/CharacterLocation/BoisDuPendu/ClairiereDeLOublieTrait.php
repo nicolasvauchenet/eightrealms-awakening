@@ -7,7 +7,7 @@ use App\Entity\Character\Npc;
 trait ClairiereDeLOublieTrait
 {
     const CLAIRIERE_DE_L_OUBLIE_NPCS = [
-        [
+        /*[
             'character' => 'npc_theobald_le_gris_murmure',
             'characterClass' => Npc::class,
             'location' => 'location_zone_clairiere_de_loublie',
@@ -18,6 +18,6 @@ trait ClairiereDeLOublieTrait
                 ],
             ],
             'reference' => 'location_zone_clairiere_de_loublie_theobald_le_gris_murmure',
-        ],
+        ],*/
     ];
 }

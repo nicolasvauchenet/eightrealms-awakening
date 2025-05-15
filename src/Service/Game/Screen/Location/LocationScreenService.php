@@ -2,19 +2,21 @@
 
 namespace App\Service\Game\Screen\Location;
 
+use App\Entity\Character\Creature;
 use App\Entity\Character\Player;
-use App\Entity\Location\CharacterLocation;
 use App\Entity\Location\Location;
 use App\Entity\Screen\LocationScreen;
 use App\Service\Game\Condition\ConditionEvaluatorService;
 use App\Service\Game\Navigation\ExitActionResolver;
+use App\Service\Riddle\RiddleTriggerResolverService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class LocationScreenService
 {
-    public function __construct(private EntityManagerInterface    $entityManager,
-                                private ConditionEvaluatorService $conditionEvaluatorService,
-                                private ExitActionResolver        $exitActionResolver)
+    public function __construct(private EntityManagerInterface       $entityManager,
+                                private ConditionEvaluatorService    $conditionEvaluatorService,
+                                private ExitActionResolver           $exitActionResolver,
+                                private RiddleTriggerResolverService $riddleTriggerResolver,)
     {
     }
 
@@ -40,213 +42,150 @@ readonly class LocationScreenService
     private function createScreenActions(LocationScreen $screen, Location $location, Player $player): void
     {
         $screen->setActions([]);
-        $footerActions = [];
+
+        $footerActions = [
+            'npcs' => [],
+            'creatures' => [],
+            'buildings' => [],
+            'riddles' => [],
+            'exit' => [],
+        ];
 
         switch($location->getType()) {
             case 'location':
-                // Interactions avec personnages
-                $hasNpcs = false;
-                foreach($location->getCharacterLocations() as $characterLocation) {
-                    $character = $characterLocation->getCharacter();
-
-                    if($character instanceof Player) continue;
-
-                    $conditions = $characterLocation->getConditions();
-                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
-                        continue;
-                    }
-
-                    $footerActions[] = [
-                        'type' => 'interaction',
-                        'slug' => $character->getSlug(),
-                        'label' => $character->getName(),
-                        'thumbnail' => $character->getThumbnail(),
-                    ];
-                    $hasNpcs = true;
-                }
-
-                // Combat
-                $hasCombats = false;
-                $combats = $location->getCombats() ?? [];
-                foreach($combats as $combat) {
-                    $conditions = $combat->getConditions();
-
-                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
-                        continue;
-                    }
-
-                    $footerActions[] = [
-                        'type' => 'combat',
-                        'slug' => $combat->getSlug(),
-                        'label' => $combat->getName(),
-                        'thumbnail' => $combat->getThumbnail(),
-                        'isQuest' => $combat->getQuestStep() ? true : false,
-                    ];
-                    $hasCombats = true;
-                }
-
-                // Accès aux bâtiments enfants
-                $hasBuildings = false;
-                foreach($location->getChildren() as $childLocation) {
-                    if($childLocation->getType() === 'building') {
-                        $footerActions[] = [
-                            'type' => 'location',
-                            'slug' => $childLocation->getSlug(),
-                            'label' => $childLocation->getName(),
-                            'thumbnail' => $childLocation->getThumbnail(),
-                        ];
-                        $hasBuildings = true;
-                    }
-                }
-
-                // Explorer uniquement si la zone est vide
-                if(!$hasNpcs && !$hasCombats && !$hasBuildings) {
-                    $hasChild = false;
-                    foreach($location->getChildren() as $child) {
-                        $hasChild = true;
-                    }
-
-                    if($hasChild) {
-                        $firstChild = $location->getChildren()->first();
-                        if($firstChild) {
-                            $footerActions[] = [
-                                'type' => 'location',
-                                'slug' => $firstChild->getSlug(),
-                                'label' => 'Explorer',
-                                'thumbnail' => 'img/core/action/walk.png',
-                            ];
-                        }
-                    }
-                }
-                break;
-
             case 'zone':
-                // Interactions avec personnages
-                $hasNpcs = false;
+            case 'building':
                 foreach($location->getCharacterLocations() as $characterLocation) {
                     $character = $characterLocation->getCharacter();
-
-                    if($character instanceof Player) continue;
+                    if($character instanceof Player) {
+                        continue;
+                    }
 
                     $conditions = $characterLocation->getConditions();
                     if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
                         continue;
                     }
 
-                    $footerActions[] = [
+                    $action = [
                         'type' => 'interaction',
                         'slug' => $character->getSlug(),
                         'label' => $character->getName(),
                         'thumbnail' => $character->getThumbnail(),
                     ];
-                    $hasNpcs = true;
+
+                    if($character instanceof Creature) {
+                        $footerActions['creatures'][] = $action;
+                    } else {
+                        $footerActions['npcs'][] = $action;
+                    }
                 }
 
-                // Combat
-                $hasCombats = false;
-                $combats = $location->getCombats() ?? [];
-                foreach($combats as $combat) {
+                foreach($location->getCombats() ?? [] as $combat) {
                     $conditions = $combat->getConditions();
                     if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
                         continue;
                     }
 
-                    $footerActions[] = [
+                    $footerActions['creatures'][] = [
                         'type' => 'combat',
                         'slug' => $combat->getSlug(),
                         'label' => $combat->getName(),
                         'thumbnail' => $combat->getThumbnail(),
                         'isQuest' => $combat->getQuestStep() ? true : false,
                     ];
-                    $hasCombats = true;
                 }
 
-                // Accès aux bâtiments enfants
-                $hasBuildings = false;
                 foreach($location->getChildren() as $childLocation) {
                     if($childLocation->getType() === 'building') {
-                        $footerActions[] = [
+                        $footerActions['buildings'][] = [
                             'type' => 'location',
                             'slug' => $childLocation->getSlug(),
                             'label' => $childLocation->getName(),
                             'thumbnail' => $childLocation->getThumbnail(),
                         ];
-                        $hasBuildings = true;
                     }
                 }
 
-                // Zone suivante uniquement si la zone est vide
+                // Énigmes
+                $riddles = $this->createRiddleActions($location, $player);
+                foreach($riddles as $riddleAction) {
+                    $footerActions['riddles'][] = $riddleAction;
+                }
+
+                // Exit
+                $exitAction = $this->exitActionResolver->getExitAction($screen);
+                if($exitAction) {
+                    $footerActions['exit'][] = $exitAction;
+                }
+
+                break;
+        }
+
+        // Bouton 'Explorer' si aucune action n'est possible
+        $isEmpty = empty($footerActions['npcs']) &&
+            empty($footerActions['creatures']) &&
+            empty($footerActions['buildings']) &&
+            empty($footerActions['riddles']);
+        if($isEmpty) {
+            if($location->getType() === 'location' && $location->getChildren()->count() > 0) {
+                $firstChild = $location->getChildren()->first();
+                if($firstChild) {
+                    $footerActions['exit'][] = [
+                        'type' => 'location',
+                        'slug' => $firstChild->getSlug(),
+                        'label' => 'Explorer',
+                        'thumbnail' => 'img/core/action/walk.png',
+                    ];
+                }
+            }
+
+            if($location->getType() === 'zone') {
                 $parent = $location->getParent();
-                if($parent && !$hasNpcs && !$hasCombats && !$hasBuildings) {
+                if($parent) {
                     $siblings = $parent->getChildren()->filter(
                         fn(Location $child) => $child->getType() === 'zone'
                     )->getValues();
 
                     $currentIndex = array_search($location, $siblings, true);
+                    $nextZone = null;
 
                     if($currentIndex !== false) {
                         $nextIndex = $currentIndex + 1;
-
-                        if(isset($siblings[$nextIndex])) {
-                            $nextZone = $siblings[$nextIndex];
-                        } else {
-                            $nextZone = $siblings[0] ?? null;
-                        }
-
-                        if($nextZone && $nextZone !== $location) {
-                            $footerActions[] = [
-                                'type' => 'location',
-                                'slug' => $nextZone->getSlug(),
-                                'label' => 'Explorer',
-                                'thumbnail' => 'img/core/action/walk.png',
-                            ];
-                        }
-                    }
-                }
-                break;
-
-            case 'building':
-                // Interactions avec personnages
-                foreach($location->getCharacterLocations() as $characterLocation) {
-                    $character = $characterLocation->getCharacter();
-
-                    if($character instanceof Player) continue;
-
-                    $conditions = $characterLocation->getConditions();
-                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
-                        continue;
+                        $nextZone = $siblings[$nextIndex] ?? $siblings[0] ?? null;
                     }
 
-                    $footerActions[] = [
-                        'type' => 'interaction',
-                        'slug' => $character->getSlug(),
-                        'label' => $character->getName(),
-                        'thumbnail' => $character->getThumbnail(),
-                    ];
-                }
-
-                // Accès aux bâtiments enfants
-                foreach($location->getChildren() as $childLocation) {
-                    if($childLocation->getType() === 'building') {
-                        $footerActions[] = [
+                    if($nextZone && $nextZone !== $location) {
+                        $footerActions['exit'][] = [
                             'type' => 'location',
-                            'slug' => $childLocation->getSlug(),
-                            'label' => $childLocation->getName(),
-                            'thumbnail' => $childLocation->getThumbnail(),
+                            'slug' => $nextZone->getSlug(),
+                            'label' => 'Explorer',
+                            'thumbnail' => 'img/core/action/walk.png',
                         ];
                     }
                 }
-
-                // Retour vers la zone
-                $exitAction = $this->exitActionResolver->getExitAction($screen);
-                if($exitAction) {
-                    $footerActions[] = $exitAction;
-                }
-                break;
+            }
         }
 
-        if(!empty($footerActions)) {
-            $screen->setActions(['footer' => $footerActions]);
+        // Ne pas injecter de section vide
+        $cleanFooter = array_filter($footerActions, fn(array $group) => !empty($group));
+        if(!empty($cleanFooter)) {
+            $screen->setActions(['footer' => $cleanFooter]);
         }
+    }
+
+    private function createRiddleActions(Location $location, Player $player): array
+    {
+        $riddleActions = [];
+        $riddleTriggers = $this->riddleTriggerResolver->getAvailableRiddleTriggers('location_screen', $location->getSlug(), $player);
+        foreach($riddleTriggers as $riddleTrigger) {
+            $riddleActions[] = [
+                'type' => 'riddle',
+                'triggerId' => $riddleTrigger->getId(),
+                'label' => $riddleTrigger->getRiddle()->getName(),
+                'thumbnail' => $riddleTrigger->getRiddle()->getThumbnail() ?? 'img/core/action/search.png',
+            ];
+        }
+
+        return $riddleActions;
     }
 }

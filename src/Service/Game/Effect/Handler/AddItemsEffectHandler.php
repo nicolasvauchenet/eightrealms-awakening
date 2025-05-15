@@ -5,7 +5,7 @@ namespace App\Service\Game\Effect\Handler;
 use App\Entity\Character\Player;
 use App\Service\Item\CharacterInventoryService;
 
-readonly class AddItemsEffectHandler implements DialogEffectHandlerInterface
+readonly class AddItemsEffectHandler implements EffectHandlerInterface
 {
     public function __construct(private CharacterInventoryService $inventoryService)
     {

@@ -37,7 +37,9 @@ services:
 
   App\Service\Game\Effect\Handler\:
     resource: '../src/Service/Game/Effect/Handler'
-    tags: [ 'dialog_effect.handler' ]
+    tags:
+      - 'dialog_effect.handler'
+      - 'riddle_effect.handler'
     autowire: true
     autoconfigure: false
   # add more service definitions when explicit configuration is needed

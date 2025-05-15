@@ -6,6 +6,7 @@ use App\Entity\Combat\PlayerCombat;
 use App\Entity\Location\Location;
 use App\Entity\Quest\PlayerQuest;
 use App\Entity\Quest\PlayerQuestStep;
+use App\Entity\Riddle\PlayerRiddle;
 use App\Entity\Screen\Screen;
 use App\Entity\User;
 use App\Repository\Character\PlayerRepository;
@@ -62,12 +63,19 @@ class Player extends Character
     #[ORM\OneToMany(targetEntity: PlayerCombat::class, mappedBy: 'player', orphanRemoval: true)]
     private Collection $playerCombats;
 
+    /**
+     * @var Collection<int, PlayerRiddle>
+     */
+    #[ORM\OneToMany(targetEntity: PlayerRiddle::class, mappedBy: 'player', orphanRemoval: true)]
+    private Collection $playerRiddles;
+
     public function __construct()
     {
         $this->playerCharacters = new ArrayCollection();
         $this->playerQuests = new ArrayCollection();
         $this->playerQuestSteps = new ArrayCollection();
         $this->playerCombats = new ArrayCollection();
+        $this->playerRiddles = new ArrayCollection();
     }
 
     public function getExperience(): ?int
@@ -268,6 +276,36 @@ class Player extends Character
             // set the owning side to null (unless already changed)
             if($playerCombat->getPlayer() === $this) {
                 $playerCombat->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlayerRiddle>
+     */
+    public function getPlayerRiddles(): Collection
+    {
+        return $this->playerRiddles;
+    }
+
+    public function addPlayerRiddle(PlayerRiddle $playerRiddle): static
+    {
+        if (!$this->playerRiddles->contains($playerRiddle)) {
+            $this->playerRiddles->add($playerRiddle);
+            $playerRiddle->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerRiddle(PlayerRiddle $playerRiddle): static
+    {
+        if ($this->playerRiddles->removeElement($playerRiddle)) {
+            // set the owning side to null (unless already changed)
+            if ($playerRiddle->getPlayer() === $this) {
+                $playerRiddle->setPlayer(null);
             }
         }
 

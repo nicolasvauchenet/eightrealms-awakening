@@ -7,6 +7,7 @@ use App\Entity\Riddle\PlayerRiddle;
 use App\Entity\Riddle\RiddleTrigger;
 use App\Repository\Riddle\PlayerRiddleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Random\RandomException;
 
 class RiddleResolverService
 {
@@ -18,7 +19,10 @@ class RiddleResolverService
     {
     }
 
-    public function resolve(Player $player, RiddleTrigger $riddleTrigger): RiddleResolutionResult
+    /**
+     * @throws RandomException
+     */
+    public function resolve(Player $player, RiddleTrigger $riddleTrigger): string
     {
         $playerRiddle = $this->playerRiddleRepository->findOneBy(['player' => $player, 'riddle' => $riddleTrigger->getRiddle()]);
         if(!$playerRiddle) {
@@ -45,28 +49,9 @@ class RiddleResolverService
         $effects = $success ? $riddleTrigger->getRiddle()->getSuccessEffects() : $riddleTrigger->getRiddle()->getFailureEffects() ?? [];
         $this->riddleEffectApplierService->applyEffects($effects, $player, $conditions);
 
-        $locationName = $player->getCurrentLocation()?->getName() ?? 'cet endroit';
-        $log = '';
-        if($riddleTrigger->getRiddle()->getType() === 'search') {
-            if($success) {
-                $log .= "<p class='text-success'>$locationName cachait bien un secret&nbsp;!</p>";
-            } else {
-                $log .= "<p class='text-info'>Vous fouillez $locationName mais vous ne trouvez rien d'intéressant.</p>";
-            }
-        } else {
-            $log .= sprintf(
-                "<p>Jet de <strong>%s</strong> : <code>%d + %d = %d</code> contre une difficulté de <strong>%d</strong>.</p>",
-                ucfirst($characteristic),
-                $roll,
-                $statValue,
-                $total,
-                $difficulty
-            );
-            $log .= $success
-                ? "<p><strong class='text-success'>Succès !</strong></p>"
-                : "<p><strong class='text-danger'>Échec…</strong></p>";
-        }
+        // Logs
+        $log = $riddleTrigger->getRiddle()->getDescription() . ($success ? $riddleTrigger->getRiddle()->getSuccessEffects()['log'] : $riddleTrigger->getRiddle()->getFailureEffects()['log']);
 
-        return new RiddleResolutionResult($success, $roll, $statValue, $total, $difficulty, $log);
+        return $log;
     }
 }

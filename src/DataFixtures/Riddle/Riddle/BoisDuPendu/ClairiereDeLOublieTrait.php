@@ -8,7 +8,7 @@ trait ClairiereDeLOublieTrait
         [
             'name' => 'Fouiller la clairière',
             'thumbnail' => 'img/core/action/search.png',
-            'description' => "<p>Quelque chose vous paraît étrange dans ces buissons…</p>",
+            'description' => "<p class='text-info'>Quelque chose semble bouger dans les buissons… ",
             'type' => 'search',
             'characteristic' => 'intelligence',
             'difficulty' => 10,
@@ -17,9 +17,10 @@ trait ClairiereDeLOublieTrait
                 'add_characters' => [
                     'theobald-le-gris-murmure',
                 ],
+                'log' => "un vieillard se cachait et vous observait&nbsp;!</p>",
             ],
             'failureEffects' => [
-                'log' => "<p>Vous ne trouvez rien de particulier, à part quelques crottes de chèvre.</p>",
+                'log' => "mais vous ne voyez rien de particulier, à part quelques crottes de chèvre.</p>",
             ],
             'reference' => 'riddle_clairiere_de_loublie_fouiller',
         ],

@@ -1,32 +1,15 @@
 <?php
 
-namespace App\DataFixtures\Location\CharacterLocation\PortSaintDoux;
-
-use App\Entity\Character\Creature;
-use App\Entity\Character\Npc;
+namespace App\DataFixtures\Riddle\RiddleTrigger\PortSaintDoux;
 
 trait DocksDeLOuestTrait
 {
-    const DOCKS_DE_L_OUEST_NPCS = [
-        // Npcs
+    const DOCKS_DE_L_OUEST_RIDDLE_TRIGGERS = [
         [
-            'character' => 'npc_jarrod_le_tavernier',
-            'characterClass' => Npc::class,
-            'location' => 'location_building_taverne_de_la_flute_moisie',
-            'reference' => 'location_building_taverne_de_la_flute_moisie_jarrod_le_tavernier',
-        ],
-        [
-            'character' => 'npc_myra_la_vieille',
-            'characterClass' => Npc::class,
-            'location' => 'location_building_taverne_de_la_flute_moisie',
-            'reference' => 'location_building_taverne_de_la_flute_moisie_myra_la_vieille',
-        ],
-
-        // Creatures
-        /*[
-            'character' => 'creature_sirene',
-            'characterClass' => Creature::class,
-            'location' => 'location_zone_docks_de_l_ouest',
+            'type' => 'location_screen',
+            'payload' => [
+                'slug' => 'docks-de-louest',
+            ],
             'conditions' => [
                 'all' => [
                     [
@@ -62,7 +45,8 @@ trait DocksDeLOuestTrait
                     ],
                 ],
             ],
-            'reference' => 'location_zone_docks_de_l_ouest_sirene',
-        ],*/
+            'riddle' => 'riddle_docks_de_louest_chanter',
+            'reference' => 'riddle_trigger_docks_de_louest_chanter',
+        ],
     ];
 }

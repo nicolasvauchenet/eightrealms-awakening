@@ -3,6 +3,8 @@
 namespace App\DataFixtures\Riddle;
 
 use App\DataFixtures\Riddle\RiddleTrigger\BoisDuPendu\ClairiereDeLOublieTrait;
+use App\DataFixtures\Riddle\RiddleTrigger\PortSaintDoux\DocksDeLOuestTrait;
+use App\DataFixtures\Riddle\RiddleTrigger\SablesChauds\PlageDeLaSireneTrait;
 use App\Entity\Riddle\Riddle;
 use App\Entity\Riddle\RiddleTrigger;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -11,13 +13,21 @@ use Doctrine\Persistence\ObjectManager;
 
 class RiddleTriggerFixtures extends Fixture implements OrderedFixtureInterface
 {
+    use DocksDeLOuestTrait;
     use ClairiereDeLOublieTrait;
+    use PlageDeLaSireneTrait;
 
     public function load(ObjectManager $manager): void
     {
         $allRiddleTriggers = [
+            // Port Saint-Doux
+            self::DOCKS_DE_L_OUEST_RIDDLE_TRIGGERS,
+
             // Bois du Pendu
             self::CLAIRIERE_DE_L_OUBLIE_RIDDLE_TRIGGERS,
+
+            // Sables Chauds
+            self::PLAGE_DE_LA_SIRENE_RIDDLE_TRIGGERS,
         ];
 
         foreach($allRiddleTriggers as $riddleTriggers) {

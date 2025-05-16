@@ -57,4 +57,30 @@ readonly class RiddleTriggerResolverService
 
         return $riddleTriggers;
     }
+
+    public function isCombatLockedByUnsolvedRiddle(Player $player, string $combatSlug): bool
+    {
+        $triggers = $this->entityManager->getRepository(RiddleTrigger::class)->findBy(['type' => 'location_screen']);
+
+        foreach($triggers as $trigger) {
+            $riddle = $trigger->getRiddle();
+            if(!$riddle) {
+                continue;
+            }
+
+            $effects = $riddle->getSuccessEffects();
+            if(!isset($effects['add_combat']) || !in_array($combatSlug, $effects['add_combat'], true)) {
+                continue;
+            }
+
+            // Check si le player a résolu l'énigme
+            $playerRiddle = $this->playerRiddleRepository->findOneBy(['player' => $player, 'riddle' => $riddle]);
+
+            if(!$playerRiddle || !$playerRiddle->isSolved() || !$playerRiddle->isSuccess()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

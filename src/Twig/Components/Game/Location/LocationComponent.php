@@ -45,8 +45,7 @@ class LocationComponent
     public function resolveRiddle(#[LiveArg] int $riddleTriggerId): void
     {
         $riddleTrigger = $this->entityManager->getRepository(RiddleTrigger::class)->find($riddleTriggerId);
-        $result = $this->riddleResolver->resolve($this->character, $riddleTrigger);
-        $this->description .= $result->log;
+        $this->description .= $this->riddleResolver->resolve($this->character, $riddleTrigger);;
         $this->screen = $this->locationScreenService->getScreen($this->character->getCurrentLocation(), $this->character);
     }
 }

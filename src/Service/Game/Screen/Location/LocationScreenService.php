@@ -86,6 +86,10 @@ readonly class LocationScreenService
                         continue;
                     }
 
+                    if($this->riddleTriggerResolver->isCombatLockedByUnsolvedRiddle($player, $combat->getSlug())) {
+                        continue;
+                    }
+
                     $footerActions['creatures'][] = [
                         'type' => 'combat',
                         'slug' => $combat->getSlug(),

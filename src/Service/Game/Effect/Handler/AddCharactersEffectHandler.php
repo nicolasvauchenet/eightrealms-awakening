@@ -20,10 +20,10 @@ readonly class AddCharactersEffectHandler implements EffectHandlerInterface
         return $type === 'add_characters';
     }
 
-    public function apply(Player $player, mixed $data): void
+    public function apply(Player $player, mixed $value): void
     {
-        $values = $data['value'] ?? [];
-        $conditions = $data['conditions'] ?? null;
+        $values = $value['value'] ?? [];
+        $conditions = $value['conditions'] ?? null;
 
         $location = $player->getCurrentLocation();
         if(!$location) return;
@@ -32,17 +32,17 @@ readonly class AddCharactersEffectHandler implements EffectHandlerInterface
             $character = $this->entityManager->getRepository(Character::class)->findOneBy(['slug' => $slug]);
             if(!$character) continue;
 
-            $existing = $this->entityManager->getRepository(CharacterLocation::class)->findOneBy([
+            $characterLocation = $this->entityManager->getRepository(CharacterLocation::class)->findOneBy([
                 'character' => $character,
                 'location' => $location,
             ]);
-            if($existing) continue;
 
-            $characterLocation = (new CharacterLocation())
-                ->setCharacter($character)
-                ->setLocation($location)
-                ->setConditions($conditions);
-
+            if(!$characterLocation) {
+                $characterLocation = (new CharacterLocation())
+                    ->setCharacter($character)
+                    ->setLocation($location)
+                    ->setConditions($conditions);
+            }
             $this->entityManager->persist($characterLocation);
         }
 

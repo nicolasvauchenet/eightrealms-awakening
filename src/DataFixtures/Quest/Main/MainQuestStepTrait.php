@@ -47,5 +47,40 @@ trait MainQuestStepTrait
             'quest' => 'quest_main',
             'reference' => 'quest_main_step_6',
         ],
+        [
+            'description' => "<p>J'ai rencontré le Grand Druide, dans le cercle des Bois du Pendu. Il n'est pas commode, et n'acceptera de me parler que si je passe une épreuve.</p>",
+            'position' => 7,
+            'last' => false,
+            'quest' => 'quest_main',
+            'reference' => 'quest_main_step_7',
+        ],
+        [
+            'description' => "<p>J'ai réussi l'épreuve du Grand Druide, Peut-être acceptera-t-il de me révéler ses secrets maintenant.</p>",
+            'position' => 8,
+            'last' => false,
+            'quest' => 'quest_main',
+            'reference' => 'quest_main_step_8',
+        ],
+        [
+            'description' => "<p>Le Grand Druide a accepté de m'en dire plus sur le rituel et l'amulette. Le Rituel de l'Âme permet d'ouvrir la porte du Donjon de l'Âme, et le Médaillon des Vents n'est qu'une partie du Sceau du Tombeau, situé aux confins du donjon. Il a catégoriquement refusé de m'en dire davantage sur le deuxième fragment, en insistant sur le fait que &laquo;Ce qui est enfermé ne l'est jamais pour rien&raquo;… Il a aussi refusé de m'apprendre le Rituel de l'Âme, mais il a admis qu'il l'avait déjà enseigné auparavant… Je dois le convaincre, j'ai besoin du rituel pour accéder au Donjon.</p>",
+            'position' => 9,
+            'last' => false,
+            'quest' => 'quest_main',
+            'reference' => 'quest_main_step_9',
+        ],
+        [
+            'description' => "<p>Je pense avoir trouvé de quoi décider le Grand Druide à m'enseigner le rituel… Je vais retourner le voir et jouer le tout pour le tout.</p>",
+            'position' => 10,
+            'last' => false,
+            'quest' => 'quest_main',
+            'reference' => 'quest_main_step_10',
+        ],
+        [
+            'description' => "<p>Le Grand Druide a accepté de m'enseigner le Rituel de l'Âme. Je peux désormais trouver l'entrée du Donjon, mais il me reste à résoudre l'énigme du Sceau du Tombeau…</p><p><strong>Rappel du Rituel de l’Âme&nbsp;:</strong></p><ul><li>Tracer un cercle de cendre au sol.</li><li>Placer quatre pierres aux quatre points cardinaux, chacune gravée d’un mot&nbsp;: Âme (nord), Mémoire (sud), Chair (est), Sang (ouest).</li><li>Déposer au centre un objet lié à un mort, puis y verser quelques gouttes de son propre sang.</li><li>Prononcer à voix haute&nbsp;: <em>« Que les morts m’entendent, que les vivants me laissent passer. Que l’Âme parle, et que la Chair se taise. »</em></li></ul><p>Si tout est correctement exécuté, l’entrée du Donjon de l’Âme s’ouvrira… peut-être.</p>",
+            'position' => 11,
+            'last' => false,
+            'quest' => 'quest_main',
+            'reference' => 'quest_main_step_11',
+        ],
     ];
 }

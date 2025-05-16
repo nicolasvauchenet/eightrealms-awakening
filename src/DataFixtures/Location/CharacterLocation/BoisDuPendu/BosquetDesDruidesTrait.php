@@ -12,10 +12,28 @@ trait BosquetDesDruidesTrait
             'characterClass' => Npc::class,
             'location' => 'location_zone_bosquet_des_druides',
             'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'les-disparus-du-donjon',
-                    'quest_step' => 2,
-                    'status' => 'progress',
+                'any' => [
+                    [
+                        'quest_step_status' => [
+                            'quest' => 'les-disparus-du-donjon',
+                            'quest_step' => 3,
+                            'status' => 'progress',
+                        ],
+                    ],
+                    [
+                        'quest_step_status' => [
+                            'quest' => 'les-disparus-du-donjon',
+                            'quest_step' => 8,
+                            'status' => 'progress',
+                        ],
+                    ],
+                    [
+                        'quest_step_status' => [
+                            'quest' => 'les-disparus-du-donjon',
+                            'quest_step' => 10,
+                            'status' => 'progress',
+                        ],
+                    ],
                 ],
             ],
             'reference' => 'location_zone_bosquet_des_druides_grand_druide',

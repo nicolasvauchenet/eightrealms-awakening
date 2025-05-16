@@ -56,7 +56,7 @@ trait TheobaldGrisMurmureTrait
         ],
         [
             'name' => 'Théobald - Grand Druide',
-            'text' => "<p><em>Vous comptez approcher le Grand Druide ? Hm… c’est noble. Et terriblement dangereux. Les cercles se referment vite sur les intrus. Même un mot mal placé peut suffire à vous condamner.</em></p><p><em>Alors prenez ceci. L’Amulette du Cercle. Elle marque celui qui a appartenu à la Forêt. Même bannis, nous portons encore son empreinte. Peut-être qu’en la voyant, ils écouteront… avant de frapper.</em></p>",
+            'text' => "<p><em>Vous comptez approcher le Grand Druide ? Hm… c’est noble. Et terriblement dangereux. Les cercles se referment vite sur les intrus. Même un mot mal placé peut suffire à vous condamner. Je vais vous montrer le chemin.</em></p>",
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'bagarre-bizarre',
@@ -71,12 +71,12 @@ trait TheobaldGrisMurmureTrait
                     'quest_step' => 4,
                     'status' => 'completed',
                 ],
-                'add_items' => [
+                /*'add_items' => [
                     [
                         'item' => 'amulette-du-cercle',
                         'questItem' => true,
                     ],
-                ],
+                ],*/
             ],
             'dialog' => 'quest_theobald_gris_murmure',
             'reference' => 'quest_step_theobald_gris_murmure_4',

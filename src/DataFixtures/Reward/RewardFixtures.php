@@ -8,6 +8,7 @@ use App\DataFixtures\Reward\Misc\MiscTrait;
 use App\DataFixtures\Reward\Quest\MainQuestTrait;
 use App\DataFixtures\Reward\Quest\SideQuestTrait;
 use App\DataFixtures\Reward\QuestCombat\BoisDuPendu\ClairiereDeLOublieQuestCombatTrait;
+use App\DataFixtures\Reward\QuestCombat\BoisDuPendu\CriqueDuPenduQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\Plouc\CampementGobelinQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\PortSaintDoux\AnciensDocksQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\PortSaintDoux\DocksDeLOuestQuestCombatTrait;
@@ -28,6 +29,7 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
     use OreeDuBoisCombatTrait;
     use CampementGobelinQuestCombatTrait;
     use ClairiereDeLOublieQuestCombatTrait;
+    use CriqueDuPenduQuestCombatTrait;
     use OasisSansNomQuestCombatTrait;
     use MainQuestTrait;
     use SideQuestTrait;
@@ -54,6 +56,7 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
 
             // Bois du Pendu
             self::CLAIRIERE_DE_L_OUBLIE_COMBAT_QUEST_REWARDS,
+            self::CRIQUE_DU_PENDU_COMBAT_QUEST_REWARDS,
 
             // Sables Chauds
             self::OASIS_SANS_NOM_COMBAT_QUEST_REWARDS,

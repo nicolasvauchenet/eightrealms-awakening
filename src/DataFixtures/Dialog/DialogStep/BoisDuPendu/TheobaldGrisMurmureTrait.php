@@ -66,16 +66,10 @@ trait TheobaldGrisMurmureTrait
             ],
             'effects' => [
                 'reveal_location' => 'bosquet-des-druides',
-                'edit_quest_step_status' => [
+                /*'edit_quest_step_status' => [
                     'quest' => 'bagarre-bizarre',
                     'quest_step' => 4,
                     'status' => 'completed',
-                ],
-                /*'add_items' => [
-                    [
-                        'item' => 'amulette-du-cercle',
-                        'questItem' => true,
-                    ],
                 ],*/
             ],
             'dialog' => 'quest_theobald_gris_murmure',
@@ -93,9 +87,16 @@ trait TheobaldGrisMurmureTrait
             ],
             'effects' => [
                 'edit_quest_step_status' => [
-                    'quest' => 'bagarre-bizarre',
-                    'quest_step' => 4,
-                    'status' => 'completed',
+                    [
+                        'quest' => 'bagarre-bizarre',
+                        'quest_step' => 4,
+                        'status' => 'completed',
+                    ],
+                    [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 3,
+                        'status' => 'completed',
+                    ],
                 ],
             ],
             'dialog' => 'quest_theobald_gris_murmure',

@@ -41,5 +41,23 @@ trait FantomeTrait
             'race' => 'race_fantome',
             'reference' => 'creature_ame-en-peine',
         ],
+        [
+            'name' => 'Gérome le Pendu',
+            'picture' => 'img/chapter1/creature/gerome-le-pendu.png',
+            'thumbnail' => 'img/chapter1/creature/gerome-le-pendu_thumb.png',
+            'description' => "<p>Une forme spectrale, ou ce qui reste d'un homme, à la nuque tordue, flotte lentement au-dessus de la vase. Sa silhouette conserve les traces de sa pendaison&nbsp;: corde effilochée, peau violacée, regard brisé. Pourtant, dans ses yeux troubles, il reste une lueur… une mémoire incomplète.</p><p>Il ne semble pas hostile. Pas pour le moment, en tout cas.</p>",
+            'strength' => 9,
+            'dexterity' => 12,
+            'constitution' => 12,
+            'wisdom' => 15,
+            'intelligence' => 13,
+            'charisma' => 10,
+            'healthMax' => 120,
+            'manaMax' => 65,
+            'fortune' => 0,
+            'level' => 6,
+            'race' => 'race_fantome',
+            'reference' => 'creature_gerome_le_pendu',
+        ],
     ];
 }

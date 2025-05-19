@@ -214,8 +214,7 @@ readonly class QuestProgressionService
         }
 
         $lastStep = $quest->getQuestSteps()->filter(fn($s) => $s->isLast())->first();
-        $giver = $quest->getGiver() ?? $lastStep?->getGiver();
-
+        $giver = $quest->getGiver() ? $lastStep?->getGiver() : null;
         if($giver) {
             $this->characterReputationService->increaseReputationFromQuestReward($player, $giver);
         }

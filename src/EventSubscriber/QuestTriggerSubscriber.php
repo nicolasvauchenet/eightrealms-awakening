@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Character\Player;
+use App\Event\CombatVictoryEvent;
 use App\Event\DialogStepReachedEvent;
 use App\Event\ItemReceivedEvent;
 use App\Entity\Quest\QuestStepTrigger;
@@ -24,6 +25,7 @@ readonly class QuestTriggerSubscriber implements EventSubscriberInterface
         return [
             ItemReceivedEvent::class => 'onItemReceived',
             DialogStepReachedEvent::class => 'onDialogStepReached',
+            CombatVictoryEvent::class => 'onCombatVictory',
         ];
     }
 
@@ -70,6 +72,35 @@ readonly class QuestTriggerSubscriber implements EventSubscriberInterface
         foreach($triggers as $trigger) {
             $payload = $trigger->getPayload();
             if(($payload['slug'] ?? null) !== $event->dialogStepSlug) {
+                continue;
+            }
+
+            $step = $trigger->getQuestStep();
+            $quest = $step?->getQuest();
+
+            if($step && $quest) {
+                $this->questProgressionService->startQuestStep($player, [
+                    'quest' => $quest->getSlug(),
+                    'quest_step' => $step->getPosition(),
+                ]);
+            }
+        }
+    }
+
+    public function onCombatVictory(CombatVictoryEvent $event): void
+    {
+        $player = $this->entityManager->getRepository(Player::class)->find($event->playerId);
+        if(!$player) {
+            return;
+        }
+
+        $triggers = $this->entityManager
+            ->getRepository(QuestStepTrigger::class)
+            ->findBy(['type' => 'combat_victory']);
+
+        foreach($triggers as $trigger) {
+            $payload = $trigger->getPayload();
+            if(($payload['slug'] ?? null) !== $event->combatSlug) {
                 continue;
             }
 

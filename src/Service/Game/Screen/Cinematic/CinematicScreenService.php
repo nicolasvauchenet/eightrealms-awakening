@@ -7,16 +7,19 @@ use App\Entity\Combat\Combat;
 use App\Entity\Dialog\DialogStep;
 use App\Entity\Screen\CinematicScreen;
 use App\Entity\Location\Location;
+use App\Event\CombatVictoryEvent;
 use App\Service\Game\Screen\Dialog\DialogScreenService;
 use App\Service\Game\Screen\Location\LocationScreenService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 readonly class CinematicScreenService
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
         private LocationScreenService  $locationScreenService,
-        private DialogScreenService    $dialogScreenService
+        private DialogScreenService    $dialogScreenService,
+        private EventDispatcherInterface   $eventDispatcher
     )
     {
     }
@@ -56,6 +59,9 @@ readonly class CinematicScreenService
 
         $this->entityManager->persist($screen);
         $this->entityManager->flush();
+
+        // Le combat peut déclencher une étape de la quête principale
+        $this->eventDispatcher->dispatch(new CombatVictoryEvent($player->getId(), $combat->getSlug()));
 
         return $screen;
     }

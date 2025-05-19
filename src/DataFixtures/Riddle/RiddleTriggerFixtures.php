@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Riddle;
 
 use App\DataFixtures\Riddle\RiddleTrigger\BoisDuPendu\ClairiereDeLOublieTrait;
+use App\DataFixtures\Riddle\RiddleTrigger\BoisDuPendu\CriqueDuPenduTrait;
 use App\DataFixtures\Riddle\RiddleTrigger\PortSaintDoux\DocksDeLOuestTrait;
 use App\DataFixtures\Riddle\RiddleTrigger\SablesChauds\PlageDeLaSireneTrait;
 use App\Entity\Riddle\Riddle;
@@ -15,6 +16,7 @@ class RiddleTriggerFixtures extends Fixture implements OrderedFixtureInterface
 {
     use DocksDeLOuestTrait;
     use ClairiereDeLOublieTrait;
+    use CriqueDuPenduTrait;
     use PlageDeLaSireneTrait;
 
     public function load(ObjectManager $manager): void
@@ -25,6 +27,7 @@ class RiddleTriggerFixtures extends Fixture implements OrderedFixtureInterface
 
             // Bois du Pendu
             self::CLAIRIERE_DE_L_OUBLIE_RIDDLE_TRIGGERS,
+            self::CRIQUE_DU_PENDU_RIDDLE_TRIGGERS,
 
             // Sables Chauds
             self::PLAGE_DE_LA_SIRENE_RIDDLE_TRIGGERS,

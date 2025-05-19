@@ -5,6 +5,7 @@ namespace App\DataFixtures\Dialog\DialogReply\SablesChauds;
 trait FaroukLeNomadeTrait
 {
     const FAROUK_LE_NOMADE_DIALOG_REPLIES = [
+        // Quête : La Fiole Perdue
         [
             'text' => "Avez-vous vu passer un homme étrange&nbsp;?",
             'dialogStep' => 'quest_step_farouk_le_nomade_1',
@@ -28,6 +29,14 @@ trait FaroukLeNomadeTrait
             'dialogStep' => 'quest_step_farouk_le_nomade_3',
             'nextStep' => 'quest_step_farouk_le_nomade_5',
             'reference' => 'quest_reply_farouk_le_nomade_3_2',
+        ],
+
+        // Ragots
+        [
+            'text' => "Je ne comprends pas…",
+            'dialogStep' => 'rumor_step_farouk_le_nomade_1',
+            'nextStep' => 'rumor_step_farouk_le_nomade_2',
+            'reference' => 'rumor_reply_farouk_le_nomade_1_1',
         ],
     ];
 }

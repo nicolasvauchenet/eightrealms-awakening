@@ -20,5 +20,13 @@ trait FaroukLeNomadeTrait
             'characterClass' => Npc::class,
             'reference' => 'quest_farouk_le_nomade',
         ],
+
+        // Ragots
+        [
+            'type' => 'rumor',
+            'character' => 'npc_farouk_le_nomade',
+            'characterClass' => Npc::class,
+            'reference' => 'rumor_farouk_le_nomade',
+        ],
     ];
 }

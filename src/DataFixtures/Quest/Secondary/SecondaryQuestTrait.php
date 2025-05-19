@@ -47,5 +47,10 @@ trait SecondaryQuestTrait
             'giverClass' => Npc::class,
             'reference' => 'quest_secondary_la_sirene_et_le_marin',
         ],
+        [
+            'name' => 'Le Jugement du Cercle',
+            'type' => 'Secondaire',
+            'reference' => 'quest_secondary_le_jugement_du_cercle',
+        ],
     ];
 }

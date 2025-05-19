@@ -12,7 +12,7 @@ trait GrandDruideTrait
             'reference' => 'quest_reply_grand_druide_1_1',
         ],
         [
-            'text' => "Et le second fragment du Sceau&nbsp;? Où se trouve-t-il&nbsp;?",
+            'text' => "Et les autres fragments? Où se trouvent-t-ils&nbsp;?",
             'dialogStep' => 'quest_step_grand_druide_3',
             'nextStep' => 'quest_step_grand_druide_4',
             'reference' => 'quest_reply_grand_druide_3_1',

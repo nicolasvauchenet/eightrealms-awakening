@@ -16,7 +16,7 @@ trait BosquetDesDruidesTrait
                     [
                         'quest_step_status' => [
                             'quest' => 'les-disparus-du-donjon',
-                            'quest_step' => 3,
+                            'quest_step' => 4,
                             'status' => 'progress',
                         ],
                     ],
@@ -33,6 +33,9 @@ trait BosquetDesDruidesTrait
                             'quest_step' => 10,
                             'status' => 'progress',
                         ],
+                    ],
+                    [
+                        'has_item' => 'amulette-du-cercle',
                     ],
                 ],
             ],

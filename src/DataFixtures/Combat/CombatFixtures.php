@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Combat;
 
 use App\DataFixtures\Combat\BoisDuPendu\ClairiereDeLOublieTrait;
+use App\DataFixtures\Combat\BoisDuPendu\CriqueDuPenduTrait;
 use App\DataFixtures\Combat\Plouc\BoisDesRelentsTrait;
 use App\DataFixtures\Combat\PortSaintDoux\AnciensDocksTrait;
 use App\DataFixtures\Combat\PortSaintDoux\DocksDeLOuestTrait;
@@ -23,6 +24,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
     use DocksDeLOuestTrait;
     use BoisDesRelentsTrait;
     use ClairiereDeLOublieTrait;
+    use CriqueDuPenduTrait;
     use OasisSansNomTrait;
     use PlageDeLaSireneTrait;
 
@@ -38,6 +40,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
 
             // Bois du Pendu
             self::CLAIRIERE_DE_L_OUBLIE_COMBATS,
+            self::CRIQUE_DU_PENDU_COMBATS,
 
             // Sables Chauds
             self::OASIS_SANS_NOM_COMBATS,

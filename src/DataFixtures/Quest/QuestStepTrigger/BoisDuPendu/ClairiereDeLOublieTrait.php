@@ -14,15 +14,5 @@ trait ClairiereDeLOublieTrait
             'questStep' => 'quest_main_step_3',
             'reference' => 'trigger_dialog_step_theobald_gris_murmure_alaric',
         ],
-
-        // Dialogue : Théobald Gris-Murmure - Clé
-        [
-            'type' => 'dialog_step',
-            'payload' => [
-                'slug' => 'theobald-cle',
-            ],
-            'questStep' => 'quest_main_step_4',
-            'reference' => 'trigger_dialog_step_theobald_gris_murmure_cle',
-        ],
     ];
 }

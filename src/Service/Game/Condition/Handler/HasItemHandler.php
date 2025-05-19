@@ -7,7 +7,7 @@ use App\Entity\Item\CharacterItem;
 use App\Entity\Item\Item;
 use Doctrine\ORM\EntityManagerInterface;
 
-class InventoryHasHandler implements ConditionHandlerInterface
+class HasItemHandler implements ConditionHandlerInterface
 {
     public function __construct(private EntityManagerInterface $em)
     {
@@ -15,7 +15,7 @@ class InventoryHasHandler implements ConditionHandlerInterface
 
     public function supports(string $type): bool
     {
-        return $type === 'inventory_has';
+        return $type === 'has_item';
     }
 
     public function evaluate(Player $player, mixed $value): bool

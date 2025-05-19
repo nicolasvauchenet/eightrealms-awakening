@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Dialog;
 
+use App\DataFixtures\Dialog\DialogStep\BoisDuPendu\GeromeLePenduTrait;
 use App\DataFixtures\Dialog\DialogStep\BoisDuPendu\GrandDruideTrait;
 use App\DataFixtures\Dialog\DialogStep\BoisDuPendu\TheobaldGrisMurmureTrait;
 use App\DataFixtures\Dialog\DialogStep\Plouc\ChefGobelinTrait;
@@ -42,6 +43,7 @@ class DialogStepFixtures extends Fixture implements OrderedFixtureInterface
     use FauxDjinnTrait;
     use TheobaldGrisMurmureTrait;
     use GrandDruideTrait;
+    use GeromeLePenduTrait;
     use GerardLePecheurTrait;
     use ChefGobelinTrait;
 
@@ -68,6 +70,7 @@ class DialogStepFixtures extends Fixture implements OrderedFixtureInterface
             // Bois du Pendu
             self::THEOBALD_GRIS_MURMURE_DIALOG_STEPS,
             self::GRAND_DRUIDE_DIALOG_STEPS,
+            self::GEROME_LE_PENDU_DIALOG_STEPS,
 
             // Plouc
             self::GERARD_LE_PECHEUR_DIALOG_STEPS,

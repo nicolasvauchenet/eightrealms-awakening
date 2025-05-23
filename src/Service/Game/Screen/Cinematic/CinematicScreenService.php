@@ -5,6 +5,7 @@ namespace App\Service\Game\Screen\Cinematic;
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
 use App\Entity\Dialog\DialogStep;
+use App\Entity\Riddle\Riddle;
 use App\Entity\Screen\CinematicScreen;
 use App\Entity\Location\Location;
 use App\Event\CombatVictoryEvent;
@@ -16,10 +17,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 readonly class CinematicScreenService
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private LocationScreenService  $locationScreenService,
-        private DialogScreenService    $dialogScreenService,
-        private EventDispatcherInterface   $eventDispatcher
+        private EntityManagerInterface   $entityManager,
+        private LocationScreenService    $locationScreenService,
+        private DialogScreenService      $dialogScreenService,
+        private EventDispatcherInterface $eventDispatcher
     )
     {
     }
@@ -103,6 +104,57 @@ readonly class CinematicScreenService
                         'thumbnail' => 'img/core/action/continue.png',
                     ],
                 ],
+            ]);
+
+        $this->entityManager->persist($screen);
+        $this->entityManager->flush();
+
+        return $screen;
+    }
+
+    public function getTestResultScreen(Player $player, Riddle $riddle): CinematicScreen
+    {
+        $alignment = $player->getPlayerAlignment()?->getAlignment();
+        $dominantMarker = $player->getPlayerAlignment()?->getDominantMarker();
+
+        if(!$alignment || !$dominantMarker) {
+            throw new \RuntimeException('Aucun alignement ou marqueur dominant défini pour ce joueur.');
+        }
+
+        $slug = 'test_result_' . $alignment->getSlug();
+
+        $screen = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy([
+            'slug' => $slug,
+        ]);
+
+        if($screen) {
+            return $screen;
+        }
+
+        // Fallback vers le lieu actuel du joueur
+        $location = $player->getCurrentLocation();
+        $redirectSlug = $this->locationScreenService->getScreen($location, $player)->getSlug();
+
+        // Génération dynamique de la description
+        $description = sprintf(
+            "<p>Le Grand Druide incline la tête.</p><p><em>%s, vous avez passé l'épreuve. %s</em></p>",
+            $alignment->getName(),
+            $alignment->getDescription()
+        );
+
+        $screen = (new CinematicScreen())
+            ->setName("Épreuve de l'Esprit : Résultat")
+            ->setSlug($slug)
+            ->setPicture($riddle->getPicture())
+            ->setDescription($description)
+            ->setType('cinematic')
+            ->setActions([
+                'footer' => [[
+                    'type' => 'location',
+                    'slug' => $redirectSlug,
+                    'label' => 'Continuer',
+                    'thumbnail' => 'img/core/action/continue.png',
+                ]],
             ]);
 
         $this->entityManager->persist($screen);

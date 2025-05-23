@@ -1,0 +1,9 @@
+{% if this.screen.riddleQuestion.riddleChoices is defined and this.screen.riddleQuestion.riddleChoices | length > 0 %}
+    <div class="reply-actions">
+        {% for choice in this.screen.riddleQuestion.riddleChoices %}
+            <button class="reply-action" {{ live_action('choice', {choiceId: choice.id}) }}>
+                {{ choice.text | raw }}
+            </button>
+        {% endfor %}
+    </div>
+{% endif %}

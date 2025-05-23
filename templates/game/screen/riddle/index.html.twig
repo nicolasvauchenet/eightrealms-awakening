@@ -1,0 +1,9 @@
+{% extends 'game/_layout/_index.html.twig' %}
+
+{% block title %}{{ screen.name }} - Les Huit Royaumes - Chapitre I : L'Éveil{% endblock %}
+
+{% block body_class %}game screen {{ screen.type }}{% endblock %}
+
+{% block main %}
+    {{ component('RiddleScreen', {character: app.user.player, screen: screen}) }}
+{% endblock %}

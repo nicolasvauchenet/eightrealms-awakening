@@ -30,7 +30,7 @@ trait GrandDruideTrait
                 ],
             ],
             'dialog' => 'quest_grand_druide',
-            'redirectToRiddle' => '',
+            'redirectToRiddle' => 'lepreuve-de-lesprit-du-cercle',
             'reference' => 'quest_step_grand_druide_2',
         ],
         [

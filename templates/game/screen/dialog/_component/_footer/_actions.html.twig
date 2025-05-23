@@ -1,14 +1,22 @@
 {% if this.screen.actions.footer is defined and this.screen.actions.footer | length > 0 %}
     <div class="footer-actions">
         {% for action in this.screen.actions.footer %}
-            <a href="{{ path('app_game_screen_' ~ action.type, {'slug': action.slug}) }}"
-               class="app-button cta {% if action.isQuest is defined and action.isQuest %}focus{% endif %}"
-               title="{{ action.label }}">
-                {% if action.type == 'combat' %}
-                    <img src="{{ asset('img/core/action/attack.png') }}" class="combat" alt="Combat"/>
-                {% endif %}
-                <img src="{{ asset(action.thumbnail) }}" alt="{{ action.label }}"/>
-            </a>
+            {% if action.type == 'riddle' %}
+                <a href="{{ path('app_game_screen_' ~ action.type, {'id': action.id}) }}"
+                   class="app-button cta {% if action.isQuest is defined and action.isQuest %}focus{% endif %}"
+                   title="{{ action.label }}">
+                    <img src="{{ asset(action.thumbnail) }}" alt="{{ action.label }}"/>
+                </a>
+            {% else %}
+                <a href="{{ path('app_game_screen_' ~ action.type, {'slug': action.slug}) }}"
+                   class="app-button cta {% if action.isQuest is defined and action.isQuest %}focus{% endif %}"
+                   title="{{ action.label }}">
+                    {% if action.type == 'combat' %}
+                        <img src="{{ asset('img/core/action/attack.png') }}" class="combat" alt="Combat"/>
+                    {% endif %}
+                    <img src="{{ asset(action.thumbnail) }}" alt="{{ action.label }}"/>
+                </a>
+            {% endif %}
         {% endfor %}
     </div>
 {% endif %}

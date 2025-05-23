@@ -25,6 +25,9 @@ class Riddle
     private ?string $slug = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    private ?string $picture = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $thumbnail = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -39,8 +42,8 @@ class Riddle
     #[ORM\Column(nullable: true)]
     private ?int $difficulty = null;
 
-    #[ORM\Column]
-    private array $successEffects = [];
+    #[ORM\Column(nullable: true)]
+    private ?array $successEffects = null;
 
     #[ORM\Column(nullable: true)]
     private ?array $failureEffects = null;
@@ -60,10 +63,17 @@ class Riddle
     #[ORM\OneToMany(targetEntity: PlayerRiddle::class, mappedBy: 'riddle', orphanRemoval: true)]
     private Collection $playerRiddles;
 
+    /**
+     * @var Collection<int, RiddleQuestion>
+     */
+    #[ORM\OneToMany(targetEntity: RiddleQuestion::class, mappedBy: 'riddle', orphanRemoval: true)]
+    private Collection $riddleQuestions;
+
     public function __construct()
     {
         $this->riddleTriggers = new ArrayCollection();
         $this->playerRiddles = new ArrayCollection();
+        $this->riddleQuestions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,6 +101,18 @@ class Riddle
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): static
+    {
+        $this->picture = $picture;
 
         return $this;
     }
@@ -160,7 +182,7 @@ class Riddle
         return $this->successEffects;
     }
 
-    public function setSuccessEffects(array $successEffects): static
+    public function setSuccessEffects(?array $successEffects): static
     {
         $this->successEffects = $successEffects;
 
@@ -249,5 +271,48 @@ class Riddle
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, RiddleQuestion>
+     */
+    public function getRiddleQuestions(): Collection
+    {
+        return $this->riddleQuestions;
+    }
+
+    public function addRiddleQuestion(RiddleQuestion $riddleQuestion): static
+    {
+        if(!$this->riddleQuestions->contains($riddleQuestion)) {
+            $this->riddleQuestions->add($riddleQuestion);
+            $riddleQuestion->setRiddle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRiddleQuestion(RiddleQuestion $riddleQuestion): static
+    {
+        if($this->riddleQuestions->removeElement($riddleQuestion)) {
+            // set the owning side to null (unless already changed)
+            if($riddleQuestion->getRiddle() === $this) {
+                $riddleQuestion->setRiddle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFirstQuestion(): ?RiddleQuestion
+    {
+        $questions = $this->getRiddleQuestions()->toArray();
+
+        if(empty($questions)) {
+            return null;
+        }
+
+        usort($questions, fn(RiddleQuestion $a, RiddleQuestion $b) => $a->getPosition() <=> $b->getPosition());
+
+        return $questions[0] ?? null;
     }
 }

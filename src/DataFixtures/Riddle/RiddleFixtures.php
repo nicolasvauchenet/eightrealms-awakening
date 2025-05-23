@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Riddle;
 
+use App\DataFixtures\Riddle\Riddle\BoisDuPendu\BosquetDesDruidesTrait;
 use App\DataFixtures\Riddle\Riddle\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Riddle\Riddle\BoisDuPendu\CriqueDuPenduTrait;
 use App\DataFixtures\Riddle\Riddle\PortSaintDoux\DocksDeLouestTrait;
@@ -15,6 +16,7 @@ class RiddleFixtures extends Fixture implements OrderedFixtureInterface
 {
     use DocksDeLouestTrait;
     use ClairiereDeLOublieTrait;
+    use BosquetDesDruidesTrait;
     use CriqueDuPenduTrait;
     use PlageDeLaSireneTrait;
 
@@ -27,6 +29,7 @@ class RiddleFixtures extends Fixture implements OrderedFixtureInterface
             // Bois du Pendu
             self::CLAIRIERE_DE_L_OUBLIE_RIDDLES,
             self::CRIQUE_DU_PENDU_RIDDLES,
+            self::BOSQUET_DES_DRUIDES_RIDDLES,
 
             // Sables Chauds
             self::PLAGE_DE_LA_SIRENE_RIDDLES,
@@ -36,13 +39,14 @@ class RiddleFixtures extends Fixture implements OrderedFixtureInterface
             foreach($riddles as $data) {
                 $riddle = (new Riddle())
                     ->setName($data['name'])
+                    ->setPicture($data['picture'] ?? null)
                     ->setThumbnail($data['thumbnail'])
                     ->setDescription($data['description'])
                     ->setType($data['type'])
                     ->setCharacteristic($data['characteristic'] ?? null)
                     ->setDifficulty($data['difficulty'] ?? null)
                     ->setRepeatOnFailure($data['repeatOnFailure'])
-                    ->setSuccessEffects($data['successEffects'])
+                    ->setSuccessEffects($data['successEffects'] ?? null)
                     ->setFailureEffects($data['failureEffects'] ?? null);
                 $manager->persist($riddle);
                 $this->addReference($data['reference'], $riddle);

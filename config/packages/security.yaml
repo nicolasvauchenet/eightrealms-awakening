@@ -46,6 +46,7 @@ security:
     - { path: ^/reparer, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/recharger, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/combat, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/enigme, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/, roles: PUBLIC_ACCESS }
 
   access_denied_url: /

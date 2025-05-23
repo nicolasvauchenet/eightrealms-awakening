@@ -19,6 +19,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
     'reload' => ReloadScreen::class,
     'dialog' => DialogScreen::class,
     'combat' => CombatScreen::class,
+    'riddle' => RiddleScreen::class,
 ])]
 abstract
 class Screen

@@ -39,6 +39,9 @@ class DialogStep
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $redirectToCombat = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $redirectToRiddle = null;
+
     #[ORM\ManyToOne(inversedBy: 'dialogSteps')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Dialog $dialog = null;
@@ -139,6 +142,18 @@ class DialogStep
     public function setRedirectToCombat(?string $redirectToCombat): static
     {
         $this->redirectToCombat = $redirectToCombat;
+
+        return $this;
+    }
+
+    public function getRedirectToRiddle(): ?string
+    {
+        return $this->redirectToRiddle;
+    }
+
+    public function setRedirectToRiddle(?string $redirectToRiddle): static
+    {
+        $this->redirectToRiddle = $redirectToRiddle;
 
         return $this;
     }

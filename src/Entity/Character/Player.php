@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Alignment\PlayerAlignment;
 use App\Entity\Combat\PlayerCombat;
 use App\Entity\Location\Location;
 use App\Entity\Quest\PlayerQuest;
@@ -68,6 +69,9 @@ class Player extends Character
      */
     #[ORM\OneToMany(targetEntity: PlayerRiddle::class, mappedBy: 'player', orphanRemoval: true)]
     private Collection $playerRiddles;
+
+    #[ORM\OneToOne(mappedBy: 'player', cascade: ['persist', 'remove'])]
+    private ?PlayerAlignment $playerAlignment = null;
 
     public function __construct()
     {
@@ -308,6 +312,23 @@ class Player extends Character
                 $playerRiddle->setPlayer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPlayerAlignment(): ?PlayerAlignment
+    {
+        return $this->playerAlignment;
+    }
+
+    public function setPlayerAlignment(PlayerAlignment $playerAlignment): static
+    {
+        // set the owning side of the relation if necessary
+        if ($playerAlignment->getPlayer() !== $this) {
+            $playerAlignment->setPlayer($this);
+        }
+
+        $this->playerAlignment = $playerAlignment;
 
         return $this;
     }

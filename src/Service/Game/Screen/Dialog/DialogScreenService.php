@@ -5,6 +5,7 @@ namespace App\Service\Game\Screen\Dialog;
 use App\Entity\Character\Player;
 use App\Entity\Combat\Combat;
 use App\Entity\Dialog\DialogStep;
+use App\Entity\Riddle\Riddle;
 use App\Entity\Screen\DialogScreen;
 use App\Event\DialogStepReachedEvent;
 use App\Service\Game\Dialog\DialogEffectApplierService;
@@ -73,8 +74,30 @@ readonly class DialogScreenService
             }
         }
 
-        // Supprime les 'interaction' si 'combat' présent
-        if($hasCombat) {
+        // Ajout d’un riddle si redirection
+        if($slug = $screen->getDialogStep()->getRedirectToRiddle()) {
+            $riddle = $this->entityManager->getRepository(Riddle::class)->findOneBy(['slug' => $slug]);
+            if($riddle) {
+                $footerActions[] = [
+                    'type' => 'riddle',
+                    'id' => $riddle->getFirstQuestion()->getId(),
+                    'label' => $riddle->getName(),
+                    'thumbnail' => $riddle->getThumbnail(),
+                ];
+            }
+        }
+
+        // Vérifie s'il y a une action de type 'riddle'
+        $hasRiddle = false;
+        foreach($footerActions as $action) {
+            if($action['type'] === 'riddle') {
+                $hasRiddle = true;
+                break;
+            }
+        }
+
+        // Supprime les 'interaction' si 'combat' ou 'riddle' présent
+        if($hasCombat || $hasRiddle) {
             $footerActions = array_filter($footerActions, fn($action) => $action['type'] !== 'interaction');
         }
 

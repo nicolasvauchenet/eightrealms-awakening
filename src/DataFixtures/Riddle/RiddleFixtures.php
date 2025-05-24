@@ -7,6 +7,7 @@ use App\DataFixtures\Riddle\Riddle\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Riddle\Riddle\BoisDuPendu\CriqueDuPenduTrait;
 use App\DataFixtures\Riddle\Riddle\PortSaintDoux\DocksDeLouestTrait;
 use App\DataFixtures\Riddle\Riddle\SablesChauds\PlageDeLaSireneTrait;
+use App\Entity\Quest\QuestStep;
 use App\Entity\Riddle\Riddle;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -45,9 +46,13 @@ class RiddleFixtures extends Fixture implements OrderedFixtureInterface
                     ->setType($data['type'])
                     ->setCharacteristic($data['characteristic'] ?? null)
                     ->setDifficulty($data['difficulty'] ?? null)
-                    ->setRepeatOnFailure($data['repeatOnFailure'])
                     ->setSuccessEffects($data['successEffects'] ?? null)
-                    ->setFailureEffects($data['failureEffects'] ?? null);
+                    ->setSuccessDescription($data['successDescription'] ?? null)
+                    ->setFailureEffects($data['failureEffects'] ?? null)
+                    ->setFailureDescription($data['failureDescription'] ?? null)
+                    ->setRepeatOnFailure($data['repeatOnFailure'])
+                    ->setRedirectToDialog(($data['redirectToDialog'] ?? null))
+                    ->setQuestStep(isset($data['questStep']) ? $this->getReference($data['questStep'], QuestStep::class) : null);
                 $manager->persist($riddle);
                 $this->addReference($data['reference'], $riddle);
             }

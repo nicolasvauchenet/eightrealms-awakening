@@ -112,7 +112,7 @@ readonly class CinematicScreenService
         return $screen;
     }
 
-    public function getTestResultScreen(Player $player, Riddle $riddle): CinematicScreen
+    public function getTestResultScreen(Player $player, Riddle $riddle, bool $isSuccess = false): CinematicScreen
     {
         $alignment = $player->getPlayerAlignment()?->getAlignment();
         $dominantMarker = $player->getPlayerAlignment()?->getDominantMarker();
@@ -122,41 +122,47 @@ readonly class CinematicScreenService
         }
 
         $slug = 'test_result_' . $alignment->getSlug();
-
-        $screen = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy([
-            'slug' => $slug,
-        ]);
-
-        if($screen) {
-            return $screen;
+        $existing = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy(['slug' => $slug,]);
+        if($existing) {
+            return $existing;
         }
 
-        // Fallback vers le lieu actuel du joueur
-        $location = $player->getCurrentLocation();
-        $redirectSlug = $this->locationScreenService->getScreen($location, $player)->getSlug();
+        // Redirection dynamique
+        if($riddle->getRedirectToDialog()) {
+            $dialogStep = $this->entityManager->getRepository(DialogStep::class)->findOneBy(['slug' => $riddle->getRedirectToDialog()]);
+            if(!$dialogStep) {
+                throw new \RuntimeException('DialogStep introuvable pour le slug : ' . $riddle->getRedirectToDialog());
+            }
+            $redirectSlug = $this->dialogScreenService->getScreen($dialogStep, $player)->getSlug();
+            $redirectType = 'dialog';
+        } else {
+            $location = $player->getCurrentLocation();
+            $redirectSlug = $this->locationScreenService->getScreen($location, $player)->getSlug();
+            $redirectType = 'location';
+        }
 
-        // Génération dynamique de la description
+        // Génération dynamique de la description selon succès ou échec
+        $descriptionTemplate = $isSuccess ? $riddle->getSuccessDescription() : $riddle->getFailureDescription();
         $description = sprintf(
-            "<p>Le Grand Druide incline la tête.</p><p><em>%s, vous avez passé l'épreuve. %s</em></p>",
+            $descriptionTemplate,
             $alignment->getName(),
             $alignment->getDescription()
         );
 
         $screen = (new CinematicScreen())
-            ->setName("Épreuve de l'Esprit : Résultat")
+            ->setName("Épreuve de l'Esprit<small>{$alignment->getName()}</small>")
             ->setSlug($slug)
             ->setPicture($riddle->getPicture())
             ->setDescription($description)
             ->setType('cinematic')
             ->setActions([
                 'footer' => [[
-                    'type' => 'location',
+                    'type' => $redirectType,
                     'slug' => $redirectSlug,
                     'label' => 'Continuer',
                     'thumbnail' => 'img/core/action/continue.png',
                 ]],
             ]);
-
         $this->entityManager->persist($screen);
         $this->entityManager->flush();
 

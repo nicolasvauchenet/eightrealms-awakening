@@ -2,6 +2,7 @@
 
 namespace App\Entity\Riddle;
 
+use App\Entity\Quest\QuestStep;
 use App\Repository\Riddle\RiddleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -45,11 +46,20 @@ class Riddle
     #[ORM\Column(nullable: true)]
     private ?array $successEffects = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $successDescription = null;
+
     #[ORM\Column(nullable: true)]
     private ?array $failureEffects = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $failureDescription = null;
+
     #[ORM\Column]
     private ?bool $repeatOnFailure = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $redirectToDialog = null;
 
     /**
      * @var Collection<int, RiddleTrigger>
@@ -68,6 +78,9 @@ class Riddle
      */
     #[ORM\OneToMany(targetEntity: RiddleQuestion::class, mappedBy: 'riddle', orphanRemoval: true)]
     private Collection $riddleQuestions;
+
+    #[ORM\ManyToOne]
+    private ?QuestStep $questStep = null;
 
     public function __construct()
     {
@@ -189,6 +202,18 @@ class Riddle
         return $this;
     }
 
+    public function getSuccessDescription(): ?string
+    {
+        return $this->successDescription;
+    }
+
+    public function setSuccessDescription(?string $successDescription): static
+    {
+        $this->successDescription = $successDescription;
+
+        return $this;
+    }
+
     public function getFailureEffects(): ?array
     {
         return $this->failureEffects;
@@ -201,6 +226,18 @@ class Riddle
         return $this;
     }
 
+    public function getFailureDescription(): ?string
+    {
+        return $this->failureDescription;
+    }
+
+    public function setFailureDescription(?string $failureDescription): static
+    {
+        $this->failureDescription = $failureDescription;
+
+        return $this;
+    }
+
     public function isRepeatOnFailure(): ?bool
     {
         return $this->repeatOnFailure;
@@ -209,6 +246,18 @@ class Riddle
     public function setRepeatOnFailure(bool $repeatOnFailure): static
     {
         $this->repeatOnFailure = $repeatOnFailure;
+
+        return $this;
+    }
+
+    public function getRedirectToDialog(): ?string
+    {
+        return $this->redirectToDialog;
+    }
+
+    public function setRedirectToDialog(?string $redirectToDialog): static
+    {
+        $this->redirectToDialog = $redirectToDialog;
 
         return $this;
     }
@@ -314,5 +363,17 @@ class Riddle
         usort($questions, fn(RiddleQuestion $a, RiddleQuestion $b) => $a->getPosition() <=> $b->getPosition());
 
         return $questions[0] ?? null;
+    }
+
+    public function getQuestStep(): ?QuestStep
+    {
+        return $this->questStep;
+    }
+
+    public function setQuestStep(?QuestStep $questStep): static
+    {
+        $this->questStep = $questStep;
+
+        return $this;
     }
 }

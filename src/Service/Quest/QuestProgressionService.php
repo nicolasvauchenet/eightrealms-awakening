@@ -103,7 +103,7 @@ readonly class QuestProgressionService
         $this->entityManager->flush();
     }
 
-    public function editQuestStepStatus(Player $player, array $data): void
+    public function editQuestStepStatus(Player $player, array $data, ?bool $goNext = true): void
     {
         $entries = isset($data['quest']) ? [$data] : $data;
 
@@ -145,8 +145,9 @@ readonly class QuestProgressionService
             }
 
             $playerQuestStep->setStatus($entry['status']);
+            $this->entityManager->persist($playerQuestStep);
 
-            if($entry['status'] === 'completed') {
+            if($entry['status'] === 'completed' && $goNext) {
                 $currentPos = $step->getPosition();
                 $steps = $quest->getQuestSteps();
                 $maxPos = $steps->last()?->getPosition() ?? $currentPos;

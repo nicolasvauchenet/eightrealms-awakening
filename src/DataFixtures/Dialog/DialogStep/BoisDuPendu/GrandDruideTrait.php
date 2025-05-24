@@ -44,6 +44,24 @@ trait GrandDruideTrait
                     'status' => 'progress',
                 ],
             ],
+            'effects' => [
+                'end_quest_step' => [
+                    [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 4,
+                        'status' => 'completed',
+                    ],
+                    [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 7,
+                        'status' => 'completed',
+                    ],
+                ],
+                'start_quest_step' => [
+                    'quest' => 'les-disparus-du-donjon',
+                    'quest_step' => 8,
+                ],
+            ],
             'dialog' => 'quest_grand_druide',
             'reference' => 'quest_step_grand_druide_3',
         ],

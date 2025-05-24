@@ -9,6 +9,8 @@ use App\Entity\Combat\PlayerCombatEffect;
 use App\Entity\Combat\PlayerCombatEnemy;
 use App\Entity\Location\CharacterLocation;
 use App\Entity\Location\Location;
+use App\Entity\Riddle\PlayerRiddle;
+use App\Entity\Riddle\Riddle;
 use App\Entity\Screen\Screen;
 use App\Service\Game\Combat\InitiativeService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,7 +22,7 @@ readonly class UpdatePlayerService
     {
     }
 
-    public function updatePlayerScreen(Player $player, Screen $screen, ?Location $location = null, ?Combat $combat = null): void
+    public function updatePlayerScreen(Player $player, Screen $screen, ?Location $location = null, ?Combat $combat = null, ?Riddle $riddle = null): void
     {
         $player->setCurrentScreen($screen);
         $this->entityManager->persist($player);
@@ -32,6 +34,10 @@ readonly class UpdatePlayerService
 
         if($combat) {
             $this->updatePlayerCombat($player, $combat);
+        }
+
+        if($riddle) {
+            $this->updatePlayerRiddle($player, $riddle);
         }
 
     }
@@ -139,5 +145,27 @@ readonly class UpdatePlayerService
         }
 
         $this->entityManager->flush();
+    }
+
+    public function updatePlayerRiddle(Player $player, Riddle $riddle): PlayerRiddle
+    {
+        // Récupérer l'entité PlayerRiddle existante
+        $playerRiddle = $this->entityManager->getRepository(PlayerRiddle::class)->findOneBy([
+            'player' => $player,
+            'riddle' => $riddle,
+        ]);
+
+        if(!$playerRiddle) {
+            // Nouvelle énigme pour le joueur
+            $playerRiddle = (new PlayerRiddle())
+                ->setPlayer($player)
+                ->setRiddle($riddle)
+                ->setSolved(false)
+                ->setSuccess(false);
+            $this->entityManager->persist($playerRiddle);
+            $this->entityManager->flush();
+        }
+
+        return $playerRiddle;
     }
 }

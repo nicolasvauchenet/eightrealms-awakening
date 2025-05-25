@@ -52,7 +52,9 @@ class RiddleFixtures extends Fixture implements OrderedFixtureInterface
                     ->setFailureDescription($data['failureDescription'] ?? null)
                     ->setRepeatOnFailure($data['repeatOnFailure'])
                     ->setRedirectToDialog(($data['redirectToDialog'] ?? null))
-                    ->setQuestStep(isset($data['questStep']) ? $this->getReference($data['questStep'], QuestStep::class) : null);
+                    ->setResolverKey($data['resolverKey'] ?? null)
+                    ->setQuestStep(isset($data['questStep']) ? $this->getReference($data['questStep'], QuestStep::class) : null)
+                    ->setTargetCharacter(isset($data['targetCharacter']) ? $this->getReference($data['targetCharacter'], $data['targetCharacterClass']) : null);
                 $manager->persist($riddle);
                 $this->addReference($data['reference'], $riddle);
             }

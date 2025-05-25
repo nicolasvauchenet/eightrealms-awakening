@@ -21,7 +21,7 @@ final class Version20250515132209 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE riddle (id SERIAL NOT NULL, quest_step_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, picture VARCHAR(255) DEFAULT NULL, thumbnail VARCHAR(255) DEFAULT NULL, description TEXT DEFAULT NULL, type VARCHAR(255) NOT NULL, characteristic VARCHAR(255) DEFAULT NULL, difficulty INT DEFAULT NULL, success_effects JSON DEFAULT NULL, success_description TEXT DEFAULT NULL, failure_effects JSON DEFAULT NULL, failure_description TEXT DEFAULT NULL, repeat_on_failure BOOLEAN NOT NULL, redirect_to_dialog VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))
+            CREATE TABLE riddle (id SERIAL NOT NULL, quest_step_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, picture VARCHAR(255) DEFAULT NULL, thumbnail VARCHAR(255) DEFAULT NULL, description TEXT DEFAULT NULL, type VARCHAR(255) NOT NULL, characteristic VARCHAR(255) DEFAULT NULL, difficulty INT DEFAULT NULL, success_effects JSON DEFAULT NULL, success_description TEXT DEFAULT NULL, failure_effects JSON DEFAULT NULL, failure_description TEXT DEFAULT NULL, repeat_on_failure BOOLEAN NOT NULL, redirect_to_dialog VARCHAR(255) DEFAULT NULL, resolver_key VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))
         SQL
         );
         $this->addSql(<<<'SQL'

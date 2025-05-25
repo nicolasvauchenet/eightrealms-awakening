@@ -95,7 +95,7 @@ trait BosquetDesDruidesTrait
         ],
         [
             'position' => 4,
-            'text' => "Je passe mon chemin, la vie est cruelle",
+            'text' => "Je le laisse là, la vie est cruelle",
             'marker' => 'détachement',
             'riddleQuestion' => 'riddle_question_bosquet_des_druides_test_3',
             'nextRiddleQuestion' => 'riddle_question_bosquet_des_druides_test_4',

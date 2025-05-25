@@ -2,6 +2,7 @@
 
 namespace App\Entity\Character;
 
+use App\Entity\Alignment\CharacterAlignment;
 use App\Entity\Combat\CombatEnemy;
 use App\Entity\Dialog\Dialog;
 use App\Entity\Item\CharacterItem;
@@ -145,6 +146,9 @@ abstract class Character
 
     #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
     private ?ReloadScreen $reloadScreen = null;
+
+    #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
+    private ?CharacterAlignment $characterAlignment = null;
 
     public function __construct()
     {
@@ -681,5 +685,22 @@ abstract class Character
             'charisma' => $this->getCharisma(),
             default => 0,
         };
+    }
+
+    public function getCharacterAlignment(): ?CharacterAlignment
+    {
+        return $this->characterAlignment;
+    }
+
+    public function setCharacterAlignment(CharacterAlignment $characterAlignment): static
+    {
+        // set the owning side of the relation if necessary
+        if ($characterAlignment->getCharacter() !== $this) {
+            $characterAlignment->setCharacter($this);
+        }
+
+        $this->characterAlignment = $characterAlignment;
+
+        return $this;
     }
 }

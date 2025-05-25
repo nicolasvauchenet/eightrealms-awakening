@@ -2,6 +2,7 @@
 
 namespace App\Entity\Riddle;
 
+use App\Entity\Character\Character;
 use App\Entity\Quest\QuestStep;
 use App\Repository\Riddle\RiddleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -81,6 +82,12 @@ class Riddle
 
     #[ORM\ManyToOne]
     private ?QuestStep $questStep = null;
+
+    #[ORM\ManyToOne]
+    private ?Character $targetCharacter = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $resolverKey = null;
 
     public function __construct()
     {
@@ -373,6 +380,30 @@ class Riddle
     public function setQuestStep(?QuestStep $questStep): static
     {
         $this->questStep = $questStep;
+
+        return $this;
+    }
+
+    public function getTargetCharacter(): ?Character
+    {
+        return $this->targetCharacter;
+    }
+
+    public function setTargetCharacter(?Character $targetCharacter): static
+    {
+        $this->targetCharacter = $targetCharacter;
+
+        return $this;
+    }
+
+    public function getResolverKey(): ?string
+    {
+        return $this->resolverKey;
+    }
+
+    public function setResolverKey(?string $resolverKey): static
+    {
+        $this->resolverKey = $resolverKey;
 
         return $this;
     }

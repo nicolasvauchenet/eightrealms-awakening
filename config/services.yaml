@@ -42,5 +42,11 @@ services:
       - 'riddle_effect.handler'
     autowire: true
     autoconfigure: false
+
+  App\Service\Riddle\Resolver\:
+    resource: '../src/Service/Riddle/Resolver'
+    tags: [ 'riddle.resolver' ]
+    autowire: true
+    autoconfigure: false
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones

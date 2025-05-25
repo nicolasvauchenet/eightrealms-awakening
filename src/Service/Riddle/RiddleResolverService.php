@@ -5,16 +5,18 @@ namespace App\Service\Riddle;
 use App\Entity\Character\Player;
 use App\Entity\Riddle\PlayerRiddle;
 use App\Entity\Riddle\RiddleTrigger;
-use App\Repository\Riddle\PlayerRiddleRepository;
+use App\Service\Riddle\Resolver\RiddleResolverInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
+use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
 
-class RiddleResolverService
+readonly class RiddleResolverService
 {
     public function __construct(
-        private readonly EntityManagerInterface     $entityManager,
-        private readonly RiddleEffectApplierService $riddleEffectApplierService,
-        private readonly PlayerRiddleRepository     $playerRiddleRepository,
+        #[AutowireLocator('riddle.resolver')]
+        private iterable                   $resolvers,
+        private EntityManagerInterface     $entityManager,
+        private RiddleEffectApplierService $riddleEffectApplierService,
     )
     {
     }
@@ -22,36 +24,48 @@ class RiddleResolverService
     /**
      * @throws RandomException
      */
-    public function resolve(Player $player, RiddleTrigger $riddleTrigger): string
+    public function evaluate(Player $player, RiddleTrigger $riddleTrigger): bool
     {
-        $playerRiddle = $this->playerRiddleRepository->findOneBy(['player' => $player, 'riddle' => $riddleTrigger->getRiddle()]);
-        if(!$playerRiddle) {
-            $playerRiddle = (new PlayerRiddle())
-                ->setPlayer($player)
-                ->setRiddle($riddleTrigger->getRiddle());
+        $riddle = $riddleTrigger->getRiddle();
+
+        if($riddle->getResolverKey()) {
+            foreach($this->resolvers as $resolver) {
+                if($resolver instanceof RiddleResolverInterface && $resolver->supports($riddle)) {
+                    return $resolver->resolve($riddle, $player);
+                }
+            }
         }
 
-        // Jet de caractéristique
-        $characteristic = $riddleTrigger->getRiddle()->getCharacteristic();
-        $difficulty = $riddleTrigger->getRiddle()->getDifficulty() ?? 0;
+        // fallback stat check
+        $characteristic = $riddle->getCharacteristic();
+        $difficulty = $riddle->getDifficulty() ?? 0;
 
         $statValue = $player->getCharacteristicValue($characteristic);
         $roll = random_int(1, 20);
         $total = $roll + $statValue;
-        $success = $total >= $difficulty;
 
-        $playerRiddle->setSolved(true)
-            ->setSuccess($success);
+        return $total >= $difficulty;
+    }
+
+    public function resolve(Player $player, RiddleTrigger $riddleTrigger): string
+    {
+        $riddle = $riddleTrigger->getRiddle();
+
+        $success = $this->evaluate($player, $riddleTrigger);
+
+        $playerRiddle = $this->entityManager->getRepository(PlayerRiddle::class)->findOneBy([
+            'player' => $player,
+            'riddle' => $riddle,
+        ]) ?? (new PlayerRiddle())->setPlayer($player)->setRiddle($riddle);
+
+        $playerRiddle->setSolved(true)->setSuccess($success);
         $this->entityManager->persist($playerRiddle);
+        $this->entityManager->flush();
 
-        // Application des effets
+        $effects = $success ? $riddle->getSuccessEffects() : $riddle->getFailureEffects() ?? [];
         $conditions = $riddleTrigger->getConditions();
-        $effects = $success ? $riddleTrigger->getRiddle()->getSuccessEffects() : $riddleTrigger->getRiddle()->getFailureEffects() ?? [];
         $this->riddleEffectApplierService->applyEffects($effects, $player, $conditions);
 
-        // Logs
-        $log = $riddleTrigger->getRiddle()->getDescription() . ($success ? $riddleTrigger->getRiddle()->getSuccessEffects()['log'] : $riddleTrigger->getRiddle()->getFailureEffects()['log']);
-
-        return $log;
+        return $riddle->getDescription() . ($effects['log'] ?? '');
     }
 }

@@ -122,13 +122,13 @@ readonly class CinematicScreenService
         }
 
         $slug = 'test_result_' . $alignment->getSlug();
-        $existing = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy(['slug' => $slug,]);
+        $existing = $this->entityManager->getRepository(CinematicScreen::class)->findOneBy(['slug' => $slug]);
         if($existing) {
             return $existing;
         }
 
-        // Redirection dynamique
-        if($riddle->getRedirectToDialog()) {
+        // Redirection dynamique — uniquement si réussite
+        if($isSuccess && $riddle->getRedirectToDialog()) {
             $dialogStep = $this->entityManager->getRepository(DialogStep::class)->findOneBy(['slug' => $riddle->getRedirectToDialog()]);
             if(!$dialogStep) {
                 throw new \RuntimeException('DialogStep introuvable pour le slug : ' . $riddle->getRedirectToDialog());
@@ -141,7 +141,7 @@ readonly class CinematicScreenService
             $redirectType = 'location';
         }
 
-        // Génération dynamique de la description selon succès ou échec
+        // Génération dynamique de la description
         $descriptionTemplate = $isSuccess ? $riddle->getSuccessDescription() : $riddle->getFailureDescription();
         $description = sprintf(
             $descriptionTemplate,
@@ -163,6 +163,7 @@ readonly class CinematicScreenService
                     'thumbnail' => 'img/core/action/continue.png',
                 ]],
             ]);
+
         $this->entityManager->persist($screen);
         $this->entityManager->flush();
 

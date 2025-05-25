@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures\Item;
+namespace App\DataFixtures\Alignment;
 
 use App\Entity\Alignment\Alignment;
 use Doctrine\Bundle\FixturesBundle\Fixture;

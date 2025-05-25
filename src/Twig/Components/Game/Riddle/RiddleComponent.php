@@ -9,12 +9,15 @@ use App\Entity\Quest\PlayerQuestStep;
 use App\Entity\Quest\QuestStep;
 use App\Entity\Riddle\PlayerRiddle;
 use App\Entity\Riddle\RiddleChoice;
+use App\Entity\Riddle\RiddleTrigger;
 use App\Entity\Screen\RiddleScreen;
 use App\Service\Character\CharacterAlignmentService;
 use App\Service\Game\Screen\Cinematic\CinematicScreenService;
 use App\Service\Quest\QuestProgressionService;
 use App\Service\Quest\QuestSelectorService;
+use App\Service\Riddle\RiddleResolverService;
 use Doctrine\ORM\EntityManagerInterface;
+use Random\RandomException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -45,7 +48,8 @@ class RiddleComponent extends AbstractController
                                 private readonly CharacterAlignmentService $characterAlignmentService,
                                 private readonly CinematicScreenService    $cinematicScreenService,
                                 private readonly QuestSelectorService      $questService,
-                                private readonly QuestProgressionService   $questProgressionService
+                                private readonly QuestProgressionService   $questProgressionService,
+                                private readonly RiddleResolverService     $riddleResolverService
     )
     {
     }
@@ -63,60 +67,70 @@ class RiddleComponent extends AbstractController
         $this->description = $this->screen->getRiddleQuestion()->getText();
     }
 
+    /**
+     * @throws RandomException
+     */
     #[LiveAction]
     public function choice(#[LiveArg] int $choiceId): RedirectResponse
     {
         $choice = $this->entityManager->getRepository(RiddleChoice::class)->find($choiceId);
-        $marker = $choice->getMarker();
+        $riddle = $choice->getRiddleQuestion()->getRiddle();
 
-        $playerAlignment = $this->entityManager->getRepository(PlayerAlignment::class)->findOneBy(['player' => $this->character]);
+        // --- MAJ de l'alignement joueur via le marker sélectionné
+        $marker = $choice->getMarker();
+        $playerAlignment = $this->entityManager->getRepository(PlayerAlignment::class)
+            ->findOneBy(['player' => $this->character]);
+
         if(!$playerAlignment) {
             $playerAlignment = (new PlayerAlignment())
                 ->setPlayer($this->character)
                 ->setMarkerCounts([])
-                ->setAlignment($this->entityManager->getRepository(Alignment::class)->findOneBy(['slug' => 'ame-en-germe']));
+                ->setAlignment($this->entityManager->getRepository(Alignment::class)->findOneBy([
+                    'slug' => 'ame-en-germe',
+                ]));
+            $this->entityManager->persist($playerAlignment);
         }
+
         $playerAlignment->addMarker($marker);
         $matchedAlignment = $this->characterAlignmentService->match($playerAlignment);
         $playerAlignment->setAlignment($matchedAlignment);
-        $this->entityManager->persist($playerAlignment);
-        $this->entityManager->flush();
 
+        // --- Transition : autre question ou résolution finale
         if($choice->getNextRiddleQuestion()) {
+            $this->entityManager->flush();
+
             return $this->redirectToRoute('app_game_screen_riddle', [
                 'id' => $choice->getNextRiddleQuestion()->getId(),
             ]);
-        } else {
-            if(true) {
-                // Énigme résolue
-                $this->playerRiddle->setSuccess(true)
-                    ->setSolved(true);
-                $this->entityManager->persist($this->playerRiddle);
-
-                // Si une étape de quête est associée, on la complète
-                $questStep = $this->screen->getRiddleQuestion()->getRiddle()->getQuestStep();
-                if($questStep) {
-                    $stepsToUnlock = $this->buildQuestStepsToUnlock($questStep);
-                    $this->questProgressionService->editQuestStepStatus($this->character, $stepsToUnlock);
-                }
-
-                // Écran de résultat
-                $resultScreen = $this->cinematicScreenService->getTestResultScreen($this->character, $choice->getRiddleQuestion()->getRiddle(), true);
-            } else {
-                // Énigme non résolue
-                $this->playerRiddle->setSuccess(false)
-                    ->setSolved(false);
-                $this->entityManager->persist($this->playerRiddle);
-
-                // Écran de résultat
-                $resultScreen = $this->cinematicScreenService->getTestResultScreen($this->character, $choice->getRiddleQuestion()->getRiddle());
-            }
-            $this->entityManager->flush();
-
-            return $this->redirectToRoute('app_game_screen_cinematic', [
-                'slug' => $resultScreen->getSlug(),
-            ]);
         }
+
+        // --- Résolution de l'énigme via RiddleResolverService
+        $riddleTrigger = $this->entityManager->getRepository(RiddleTrigger::class)->findOneBy(['riddle' => $riddle]);
+        $success = $this->riddleResolverService->evaluate($this->character, $riddleTrigger);
+
+        // --- Enregistrement PlayerRiddle
+        $this->playerRiddle->setSolved(true)->setSuccess($success);
+        $this->entityManager->persist($this->playerRiddle);
+
+        // --- Éventuel déblocage d'étapes de quête
+        $questStep = $riddle->getQuestStep();
+        if($questStep) {
+            $stepsToUnlock = $this->buildQuestStepsToUnlock($questStep);
+            $this->questProgressionService->editQuestStepStatus($this->character, $stepsToUnlock);
+        }
+
+        // --- Génération de l'écran final
+        $resultScreen = $this->cinematicScreenService->getTestResultScreen(
+            $this->character,
+            $riddle,
+            $success
+        );
+
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('app_game_screen_cinematic', [
+            'slug' => $resultScreen->getSlug(),
+        ]);
     }
 
     private function buildQuestStepsToUnlock(QuestStep $questStep): array

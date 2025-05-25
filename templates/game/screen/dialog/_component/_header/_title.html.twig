@@ -1,0 +1,27 @@
+<div class="header-title">
+    <div class="header-actions">
+        {% set backUrl = path('app_game_screen_' ~ this.screen.type, {slug: this.screen.dialogStep.slug}) %}
+
+        <a href="{{ path('app_character_sheet_player', {'back': backUrl}) }}"
+           class="header-control">
+            {{ ux_icon('mynaui:user-solid', {'class': 'app-icon'}) }}
+        </a>
+    </div>
+
+    <h1>
+        {% if this.screen.dialogStep.dialog.type == 'dialog' %}
+            <small>Discuter</small>
+        {% else %}
+            <small>Ragots</small>
+        {% endif %}
+        {{ this.playerCharacter.character.name }}
+    </h1>
+
+    <div class="header-actions">
+        <a href="{{ path('app_home') }}"
+           class="header-control bg-danger"
+           onclick="return window.confirm('Quitter la partie en cours ?')">
+            {{ ux_icon('mdi:exit-to-app', {'class': 'app-icon'}) }}
+        </a>
+    </div>
+</div>

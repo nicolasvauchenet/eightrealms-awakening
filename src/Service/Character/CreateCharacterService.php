@@ -2,6 +2,8 @@
 
 namespace App\Service\Character;
 
+use App\Entity\Alignment\Alignment;
+use App\Entity\Alignment\PlayerAlignment;
 use App\Entity\Character\Player;
 use App\Entity\Character\PreGenerated;
 use App\Entity\Item\CharacterItem;
@@ -32,6 +34,7 @@ readonly class CreateCharacterService
         $character = $this->initCharacterItems($preGenerated, $character);
         $character = $this->initCharacterSpells($preGenerated, $character);
         $character = $this->initCharacterGifts($character);
+        $character = $this->initCharacterAlignment($character);
 
         return $character;
     }
@@ -46,9 +49,8 @@ readonly class CreateCharacterService
         } else {
             $pictureFileName = $this->fileUploaderService->copyFile('core/pregenerated', $preGenerated->getPicture(), 'character', strtolower($this->slugger->slug($character->getName())));
         }
-        $character->setPicture($pictureFileName);
-
-        $character->setDescription('<p>' . $character->getDescription() . '</p>');
+        $character->setPicture($pictureFileName)
+            ->setDescription('<p>' . $character->getDescription() . '</p>');
 
         $this->entityManager->persist($character);
         $this->entityManager->flush();
@@ -142,6 +144,19 @@ readonly class CreateCharacterService
             ->setEquipped(false)
             ->setQuestItem(false);
         $this->entityManager->persist($characterItem);
+
+        return $character;
+    }
+
+    public function initCharacterAlignment(Player $character): Player
+    {
+        $alignment = $this->entityManager->getRepository(Alignment::class)->findOneBy(['slug' => 'ame-en-germe']);
+        $playerAlignment = (new PlayerAlignment())
+            ->setPlayer($character)
+            ->setAlignment($alignment);
+        $this->entityManager->persist($playerAlignment);
+
+        $character->setPlayerAlignment($playerAlignment);
 
         return $character;
     }

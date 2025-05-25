@@ -4,6 +4,12 @@
         {{ this.character.level }}
     </p>
 
+    <p>
+        <small>
+            {{ this.character.playerAlignment.alignment.name }}
+        </small>
+    </p>
+
     {% set pendingLevels = app_characterLevelService.getPendingLevelUps(this.character) %}
     {% if pendingLevels > 0 %}
         <p>

@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures\Character\Player;
 
+use App\Entity\Alignment\Alignment;
+use App\Entity\Alignment\PlayerAlignment;
 use App\Entity\Character\Player;
 use App\Entity\Character\Profession;
 use App\Entity\Character\Race;
@@ -305,6 +307,12 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
                 ->setQuestItem(false);
             $manager->persist($characterItem);
         }
+
+        $alignment = $manager->getRepository(Alignment::class)->findOneBy(['slug' => 'ame-en-germe']);
+        $playerAlignment = (new PlayerAlignment())
+            ->setPlayer($character)
+            ->setAlignment($alignment);
+        $manager->persist($playerAlignment);
 
         $manager->flush();
     }

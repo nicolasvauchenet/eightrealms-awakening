@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures\Character\Player;
 
+use App\Entity\Alignment\Alignment;
+use App\Entity\Alignment\PlayerAlignment;
 use App\Entity\Character\Player;
 use App\Entity\Character\Profession;
 use App\Entity\Character\Race;
@@ -263,6 +265,12 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 ->setDurationBonus($data['durationBonus']);
             $manager->persist($characterSpell);
         }
+
+        $alignment = $manager->getRepository(Alignment::class)->findOneBy(['slug' => 'ame-en-germe']);
+        $playerAlignment = (new PlayerAlignment())
+            ->setPlayer($character)
+            ->setAlignment($alignment);
+        $manager->persist($playerAlignment);
 
         $manager->flush();
     }

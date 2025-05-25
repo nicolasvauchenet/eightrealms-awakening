@@ -30,7 +30,7 @@ trait GrandDruideTrait
             'reference' => 'quest_reply_grand_druide_5_1',
         ],
         [
-            'text' => "Qui est-ce&nbsp;?",
+            'text' => "Celui qui est enfermé&nbsp;? Qui est-ce&nbsp;?",
             'dialogStep' => 'quest_step_grand_druide_7',
             'nextStep' => 'quest_step_grand_druide_8',
             'reference' => 'quest_reply_grand_druide_7_1',

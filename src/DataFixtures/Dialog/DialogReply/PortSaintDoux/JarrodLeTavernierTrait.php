@@ -7,9 +7,6 @@ trait JarrodLeTavernierTrait
     const JARROD_LE_TAVERNIER_DIALOG_REPLIES = [
         [
             'text' => "Le Bois du Pendu&nbsp;?",
-            'conditions' => [
-                'location_unknown' => 'bois-du-pendu',
-            ],
             'dialogStep' => 'quest_step_jarrod_le_tavernier_1',
             'nextStep' => 'quest_step_jarrod_le_tavernier_2',
             'reference' => 'quest_reply_jarrod_le_tavernier_1_1',

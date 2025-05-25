@@ -34,7 +34,7 @@ trait MainQuestStepTrait
             'reference' => 'quest_main_step_4',
         ],
         [
-            'description' => "<p>J'ai trouvé un médaillon étrange, orné de motifs runiques. Il semble avoir une certaine importance, alors j'en ai parlé à Wilbert, l'Arcaniste de Port Saint-Doux. Il m'a dit que ce médaillon était lié à un ancien rituel druidique, et qu'il pourrait être une partie de la clé, qu'il a appelée &laquo;le Sceau&raquo;, pour ouvrir le &laquo;Tombeau&raquo;. Je dois en apprendre davantage sur ce rituel et sur cette amulette.</p>",
+            'description' => "<p>J'ai trouvé un médaillon étrange, orné de motifs runiques. Il semble avoir une certaine importance, alors j'en ai parlé à Wilbert, l'Arcaniste de Port Saint-Doux. Il m'a dit que ce médaillon était un artefact ancien, et qu'il pourrait être utilisé pour ouvrir &laquo;des portes que nul ne voit encore&raquo;. Je vais essayer d'en apprendre davantage sur cette amulette.</p>",
             'position' => 5,
             'last' => false,
             'quest' => 'quest_main',
@@ -62,7 +62,7 @@ trait MainQuestStepTrait
             'reference' => 'quest_main_step_8',
         ],
         [
-            'description' => "<p>Le Grand Druide a accepté de m'en dire plus sur le rituel et l'amulette. Le Rituel de l'Âme permet d'ouvrir la porte du Donjon de l'Âme, et le Médaillon des Vents n'est qu'une partie du Sceau du Tombeau, situé aux confins du donjon. Il a catégoriquement refusé de m'en dire davantage sur le deuxième fragment, en insistant sur le fait que &laquo;Ce qui est enfermé ne l'est jamais pour rien&raquo;… Il a aussi refusé de m'apprendre le Rituel de l'Âme, mais il a admis qu'il l'avait déjà enseigné auparavant… Je dois le convaincre, j'ai besoin du rituel pour accéder au Donjon.</p>",
+            'description' => "<p>Le Grand Druide a accepté de m'en dire plus sur le rituel et l'amulette. Le Rituel de l'Âme permet d'ouvrir la porte du Donjon de l'Âme, et le Médaillon des Vents n'est qu'une partie du Sceau du Tombeau, situé aux confins du donjon. Il a catégoriquement refusé de m'en dire davantage sur le deuxième fragment, en insistant sur le fait que &laquo;ce qui est enfermé ne l'est jamais pour rien&raquo;… Il a aussi refusé de m'apprendre le Rituel de l'Âme, mais il a admis qu'il l'avait déjà enseigné auparavant… Je dois le convaincre, j'ai besoin du rituel pour accéder au Donjon.</p>",
             'position' => 9,
             'last' => false,
             'quest' => 'quest_main',
@@ -81,6 +81,13 @@ trait MainQuestStepTrait
             'last' => false,
             'quest' => 'quest_main',
             'reference' => 'quest_main_step_11',
+        ],
+        [
+            'description' => "<p>Wilbert l'arcaniste de Port Saint-Doux, m'a enfin révélé le mystère du Donjon de l'Âme, et m'en a indiqué le chemin. Je dois partir à la recherche du Roi Galdric et du Prince Alaric. Mais avant cela, je dois reformer le Sceau pour ouvrir le Tombeau du Roi Galdric 1er. Peut-être devrais-je aller parler à Gart, le forgeron…</p>",
+            'position' => 12,
+            'last' => false,
+            'quest' => 'quest_main',
+            'reference' => 'quest_main_step_12',
         ],
     ];
 }

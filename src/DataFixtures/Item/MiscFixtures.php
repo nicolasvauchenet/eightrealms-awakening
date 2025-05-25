@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures\Item;
 
-use App\DataFixtures\Item\Misc\MiscTrait;
+use App\DataFixtures\Item\Misc\QuestTrait;
 use App\Entity\Item\Misc;
 use App\Entity\Item\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -11,13 +11,13 @@ use Doctrine\Persistence\ObjectManager;
 
 class MiscFixtures extends Fixture implements OrderedFixtureInterface
 {
-    use MiscTrait;
+    use QuestTrait;
 
     public function load(ObjectManager $manager): void
     {
         $allMiscs = [
-            // Miscellaneous items
-            self::MISC_ITEMS,
+            // Miscellaneous quest items
+            self::QUEST_MISC_ITEMS,
         ];
 
         foreach($allMiscs as $miscs) {

@@ -11,6 +11,7 @@ twig:
     app_mapService: '@App\Service\Map\MapService'
     app_tradeService: '@App\Service\Game\Trade\TradeService'
     app_enemyLabelService: '@App\Service\Game\Combat\Helper\EnemyLabelHelperService'
+    app_conditionEvaluatorService: '@App\Service\Game\Condition\ConditionEvaluatorService'
 
 when@test:
   twig:

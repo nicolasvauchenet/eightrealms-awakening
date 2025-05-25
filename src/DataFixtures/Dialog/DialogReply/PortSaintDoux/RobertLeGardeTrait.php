@@ -7,9 +7,6 @@ trait RobertLeGardeTrait
     const ROBERT_LE_GARDE_DIALOG_REPLIES = [
         [
             'text' => "Où se trouve cette taverne&nbsp;?",
-            'conditions' => [
-                'location_unknown' => 'docks-de-louest',
-            ],
             'dialogStep' => 'quest_step_robert_le_garde_1',
             'nextStep' => 'quest_step_robert_le_garde_2',
             'reference' => 'quest_reply_robert_le_garde_1_1',

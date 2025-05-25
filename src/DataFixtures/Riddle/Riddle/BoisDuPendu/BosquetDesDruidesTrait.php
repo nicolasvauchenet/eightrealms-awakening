@@ -14,7 +14,7 @@ trait BosquetDesDruidesTrait
             'description' => "<p>Une série de questions initiatiques posées par le Grand Druide pour sonder ton âme.</p>",
             'type' => 'test',
             'repeatOnFailure' => false,
-            'successDescription' => "<p>Le Grand Druide incline la tête.</p><p><em>%s, vous avez passé l’épreuve. %s</em></p>",
+            'successDescription' => "<p>Le Grand Druide incline la tête. Il ne parle pas, mais une voix résonne dans vos oreilles…</p><p><em>%s, vous avez passé l’épreuve. %s</em></p>",
             'failureDescription' => "<p>Le Grand Druide ferme les yeux un instant.</p><p><em>Ton esprit s’agite encore… Il te faudra du temps pour comprendre les voies du Cercle. Mais l’épreuve n’est jamais vaine. Marque bien tes pas, car ils te ramèneront peut-être ici.</em></p>",
             'redirectToDialog' => 'grand-druide-reponses',
             'targetCharacter' => 'npc_grand_druide',

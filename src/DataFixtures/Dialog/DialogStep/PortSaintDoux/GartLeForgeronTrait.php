@@ -148,6 +148,128 @@ trait GartLeForgeronTrait
             'reference' => 'quest_step_gart_le_forgeron_7',
         ],
 
+        // Dialogue : Le Sceau du Tombeau
+        [
+            'name' => 'Gart - Dialogue',
+            'text' => "<p>Le forgeron fais un effort visible pour rester patient, et vous regarde en tapotant ses doigts sur son avant-bras.<em>Que vous faut-il&nbsp;?</em></p>",
+            'first' => true,
+            'conditions' => [
+                'all' => [
+                    'quest_status' => [
+                        'quest' => 'livraison-en-cours',
+                        'status' => 'rewarded',
+                    ],
+                    'quest_step_status' => [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 12,
+                        'status' => 'progress',
+                    ],
+                ],
+            ],
+            'dialog' => 'dialog_gart_le_forgeron',
+            'reference' => 'dialog_step_gart_le_forgeron_sceau_1',
+        ],
+        [
+            'name' => 'Gart - Dialogue',
+            'text' => "<p>Ses doigts s'arrêtent de tapoter, ses sourcils se lèvent et il entrouve la bouche, ne savant quoi dire… Puis il se reprend, essaie de prendre un air détaché, et il vous regarde, les sourcils toujours en l'air.</p><p><em>Le seau&nbsp;? J'en ai forgé un avant-hier, oui. Mais en quoi ça vous intéresse&nbsp;? Vous êtes jardinier&nbsp;?</em></p>",
+            'first' => false,
+            'conditions' => [
+                'all' => [
+                    'quest_status' => [
+                        'quest' => 'livraison-en-cours',
+                        'status' => 'rewarded',
+                    ],
+                    'quest_step_status' => [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 12,
+                        'status' => 'progress',
+                    ],
+                ],
+            ],
+            'dialog' => 'dialog_gart_le_forgeron',
+            'reference' => 'dialog_step_gart_le_forgeron_sceau_2',
+        ],
+        [
+            'name' => 'Gart - Dialogue',
+            'text' => "<p>Il vous regarde un moment, semble réfléchir.</p><p><em>Ça va&nbsp;! Vous êtes au courant, d'accord, même si je me demande comment… Et en quoi ça vous intéresse, je peux savoir&nbsp;?</em></p>",
+            'first' => false,
+            'conditions' => [
+                'all' => [
+                    'quest_status' => [
+                        'quest' => 'livraison-en-cours',
+                        'status' => 'rewarded',
+                    ],
+                    'quest_step_status' => [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 12,
+                        'status' => 'progress',
+                    ],
+                ],
+            ],
+            'dialog' => 'dialog_gart_le_forgeron',
+            'reference' => 'dialog_step_gart_le_forgeron_sceau_3',
+        ],
+        [
+            'name' => 'Gart - Dialogue',
+            'text' => "<p><em>…mais il n'est pas revenu. Ni lui, ni le Prince. Je comprends mieux alors. Pourquoi il m'a interrogé sur les médaillons, pourquoi il était si intéressé par ces vieilles histoires… Je ne lui ai rien dit bien entendu, car si Galdric ne lui en a jamais parlé, ce n'était pas à moi de le faire. J'ai fait un serment. Ne rien dire à propos du Sceau, à personne.</em></p><p>Il hésite, puis continue.</p><p><em>Et vous voulez reconstituer le Sceau&nbsp;? Avec quoi&nbsp;?</em></p>",
+            'first' => false,
+            'conditions' => [
+                'all' => [
+                    'quest_status' => [
+                        'quest' => 'livraison-en-cours',
+                        'status' => 'rewarded',
+                    ],
+                    'quest_step_status' => [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 12,
+                        'status' => 'progress',
+                    ],
+                ],
+            ],
+            'dialog' => 'dialog_gart_le_forgeron',
+            'reference' => 'dialog_step_gart_le_forgeron_sceau_4',
+        ],
+        [
+            'name' => 'Gart - Dialogue',
+            'text' => "<p>Vous lui montrez le médaillon, qu'il prend délicatement, avec déférence et un peu de crainte. Il le regarde longuement, comme s'il retrouvait un objet perdu depuis bien longtemps.</p><p><em>Où l'avez-vous trouvé&nbsp;? Bah, qu'importe. Vous m'avez tout l'air d'être capable de retrouver ce genre de choses… Le Médaillon des Vents… C'est bien lui, le premier fragment du Sceau du Tombeau.</em></p><p>Il vous le rend, et vous regarde d'un air dubitatif.</p><p><em>Et vous voulez que je reforge le Sceau, c'est bien ça&nbsp;? Pour quoi faire&nbsp;? Vous avez l'autre fragment au moins&nbsp;?</em></p>",
+            'first' => false,
+            'conditions' => [
+                'all' => [
+                    'quest_status' => [
+                        'quest' => 'livraison-en-cours',
+                        'status' => 'rewarded',
+                    ],
+                    'quest_step_status' => [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 12,
+                        'status' => 'progress',
+                    ],
+                ],
+            ],
+            'dialog' => 'dialog_gart_le_forgeron',
+            'reference' => 'dialog_step_gart_le_forgeron_sceau_5',
+        ],
+        [
+            'name' => 'Gart - Dialogue',
+            'text' => "<p><em>Alors ne comptez pas sur moi pour vous en dire davantage. Comprenez bien&nbsp;:&nbsp;le Tombeau ne doit PAS être rouvert. Ce qui y est enfermé ne doit pas en sortir. Jamais. Il en va de l'avenir du Monde.</em></p><p>Il décroise ses bras, prend un marteau et un casque cabossé.</p><p><em>Un conseil d'ami&nbsp;:&nbsp;laissez tomber. Ces affaires nous dépassent, vous et moi, ce sont des histoires de rois, et de magiciens surpuissants. Et de démons. Tout ce qu'on tenterait serait en pure perte. Au pire, on ferait qu'empirer les choses.</em></p><p>Il vous tourne le dos et se met à taper bruyamment sur le casque.</p>",
+            'first' => false,
+            'conditions' => [
+                'all' => [
+                    'quest_status' => [
+                        'quest' => 'livraison-en-cours',
+                        'status' => 'rewarded',
+                    ],
+                    'quest_step_status' => [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 12,
+                        'status' => 'progress',
+                    ],
+                ],
+            ],
+            'dialog' => 'dialog_gart_le_forgeron',
+            'reference' => 'dialog_step_gart_le_forgeron_sceau_6',
+        ],
+
         // Dialogue normal
         [
             'name' => 'Gart - Dialogue',

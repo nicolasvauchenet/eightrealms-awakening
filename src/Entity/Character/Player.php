@@ -219,7 +219,13 @@ class Player extends Character
      */
     public function getPlayerQuestSteps(): Collection
     {
-        return $this->playerQuestSteps;
+        $steps = $this->playerQuestSteps->toArray();
+
+        usort($steps, function(PlayerQuestStep $a, PlayerQuestStep $b) {
+            return $a->getId() <=> $b->getId();
+        });
+
+        return new ArrayCollection($steps);
     }
 
     public function addPlayerQuestStep(PlayerQuestStep $playerQuestStep): static
@@ -296,7 +302,7 @@ class Player extends Character
 
     public function addPlayerRiddle(PlayerRiddle $playerRiddle): static
     {
-        if (!$this->playerRiddles->contains($playerRiddle)) {
+        if(!$this->playerRiddles->contains($playerRiddle)) {
             $this->playerRiddles->add($playerRiddle);
             $playerRiddle->setPlayer($this);
         }
@@ -306,9 +312,9 @@ class Player extends Character
 
     public function removePlayerRiddle(PlayerRiddle $playerRiddle): static
     {
-        if ($this->playerRiddles->removeElement($playerRiddle)) {
+        if($this->playerRiddles->removeElement($playerRiddle)) {
             // set the owning side to null (unless already changed)
-            if ($playerRiddle->getPlayer() === $this) {
+            if($playerRiddle->getPlayer() === $this) {
                 $playerRiddle->setPlayer(null);
             }
         }
@@ -324,7 +330,7 @@ class Player extends Character
     public function setPlayerAlignment(PlayerAlignment $playerAlignment): static
     {
         // set the owning side of the relation if necessary
-        if ($playerAlignment->getPlayer() !== $this) {
+        if($playerAlignment->getPlayer() !== $this) {
             $playerAlignment->setPlayer($this);
         }
 

@@ -57,7 +57,7 @@ trait GeromeLePenduTrait
         ],
         [
             'name' => 'Gérome le Pendu - Question 2',
-            'text' => "<p><em>Ont-ils jugé avec colère&nbsp;? Ou avec froideur&nbsp;?</em></p>",
+            'text' => "<p><em>Comment m'ont-ils jugé&nbsp;? Avec colère&nbsp;? Ont-ils eu pitié de moi&nbsp;? Ou étaient-ils sévères et froids&nbsp;?</em></p>",
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'le-jugement-du-cercle',
@@ -96,7 +96,7 @@ trait GeromeLePenduTrait
         ],
         [
             'name' => 'Gérome le Pendu - Réussite',
-            'text' => "<p><em>Oui… Je suis Gérome. Le dernier. Le Pendu. Et toi, tu sais. Tu peux porter ce que j’ai porté.</em></p><p>L'esprit de Gérome s'évanouit et l'air se réchauffe enfin. À sa place, se trouve un pendentif, posé à terre, comme s'il avait été là depuis le début…</p>",
+            'text' => "<p><em>Oui… Je suis Gérome. Le druide de l'Ancien Cercle. Le Pendu. Et toi, tu sais. Tu as compris.</em></p><p>Il semble apaisé, et de moins en moins tangible.</p><p><em>Tu m'as rendu le souvenir, et je t'en remercie. Tu peux porter ce que j’ai porté, car tu le mérites, et je n'en aurai désormais plus besoin.</em></p><p>L'esprit de Gérome s'évanouit et l'air se réchauffe enfin. À sa place, se trouve un pendentif, posé à terre, comme s'il avait été là depuis le début…</p>",
             'conditions' => [
                 'quest_step_status' => [
                     [

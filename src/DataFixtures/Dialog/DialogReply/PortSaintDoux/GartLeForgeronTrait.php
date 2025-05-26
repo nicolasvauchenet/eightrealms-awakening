@@ -33,7 +33,7 @@ trait GartLeForgeronTrait
 
         // Quête principale : Le Sceau du Tombeau
         [
-            'text' => "Avez-vous reforgé le Sceau&nbsp;?",
+            'text' => "Avez-vous reforgé le Sceau récemment&nbsp;?",
             'dialogStep' => 'dialog_step_gart_le_forgeron_sceau_1',
             'nextStep' => 'dialog_step_gart_le_forgeron_sceau_2',
             'reference' => 'quest_reply_gart_le_forgeron_sceau_1_1',

@@ -222,7 +222,7 @@ class Player extends Character
         $steps = $this->playerQuestSteps->toArray();
 
         usort($steps, function(PlayerQuestStep $a, PlayerQuestStep $b) {
-            return $a->getId() <=> $b->getId();
+            return $a->getQuestStep()->getId() <=> $b->getQuestStep()->getId();
         });
 
         return new ArrayCollection($steps);

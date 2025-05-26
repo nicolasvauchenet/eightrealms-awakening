@@ -89,5 +89,12 @@ trait MainQuestStepTrait
             'quest' => 'quest_main',
             'reference' => 'quest_main_step_12',
         ],
+        [
+            'description' => "<p>Gart le Forgeron m'a confirmé qu'il pouvait reforger le Sceau. Il n'a pas été facile à convaincre, mais le Médaillon des Vents a fini par le décider à parler. En revanche, il ne sait visiblement rien du second fragment, même s'ils a évoqué &laquo;les amulettes&raquo;… Comment m'y prendre pour retrouver la piste de l'amulette manquante&nbsp;?</p>",
+            'position' => 13,
+            'last' => false,
+            'quest' => 'quest_main',
+            'reference' => 'quest_main_step_13',
+        ],
     ];
 }

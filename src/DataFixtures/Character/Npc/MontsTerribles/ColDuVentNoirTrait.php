@@ -8,7 +8,7 @@ trait ColDuVentNoirTrait
         [
             'name' => 'Nain mineur',
             'picture' => 'img/core/npc/nain-mineur.png',
-            'thumbnail' => 'img/core/creature/nain-mineur_thumb.png',
+            'thumbnail' => 'img/core/npc/nain-mineur_thumb.png',
             'description' => "<p>Un nain surgit de derrière un rocher, les traits creusés et le regard vide. Son pic de mine est levé… et il ne vous pose aucune question.</p>",
             'strength' => 14,
             'dexterity' => 8,

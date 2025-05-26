@@ -62,5 +62,11 @@ trait SpecialTrait
             'playable' => false,
             'reference' => 'profession_notable',
         ],
+        [
+            'name' => 'Ermite',
+            'type' => 'specialized',
+            'playable' => false,
+            'reference' => 'profession_ermite',
+        ],
     ];
 }

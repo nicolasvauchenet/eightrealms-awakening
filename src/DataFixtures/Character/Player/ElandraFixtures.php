@@ -103,7 +103,7 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
                 'isEquipped' => true,
                 'slot' => 'lefthand',
                 'character' => 'player_elandra',
-                'item' => 'weapon_dagger',
+                'item' => 'weapon_longsword',
                 'class' => Weapon::class,
             ],
             [
@@ -121,9 +121,21 @@ class ElandraFixtures extends Fixture implements OrderedFixtureInterface
             ],
             [
                 'character' => 'player_elandra',
+                'item' => 'scroll_fireball',
+                'isEquipped' => false,
+                'class' => Scroll::class,
+            ],
+            [
+                'character' => 'player_elandra',
                 'item' => 'scroll_barrier',
                 'isEquipped' => false,
                 'class' => Scroll::class,
+            ],
+            [
+                'character' => 'player_elandra',
+                'item' => 'weapon_quest_croc_daskalor',
+                'isEquipped' => false,
+                'class' => Weapon::class,
             ],
         ];
 

@@ -11,13 +11,10 @@ use Doctrine\Persistence\ObjectManager;
 
 class MiscFixtures extends Fixture implements OrderedFixtureInterface
 {
-    use QuestTrait;
-
     public function load(ObjectManager $manager): void
     {
         $allMiscs = [
-            // Miscellaneous quest items
-            self::QUEST_MISC_ITEMS,
+
         ];
 
         foreach($allMiscs as $miscs) {

@@ -7,6 +7,7 @@ use App\DataFixtures\Character\Npc\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Character\Npc\DonjonDeLAme\AntichambreDuRoiTrait;
 use App\DataFixtures\Character\Npc\DonjonDeLAme\SalleDesMurmuresTrait;
 use App\DataFixtures\Character\Npc\MontsTerribles\ColDuVentNoirTrait;
+use App\DataFixtures\Character\Npc\MontsTerribles\RefugeDuBoucBoiteuxTrait;
 use App\DataFixtures\Character\Npc\Plouc\PloucTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\DocksDeLOuestTrait;
 use App\DataFixtures\Character\Npc\PortSaintDoux\QuartierDesChauvesTrait;
@@ -33,6 +34,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
     use ClairiereDeLOublieTrait;
     use BosquetDesDruidesTrait;
     use ColDuVentNoirTrait;
+    use RefugeDuBoucBoiteuxTrait;
     use CampAbandonneTrait;
     use OasisSansNomTrait;
     use SalleDesMurmuresTrait;
@@ -57,6 +59,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
 
             // Monts Terribles
             self::COL_DU_VENT_NOIR_NPCS,
+            self::REFUGE_DU_BOUC_BOITEUX_NPCS,
 
             // Sables Chauds
             self::CAMP_ABANDONNE_NPCS,

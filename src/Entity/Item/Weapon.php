@@ -29,6 +29,12 @@ class Weapon extends Item
     #[ORM\Column]
     private ?bool $magical = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $requiredLevel = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $legendaryBonus = null;
+
     public function getHealthMax(): ?int
     {
         return $this->healthMax;
@@ -109,6 +115,30 @@ class Weapon extends Item
     public function setMagical(bool $magical): static
     {
         $this->magical = $magical;
+
+        return $this;
+    }
+
+    public function getRequiredLevel(): ?int
+    {
+        return $this->requiredLevel;
+    }
+
+    public function setRequiredLevel(?int $requiredLevel): static
+    {
+        $this->requiredLevel = $requiredLevel;
+
+        return $this;
+    }
+
+    public function getLegendaryBonus(): ?array
+    {
+        return $this->legendaryBonus;
+    }
+
+    public function setLegendaryBonus(?array $legendaryBonus): static
+    {
+        $this->legendaryBonus = $legendaryBonus;
 
         return $this;
     }

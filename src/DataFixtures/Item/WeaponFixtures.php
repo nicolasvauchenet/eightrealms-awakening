@@ -5,6 +5,7 @@ namespace App\DataFixtures\Item;
 use App\DataFixtures\Item\Weapon\CreatureTrait;
 use App\DataFixtures\Item\Weapon\EnchantedTrait;
 use App\DataFixtures\Item\Weapon\MeleeTrait;
+use App\DataFixtures\Item\Weapon\QuestTrait;
 use App\DataFixtures\Item\Weapon\RangedTrait;
 use App\Entity\Item\Category;
 use App\Entity\Item\Weapon;
@@ -18,6 +19,7 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
     use EnchantedTrait;
     use MeleeTrait;
     use RangedTrait;
+    use QuestTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -33,6 +35,9 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
 
             // Créatures
             self::CREATURE_WEAPONS,
+
+            // Quêtes
+            self::QUEST_WEAPONS,
         ];
 
         foreach($allWeapons as $weapons) {
@@ -50,7 +55,9 @@ class WeaponFixtures extends Fixture implements OrderedFixtureInterface
                     ->setTarget($data['target'] ?? null)
                     ->setEffect($data['effect'] ?? null)
                     ->setAmount($data['amount'] ?? null)
-                    ->setMagical($data['magical']);
+                    ->setMagical($data['magical'])
+                    ->setRequiredLevel($data['requiredLevel'] ?? null)
+                    ->setLegendaryBonus($data['legendaryBonus'] ?? null);
                 $manager->persist($weapon);
                 $this->addReference($data['reference'], $weapon);
             }

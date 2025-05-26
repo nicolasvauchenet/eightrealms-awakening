@@ -62,11 +62,29 @@ readonly class CharacterItemService
 
     public function canEquipItem(Character $character, CharacterItem|PlayerCharacterItem $characterItem): bool
     {
-        if($characterItem->getItem() instanceof MagicalWeapon) {
-            return ($character->getProfession()->getType() === 'magical' || in_array($character->getProfession()->getSlug(), ['mecaniste', 'moine']));
-        } else if($characterItem->getItem() instanceof Armor || $characterItem->getItem() instanceof Shield) {
-            if(in_array($characterItem->getItem()->getType(), ['Armure lourde', 'Armure lourde enchantée', 'Bouclier lourd', 'Bouclier lourd enchanté'])) {
-                return ($character->getProfession()->getType() !== 'magical' && !in_array($character->getProfession()->getSlug(), ['archer', 'voleur', 'rodeur']));
+        $item = $characterItem->getItem();
+        // Vérification du niveau requis (optionnel)
+        if(method_exists($item, 'getRequiredLevel') && $item->getRequiredLevel() !== null) {
+            if($character->getLevel() < $item->getRequiredLevel()) {
+                return false;
+            }
+        }
+
+        // Règle pour les armes magiques
+        if($item instanceof MagicalWeapon) {
+            return (
+                $character->getProfession()->getType() === 'magical' ||
+                in_array($character->getProfession()->getSlug(), ['mecaniste', 'moine'])
+            );
+        }
+
+        // Règle pour les armures et boucliers lourds
+        if($item instanceof Armor || $item instanceof Shield) {
+            if(in_array($item->getType(), ['Armure lourde', 'Armure lourde enchantée', 'Bouclier lourd', 'Bouclier lourd enchanté'])) {
+                return (
+                    $character->getProfession()->getType() !== 'magical' &&
+                    !in_array($character->getProfession()->getSlug(), ['archer', 'voleur', 'rodeur'])
+                );
             }
         }
 

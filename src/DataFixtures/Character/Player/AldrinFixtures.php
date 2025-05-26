@@ -254,6 +254,12 @@ class AldrinFixtures extends Fixture implements OrderedFixtureInterface
                 'isEquipped' => false,
                 'class' => Scroll::class,
             ],
+            [
+                'character' => 'player_aldrin',
+                'item' => 'weapon_quest_croc_daskalor',
+                'isEquipped' => false,
+                'class' => Weapon::class,
+            ],
         ];
 
         foreach($characters as $data) {

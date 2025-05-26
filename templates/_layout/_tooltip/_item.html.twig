@@ -30,33 +30,39 @@
             {% endif %}
 
             {% if not characterItem.isQuestItem and characterItem.item.target is defined and characterItem.item.type not in ['offensive', 'Arme de mêlée enchantée', 'Arme de jet enchantée'] and (characterItem.item.target is not null or characterItem.item.effect is not null) %}
-                •
                 {% if characterItem.item.target == 'health' %}
-                    augmente la Santé
+                    • augmente la Santé
                 {% elseif characterItem.item.target == 'mana' %}
-                    augmente la Magie
+                    • augmente la Magie
                 {% elseif characterItem.item.target == 'health' %}
-                    augmente la Magie
+                    • augmente la Magie
                 {% elseif characterItem.item.target == 'charisma' %}
-                    augmente la Sagesse
+                    • augmente la Sagesse
                 {% elseif characterItem.item.effect == 'charmed' %}
                     {% if characterItem.item.target == 'aquatics' %}
-                        amitié avec les créatures aquatiques
+                        • amitié avec les créatures aquatiques
                     {% elseif characterItem.item.target == 'druids' %}
-                        signe de reconnaissance druidique
+                        • signe de reconnaissance druidique
                     {% endif %}
                 {% elseif characterItem.item.effect == 'invisibility' %}
-                    rend invisible
+                    • rend invisible
                 {% endif %}
             {% endif %}
 
-            {% if characterItem.item.effect is defined and characterItem.item.effect is not null and characterItem.item.category.slug == 'nourriture' %}
-                •
-                <span class="text-warning">
-                    provoque {{ characterItem.item.effect }}&nbsp;!
-                </span>
+            {% if characterItem.item.effect is defined and characterItem.item.effect is not null %}
+                {% if characterItem.item.category.slug == 'nourriture' %}
+                    <span class="text-warning">
+                        • provoque {{ characterItem.item.effect }}&nbsp;!
+                    </span>
+                {% endif %}
             {% endif %}
         </h3>
+
+        {% if characterItem.item.requiredLevel is defined and this.character.level < characterItem.item.requiredLevel %}
+            <h3 class="tooltip-subtitle">
+                Niveau requis&nbsp;:&nbsp;{{ characterItem.item.requiredLevel }}
+            </h3>
+        {% endif %}
 
         {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}
             <h3 class="tooltip-subtitle text-danger">
@@ -85,16 +91,16 @@
         <figure class="tooltip-picture">
             {% if characterItem.item.thumbnail is defined %}
                 <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
-                     class="tooltip-image {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                     class="tooltip-image {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
                      alt="{{ characterItem.item.name }}"/>
             {% else %}
                 <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
-                     class="tooltip-image {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                     class="tooltip-image {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
                      alt="{{ characterItem.item.name }}"/>
             {% endif %}
 
             {% if characterItem.item.category.slug in ['armure', 'bouclier', 'arme', 'arme-magique'] %}
-                <div class="gauge {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}disabled{% endif %}">
+                <div class="gauge">
                     <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
                          style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
                     </div>

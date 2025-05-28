@@ -5,6 +5,7 @@ namespace App\DataFixtures\Riddle;
 use App\DataFixtures\Riddle\RiddleTrigger\BoisDuPendu\BosquetDesDruidesTrait;
 use App\DataFixtures\Riddle\RiddleTrigger\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Riddle\RiddleTrigger\BoisDuPendu\CriqueDuPenduTrait;
+use App\DataFixtures\Riddle\RiddleTrigger\MontsTerribles\GouffreDAskalorTrait;
 use App\DataFixtures\Riddle\RiddleTrigger\PortSaintDoux\DocksDeLOuestTrait;
 use App\DataFixtures\Riddle\RiddleTrigger\SablesChauds\PlageDeLaSireneTrait;
 use App\Entity\Riddle\Riddle;
@@ -20,6 +21,7 @@ class RiddleTriggerFixtures extends Fixture implements OrderedFixtureInterface
     use CriqueDuPenduTrait;
     use BosquetDesDruidesTrait;
     use PlageDeLaSireneTrait;
+    use GouffreDAskalorTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -34,6 +36,9 @@ class RiddleTriggerFixtures extends Fixture implements OrderedFixtureInterface
 
             // Sables Chauds
             self::PLAGE_DE_LA_SIRENE_RIDDLE_TRIGGERS,
+
+            // Monts Terribles
+            self::GOUFFRE_D_ASKALOR_RIDDLE_TRIGGERS,
         ];
 
         foreach($allRiddleTriggers as $riddleTriggers) {

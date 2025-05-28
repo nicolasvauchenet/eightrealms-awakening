@@ -7,6 +7,7 @@ use App\DataFixtures\Location\CharacterLocation\BoisDuPendu\ClairiereDeLOublieTr
 use App\DataFixtures\Location\CharacterLocation\DonjonDeLAme\AntichambreDuRoiTrait;
 use App\DataFixtures\Location\CharacterLocation\DonjonDeLAme\SalleDesMurmuresTrait;
 use App\DataFixtures\Location\CharacterLocation\DonjonDeLAme\TombeauDeGladricPremierTrait;
+use App\DataFixtures\Location\CharacterLocation\MontsTerribles\RefugeDuBoucBoiteuxTrait;
 use App\DataFixtures\Location\CharacterLocation\Plouc\PloucTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\DocksDeLOuestTrait;
 use App\DataFixtures\Location\CharacterLocation\PortSaintDoux\QuartierDesChauvesTrait;
@@ -33,6 +34,7 @@ class CharacterLocationFixtures extends Fixture implements OrderedFixtureInterfa
     use BosquetDesDruidesTrait;
     use CampAbandonneTrait;
     use OasisSansNomTrait;
+    use RefugeDuBoucBoiteuxTrait;
     use SalleDesMurmuresTrait;
     use AntichambreDuRoiTrait;
     use TombeauDeGladricPremierTrait;
@@ -57,6 +59,9 @@ class CharacterLocationFixtures extends Fixture implements OrderedFixtureInterfa
             // Sables Chauds
             self::CAMP_ABANDONNE_NPCS,
             self::OASIS_SANS_NOM_NPCS,
+
+            // Monts Terribles
+            self::REFUGE_DU_BOUC_BOITEUX_NPCS,
 
             // Donjon de l'Âme
             self::SALLE_DES_MURMURES_NPCS,

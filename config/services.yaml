@@ -48,5 +48,9 @@ services:
     tags: [ 'riddle.resolver' ]
     autowire: true
     autoconfigure: false
+
+  App\Service\Quest\TriggerHandler\:
+    resource: '../src/Service/Quest/TriggerHandler'
+    tags: [ 'app.quest_trigger_handler' ]
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones

@@ -18,15 +18,16 @@ readonly class AddItemsEffectHandler implements EffectHandlerInterface
 
     public function apply(Player $player, mixed $value): void
     {
-        foreach($value as $data) {
-            if(!isset($data['item'])) {
-                continue;
+        foreach($value as $items) {
+            foreach($items as $data) {
+                if(!isset($data['item'])) {
+                    continue;
+                }
+
+                $itemSlug = $data['item'];
+                $isQuestItem = $data['questItem'] ?? false;
+                $this->inventoryService->addItem($player, $itemSlug, $isQuestItem);
             }
-
-            $itemSlug = $data['item'];
-            $isQuestItem = $data['questItem'] ?? false;
-
-            $this->inventoryService->addItem($player, $itemSlug, $isQuestItem);
         }
     }
 }

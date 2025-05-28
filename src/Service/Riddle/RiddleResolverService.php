@@ -50,9 +50,7 @@ readonly class RiddleResolverService
     public function resolve(Player $player, RiddleTrigger $riddleTrigger): string
     {
         $riddle = $riddleTrigger->getRiddle();
-
         $success = $this->evaluate($player, $riddleTrigger);
-
         $playerRiddle = $this->entityManager->getRepository(PlayerRiddle::class)->findOneBy([
             'player' => $player,
             'riddle' => $riddle,

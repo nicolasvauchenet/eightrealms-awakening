@@ -4,6 +4,7 @@ namespace App\DataFixtures\Combat;
 
 use App\DataFixtures\Combat\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Combat\BoisDuPendu\CriqueDuPenduTrait;
+use App\DataFixtures\Combat\MontsTerribles\RefugeDuBoucBoiteuxTrait;
 use App\DataFixtures\Combat\Plouc\BoisDesRelentsTrait;
 use App\DataFixtures\Combat\PortSaintDoux\AnciensDocksTrait;
 use App\DataFixtures\Combat\PortSaintDoux\DocksDeLOuestTrait;
@@ -27,6 +28,7 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
     use CriqueDuPenduTrait;
     use OasisSansNomTrait;
     use PlageDeLaSireneTrait;
+    use RefugeDuBoucBoiteuxTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -45,6 +47,9 @@ class CombatFixtures extends Fixture implements OrderedFixtureInterface
             // Sables Chauds
             self::OASIS_SANS_NOM_COMBATS,
             self::PLAGE_DE_LA_SIRENE_COMBATS,
+
+            // Monts Terribles
+            self::REFUGE_DU_BOUC_BOITEUX_COMBATS,
         ];
 
         foreach($combatLocations as $combats) {

@@ -16,7 +16,7 @@ trait BouquetinTrait
             'wisdom' => 6,
             'intelligence' => 4,
             'charisma' => 3,
-            'healthMax' => 130,
+            'healthMax' => 10,
             'manaMax' => 0,
             'fortune' => 0,
             'level' => 6,

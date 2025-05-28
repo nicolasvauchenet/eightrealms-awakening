@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class HasItemHandler implements ConditionHandlerInterface
 {
-    public function __construct(private EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
@@ -20,9 +20,9 @@ class HasItemHandler implements ConditionHandlerInterface
 
     public function evaluate(Player $player, mixed $value): bool
     {
-        $item = $this->em->getRepository(Item::class)->findOneBy(['slug' => $value]);
+        $item = $this->entityManager->getRepository(Item::class)->findOneBy(['slug' => $value]);
 
-        return $this->em->getRepository(CharacterItem::class)->findOneBy([
+        return $this->entityManager->getRepository(CharacterItem::class)->findOneBy([
                 'character' => $player,
                 'item' => $item,
             ]) !== null;

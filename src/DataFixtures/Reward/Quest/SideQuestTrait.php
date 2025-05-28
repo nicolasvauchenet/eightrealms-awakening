@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures\Reward\Quest;
 
+use App\Entity\Item\Book;
+
 trait SideQuestTrait
 {
     const SIDE_QUEST_REWARDS = [

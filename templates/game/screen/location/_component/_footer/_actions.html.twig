@@ -6,6 +6,10 @@
                     <button class="app-button cta" title="{{ action.label }}" {{ live_action('resolveRiddle', {riddleTriggerId: action.triggerId}) }}>
                         <img src="{{ asset(action.thumbnail) }}" alt="{{ action.label }}"/>
                     </button>
+                {% elseif action.type == 'sleep' %}
+                    <button class="app-button cta" title="{{ action.label }}" {{ live_action('sleep', {slug: action.slug}) }}>
+                        <img src="{{ asset(action.thumbnail) }}" alt="{{ action.label }}"/>
+                    </button>
                 {% else %}
                     <a href="{{ path('app_game_screen_' ~ action.type, {'slug': action.slug}) }}"
                        class="app-button cta {% if action.isQuest is defined and action.isQuest %}focus{% endif %}"

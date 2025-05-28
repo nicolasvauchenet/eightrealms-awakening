@@ -2,20 +2,19 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Character\Player;
-use App\Event\CombatVictoryEvent;
-use App\Event\DialogStepReachedEvent;
 use App\Event\ItemReceivedEvent;
-use App\Entity\Quest\QuestStepTrigger;
-use App\Service\Quest\QuestProgressionService;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Event\DialogStepReachedEvent;
+use App\Event\CombatVictoryEvent;
+use App\Event\EnterLocationEvent;
+use App\Repository\Character\PlayerRepository;
+use App\Service\Quest\QuestTriggerExecutor;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 readonly class QuestTriggerSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private EntityManagerInterface  $entityManager,
-        private QuestProgressionService $questProgressionService
+        private PlayerRepository     $playerRepository,
+        private QuestTriggerExecutor $executor
     )
     {
     }
@@ -26,93 +25,39 @@ readonly class QuestTriggerSubscriber implements EventSubscriberInterface
             ItemReceivedEvent::class => 'onItemReceived',
             DialogStepReachedEvent::class => 'onDialogStepReached',
             CombatVictoryEvent::class => 'onCombatVictory',
+            EnterLocationEvent::class => 'onEnterLocation',
         ];
     }
 
     public function onItemReceived(ItemReceivedEvent $event): void
     {
-        $player = $this->entityManager->getRepository(Player::class)->find($event->getPlayerId());
-        if(!$player) {
-            return;
-        }
+        $player = $this->playerRepository->find($event->getPlayerId());
+        if(!$player) return;
 
-        $slug = $event->getItemSlug();
-        $triggers = $this->entityManager->getRepository(QuestStepTrigger::class)->findBy(['type' => 'add_item']);
-
-        foreach($triggers as $trigger) {
-            $payload = $trigger->getPayload();
-            if(($payload['slug'] ?? null) !== $slug) {
-                continue;
-            }
-
-            $step = $trigger->getQuestStep();
-            if(!$step) {
-                continue;
-            }
-
-            $quest = $step->getQuest();
-            $this->questProgressionService->startQuestStep($player, [
-                'quest' => $quest->getSlug(),
-                'quest_step' => $step->getPosition(),
-            ]);
-        }
+        $this->executor->handle('add_item', $player, $event);
     }
 
     public function onDialogStepReached(DialogStepReachedEvent $event): void
     {
-        $player = $this->entityManager->getRepository(Player::class)->find($event->playerId);
-        if(!$player) {
-            return;
-        }
+        $player = $this->playerRepository->find($event->playerId);
+        if(!$player) return;
 
-        $triggers = $this->entityManager
-            ->getRepository(QuestStepTrigger::class)
-            ->findBy(['type' => 'dialog_step']);
-
-        foreach($triggers as $trigger) {
-            $payload = $trigger->getPayload();
-            if(($payload['slug'] ?? null) !== $event->dialogStepSlug) {
-                continue;
-            }
-
-            $step = $trigger->getQuestStep();
-            $quest = $step?->getQuest();
-
-            if($step && $quest) {
-                $this->questProgressionService->startQuestStep($player, [
-                    'quest' => $quest->getSlug(),
-                    'quest_step' => $step->getPosition(),
-                ]);
-            }
-        }
+        $this->executor->handle('dialog_step', $player, $event);
     }
 
     public function onCombatVictory(CombatVictoryEvent $event): void
     {
-        $player = $this->entityManager->getRepository(Player::class)->find($event->playerId);
-        if(!$player) {
-            return;
-        }
+        $player = $this->playerRepository->find($event->playerId);
+        if(!$player) return;
 
-        $triggers = $this->entityManager
-            ->getRepository(QuestStepTrigger::class)
-            ->findBy(['type' => 'combat_victory']);
+        $this->executor->handle('combat_victory', $player, $event);
+    }
 
-        foreach($triggers as $trigger) {
-            $payload = $trigger->getPayload();
-            if(($payload['slug'] ?? null) !== $event->combatSlug) {
-                continue;
-            }
+    public function onEnterLocation(EnterLocationEvent $event): void
+    {
+        $player = $this->playerRepository->find($event->getPlayerId());
+        if(!$player) return;
 
-            $step = $trigger->getQuestStep();
-            $quest = $step?->getQuest();
-
-            if($step && $quest) {
-                $this->questProgressionService->startQuestStep($player, [
-                    'quest' => $quest->getSlug(),
-                    'quest_step' => $step->getPosition(),
-                ]);
-            }
-        }
+        $this->executor->handle('enter_location', $player, $event);
     }
 }

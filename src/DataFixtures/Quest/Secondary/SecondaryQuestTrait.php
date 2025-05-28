@@ -52,5 +52,10 @@ trait SecondaryQuestTrait
             'type' => 'Secondaire',
             'reference' => 'quest_secondary_le_jugement_du_cercle',
         ],
+        [
+            'name' => 'Le Gardien du Refuge',
+            'type' => 'Secondaire',
+            'reference' => 'quest_secondary_le_gardien_du_refuge',
+        ],
     ];
 }

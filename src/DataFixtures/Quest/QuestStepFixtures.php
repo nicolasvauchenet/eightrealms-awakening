@@ -7,6 +7,7 @@ use App\DataFixtures\Quest\Secondary\BagarreBizarreTrait;
 use App\DataFixtures\Quest\Secondary\DesRatsSurLesDocksTrait;
 use App\DataFixtures\Quest\Secondary\LaFiolePerdueTrait;
 use App\DataFixtures\Quest\Secondary\LaSireneEtLeMarinTrait;
+use App\DataFixtures\Quest\Secondary\LeGardienDuRefugeTrait;
 use App\DataFixtures\Quest\Secondary\LeJugementDuCercleTrait;
 use App\DataFixtures\Quest\Secondary\LivraisonEnCoursTrait;
 use App\Entity\Quest\Quest;
@@ -25,6 +26,7 @@ class QuestStepFixtures extends Fixture implements OrderedFixtureInterface
     use LaSireneEtLeMarinTrait;
     use LivraisonEnCoursTrait;
     use LeJugementDuCercleTrait;
+    use LeGardienDuRefugeTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -39,6 +41,7 @@ class QuestStepFixtures extends Fixture implements OrderedFixtureInterface
             self::LA_SIRENE_ET_LE_MARIN_QUEST_STEPS,
             self::LIVRAISON_EN_COURS_QUEST_STEPS,
             self::LE_JUGEMENT_DU_CERCLE_QUEST_STEPS,
+            self::LE_GARDIEN_DU_REFUGE_QUEST_STEPS,
         ];
 
         foreach($allQuestSteps as $questSteps) {

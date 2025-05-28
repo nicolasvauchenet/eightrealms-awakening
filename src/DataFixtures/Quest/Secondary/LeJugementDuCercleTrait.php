@@ -29,7 +29,7 @@ trait LeJugementDuCercleTrait
         [
             'description' => "<p>Le fantôme m’a posé des questions. Des énigmes… ou plutôt des souvenirs brisés. Il voulait que je lui dise pourquoi il avait été jugé, pendu, effacé. Comme si j’étais là. Comme si j’avais le droit de le juger à mon tour. Il voulait savoir qui il était. J’ai échoué à répondre à ses questions. Il s’est mis à hurler. La forêt a tremblé. Et le fantôme m’a attaqué, ivre de douleur, de colère… ou de folie. J’ai dû me battre. Quand tout fut terminé, un silence écrasant s’est abattu. Et à mes pieds, j’ai trouvé une vieille amulette, visiblement druidique. Peut-être intéressera-t-elle quelqu'un.</p>",
             'position' => 4,
-            'last' => false,
+            'last' => true,
             'quest' => 'quest_secondary_le_jugement_du_cercle',
             'reference' => 'quest_secondary_le_jugement_du_cercle_step_4',
         ],

@@ -27,4 +27,13 @@ readonly class CharacterQuestService
     {
         return $this->entityManager->getRepository(PlayerQuest::class)->findSideQuests($character, $isRewarded);
     }
+
+    public function hasQuestStep(Player $player, array $data): bool
+    {
+        $quest = $this->entityManager->getRepository(Quest::class)->findOneBy(['slug' => $data['quest']]);
+        $questStep = $this->entityManager->getRepository(QuestStep::class)->findOneBy(['quest' => $quest, 'position' => $data['quest_step']]);
+        $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy(['player' => $player, 'questStep' => $questStep, 'status' => $data['status']]);
+
+        return $playerQuestStep ? true : false;
+    }
 }

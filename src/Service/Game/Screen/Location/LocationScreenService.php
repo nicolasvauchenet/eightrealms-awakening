@@ -5,18 +5,25 @@ namespace App\Service\Game\Screen\Location;
 use App\Entity\Character\Creature;
 use App\Entity\Character\Player;
 use App\Entity\Location\Location;
+use App\Entity\Quest\PlayerQuestStep;
+use App\Entity\Quest\Quest;
+use App\Entity\Quest\QuestStep;
 use App\Entity\Screen\LocationScreen;
+use App\Event\EnterLocationEvent;
 use App\Service\Game\Condition\ConditionEvaluatorService;
 use App\Service\Game\Navigation\ExitActionResolver;
+use App\Service\Quest\CharacterQuestService;
 use App\Service\Riddle\RiddleTriggerResolverService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 readonly class LocationScreenService
 {
     public function __construct(private EntityManagerInterface       $entityManager,
                                 private ConditionEvaluatorService    $conditionEvaluatorService,
                                 private ExitActionResolver           $exitActionResolver,
-                                private RiddleTriggerResolverService $riddleTriggerResolver,)
+                                private RiddleTriggerResolverService $riddleTriggerResolver,
+                                private EventDispatcherInterface     $eventDispatcher, private CharacterQuestService $characterQuestService)
     {
     }
 
@@ -31,6 +38,11 @@ readonly class LocationScreenService
                 ->setType('location')
                 ->setLocation($location);
         }
+        $this->entityManager->persist($screen);
+        $this->entityManager->flush();
+
+        // Entrer dans un lieu peut déclencher une étape de quête
+        $this->eventDispatcher->dispatch(new EnterLocationEvent($player->getId(), $screen->getSlug()));
 
         $this->createScreenActions($screen, $location, $player);
         $this->entityManager->persist($screen);
@@ -48,6 +60,7 @@ readonly class LocationScreenService
             'creatures' => [],
             'buildings' => [],
             'riddles' => [],
+            'specials' => [],
             'exit' => [],
         ];
 
@@ -99,6 +112,36 @@ readonly class LocationScreenService
                     ];
                 }
 
+                if($location->getSlug() === 'le-refuge') {
+                    $isTharolInHere = false;
+                    $stepConditions = [3, 4, 6, 7, 10];
+                    foreach($stepConditions as $step) {
+                        if($this->characterQuestService->hasQuestStep($player, [
+                            'quest' => 'le-gardien-du-refuge',
+                            'quest_step' => $step,
+                            'status' => 'progress',
+                        ])) {
+                            $isTharolInHere = true;
+                            break;
+                        }
+                    }
+
+                    if(!$isTharolInHere) {
+                        $footerActions['specials'][] = [
+                            'type' => 'sleep',
+                            'slug' => 'le-refuge',
+                            'label' => 'Dormir',
+                            'thumbnail' => 'img/core/action/sleep.png',
+                        ];
+                    }
+                }
+
+                // Énigmes
+                $riddles = $this->createRiddleActions($location, $player);
+                foreach($riddles as $riddleAction) {
+                    $footerActions['riddles'][] = $riddleAction;
+                }
+
                 foreach($location->getChildren() as $childLocation) {
                     if($childLocation->getType() === 'building') {
                         $footerActions['buildings'][] = [
@@ -108,12 +151,6 @@ readonly class LocationScreenService
                             'thumbnail' => $childLocation->getThumbnail(),
                         ];
                     }
-                }
-
-                // Énigmes
-                $riddles = $this->createRiddleActions($location, $player);
-                foreach($riddles as $riddleAction) {
-                    $footerActions['riddles'][] = $riddleAction;
                 }
 
                 // Exit

@@ -5,6 +5,7 @@ namespace App\DataFixtures\Quest;
 use App\DataFixtures\Quest\QuestStepTrigger\BoisDuPendu\BosquetDesDruidesTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\BoisDuPendu\ClairiereDeLOublieTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\BoisDuPendu\CriqueDuPenduTrait;
+use App\DataFixtures\Quest\QuestStepTrigger\MontsTerribles\RefugeDuBoucBoiteuxTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\Plouc\CampementGobelinTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\AnciensDocksTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\QuartierDesPloucsTrait;
@@ -23,6 +24,7 @@ class QuestStepTriggerFixtures extends Fixture implements OrderedFixtureInterfac
     use ClairiereDeLOublieTrait;
     use BosquetDesDruidesTrait;
     use CriqueDuPenduTrait;
+    use RefugeDuBoucBoiteuxTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -38,6 +40,9 @@ class QuestStepTriggerFixtures extends Fixture implements OrderedFixtureInterfac
             self::CLAIRIERE_DE_L_OUBLIE_QUEST_STEP_TRIGGERS,
             self::BOSQUET_DES_DRUIDES_QUEST_STEP_TRIGGERS,
             self::CRIQUE_DU_PENDU_QUEST_STEP_TRIGGERS,
+
+            // Monts Terribles
+            self::REFUGE_DU_BOUC_BOITEUX_QUEST_STEP_TRIGGERS,
         ];
 
         foreach($allQuestStepTriggers as $questStepTriggers) {

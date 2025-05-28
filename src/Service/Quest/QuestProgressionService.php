@@ -147,37 +147,43 @@ readonly class QuestProgressionService
             $playerQuestStep->setStatus($entry['status']);
             $this->entityManager->persist($playerQuestStep);
 
-            if($entry['status'] === 'completed' && $goNext) {
-                $currentPos = $step->getPosition();
-                $steps = $quest->getQuestSteps();
-                $maxPos = $steps->last()?->getPosition() ?? $currentPos;
+            if($entry['status'] === 'completed') {
+                if($reward = $playerQuestStep->getQuestStep()->getReward()) {
+                    $this->rewardService->giveReward($reward, $player);
+                }
 
-                for($i = $currentPos + 1; $i <= $maxPos; $i++) {
-                    $candidate = $steps->filter(fn($s) => $s->getPosition() === $i)->first();
-                    if(!$candidate) continue;
+                if($goNext) {
+                    $currentPos = $step->getPosition();
+                    $steps = $quest->getQuestSteps();
+                    $maxPos = $steps->last()?->getPosition() ?? $currentPos;
 
-                    if(isset($manualStatuses[$entry['quest']][$i])) {
+                    for($i = $currentPos + 1; $i <= $maxPos; $i++) {
+                        $candidate = $steps->filter(fn($s) => $s->getPosition() === $i)->first();
+                        if(!$candidate) continue;
+
+                        if(isset($manualStatuses[$entry['quest']][$i])) {
+                            break;
+                        }
+
+                        $existing = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
+                            'player' => $player,
+                            'questStep' => $candidate,
+                        ]);
+
+                        if(!$existing) {
+                            $nextStatus = $entry['next'] ?? 'progress';
+
+                            $newStep = (new PlayerQuestStep())
+                                ->setPlayer($player)
+                                ->setQuestStep($candidate)
+                                ->setPlayerQuest($playerQuest)
+                                ->setStatus($nextStatus);
+
+                            $this->entityManager->persist($newStep);
+                        }
+
                         break;
                     }
-
-                    $existing = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
-                        'player' => $player,
-                        'questStep' => $candidate,
-                    ]);
-
-                    if(!$existing) {
-                        $nextStatus = $entry['next'] ?? 'progress';
-
-                        $newStep = (new PlayerQuestStep())
-                            ->setPlayer($player)
-                            ->setQuestStep($candidate)
-                            ->setPlayerQuest($playerQuest)
-                            ->setStatus($nextStatus);
-
-                        $this->entityManager->persist($newStep);
-                    }
-
-                    break;
                 }
             }
         }

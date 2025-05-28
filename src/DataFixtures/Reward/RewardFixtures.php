@@ -9,6 +9,7 @@ use App\DataFixtures\Reward\Quest\MainQuestTrait;
 use App\DataFixtures\Reward\Quest\SideQuestTrait;
 use App\DataFixtures\Reward\QuestCombat\BoisDuPendu\ClairiereDeLOublieQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\BoisDuPendu\CriqueDuPenduQuestCombatTrait;
+use App\DataFixtures\Reward\QuestCombat\MontsTerribles\RefugeDuBoucBoiteuxQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\Plouc\CampementGobelinQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\PortSaintDoux\AnciensDocksQuestCombatTrait;
 use App\DataFixtures\Reward\QuestCombat\PortSaintDoux\DocksDeLOuestQuestCombatTrait;
@@ -31,6 +32,7 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
     use ClairiereDeLOublieQuestCombatTrait;
     use CriqueDuPenduQuestCombatTrait;
     use OasisSansNomQuestCombatTrait;
+    use RefugeDuBoucBoiteuxQuestCombatTrait;
     use MainQuestTrait;
     use SideQuestTrait;
     use MiscTrait;
@@ -60,6 +62,9 @@ class RewardFixtures extends Fixture implements OrderedFixtureInterface
 
             // Sables Chauds
             self::OASIS_SANS_NOM_COMBAT_QUEST_REWARDS,
+
+            // Monts Terribles
+            self::REFUGE_DU_BOUC_BOITEUX_COMBAT_QUEST_REWARDS,
         ];
 
         foreach($allRewards as $rewards) {

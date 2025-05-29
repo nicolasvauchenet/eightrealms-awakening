@@ -103,7 +103,11 @@ trait FaroukLeNomadeTrait
             'text' => "<p><em>Le bois qui rafraîchit le désert au nord… Il cache beaucoup de nœuds dans ses branches. Des nœuds qu’on n’a pas tous défaits. Un client, un vieil homme du sud, m’a jadis murmuré cette phrase&nbsp;:&nbsp;Le Cercle jugeait en silence. Et parfois… il pendait aussi.</em></p>",
             'first' => true,
             'conditions' => [
-                'location_unknown' => 'crique-du-pendu',
+                'quest_step_status' => [
+                    'quest' => 'les-disparus-du-donjon',
+                    'quest_step' => 9,
+                    'status' => 'progress',
+                ],
             ],
             'dialog' => 'rumor_farouk_le_nomade',
             'reference' => 'rumor_step_farouk_le_nomade_1',
@@ -128,7 +132,7 @@ trait FaroukLeNomadeTrait
             'name' => 'Farouk - Ragots',
             'text' => "<p><em>Jadis, j’ai vendu un miroir à une vieille femme qui vivait seule. Depuis, elle refuse de me voir. Elle dit que j’y ai laissé une part de moi…</em></p><p>Il se fend d'un large sourire, pas très convaincant cependant.</p><p><em>Comment serait-ce possible&nbsp;?</em></p>",
             'conditions' => [
-                'location_known' => 'crique-du-pendu',
+                'quest_started' => 'le-jugement-du-cercle',
             ],
             'first' => true,
             'dialog' => 'rumor_farouk_le_nomade',

@@ -61,48 +61,55 @@ trait LeGardienDuRefugeTrait
             'quest' => 'quest_secondary_le_gardien_du_refuge',
             'reference' => 'quest_secondary_le_gardien_du_refuge_step_8',
         ],
-        //Break
         [
-            'description' => "<p>Le Grand Druide m’a parlé d’un ancien rituel de séparation. Un lien d’âme. Une faille. Il ne connaît pas les mots exacts, mais il m’a guidé vers les Archives oubliées de Port Saint-Doux. Là-bas, peut-être, j’en saurai davantage.</p>",
+            'description' => "<p>Le Grand Druide m’a parlé d’un ancien rituel de séparation. Un lien d’âme. Une faille. Il ne connaît pas les mots exacts, mais il m’a assuré qu'ils étaient écrits. Dans un grimoire ancien, hélas! interdit et caché par le Roi Galdric II il y a des années. Je dois retourner à Port Saint-Doux afin de chercher des informations sur l'endroit où sont cachés les livres interdits.</p>",
             'position' => 9,
             'last' => false,
             'quest' => 'quest_secondary_le_gardien_du_refuge',
             'reference' => 'quest_secondary_le_gardien_du_refuge_step_9',
         ],
         [
-            'description' => "<p>Dans les profondeurs des Archives, j’ai retrouvé un vieux manuscrit : <em>Serments Brisés</em>. Deux rituels s’y affrontent : l’un pour rompre le lien, l’autre pour le reprendre à son compte. Les avertissements sont clairs. Mais je n’ai plus le luxe d’hésiter.</p>",
+            'description' => "<p>Le Grand Druide m’a parlé d’un ancien rituel de séparation. Un lien d’âme. Une faille. Mais il n'en savait pas plus… Je dois repartir à la recherche d'une piste…</p>",
             'position' => 10,
             'last' => false,
             'quest' => 'quest_secondary_le_gardien_du_refuge',
             'reference' => 'quest_secondary_le_gardien_du_refuge_step_10',
         ],
+        //Break
         [
-            'description' => "<p>J’ai échoué. Le rituel n’a pas fonctionné. Tharôl s’est tordu dans une douleur impossible. Il s’est transformé. Définitivement. Ce n’est plus un homme. C’est la bête. Et elle ne reviendra plus. J’ai mis fin au lien. Mais pas comme je l’espérais.</p>",
+            'description' => "<p>Dans les profondeurs des Archives, j’ai retrouvé un vieux manuscrit : <em>Serments Brisés</em>. Deux rituels s’y affrontent : l’un pour rompre le lien, l’autre pour le reprendre à son compte. Les avertissements sont clairs. Mais je n’ai plus le luxe d’hésiter.</p>",
             'position' => 11,
             'last' => false,
             'quest' => 'quest_secondary_le_gardien_du_refuge',
             'reference' => 'quest_secondary_le_gardien_du_refuge_step_11',
         ],
         [
-            'description' => "<p>Le rituel a réussi. Tharôl s’est effondré, vidé. Il ne se souvient plus. L’Épine est là, entre nous. Il la regarde à peine. Il ne veut plus décider. Il ne veut plus rien. C’est à moi de trancher.</p>",
+            'description' => "<p>J’ai échoué. Le rituel n’a pas fonctionné. Tharôl s’est tordu dans une douleur impossible. Il s’est transformé. Définitivement. Ce n’est plus un homme. C’est la bête. Et elle ne reviendra plus. J’ai mis fin au lien. Mais pas comme je l’espérais.</p>",
             'position' => 12,
             'last' => false,
             'quest' => 'quest_secondary_le_gardien_du_refuge',
             'reference' => 'quest_secondary_le_gardien_du_refuge_step_12',
         ],
         [
-            'description' => "<p>J’ai affronté Tharôl. Ou ce qu’il en restait. Il refusait de céder l’Épine. J’ai dû la prendre par la force. Ce n’est pas une victoire. C’est une fin. Une fin sale.</p>",
+            'description' => "<p>Le rituel a réussi. Tharôl s’est effondré, vidé. Il ne se souvient plus. L’Épine est là, entre nous. Il la regarde à peine. Il ne veut plus décider. Il ne veut plus rien. C’est à moi de trancher.</p>",
             'position' => 13,
-            'last' => true,
+            'last' => false,
             'quest' => 'quest_secondary_le_gardien_du_refuge',
             'reference' => 'quest_secondary_le_gardien_du_refuge_step_13',
         ],
         [
-            'description' => "<p>Je suis reparti avec l’Épine. Tharôl est resté là, libre, vide… ou mort. Je ne sais plus. Je sais seulement que le poids a changé de main. Et qu’il ne sera pas plus léger pour moi.</p>",
+            'description' => "<p>J’ai affronté Tharôl. Ou ce qu’il en restait. Il refusait de céder l’Épine. J’ai dû la prendre par la force. Ce n’est pas une victoire. C’est une fin. Une fin sale.</p>",
             'position' => 14,
             'last' => true,
             'quest' => 'quest_secondary_le_gardien_du_refuge',
             'reference' => 'quest_secondary_le_gardien_du_refuge_step_14',
+        ],
+        [
+            'description' => "<p>Je suis reparti avec l’Épine. Tharôl est resté là, libre, vide… ou mort. Je ne sais plus. Je sais seulement que le poids a changé de main. Et qu’il ne sera pas plus léger pour moi.</p>",
+            'position' => 15,
+            'last' => true,
+            'quest' => 'quest_secondary_le_gardien_du_refuge',
+            'reference' => 'quest_secondary_le_gardien_du_refuge_step_15',
         ],
     ];
 }

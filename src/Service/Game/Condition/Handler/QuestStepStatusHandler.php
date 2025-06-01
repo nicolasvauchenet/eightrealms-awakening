@@ -22,7 +22,6 @@ class QuestStepStatusHandler implements ConditionHandlerInterface
     {
         $quest = $this->em->getRepository(Quest::class)->findOneBy(['slug' => $value['quest'] ?? null]);
         $step = $quest?->getQuestSteps()->filter(fn($s) => $s->getPosition() === $value['quest_step'])->first();
-
         if(!$quest || !$step) return false;
 
         $pqs = $this->em->getRepository(PlayerQuestStep::class)->findOneBy(['player' => $player, 'questStep' => $step]);

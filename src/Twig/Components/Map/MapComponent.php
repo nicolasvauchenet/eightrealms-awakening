@@ -2,10 +2,8 @@
 
 namespace App\Twig\Components\Map;
 
-use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Location\Location;
-use App\Entity\Screen\LocationScreen;
 use App\Service\Map\MapService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

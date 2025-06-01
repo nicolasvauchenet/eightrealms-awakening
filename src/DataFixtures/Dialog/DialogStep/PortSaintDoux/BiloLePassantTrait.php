@@ -19,9 +19,6 @@ trait BiloLePassantTrait
         [
             'name' => 'Bilo - Anciens Docks',
             'text' => "<p><em>C'est dans les Anciens Docks, au sud-est de la ville. C'est l'ancien quartier des pêcheurs et des marins, mais surtout des vieux qui se sont pas fait à la modernité des Docks de l'Ouest. C'est un endroit calme, mais avec ces rats, ça devient un peu plus animé… enfin, si on peut dire.</em></p>",
-            'conditions' => [
-                'quest_not_started' => 'des-rats-sur-les-docks',
-            ],
             'effects' => [
                 'reveal_location' => 'anciens-docks',
             ],
@@ -31,9 +28,6 @@ trait BiloLePassantTrait
         [
             'name' => 'Bilo - Accepter la quête',
             'text' => "<p><em>Super&nbsp;! Enfin quelqu'un qui s'occupe des problèmes du peuple&nbsp;! C'est pas tous les jours qu'on voit ça. Bonne chance à vous&nbsp;!</em></p>",
-            'conditions' => [
-                'quest_not_started' => 'des-rats-sur-les-docks',
-            ],
             'effects' => [
                 'start_quest' => 'des-rats-sur-les-docks',
             ],
@@ -43,9 +37,6 @@ trait BiloLePassantTrait
         [
             'name' => 'Bilo - Refuser la quête',
             'text' => "<p><em>Oh, vous savez moi, ce que j'en dis… Si ce n'est le problème de personne, et que les gardes sont trop occupés, alors qui va s'en occuper de ces rats&nbsp;?</em></p>",
-            'conditions' => [
-                'quest_not_started' => 'des-rats-sur-les-docks',
-            ],
             'dialog' => 'quest_bilo_le_passant',
             'reference' => 'quest_step_bilo_le_passant_4',
         ],
@@ -75,11 +66,6 @@ trait BiloLePassantTrait
                 ],
             ],
             'effects' => [
-                'edit_quest_step_status' => [
-                    'quest' => 'des-rats-sur-les-docks',
-                    'quest_step' => 2,
-                    'status' => 'completed',
-                ],
                 'reward_quest' => 'des-rats-sur-les-docks',
             ],
             'dialog' => 'quest_bilo_le_passant',
@@ -104,7 +90,7 @@ trait BiloLePassantTrait
             'reference' => 'dialog_step_bilo_le_passant_1',
         ],
 
-        // Ragots
+        // Ragots : Arcaniste
         [
             'name' => 'Bilo - Rencontre',
             'text' => "<p><em>Je reviens de chez Wilbert, l'Arcaniste. Il en a des trucs magiques&nbsp;! Ça fait rêver… Mais qu'est-ce que c'est cher, la magie&nbsp;!</em></p>",
@@ -118,22 +104,21 @@ trait BiloLePassantTrait
         [
             'name' => "Bilo - Quartier des Ploucs",
             'text' => "<p><em>Dans le Quartier des Ploucs. Ça s'appelle comme ça parce que c'est en grande partie les pêcheurs du village de Plouc qui y habitent. Enfin, qui ont déménagé à la ville. Sûrement à cause des rhumes…</em></p>",
-            'conditions' => [
-                'location_unknown' => 'quartier-des-ploucs',
-            ],
             'effects' => [
                 'reveal_location' => 'quartier-des-ploucs',
             ],
             'dialog' => 'rumor_bilo_le_passant',
             'reference' => 'rumor_step_bilo_le_passant_2',
         ],
+
+        // Ragots
         [
             'name' => 'Bilo - Ragots',
             'text' => "<p><em>Vous savez que si vous mangez trois pommes, une carotte et un vieux fromage de chèvre avant de dormir, vous rêverez du futur&nbsp;? Enfin… moi, j’ai rêvé que j’étais un poisson qui chantait des berceuses à des dragons. Alors bon, ce n’est peut-être pas le futur-futur. Mais c'est une preuve, vous ne pensez pas&nbsp;?</em></p>",
+            'first' => true,
             'conditions' => [
                 'location_known' => 'quartier-des-ploucs',
             ],
-            'first' => true,
             'dialog' => 'rumor_bilo_le_passant',
             'reference' => 'rumor_step_bilo_le_passant_3',
         ],

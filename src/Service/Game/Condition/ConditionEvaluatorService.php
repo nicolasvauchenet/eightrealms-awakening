@@ -40,6 +40,10 @@ readonly class ConditionEvaluatorService
             return $this->evaluateAll($value, $player);
         }
 
+        if($type === 'none') {
+            return $this->evaluateNone($value, $player);
+        }
+
         foreach($this->handlers as $handler) {
             if($handler->supports($type)) {
                 return $handler->evaluate($player, $value);
@@ -78,6 +82,24 @@ readonly class ConditionEvaluatorService
             foreach($subCondition as $type => $value) {
                 if(!$this->evaluate($type, $value, $player)) {
                     return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private function evaluateNone(mixed $conditions, Player $player): bool
+    {
+        if(!is_array($conditions)) return false;
+        if(array_keys($conditions) === array_filter(array_keys($conditions), 'is_string')) {
+            $conditions = [$conditions];
+        }
+
+        foreach($conditions as $subCondition) {
+            foreach($subCondition as $type => $value) {
+                if($this->evaluate($type, $value, $player)) {
+                    return false; // Une condition est vraie -> none échoue
                 }
             }
         }

@@ -19,9 +19,6 @@ trait MaireDePortSaintDouxTrait
         [
             'name' => "Maire de Port Saint-Doux - Nouvelle Ville",
             'text' => "<p><em>Au nord de la ville bien sûr, où voulez-vous qu'on construise&nbsp;? Vous n'étiez pas à la réunion&nbsp;? Imaginez donc&nbsp;:&nbsp;un Théâtre de la Renaissance, plus raffiné encore que les salles elfiques&nbsp;;&nbsp;une Grande Bibliothèque, où chaque langue du monde trouvera sa place, sauf peut-être les dialectes gobelins&nbsp;;&nbsp;une Maison des Guildes pour enfin remettre de l’ordre dans le capharnaüm commercial ambiant&nbsp;—&nbsp;fini les fraudes&nbsp;! Et surtout, la Maison de l’Urbanisme, mon chef-d'œuvre administratif, où les plus brillants architectes centraliseront les plans de la ville, recoin par recoin. Ce sera… grandiose&nbsp;! Merveilleux&nbsp;! À mon image, en somme.</em></p>",
-            'conditions' => [
-                'location_unknown' => 'nouvelle-ville',
-            ],
             'effects' => [
                 'reveal_location' => 'nouvelle-ville',
             ],

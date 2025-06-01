@@ -64,13 +64,6 @@ trait SireneDesDocksDeLOuestTrait
         [
             'name' => "Sirene des Docks de l'Ouest - Quête terminée - Vérité",
             'text' => "<p>La Sirène observe le journal avec une intensité presque douloureuse. Chaque mot semble l’atteindre comme une lame. Lorsqu’elle lève les yeux vers vous, ses traits sont figés dans une tristesse muette.</p><p><em>Je l’aimais. Et il riait… Il s'est servi de mon précieux cadeau pour… pour décimer mon peuple.</em></p><p>Un long silence.</p><p><em>Merci. D’avoir chanté la vérité. Apporte mes regrets à Myra. Dis-lui qu’elle avait raison. J'en ai terminé avec les tiens.</em></p><p>Elle vous tend le médaillon sans un mot de plus, puis plonge lentement, disparaissant dans les profondeurs, l'air apaisé pour la première fois depuis longtemps.</p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 4,
-                    'status' => 'progress',
-                ],
-            ],
             'effects' => [
                 'remove_items' => [
                     'journal-deryl',
@@ -85,12 +78,22 @@ trait SireneDesDocksDeLOuestTrait
                 'edit_quest_step_status' => [
                     [
                         'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 3,
+                        'status' => 'completed',
+                    ],
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
                         'quest_step' => 4,
                         'status' => 'completed',
                     ],
                     [
                         'quest' => 'la-sirene-et-le-marin',
                         'quest_step' => 6,
+                        'status' => 'skipped',
+                    ],
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 8,
                         'status' => 'skipped',
                     ],
                 ],
@@ -101,13 +104,6 @@ trait SireneDesDocksDeLOuestTrait
         [
             'name' => "Sirene des Docks de l'Ouest - Quête terminée - Mensonge",
             'text' => "<p>La Sirène fixe le médaillon que vous tendez. Sa main l’effleure, hésitante, puis elle le prend doucement contre elle.</p><p><em>Alors… il m’aimait encore…</em></p><p>Elle ferme les yeux, un sourire presque imperceptible aux lèvres.</p><p><em>C’est suffisant.</em></p><p>Elle vous tourne le dos, et disparaît dans les flots, ne laissant derrière elle qu’une brise salée.</p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'la-sirene-et-le-marin',
-                    'quest_step' => 4,
-                    'status' => 'progress',
-                ],
-            ],
             'effects' => [
                 'remove_items' => [
                     'journal-deryl',
@@ -116,12 +112,22 @@ trait SireneDesDocksDeLOuestTrait
                 'edit_quest_step_status' => [
                     [
                         'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 3,
+                        'status' => 'completed',
+                    ],
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
                         'quest_step' => 4,
                         'status' => 'completed',
                     ],
                     [
                         'quest' => 'la-sirene-et-le-marin',
                         'quest_step' => 5,
+                        'status' => 'skipped',
+                    ],
+                    [
+                        'quest' => 'la-sirene-et-le-marin',
+                        'quest_step' => 7,
                         'status' => 'skipped',
                     ],
                 ],

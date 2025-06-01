@@ -26,16 +26,6 @@ trait JarrodLeTavernierTrait
         [
             'name' => 'Jarrod - Bois du Pendu',
             'text' => "<p><em>Oui, le Bois du Pendu. Un endroit maudit. On dit qu’on y entend les branches craquer même quand il n’y a pas de vent. Et que certains arbres saignent quand on les touche… Mais bon, j’dis ça, j’y mets jamais les pieds. Si vous y allez, faites gaffe à vous. Et évitez de répondre si quelqu’un vous appelle par votre nom.</em></p>",
-            'conditions' => [
-                'quest_status' => [
-                    'quest' => 'bagarre-bizarre',
-                    'status' => 'progress',
-                ],
-                'quest_step_not_started' => [
-                    'quest' => 'bagarre-bizarre',
-                    'quest_step' => 2,
-                ],
-            ],
             'effects' => [
                 'reveal_location' => 'bois-du-pendu',
             ],
@@ -45,16 +35,6 @@ trait JarrodLeTavernierTrait
         [
             'name' => 'Jarrod - Accepter la quête',
             'text' => "<p><em>Vous êtes courageux, ou alors inconscient… mais j’aime ça. Si vous trouvez ce vieux fou, peut-être qu’il vous dira pourquoi il s’est battu comme un diable ce soir-là. Et s’il trouve que vous chantez faux… eh bien, j’aurai toujours une bière pour vous à votre retour.</em></p>",
-            'conditions' => [
-                'quest_status' => [
-                    'quest' => 'bagarre-bizarre',
-                    'status' => 'progress',
-                ],
-                'quest_step_not_started' => [
-                    'quest' => 'bagarre-bizarre',
-                    'quest_step' => 2,
-                ],
-            ],
             'effects' => [
                 'edit_quest_step_status' => [
                     'quest' => 'bagarre-bizarre',
@@ -65,6 +45,7 @@ trait JarrodLeTavernierTrait
                     'quest' => 'bagarre-bizarre',
                     'quest_step' => 2,
                 ],
+                // Increase reputation with Jarrod
             ],
             'dialog' => 'quest_jarrod_le_tavernier',
             'reference' => 'quest_step_jarrod_le_tavernier_3',
@@ -72,16 +53,6 @@ trait JarrodLeTavernierTrait
         [
             'name' => 'Jarrod - Refuser la quête',
             'text' => "<p><em>Vous savez quoi ? Vous avez bien raison. Trop de gens curieux finissent par nourrir les racines de ce bois. Et moi, je préfère servir des vivants que leur rendre hommage. Revenez quand vous serez prêt… ou pas.</em></p>",
-            'conditions' => [
-                'quest_status' => [
-                    'quest' => 'bagarre-bizarre',
-                    'status' => 'progress',
-                ],
-                'quest_step_not_started' => [
-                    'quest' => 'bagarre-bizarre',
-                    'quest_step' => 2,
-                ],
-            ],
             'dialog' => 'quest_jarrod_le_tavernier',
             'reference' => 'quest_step_jarrod_le_tavernier_4',
         ],

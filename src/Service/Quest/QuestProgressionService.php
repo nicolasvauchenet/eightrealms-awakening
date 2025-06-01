@@ -202,18 +202,29 @@ readonly class QuestProgressionService
         ]);
         if(!$playerQuest || $playerQuest->getStatus() === 'rewarded') return;
 
-        foreach($quest->getQuestSteps() as $step) {
-            $playerQuestStep = $this->entityManager->getRepository(PlayerQuestStep::class)->findOneBy([
+        $questSteps = $quest->getQuestSteps();
+        $stepRepo = $this->entityManager->getRepository(PlayerQuestStep::class);
+
+        foreach($questSteps as $step) {
+            $playerQuestStep = $stepRepo->findOneBy([
                 'player' => $player,
                 'questStep' => $step,
             ]);
 
-            if(!$playerQuestStep || $playerQuestStep->getStatus() === 'skipped') {
-                continue;
+            if($playerQuestStep) {
+                if($playerQuestStep->getStatus() !== 'skipped') {
+                    $playerQuestStep->setStatus('completed');
+                    $this->entityManager->persist($playerQuestStep);
+                }
+            } else {
+                // Étape manquante → on la crée et on la complète directement
+                $newStep = (new PlayerQuestStep())
+                    ->setPlayer($player)
+                    ->setQuestStep($step)
+                    ->setPlayerQuest($playerQuest)
+                    ->setStatus('completed');
+                $this->entityManager->persist($newStep);
             }
-
-            $playerQuestStep->setStatus('completed');
-            $this->entityManager->persist($playerQuestStep);
         }
 
         if($reward = $quest->getReward()) {

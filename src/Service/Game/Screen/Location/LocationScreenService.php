@@ -58,20 +58,52 @@ readonly class LocationScreenService
         $footerActions = [
             'npcs' => [],
             'creatures' => [],
-            'buildings' => [],
             'riddles' => [],
             'specials' => [],
+            'buildings' => [],
             'exit' => [],
         ];
+
+        $combatCharacters = [];
 
         switch($location->getType()) {
             case 'location':
             case 'zone':
             case 'building':
+
+                // Combats d'abord : on stocke les ennemis
+                foreach($location->getCombats() ?? [] as $combat) {
+                    $conditions = $combat->getConditions();
+                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
+                        continue;
+                    }
+
+                    if($this->riddleTriggerResolver->isCombatLockedByUnsolvedRiddle($player, $combat->getSlug())) {
+                        continue;
+                    }
+
+                    foreach($combat->getCombatEnemies() as $CombatEnemy) {
+                        $combatCharacters[] = $CombatEnemy->getEnemy()->getSlug();
+                    }
+
+                    $footerActions['creatures'][] = [
+                        'type' => 'combat',
+                        'slug' => $combat->getSlug(),
+                        'label' => $combat->getName(),
+                        'thumbnail' => $combat->getThumbnail(),
+                        'isQuest' => $combat->getQuestStep() ? true : false,
+                    ];
+                }
+
+                // Interactions personnages
                 foreach($location->getCharacterLocations() as $characterLocation) {
                     $character = $characterLocation->getCharacter();
                     if($character instanceof Player) {
                         continue;
+                    }
+
+                    if(in_array($character->getSlug(), $combatCharacters, true)) {
+                        continue; // Éviter les doublons bouton combat + interaction
                     }
 
                     $conditions = $characterLocation->getConditions();
@@ -93,25 +125,7 @@ readonly class LocationScreenService
                     }
                 }
 
-                foreach($location->getCombats() ?? [] as $combat) {
-                    $conditions = $combat->getConditions();
-                    if($conditions && !$this->conditionEvaluatorService->isValid($conditions, $player)) {
-                        continue;
-                    }
-
-                    if($this->riddleTriggerResolver->isCombatLockedByUnsolvedRiddle($player, $combat->getSlug())) {
-                        continue;
-                    }
-
-                    $footerActions['creatures'][] = [
-                        'type' => 'combat',
-                        'slug' => $combat->getSlug(),
-                        'label' => $combat->getName(),
-                        'thumbnail' => $combat->getThumbnail(),
-                        'isQuest' => $combat->getQuestStep() ? true : false,
-                    ];
-                }
-
+                // Cas particulier du refuge
                 if($location->getSlug() === 'le-refuge') {
                     $isTharolInHere = false;
                     $stepConditions = [3, 4, 6, 7, 10];
@@ -142,6 +156,7 @@ readonly class LocationScreenService
                     $footerActions['riddles'][] = $riddleAction;
                 }
 
+                // Bâtiments enfants
                 foreach($location->getChildren() as $childLocation) {
                     if($childLocation->getType() === 'building') {
                         $footerActions['buildings'][] = [
@@ -153,7 +168,7 @@ readonly class LocationScreenService
                     }
                 }
 
-                // Exit
+                // Bouton Exit
                 $exitAction = $this->exitActionResolver->getExitAction($screen);
                 if($exitAction) {
                     $footerActions['exit'][] = $exitAction;
@@ -162,7 +177,7 @@ readonly class LocationScreenService
                 break;
         }
 
-        // Bouton 'Explorer' si aucune action n'est possible
+        // Bouton 'Explorer' si aucune action dispo
         $isEmpty = empty($footerActions['npcs']) &&
             empty($footerActions['creatures']) &&
             empty($footerActions['buildings']) &&
@@ -207,7 +222,7 @@ readonly class LocationScreenService
             }
         }
 
-        // Ne pas injecter de section vide
+        // Nettoyage final
         $cleanFooter = array_filter($footerActions, fn(array $group) => !empty($group));
         if(!empty($cleanFooter)) {
             $screen->setActions(['footer' => $cleanFooter]);

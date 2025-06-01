@@ -25,5 +25,26 @@ trait ClairiereDeLOublieTrait
             'profession' => 'profession_erudit',
             'reference' => 'npc_theobald_le_gris_murmure',
         ],
+
+        // Enemies
+        [
+            'name' => 'Druide',
+            'picture' => 'img/core/npc/druide.png',
+            'thumbnail' => 'img/core/npc/druide_thumb.png',
+            'description' => "<p>Le druide vous observe, droit et immobile. Son bâton est levé avant même que vous ouvriez la bouche. Ici, la forêt ne vous veut pas… et lui non plus.</p>",
+            'strength' => 9,
+            'dexterity' => 10,
+            'constitution' => 11,
+            'wisdom' => 15,
+            'intelligence' => 14,
+            'charisma' => 8,
+            'healthMax' => 10,
+            'manaMax' => 0,
+            'fortune' => 5,
+            'level' => 2,
+            'race' => 'race_humain',
+            'profession' => 'profession_druide',
+            'reference' => 'npc_druide',
+        ],
     ];
 }

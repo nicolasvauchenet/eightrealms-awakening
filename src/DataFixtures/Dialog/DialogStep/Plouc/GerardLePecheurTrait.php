@@ -23,13 +23,6 @@ trait GerardLePecheurTrait
         [
             'name' => 'Gérard - Début de la Quête',
             'text' => "<p><em>Ah&nbsp;! Enfin&nbsp;! Par tous les crabes du port, j’pensais qu’il m’avait oublié, l’enclumeur. Ce truc-là va me servir, j’vous le dis. Ces saloperies de gobelins vont comprendre c’que c’est qu’un vieux pêcheur bien équipé&nbsp;!</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'quest_step' => 1,
-                    'status' => 'progress',
-                ],
-            ],
             'effects' => [
                 'edit_quest_step_status' => [
                     [
@@ -48,13 +41,6 @@ trait GerardLePecheurTrait
         [
             'name' => 'Gérard - Quête',
             'text' => "<p>Gérard attrape une canne à pêche renforcée, visiblement modifiée pour frapper fort.</p><p><em>Contre des gobelins, oui. Depuis des mois, ces vermines viennent la nuit. Ils crèvent les filets, piquent le poisson, foutent le feu aux barques. Et le maire&nbsp;? Il s’en bat les roustons et y nous renvoie chier comme des malpropres, c'te gros bon à rien d'imposteur. Alors j’vais m’occuper de ces fumiers moi-même.</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'quest_step' => 1,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_gerard_le_pecheur',
             'reference' => 'quest_step_gerard_le_pecheur_3',
         ],
@@ -250,39 +236,18 @@ trait GerardLePecheurTrait
         [
             'name' => 'Gérard - Quête en négociation 3',
             'text' => "<p>Gérard prend son air le plus sombre et renfrogné, crache par terre et vous regarde sévèrement.</p><p><em>Vous voulez qu’on papote avec ces fouilles-merde&nbsp;? Qu’on leur offre le gîte tant qu’on y est&nbsp;? Jamais&nbsp;! Des voleurs, des parasites, des enflures, voilà ce qu’ils sont&nbsp;! Si c'est pour ça qu'vous êtes revenu, c'était pas la peine de… heu… de revenir&nbsp;! Fallait rester papoter avec vos nouveaux amis.</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'quest_step' => 7,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_gerard_le_pecheur',
             'reference' => 'quest_step_gerard_le_pecheur_8',
         ],
         [
             'name' => 'Gérard - Quête en négociation 3',
             'text' => "<p>Il reste impassible et croise les bras.</p><p><em>Et moi j’veux un royaume sans gobelins&nbsp;! C’est pas pour ça qu’on l’a, hein&nbsp;?</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'quest_step' => 7,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_gerard_le_pecheur',
             'reference' => 'quest_step_gerard_le_pecheur_9',
         ],
         [
             'name' => 'Gérard - Quête négociée',
             'text' => "<p>Gérard blêmit, se gratte la tempe.</p><p><em>Bon sang… Bon. D’accord. Mais j’vous préviens&nbsp;:&nbsp;si une de ces ordures touche à une écaille de poisson sans demander, ou qu'y s'approche de trop près des barques, j’le démonte&nbsp;!</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'quest_step' => 7,
-                    'status' => 'progress',
-                ],
-            ],
             'effects' => [
                 'edit_quest_step_status' => [
                     [
@@ -303,26 +268,12 @@ trait GerardLePecheurTrait
         [
             'name' => 'Gérard - Quête en négociation 2',
             'text' => "<p>Gérard vous regarde partir, sans rien dire, l'air impassible.</p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'quest_step' => 7,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_gerard_le_pecheur',
             'reference' => 'quest_step_gerard_le_pecheur_11',
         ],
         [
             'name' => 'Gérard - Quête négociée',
             'text' => "<p>Gérard reprend son bouclier, puis il sort d'un pas décidé et part vers le bois en marmonnant.</p><p><em>Ça va pas s'faire tout seul, allez&nbsp;! Au carnage&nbsp;!</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'livraison-en-cours',
-                    'quest_step' => 7,
-                    'status' => 'completed',
-                ],
-            ],
             'effects' => [
                 'remove_items' => [
                     'bouclier-en-fer',

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Reward\Quest;
 
+use App\Entity\Item\Amulet;
 use App\Entity\Item\Book;
 
 trait SideQuestTrait
@@ -40,6 +41,21 @@ trait SideQuestTrait
             'crowns' => 0,
             'experience' => 100,
             'reference' => 'reward_quest_la_sirene_et_le_marin',
+        ],
+
+        // Le Jugement du Cercle
+        [
+            'items' => [
+                [
+                    'item' => 'amulet_amulette_du_cercle',
+                    'itemClass' => Amulet::class,
+                    'quantity' => 1,
+                    'questItem' => true,
+                ],
+            ],
+            'crowns' => 100,
+            'experience' => 150,
+            'reference' => 'reward_quest_le_jugement_du_cercle',
         ],
     ];
 }

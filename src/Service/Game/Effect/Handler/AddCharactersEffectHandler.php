@@ -29,6 +29,7 @@ readonly class AddCharactersEffectHandler implements EffectHandlerInterface
         if(!$location) return;
 
         foreach($values as $slug) {
+            if(!is_string($slug) || empty($slug)) continue;
             $character = $this->entityManager->getRepository(Character::class)->findOneBy(['slug' => $slug]);
             if(!$character) continue;
 

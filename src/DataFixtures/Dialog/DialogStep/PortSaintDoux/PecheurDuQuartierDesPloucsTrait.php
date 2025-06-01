@@ -19,9 +19,6 @@ trait PecheurDuQuartierDesPloucsTrait
         [
             'name' => "Pêcheur du Quartier des Ploucs - Quartier des Chauves",
             'text' => "<p><em>Le quartier des Chauves&nbsp;! C'est l'quartier le plus bourgeois d'la capitale, voyons&nbsp;! Le Palais Royal, l'Hôtel de Ville, tous les aristos ont leur cabane là-bas&nbsp;! Enfin, quand j'dis &laquo;cabanes&raquo;, j'exagère hein. On parlerait plutôt de palaces, ouais&nbsp;!</em></p><p><em>Mais attention hein&nbsp;! C'est point tout l'monde qui peut s'y promener comme ça. Y'a des gardes de partout&nbsp;! Et des pas commodes en plus. Z'avez intérêt à vérifier vos s'melles de bottes si vous voulez trotter sur leurs pavés.</em></p>",
-            'conditions' => [
-                'location_unknown' => 'quartier-des-chauves',
-            ],
             'effects' => [
                 'reveal_location' => 'quartier-des-chauves',
             ],

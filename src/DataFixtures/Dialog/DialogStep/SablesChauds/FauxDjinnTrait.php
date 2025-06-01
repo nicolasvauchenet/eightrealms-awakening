@@ -22,26 +22,12 @@ trait FauxDjinnTrait
         [
             'name' => 'Faux Djinn - Quête',
             'text' => "<p><em>Ils m’ont appelé voleur. Imposteur. Mais moi seul ai compris. Cette fiole… ce bijou… Ils me parlent, vois-tu&nbsp;? Ils m’ont choisi. Ils me brûlent, oui… mais c’est le prix du savoir&nbsp;!</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'la-fiole-perdue',
-                    'quest_step' => 2,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_faux_djinn',
             'reference' => 'quest_step_faux_djinn_2',
         ],
         [
             'name' => 'Faux Djinn - Accepter la quête',
             'text' => "<p><em>Tu veux la reprendre&nbsp;? Tu veux éteindre la lumière&nbsp;? Alors viens. Approche. Et embrasse le feu&nbsp;!</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'la-fiole-perdue',
-                    'quest_step' => 2,
-                    'status' => 'progress',
-                ],
-            ],
             'effects' => [
                 'edit_quest_step_status' => [
                     'quest' => 'la-fiole-perdue',
@@ -56,13 +42,6 @@ trait FauxDjinnTrait
         [
             'name' => 'Faux Djinn - Refuser la quête',
             'text' => "<p>Un ricanement sinistre semble monter du fond de sa gorge.</p><p><em>Tu es raisonnable, à défaut d'être courageux. Ne reviens plus ici, ou l'air que tu expires actuellement sera ton dernier souffle.</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'la-fiole-perdue',
-                    'quest_step' => 2,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_faux_djinn',
             'reference' => 'quest_step_faux_djinn_4',
         ],

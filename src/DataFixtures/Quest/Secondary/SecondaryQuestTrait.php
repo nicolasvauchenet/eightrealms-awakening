@@ -50,6 +50,7 @@ trait SecondaryQuestTrait
         [
             'name' => 'Le Jugement du Cercle',
             'type' => 'Secondaire',
+            'reward' => 'reward_quest_le_jugement_du_cercle',
             'reference' => 'quest_secondary_le_jugement_du_cercle',
         ],
         [

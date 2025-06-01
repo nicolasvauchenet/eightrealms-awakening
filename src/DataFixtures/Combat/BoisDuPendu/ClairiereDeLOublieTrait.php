@@ -39,7 +39,7 @@ trait ClairiereDeLOublieTrait
                     'enemyClass' => Npc::class,
                 ],
             ],
-            'redirectToDialog' => 'theobald-combat',
+            'redirectToDialog' => 'theobald-presentations',
             'reference' => 'combat_bois_du_pendu_druides_de_la_clairiere',
         ],
     ];

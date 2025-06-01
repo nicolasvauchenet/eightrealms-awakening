@@ -11,9 +11,28 @@ trait ClairiereDeLOublieTrait
                 'slug' => 'clairiere-de-loublie',
             ],
             'conditions' => [
-                'quest_status' => [
-                    'quest' => 'bagarre-bizarre',
-                    'status' => 'progress',
+                'any' => [
+                    [
+                        'quest_step_status' => [
+                            'quest' => 'bagarre-bizarre',
+                            'quest_step' => 2,
+                            'status' => 'progress',
+                        ],
+                    ],
+                    [
+                        'quest_step_status' => [
+                            'quest' => 'bagarre-bizarre',
+                            'quest_step' => 3,
+                            'status' => 'progress',
+                        ],
+                    ],
+                    [
+                        'quest_step_status' => [
+                            'quest' => 'bagarre-bizarre',
+                            'quest_step' => 4,
+                            'status' => 'progress',
+                        ],
+                    ],
                 ],
             ],
             'riddle' => 'riddle_clairiere_de_loublie_fouiller',

@@ -45,74 +45,31 @@ trait GeromeLePenduTrait
         [
             'name' => 'Gérome le Pendu - Question 1',
             'text' => "<p><em>Le Cercle m’a banni, mais pour quelle faute&nbsp;? Quel savoir ne devait jamais être partagé&nbsp;?</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'le-jugement-du-cercle',
-                    'quest_step' => 2,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_gerome_le_pendu',
             'reference' => 'quest_step_gerome_le_pendu_3',
         ],
         [
             'name' => 'Gérome le Pendu - Question 2',
             'text' => "<p><em>Comment m'ont-ils jugé&nbsp;? Avec colère&nbsp;? Ont-ils eu pitié de moi&nbsp;? Ou étaient-ils sévères et froids&nbsp;?</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'le-jugement-du-cercle',
-                    'quest_step' => 2,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_gerome_le_pendu',
             'reference' => 'quest_step_gerome_le_pendu_4',
         ],
         [
             'name' => 'Gérome le Pendu - Question 3',
             'text' => "<p><em>Et que suis-je devenu, alors que la corde cédait&nbsp;?</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'le-jugement-du-cercle',
-                    'quest_step' => 2,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_gerome_le_pendu',
             'reference' => 'quest_step_gerome_le_pendu_5',
         ],
         [
             'name' => 'Gérome le Pendu - Question 4',
             'text' => "<p><em>Qui suis-je&nbsp;?</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'le-jugement-du-cercle',
-                    'quest_step' => 2,
-                    'status' => 'progress',
-                ],
-            ],
             'dialog' => 'quest_gerome_le_pendu',
             'reference' => 'quest_step_gerome_le_pendu_6',
         ],
         [
             'name' => 'Gérome le Pendu - Réussite',
             'text' => "<p><em>Oui… Je suis Gérome. Le druide de l'Ancien Cercle. Le Pendu. Et toi, tu sais. Tu as compris.</em></p><p>Il semble apaisé, et de moins en moins tangible.</p><p><em>Tu m'as rendu le souvenir, et je t'en remercie. Tu peux porter ce que j’ai porté, car tu le mérites, et je n'en aurai désormais plus besoin.</em></p><p>L'esprit de Gérome s'évanouit et l'air se réchauffe enfin. À sa place, se trouve un pendentif, posé à terre, comme s'il avait été là depuis le début…</p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    [
-                        'quest' => 'le-jugement-du-cercle',
-                        'quest_step' => 2,
-                        'status' => 'progress',
-                    ],
-                ],
-            ],
             'effects' => [
-                'add_items' => [
-                    [
-                        'item' => 'amulette-du-cercle',
-                        'questItem' => true,
-                    ],
-                ],
                 'edit_quest_step_status' => [
                     [
                         'quest' => 'le-jugement-du-cercle',
@@ -138,13 +95,6 @@ trait GeromeLePenduTrait
         [
             'name' => 'Gérome le Pendu - Échec',
             'text' => "<p><em>Non&nbsp;! Ça ne peut pas être ça&nbsp;! Tu te moques de moi, tu te moques des âmes perdues, tout comme eux&nbsp;! Tu ne vaux pas mieux qu'eux&nbsp;!</em></p>",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'le-jugement-du-cercle',
-                    'quest_step' => 2,
-                    'status' => 'progress',
-                ],
-            ],
             'effects' => [
                 'edit_quest_step_status' => [
                     [

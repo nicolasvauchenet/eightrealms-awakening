@@ -20,7 +20,7 @@ trait DocksDeLouestTrait
                 'log' => "et vous voyez quelque chose émerger…</p>",
             ],
             'failureEffects' => [
-                'log' => "mais rien de plus. Continuez à chanter.</p>",
+                'log' => "mais rien de plus. Vous continuez à chanter.</p>",
             ],
             'reference' => 'riddle_docks_de_louest_chanter',
         ],

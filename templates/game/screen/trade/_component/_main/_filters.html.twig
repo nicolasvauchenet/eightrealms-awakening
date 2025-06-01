@@ -1,0 +1,21 @@
+{% set currentFilter = attribute(this, side ~ 'Filter') %}
+<div class="filters">
+    <div class="filters-inner">
+        <button {{ live_action('filter' ~ side | capitalize) }}
+                class="filter {{ this.activeCategoryFilter == null ? 'active' : '' }}"
+                title="Tous les objets">
+            <img src="{{ asset('img/core/equipment/inventory.png') }}" alt="Tous les objets"/>
+        </button>
+
+        {% set categories = side == 'sell'
+            ? app_tradeService.getSellableCategories(this.character, this.playerCharacter.character)
+            : app_tradeService.getBuyableCategories(this.playerCharacter) %}
+        {% for category in categories %}
+            <button {{ live_action('filter' ~ side | capitalize, { category: category.slug }) }}
+                    class="filter {{ this.activeCategoryFilter == category.slug ? 'active' : '' }}"
+                    title="{{ category.name }}">
+                <img src="{{ asset('img/core/equipment/' ~ category.slug ~ '.png') }}" alt="{{ category.name }}"/>
+            </button>
+        {% endfor %}
+    </div>
+</div>

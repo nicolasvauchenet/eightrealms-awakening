@@ -5,6 +5,7 @@ namespace App\Service\Game\Trade;
 use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerCharacter;
+use App\Entity\Item\Category;
 use App\Entity\Item\CharacterItem;
 use App\Entity\Item\PlayerCharacterItem;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,9 +22,9 @@ readonly class TradeService
         $inventory = $player->getCharacterItems();
 
         $allowedTypes = match ($npc->getProfession()?->getSlug()) {
-            'marchand' => ['nourriture', 'cadeau', 'carte'],
-            'forgeron' => ['armure', 'bouclier', 'arme'],
-            'arcaniste' => ['arme-magique', 'parchemin', 'potion', 'anneau', 'amulette'],
+            'marchand' => ['nourriture', 'cadeau', 'carte', 'divers'],
+            'forgeron' => ['armure', 'bouclier', 'arme', 'cadeau'],
+            'arcaniste' => ['arme-magique', 'parchemin', 'potion', 'anneau', 'amulette', 'cadeau', 'carte', 'livre'],
             'tavernier', 'pecheur' => ['nourriture'],
             default => [],
         };
@@ -31,6 +32,36 @@ readonly class TradeService
         return new ArrayCollection(array_filter($inventory->toArray(), function($characterItem) use ($allowedTypes) {
             return in_array($characterItem->getItem()->getCategory()->getSlug(), $allowedTypes) && !$characterItem->isQuestItem();
         }));
+    }
+
+    public function getSellableCategories(Player $player, Npc $npc): array
+    {
+        $items = $this->getSellableItems($player, $npc);
+        $categories = [];
+        foreach($items as $characterItem) {
+            $category = $characterItem->getItem()->getCategory();
+            if($category instanceof Category) {
+                $categories[$category->getSlug()] = $category;
+            }
+        }
+        uasort($categories, fn(Category $a, Category $b) => $a->getName() <=> $b->getName());
+
+        return array_values($categories);
+    }
+
+    public function getBuyableCategories(PlayerCharacter $merchant): array
+    {
+        $items = $merchant->getPlayerCharacterItems();
+        $categories = [];
+        foreach($items as $characterItem) {
+            $category = $characterItem->getItem()->getCategory();
+            if($category instanceof Category) {
+                $categories[$category->getSlug()] = $category;
+            }
+        }
+        uasort($categories, fn(Category $a, Category $b) => $a->getName() <=> $b->getName());
+
+        return array_values($categories);
     }
 
     public function getRepairableItems(Player $player): Collection

@@ -91,10 +91,5 @@ trait GartTrait
             'item' => 'ring_gold',
             'class' => Gift::class,
         ],
-        [
-            'character' => 'npc_gart_le_forgeron',
-            'item' => 'map_plouc',
-            'class' => Map::class,
-        ],
     ];
 }

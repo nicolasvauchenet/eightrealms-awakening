@@ -5,6 +5,7 @@ twig:
     app_characterService: '@App\Service\Character\CharacterService'
     app_characterBonusService: '@App\Service\Character\CharacterBonusService'
     app_characterItemService: '@App\Service\Item\CharacterItemService'
+    app_itemCategoryService: '@App\Service\Item\ItemCategoryService'
     app_characterSpellService: '@App\Service\Spell\CharacterSpellService'
     app_characterQuestService: '@App\Service\Quest\CharacterQuestService'
     app_characterLevelService: '@App\Service\Character\CharacterLevelService'

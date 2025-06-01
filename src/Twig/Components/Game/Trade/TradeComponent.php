@@ -2,6 +2,7 @@
 
 namespace App\Twig\Components\Game\Trade;
 
+use App\Entity\Character\Npc;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerCharacter;
 use App\Entity\Item\CharacterItem;
@@ -36,6 +37,15 @@ class TradeComponent
 
     #[LiveProp(writable: true)]
     public string $description = '';
+
+    #[LiveProp(writable: true)]
+    public ?string $activeCategoryFilter = null;
+
+    #[LiveProp(writable: true)]
+    public ?string $sellFilter = null;
+
+    #[LiveProp(writable: true)]
+    public ?string $buyFilter = null;
 
     public function __construct(private readonly EntityManagerInterface $entityManager,
                                 private readonly CharacterItemService   $characterItemService,
@@ -104,6 +114,16 @@ class TradeComponent
         $this->entityManager->flush();
 
         $this->description .= "<p>Vous avez acheté 1 <strong>{$item->getName()}</strong> pour $price couronne" . ($price > 1 ? 's' : '') . ".</p>";
+
+        if($this->buyFilter) {
+            $remaining = $this->playerCharacter->getPlayerCharacterItems()->filter(
+                fn(PlayerCharacterItem $ci) => $ci->getItem()->getCategory()->getSlug() === $this->buyFilter
+            );
+
+            if($remaining->isEmpty()) {
+                $this->buyFilter = null;
+            }
+        }
     }
 
     #[LiveAction]
@@ -130,8 +150,8 @@ class TradeComponent
         $this->entityManager->persist($player);
 
         // Débit du NPC
-        $npc = $this->playerCharacter;
-        $npc->setFortune($npc->getFortune() - $price);
+        $npc = $this->entityManager->getRepository(Npc::class)->find($this->playerCharacter->getCharacter()->getId());
+        $this->playerCharacter->setFortune($npc->getFortune() - $price);
         $this->entityManager->persist($npc);
 
         $item = $characterItem->getItem();
@@ -140,7 +160,7 @@ class TradeComponent
         $existingNpcItem = $this->entityManager->getRepository(PlayerCharacterItem::class)
             ->findOneBy([
                 'item' => $item,
-                'playerCharacter' => $npc,
+                'playerCharacter' => $this->playerCharacter,
                 'original' => true,
             ]);
 
@@ -148,7 +168,7 @@ class TradeComponent
         if(!$existingNpcItem) {
             $npcItem = (new PlayerCharacterItem())
                 ->setItem($item)
-                ->setPlayerCharacter($npc)
+                ->setPlayerCharacter($this->playerCharacter)
                 ->setOriginal(false)
                 ->setHealth($characterItem->getHealth() ?? 100)
                 ->setCharge($characterItem->getCharge() ?? 100)
@@ -162,6 +182,29 @@ class TradeComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p>Vous avez vendu 1 <strong>{$item->getName()}</strong> pour $price couronne" . ($price > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p>Vous avez vendu 1 <strong>{$item->getName()}</strong> à {$npc->getName()} pour $price couronne" . ($price > 1 ? 's' : '') . ".</p>";
+
+        if($this->sellFilter) {
+            $filtered = $this->tradeService->getSellableItems($this->character, $npc)
+                ->filter(fn(CharacterItem $ci) => $ci->getItem()->getCategory()->getSlug() === $this->sellFilter);
+
+            if($filtered->isEmpty()) {
+                $this->sellFilter = null;
+            }
+        }
+    }
+
+    #[LiveAction]
+    public function filterSell(#[LiveArg] ?string $category = null): void
+    {
+        $this->sellFilter = $category;
+        $this->activeCategoryFilter = $category;
+    }
+
+    #[LiveAction]
+    public function filterBuy(#[LiveArg] ?string $category = null): void
+    {
+        $this->buyFilter = $category;
+        $this->activeCategoryFilter = $category;
     }
 }

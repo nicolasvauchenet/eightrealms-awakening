@@ -1,10 +1,21 @@
-{% if app_tradeService.sellableItems(this.character, this.playerCharacter.character) | length > 0 %}
-    <div class="items scrollable">
-        {% for characterItem in app_tradeService.sellableItems(this.character, this.playerCharacter.character) %}
+{% set sellableItems = app_tradeService.sellableItems(this.character, this.playerCharacter.character) %}
+{% if this.activeCategoryFilter %}
+    {% set sellableItems = sellableItems | filter(item => item.item.category.slug == this.activeCategoryFilter) %}
+{% endif %}
+
+{% if sellableItems | length > 0 %}
+    <div class="items">
+        {% for characterItem in sellableItems %}
             <div class="app-card item"
                  data-controller="tooltip">
                 <a href="#" data-action="click->tooltip#open">
                     <div class="card-header">
+                        {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}
+                            <span class="warning">
+                                {{ ux_icon('fe:disabled', {'class': 'app-icon'}) }}
+                            </span>
+                        {% endif %}
+
                         {% if characterItem.equipped %}
                             <span class="equipped">
                                 {{ ux_icon('game-icons:light-backpack', {'class': 'app-icon'}) }}
@@ -40,6 +51,8 @@
     </div>
 {% else %}
     <p>
-        <strong>Vous n'avez rien à vendre à {{ this.playerCharacter.character.name }}&nbsp;!</strong>
+        <strong>Aucun objet à vendre.</strong>
     </p>
 {% endif %}
+
+{% include 'game/screen/trade/_component/_main/_filters.html.twig' with { side: 'sell' } %}

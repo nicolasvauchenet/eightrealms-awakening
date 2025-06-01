@@ -1,38 +1,51 @@
-<div class="items">
-    {% for characterItem in this.playerCharacter.playerCharacterItems %}
-        <div class="app-card item"
-             data-controller="tooltip">
-            <a href="#" data-action="click->tooltip#open">
-                <div class="card-header">
-                    {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}
-                        <span class="warning">
-                            {{ ux_icon('fe:disabled', {'class': 'app-icon'}) }}
-                        </span>
-                    {% endif %}
-                    {% if characterItem.item.thumbnail is defined %}
-                        <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
-                             class="card-image {% if app_characterItemService.canBuyItem(this.playerCharacter, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
-                             alt="{{ characterItem.item.name }}"/>
-                    {% else %}
-                        <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
-                             class="card-image {% if app_characterItemService.canBuyItem(this.playerCharacter, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
-                             alt="{{ characterItem.item.name }}"/>
-                    {% endif %}
-                </div>
+{% set buyableItems = this.playerCharacter.playerCharacterItems %}
+{% if this.activeCategoryFilter %}
+    {% set buyableItems = buyableItems | filter(item => attribute(attribute(item.item, 'category'), 'slug') == this.activeCategoryFilter) %}
+{% endif %}
 
-                <div class="card-body">
-                    <h4 class="card-title">{{ characterItem.item.name }}</h4>
-                </div>
-            </a>
-            {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+{% if buyableItems | length > 0 %}
+    <div class="items">
+        {% for characterItem in buyableItems %}
+            <div class="app-card item"
+                 data-controller="tooltip">
+                <a href="#" data-action="click->tooltip#open">
+                    <div class="card-header">
+                        {% if app_characterItemService.canEquipItem(this.character, characterItem) == false %}
+                            <span class="warning">
+                                {{ ux_icon('fe:disabled', {'class': 'app-icon'}) }}
+                            </span>
+                        {% endif %}
+                        {% if characterItem.item.thumbnail is defined %}
+                            <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
+                                 class="card-image {% if app_characterItemService.canBuyItem(this.playerCharacter, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                                 alt="{{ characterItem.item.name }}"/>
+                        {% else %}
+                            <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                                 class="card-image {% if app_characterItemService.canBuyItem(this.playerCharacter, characterItem) == false %}disabled{% endif %} {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                                 alt="{{ characterItem.item.name }}"/>
+                        {% endif %}
+                    </div>
 
-            <div class="card-footer">
-                <button class="bg-success {% if app_characterItemService.canBuyItem(this.playerCharacter, characterItem) == false %}disabled{% endif %}"
-                        {{ live_action('buyItem', {'characterItemId': characterItem.id }) }}>
-                    {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
-                    {{ app_tradeService.itemPrice(this.playerCharacter, characterItem) }} ({{ characterItem.item.price }})
-                </button>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ characterItem.item.name }}</h4>
+                    </div>
+                </a>
+                {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+
+                <div class="card-footer">
+                    <button class="bg-success {% if app_characterItemService.canBuyItem(this.playerCharacter, characterItem) == false %}disabled{% endif %}"
+                            {{ live_action('buyItem', {'characterItemId': characterItem.id }) }}>
+                        {{ ux_icon('game-icons:crown-coin', {'class': 'app-icon text-warning'}) }}
+                        {{ app_tradeService.itemPrice(this.playerCharacter, characterItem) }} ({{ characterItem.item.price }})
+                    </button>
+                </div>
             </div>
-        </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>
+        <strong>Aucun objet à vendre.</strong>
+    </p>
+{% endif %}
+
+{% include 'game/screen/trade/_component/_main/_filters.html.twig' with { side: 'buy' } %}

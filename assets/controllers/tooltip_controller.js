@@ -1,7 +1,7 @@
 import {Controller} from '@hotwired/stimulus';
 
 export default class extends Controller {
-    static targets = ["tooltip", "background"];
+    static targets = ["tooltip", "background", "pages"];
 
     open(event) {
         event.preventDefault();
@@ -27,5 +27,15 @@ export default class extends Controller {
                 document.body.querySelector('.screen-footer').style.zIndex = 'initial';
             }
         }
+    }
+
+    scrollLeft() {
+        if (!this.hasPagesTarget) return;
+        this.pagesTarget.scrollLeft -= this.pagesTarget.offsetWidth;
+    }
+
+    scrollRight() {
+        if (!this.hasPagesTarget) return;
+        this.pagesTarget.scrollLeft += this.pagesTarget.offsetWidth;
     }
 }

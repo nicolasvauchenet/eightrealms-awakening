@@ -91,6 +91,6 @@ class PreGeneratedItemFixtures extends Fixture implements OrderedFixtureInterfac
 
     public function getOrder(): int
     {
-        return 19;
+        return 20;
     }
 }

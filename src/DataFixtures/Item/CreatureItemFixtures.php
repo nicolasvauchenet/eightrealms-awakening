@@ -66,6 +66,6 @@ class CreatureItemFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 21;
+        return 22;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Item\NpcItem;
 
 use App\Entity\Item\Amulet;
+use App\Entity\Item\Book;
 use App\Entity\Item\MagicalWeapon;
 use App\Entity\Item\Map;
 use App\Entity\Item\Potion;
@@ -166,6 +167,26 @@ trait WilbertTrait
             'character' => 'npc_wilbert_larcaniste',
             'item' => 'map_port_saint_doux',
             'class' => Map::class,
+        ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'book_chroniques_galdric',
+            'class' => Book::class,
+        ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'journal_d_eryl',
+            'class' => Book::class,
+        ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'journal_de_tharol',
+            'class' => Book::class,
+        ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'note_d_alaric',
+            'class' => Book::class,
         ],
     ];
 }

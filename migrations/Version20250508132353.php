@@ -21,7 +21,7 @@ final class Version20250508132353 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE book (id INT NOT NULL, thumbnail VARCHAR(255) NOT NULL, PRIMARY KEY(id))
+            CREATE TABLE book (id INT NOT NULL, thumbnail VARCHAR(255) NOT NULL, book_author VARCHAR(255) DEFAULT NULL, book_category VARCHAR(255) DEFAULT NULL, book_content TEXT DEFAULT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE book ADD CONSTRAINT FK_CBE5A331BF396750 FOREIGN KEY (id) REFERENCES item (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE

@@ -65,6 +65,16 @@
         height: 0.25rem;
       }
 
+      &::-webkit-scrollbar-thumb {
+        background: rgba($white, 0.25);
+        border-radius: 0.25rem;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: rgba($white, 0.25);
+        border-radius: 0.25rem;
+      }
+
       .filters-inner {
         @include displayFlex(flex-start, center);
         flex-wrap: nowrap;

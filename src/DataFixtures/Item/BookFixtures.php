@@ -3,6 +3,7 @@
 namespace App\DataFixtures\Item;
 
 use App\DataFixtures\Item\Book\DiaryTrait;
+use App\DataFixtures\Item\Book\HistoryTrait;
 use App\DataFixtures\Item\Book\LetterTrait;
 use App\Entity\Item\Book;
 use App\Entity\Item\Category;
@@ -14,6 +15,7 @@ class BookFixtures extends Fixture implements OrderedFixtureInterface
 {
     use DiaryTrait;
     use LetterTrait;
+    use HistoryTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -23,6 +25,9 @@ class BookFixtures extends Fixture implements OrderedFixtureInterface
 
             // Lettre & Notes
             self::LETTER_BOOKS,
+
+            // Histoire
+            self::HISTORY_BOOKS,
         ];
 
         foreach($allBooks as $books) {
@@ -34,7 +39,10 @@ class BookFixtures extends Fixture implements OrderedFixtureInterface
                     ->setType($data['type'])
                     ->setPrice($data['price'])
                     ->setCategory($this->getReference($data['category'], Category::class))
-                    ->setThumbnail($data['picture']);
+                    ->setThumbnail($data['picture'])
+                    ->setBookAuthor($data['bookAuthor'] ?? null)
+                    ->setBookCategory($data['book_category'] ?? null)
+                    ->setBookContent($data['bookContent'] ?? null);
                 $manager->persist($book);
                 $this->addReference($data['reference'], $book);
             }
@@ -45,6 +53,6 @@ class BookFixtures extends Fixture implements OrderedFixtureInterface
 
     public function getOrder(): int
     {
-        return 22;
+        return 19;
     }
 }

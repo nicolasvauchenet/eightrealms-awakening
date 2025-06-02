@@ -1,0 +1,81 @@
+<?php
+
+namespace App\DataFixtures\Item\Book;
+
+trait BestiaryTrait
+{
+    const BESTIARY_BOOKS = [
+        [
+            'name' => "Bestiaire des Bêtes Sauvages",
+            'picture' => 'book_author.png',
+            'description' => "<p><em>Un traité ancien compilant les observations de chasseurs, pisteurs et forestiers sur les bêtes les plus communes&nbsp;—&nbsp;et parfois les plus dangereuses&nbsp;—&nbsp;des Huit Royaumes. L’auteur reste anonyme, mais plusieurs notes en marge trahissent un style bourru… voire légèrement alcoolisé.</em></p>",
+            'type' => 'book',
+            'price' => 100,
+            'category' => 'category_book',
+            'bookAuthor' => 'Un pisteur anonyme',
+            'bookCategory' => 'Bestiaire des Huit Royaumes',
+            'bookContent' => "<p>{{image:gros-rat}}<strong>Gros rat (Niveau 1)</strong>&nbsp;—&nbsp;Petit mais hargneux, ce nuisible pullule dans les ruelles, les cales de bateau et les caves humides. S’attaque parfois en groupe. Signe particulier&nbsp;:&nbsp;le regard mesquin et l’odeur de fromage moisi.</p><p>{{image:rat-geant}}<strong>Rat géant (Niveau 6)</strong>&nbsp;—&nbsp;Variante bien nourrie et plus méchante du précédent, souvent croisée près des sites corrompus, ou en chef de bande. Peut dévorer un mouton s’il a faim… ou un semi-homme, si vous êtes distrait.</p><p>{{image:loup}}<strong>Loup affamé (Niveau 3)</strong>&nbsp;—&nbsp;Prédateur rusé des forêts profondes. Attaque rarement seul. Ses yeux brillent d’un jaune inquiétant la nuit tombée, et son hurlement suffit à glacer le sang d’un vétéran.</p><p>{{image:bouquetin-feroce}}<strong>Bouquetin féroce (Niveau 6)</strong>&nbsp;—&nbsp;Maître des pentes rocheuses. Ce n’est pas une créature magique, mais croyez-moi&nbsp;:&nbsp;ses cornes peuvent briser un thorax comme une noix. À éviter si vous tenez à vos côtes.</p><p>{{image:ours-cendre}}<strong>Ours cendré (Niveau 7)</strong>&nbsp;—&nbsp;Massif, solitaire et d’humeur changeante. Habite en plaine comme en montagne. On le distingue à son pelage gris foncé et ses cicatrices de combat. N'approchez pas. Sérieusement.</p><p>{{image:sanglier-noir}}<strong>Sanglier noir (Niveau 4)</strong>&nbsp;—&nbsp;Agile et vicieux. Quand il charge, il ne s’arrête pas. Les druides disent qu’il sent la corruption. Les fermiers, eux, se contentent de crier et de grimper aux arbres.</p><p>{{image:corbeau-des-brumes}}<strong>Corbeau des brumes (Niveau 2)</strong>&nbsp;—&nbsp;Plus intelligent qu’il n’y paraît. Suit les blessés, picore les yeux, puis disparaît. Certains disent qu’il parle dans le vent… mais bon, certains boivent aussi l’eau de la rivière sans la faire bouillir.</p>",
+            'reference' => 'book_bestiary_betes_sauvages',
+        ],
+        [
+            'name' => "Bestiaire des Créatures Aquatiques",
+            'picture' => 'book_author.png',
+            'description' => "<p><em>Un ouvrage humide mais précieux, relatant les observations d’un ermite marin&nbsp;—&nbsp;probablement fou&nbsp;—&nbsp;sur les créatures peuplant les lacs, rivières et côtes oubliées des Huit Royaumes. On y trouve des croquis flous, des annotations en rimes, et des taches d’eau salée.</em></p>",
+            'type' => 'book',
+            'price' => 150,
+            'category' => 'category_book',
+            'bookAuthor' => 'Un ermite marin anonyme',
+            'bookCategory' => 'Bestiaire des Huit Royaumes',
+            'bookContent' => "<p>{{image:sirene}}<strong>Sirène (Niveau 1)</strong>&nbsp;—&nbsp;Cette créature aquatique est connue pour sa beauté envoûtante et son chant mélodieux. Elle attire les marins vers les récifs avec sa voix enchanteresse. Parfois accompagnée de ses anciennes victimes… ou de ce qu'il en reste. Un conseil&nbsp;:&nbsp;bouchez-vous les oreilles.</p>",
+            'reference' => 'book_bestiary_creatures_aquatiques',
+        ],
+        [
+            'name' => "Bestiaire des Créatures Monstrueuses",
+            'picture' => 'book_author.png',
+            'description' => "<p><em>Rassemblé par un chasseur de primes reconverti en écrivain&nbsp;—&nbsp;ou l’inverse&nbsp;?, ce manuscrit regroupe les espèces les plus mal-aimées, souvent difformes ou cruelles. L’auteur assume leur laideur, mais reconnaît leur redoutable efficacité.</em></p>",
+            'type' => 'book',
+            'price' => 250,
+            'category' => 'category_book',
+            'bookAuthor' => 'Un ancien mercenaire',
+            'bookCategory' => 'Bestiaire des Huit Royaumes',
+            'bookContent' => "<p>{{image:gobelin-eclaireur}}<strong>Éclaireur gobelin (Niveau 1)</strong>&nbsp;—&nbsp;Rapide et agile, envoyé en avant-garde. Pas très costaud mais dangereux en groupe.</p><p>{{image:gobelin-guerrier}}<strong>Guerrier gobelin (Niveau 6)</strong>&nbsp;—&nbsp;Force de frappe moyenne, combat frontal. Très dangereux quand ils sont en troupes, encore plus quand ils sont commandés.</p><p>{{image:gobelin-chef}}<strong>Chef gobelin (Niveau 10)</strong>&nbsp;—&nbsp;Coordonne les attaques, plus intelligent et redouté. Redoutable par sa force brutale en combat rapproché. Certains pratiqueraient même une forme de magie basique mais efficace.</p><p>{{image:harpie-des-cimes}}<strong>Harpie des cimes (Niveau 5)</strong>&nbsp;—&nbsp;Vit en petits groupes. Plane et fond sur sa proie, on la repère à ses cris stridents. Elle vit principalement dans les montagnes.</p>",
+            'reference' => 'book_bestiary_creatures_monstrueuses',
+        ],
+        [
+            'name' => "Bestiaire des Âmes Revenantes",
+            'picture' => 'book_author.png',
+            'description' => "<p><em>Un recueil lugubre, rédigé à la lueur d'une chandelle tremblotante par un moine obsédé par les morts qui ne reposent pas. Il y aurait glissé des incantations pour éloigner les esprits. Sans grand succès apparemment, car il est resté totalement inconnu.</em></p>",
+            'type' => 'book',
+            'price' => 500,
+            'category' => 'category_book',
+            'bookAuthor' => 'Frère Vespasien',
+            'bookCategory' => 'Bestiaire des Huit Royaumes',
+            'bookContent' => "<p>{{image:fantome}}<strong>Fantôme (Niveau 5)</strong>&nbsp;—&nbsp;Flottant, regard vide, vous glace l’âme.</p><p>{{image:ame-en-peine}}<strong>Âme en peine (Niveau 5)</strong>&nbsp;—&nbsp;Même description, mais avec plus de tristesse. Elle pleure intérieurement.</p><p>{{image:squelette-guerrier}}<strong>Guerrier Squelette (Niveau 4)</strong>&nbsp;—&nbsp;Arme rouillée, os fissurés, prêt à combattre.</p><p>{{image:squelette-de-marin}}<strong>Squelette de marin (Niveau 4)</strong>&nbsp;—&nbsp;Harpon encore en main, haine tenace depuis les abysses.</p>",
+            'reference' => 'book_bestiary_ames_revenantes',
+        ],
+        [
+            'name' => "Bestiaire des Créatures Légendaires",
+            'picture' => 'book_author.png',
+            'description' => "<p><em>Très rare exemplaire d’un manuscrit relié en peau de wyverne. Seuls les érudits les plus chevronnés connaissent les légendes évoquées dans ces pages, et encore… à moitié. L’ouvrage suinte le mythe et la poudre de bibliothèque.</em></p>",
+            'type' => 'book',
+            'price' => 1000,
+            'category' => 'category_book',
+            'bookAuthor' => 'Wilbert l’Arcaniste',
+            'bookCategory' => 'Bestiaire des Huit Royaumes',
+            'bookContent' => "<p>{{image:dragon-de-pierre_bg}}<strong>Dragon de pierre (Niveau 12)</strong>&nbsp;—&nbsp;Émerge d’un mur, souffle ancien, terriblement puissant. Un conseil&nbsp;:&nbsp;ne le croisez pas.</p>",
+            'reference' => 'book_bestiary_creatires_legendaires',
+        ],
+        [
+            'name' => "Bestiaire des Entités Infernales",
+            'picture' => 'book_author.png',
+            'description' => "<p><em>Interdit dans plusieurs royaumes, ce grimoire a été caché dès sa parution. Il n’est à lire qu’en pleine lumière, et jamais à haute voix. Le parchemin grince. Les ombres frémissent. Ne vous étonnez pas s'il est déjà ouvert quand vous le reprenez en main.</em></p>",
+            'type' => 'book',
+            'price' => 2000,
+            'category' => 'category_book',
+            'bookAuthor' => 'Un exorciste déchu',
+            'bookCategory' => 'Bestiaire des Huit Royaumes',
+            'bookContent' => "<p>{{image:chapter1:nashore_bg}}<strong>Nashoré (Niveau 10)</strong>&nbsp;—&nbsp;Entité démoniaque du Donjon de l’Âme. Souffle des promesses empoisonnées. Statuaire et malveillant.</p>",
+            'reference' => 'book_bestiary_entites_infernales',
+        ],
+    ];
+}

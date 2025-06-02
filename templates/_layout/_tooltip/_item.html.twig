@@ -88,67 +88,28 @@
             </h3>
         {% endif %}
 
-        {% if characterItem.item.category.slug == 'livre' %}
-            <h3 class="tooltip-subtitle">
-                {{ characterItem.item.bookAuthor is defined and characterItem.item.bookAuthor ? 'Par ' ~ characterItem.item.bookAuthor : 'Auteur inconnu' }}
-            </h3>
+        <figure class="tooltip-picture">
+            {% if characterItem.item.thumbnail is defined %}
+                <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
+                     class="tooltip-image {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                     alt="{{ characterItem.item.name }}"/>
+            {% else %}
+                <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
+                     class="tooltip-image {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
+                     alt="{{ characterItem.item.name }}"/>
+            {% endif %}
 
-            <div class="tooltip-book-description">
-                {{ characterItem.item.description | raw }}
-            </div>
-        {% endif %}
-
-        {% if characterItem.item.category.slug != 'livre' %}
-            <figure class="tooltip-picture">
-                {% if characterItem.item.thumbnail is defined %}
-                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.thumbnail) }}"
-                         class="tooltip-image {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
-                         alt="{{ characterItem.item.name }}"/>
-                {% else %}
-                    <img src="{{ asset('img/core/item/' ~ characterItem.item.category.folder ~ '/' ~ characterItem.item.picture) }}"
-                         class="tooltip-image {% if app_characterItemService.health(characterItem).health <= 0 %}broken{% endif %}"
-                         alt="{{ characterItem.item.name }}"/>
-                {% endif %}
-
-                {% if characterItem.item.category.slug in ['armure', 'bouclier', 'arme', 'arme-magique'] %}
-                    <div class="gauge">
-                        <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
-                             style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
-                        </div>
+            {% if characterItem.item.category.slug in ['armure', 'bouclier', 'arme', 'arme-magique'] %}
+                <div class="gauge">
+                    <div class="gauge-fill {% if characterItem.item.chargeMax is defined and characterItem.item.chargeMax is not null %}info{% else %}success{% endif %}"
+                         style="--value: {{ app_characterItemService.health(characterItem).health / app_characterItemService.health(characterItem).healthMax }}">
                     </div>
-                {% endif %}
-            </figure>
-        {% endif %}
-
-        {% if characterItem.item.bookContent is defined and characterItem.item.bookContent %}
-            <div class="tooltip-book-reader">
-                <div class="tooltip-book-pages" data-tooltip-target="pages">
-                    {% set rawParagraphs = characterItem.item.bookContent|split('</p>') %}
-                    {% set paragraphs = [] %}
-                    {% for p in rawParagraphs %}
-                        {% set trimmed = p | trim %}
-                        {% if trimmed is not empty %}
-                            {% set paragraphs = paragraphs | merge([trimmed ~ '</p>']) %}
-                        {% endif %}
-                    {% endfor %}
-                    {% for paragraph in paragraphs %}
-                        <div class="tooltip-book-page">
-                            {{ paragraph | raw }}
-                        </div>
-                    {% endfor %}
                 </div>
+            {% endif %}
+        </figure>
 
-                <div class="tooltip-book-controls">
-                    <button data-action="click->tooltip#scrollLeft" class="tooltip-book-arrow">←</button>
-                    <button data-action="click->tooltip#scrollRight" class="tooltip-book-arrow">→</button>
-                </div>
-            </div>
-        {% endif %}
-
-        {% if characterItem.item.category.slug != 'livre' %}
-            <div class="tooltip-description">
-                {{ characterItem.item.description | raw }}
-            </div>
-        {% endif %}
+        <div class="tooltip-description">
+            {{ characterItem.item.description | raw }}
+        </div>
     </div>
 </div>

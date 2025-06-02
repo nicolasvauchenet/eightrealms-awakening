@@ -44,7 +44,7 @@
                 <h4 class="card-title">{{ characterItem.item.name }}</h4>
             </div>
         </a>
-        {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+        {% include '_layout/_tooltip/_' ~ (characterItem.item.category.slug == 'livre' ? 'book' : 'item') ~ '.html.twig' with {characterItem: characterItem} %}
 
         {% if this.characterType == 'player' %}
             <div class="card-footer">

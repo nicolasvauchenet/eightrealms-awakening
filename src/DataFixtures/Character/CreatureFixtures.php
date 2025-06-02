@@ -2,16 +2,12 @@
 
 namespace App\DataFixtures\Character;
 
-use App\DataFixtures\Character\Creature\BouquetinTrait;
-use App\DataFixtures\Character\Creature\DemonTrait;
-use App\DataFixtures\Character\Creature\DragonTrait;
-use App\DataFixtures\Character\Creature\FantomeTrait;
-use App\DataFixtures\Character\Creature\GobelinTrait;
-use App\DataFixtures\Character\Creature\HarpieTrait;
-use App\DataFixtures\Character\Creature\LoupTrait;
-use App\DataFixtures\Character\Creature\RatTrait;
-use App\DataFixtures\Character\Creature\SireneTrait;
-use App\DataFixtures\Character\Creature\SqueletteTrait;
+use App\DataFixtures\Character\Creature\InfernalTrait;
+use App\DataFixtures\Character\Creature\LegendaireTrait;
+use App\DataFixtures\Character\Creature\RevenantTrait;
+use App\DataFixtures\Character\Creature\MonstreTrait;
+use App\DataFixtures\Character\Creature\SauvageTrait;
+use App\DataFixtures\Character\Creature\AquatiqueTrait;
 use App\Entity\Character\Creature;
 use App\Entity\Character\Race;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -20,49 +16,33 @@ use Doctrine\Persistence\ObjectManager;
 
 class CreatureFixtures extends Fixture implements OrderedFixtureInterface
 {
-    use GobelinTrait;
-    use RatTrait;
-    use SireneTrait;
-    use LoupTrait;
-    use FantomeTrait;
-    use HarpieTrait;
-    use BouquetinTrait;
-    use DragonTrait;
-    use SqueletteTrait;
-    use DemonTrait;
+    use SauvageTrait;
+    use AquatiqueTrait;
+    use RevenantTrait;
+    use MonstreTrait;
+    use LegendaireTrait;
+    use InfernalTrait;
 
     public function load(ObjectManager $manager): void
     {
         $allCreatures = [
-            // Rats
-            self::RAT_CREATURES,
+            // Bêtes sauvages
+            self::WILD_CREATURES,
 
-            // Gobelins
-            self::GOBELIN_CREATURES,
+            // Créatures aquatiques
+            self::AQUATIC_CREATURES,
 
-            // Sirènes
-            self::SIRENE_CREATURES,
+            // Créatures monstrueuses
+            self::MONSTROUS_CREATURES,
 
-            // Loups
-            self::LOUP_CREATURES,
+            // Âmes revenantes
+            self::GHOST_CREATURES,
 
-            // Fantômes
-            self::FANTOME_CREATURES,
+            // Créatures légendaires
+            self::LEGENDARY_CREATURES,
 
-            // Harpies
-            self::HARPIE_CREATURES,
-
-            // Bouquetins
-            self::BOUQUETIN_CREATURES,
-
-            // Dragons
-            self::DRAGON_CREATURES,
-
-            // Squelettes
-            self::SQUELETTE_CREATURES,
-
-            // Démons
-            self::DEMON_CREATURES,
+            // Entités infernales
+            self::INFERNAL_CREATURES,
         ];
 
         foreach($allCreatures as $creatures) {

@@ -1,0 +1,38 @@
+<div class="app-tooltip book" data-tooltip-target="tooltip" data-action="click->tooltip#close">
+    <div class="tooltip-background" data-tooltip-target="background"></div>
+
+    <div class="tooltip-body">
+        <h2 class="tooltip-title">{{ characterItem.item.name }}</h2>
+
+        <h3 class="tooltip-subtitle">
+            {{ characterItem.item.bookAuthor is defined and characterItem.item.bookAuthor ? characterItem.item.bookAuthor : 'Auteur inconnu' }}
+        </h3>
+
+        <div class="tooltip-book-description">
+            {{ characterItem.item.description | raw }}
+        </div>
+
+        <div class="tooltip-book-reader">
+            <div class="tooltip-book-pages" data-tooltip-target="pages">
+                {% set rawParagraphs = characterItem.item.bookContent|split('</p>') %}
+                {% set paragraphs = [] %}
+                {% for p in rawParagraphs %}
+                    {% set trimmed = p | trim %}
+                    {% if trimmed is not empty %}
+                        {% set paragraphs = paragraphs | merge([trimmed ~ '</p>']) %}
+                    {% endif %}
+                {% endfor %}
+                {% for paragraph in paragraphs %}
+                    <div class="tooltip-book-page">
+                        {{ paragraph | insertFixturesImage | raw }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="tooltip-book-controls">
+                <button data-action="click->tooltip#scrollLeft" class="tooltip-book-arrow">←</button>
+                <button data-action="click->tooltip#scrollRight" class="tooltip-book-arrow">→</button>
+            </div>
+        </div>
+    </div>
+</div>

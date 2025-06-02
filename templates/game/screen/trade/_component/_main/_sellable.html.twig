@@ -37,7 +37,7 @@
                         <h4 class="card-title">{{ characterItem.item.name }}</h4>
                     </div>
                 </a>
-                {% include '_layout/_tooltip/_item.html.twig' with {characterItem: characterItem} %}
+                {% include '_layout/_tooltip/_' ~ (characterItem.item.category.slug == 'livre' ? 'book' : 'item') ~ '.html.twig' with {characterItem: characterItem} %}
 
                 <div class="card-footer">
                     <button class="bg-success {% if app_characterItemService.canSellItem(this.playerCharacter, characterItem) == false %}disabled{% endif %}"

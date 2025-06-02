@@ -15,7 +15,7 @@ trait DocksDeLouestTrait
             'repeatOnFailure' => true,
             'successEffects' => [
                 'add_characters' => [
-                    'sirene',
+                    'sirene-melancolique',
                 ],
                 'log' => "et vous voyez quelque chose émerger…</p>",
             ],

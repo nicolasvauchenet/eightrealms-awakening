@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures\Item;
 
+use App\DataFixtures\Item\Book\BestiaryTrait;
 use App\DataFixtures\Item\Book\DiaryTrait;
 use App\DataFixtures\Item\Book\HistoryTrait;
 use App\DataFixtures\Item\Book\LetterTrait;
@@ -16,6 +17,7 @@ class BookFixtures extends Fixture implements OrderedFixtureInterface
     use DiaryTrait;
     use LetterTrait;
     use HistoryTrait;
+    use BestiaryTrait;
 
     public function load(ObjectManager $manager): void
     {
@@ -28,6 +30,9 @@ class BookFixtures extends Fixture implements OrderedFixtureInterface
 
             // Histoire
             self::HISTORY_BOOKS,
+
+            // Bestiaire
+            self::BESTIARY_BOOKS,
         ];
 
         foreach($allBooks as $books) {

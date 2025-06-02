@@ -2,9 +2,10 @@
 
 namespace App\DataFixtures\Character\Creature;
 
-trait DemonTrait
+trait InfernalTrait
 {
-    const DEMON_CREATURES = [
+    const INFERNAL_CREATURES = [
+        // Démons
         [
             'name' => 'Nashoré',
             'picture' => 'img/chapter1/creature/nashore.png',

@@ -188,5 +188,35 @@ trait WilbertTrait
             'item' => 'note_d_alaric',
             'class' => Book::class,
         ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'book_bestiary_betes_sauvages',
+            'class' => Book::class,
+        ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'book_bestiary_creatures_aquatiques',
+            'class' => Book::class,
+        ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'book_bestiary_creatures_monstrueuses',
+            'class' => Book::class,
+        ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'book_bestiary_ames_revenantes',
+            'class' => Book::class,
+        ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'book_bestiary_creatires_legendaires',
+            'class' => Book::class,
+        ],
+        [
+            'character' => 'npc_wilbert_larcaniste',
+            'item' => 'book_bestiary_entites_infernales',
+            'class' => Book::class,
+        ],
     ];
 }

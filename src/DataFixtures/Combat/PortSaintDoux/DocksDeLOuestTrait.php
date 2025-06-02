@@ -10,8 +10,8 @@ trait DocksDeLOuestTrait
         // Quêtes
         [
             'name' => 'La Sirène des Docks',
-            'picture' => 'img/core/creature/sirene-angry.png',
-            'thumbnail' => 'img/core/creature/sirene_thumb.png',
+            'picture' => 'img/core/creature/sirene-melancolique-angry.png',
+            'thumbnail' => 'img/core/creature/sirene-melancolique_thumb.png',
             'description' => "<p>L’eau clapote étrangement, puis une silhouette féminine émerge des flots. Ses yeux scintillent d’un éclat hypnotique. Une sirène, envoûtante et létale, fond sur vous sans un mot. Votre cœur hésite, mais vos mains saisissent déjà vos armes…</p>",
             'conditions' => [
                 'quest_step_status' => [
@@ -27,7 +27,7 @@ trait DocksDeLOuestTrait
             'questStep' => 'quest_secondary_la_sirene_et_le_marin_step_2',
             'enemies' => [
                 [
-                    'enemy' => 'creature_sirene',
+                    'enemy' => 'creature_sirene_melancolique',
                     'enemyClass' => Creature::class,
                 ],
             ],

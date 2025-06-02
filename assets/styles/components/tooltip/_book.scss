@@ -1,0 +1,116 @@
+&.book {
+  .tooltip-body {
+    max-width: 84dvw;
+    background: url('/img/core/ui/parchment-texture.png') repeat,
+    linear-gradient(rgba(217, 160, 102, 0.95), rgba(217, 160, 102, 0.9));
+    background-size: cover;
+
+    @include respondTo(md) {
+      max-width: calc(500px - 4rem);
+    }
+
+    .tooltip-title,
+    .tooltip-subtitle {
+      color: $white !important;
+    }
+
+    .tooltip-book-description {
+      padding: 0.5rem;
+
+      p {
+        font-family: $font-primary;
+        font-size: 1rem;
+        font-weight: normal;
+        text-align: justify;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        color: $white !important;
+
+        em {
+          color: rgba($white, 0.85) !important;
+        }
+      }
+    }
+
+    .tooltip-book-reader {
+      position: relative;
+      overflow: hidden;
+
+      .tooltip-book-pages {
+        @include displayFlex(null, null, 0.5rem);
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        overflow-anchor: none;
+
+        &::-webkit-scrollbar {
+          height: 0.25rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba($white, 0.5);
+          border-radius: 0.25rem;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+          background: rgba($white, 0.5);
+          border-radius: 0.25rem;
+        }
+
+        .tooltip-book-page {
+          box-sizing: border-box;
+          flex: 0 0 100%;
+          padding-right: 0.25rem;
+          scroll-snap-align: start;
+
+          p {
+            box-sizing: border-box;
+            padding: 1rem 1rem 2rem;
+            margin: 0 0.25em 0.5rem 0 !important;
+            height: calc(100% - 0.5rem);
+            font-family: $font-third;
+            font-size: 1.15rem !important;
+            line-height: 1.5rem;
+            text-align: justify !important;
+            word-break: break-word;
+            align-content: center;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            color: $white !important;
+            border-radius: 0.5rem;
+            text-shadow: 1px 1px 2px rgba($black, 0.25);
+
+            @include respondTo(md) {
+              padding: 1rem 2rem 2rem;
+              line-height: 1.75rem;
+            }
+
+            img {
+              display: block;
+              margin: 0 auto 0.5rem;
+              height: 30dvh;
+            }
+          }
+        }
+      }
+
+      .tooltip-book-controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.5rem;
+
+        .tooltip-book-arrow {
+          padding: 0.3rem 0.6rem;
+          font-size: 2rem;
+          color: $secondary;
+          background-color: transparent;
+          border: none;
+          text-shadow: 1px 1px 2px rgba($black, 0.85);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

@@ -55,5 +55,20 @@ trait CreatureTrait
             'playable' => false,
             'reference' => 'race_demon',
         ],
+        [
+            'name' => 'Ours',
+            'playable' => false,
+            'reference' => 'race_ours',
+        ],
+        [
+            'name' => 'Sanglier',
+            'playable' => false,
+            'reference' => 'race_sanglier',
+        ],
+        [
+            'name' => 'Oiseau',
+            'playable' => false,
+            'reference' => 'race_oiseau',
+        ],
     ];
 }

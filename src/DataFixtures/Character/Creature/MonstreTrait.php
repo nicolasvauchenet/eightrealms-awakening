@@ -2,9 +2,10 @@
 
 namespace App\DataFixtures\Character\Creature;
 
-trait GobelinTrait
+trait MonstreTrait
 {
-    const GOBELIN_CREATURES = [
+    const MONSTROUS_CREATURES = [
+        // Gobelins
         [
             'name' => 'Éclaireur gobelin',
             'picture' => 'img/core/creature/gobelineclaireur.png',
@@ -58,6 +59,26 @@ trait GobelinTrait
             'level' => 10,
             'race' => 'race_gobelin',
             'reference' => 'creature_chef_gobelin',
+        ],
+
+        // Harpies
+        [
+            'name' => 'Harpie des cimes',
+            'picture' => 'img/core/creature/harpie-des-cimes.png',
+            'thumbnail' => 'img/core/creature/harpie-des-cimes_thumb.png',
+            'description' => "<p>Un cri perçant fend les airs, aussitôt suivi d’un autre. Des ombres planent au-dessus du col, et l’une d’elles plonge en piqué, serres en avant.</p>",
+            'strength' => 10,
+            'dexterity' => 15,
+            'constitution' => 9,
+            'wisdom' => 12,
+            'intelligence' => 10,
+            'charisma' => 6,
+            'healthMax' => 85,
+            'manaMax' => 20,
+            'fortune' => 5,
+            'level' => 5,
+            'race' => 'race_harpie',
+            'reference' => 'creature_harpie_des_cimes',
         ],
     ];
 }

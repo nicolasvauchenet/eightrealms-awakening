@@ -21,7 +21,7 @@ final class Version20250510115542 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE quest_step_trigger (id SERIAL NOT NULL, quest_step_id INT NOT NULL, type VARCHAR(255) NOT NULL, payload JSON NOT NULL, conditions JSON DEFAULT NULL, PRIMARY KEY(id))
+            CREATE TABLE quest_step_trigger (id SERIAL NOT NULL, quest_step_id INT NOT NULL, type VARCHAR(255) NOT NULL, payload JSON NOT NULL, conditions JSON DEFAULT NULL, status VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_8978BE982795A3D7 ON quest_step_trigger (quest_step_id)

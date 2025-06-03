@@ -20,7 +20,7 @@ trait LaFiolePerdueTrait
             'reference' => 'quest_secondary_la_fiole_perdue_step_2',
         ],
         [
-            'description' => "<p>Dans l’Oasis Sans Nom, j’ai combattu un faux Djinn. Grâce à la fiole volée et à un mystérieux Médaillon, il avait acquis un pouvoir élémentaire destructeur… mais instable. Après sa chute, j'ai récupéré le médaillon et la fiole, brisée. Les deux artefacts semblent… interagir l'un avec l'autre, comme s'ils communiquaient.</p>",
+            'description' => "<p>Dans l’Oasis Sans Nom, j’ai combattu un faux Djinn. Grâce à la fiole volée et à un mystérieux pendentif, il avait acquis un pouvoir élémentaire destructeur… mais instable. Après sa chute, j'ai récupéré le médaillon et la fiole, brisée. Les deux artefacts semblent… interagir l'un avec l'autre, comme s'ils communiquaient.</p>",
             'position' => 3,
             'last' => false,
             'quest' => 'quest_secondary_la_fiole_perdue',
@@ -34,7 +34,7 @@ trait LaFiolePerdueTrait
             'reference' => 'quest_secondary_la_fiole_perdue_step_4',
         ],
         [
-            'description' => "<p>Wilbert a récupéré sa fiole brisée, mais il pourrait peut-être encore en tirer quelque chose. Il a également reconnu le Médaillon des Vents comme un artefact ancien, réceptif à la magie élémentaire. Il m’a conseillé de le garder, affirmant que sa valeur dépassait de loin celle de la fiole…</p>",
+            'description' => "<p>Wilbert a récupéré sa fiole brisée, mais il pourrait peut-être encore en tirer quelque chose. Il m'a quand même récompensé, et je crois que j'ai gagné quelques point de sympathie avec ce vieux gnome…</p>",
             'position' => 5,
             'last' => true,
             'quest' => 'quest_secondary_la_fiole_perdue',

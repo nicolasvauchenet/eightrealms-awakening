@@ -53,7 +53,7 @@ class RepairComponent
     {
         $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
         if(!$characterItem || $characterItem->getCharacter() !== $this->character) {
-            $this->description .= "<p>Objet introuvable ou invalide.</p>";
+            $this->description .= "<p class='text-danger'>Objet introuvable ou invalide.</p>";
 
             return;
         }
@@ -61,7 +61,7 @@ class RepairComponent
         $price = $this->tradeService->getItemPrice($this->playerCharacter, $characterItem, 'repair');
 
         if($this->character->getFortune() < $price) {
-            $this->description .= "<p>Pas assez de couronnes pour réparer <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
+            $this->description .= "<p class='text-warning'>Pas assez de couronnes pour réparer <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
 
             return;
         }
@@ -79,14 +79,14 @@ class RepairComponent
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();
 
-        $this->description .= "<p><strong>{$characterItem->getItem()->getName()}</strong> a été réparé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p><em><strong>{$characterItem->getItem()->getName()}</strong> a été réparé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</em></p>";
     }
 
     #[LiveAction]
     public function repairAllItems(#[LiveArg] int $characterId): void
     {
         if($this->character->getId() !== $characterId) {
-            $this->description .= "<p>Erreur de personnage.</p>";
+            $this->description .= "<p class='text-danger'>Erreur de personnage.</p>";
 
             return;
         }
@@ -95,7 +95,7 @@ class RepairComponent
         $totalCost = $this->tradeService->getTotalPrice($this->playerCharacter, $repairableItems, 'repair');
 
         if($this->character->getFortune() < $totalCost) {
-            $this->description .= "<p>Pas assez de couronnes pour tout réparer (coût total : {$totalCost}).</p>";
+            $this->description .= "<p class='text-warning'>Pas assez de couronnes pour tout réparer (coût total : {$totalCost}).</p>";
 
             return;
         }
@@ -112,6 +112,6 @@ class RepairComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p>Tous vos objets usés ont été réparés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p><em>Tous vos objets usés ont été réparés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</em></p>";
     }
 }

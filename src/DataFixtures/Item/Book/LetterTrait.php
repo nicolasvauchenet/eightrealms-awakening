@@ -14,7 +14,7 @@ trait LetterTrait
             'category' => 'category_book',
             'bookAuthor' => 'Anonyme',
             'bookCategory' => 'Note',
-            'bookContent' => "<p>…ulnãr ven thē'a srokan del’qëth… hrm’naç vel tuor…<br/>~A.</p>",
+            'bookContent' => "<p>…svenûl dræth ven saar… qël doran thrim’naç el’thur… skalen dë vor, qet nar tombâ’r…<br/>~A.</p>",
             'reference' => 'note_anonyme',
         ],
     ];

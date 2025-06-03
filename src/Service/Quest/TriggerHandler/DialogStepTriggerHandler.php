@@ -41,6 +41,13 @@ readonly class DialogStepTriggerHandler implements QuestTriggerHandlerInterface
                 'quest' => $quest->getSlug(),
                 'quest_step' => $step->getPosition(),
             ]);
+            if($trigger->getStatus()) {
+                $this->questProgressionService->editQuestStepStatus($player, [
+                    'quest' => $quest->getSlug(),
+                    'quest_step' => $step->getPosition(),
+                    'status' => $trigger->getStatus(),
+                ]);
+            }
         }
     }
 }

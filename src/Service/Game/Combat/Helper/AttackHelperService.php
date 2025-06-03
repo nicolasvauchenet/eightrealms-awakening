@@ -120,7 +120,7 @@ readonly class AttackHelperService
         $handText = '';
 
         if($handUsed) {
-            $handText = ' avec votre ' . ($handUsed === 'righthand' ? 'main droite' : 'main gauche');
+            $handText = ' en ' . ($handUsed === 'righthand' ? 'main droite' : 'main gauche');
         }
 
         $criticalText = '';
@@ -154,7 +154,7 @@ readonly class AttackHelperService
         $handText = '';
 
         if($handUsed) {
-            $handText = ' avec votre ' . ($handUsed === 'righthand' ? 'main droite' : 'main gauche');
+            $handText = ' en ' . ($handUsed === 'righthand' ? 'main droite' : 'main gauche');
         }
 
         return $isPlayer

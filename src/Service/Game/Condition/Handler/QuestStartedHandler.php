@@ -22,9 +22,15 @@ class QuestStartedHandler implements ConditionHandlerInterface
     {
         $quest = $this->em->getRepository(Quest::class)->findOneBy(['slug' => $value]);
 
-        return $this->em->getRepository(PlayerQuest::class)->findOneBy([
-                'player' => $player,
-                'quest' => $quest,
-            ]) !== null;
+        $playerQuest = $this->em->getRepository(PlayerQuest::class)->findOneBy([
+            'player' => $player,
+            'quest' => $quest,
+        ]);
+
+        if(!$playerQuest || $playerQuest->getStatus() === 'rewarded') {
+            return false;
+        }
+
+        return true;
     }
 }

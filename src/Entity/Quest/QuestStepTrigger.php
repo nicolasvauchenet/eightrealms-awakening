@@ -22,6 +22,9 @@ class QuestStepTrigger
     #[ORM\Column(nullable: true)]
     private ?array $conditions = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $status = null;
+
     #[ORM\ManyToOne(inversedBy: 'questStepTriggers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?QuestStep $questStep = null;
@@ -63,6 +66,18 @@ class QuestStepTrigger
     public function setConditions(?array $conditions): static
     {
         $this->conditions = $conditions;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

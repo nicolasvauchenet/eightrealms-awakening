@@ -64,6 +64,10 @@
         word-break: break-word;
         overflow-wrap: break-word;
         hyphens: auto;
+
+        em {
+          color: $third !important;
+        }
       }
 
       ul,

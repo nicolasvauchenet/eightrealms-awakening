@@ -53,7 +53,8 @@ class QuestStepTriggerFixtures extends Fixture implements OrderedFixtureInterfac
                     ->setType($data['type'])
                     ->setPayload($data['payload'])
                     ->setConditions($data['conditions'] ?? null)
-                    ->setQuestStep($this->getReference($data['questStep'], QuestStep::class));
+                    ->setQuestStep($this->getReference($data['questStep'], QuestStep::class))
+                    ->setStatus($data['status'] ?? null);
                 $manager->persist($questStepTrigger);
                 $this->addReference($data['reference'], $questStepTrigger);
             }

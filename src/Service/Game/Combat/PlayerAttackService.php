@@ -231,7 +231,7 @@ readonly class PlayerAttackService
 
         $this->entityManager->persist($target);
 
-        $log = "<span class='text-success'>Vous utilisez votre <strong>{$item->getName()}</strong> avec votre " . ($hand === 'righthand' ? 'main droite' : 'main gauche') . " sur $targetName et lui infligez $amount point" . ($amount > 1 ? 's' : '') . " de dégâts.</span><br/>";
+        $log = "<span class='text-success'>Vous utilisez votre <strong>{$item->getName()}</strong> en " . ($hand === 'righthand' ? 'main droite' : 'main gauche') . " sur $targetName et lui infligez $amount point" . ($amount > 1 ? 's' : '') . " de dégâts.</span><br/>";
 
         if($target->getHealth() <= 0) {
             $log .= "<strong class='text-success'>$targetName est vaincu&nbsp;!</strong><br/>";

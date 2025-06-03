@@ -70,7 +70,7 @@ class TradeComponent
         }
 
         if(!$this->characterItemService->canBuyItem($this->playerCharacter, $npcItem)) {
-            $this->description .= "<p>Vous n'avez pas assez d'argent pour acheter cet objet.</p>";
+            $this->description .= "<p class='text-warning'>Vous n'avez pas assez d'argent pour acheter cet objet.</p>";
 
             return;
         }
@@ -113,7 +113,7 @@ class TradeComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p>Vous avez acheté 1 <strong>{$item->getName()}</strong> pour $price couronne" . ($price > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p><em>Vous avez acheté 1 <strong>{$item->getName()}</strong> pour $price couronne" . ($price > 1 ? 's' : '') . ".</em></p>";
 
         if($this->buyFilter) {
             $remaining = $this->playerCharacter->getPlayerCharacterItems()->filter(
@@ -131,13 +131,13 @@ class TradeComponent
     {
         $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
         if(!$characterItem || $characterItem->getCharacter() !== $this->character) {
-            $this->description .= "<p>Objet non valide ou introuvable dans votre inventaire.</p>";
+            $this->description .= "<p class='text-danger'>Objet non valide ou introuvable dans votre inventaire.</p>";
 
             return;
         }
 
         if(!$this->characterItemService->canSellItem($this->playerCharacter, $characterItem)) {
-            $this->description .= "<p>Le marchand ne peut pas vous acheter cet objet.</p>";
+            $this->description .= "<p class='text-warning'>Le marchand ne peut pas vous acheter cet objet.</p>";
 
             return;
         }
@@ -182,7 +182,7 @@ class TradeComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p>Vous avez vendu 1 <strong>{$item->getName()}</strong> à {$npc->getName()} pour $price couronne" . ($price > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p><em>Vous avez vendu 1 <strong>{$item->getName()}</strong> à {$npc->getName()} pour $price couronne" . ($price > 1 ? 's' : '') . ".</em></p>";
 
         if($this->sellFilter) {
             $filtered = $this->tradeService->getSellableItems($this->character, $npc)

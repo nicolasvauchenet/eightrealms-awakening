@@ -53,7 +53,7 @@ class ReloadComponent
     {
         $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
         if(!$characterItem || $characterItem->getCharacter() !== $this->character) {
-            $this->description .= "<p>Objet introuvable ou invalide.</p>";
+            $this->description .= "<p class='text-danger'>Objet introuvable ou invalide.</p>";
 
             return;
         }
@@ -61,7 +61,7 @@ class ReloadComponent
         $price = $this->tradeService->getItemPrice($this->playerCharacter, $characterItem, 'reload');
 
         if($this->character->getFortune() < $price) {
-            $this->description .= "<p>Pas assez de couronnes pour recharger <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
+            $this->description .= "<p class='text-warning'>Pas assez de couronnes pour recharger <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
 
             return;
         }
@@ -78,14 +78,14 @@ class ReloadComponent
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();
 
-        $this->description .= "<p><strong>{$characterItem->getItem()->getName()}</strong> a été rechargé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p><em><strong>{$characterItem->getItem()->getName()}</strong> a été rechargé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</em></p>";
     }
 
     #[LiveAction]
     public function reloadAllItems(#[LiveArg] int $characterId): void
     {
         if($this->character->getId() !== $characterId) {
-            $this->description .= "<p>Erreur de personnage.</p>";
+            $this->description .= "<p class='text-danger'>Erreur de personnage.</p>";
 
             return;
         }
@@ -94,7 +94,7 @@ class ReloadComponent
         $totalCost = $this->tradeService->getTotalPrice($this->playerCharacter, $reloadableItems, 'reload');
 
         if($this->character->getFortune() < $totalCost) {
-            $this->description .= "<p>Pas assez de couronnes pour tout recharger (coût total : {$totalCost}).</p>";
+            $this->description .= "<p class='text-warning'>Pas assez de couronnes pour tout recharger (coût total : {$totalCost}).</p>";
 
             return;
         }
@@ -111,6 +111,6 @@ class ReloadComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p>Tous vos objets magiques ont été rechargés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p><em>Tous vos objets magiques ont été rechargés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</em></p>";
     }
 }

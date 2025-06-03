@@ -18,7 +18,7 @@ trait AnciensDocksQuestCombatTrait
                     'quantity' => 3,
                 ],
                 [
-                    'item' => 'note_d_alaric',
+                    'item' => 'note_anonyme',
                     'itemClass' => Book::class,
                     'quantity' => 1,
                     'questItem' => true,

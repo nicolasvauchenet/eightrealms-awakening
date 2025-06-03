@@ -59,6 +59,7 @@
       p,
       ul,
       ol {
+        margin-bottom: 0.5rem;
         text-align: justify;
         word-break: break-word;
         overflow-wrap: break-word;
@@ -67,7 +68,7 @@
 
       ul,
       ol {
-        margin: 0 0 1rem 1rem;
+        margin: 0 0 0.5rem 1rem;
         list-style: decimal;
 
         li {

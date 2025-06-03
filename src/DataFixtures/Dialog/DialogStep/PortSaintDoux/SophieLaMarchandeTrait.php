@@ -8,11 +8,8 @@ trait SophieLaMarchandeTrait
         // Dialogue normal
         [
             'name' => "Sophie - Dialogue normal",
-            'text' => "<p><em>C'est quand même un comble&nbsp;! Nous n'avons plus ni Roi, ni Prince&nbsp;! Mais qu'est-ce qui leur a pris de nous laisser tous seuls comme ça&nbsp;? Qu'est-ce qu'on va devenir, nous autres&nbsp;? Heureusement que les gardes sont toujours là…</em></p>",
+            'text' => "<p><em>C'est quand même un comble&nbsp;! Nous n'avons plus ni Roi, ni Prince&nbsp;! Mais qu'est-ce qui leur a pris de nous laisser tous seuls comme ça&nbsp;? Qu'est-ce qu'on va devenir, nous autres&nbsp;? Heureusement que le Maire est toujours là…</em></p>",
             'first' => true,
-            'effects' => [
-                'start_quest' => 'les-disparus-du-donjon',
-            ],
             'dialog' => 'dialog_sophie_la_marchande',
             'reference' => 'dialog_step_sophie_la_marchande_1',
         ],

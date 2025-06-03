@@ -76,7 +76,7 @@ trait LivraisonEnCoursTrait
             'reference' => 'quest_secondary_livraison_en_cours_step_10',
         ],
         [
-            'description' => "<p> Je vais retourner voir Gart à Port Saint-Doux.</p>",
+            'description' => "<p>Je vais retourner voir Gart à Port Saint-Doux.</p>",
             'position' => 11,
             'last' => false,
             'quest' => 'quest_secondary_livraison_en_cours',

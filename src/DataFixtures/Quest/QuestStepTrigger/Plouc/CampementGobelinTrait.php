@@ -11,7 +11,7 @@ trait CampementGobelinTrait
             'payload' => [
                 'slug' => 'chef-gobelin-quete-indice',
             ],
-            'questStep' => 'quest_main_step_6',
+            'questStep' => 'quest_main_step_4',
             'reference' => 'trigger_dialog_step_chef_gobelin_le_roi_galdric',
         ],
     ];

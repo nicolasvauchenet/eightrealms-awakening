@@ -8,7 +8,7 @@ trait BiloLePassantTrait
         // Quête : Des Rats sur les Docks
         [
             'name' => 'Bilo - Quête',
-            'text' => "<p><em>Vous avez entendu parler des rats qui envahissent les rues du Vieux Port&nbsp;? Il y en a partout&nbsp;! Et ils sortent même le jour maintenant… C’est inquiétant.</em></p>",
+            'text' => "<p><em>Vous avez entendu parler des rats qui envahissent les quais du Vieux Port&nbsp;? Il y en a partout&nbsp;! Et ils sortent même le jour maintenant… C’est inquiétant. Plus personne n'ose se promener là-bas, à cause d'eux. C'est du gâchis, non&nbsp;?</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_not_started' => 'des-rats-sur-les-docks',
@@ -27,7 +27,7 @@ trait BiloLePassantTrait
         ],
         [
             'name' => 'Bilo - Accepter la quête',
-            'text' => "<p><em>Super&nbsp;! Enfin quelqu'un qui s'occupe des problèmes du peuple&nbsp;! C'est pas tous les jours qu'on voit ça. Bonne chance à vous&nbsp;!</em></p>",
+            'text' => "<p><em>Super&nbsp;! Enfin quelqu'un qui s'occupe des problèmes du peuple&nbsp;! C'est pas tous les jours qu'on voit ça. Je vous récompenserai, soyez sûr&nbsp;! Bonne chance à vous&nbsp;!</em></p>",
             'effects' => [
                 'start_quest' => 'des-rats-sur-les-docks',
             ],
@@ -56,7 +56,7 @@ trait BiloLePassantTrait
         ],
         [
             'name' => 'Bilo - Quête terminée',
-            'text' => "<p><em>Bravo&nbsp;! Vous avez réussi à vous débarrasser de ces rats&nbsp;! C'est un soulagement pour tout le monde, et soyez sûr que je vais m'empresser d'aller raconter votre victoire&nbsp;! J'espère que vous ne vous êtes pas fait mordre trop fort…</em></p>",
+            'text' => "<p><em>Bravo&nbsp;! Vous avez réussi à vous débarrasser de ces rats&nbsp;! C'est un soulagement pour tout le monde, et soyez sûr que je vais m'empresser d'aller raconter votre victoire&nbsp;! Et voici votre récompense, comme promis. J'espère que vous ne vous êtes pas fait mordre trop fort…</em></p>",
             'first' => true,
             'conditions' => [
                 'quest_step_status' => [
@@ -83,9 +83,6 @@ trait BiloLePassantTrait
                     'status' => 'rewarded',
                 ],
             ],
-            'effects' => [
-                'start_quest' => 'les-disparus-du-donjon',
-            ],
             'dialog' => 'dialog_bilo_le_passant',
             'reference' => 'dialog_step_bilo_le_passant_1',
         ],
@@ -103,7 +100,7 @@ trait BiloLePassantTrait
         ],
         [
             'name' => "Bilo - Quartier des Ploucs",
-            'text' => "<p><em>Dans le Quartier des Ploucs. Ça s'appelle comme ça parce que c'est en grande partie les pêcheurs du village de Plouc qui y habitent. Enfin, qui ont déménagé à la ville. Sûrement à cause des rhumes…</em></p>",
+            'text' => "<p><em>Dans le Quartier des Ploucs. Ça s'appelle comme ça parce que c'est en grande partie les pêcheurs du village de Plouc qui y habitent. C'est le Roi Galdric 1er qui leur a donné ce quartier, quand il a voulu réunifier les peuples de l'Île. Certains ont saisi la chance et ont déménagé à la ville. Sûrement à cause des gobelins… Il paraît qu'ils pullulent dans le bois d'à côté.</em></p>",
             'effects' => [
                 'reveal_location' => 'quartier-des-ploucs',
             ],

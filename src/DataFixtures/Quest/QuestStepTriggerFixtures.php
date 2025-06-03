@@ -9,6 +9,7 @@ use App\DataFixtures\Quest\QuestStepTrigger\MontsTerribles\RefugeDuBoucBoiteuxTr
 use App\DataFixtures\Quest\QuestStepTrigger\Plouc\CampementGobelinTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\AnciensDocksTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\QuartierDesPloucsTrait;
+use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\PortSaintDouxTrait;
 use App\Entity\Quest\QuestStep;
 use App\Entity\Quest\QuestStepTrigger;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -17,7 +18,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class QuestStepTriggerFixtures extends Fixture implements OrderedFixtureInterface
 {
-
+    use PortSaintDouxTrait;
     use AnciensDocksTrait;
     use QuartierDesPloucsTrait;
     use CampementGobelinTrait;
@@ -30,6 +31,7 @@ class QuestStepTriggerFixtures extends Fixture implements OrderedFixtureInterfac
     {
         $allQuestStepTriggers = [
             // Port Saint-Doux
+            self::PORT_SAINT_DOUX_QUEST_STEP_TRIGGERS,
             self::ANCIENS_DOCKS_QUEST_STEP_TRIGGERS,
             self::QUARTIER_DES_PLOUCS_QUEST_STEP_TRIGGERS,
 

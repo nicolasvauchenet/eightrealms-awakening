@@ -185,7 +185,7 @@ trait WilbertTrait
         ],
         [
             'character' => 'npc_wilbert_larcaniste',
-            'item' => 'note_d_alaric',
+            'item' => 'note_anonyme',
             'class' => Book::class,
         ],
         [

@@ -29,10 +29,12 @@
                 {% endfor %}
             </div>
 
-            <div class="tooltip-book-controls">
-                <button data-action="click->tooltip#scrollLeft" class="tooltip-book-arrow">←</button>
-                <button data-action="click->tooltip#scrollRight" class="tooltip-book-arrow">→</button>
-            </div>
+            {% if paragraphs | length > 1 %}
+                <div class="tooltip-book-controls">
+                    <button data-action="click->tooltip#scrollLeft" class="tooltip-book-arrow">←</button>
+                    <button data-action="click->tooltip#scrollRight" class="tooltip-book-arrow">→</button>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

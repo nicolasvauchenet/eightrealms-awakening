@@ -200,6 +200,22 @@ trait WilbertLArcanisteTrait
             'reference' => 'dialog_step_wilbert_larcaniste_medaillon_8',
         ],
 
+        // Quête principale : La note mystérieuse
+        [
+            'name' => "Wilbert - Note",
+            'text' => "<p>Les bras chargés de rouleaux de parchemins, le vieux gnome vous regarde et semble attendre que vous vous décidiez à parler. Au bout de quelques secondes, il commence à tapoter du pied.</p>",
+            'first' => true,
+            'conditions' => [
+                'quest_step_status' => [
+                    'quest' => 'les-disparus-du-donjon',
+                    'quest_step' => 2,
+                    'status' => 'progress',
+                ],
+            ],
+            'dialog' => 'quest_wilbert_larcaniste',
+            'reference' => 'dialog_step_wilbert_larcaniste_note_1',
+        ],
+
         // Dialogue normal
         [
             'name' => "Wilbert - Dialogue",

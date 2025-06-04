@@ -7,7 +7,7 @@ use App\Entity\Character\Npc;
 trait GartLeForgeronTrait
 {
     const GART_LE_FORGERON_DIALOGS = [
-        // Quête : Livraison en cours
+        // Quête secondaire : Livraison en cours
         [
             'type' => 'dialog',
             'character' => 'npc_gart_le_forgeron',

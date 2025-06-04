@@ -31,7 +31,7 @@ trait DocksDeLOuestTrait
                     'enemyClass' => Creature::class,
                 ],
             ],
-            'redirectToDialog' => 'sirene-des-docks-de-louest-quete',
+            'redirectToDialog' => 'sirene-des-docks-de-louest-apres-le-combat',
             'reference' => 'combat_port_saint_doux_la_sirene_des_docks',
         ],
     ];

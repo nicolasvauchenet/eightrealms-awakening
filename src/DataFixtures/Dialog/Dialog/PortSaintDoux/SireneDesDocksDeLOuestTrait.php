@@ -7,12 +7,12 @@ use App\Entity\Character\Creature;
 trait SireneDesDocksDeLOuestTrait
 {
     const SIRENE_DES_DOCKS_DE_L_OUEST_DIALOGS = [
-        // Quête : La Sirène et le Marin
+        // Quête secondaire : La Sirène et le Marin
         [
             'type' => 'dialog',
-            'character' => 'creature_sirene',
+            'character' => 'creature_sirene_melancolique',
             'characterClass' => Creature::class,
-            'reference' => 'quest_sirene_des_docks_de_louest',
+            'reference' => 'quest_secondary_sirene_des_docks_de_louest',
         ],
     ];
 }

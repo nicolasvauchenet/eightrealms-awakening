@@ -15,6 +15,14 @@ trait PecheurDuQuartierDesPloucsTrait
             'reference' => 'dialog_pecheur_du_quartier_des_ploucs',
         ],
 
+        // Ragots : Quartier des Chauves
+        [
+            'type' => 'rumor',
+            'character' => 'npc_pecheur',
+            'characterClass' => Npc::class,
+            'reference' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs',
+        ],
+
         // Ragots
         [
             'type' => 'rumor',

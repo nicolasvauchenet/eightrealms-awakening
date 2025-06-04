@@ -7,12 +7,12 @@ use App\Entity\Character\Npc;
 trait MyraLaVieilleTrait
 {
     const MYRA_LA_VIEILLE_DIALOGS = [
-        // Quête : La Sirène et le Marin
+        // Quête secondaire : La Sirène et le Marin
         [
             'type' => 'dialog',
             'character' => 'npc_myra_la_vieille',
             'characterClass' => Npc::class,
-            'reference' => 'quest_myra_la_vieille',
+            'reference' => 'quest_secondary_myra_la_vieille',
         ],
 
         // Dialogue normal

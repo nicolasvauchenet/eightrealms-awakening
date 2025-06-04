@@ -15,6 +15,14 @@ trait SophieLaMarchandeTrait
             'reference' => 'dialog_sophie_la_marchande',
         ],
 
+        // Ragots : Temple de Port Saint-Doux
+        [
+            'type' => 'rumor',
+            'character' => 'npc_sophie_la_marchande',
+            'characterClass' => Npc::class,
+            'reference' => 'rumor_temple_sophie_la_marchande',
+        ],
+
         // Ragots
         [
             'type' => 'rumor',

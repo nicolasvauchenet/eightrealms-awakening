@@ -20,7 +20,7 @@ trait LivraisonEnCoursTrait
             'reference' => 'quest_secondary_livraison_en_cours_step_2',
         ],
         [
-            'description' => "<p>J'ai discuté avec Gérard, et j'ai vite compris qu'il comptait utiliser le bouclier pour un mission suicide&nbsp;:&nbsp;aller chasser une bande de gobelins qui campent dans le Bois de Relents, aux abords du village… Je ne sais pas combien ils sont, mais je ne peux pas laisser cet homme y aller comme ça. Je vais trouver ces gobelins.</p>",
+            'description' => "<p>J'ai discuté avec Gérard, et j'ai vite compris qu'il comptait utiliser le bouclier pour un mission suicide&nbsp;:&nbsp;aller chasser une bande de gobelins qui campent dans le Bois des Relents, aux abords du village… Je ne sais pas combien ils sont, mais je ne peux pas laisser cet homme y aller comme ça. Je vais trouver ces gobelins.</p>",
             'position' => 3,
             'last' => false,
             'quest' => 'quest_secondary_livraison_en_cours',
@@ -69,7 +69,7 @@ trait LivraisonEnCoursTrait
             'reference' => 'quest_secondary_livraison_en_cours_step_9',
         ],
         [
-            'description' => "<p>Je suis retourné au campement gobelin, pour les informer et les mettre en garde. Le chef gobelin m’a remercié, il m'a offert un anneau magique et une information étrange sur un vieil homme qu’ils ont aperçu dans la forêt, qui parlait seul et se dirigeait vers le Col du Vent Noir. Était-ce le Roi&nbsp;? Je n'en sais pas plus. Je retournerai peut-être à Plouc un jour, pour voir si tout se passe bien…</p>",
+            'description' => "<p>Je suis retourné au campement gobelin, pour les informer et les mettre en garde. Le chef gobelin m’a remercié, il m'a offert un anneau magique et une information étrange sur un vieil homme qu’ils ont aperçu dans la forêt. Je retournerai peut-être à Plouc un jour, pour voir si tout se passe bien…</p>",
             'position' => 10,
             'last' => false,
             'quest' => 'quest_secondary_livraison_en_cours',

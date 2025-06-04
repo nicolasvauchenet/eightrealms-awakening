@@ -23,8 +23,8 @@ trait JarrodLeTavernierTrait
                     ],
                 ],
             ],
-            'dialog' => 'quest_jarrod_le_tavernier',
-            'reference' => 'quest_jarrod_le_tavernier_1',
+            'dialog' => 'quest_secondary_jarrod_le_tavernier',
+            'reference' => 'quest_secondary_jarrod_le_tavernier_1',
         ],
         [
             'name' => 'Jarrod - Bois du Pendu',
@@ -32,8 +32,8 @@ trait JarrodLeTavernierTrait
             'effects' => [
                 'reveal_location' => 'bois-du-pendu',
             ],
-            'dialog' => 'quest_jarrod_le_tavernier',
-            'reference' => 'quest_jarrod_le_tavernier_2',
+            'dialog' => 'quest_secondary_jarrod_le_tavernier',
+            'reference' => 'quest_secondary_jarrod_le_tavernier_2',
         ],
         [
             'name' => 'Jarrod - Accepter la quête',
@@ -50,14 +50,14 @@ trait JarrodLeTavernierTrait
                 ],
                 // Increase reputation with Jarrod
             ],
-            'dialog' => 'quest_jarrod_le_tavernier',
-            'reference' => 'quest_jarrod_le_tavernier_3',
+            'dialog' => 'quest_secondary_jarrod_le_tavernier',
+            'reference' => 'quest_secondary_jarrod_le_tavernier_3',
         ],
         [
             'name' => 'Jarrod - Refuser la quête',
             'text' => "<p><em>Vous savez quoi&nbsp;? Vous avez bien raison. Trop de gens curieux finissent par nourrir les racines de ce bois. Et moi, je préfère servir des vivants que leur rendre hommage.</em></p>",
-            'dialog' => 'quest_jarrod_le_tavernier',
-            'reference' => 'quest_jarrod_le_tavernier_4',
+            'dialog' => 'quest_secondary_jarrod_le_tavernier',
+            'reference' => 'quest_secondary_jarrod_le_tavernier_4',
         ],
         [
             'name' => 'Jarrod - Quête en cours',
@@ -80,8 +80,8 @@ trait JarrodLeTavernierTrait
                     ],
                 ],
             ],
-            'dialog' => 'quest_jarrod_le_tavernier',
-            'reference' => 'quest_jarrod_le_tavernier_5',
+            'dialog' => 'quest_secondary_jarrod_le_tavernier',
+            'reference' => 'quest_secondary_jarrod_le_tavernier_5',
         ],
         [
             'name' => 'Jarrod - Quête terminée',
@@ -112,8 +112,8 @@ trait JarrodLeTavernierTrait
                     ],
                 ],
             ],
-            'dialog' => 'quest_jarrod_le_tavernier',
-            'reference' => 'quest_jarrod_le_tavernier_6',
+            'dialog' => 'quest_secondary_jarrod_le_tavernier',
+            'reference' => 'quest_secondary_jarrod_le_tavernier_6',
         ],
 
         // Dialogue normal

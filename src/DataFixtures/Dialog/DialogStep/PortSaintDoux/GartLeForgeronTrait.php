@@ -13,14 +13,14 @@ trait GartLeForgeronTrait
             'conditions' => [
                 'quest_not_started' => 'livraison-en-cours',
             ],
-            'dialog' => 'quest_gart_le_forgeron',
-            'reference' => 'quest_gart_le_forgeron_1',
+            'dialog' => 'quest_secondary_gart_le_forgeron',
+            'reference' => 'quest_secondary_gart_le_forgeron_1',
         ],
         [
             'name' => 'Gart - Quête',
             'text' => "<p><em>Disons simplement que j’ai forgé un bouclier de fer pour un client… et que ce dernier n’a jamais daigné revenir le chercher. Un travail de précision, coûteux en temps comme en matériaux. Je n’aime pas travailler à perte. Et j'ai pas que ça à faire, d'aller courir le royaume.</em></p><p>Il hésite un instant, puis se lance.</p><p><em>Vous n'iriez pas à Plouc, des fois&nbsp;?</em></p>",
-            'dialog' => 'quest_gart_le_forgeron',
-            'reference' => 'quest_gart_le_forgeron_2',
+            'dialog' => 'quest_secondary_gart_le_forgeron',
+            'reference' => 'quest_secondary_gart_le_forgeron_2',
         ],
         [
             'name' => 'Gart - Plouc',
@@ -28,8 +28,8 @@ trait GartLeForgeronTrait
             'effects' => [
                 'reveal_location' => 'plouc',
             ],
-            'dialog' => 'quest_gart_le_forgeron',
-            'reference' => 'quest_gart_le_forgeron_3',
+            'dialog' => 'quest_secondary_gart_le_forgeron',
+            'reference' => 'quest_secondary_gart_le_forgeron_3',
         ],
         [
             'name' => 'Gart - Accepter la quête',
@@ -43,14 +43,14 @@ trait GartLeForgeronTrait
                     ],
                 ],
             ],
-            'dialog' => 'quest_gart_le_forgeron',
-            'reference' => 'quest_gart_le_forgeron_4',
+            'dialog' => 'quest_secondary_gart_le_forgeron',
+            'reference' => 'quest_secondary_gart_le_forgeron_4',
         ],
         [
             'name' => 'Gart - Refuser la quête',
             'text' => "<p>Gart fait un pas en arrière, se redresse et son attitude se fait plus distante.</p><p><em>Bon. Dans ce cas, je ne vous ennuie pas plus avec mes problèmes. Si vous changez d'avis, vous savez où me trouver. Merci quand même.</em></p><p>Il coince ses pouces dans son tablier.</p><p><em>Qu'est-ce que je peux faire pour vous&nbsp;?</em></p>",
-            'dialog' => 'quest_gart_le_forgeron',
-            'reference' => 'quest_gart_le_forgeron_5',
+            'dialog' => 'quest_secondary_gart_le_forgeron',
+            'reference' => 'quest_secondary_gart_le_forgeron_5',
         ],
         [
             'name' => 'Gart - Quête en cours',
@@ -85,8 +85,8 @@ trait GartLeForgeronTrait
                     ],
                 ],
             ],
-            'dialog' => 'quest_gart_le_forgeron',
-            'reference' => 'quest_gart_le_forgeron_6',
+            'dialog' => 'quest_secondary_gart_le_forgeron',
+            'reference' => 'quest_secondary_gart_le_forgeron_6',
         ],
         [
             'name' => 'Gart - Quête terminée',
@@ -132,8 +132,8 @@ trait GartLeForgeronTrait
                 ],
                 'reward_quest' => 'livraison-en-cours',
             ],
-            'dialog' => 'quest_gart_le_forgeron',
-            'reference' => 'quest_gart_le_forgeron_7',
+            'dialog' => 'quest_secondary_gart_le_forgeron',
+            'reference' => 'quest_secondary_gart_le_forgeron_7',
         ],
 
         // Dialogue normal

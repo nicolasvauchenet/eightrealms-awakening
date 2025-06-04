@@ -12,7 +12,7 @@ trait JarrodLeTavernierTrait
             'type' => 'dialog',
             'character' => 'npc_jarrod_le_tavernier',
             'characterClass' => Npc::class,
-            'reference' => 'quest_jarrod_le_tavernier',
+            'reference' => 'quest_secondary_jarrod_le_tavernier',
         ],
 
         // Dialogue normal

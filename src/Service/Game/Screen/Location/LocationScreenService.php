@@ -103,7 +103,9 @@ readonly class LocationScreenService
                     }
 
                     if(in_array($character->getSlug(), $combatCharacters, true)) {
-                        continue; // Éviter les doublons bouton combat + interaction
+                        if($combat->getSlug() !== 'le-campement-gobelin') {
+                            continue;
+                        } // Éviter les doublons bouton combat + interaction, SAUF pour le campement Gobelin
                     }
 
                     $conditions = $characterLocation->getConditions();

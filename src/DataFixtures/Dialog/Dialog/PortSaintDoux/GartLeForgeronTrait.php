@@ -12,7 +12,7 @@ trait GartLeForgeronTrait
             'type' => 'dialog',
             'character' => 'npc_gart_le_forgeron',
             'characterClass' => Npc::class,
-            'reference' => 'quest_gart_le_forgeron',
+            'reference' => 'quest_secondary_gart_le_forgeron',
         ],
 
         // Dialogue normal

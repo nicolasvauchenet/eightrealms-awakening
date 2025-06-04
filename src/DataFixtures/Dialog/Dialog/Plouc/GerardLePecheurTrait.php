@@ -7,12 +7,12 @@ use App\Entity\Character\Npc;
 trait GerardLePecheurTrait
 {
     const GERARD_LE_PECHEUR_DIALOGS = [
-        // Quête : Livraison en cours
+        // Quête secondaire : Livraison en cours
         [
             'type' => 'dialog',
             'character' => 'npc_gerard_le_pecheur',
             'characterClass' => Npc::class,
-            'reference' => 'quest_gerard_le_pecheur',
+            'reference' => 'quest_secondary_gerard_le_pecheur',
         ],
 
         // Dialogue normal

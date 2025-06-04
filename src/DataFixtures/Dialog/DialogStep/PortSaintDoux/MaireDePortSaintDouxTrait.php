@@ -5,7 +5,7 @@ namespace App\DataFixtures\Dialog\DialogStep\PortSaintDoux;
 trait MaireDePortSaintDouxTrait
 {
     const MAIRE_DE_PORT_SAINT_DOUX_DIALOG_STEPS = [
-        // Dialogue normal
+        // Ragots : Quartier de la Nouvelle Ville
         [
             'name' => 'Maire de Port Saint-Doux - Dialogue',
             'text' => "<p><em>Ah, la Nouvelle Ville… Mon projet le plus ambitieux à ce jour&nbsp;! Un quartier flambant neuf, un joyau d’urbanisme qui fera resplendir notre chère Port Saint-Doux dans tout le continent en-dessous. Enfin, nous aurons une capitale digne de ce nom, au cœur même de ce Royaume de Ploucs et de barbares. Je vous assure, sans moi, cette ville ne serait qu’un port de pêche boueux envahi de marchands illettrés.</em></p>",
@@ -13,8 +13,8 @@ trait MaireDePortSaintDouxTrait
             'conditions' => [
                 'location_unknown' => 'nouvelle-ville',
             ],
-            'dialog' => 'dialog_maire_de_port_saint_doux',
-            'reference' => 'dialog_step_maire_de_port_saint_doux_1',
+            'dialog' => 'rumor_nouvelle_ville_maire_de_port_saint_doux',
+            'reference' => 'rumor_nouvelle_ville_maire_de_port_saint_doux_1',
         ],
         [
             'name' => "Maire de Port Saint-Doux - Nouvelle Ville",
@@ -22,18 +22,14 @@ trait MaireDePortSaintDouxTrait
             'effects' => [
                 'reveal_location' => 'nouvelle-ville',
             ],
-            'dialog' => 'dialog_maire_de_port_saint_doux',
-            'reference' => 'dialog_step_maire_de_port_saint_doux_2',
+            'dialog' => 'rumor_nouvelle_ville_maire_de_port_saint_doux',
+            'reference' => 'rumor_nouvelle_ville_maire_de_port_saint_doux_2',
         ],
         [
             'name' => 'Maire de Port Saint-Doux - Dialogue',
-            'text' => "<p><em>Bon, soyons francs. Le chantier avance, certes, mais plus lentement que prévu. Le Palais a coupé les vivres depuis le départ du Roi&nbsp;—&nbsp;quelle idée, aussi, de quitter la ville à ce moment-là… Bref. Si ça continue, je devrai gouverner seul, sans directives royales. Mais rassurez-vous, la ville ne pourrait rêver d’un meilleur guide que moi. Parce qu'il y a encore fort à faire&nbsp;:&nbsp;le vieux port n'a plus sa place, par exemple. Il faut rénover ce quartier également. Faire moderne&nbsp;! Audacieux&nbsp;!</em></p>",
-            'first' => true,
-            'conditions' => [
-                'location_known' => 'nouvelle-ville',
-            ],
-            'dialog' => 'dialog_maire_de_port_saint_doux',
-            'reference' => 'dialog_step_maire_de_port_saint_doux_3',
+            'text' => "<p><em>Soyons francs. Le chantier avance, certes, mais plus lentement que prévu. Le Palais a coupé les vivres depuis le départ du Roi&nbsp;—&nbsp;quelle idée, aussi, de quitter la ville à ce moment-là… Bref. Si ça continue, je devrai gouverner seul, sans directives royales. Mais rassurez-vous, la ville ne pourrait rêver d’un meilleur guide que moi. Parce qu'il y a encore fort à faire&nbsp;:&nbsp;le vieux port n'a plus sa place, par exemple. Il faut rénover ce quartier également. Faire moderne&nbsp;! Audacieux&nbsp;!</em></p>",
+            'dialog' => 'rumor_nouvelle_ville_maire_de_port_saint_doux',
+            'reference' => 'rumor_nouvelle_ville_maire_de_port_saint_doux_3',
         ],
 
         // Ragots
@@ -41,8 +37,12 @@ trait MaireDePortSaintDouxTrait
             'name' => 'Maire de Port Saint-Doux - Ragots',
             'text' => "<p><em>Ces pêcheurs du village de Plouc… Toujours plus nombreux, toujours plus envahissants. Je leur ai offert un quartier&nbsp;—&nbsp;un vrai geste d'ouverture&nbsp;—&nbsp;et qu’en ont-ils fait&nbsp;? Un cloaque, évidemment. Et maintenant, ils rêvent de s'étendre. Mais je veille. On ne va pas laisser la capitale se faire grignoter par des rustres. Et je ne parle même pas des druides, des nains, des orcs ou des elfes… Chacun chez soi, voilà la clé d’une ville qui fonctionne.</em></p>",
             'first' => true,
+            'conditions' => [
+                'location_known' => 'nouvelle-ville',
+            ],
+
             'dialog' => 'rumor_maire_de_port_saint_doux',
-            'reference' => 'rumor_step_maire_de_port_saint_doux_1',
+            'reference' => 'rumor_maire_de_port_saint_doux_1',
         ],
     ];
 }

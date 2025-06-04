@@ -7,12 +7,12 @@ use App\Entity\Character\Npc;
 trait MaireDePortSaintDouxTrait
 {
     const MAIRE_DE_PORT_SAINT_DOUX_DIALOGS = [
-        // Dialogue normal
+        // Ragots : Quartier de la Nouvelle Ville
         [
             'type' => 'dialog',
             'character' => 'npc_maire_de_port_saint_doux',
             'characterClass' => Npc::class,
-            'reference' => 'dialog_maire_de_port_saint_doux',
+            'reference' => 'rumor_nouvelle_ville_maire_de_port_saint_doux',
         ],
 
         // Ragots

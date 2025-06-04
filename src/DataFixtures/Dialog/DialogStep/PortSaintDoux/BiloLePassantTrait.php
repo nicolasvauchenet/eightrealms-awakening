@@ -5,7 +5,7 @@ namespace App\DataFixtures\Dialog\DialogStep\PortSaintDoux;
 trait BiloLePassantTrait
 {
     const BILO_LE_PASSANT_DIALOG_STEPS = [
-        // Quête : Des Rats sur les Docks
+        // Quête secondaire : Des Rats sur les Docks
         [
             'name' => 'Bilo - Quête',
             'text' => "<p><em>Vous avez entendu parler des rats qui envahissent les quais du Vieux Port&nbsp;? Il y en a partout&nbsp;! Et ils sortent même le jour maintenant… C’est inquiétant. Plus personne n'ose se promener là-bas, à cause d'eux. C'est du gâchis, non&nbsp;?</em></p>",

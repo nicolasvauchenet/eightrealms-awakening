@@ -5,7 +5,7 @@ namespace App\DataFixtures\Dialog\DialogReply\PortSaintDoux;
 trait BiloLePassantTrait
 {
     const BILO_LE_PASSANT_DIALOG_REPLIES = [
-        // Quête : Des Rats sur les Docks
+        // Quête secondaire : Des Rats sur les Docks
         [
             'text' => "Où se trouve le Vieux Port&nbsp;?",
             'dialogStep' => 'quest_secondary_bilo_le_passant_1',

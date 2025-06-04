@@ -7,12 +7,12 @@ use App\Entity\Character\Npc;
 trait RobertLeGardeTrait
 {
     const ROBERT_LE_GARDE_DIALOGS = [
-        // Quête : Bagarre bizarre
+        // Quête secondaire : Bagarre bizarre
         [
             'type' => 'dialog',
             'character' => 'npc_robert_le_garde',
             'characterClass' => Npc::class,
-            'reference' => 'quest_robert_le_garde',
+            'reference' => 'quest_secondary_robert_le_garde',
         ],
 
         // Dialogue normal

@@ -7,7 +7,7 @@ use App\Entity\Character\Npc;
 trait BiloLePassantTrait
 {
     const BILO_LE_PASSANT_DIALOGS = [
-        // Quête : Des Rats sur les Docks
+        // Quête secondaire : Des Rats sur les Docks
         [
             'type' => 'dialog',
             'character' => 'npc_bilo_le_passant',

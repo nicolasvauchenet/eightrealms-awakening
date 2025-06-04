@@ -5,7 +5,7 @@ namespace App\DataFixtures\Dialog\DialogStep\PortSaintDoux;
 trait RobertLeGardeTrait
 {
     const ROBERT_LE_GARDE_DIALOG_STEPS = [
-        // Quête : Bagarre bizarre
+        // Quête secondaire : Bagarre bizarre
         [
             'name' => 'Robert - Quête',
             'text' => "<p><em>Il y a eu une &laquo;bagarre&raquo; à la taverne de la Flûte Moisie… Je sais pas si vous avez entendu parler de ça. Mais je vous conseille de pas trop traîner par là-bas à la nuit tombée… Cet endroit peut être dangereux. Vous feriez mieux de rester là où c'est sûr.</em></p>",
@@ -13,8 +13,8 @@ trait RobertLeGardeTrait
             'conditions' => [
                 'quest_not_started' => 'bagarre-bizarre',
             ],
-            'dialog' => 'quest_robert_le_garde',
-            'reference' => 'quest_step_robert_le_garde_1',
+            'dialog' => 'quest_secondary_robert_le_garde',
+            'reference' => 'quest_secondary_robert_le_garde_1',
         ],
         [
             'name' => "Robert - Docks de l'Ouest",
@@ -22,8 +22,8 @@ trait RobertLeGardeTrait
             'effects' => [
                 'reveal_location' => 'docks-de-louest',
             ],
-            'dialog' => 'quest_robert_le_garde',
-            'reference' => 'quest_step_robert_le_garde_2',
+            'dialog' => 'quest_secondary_robert_le_garde',
+            'reference' => 'quest_secondary_robert_le_garde_2',
         ],
         [
             'name' => 'Robert - Accepter la quête',
@@ -31,14 +31,14 @@ trait RobertLeGardeTrait
             'effects' => [
                 'start_quest' => 'bagarre-bizarre',
             ],
-            'dialog' => 'quest_robert_le_garde',
-            'reference' => 'quest_step_robert_le_garde_3',
+            'dialog' => 'quest_secondary_robert_le_garde',
+            'reference' => 'quest_secondary_robert_le_garde_3',
         ],
         [
             'name' => 'Robert - Refuser la quête',
             'text' => "<p><em>Hé ben, c'est pas vos affaires, c'est vrai. Heureusement qu'y a encore des gardes dans c'te ville… Allez circulez&nbsp;!</em></p>",
-            'dialog' => 'quest_robert_le_garde',
-            'reference' => 'quest_step_robert_le_garde_4',
+            'dialog' => 'quest_secondary_robert_le_garde',
+            'reference' => 'quest_secondary_robert_le_garde_4',
         ],
         [
             'name' => 'Robert - Quête en cours',
@@ -72,8 +72,8 @@ trait RobertLeGardeTrait
                     ],
                 ],
             ],
-            'dialog' => 'quest_robert_le_garde',
-            'reference' => 'quest_step_robert_le_garde_5',
+            'dialog' => 'quest_secondary_robert_le_garde',
+            'reference' => 'quest_secondary_robert_le_garde_5',
         ],
         [
             'name' => 'Robert - Quête terminée',
@@ -114,8 +114,8 @@ trait RobertLeGardeTrait
                 ],
                 'reward_quest' => 'bagarre-bizarre',
             ],
-            'dialog' => 'quest_robert_le_garde',
-            'reference' => 'quest_step_robert_le_garde_6',
+            'dialog' => 'quest_secondary_robert_le_garde',
+            'reference' => 'quest_secondary_robert_le_garde_6',
         ],
 
         // Dialogue normal
@@ -130,7 +130,7 @@ trait RobertLeGardeTrait
                 ],
             ],
             'dialog' => 'dialog_robert_le_garde',
-            'reference' => 'dialog_step_robert_le_garde_1',
+            'reference' => 'dialog_robert_le_garde_1',
         ],
 
         // Ragots
@@ -139,7 +139,7 @@ trait RobertLeGardeTrait
             'text' => "<p><em>Bon. Là en ce moment, chus occupé. Chuis en service au cas où z'auriez point remarqué. Alors salut.</em></p>",
             'first' => true,
             'dialog' => 'rumor_robert_le_garde',
-            'reference' => 'rumor_step_robert_le_garde_1',
+            'reference' => 'rumor_robert_le_garde_1',
         ],
     ];
 }

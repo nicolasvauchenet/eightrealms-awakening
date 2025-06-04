@@ -7,18 +7,20 @@ use App\Entity\Character\Npc;
 trait FaroukLeNomadeTrait
 {
     const FAROUK_LE_NOMADE_DIALOGS = [
-        // Quête: La Fiole Perdue
+        // Quête secondaire : La Fiole Perdue
         [
             'type' => 'dialog',
-            'conditions' => [
-                'quest_status' => [
-                    'quest' => 'la-fiole-perdue',
-                    'status' => 'progress',
-                ],
-            ],
             'character' => 'npc_farouk_le_nomade',
             'characterClass' => Npc::class,
-            'reference' => 'quest_farouk_le_nomade',
+            'reference' => 'quest_secondary_farouk_le_nomade',
+        ],
+
+        // Ragots : Crique du Pendu
+        [
+            'type' => 'rumor',
+            'character' => 'npc_farouk_le_nomade',
+            'characterClass' => Npc::class,
+            'reference' => 'rumor_crique_du_pendu_farouk_le_nomade',
         ],
 
         // Ragots

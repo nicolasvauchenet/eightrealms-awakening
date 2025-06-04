@@ -20,7 +20,7 @@ trait LeJugementDuCercleTrait
             'reference' => 'quest_secondary_le_jugement_du_cercle_step_2',
         ],
         [
-            'description' => "<p>Le fantôme m’a posé des questions. Des énigmes… ou plutôt des souvenirs brisés. Il voulait que je lui dise pourquoi il avait été jugé, pendu, effacé. Comme si j’étais là. Comme si j’avais le droit de le juger à mon tour. Il voulait savoir qui il était. J’ai répondu. Et il s’est souvenu. Son nom, son erreur, son supplice. Il m’a regardé avec des yeux presque vivants, et il m’a remercié. Avant de disparaître dans un souffle de brume. À mes pieds, là où il flottait, j’ai trouvé une vieille amulette. Une amulette druidique. Peut-être que le Cercle s’en souviendra, lui aussi.</p>",
+            'description' => "<p>Le fantôme m’a posé des questions. Des énigmes… ou plutôt des souvenirs brisés. Il voulait que je lui dise pourquoi il avait été jugé, pendu, effacé. Comme si j’étais là. Comme si j’avais le droit de le juger à mon tour. Il voulait savoir qui il était. J’ai répondu. Et il s’est souvenu. Son nom, son erreur, son supplice. Il m’a regardé avec des yeux presque vivants, et il m’a remercié. Avant de disparaître dans un souffle de brume. À mes pieds, là où il flottait, j’ai trouvé une vieille amulette. Une amulette druidique.</p>",
             'position' => 3,
             'last' => false,
             'quest' => 'quest_secondary_le_jugement_du_cercle',

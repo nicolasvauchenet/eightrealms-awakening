@@ -17,14 +17,14 @@ trait FaroukLeNomadeTrait
                     'status' => 'progress',
                 ],
             ],
-            'dialog' => 'quest_farouk_le_nomade',
-            'reference' => 'quest_step_farouk_le_nomade_1',
+            'dialog' => 'quest_secondary_farouk_le_nomade',
+            'reference' => 'quest_secondary_farouk_le_nomade_1',
         ],
         [
             'name' => 'Farouk - Quête',
             'text' => "<p><em>Un homme étrange, oui. Sable dans les bottes, mais pas une goutte de sueur. Il est passé ici, m’a volé un objet avant même que je le voie bouger. Je l’ai suivi un moment… jusqu’à ce qu’il disparaisse dans l’Oasis Sans Nom.</em></p>",
-            'dialog' => 'quest_farouk_le_nomade',
-            'reference' => 'quest_step_farouk_le_nomade_2',
+            'dialog' => 'quest_secondary_farouk_le_nomade',
+            'reference' => 'quest_secondary_farouk_le_nomade_2',
         ],
         [
             'name' => 'Farouk - Oasis',
@@ -32,8 +32,8 @@ trait FaroukLeNomadeTrait
             'effects' => [
                 'reveal_location' => 'oasis-sans-nom',
             ],
-            'dialog' => 'quest_farouk_le_nomade',
-            'reference' => 'quest_step_farouk_le_nomade_3',
+            'dialog' => 'quest_secondary_farouk_le_nomade',
+            'reference' => 'quest_secondary_farouk_le_nomade_3',
         ],
         [
             'name' => 'Farouk - Accepter la quête',
@@ -45,14 +45,14 @@ trait FaroukLeNomadeTrait
                     'status' => 'completed',
                 ],
             ],
-            'dialog' => 'quest_farouk_le_nomade',
-            'reference' => 'quest_step_farouk_le_nomade_4',
+            'dialog' => 'quest_secondary_farouk_le_nomade',
+            'reference' => 'quest_secondary_farouk_le_nomade_4',
         ],
         [
             'name' => 'Farouk - Refuser la quête',
             'text' => "<p><em>Tu choisis la prudence&nbsp;? Je comprends. Mais sache que ce que je vends ici ne repassera peut-être jamais. Le désert garde ses secrets… et moi aussi.</em></p>",
-            'dialog' => 'quest_farouk_le_nomade',
-            'reference' => 'quest_step_farouk_le_nomade_5',
+            'dialog' => 'quest_secondary_farouk_le_nomade',
+            'reference' => 'quest_secondary_farouk_le_nomade_5',
         ],
         [
             'name' => 'Farouk - Quête en cours',
@@ -65,24 +65,20 @@ trait FaroukLeNomadeTrait
                     'status' => 'progress',
                 ],
             ],
-            'dialog' => 'quest_farouk_le_nomade',
-            'reference' => 'quest_step_farouk_le_nomade_6',
+            'dialog' => 'quest_secondary_farouk_le_nomade',
+            'reference' => 'quest_secondary_farouk_le_nomade_6',
         ],
 
-        // Ragots
+        // Ragots : Crique du Pendu
         [
             'name' => 'Farouk - Histoire',
-            'text' => "<p><em>Le bois qui rafraîchit le désert au nord… Il cache beaucoup de nœuds dans ses branches. Des nœuds qu’on n’a pas tous défaits. Un client, un vieil homme du sud, m’a jadis murmuré cette phrase&nbsp;:&nbsp;Le Cercle jugeait en silence. Et parfois… il pendait aussi.</em></p>",
+            'text' => "<p><em>Le bois qui rafraîchit le désert au nord… Il cache beaucoup de nœuds dans ses branches. Des nœuds qu’on n’a pas tous défaits. Un client, un vieil homme du sud, m’a jadis murmuré cette phrase&nbsp;:&nbsp;Le Cercle jugeait en silence. Et parfois… il condamnait.</em></p>",
             'first' => true,
             'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'les-disparus-du-donjon',
-                    'quest_step' => 9,
-                    'status' => 'progress',
-                ],
+                'quest_not_started' => 'le-jugement-du-cercle',
             ],
-            'dialog' => 'rumor_farouk_le_nomade',
-            'reference' => 'rumor_step_farouk_le_nomade_1',
+            'dialog' => 'rumor_crique_du_pendu_farouk_le_nomade',
+            'reference' => 'rumor_crique_du_pendu_farouk_le_nomade_1',
         ],
         [
             'name' => "Farouk - Crique du Pendu",
@@ -94,9 +90,11 @@ trait FaroukLeNomadeTrait
                 ],
                 'start_quest' => 'le-jugement-du-cercle',
             ],
-            'dialog' => 'rumor_farouk_le_nomade',
-            'reference' => 'rumor_step_farouk_le_nomade_2',
+            'dialog' => 'rumor_crique_du_pendu_farouk_le_nomade',
+            'reference' => 'rumor_crique_du_pendu_farouk_le_nomade_2',
         ],
+
+        // Ragots
         [
             'name' => 'Farouk - Ragots',
             'text' => "<p><em>Jadis, j’ai vendu un miroir à une vieille femme qui vivait seule. Depuis, elle refuse de me voir. Elle dit que j’y ai laissé une part de moi…</em></p><p>Il se fend d'un large sourire, pas très convaincant cependant.</p><p><em>Comment serait-ce possible&nbsp;?</em></p>",
@@ -105,7 +103,7 @@ trait FaroukLeNomadeTrait
                 'quest_started' => 'le-jugement-du-cercle',
             ],
             'dialog' => 'rumor_farouk_le_nomade',
-            'reference' => 'rumor_step_farouk_le_nomade_3',
+            'reference' => 'rumor_farouk_le_nomade_3',
         ],
     ];
 }

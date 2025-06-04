@@ -64,13 +64,13 @@ class TradeComponent
     {
         $npcItem = $this->entityManager->getRepository(PlayerCharacterItem::class)->find($characterItemId);
         if(!$npcItem) {
-            $this->description .= "<p>Objet introuvable.</p>";
+            $this->description .= "<p class='text-danger'>Objet introuvable.</p>";
 
             return;
         }
 
         if(!$this->characterItemService->canBuyItem($this->playerCharacter, $npcItem)) {
-            $this->description .= "<p class='text-warning'>Vous n'avez pas assez d'argent pour acheter cet objet.</p>";
+            $this->description .= "<p class='text-warning'>Vous n'avez pas assez de couronnes pour acheter cet objet.</p>";
 
             return;
         }
@@ -113,7 +113,7 @@ class TradeComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p><em>Vous avez acheté 1 <strong>{$item->getName()}</strong> pour $price couronne" . ($price > 1 ? 's' : '') . ".</em></p>";
+        $this->description .= "<p class='text-success'>Vous avez acheté 1 <strong>{$item->getName()}</strong> pour $price couronne" . ($price > 1 ? 's' : '') . ".</p>";
 
         if($this->buyFilter) {
             $remaining = $this->playerCharacter->getPlayerCharacterItems()->filter(
@@ -182,7 +182,7 @@ class TradeComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p><em>Vous avez vendu 1 <strong>{$item->getName()}</strong> à {$npc->getName()} pour $price couronne" . ($price > 1 ? 's' : '') . ".</em></p>";
+        $this->description .= "<p class='text-success'>Vous avez vendu 1 <strong>{$item->getName()}</strong> à {$npc->getName()} pour $price couronne" . ($price > 1 ? 's' : '') . ".</p>";
 
         if($this->sellFilter) {
             $filtered = $this->tradeService->getSellableItems($this->character, $npc)

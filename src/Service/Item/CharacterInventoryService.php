@@ -20,7 +20,7 @@ readonly class CharacterInventoryService
     {
         $item = $this->entityManager->getRepository(Item::class)->findOneBy(['slug' => $itemSlug]);
         if(!$item) {
-            return;
+            throw new \InvalidArgumentException(sprintf('Item with slug "%s" not found.', $itemSlug));
         }
 
         $existing = $this->entityManager->getRepository(CharacterItem::class)->findOneBy([
@@ -48,7 +48,7 @@ readonly class CharacterInventoryService
     {
         $item = $this->entityManager->getRepository(Item::class)->findOneBy(['slug' => $itemSlug]);
         if(!$item) {
-            return;
+            throw new \InvalidArgumentException(sprintf('Item with slug "%s" not found.', $itemSlug));
         }
 
         $characterItem = $this->entityManager->getRepository(CharacterItem::class)->findOneBy([

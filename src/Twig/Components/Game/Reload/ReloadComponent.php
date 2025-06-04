@@ -61,7 +61,7 @@ class ReloadComponent
         $price = $this->tradeService->getItemPrice($this->playerCharacter, $characterItem, 'reload');
 
         if($this->character->getFortune() < $price) {
-            $this->description .= "<p class='text-warning'>Pas assez de couronnes pour recharger <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
+            $this->description .= "<p class='text-warning'>Vous n'avez pas assez de couronnes pour faire recharger votre <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
 
             return;
         }
@@ -78,7 +78,7 @@ class ReloadComponent
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();
 
-        $this->description .= "<p><em><strong>{$characterItem->getItem()->getName()}</strong> a été rechargé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</em></p>";
+        $this->description .= "<p class='text-success'><strong>{$characterItem->getItem()->getName()}</strong> a été rechargé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</p>";
     }
 
     #[LiveAction]
@@ -94,7 +94,7 @@ class ReloadComponent
         $totalCost = $this->tradeService->getTotalPrice($this->playerCharacter, $reloadableItems, 'reload');
 
         if($this->character->getFortune() < $totalCost) {
-            $this->description .= "<p class='text-warning'>Pas assez de couronnes pour tout recharger (coût total : {$totalCost}).</p>";
+            $this->description .= "<p class='text-warning'>Vous n'avez pas assez de couronnes pour tout faire recharger.</p>";
 
             return;
         }
@@ -111,6 +111,6 @@ class ReloadComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p><em>Tous vos objets magiques ont été rechargés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</em></p>";
+        $this->description .= "<p class='text-success'>Tous vos objets magiques ont été rechargés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
     }
 }

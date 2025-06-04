@@ -61,7 +61,7 @@ class RepairComponent
         $price = $this->tradeService->getItemPrice($this->playerCharacter, $characterItem, 'repair');
 
         if($this->character->getFortune() < $price) {
-            $this->description .= "<p class='text-warning'>Pas assez de couronnes pour réparer <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
+            $this->description .= "<p class='text-warning'>Vous n'avez pas assez de couronnes pour faire réparer votre <strong>{$characterItem->getItem()->getName()}</strong>.</p>";
 
             return;
         }
@@ -79,7 +79,7 @@ class RepairComponent
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();
 
-        $this->description .= "<p><em><strong>{$characterItem->getItem()->getName()}</strong> a été réparé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</em></p>";
+        $this->description .= "<p class='text-success'><strong>{$characterItem->getItem()->getName()}</strong> a été réparé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</p>";
     }
 
     #[LiveAction]
@@ -95,7 +95,7 @@ class RepairComponent
         $totalCost = $this->tradeService->getTotalPrice($this->playerCharacter, $repairableItems, 'repair');
 
         if($this->character->getFortune() < $totalCost) {
-            $this->description .= "<p class='text-warning'>Pas assez de couronnes pour tout réparer (coût total : {$totalCost}).</p>";
+            $this->description .= "<p class='text-warning'>Vous n'avez pas assez de couronnes pour tout faire réparer.</p>";
 
             return;
         }
@@ -112,6 +112,6 @@ class RepairComponent
 
         $this->entityManager->flush();
 
-        $this->description .= "<p><em>Tous vos objets usés ont été réparés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</em></p>";
+        $this->description .= "<p class='text-success'>Tous vos objets usés ont été réparés pour <strong>{$totalCost}</strong> couronne" . ($totalCost > 1 ? 's' : '') . ".</p>";
     }
 }

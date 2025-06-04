@@ -19,7 +19,7 @@ trait DocksDeLOuestTrait
         [
             'name' => 'Taverne de la Flûte Moisie',
             'picture' => 'img/chapter1/location/taverne-de-la-flute-moisie.webp',
-            'description' => "<p>La Taverne de la Flûte Moisie est un lieu bruyant et chaleureux, où les marins et les aventuriers viennent se détendre après une longue journée de travail. Les tables en bois massif sont couvertes de chopes de bière et de plats fumants, et l'odeur de la soupe au poisson flotte dans l'air. Le Tavernier vous adresse un sourire cordial…</p>",
+            'description' => "<p>La Taverne de la Flûte Moisie est un lieu bruyant et chaleureux, où les marins et les aventuriers viennent se détendre après une longue journée de travail. Les tables en bois massif sont couvertes de chopes de bière et de plats fumants, et l'odeur de la soupe au poisson flotte dans l'air. Le Tavernier, un orque énorme sous un tablier moyen, est derrière son comptoir.</p>",
             'type' => 'building',
             'thumbnail' => 'img/core/location/taverne_thumb.webp',
             'parent' => 'location_zone_docks_de_l_ouest',

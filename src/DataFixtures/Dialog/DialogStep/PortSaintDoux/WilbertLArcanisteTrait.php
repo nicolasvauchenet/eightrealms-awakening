@@ -196,7 +196,7 @@ trait WilbertLArcanisteTrait
             'text' => "<p><em>Port Saint-Doux est aveugle. Les gens rient, commercent, prient… pendant que des forces invisibles tirent les ficelles. Mais je les vois, moi. Je les entends. Et si vous ouvrez votre esprit, vous entendrez aussi… Oh, mais j’en oublie mes manières. Vous voulez un sort de lévitation ou une infusion pour la mémoire&nbsp;?</em></p>",
             'first' => true,
             'dialog' => 'rumor_wilbert_larcaniste',
-            'reference' => 'rumor_step_wilbert_larcaniste_1',
+            'reference' => 'rumor_wilbert_larcaniste_1',
         ],
     ];
 }

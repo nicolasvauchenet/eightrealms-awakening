@@ -13,8 +13,8 @@ trait BiloLePassantTrait
             'conditions' => [
                 'quest_not_started' => 'des-rats-sur-les-docks',
             ],
-            'dialog' => 'quest_bilo_le_passant',
-            'reference' => 'quest_step_bilo_le_passant_1',
+            'dialog' => 'quest_secondary_bilo_le_passant',
+            'reference' => 'quest_secondary_bilo_le_passant_1',
         ],
         [
             'name' => 'Bilo - Anciens Docks',
@@ -22,8 +22,8 @@ trait BiloLePassantTrait
             'effects' => [
                 'reveal_location' => 'anciens-docks',
             ],
-            'dialog' => 'quest_bilo_le_passant',
-            'reference' => 'quest_step_bilo_le_passant_2',
+            'dialog' => 'quest_secondary_bilo_le_passant',
+            'reference' => 'quest_secondary_bilo_le_passant_2',
         ],
         [
             'name' => 'Bilo - Accepter la quête',
@@ -31,14 +31,14 @@ trait BiloLePassantTrait
             'effects' => [
                 'start_quest' => 'des-rats-sur-les-docks',
             ],
-            'dialog' => 'quest_bilo_le_passant',
-            'reference' => 'quest_step_bilo_le_passant_3',
+            'dialog' => 'quest_secondary_bilo_le_passant',
+            'reference' => 'quest_secondary_bilo_le_passant_3',
         ],
         [
             'name' => 'Bilo - Refuser la quête',
             'text' => "<p><em>Oh, vous savez moi, ce que j'en dis… Si ce n'est le problème de personne, et que les gardes sont trop occupés, alors qui va s'en occuper de ces rats&nbsp;?</em></p>",
-            'dialog' => 'quest_bilo_le_passant',
-            'reference' => 'quest_step_bilo_le_passant_4',
+            'dialog' => 'quest_secondary_bilo_le_passant',
+            'reference' => 'quest_secondary_bilo_le_passant_4',
         ],
         [
             'name' => 'Bilo - Quête en cours',
@@ -51,8 +51,8 @@ trait BiloLePassantTrait
                     'status' => 'progress',
                 ],
             ],
-            'dialog' => 'quest_bilo_le_passant',
-            'reference' => 'quest_step_bilo_le_passant_5',
+            'dialog' => 'quest_secondary_bilo_le_passant',
+            'reference' => 'quest_secondary_bilo_le_passant_5',
         ],
         [
             'name' => 'Bilo - Quête terminée',
@@ -68,8 +68,8 @@ trait BiloLePassantTrait
             'effects' => [
                 'reward_quest' => 'des-rats-sur-les-docks',
             ],
-            'dialog' => 'quest_bilo_le_passant',
-            'reference' => 'quest_step_bilo_le_passant_6',
+            'dialog' => 'quest_secondary_bilo_le_passant',
+            'reference' => 'quest_secondary_bilo_le_passant_6',
         ],
 
         // Dialogue normal
@@ -84,10 +84,10 @@ trait BiloLePassantTrait
                 ],
             ],
             'dialog' => 'dialog_bilo_le_passant',
-            'reference' => 'dialog_step_bilo_le_passant_1',
+            'reference' => 'dialog_bilo_le_passant_1',
         ],
 
-        // Ragots : Arcaniste
+        // Ragots : Arcanes de Port Saint-Doux
         [
             'name' => 'Bilo - Rencontre',
             'text' => "<p><em>Je reviens de chez Wilbert, l'Arcaniste. Il en a des trucs magiques&nbsp;! Ça fait rêver… Mais qu'est-ce que c'est cher, la magie&nbsp;!</em></p>",
@@ -95,8 +95,8 @@ trait BiloLePassantTrait
             'conditions' => [
                 'location_unknown' => 'quartier-des-ploucs',
             ],
-            'dialog' => 'rumor_bilo_le_passant',
-            'reference' => 'rumor_step_bilo_le_passant_1',
+            'dialog' => 'rumor_arcanes_bilo_le_passant',
+            'reference' => 'rumor_arcanes_bilo_le_passant_1',
         ],
         [
             'name' => "Bilo - Quartier des Ploucs",
@@ -104,8 +104,8 @@ trait BiloLePassantTrait
             'effects' => [
                 'reveal_location' => 'quartier-des-ploucs',
             ],
-            'dialog' => 'rumor_bilo_le_passant',
-            'reference' => 'rumor_step_bilo_le_passant_2',
+            'dialog' => 'rumor_arcanes_bilo_le_passant',
+            'reference' => 'rumor_arcanes_bilo_le_passant_2',
         ],
 
         // Ragots
@@ -117,7 +117,7 @@ trait BiloLePassantTrait
                 'location_known' => 'quartier-des-ploucs',
             ],
             'dialog' => 'rumor_bilo_le_passant',
-            'reference' => 'rumor_step_bilo_le_passant_3',
+            'reference' => 'rumor_bilo_le_passant_1',
         ],
     ];
 }

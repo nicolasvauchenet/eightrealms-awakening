@@ -17,7 +17,7 @@ trait BagarreBizarreTrait
             'reference' => 'quest_secondary_bagarre_bizarre_step_1',
         ],
         [
-            'description' => "<p>À la Taverne de la Flûte Moisie, le Tavernier m’a parlé d’une altercation pas commune&nbsp;: un vieillard seul, mais redoutable au combat, a mis en déroute trois bandits en un instant. Avant de quitter les lieux, il aurait murmuré quelque chose à propos d’un bois ancien… un certain Bois du Pendu.</p><p>Le nom seul donne des frissons. Peut-être que cet homme s’y est réfugié. Peut-être qu’il fuyait quelque chose…</p>",
+            'description' => "<p>À la Taverne de la Flûte Moisie, le Tavernier m’a parlé d’une altercation pas commune&nbsp;:&nbsp;un vieillard seul, mais redoutable au combat, a mis en déroute trois bandits en un instant. Avant de quitter les lieux, il aurait murmuré quelque chose à propos d’un bois ancien… le Bois du Pendu.</p><p>Le nom seul donne des frissons. Peut-être que cet homme s’y est réfugié. Peut-être qu’il fuyait quelque chose…</p>",
             'position' => 2,
             'last' => false,
             'quest' => 'quest_secondary_bagarre_bizarre',
@@ -40,14 +40,14 @@ trait BagarreBizarreTrait
             'reference' => 'quest_secondary_bagarre_bizarre_step_4',
         ],
         [
-            'description' => "<p>Après la bataille, Théobald m’a révélé qu’il avait été banni du Cercle des Druides. Il avait osé vouloir apprendre un rituel, le &laquo;Rituel de l’Âme&raquo;, de peur que ce savoir précieux disparaisse avec le Grand Druide. Accusé de vouloir usurper les secrets sacrés, il fut d'abord rejeté, puis pourchassé par ses anciens compagnons.</p>",
+            'description' => "<p>Après la bataille, Théobald m’a révélé qu’il avait été banni du Cercle des Druides. Il avait osé vouloir apprendre un rituel, le &laquo;Rituel de l’Âme&raquo;, de peur que ce savoir précieux ne disparaisse avec le Grand Druide, le seul qui a le droit de le connaître et de le transmettre. Accusé de vouloir usurper les secrets sacrés, il fut d'abord rejeté, mais il a continué ses recherches. Ce qui n'a pas plu à son ancien ordre, qui le traque depuis pour le mettre à mort.</p>",
             'position' => 5,
             'last' => false,
             'quest' => 'quest_secondary_bagarre_bizarre',
             'reference' => 'quest_secondary_bagarre_bizarre_step_5',
         ],
         [
-            'description' => "<p>Cette histoire de bagarre est résolue, et Port Saint-Doux n'était pas directement concernée. Ce sont des histoires de druides, sans incidence pour le Royaume ni pour la Capitale. Je vais retourner voir le garde au Quartier du Marché.</p>",
+            'description' => "<p>Cette histoire de bagarre est résolue, Port Saint-Doux n'est pas directement concernée. Ce sont des histoires de druides, sans incidence pour le Royaume ni pour la Capitale. Je vais retourner voir Robert, le garde au Quartier du Marché.</p>",
             'position' => 6,
             'last' => false,
             'quest' => 'quest_secondary_bagarre_bizarre',

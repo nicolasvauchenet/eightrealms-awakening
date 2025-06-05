@@ -11,6 +11,9 @@ trait CampAbandonneTrait
             'character' => 'npc_farouk_le_nomade',
             'characterClass' => Npc::class,
             'location' => 'location_zone_camp_abandonne',
+            'conditions' => [
+                'quest_started' => 'la-fiole-perdue',
+            ],
             'reference' => 'location_zone_camp_abandonne_farouk_le_nomade',
         ],
     ];

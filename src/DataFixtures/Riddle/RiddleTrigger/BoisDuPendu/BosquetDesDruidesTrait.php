@@ -13,8 +13,8 @@ trait BosquetDesDruidesTrait
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'les-disparus-du-donjon',
-                    'quest_step' => 7,
-                    'status' => 'progress',
+                    'quest_step' => 5,
+                    'status' => 'completed',
                 ],
             ],
             'riddle' => 'riddle_bosquet_des_druides_test',

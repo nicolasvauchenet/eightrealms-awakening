@@ -16,27 +16,41 @@ trait BosquetDesDruidesTrait
                     [
                         'quest_step_status' => [
                             'quest' => 'les-disparus-du-donjon',
-                            'quest_step' => 4,
+                            'quest_step' => 5,
                             'status' => 'progress',
                         ],
                     ],
                     [
                         'quest_step_status' => [
                             'quest' => 'les-disparus-du-donjon',
-                            'quest_step' => 8,
+                            'quest_step' => 5,
+                            'status' => 'completed',
+                        ],
+                    ],
+                    [
+                        'quest_step_status' => [
+                            'quest' => 'les-disparus-du-donjon',
+                            'quest_step' => 6,
                             'status' => 'progress',
                         ],
                     ],
                     [
                         'quest_step_status' => [
                             'quest' => 'les-disparus-du-donjon',
-                            'quest_step' => 10,
-                            'status' => 'progress',
+                            'quest_step' => 6,
+                            'status' => 'completed',
                         ],
                     ],
                     [
+                        'quest_step_status' => [
+                            'quest' => 'les-disparus-du-donjon',
+                            'quest_step' => 25,
+                            'status' => 'progress',
+                        ],
+                    ],
+                    /*[
                         'has_item' => 'amulette-du-cercle',
-                    ],
+                    ],*/
                 ],
             ],
             'reference' => 'location_zone_bosquet_des_druides_grand_druide',

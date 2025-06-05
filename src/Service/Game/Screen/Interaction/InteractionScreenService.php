@@ -4,16 +4,19 @@ namespace App\Service\Game\Screen\Interaction;
 
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
+use App\Entity\Location\Location;
 use App\Entity\Screen\InteractionScreen;
 use App\Service\Game\Dialog\DialogService;
 use App\Service\Game\Navigation\ExitActionResolver;
+use App\Service\Riddle\RiddleTriggerResolverService;
 use Doctrine\ORM\EntityManagerInterface;
 
 readonly class InteractionScreenService
 {
-    public function __construct(private EntityManagerInterface $entityManager,
-                                private DialogService          $dialogService,
-                                private ExitActionResolver     $exitActionResolver)
+    public function __construct(private EntityManagerInterface       $entityManager,
+                                private DialogService                $dialogService,
+                                private RiddleTriggerResolverService $riddleTriggerResolver,
+                                private ExitActionResolver           $exitActionResolver)
     {
     }
 
@@ -37,13 +40,13 @@ readonly class InteractionScreenService
 
     private function createScreenActions(InteractionScreen $screen, Player $player): void
     {
-        $footerActions = [];
+        $actionsByType = [];
         $character = $screen->getCharacter();
 
-        // Actions de dialogue
+        // Dialogue principal
         $dialog = $this->dialogService->findFirstDialogStep($character, $player);
         if($dialog) {
-            $footerActions[] = [
+            $actionsByType['dialog'][] = [
                 'type' => 'dialog',
                 'slug' => $dialog->getSlug(),
                 'label' => 'Discuter avec ' . $character->getName(),
@@ -51,10 +54,10 @@ readonly class InteractionScreenService
             ];
         }
 
-        // Actions de ragots
+        // Ragots
         $rumor = $this->dialogService->findFirstRumorStep($character, $player);
         if($rumor) {
-            $footerActions[] = [
+            $actionsByType['dialog'][] = [
                 'type' => 'dialog',
                 'slug' => $rumor->getSlug(),
                 'label' => 'Ragots de ' . $character->getName(),
@@ -62,35 +65,35 @@ readonly class InteractionScreenService
             ];
         }
 
-        // Actions métier
+        // Métier
         $profession = $character->getProfession();
         if($profession) {
-            $tradeProfessions = ['marchand', 'forgeron', 'arcaniste', 'tavernier', 'pecheur'];
-            if(in_array($profession->getSlug(), $tradeProfessions, true)) {
-                $footerActions[] = [
+            $slug = $profession->getSlug();
+            if(in_array($slug, ['marchand', 'forgeron', 'arcaniste', 'tavernier', 'pecheur'], true)) {
+                $actionsByType['trade'][] = [
                     'type' => 'trade',
                     'slug' => $character->getSlug(),
                     'label' => 'Marchander avec ' . $character->getName(),
                     'thumbnail' => 'img/core/action/trade.png',
                 ];
-                if($profession->getSlug() === 'forgeron') {
-                    $footerActions[] = [
+                if($slug === 'forgeron') {
+                    $actionsByType['repair'][] = [
                         'type' => 'repair',
                         'slug' => $character->getSlug(),
                         'label' => 'Réparer avec ' . $character->getName(),
                         'thumbnail' => 'img/core/action/repair.png',
                     ];
                 }
-                if($profession->getSlug() === 'arcaniste') {
-                    $footerActions[] = [
+                if($slug === 'arcaniste') {
+                    $actionsByType['reload'][] = [
                         'type' => 'reload',
                         'slug' => $character->getSlug(),
                         'label' => 'Recharger avec ' . $character->getName(),
                         'thumbnail' => 'img/core/action/reload.png',
                     ];
                 }
-            } else if($profession->getSlug() === 'pretre') {
-                $footerActions[] = [
+            } else if($slug === 'pretre') {
+                $actionsByType['pray'][] = [
                     'type' => 'pray',
                     'slug' => $character->getSlug(),
                     'label' => 'Prier avec ' . $character->getName(),
@@ -99,14 +102,27 @@ readonly class InteractionScreenService
             }
         }
 
-        // Bouton retour
-        $exitAction = $this->exitActionResolver->getExitAction($screen, $player);
-        if($exitAction) {
-            $footerActions[] = $exitAction;
+        // Énigmes
+        $riddleSlug = '';
+        if($character->getSlug() === 'grand-druide') {
+            $riddleSlug = 'lepreuve-de-lesprit-du-cercle';
+        }
+        $riddleTriggers = $this->riddleTriggerResolver->getAvailableRiddleTriggers('riddle_screen', $riddleSlug, $player);
+        foreach($riddleTriggers as $riddleTrigger) {
+            $actionsByType['riddle'][] = [
+                'type' => 'riddle',
+                'id' => $riddleTrigger->getRiddle()->getRiddleQuestions()->first()->getId(),
+                'label' => $riddleTrigger->getRiddle()->getName(),
+                'thumbnail' => $riddleTrigger->getRiddle()->getThumbnail() ?? 'img/core/action/search.png',
+            ];
         }
 
-        if(!empty($footerActions)) {
-            $screen->setActions(['footer' => $footerActions]);
+        // Retour
+        $exitAction = $this->exitActionResolver->getExitAction($screen, $player);
+        if($exitAction) {
+            $actionsByType['location'][] = $exitAction;
         }
+
+        $screen->setActions(['footer' => $actionsByType]);
     }
 }

@@ -5,7 +5,10 @@ namespace App\Twig\Components\Game\Interaction;
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Character\PlayerCharacter;
+use App\Entity\Riddle\RiddleTrigger;
 use App\Entity\Screen\InteractionScreen;
+use App\Service\Game\Screen\Riddle\RiddleScreenService;
+use App\Service\Riddle\RiddleResolverService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -31,7 +34,9 @@ class InteractionComponent
     #[LiveProp(writable: true)]
     public string $description = '';
 
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager,
+                                private readonly RiddleResolverService  $riddleResolver,
+                                private readonly RiddleScreenService    $riddleScreenService)
     {
     }
 

@@ -11,7 +11,7 @@ trait FauxDjinnTrait
             'text' => "<p>L’air se trouble devant vous, comme agité par une chaleur invisible. Au centre de l’oasis, une silhouette se dresse au bord de l’eau, drapée de tissus aux reflets flamboyants. Ses pieds ne semblent pas toucher le sol. Autour de lui, le sable vibre doucement, comme attiré par sa présence. Une odeur de cendres et de pourriture flotte dans l’air.</p><p><em>Je suis le souffle du désert. La flamme du passé. L’éclat de la vérité que vous ne pouvez supporter…</em></p>",
             'first' => true,
             'conditions' => [
-                'quest_secondary_status' => [
+                'quest_step_status' => [
                     'quest' => 'la-fiole-perdue',
                     'quest_step' => 2,
                     'status' => 'progress',
@@ -30,7 +30,7 @@ trait FauxDjinnTrait
             'name' => 'Faux Djinn - Accepter la quête',
             'text' => "<p><em>Tu veux la reprendre&nbsp;? Tu veux éteindre la lumière&nbsp;? Alors viens. Approche. Et embrasse le feu&nbsp;!</em></p>",
             'effects' => [
-                'edit_quest_secondary_status' => [
+                'edit_quest_step_status' => [
                     'quest' => 'la-fiole-perdue',
                     'quest_step' => 2,
                     'status' => 'completed',

@@ -90,7 +90,7 @@ trait BiloLePassantTrait
         // Ragots : Arcanes de Port Saint-Doux
         [
             'name' => 'Bilo - Rencontre',
-            'text' => "<p><em>Je reviens de chez Wilbert, l'Arcaniste. Il en a des trucs magiques&nbsp;! Ça fait rêver… Mais qu'est-ce que c'est cher, la magie&nbsp;!</em></p>",
+            'text' => "<p><em>Je reviens de chez Wilbert, l'Arcaniste. C'est un érudit, il connaît toutes les langues du Royaume, et il a lu plein de bouquins. Il est vraiment impressionnant, j'adore parler avec lui&nbsp;! Et il en a des trucs magiques&nbsp;! Plein ses étagères. Ça fait rêver… Mais qu'est-ce que c'est cher, la magie&nbsp;!</em></p>",
             'first' => true,
             'conditions' => [
                 'location_unknown' => 'quartier-des-ploucs',

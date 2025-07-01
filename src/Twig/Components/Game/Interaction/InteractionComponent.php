@@ -7,6 +7,7 @@ use App\Entity\Character\Player;
 use App\Entity\Character\PlayerCharacter;
 use App\Entity\Riddle\RiddleTrigger;
 use App\Entity\Screen\InteractionScreen;
+use App\Service\Character\CharacterDescriptionVariantService;
 use App\Service\Game\Screen\Riddle\RiddleScreenService;
 use App\Service\Riddle\RiddleResolverService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,16 +35,20 @@ class InteractionComponent
     #[LiveProp(writable: true)]
     public string $description = '';
 
-    public function __construct(private readonly EntityManagerInterface $entityManager,
-                                private readonly RiddleResolverService  $riddleResolver,
-                                private readonly RiddleScreenService    $riddleScreenService)
+    public function __construct(private readonly EntityManagerInterface             $entityManager,
+                                private readonly RiddleResolverService              $riddleResolver,
+                                private readonly RiddleScreenService                $riddleScreenService,
+                                private readonly CharacterDescriptionVariantService $descriptionVariantService)
     {
     }
 
     #[PostMount]
     public function postMount(): void
     {
-        $this->description = $this->playerCharacter->getDescription() ?? '';
+        $this->description = $this->descriptionVariantService->getVariantDescription(
+            $this->character,
+            $this->playerCharacter->getCharacter()
+        );
     }
 
     #[LiveAction]

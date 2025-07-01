@@ -25,6 +25,32 @@ trait MaireDePortSaintDouxTrait
             'reference' => 'dialog_rencontre_maire_de_port_saint_doux_3_1',
         ],
 
+        // Dialogue : Banquet Inaugural
+        [
+            'text' => "Merci. C’est… impressionnant",
+            'dialogStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_1',
+            'nextStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_4',
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_1_1',
+        ],
+        [
+            'text' => "Ce médaillon… Il est particulier, non&nbsp;?",
+            'dialogStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_1',
+            'nextStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_2',
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_1_2',
+        ],
+        [
+            'text' => "Il dégage une énergie étrange… Est-il magique&nbsp;?",
+            'dialogStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_2',
+            'nextStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_3',
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_2_1',
+        ],
+        [
+            'text' => "Merci pour votre confiance, Monsieur le Maire.",
+            'dialogStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_3',
+            'nextStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_4',
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_3_1',
+        ],
+
         // Ragots : Quartier de la Nouvelle Ville
         [
             'text' => "Où se trouvera ce quartier&nbsp;?",

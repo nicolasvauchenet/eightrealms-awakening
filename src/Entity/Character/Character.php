@@ -59,6 +59,9 @@ abstract class Character
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descriptionAngry = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descriptionAlt = null;
+
     #[ORM\Column]
     private ?int $strength = null;
 
@@ -245,6 +248,18 @@ abstract class Character
     public function setDescriptionAngry(?string $descriptionAngry): static
     {
         $this->descriptionAngry = $descriptionAngry;
+
+        return $this;
+    }
+
+    public function getDescriptionAlt(): ?string
+    {
+        return $this->descriptionAlt;
+    }
+
+    public function setDescriptionAlt(?string $descriptionAlt): static
+    {
+        $this->descriptionAlt = $descriptionAlt;
 
         return $this;
     }
@@ -695,7 +710,7 @@ abstract class Character
     public function setCharacterAlignment(CharacterAlignment $characterAlignment): static
     {
         // set the owning side of the relation if necessary
-        if ($characterAlignment->getCharacter() !== $this) {
+        if($characterAlignment->getCharacter() !== $this) {
             $characterAlignment->setCharacter($this);
         }
 

@@ -42,6 +42,9 @@ class Location
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?array $conditions = null;
+
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     #[ORM\JoinColumn(onDelete: "SET NULL")]
     private ?self $parent = null;
@@ -163,6 +166,18 @@ class Location
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getConditions(): ?array
+    {
+        return $this->conditions;
+    }
+
+    public function setConditions(?array $conditions): static
+    {
+        $this->conditions = $conditions;
 
         return $this;
     }

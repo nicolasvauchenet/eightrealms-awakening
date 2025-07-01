@@ -16,6 +16,7 @@ use App\Service\Quest\CharacterQuestService;
 use App\Service\Riddle\RiddleTriggerResolverService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 readonly class LocationScreenService
 {
@@ -23,12 +24,22 @@ readonly class LocationScreenService
                                 private ConditionEvaluatorService    $conditionEvaluatorService,
                                 private ExitActionResolver           $exitActionResolver,
                                 private RiddleTriggerResolverService $riddleTriggerResolver,
-                                private EventDispatcherInterface     $eventDispatcher, private CharacterQuestService $characterQuestService)
+                                private EventDispatcherInterface     $eventDispatcher,
+                                private CharacterQuestService        $characterQuestService)
     {
     }
 
-    public function getScreen(Location $location, Player $player): LocationScreen
+    public function getScreen(Location $location, Player $player): LocationScreen|RedirectResponse
     {
+        $result = $this->conditionEvaluatorService->isValid($location->getConditions(), $player);
+        if($result instanceof RedirectResponse) {
+            return $result;
+        }
+
+        if($result === false) {
+            throw new \RuntimeException('Accès au lieu refusé sans redirection définie.');
+        }
+
         $screen = $this->entityManager->getRepository(LocationScreen::class)->findOneBy(['location' => $location]);
         if(!$screen) {
             $screen = (new LocationScreen())
@@ -160,14 +171,25 @@ readonly class LocationScreenService
 
                 // Bâtiments enfants
                 foreach($location->getChildren() as $childLocation) {
-                    if($childLocation->getType() === 'building') {
-                        $footerActions['buildings'][] = [
-                            'type' => 'location',
-                            'slug' => $childLocation->getSlug(),
-                            'label' => $childLocation->getName(),
-                            'thumbnail' => $childLocation->getThumbnail(),
-                        ];
+                    if($childLocation->getType() !== 'building') {
+                        continue;
                     }
+
+                    $childResult = $this->conditionEvaluatorService->isValid($childLocation->getConditions(), $player);
+                    if($childResult === false) {
+                        continue;
+                    }
+
+                    if($childResult instanceof RedirectResponse && $childResult->getTargetUrl() === 'hidden') {
+                        continue;
+                    }
+
+                    $footerActions['buildings'][] = [
+                        'type' => 'location',
+                        'slug' => $childLocation->getSlug(),
+                        'label' => $childLocation->getName(),
+                        'thumbnail' => $childLocation->getThumbnail(),
+                    ];
                 }
 
                 // Bouton Exit

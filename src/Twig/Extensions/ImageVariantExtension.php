@@ -5,7 +5,6 @@ namespace App\Twig\Extensions;
 use App\Entity\Character\Character;
 use App\Entity\Character\Player;
 use App\Entity\Location\Location;
-use App\Entity\Quest\PlayerQuest;
 use App\Service\Character\CharacterReputationService;
 use App\Service\Game\Condition\ConditionEvaluatorService;
 use App\Service\Quest\CharacterQuestService;
@@ -14,9 +13,10 @@ use Twig\TwigFunction;
 
 class ImageVariantExtension extends AbstractExtension
 {
-    public function __construct(private readonly CharacterQuestService      $questService,
-                                private readonly ConditionEvaluatorService  $conditionEvaluatorService,
-                                private readonly CharacterReputationService $characterReputationService
+    public function __construct(
+        private readonly CharacterQuestService      $questService,
+        private readonly ConditionEvaluatorService  $conditionEvaluatorService,
+        private readonly CharacterReputationService $characterReputationService
     )
     {
     }
@@ -31,18 +31,23 @@ class ImageVariantExtension extends AbstractExtension
 
     public function getCharacterPicture(Player $player, Character $character): string
     {
-        switch($character->getSlug()) {
-            case 'chef-gobelin':
-                $quest = $this->getLivraisonQuest($player);
-                if($quest && $quest->getStatus() === 'rewarded') {
-                    return $this->insertAltSuffix($character->getPicture());
-                }
-                break;
-            default:
-                break;
+        $slug = $character->getSlug();
+
+        $variantRules = [
+            'chef-gobelin' => fn() => $this->questStatusIs($player, 'livraison-en-cours', 'rewarded'),
+            'bilo-le-passant' => fn() => $this->questStatusIs($player, 'banquet-inaugural', 'progress'),
+            'maire-de-port-saint-doux' => fn() => $this->questStatusIs($player, 'banquet-inaugural', 'progress'),
+            'pecheur' => fn() => $this->questStatusIs($player, 'banquet-inaugural', 'progress'),
+        ];
+
+        if(isset($variantRules[$slug]) && $variantRules[$slug]()) {
+            return $this->insertAltSuffix($character->getPicture());
         }
 
-        if($character->getPictureAngry() && $this->characterReputationService->getReputation($player, $character) < -5) {
+        if(
+            $character->getPictureAngry() &&
+            $this->characterReputationService->getReputation($player, $character) < -5
+        ) {
             return $character->getPictureAngry();
         }
 
@@ -54,26 +59,30 @@ class ImageVariantExtension extends AbstractExtension
         $characterSlugs = [
             'chef-gobelin',
             'gerard-le-pecheur',
+            'bilo-le-passant',
+            'maire-de-port-saint-doux',
+            'pecheur',
         ];
 
         $hasMatchingCharacter = false;
+
         foreach($location->getCharacterLocations() as $characterLocation) {
             $character = $characterLocation->getCharacter();
             if(!$character || !in_array($character->getSlug(), $characterSlugs, true)) {
                 continue;
             }
+
             $hasMatchingCharacter = true;
+
             $conditions = $characterLocation->getConditions();
             if(!$conditions || $this->conditionEvaluatorService->isValid($conditions, $player)) {
                 return $location->getPicture();
             }
         }
 
-        if($hasMatchingCharacter) {
-            return $this->insertAltSuffix($location->getPicture());
-        }
-
-        return $location->getPicture();
+        return $hasMatchingCharacter
+            ? $this->insertAltSuffix($location->getPicture())
+            : $location->getPicture();
     }
 
     private function insertAltSuffix(string $path): string
@@ -81,20 +90,19 @@ class ImageVariantExtension extends AbstractExtension
         return preg_replace('/(\.[a-z0-9]+)$/i', '_alt$1', $path);
     }
 
-    private function getLivraisonQuest(Player $player): ?PlayerQuest
+    private function questStatusIs(Player $player, string $questSlug, string $status): bool
     {
-        foreach($this->questService->getPlayerSideQuests($player) as $pq) {
-            if($pq->getQuest()->getSlug() === 'livraison-en-cours') {
-                return $pq;
+        $quests = array_merge(
+            $this->questService->getPlayerSideQuests($player),
+            $this->questService->getPlayerSideQuests($player, true)
+        );
+
+        foreach($quests as $pq) {
+            if($pq->getQuest()->getSlug() === $questSlug && $pq->getStatus() === $status) {
+                return true;
             }
         }
 
-        foreach($this->questService->getPlayerSideQuests($player, true) as $pq) {
-            if($pq->getQuest()->getSlug() === 'livraison-en-cours') {
-                return $pq;
-            }
-        }
-
-        return null;
+        return false;
     }
 }

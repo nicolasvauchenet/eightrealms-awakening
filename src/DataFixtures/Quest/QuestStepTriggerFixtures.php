@@ -8,7 +8,7 @@ use App\DataFixtures\Quest\QuestStepTrigger\BoisDuPendu\CriqueDuPenduTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\MontsTerribles\RefugeDuBoucBoiteuxTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\Plouc\CampementGobelinTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\AnciensDocksTrait;
-use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\QuartierDesPloucsTrait;
+use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\QuartierDesChauvesTrait;
 use App\DataFixtures\Quest\QuestStepTrigger\PortSaintDoux\PortSaintDouxTrait;
 use App\Entity\Quest\QuestStep;
 use App\Entity\Quest\QuestStepTrigger;
@@ -20,7 +20,7 @@ class QuestStepTriggerFixtures extends Fixture implements OrderedFixtureInterfac
 {
     use PortSaintDouxTrait;
     use AnciensDocksTrait;
-    use QuartierDesPloucsTrait;
+    use QuartierDesChauvesTrait;
     use CampementGobelinTrait;
     use ClairiereDeLOublieTrait;
     use BosquetDesDruidesTrait;
@@ -33,7 +33,7 @@ class QuestStepTriggerFixtures extends Fixture implements OrderedFixtureInterfac
             // Port Saint-Doux
             self::PORT_SAINT_DOUX_QUEST_STEP_TRIGGERS,
             self::ANCIENS_DOCKS_QUEST_STEP_TRIGGERS,
-            self::QUARTIER_DES_PLOUCS_QUEST_STEP_TRIGGERS,
+            self::QUARTIER_DES_CHAUVES_QUEST_STEP_TRIGGERS,
 
             // Plouc
             self::CAMPEMENT_GOBELIN_QUEST_STEP_TRIGGERS,

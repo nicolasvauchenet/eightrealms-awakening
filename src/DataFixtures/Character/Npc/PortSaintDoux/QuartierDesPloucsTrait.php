@@ -26,9 +26,10 @@ trait QuartierDesPloucsTrait
         ],
         [
             'name' => 'Pêcheur',
-            'picture' => 'img/core/npc/pecheur.png',
-            'thumbnail' => 'img/core/npc/pecheur_thumb.png',
+            'picture' => 'img/chapter1/npc/pecheur-du-quartier-des-ploucs.png',
+            'thumbnail' => 'img/chapter1/npc/pecheur-du-quartier-des-ploucs_thumb.png',
             'description' => "<p>Cet homme a l'air pauvre et plutôt mal nourri. Il s'arrête néanmoins en vous voyant vous approcher, et vous regarde avec un sourire timide.</p><p><em>Bonjour, étranger. Belle journée pour la pêche, pas vrai&nbsp;? Vous cherchez du poisson frais&nbsp;? Je peux vous en vendre à un bon prix&nbsp;!</em></p>",
+            'description_alt' => "<p>Le gars est presque méconnaissable, son visage n'est que gaieté. Il lève son gobelet en bois et éclate de rire.</p>",
             'strength' => 10,
             'dexterity' => 12,
             'constitution' => 8,
@@ -41,7 +42,7 @@ trait QuartierDesPloucsTrait
             'level' => 1,
             'race' => 'race_humain',
             'profession' => 'profession_pecheur',
-            'reference' => 'npc_pecheur',
+            'reference' => 'npc_pecheur_du_quartier_des_ploucs',
         ],
     ];
 }

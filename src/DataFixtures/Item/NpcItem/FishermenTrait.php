@@ -8,7 +8,7 @@ trait FishermenTrait
 {
     const FISHERMEN_ITEMS = [
         [
-            'character' => 'npc_pecheur',
+            'character' => 'npc_pecheur_du_quartier_des_ploucs',
             'item' => 'food_fish',
             'class' => Food::class,
         ],

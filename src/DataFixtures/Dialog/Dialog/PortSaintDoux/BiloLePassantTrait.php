@@ -31,6 +31,14 @@ trait BiloLePassantTrait
             'reference' => 'rumor_arcanes_bilo_le_passant',
         ],
 
+        // Ragots : Banquet Inaugural
+        [
+            'type' => 'rumor',
+            'character' => 'npc_bilo_le_passant',
+            'characterClass' => Npc::class,
+            'reference' => 'rumor_bilo_le_passant_banquet_inaugural',
+        ],
+
         // Ragots
         [
             'type' => 'rumor',

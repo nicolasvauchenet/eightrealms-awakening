@@ -79,6 +79,7 @@ class NpcFixtures extends Fixture implements OrderedFixtureInterface
                     ->setThumbnail($data['thumbnail'])
                     ->setDescription($data['description'])
                     ->setDescriptionAngry($data['description_angry'] ?? null)
+                    ->setDescriptionAlt($data['description_alt'] ?? null)
                     ->setStrength($data['strength'])
                     ->setDexterity($data['dexterity'])
                     ->setConstitution($data['constitution'])

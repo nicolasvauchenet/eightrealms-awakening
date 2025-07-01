@@ -54,6 +54,7 @@ trait QuartierDuMarcheTrait
             'thumbnail' => 'img/chapter1/npc/bilo-le-passant_thumb.png',
             'description' => "<p>Vous croisez un passant qui semble désœuvré. Il vous regarde avec insistance, comme s'il avait quelque chose à vous dire.</p><p><em>Euh… Oui&nbsp;? Bonjour&nbsp;! Je m'appelle Bilo&nbsp;! Comment allez-vous&nbsp;?</em></p>",
             'description_angry' => "<p>Vous croisez un passant à l’air contrarié. Il vous lance un regard appuyé, visiblement agacé, comme s’il attendait quelque chose depuis trop longtemps.</p><p><em>Quoi&nbsp;? Vous comptez rester planté là à me fixer, ou vous avez une vraie question&nbsp;?</em></p>",
+            'description_alt' => "<p>Bilo semble être là depuis un moment, à en juger par le rouge à ses joues, et à sa façon de parler un peu hasardeuse…</p>",
             'strength' => 7,
             'dexterity' => 10,
             'constitution' => 10,

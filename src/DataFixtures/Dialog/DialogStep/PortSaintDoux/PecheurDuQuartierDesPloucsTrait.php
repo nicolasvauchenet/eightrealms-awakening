@@ -17,10 +17,10 @@ trait PecheurDuQuartierDesPloucsTrait
         // Ragots : Quartier des Chauves
         [
             'name' => 'Pêcheur du Quartier des Ploucs - Quartier des Chauves',
-            'text' => "<p><em>Dans quèques jours, j'vas aller au quartier des Chauves. Ça sera la première fois d'ma vie&nbsp;! Et sûrement la dernière… Y'a l'Maire qu'a convoqué tout le peuple de la cité, pour nous présenter la &laquo;&nbsp;Nouvelle Ville&nbsp;&raquo;.</em></p><p><em>J'm'en fous un peu, j'avoue… C'est point d'la nouvelle pour nous les pêcheurs, toute façon, alors voilà. On y foutra point les orteils, nous, dans leur nouvelle capitale. Déjà qu'on peut point s'promener partout où qu'on veut dans la normale…</em></p>",
+            'text' => "<p><em>Dans quèques jours, j'vas aller au quartier des Chauves. Ça sera la première fois d'ma vie&nbsp;! Et sûrement la dernière…</em></p><p><em>Y'a l'Maire qu'organise un banquet dans la Mairie, pour fêter l'inauguration d'son &laquo;&nbsp;Quartier de la Nouvelle Ville&nbsp;&raquo;. Tout le monde est convié, qu'il a dit. Même nous autres les pêcheurs&nbsp;!</em></p><p>Il se renfrogne un court instant.</p><p><em>À dire vrai, j'm'en fous un peu, j'avoue… Mais y paraît qu'y aura du bon vin, et d'la musique. Et surtout, que la bouffe sera à volonté&nbsp;! J'vais p'têt aller y traîner mes galoches.</em></p>",
             'first' => true,
             'conditions' => [
-                'location_unknown' => 'quartier-des-chauves',
+                'quest_not_started' => 'banquet-inaugural',
             ],
             'dialog' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs',
             'reference' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs_1',
@@ -34,28 +34,46 @@ trait PecheurDuQuartierDesPloucsTrait
             'dialog' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs',
             'reference' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs_2',
         ],
+        [
+            'name' => 'Pêcheur du Quartier des Ploucs - Quartier des Chauves',
+            'text' => "<p><em>Ouais, tout l'monde. Même vous. On s'croisera p't'ête autour d'un godet&nbsp;?</em></p>",
+            'dialog' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs',
+            'reference' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs_3',
+        ],
+
+        // Ragots: Banquet Inaugural
+        [
+            'name' => 'Pêcheur du Quartier des Ploucs - Banquet Inaugural',
+            'text' => "<p><em>Par tous les bigorneaux&nbsp;! J'me suis jamais autant régalé d'ma vie&nbsp;! J'vous jure, z'avez goûté à l'porcelet à la broche&nbsp;? J'en ai pris trois fois. Trois&nbsp;! Hahaha&nbsp;!</em></p><p>Il chancelle un peu, rattrape une table en riant, puis poursuit d’un air conspirateur.</p><p><em>Et l’vin… l’vin, mon gars… C’est pas d'la vinasse d'la Crique. C’est du nectar d'aristo. J'sais pas où qu'y l'ont choppé, mais j'vais m'trouver un tonneau à la fin, j'vous l'dis.</em></p><p>Il baisse la voix, soudain grave.</p><p><em>Et z'avez vu c’que l'Maire a autour du cou&nbsp;? Une drôle d'breloque, ça. On dirait presque un bijou magique… Ou un machin à ouvrir les portails, j'sais pas trop. Mais y brille… même à travers le vin&nbsp;!</em></p>",
+            'first' => true,
+            'conditions' => [
+                'quest_status' => [
+                    'quest' => 'banquet-inaugural',
+                    'status' => 'progress',
+                ],
+            ],
+            'effects' => [
+                'edit_quest_step_status' => [
+                    'quest' => 'banquet-inaugural',
+                    'quest_step' => 1,
+                    'status' => 'completed',
+                ],
+            ],
+            'dialog' => 'rumor_pecheur_du_quartier_des_ploucs_banquet_inaugural',
+            'reference' => 'rumor_pecheur_du_quartier_des_ploucs_banquet_inaugural_1',
+        ],
 
         // Ragots
         [
             'name' => 'Pêcheur du Quartier des Ploucs - Maire',
-            'text' => "<p><em>L'a l'air gentil monsieur l'Maire. On y avait bien mangé là-bas à son discours… Bon, il est sévère comme tous les riches, mais faut l'comprendre&nbsp;:&nbsp;qu'est-ce qu'on ferait sans eux-autres, nous les habitants&nbsp;? Faut bien quelqu'un qui dirige tout c'bazar, avec de la poigne.</em></p>",
+            'text' => "<p><em>L'a l'air gentil monsieur l'Maire. Il a fait un chouette discours à son banquet… Bon, il est sévère comme tous les riches, mais faut l'comprendre&nbsp;:&nbsp;qu'est-ce qu'on ferait sans eux-autres, nous les habitants&nbsp;? Faut bien quelqu'un qui dirige tout c'bazar, avec de la poigne.</em></p>",
             'first' => true,
             'conditions' => [
-                'location_known' => 'quartier-des-chauves',
-                'any' => [
-                    [
-                        'quest_step_status' => [
-                            'quest' => 'les-disparus-du-donjon',
-                            'quest_step' => 11,
-                            'status' => 'progress',
-                        ],
-                    ],
-                    [
-                        'quest_step_status' => [
-                            'quest' => 'les-disparus-du-donjon',
-                            'quest_step' => 11,
-                            'status' => 'completed',
-                        ],
+                'all' => [
+                    'location_known' => 'quartier-des-ploucs',
+                    'quest_status_not' => [
+                        'quest' => 'banquet-inaugural',
+                        'status' => 'progress',
                     ],
                 ],
             ],

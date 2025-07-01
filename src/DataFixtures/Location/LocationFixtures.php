@@ -150,6 +150,7 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
                     ->setDescription($data['description'])
                     ->setDescriptionAlt($data['descriptionAlt'] ?? null)
                     ->setType($data['type'])
+                    ->setConditions($data['conditions'] ?? null)
                     ->setThumbnail($data['thumbnail'] ?? null)
                     ->setParent(isset($data['parent']) ? $this->getReference($data['parent'], Location::class) : null)
                     ->setMap(isset($data['map']) ? $this->getReference($data['map'], Map::class) : null);

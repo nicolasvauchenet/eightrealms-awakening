@@ -5,6 +5,7 @@ namespace App\Service\Game\Condition;
 use App\Entity\Character\Player;
 use App\Service\Game\Condition\Handler\ConditionHandlerInterface;
 use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 readonly class ConditionEvaluatorService
 {
@@ -15,14 +16,20 @@ readonly class ConditionEvaluatorService
     {
     }
 
-    public function isValid(?array $conditions, Player $player): bool
+    public function isValid(?array $conditions, Player $player): bool|RedirectResponse
     {
         if(empty($conditions)) {
             return true;
         }
 
         foreach($conditions as $type => $value) {
-            if(!$this->evaluate($type, $value, $player)) {
+            $result = $this->evaluate($type, $value, $player);
+
+            if($result instanceof RedirectResponse) {
+                return $result;
+            }
+
+            if($result !== true) {
                 return false;
             }
         }
@@ -30,7 +37,7 @@ readonly class ConditionEvaluatorService
         return true;
     }
 
-    private function evaluate(string $type, mixed $value, Player $player): bool
+    private function evaluate(string $type, mixed $value, Player $player): bool|RedirectResponse
     {
         if($type === 'any') {
             return $this->evaluateAny($value, $player);

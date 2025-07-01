@@ -12,5 +12,11 @@ trait PecheurDuQuartierDesPloucsTrait
             'nextStep' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs_2',
             'reference' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs_1_1',
         ],
+        [
+            'text' => "Et tout le monde peut y aller&nbsp;?",
+            'dialogStep' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs_2',
+            'nextStep' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs_3',
+            'reference' => 'rumor_quartier_des_chauves_pecheur_du_quartier_des_ploucs_2_1',
+        ],
     ];
 }

@@ -21,7 +21,7 @@ final class Version20250419233510 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            CREATE TABLE location (id SERIAL NOT NULL, parent_id INT DEFAULT NULL, map_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, picture VARCHAR(255) NOT NULL, thumbnail VARCHAR(255) DEFAULT NULL, description TEXT NOT NULL, description_alt TEXT DEFAULT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id))
+            CREATE TABLE location (id SERIAL NOT NULL, parent_id INT DEFAULT NULL, map_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, picture VARCHAR(255) NOT NULL, thumbnail VARCHAR(255) DEFAULT NULL, description TEXT NOT NULL, description_alt TEXT DEFAULT NULL, type VARCHAR(255) NOT NULL, conditions JSON DEFAULT NULL, PRIMARY KEY(id))
         SQL);
         $this->addSql(<<<'SQL'
             CREATE INDEX IDX_5E9E89CB727ACA70 ON location (parent_id)

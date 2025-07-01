@@ -15,6 +15,14 @@ trait MaireDePortSaintDouxTrait
             'reference' => 'dialog_rencontre_maire_de_port_saint_doux',
         ],
 
+        // Dialogue : Banquet Inaugural
+        [
+            'type' => 'dialog',
+            'character' => 'npc_maire_de_port_saint_doux',
+            'characterClass' => Npc::class,
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux',
+        ],
+
         // Ragots : Quartier de la Nouvelle Ville
         [
             'type' => 'rumor',

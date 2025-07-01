@@ -108,13 +108,41 @@ trait BiloLePassantTrait
             'reference' => 'rumor_arcanes_bilo_le_passant_2',
         ],
 
+        // Ragots: Banquet Inaugural
+        [
+            'name' => 'Bilo - Banquet Inaugural',
+            'text' => "<p><em>Oh bah vous voilà&nbsp;! J’vous avais pas vu dans tout ce monde.</em></p><p>Il se rapproche de vous et votre odorat vous confirme qu'il ripaille depuis déjà un certain temps.</p><p><em>Dites, vous l’avez remarquée vous aussi, l’amulette du Maire&nbsp;? Celle qu’il a autour du cou. On dirait qu’elle brille toute seule, même à l’ombre. R'gardez bien… C’est pas un bijou qu’on trouve au marché, ça, j’vous le dis.</em></p><p><em>J’ai entendu dire qu’il l’aurait reçue d’un vieux noble… ou d’un mage, même&nbsp;! Personne sait trop. Mais moi, j’crois que c'est un truc mystique. Vachement ancien, vous voyez&nbsp;?</em></p><p>Son air presque sérieux et le doigt qui hasarde vers son visage vous donnent envie de sourire.</p><p><em>Y a quelque chose qui cloche, j’le sens dans mes mollets.</em></p>",
+            'first' => true,
+            'conditions' => [
+                'quest_status' => [
+                    'quest' => 'banquet-inaugural',
+                    'status' => 'progress',
+                ],
+            ],
+            'effects' => [
+                'edit_quest_step_status' => [
+                    'quest' => 'banquet-inaugural',
+                    'quest_step' => 1,
+                    'status' => 'completed',
+                ],
+            ],
+            'dialog' => 'rumor_bilo_le_passant_banquet_inaugural',
+            'reference' => 'rumor_bilo_le_passant_banquet_inaugural_1',
+        ],
+
         // Ragots
         [
             'name' => 'Bilo - Ragots',
             'text' => "<p><em>Vous savez que si vous mangez trois pommes, une carotte et un vieux fromage de chèvre avant de dormir, vous rêverez du futur&nbsp;? Enfin… moi, j’ai rêvé que j’étais un poisson qui chantait des berceuses à des dragons. Alors bon, ce n’est peut-être pas le futur-futur. Mais c'est une preuve, vous ne pensez pas&nbsp;?</em></p>",
             'first' => true,
             'conditions' => [
-                'location_known' => 'quartier-des-ploucs',
+                'all' => [
+                    'location_known' => 'quartier-des-ploucs',
+                    'quest_status_not' => [
+                        'quest' => 'banquet-inaugural',
+                        'status' => 'progress',
+                    ],
+                ],
             ],
             'dialog' => 'rumor_bilo_le_passant',
             'reference' => 'rumor_bilo_le_passant_1',

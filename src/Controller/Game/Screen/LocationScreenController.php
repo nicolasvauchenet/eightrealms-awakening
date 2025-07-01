@@ -6,6 +6,7 @@ use App\Entity\Location\Location;
 use App\Service\Game\Player\UpdatePlayerService;
 use App\Service\Game\Screen\Location\LocationScreenService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -17,6 +18,9 @@ final class LocationScreenController extends AbstractController
                           Location              $location): Response
     {
         $screen = $locationScreenService->getScreen($location, $this->getUser()->getPlayer());
+        if($screen instanceof RedirectResponse) {
+            return $screen;
+        }
         $updatePlayerService->updatePlayerScreen($this->getUser()->getPlayer(), $screen, $location);
 
         return $this->render('game/screen/location/index.html.twig', [

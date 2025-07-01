@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures\Location\Location\PortSaintDoux;
 
+use App\Entity\Character\Npc;
+
 trait QuartierDesChauvesTrait
 {
     const QUARTIER_DES_CHAUVES_LOCATIONS = [
@@ -21,6 +23,18 @@ trait QuartierDesChauvesTrait
             'description' => "<p>Vestige éclatant d’une royauté désormais révolue, le Palais Royal surplombe le Quartier des Chauves avec une majesté hautaine. Ses hautes colonnes de marbre, ses jardins parfaitement taillés et ses vitraux aux armes du royaume témoignent d’un passé glorieux.</p><p>Bien que le trône soit désormais désert, le palais reste impeccablement entretenu, gardé jour et nuit par des soldats à l’armure aussi brillante que leurs moustaches sont taillées. Les curieux sont poliment refoulés&nbsp;—&nbsp;ou moins poliment, selon leur accoutrement.</p>",
             'type' => 'building',
             'thumbnail' => 'img/chapter1/location/palais-royal_thumb.webp',
+            'conditions' => [
+                'can_enter_location' => [
+                    'conditions' => [
+                        'quest_step_started' => [
+                            'quest' => 'les-disparus-du-donjon',
+                            'quest_step' => 13,
+                        ],
+                    ],
+                    'redirect_type' => 'dialog',
+                    'redirect' => 'garde-du-quartier-des-chauves-acces-au-palais',
+                ],
+            ],
             'parent' => 'location_zone_quartier_des_chauves',
             'reference' => 'location_building_palais_royal',
         ],
@@ -43,6 +57,25 @@ trait QuartierDesChauvesTrait
             'thumbnail' => 'img/chapter1/location/appartements-royaux_thumb.webp',
             'parent' => 'location_building_palais_royal',
             'reference' => 'location_building_appartements_royaux',
+        ],
+        [
+            'name' => 'Jardins de la Mairie',
+            'picture' => 'img/chapter1/location/jardins-de-la-mairie.webp',
+            'description' => "<p>Les jardins ont été soigneusement aménagés pour accueillir l’inauguration du Quartier de la Nouvelle Ville. Guirlandes tendues entre les arbres, tables garnies de victuailles, lampions colorés flottant au-dessus de la foule… Le Maire se mêle à la foule non sans une certaine réticence affichée sur son visage, entouré de ses concitoyens trop occupés à ripailler pour s'en rendre compte.</p>",
+            'type' => 'building',
+            'thumbnail' => 'img/chapter1/location/jardins-de-la-mairie_thumb.webp',
+            'conditions' => [
+                'can_enter_location' => [
+                    'conditions' => [
+                        'quest_started' => [
+                            'quest' => 'banquet-inaugural',
+                        ],
+                    ],
+                    'redirect_type' => 'hidden',
+                ],
+            ],
+            'parent' => 'location_building_hotel_de_ville',
+            'reference' => 'location_building_jardins_de_la_mairie',
         ],
     ];
 }

@@ -51,6 +51,11 @@ trait SecondaryQuestTrait
             'type' => 'Secondaire',
             'reference' => 'quest_secondary_le_gardien_du_refuge',
         ],
+        [
+            'name' => 'Banquet Inaugural',
+            'type' => 'Secondaire',
+            'reference' => 'quest_secondary_banquet_inaugural',
+        ],
 
         // Quêtes annexes
         [

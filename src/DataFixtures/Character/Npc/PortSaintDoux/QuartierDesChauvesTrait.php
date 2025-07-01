@@ -67,7 +67,7 @@ trait QuartierDesChauvesTrait
             'picture' => 'img/chapter1/npc/maire-de-port-saint-doux.png',
             'thumbnail' => 'img/chapter1/npc/maire-de-port-saint-doux_thumb.png',
             'description' => "<p>Bedonnant, engoncé dans ses riches habits et constamment flanqué de courtisans serviles, le Maire de Port Saint-Doux règne d’un œil torve sur le Quartier des Chauves. Hautain, sûr de lui, il parade plus qu’il ne gouverne… du moins en apparence.</p><p>Car derrière les sourires moqueurs et les critiques feutrées, chacun sait qu’il tire les ficelles de la ville comme un marionnettiste avisé. Nul décret ne passe sans son sceau, nul marché ne prospère sans son aval.</p><p>Et ceux qui l’oublient finissent, étrangement, sans voix&nbsp;—&nbsp;ou sans toit.</p>",
-            'description_alt' => "",
+            'description_alt' => "<p>Le Maire fait apparemment tout ce qu'il peut pour paraître à l'aise, mais son sourire n'arrive pas à être suffisamment marqué pour y croire.</p>",
             'strength' => 6,
             'dexterity' => 5,
             'constitution' => 9,

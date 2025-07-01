@@ -18,7 +18,10 @@ trait QuartierDesPloucsTrait
             'characterClass' => Npc::class,
             'location' => 'location_zone_quartier_des_ploucs',
             'conditions' => [
-                'quest_not_started' => 'banquet-inaugural',
+                'quest_status_not' => [
+                    'quest' => 'banquet-inaugural',
+                    'status' => 'progress',
+                ],
             ],
             'reference' => 'location_zone_quartier_des_ploucs_pecheur',
         ],
@@ -27,9 +30,8 @@ trait QuartierDesPloucsTrait
             'characterClass' => Npc::class,
             'location' => 'location_building_jardins_de_la_mairie',
             'conditions' => [
-                'quest_step_status' => [
+                'quest_status' => [
                     'quest' => 'banquet-inaugural',
-                    'quest_step' => 1,
                     'status' => 'progress',
                 ],
             ],

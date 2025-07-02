@@ -169,5 +169,11 @@ trait GrandDruideTrait
             'dialog' => 'quest_main_grand_druide',
             'reference' => 'quest_main_grand_druide_10',
         ],
+        [
+            'name' => 'Grand Druide - Rien',
+            'text' => "<p>Il vous regarde comme s'il n'avait pas compris. Puis, après un instant de réflexion, il se retourne.</p><p><em>Beaucoup voudraient comprendre les choses de ce Monde, mais peu en sont dignes. Le Savoir et la Connaissance ne se portent pas comme de simples vêtements. Continue ton chemin. Tu as encore beaucoup à apprendre.</em></p>",
+            'dialog' => 'quest_main_grand_druide',
+            'reference' => 'quest_main_grand_druide_11',
+        ],
     ];
 }

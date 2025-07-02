@@ -10,7 +10,19 @@ trait GrandDruideTrait
             'text' => "J'aimerais en savoir plus sur le Rituel de l'Âme",
             'dialogStep' => 'quest_main_grand_druide_1',
             'nextStep' => 'quest_main_grand_druide_2',
+            'conditions' => [
+                'has_item' => 'medaillon-des-vents',
+            ],
             'reference' => 'quest_main_grand_druide_1_1',
+        ],
+        [
+            'text' => "J'aimerais comprendre ce qui se passe",
+            'dialogStep' => 'quest_main_grand_druide_1',
+            'nextStep' => 'quest_main_grand_druide_11',
+            'conditions' => [
+                'has_not_item' => 'medaillon-des-vents',
+            ],
+            'reference' => 'quest_main_grand_druide_1_2',
         ],
         [
             'text' => "Et l'autre fragment&nbsp;?",

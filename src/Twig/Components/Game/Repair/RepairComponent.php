@@ -79,7 +79,7 @@ class RepairComponent
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();
 
-        $this->description .= "<p class='text-success'><strong>{$characterItem->getItem()->getName()}</strong> a été réparé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p class='text-success'>{$this->screen->getCharacter()->getName()} a réparé votre <strong>{$characterItem->getItem()->getName()}</strong> pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</p>";
     }
 
     #[LiveAction]

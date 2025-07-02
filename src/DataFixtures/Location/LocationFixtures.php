@@ -94,11 +94,11 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
             // Port Saint-Doux
             self::PORT_SAINT_DOUX_LOCATIONS,
             self::QUARTIER_DU_MARCHE_LOCATIONS,
-            self::QUARTIER_DES_PLOUCS_LOCATIONS,
-            self::VIEILLE_VILLE_LOCATIONS,
-            self::QUARTIER_DES_CHAUVES_LOCATIONS,
-            self::DOCKS_DE_L_OUEST_LOCATIONS,
             self::ANCIENS_DOCKS_LOCATIONS,
+            self::VIEILLE_VILLE_LOCATIONS,
+            self::DOCKS_DE_L_OUEST_LOCATIONS,
+            self::QUARTIER_DES_PLOUCS_LOCATIONS,
+            self::QUARTIER_DES_CHAUVES_LOCATIONS,
             self::NOUVELLE_VILLE_LOCATIONS,
 
             // Plouc

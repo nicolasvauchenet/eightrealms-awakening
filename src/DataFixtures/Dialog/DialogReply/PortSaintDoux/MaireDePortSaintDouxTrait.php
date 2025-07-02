@@ -24,6 +24,25 @@ trait MaireDePortSaintDouxTrait
             'nextStep' => 'dialog_rencontre_maire_de_port_saint_doux_4',
             'reference' => 'dialog_rencontre_maire_de_port_saint_doux_3_1',
         ],
+        [
+            'text' => "C'est d'accord, merci",
+            'dialogStep' => 'dialog_rencontre_maire_de_port_saint_doux_4',
+            'nextStep' => 'dialog_rencontre_maire_de_port_saint_doux_5',
+            'conditions' => [
+                'quest_step_status' => [
+                    'quest' => 'les-disparus-du-donjon',
+                    'quest_step' => 8,
+                    'status' => 'progress',
+                ],
+            ],
+            'reference' => 'dialog_rencontre_maire_de_port_saint_doux_4_1',
+        ],
+        [
+            'text' => "J'ai à faire, peut-être plus tard",
+            'dialogStep' => 'dialog_rencontre_maire_de_port_saint_doux_4',
+            'nextStep' => 'dialog_rencontre_maire_de_port_saint_doux_6',
+            'reference' => 'dialog_rencontre_maire_de_port_saint_doux_4_2',
+        ],
 
         // Dialogue : Banquet Inaugural
         [

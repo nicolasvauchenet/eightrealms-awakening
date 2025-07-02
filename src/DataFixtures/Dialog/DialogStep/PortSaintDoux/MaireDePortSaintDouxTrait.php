@@ -30,12 +30,24 @@ trait MaireDePortSaintDouxTrait
         ],
         [
             'name' => 'Maire de Port Saint-Doux - Dialogue',
-            'text' => "<p>Un silence. Son sourire se fige. Il vous fixe, longuement.</p><p><em>Le Roi&nbsp;? Vraiment&nbsp;? Allons… Galdric III a disparu sans un mot, sans laisser de trace. Son héritier s'est perdu dans je ne sais quelle quête de gloire imbéc…</em></p><p>Il toussote et se reprend.</p><p><em>Bref. S’il était vivant, croyez-vous qu’il resterait caché&nbsp;?</em></p><p>Il marque une pause, vous jauge.</p><p><em>Non. Il est parti. Définitivement. Et ce vide… je l’ai comblé. Par nécessité.</em></p><p>Il se rapproche d’un pas, le ton plus calme.</p><p><em>Je ne suis pas votre ennemi. Le peuple a besoin de stabilité, pas d’incertitude. Vous verrez par vous-même…</em></p><p>Il esquisse un sourire calculé.</p><p><em>Je vous invite. À mon banquet d’inauguration. Une célébration pour la Nouvelle Ville. Vous y verrez ce que j’ai accompli.</em></p><p>Il se retourne alors, et vous entraîne avec lui.</p><p><em>Allez. Nous sommes attendus.</em></p>",
+            'text' => "<p>Un silence. Son sourire se fige. Il vous fixe, longuement.</p><p><em>Le Roi&nbsp;? Vraiment&nbsp;? Allons… Galdric III a disparu sans un mot, sans laisser de trace. Son héritier s'est perdu dans je ne sais quelle quête de gloire imbéc…</em></p><p>Il toussote et se reprend.</p><p><em>Bref. S’il était vivant, croyez-vous qu’il resterait caché&nbsp;?</em></p><p>Il marque une pause, vous jauge.</p><p><em>Non. Il est parti. Définitivement. Et ce vide… je l’ai comblé. Par nécessité.</em></p><p>Il se rapproche d’un pas, le ton plus calme.</p><p><em>Je ne suis pas votre ennemi. Le peuple a besoin de stabilité, pas d’incertitude. Vous verrez par vous-même…</em></p><p>Il esquisse un sourire calculé.</p><p><em>Je vous invite. À mon banquet d’inauguration. Une célébration pour la Nouvelle Ville. Vous y verrez ce que j’ai accompli.</em></p>",
+            'dialog' => 'dialog_rencontre_maire_de_port_saint_doux',
+            'reference' => 'dialog_rencontre_maire_de_port_saint_doux_4',
+        ],
+        [
+            'name' => 'Maire de Port Saint-Doux - Dialogue',
+            'text' => "<p>Il se retourne, et vous entraîne avec lui.</p><p><em>Allez. Nous sommes attendus.</em></p><p>Vous sortez par une petite porte donnant sur les jardins. Et là, vous ouvrez de grands yeux…</p>",
             'effects' => [
                 'start_quest' => 'banquet-inaugural',
             ],
             'dialog' => 'dialog_rencontre_maire_de_port_saint_doux',
-            'reference' => 'dialog_rencontre_maire_de_port_saint_doux_4',
+            'reference' => 'dialog_rencontre_maire_de_port_saint_doux_5',
+        ],
+        [
+            'name' => 'Maire de Port Saint-Doux - Dialogue',
+            'text' => "<p><em>Très bien, faites ce que vous avez à faire. Et revenez dès que vous serez prêt. Il serait dommage de rater une fête aussi grandiose&nbsp;!</em></p>",
+            'dialog' => 'dialog_rencontre_maire_de_port_saint_doux',
+            'reference' => 'dialog_rencontre_maire_de_port_saint_doux_6',
         ],
 
         // Dialogue : Banquet Inaugural

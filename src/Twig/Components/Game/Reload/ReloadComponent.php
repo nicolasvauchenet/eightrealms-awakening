@@ -78,7 +78,7 @@ class ReloadComponent
         $this->entityManager->persist($characterItem);
         $this->entityManager->flush();
 
-        $this->description .= "<p class='text-success'><strong>{$characterItem->getItem()->getName()}</strong> a été rechargé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</p>";
+        $this->description .= "<p class='text-success'>Votre <strong>{$characterItem->getItem()->getName()}</strong> a été rechargé pour {$price} couronne" . ($price > 1 ? 's' : '') . ".</p>";
     }
 
     #[LiveAction]

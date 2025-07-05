@@ -55,6 +55,18 @@ trait QuartierDesChauvesTrait
             'description' => "<p>Situés à l’étage du Palais Royal, les Appartements Royaux mêlent faste et silence dans une atmosphère figée hors du temps. Cette immense pièce, à la fois chambre et bureau, était jadis le cœur des décisions du royaume.</p><p>Le lit à baldaquin trône dans un coin, drapé de velours bleu nuit brodé d’or, tandis qu’au centre, un vaste bureau en bois sombre croule sous les parchemins, les cartes et les plumes figées dans l’encrier sec. Au mur, des portraits de souverains oubliés observent les visiteurs d’un regard sévère, comme s’ils jugeaient encore les affaires du royaume.</p><p>Tout semble prêt pour le retour d’un roi… mais aucun pas ne résonne sur le parquet ciré.</p>",
             'type' => 'building',
             'thumbnail' => 'img/chapter1/location/appartements-royaux_thumb.webp',
+            'conditions' => [
+                'can_enter_location' => [
+                    'conditions' => [
+                        'quest_status' => [
+                            'quest' => 'un-cadeau-pour-la-servante',
+                            'status' => 'completed',
+                        ],
+                    ],
+                    'redirect_type' => 'dialog',
+                    'redirect' => 'garde-du-palais-acces-aux-appartements-royaux',
+                ],
+            ],
             'parent' => 'location_building_palais_royal',
             'reference' => 'location_building_appartements_royaux',
         ],

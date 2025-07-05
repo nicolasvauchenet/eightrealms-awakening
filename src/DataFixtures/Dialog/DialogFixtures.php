@@ -9,6 +9,7 @@ use App\DataFixtures\Dialog\Dialog\MontsTerribles\TharolLeSilencieuxTrait;
 use App\DataFixtures\Dialog\Dialog\Plouc\ChefGobelinTrait;
 use App\DataFixtures\Dialog\Dialog\Plouc\GerardLePecheurTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\BiloLePassantTrait;
+use App\DataFixtures\Dialog\Dialog\PortSaintDoux\GardeDuPalaisTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\GardeDuQuartierDesChauvesTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\GartLeForgeronTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\GrandPretreDePortSaintDouxTrait;
@@ -17,6 +18,7 @@ use App\DataFixtures\Dialog\Dialog\PortSaintDoux\MaireDePortSaintDouxTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\MyraLaVieilleTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\PecheurDuQuartierDesPloucsTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\RobertLeGardeTrait;
+use App\DataFixtures\Dialog\Dialog\PortSaintDoux\ServanteDuPalaisTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\SireneDesDocksDeLOuestTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\SophieLaMarchandeTrait;
 use App\DataFixtures\Dialog\Dialog\PortSaintDoux\WilbertLArcanisteTrait;
@@ -41,6 +43,8 @@ class DialogFixtures extends Fixture implements OrderedFixtureInterface
     use WilbertLArcanisteTrait;
     use MaireDePortSaintDouxTrait;
     use GardeDuQuartierDesChauvesTrait;
+    use GardeDuPalaisTrait;
+    use ServanteDuPalaisTrait;
     use FaroukLeNomadeTrait;
     use FauxDjinnTrait;
     use TheobaldGrisMurmureTrait;
@@ -66,6 +70,8 @@ class DialogFixtures extends Fixture implements OrderedFixtureInterface
             self::WILBERT_L_ARCANISTE_DIALOGS,
             self::MAIRE_DE_PORT_SAINT_DOUX_DIALOGS,
             self::GARDE_DU_QUARTIER_DES_CHAUVES_DIALOGS,
+            self::GARDE_DU_PALAIS_DIALOGS,
+            self::SERVANTE_DU_PALAIS_DIALOGS,
 
             // Sables Chauds
             self::FAROUK_LE_NOMADE_DIALOGS,

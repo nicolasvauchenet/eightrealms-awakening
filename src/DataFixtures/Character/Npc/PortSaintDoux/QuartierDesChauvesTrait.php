@@ -28,7 +28,7 @@ trait QuartierDesChauvesTrait
             'name' => 'Servante du Palais',
             'picture' => 'img/chapter1/npc/servante-du-palais.png',
             'thumbnail' => 'img/chapter1/npc/servante-du-palais_thumb.png',
-            'description' => "<p>Silencieuse et discrète, la servante arpente les couloirs du palais avec un torchon dans une main et mille secrets dans l’autre. Elle a tout vu, tout entendu, mais ne dira rien&nbsp;—&nbsp;sauf peut-être à celui qui saura gagner sa confiance. Sous ses airs effacés se cache un regard vif et une mémoire redoutable.</p>",
+            'description' => "<p>Silencieuse et discrète, la servante arpente les couloirs du palais avec un torchon dans une main et un balai. Sous ses airs effacés se cache un regard vif et attentif au moindre détail.</p>",
             'strength' => 6,
             'dexterity' => 10,
             'constitution' => 8,

@@ -56,6 +56,11 @@ trait SecondaryQuestTrait
             'type' => 'Secondaire',
             'reference' => 'quest_secondary_banquet_inaugural',
         ],
+        [
+            'name' => 'Un Cadeau pour la Servante',
+            'type' => 'Secondaire',
+            'reference' => 'quest_secondary_un_cadeau_pour_la_servante',
+        ],
 
         // Quêtes annexes
         [

@@ -28,6 +28,12 @@ trait QuartierDesChauvesTrait
         [
             'character' => 'npc_garde_du_palais',
             'characterClass' => Npc::class,
+            'conditions' => [
+                'quest_status' => [
+                    'quest' => 'un-cadeau-pour-la-servante',
+                    'status' => 'completed',
+                ],
+            ],
             'location' => 'location_building_palais_royal',
             'reference' => 'location_building_palais_royal_garde_du_palais',
         ],

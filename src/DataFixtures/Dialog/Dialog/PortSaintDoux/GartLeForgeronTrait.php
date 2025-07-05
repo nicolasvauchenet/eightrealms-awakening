@@ -15,6 +15,14 @@ trait GartLeForgeronTrait
             'reference' => 'quest_secondary_gart_le_forgeron',
         ],
 
+        // Quête principale
+        [
+            'type' => 'dialog',
+            'character' => 'npc_gart_le_forgeron',
+            'characterClass' => Npc::class,
+            'reference' => 'quest_main_gart_le_forgeron',
+        ],
+
         // Dialogue normal
         [
             'type' => 'dialog',

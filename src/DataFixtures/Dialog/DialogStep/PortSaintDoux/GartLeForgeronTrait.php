@@ -136,6 +136,53 @@ trait GartLeForgeronTrait
             'reference' => 'quest_secondary_gart_le_forgeron_7',
         ],
 
+        // Quête principale
+        [
+            'name' => 'Gart - Accueil',
+            'text' => "<p>Gart vous voit entrer, mais ne relève pas les yeux de son travail. Le métal rougeoyant claque sous ses coups.</p><p><em>Si c’est pour une commande, repassez dans trois jours.</em></p><p>Il souffle sur la lame et continue à marteler, comme si vous n’étiez pas là.</p>",
+            'first' => true,
+            'conditions' => [
+                'quest_step_status' => [
+                    'quest' => 'les-disparus-du-donjon',
+                    'quest_step' => 8,
+                    'status' => 'progress',
+                ],
+            ],
+            'dialog' => 'quest_main_gart_le_forgeron',
+            'reference' => 'quest_main_gart_le_forgeron_1',
+        ],
+        [
+            'name' => 'Gart - Ouverture',
+            'text' => "<p>Vous restez planté là, le fixant sans rien dire. Gart ralentit son geste, puis finit par poser le marteau. Il s’essuie les mains d’un chiffon noirci et vous dévisage, sourcils froncés.</p><p><em>Bon… Vous voulez quoi exactement&nbsp;? J’ai pas que ça à faire.</em></p>",
+            'dialog' => 'quest_main_gart_le_forgeron',
+            'reference' => 'quest_main_gart_le_forgeron_2',
+        ],
+        [
+            'name' => 'Gart - Choqué',
+            'text' => "<p>À votre réponse, il se fige. Ses yeux s’écarquillent à peine, mais la surprise est là, dans le silence soudain pesant. Il se redresse lentement, ses mains tremblent juste ce qu’il faut pour qu’on le remarque.</p><p><em>Vous… voulez faire… Quoi&nbsp;? Vous ne savez rien. Vous n’avez rien. Et c’est très bien comme ça. Arrêtez de délirer, ou ça va mal finir. Pour tout le monde.</em></p><p>Sa voix est un peu plus sèche. Il recule d’un pas, se protège derrière le souffle chaud de la forge.</p>",
+            'dialog' => 'quest_main_gart_le_forgeron',
+            'reference' => 'quest_main_gart_le_forgeron_3',
+        ],
+        [
+            'name' => 'Gart - Médaillon',
+            'text' => "<p>Vous sortez le Médaillon des Vents et le posez sur le comptoir. Gart s’immobilise. Lentement, il retire un gant, tend la main et le saisit. Ses doigts calleux le retournent, le scrutent à la lumière du feu. Il le rapproche de son visage, souffle dessus, observe encore.</p><p>Un muscle de sa mâchoire se tend. Puis il le repose, d’un geste sec, presque brutal.</p><p><em>Avec juste ça… vous n’irez pas loin. Et peut-être que c’est tant mieux. Reprenez ce truc et tirez-vous.</em></p>",
+            'dialog' => 'quest_main_gart_le_forgeron',
+            'reference' => 'quest_main_gart_le_forgeron_4',
+        ],
+        [
+            'name' => 'Gart - Renfermement',
+            'text' => "<p>Vous déversez tout ce que vous savez, sans détour. La malédiction. Le Tombeau. Le Donjon. Le Rituel. Le Sceau. Le Trio Royal. La discussion avec Wilbert.</p><p>À chaque mot, il blêmit un peu plus. Il détourne enfin le regard, ses poings se ferment sur le bord de l’établi. Long silence. Puis il souffle par le nez, secoue la tête, et murmure d’une voix grave&nbsp;:</p><p><em>Vous en savez déjà trop. Bien trop. Sans l’aval des autres, je ne dirai rien de plus.</em></p><p>Il se détourne, attrape à nouveau son marteau et reprend son ouvrage avec un fracas qui dit clairement que la discussion est close.</p><p><em>Allez voir Robert.</em></p>",
+            'effects' => [
+                'edit_quest_step_status' => [
+                    'quest' => 'les-disparus-du-donjon',
+                    'quest_step' => 8,
+                    'status' => 'completed',
+                ],
+            ],
+            'dialog' => 'quest_main_gart_le_forgeron',
+            'reference' => 'quest_main_gart_le_forgeron_5',
+        ],
+
         // Dialogue normal
         [
             'name' => 'Gart - Dialogue',

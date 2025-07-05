@@ -30,5 +30,31 @@ trait GartLeForgeronTrait
             'nextStep' => 'quest_secondary_gart_le_forgeron_5',
             'reference' => 'quest_secondary_gart_le_forgeron_3_2',
         ],
+
+        // Quête principale
+        [
+            'text' => "Ce n’est pas pour une commande",
+            'dialogStep' => 'quest_main_gart_le_forgeron_1',
+            'nextStep' => 'quest_main_gart_le_forgeron_2',
+            'reference' => 'quest_main_gart_le_forgeron_1_1',
+        ],
+        [
+            'text' => "Je veux retrouver Galdric et le Prince",
+            'dialogStep' => 'quest_main_gart_le_forgeron_2',
+            'nextStep' => 'quest_main_gart_le_forgeron_3',
+            'reference' => 'quest_main_gart_le_forgeron_2_1',
+        ],
+        [
+            'text' => "J'ai le premier fragment",
+            'dialogStep' => 'quest_main_gart_le_forgeron_3',
+            'nextStep' => 'quest_main_gart_le_forgeron_4',
+            'reference' => 'quest_main_gart_le_forgeron_3_1',
+        ],
+        [
+            'text' => "Wilbert m'a aidé à comprendre",
+            'dialogStep' => 'quest_main_gart_le_forgeron_4',
+            'nextStep' => 'quest_main_gart_le_forgeron_5',
+            'reference' => 'quest_main_gart_le_forgeron_4_1',
+        ],
     ];
 }

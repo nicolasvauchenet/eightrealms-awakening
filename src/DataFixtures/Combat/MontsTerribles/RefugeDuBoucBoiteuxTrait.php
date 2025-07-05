@@ -25,7 +25,7 @@ trait RefugeDuBoucBoiteuxTrait
                 ],
             ],
             'reward' => 'reward_combat_refuge_du_bouc_boiteux_le_gardien_du_refuge',
-            'victoryDescription' => "<p>Dans un dernier râle rauque, le bouquetin s'effondre sur la neige. Le Gardien du Refuge n'est plus… Mais le mystère reste entier.</p>",
+            'victoryDescription' => "<p>Dans un dernier élan, la bête chancelle et s’effondre lourdement dans la neige. Le silence retombe, et la morsure du froid se fait de nouveau sentir.</p>",
             'defeatDescription' => "<p>Les sabots du bouquetin frappent avec une violence inouïe, et vous êtes projeté dans la neige, meurtri. Le gardien du Refuge se dresse au-dessus de vous, impassible, ses yeux luisant d’un éclat ancien. Le froid n’est pas la seule chose qui mord ici…</p>",
             'location' => 'location_zone_refuge_du_bouc_boiteux',
             'questStep' => 'quest_secondary_le_gardien_du_refuge_step_3',

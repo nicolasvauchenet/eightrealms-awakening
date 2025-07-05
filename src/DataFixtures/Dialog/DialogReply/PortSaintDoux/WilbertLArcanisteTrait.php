@@ -68,19 +68,19 @@ trait WilbertLArcanisteTrait
 
         // Quête principale : Explications
         [
-            'text' => "Dites-m'en plus sur le Sceau",
+            'text' => "Pas vraiment. Parlez-moi du Sceau",
             'dialogStep' => 'quest_main_wilbert_larcaniste_6',
             'nextStep' => 'quest_main_wilbert_larcaniste_7',
             'reference' => 'quest_main_wilbert_larcaniste_6_1',
         ],
         [
-            'text' => "Pas moi. Qu'y a-t-il au Donjon de l'Âme&nbsp;?",
+            'text' => "Qu'y a-t-il au Donjon de l'Âme&nbsp;?",
             'dialogStep' => 'quest_main_wilbert_larcaniste_7',
             'nextStep' => 'quest_main_wilbert_larcaniste_8',
             'reference' => 'quest_main_wilbert_larcaniste_7_1',
         ],
         [
-            'text' => "J'ai un des deux fragments du Sceau&nbsp;!",
+            'text' => "Le Médaillon des Vents, c'est le Sceau&nbsp;?",
             'dialogStep' => 'quest_main_wilbert_larcaniste_8',
             'nextStep' => 'quest_main_wilbert_larcaniste_9',
             'reference' => 'quest_main_wilbert_larcaniste_8_1',
@@ -92,7 +92,7 @@ trait WilbertLArcanisteTrait
             'reference' => 'quest_main_wilbert_larcaniste_8_2',
         ],
         [
-            'text' => "Je sais pour le Rituel de l'Âme et le Sceau du Tombeau",
+            'text' => "Je sais pour le Rituel et le Tombeau",
             'dialogStep' => 'quest_main_wilbert_larcaniste_9',
             'nextStep' => 'quest_main_wilbert_larcaniste_11',
             'reference' => 'quest_main_wilbert_larcaniste_9_1',

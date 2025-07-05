@@ -71,29 +71,48 @@ trait MaireDePortSaintDouxTrait
             'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_2',
         ],
         [
-            'name' => 'Maire de Port Saint-Doux - Banquet Inaugural',
+            'name' => 'Maire de Port Saint-Doux - Médaillon du Maire',
             'text' => "<p>Le Maire marque un temps, pose sa coupe, se redresse un peu, et sourit.</p><p><em>Ah… vous avez l’œil. Peu le remarquent.</em></p><p>Il prend le médaillon entre ses doigts, le fait tourner doucement.</p><p><em>C’est un ancien artefact… Un souvenir, disons. Un présent du jeune Roi Galdric II, lors de mon entrée au Conseil Royal.</em></p><p>Il vous regarde comme pour jauger votre réaction, puis continue sans attendre.</p><p><em>À l’époque, les tempêtes ravageaient nos côtes, et les armateurs fuyaient Port Saint-Doux. J’ai proposé un plan de défense navale, audacieux, risqué, mais efficace.</em></p><p>Il se penche légèrement vers vous.</p><p><em>Le Roi m’a alors remis ce médaillon, symbole de sa confiance. &laquo;&nbsp;Que les vents te soient toujours favorables, mon ami&nbsp;&raquo;, a-t-il dit.</em></p><p>Il semble ému… ou très bon acteur.</p>",
             'dialog' => 'dialog_banquet_inaugural_maire_de_port_saint_doux',
             'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_3',
         ],
         [
-            'name' => 'Maire de Port Saint-Doux - Banquet Inaugural',
+            'name' => 'Maire de Port Saint-Doux - Flatté',
             'text' => "<p>Le Maire arque un sourcil, ravi qu’on touche à sa corde préférée&nbsp;:&nbsp;sa propre grandeur.</p><p><em>Ah&nbsp;! Vous ressentez ça vous aussi&nbsp;! Ce n’est pas donné à tout le monde, vous savez. Sensibilité rare, qualité des gens d’exception.</em></p><p>Il fait un petit mouvement presque comique, bombant le torse, faisant tinter le médaillon contre sa tunique.</p><p><em>Certains disent qu’il réagirait aux puissances anciennes… D’autres qu’il serait un fragment d’un artefact oublié. Moi, je dis qu’il est ce qu’on veut y voir&nbsp;:&nbsp;un symbole de légitimité. Une preuve.</em></p><p>Il sourit, satisfait, sans s’apercevoir qu’il vient de trahir son mensonge.</p>",
             'dialog' => 'dialog_banquet_inaugural_maire_de_port_saint_doux',
             'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_4',
         ],
         [
+            'name' => 'Maire de Port Saint-Doux - Entrer au Palais',
+            'text' => "<p>Un peu surpris par votre changement de discussion, il vous regarde.</p><p><em>Le Palais est fermé, en l'absence du Roi et de sa clique. Que voulez-vous aller faire là-bas&nbsp;?</p>",
+            'dialog' => 'dialog_banquet_inaugural_maire_de_port_saint_doux',
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_5',
+        ],
+        [
+            'name' => 'Maire de Port Saint-Doux - Entrée au Palais',
+            'text' => "<p>Visiblement atteint à la simple mention du nom de Robert, il se renfrogne. Contre toute attente, il abandonne et vous lâche, d'une voix tendue et un peu nerveuse&nbsp;:</p><p><em>Bah, les histoires de la Garde ne me concernent pas. Si vous y tenez, alors vous pouvez y aller.</em></p>",
+            'dialog' => 'dialog_banquet_inaugural_maire_de_port_saint_doux',
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_6',
+        ],
+        [
             'name' => 'Maire de Port Saint-Doux - Banquet Inaugural',
-            'text' => "<p><em>Ah&nbsp;! Que c’est plaisant d’entendre un peu de gratitude dans ce monde ingrat. Si seulement mes adjoints en étaient capables eux aussi…</em></p><p>Il repère un noble enrubanné un peu plus loin, lui adresse un clin d’œil.</p><p><em>Pardonnez-moi, le Baron de Foinpâle m’attend. Il n’ose pas goûter au vin sans mon approbation… Ah, l’étiquette.</em></p><p>Et il s’éloigne, l’air ravi de lui-même.</p>",
+            'text' => "<p>Il se radoucit, à l'écoute de vos remerciements.</p><p><em>Ah&nbsp;! Que c’est plaisant d’entendre un peu de gratitude dans ce monde ingrat. Si seulement mes adjoints en étaient capables eux aussi…</em></p><p>Il repère un noble enrubanné un peu plus loin, lui adresse un clin d’œil.</p><p><em>Pardonnez-moi, le Baron de Foinpâle m’attend. Il n’ose pas goûter au vin sans mon approbation… Ah, l’étiquette.</em></p><p>Et il s’éloigne, l’air ravi de lui-même.</p>",
             'effects' => [
                 'edit_quest_step_status' => [
-                    'quest' => 'banquet-inaugural',
-                    'quest_step' => 2,
-                    'status' => 'completed',
+                    [
+                        'quest' => 'banquet-inaugural',
+                        'quest_step' => 2,
+                        'status' => 'completed',
+                    ],
+                    [
+                        'quest' => 'les-disparus-du-donjon',
+                        'quest_step' => 10,
+                        'status' => 'completed',
+                    ],
                 ],
             ],
             'dialog' => 'dialog_banquet_inaugural_maire_de_port_saint_doux',
-            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_5',
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_7',
         ],
 
         // Ragots : Quartier de la Nouvelle Ville

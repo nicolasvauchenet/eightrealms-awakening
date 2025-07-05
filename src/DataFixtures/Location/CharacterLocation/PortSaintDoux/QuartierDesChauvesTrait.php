@@ -36,9 +36,20 @@ trait QuartierDesChauvesTrait
             'characterClass' => Npc::class,
             'location' => 'location_building_hotel_de_ville',
             'conditions' => [
-                'quest_status_not' => [
-                    'quest' => 'banquet-inaugural',
-                    'status' => 'progress',
+                'all' => [
+                    [
+                        'quest_status_not' => [
+                            'quest' => 'banquet-inaugural',
+                            'status' => 'progress',
+                        ],
+                    ],
+                    [
+                        'quest_step_status' => [
+                            'quest' => 'les-disparus-du-donjon',
+                            'quest_step' => 10,
+                            'status' => 'progress',
+                        ],
+                    ],
                 ],
             ],
             'reference' => 'location_building_hotel_de_ville_maire_de_port_saint_doux',

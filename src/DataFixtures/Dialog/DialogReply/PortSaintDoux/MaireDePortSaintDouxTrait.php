@@ -31,7 +31,7 @@ trait MaireDePortSaintDouxTrait
             'conditions' => [
                 'quest_step_status' => [
                     'quest' => 'les-disparus-du-donjon',
-                    'quest_step' => 8,
+                    'quest_step' => 10,
                     'status' => 'progress',
                 ],
             ],
@@ -53,13 +53,6 @@ trait MaireDePortSaintDouxTrait
         ],
         [
             'text' => "Ce médaillon… Il est particulier, non&nbsp;?",
-            'conditions' => [
-                'quest_step_status' => [
-                    'quest' => 'les-disparus-du-donjon',
-                    'quest_step' => 8,
-                    'status' => 'progress',
-                ],
-            ],
             'dialogStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_2',
             'nextStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_3',
             'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_2_1',
@@ -71,10 +64,22 @@ trait MaireDePortSaintDouxTrait
             'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_3_1',
         ],
         [
-            'text' => "Merci, Monsieur le Maire.",
+            'text' => "Je dois aller au Palais",
             'dialogStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_4',
             'nextStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_5',
             'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_4_1',
+        ],
+        [
+            'text' => "C'est Robert qui m'y envoie",
+            'dialogStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_5',
+            'nextStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_6',
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_5_1',
+        ],
+        [
+            'text' => "Merci, Monsieur le Maire",
+            'dialogStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_6',
+            'nextStep' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_7',
+            'reference' => 'dialog_banquet_inaugural_maire_de_port_saint_doux_6_1',
         ],
 
         // Ragots : Quartier de la Nouvelle Ville

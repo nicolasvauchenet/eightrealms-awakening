@@ -12,27 +12,11 @@ trait RefugeDuBoucBoiteuxTrait
             'characterClass' => Npc::class,
             'location' => 'location_building_le_refuge',
             'conditions' => [
-                'any' => [
-                    [
-                        'quest_step_status' => [
-                            'quest' => 'le-gardien-du-refuge',
-                            'quest_step' => 4,
-                            'status' => 'progress',
-                        ],
-                    ],
-                    [
-                        'quest_step_status' => [
-                            'quest' => 'le-gardien-du-refuge',
-                            'quest_step' => 7,
-                            'status' => 'progress',
-                        ],
-                    ],
-                    [
-                        'quest_step_status' => [
-                            'quest' => 'le-gardien-du-refuge',
-                            'quest_step' => 10,
-                            'status' => 'progress',
-                        ],
+                'quest_step_status' => [
+                    'quest_step_status' => [
+                        'quest' => 'le-gardien-du-refuge',
+                        'quest_step' => 14,
+                        'status' => 'progress',
                     ],
                 ],
             ],

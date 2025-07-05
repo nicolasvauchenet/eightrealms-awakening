@@ -107,17 +107,17 @@ class LocationFixtures extends Fixture implements OrderedFixtureInterface
             self::OREE_DU_BOIS_LOCATIONS,
             self::CAMPEMENT_GOBELIN_LOCATIONS,
 
-            // Sables Chauds
-            self::SABLES_CHAUDS_LOCATIONS,
-            self::CAMP_ABANDONNE_LOCATIONS,
-            self::OASIS_SANS_NOM_LOCATIONS,
-            self::PLAGE_DE_LA_SIRENE_LOCATIONS,
-
             // Bois du Pendu
             self::BOIS_DU_PENDU_LOCATIONS,
             self::CLAIRIERE_DE_L_OUBLIE_LOCATIONS,
             self::CRIQUE_DU_PENDU_LOCATIONS,
             self::BOSQUET_DES_DRUIDES_LOCATIONS,
+
+            // Sables Chauds
+            self::SABLES_CHAUDS_LOCATIONS,
+            self::CAMP_ABANDONNE_LOCATIONS,
+            self::OASIS_SANS_NOM_LOCATIONS,
+            self::PLAGE_DE_LA_SIRENE_LOCATIONS,
 
             // Monts Terribles
             self::MONTS_TERRIBLES_LOCATIONS,

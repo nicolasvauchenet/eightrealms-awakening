@@ -15,6 +15,14 @@ trait RobertLeGardeTrait
             'reference' => 'quest_secondary_robert_le_garde',
         ],
 
+        // Quête principale
+        [
+            'type' => 'dialog',
+            'character' => 'npc_robert_le_garde',
+            'characterClass' => Npc::class,
+            'reference' => 'quest_main_robert_le_garde',
+        ],
+
         // Dialogue normal
         [
             'type' => 'dialog',

@@ -28,7 +28,7 @@ trait QuartierDesChauvesTrait
                     'conditions' => [
                         'quest_step_started' => [
                             'quest' => 'les-disparus-du-donjon',
-                            'quest_step' => 13,
+                            'quest_step' => 11,
                         ],
                     ],
                     'redirect_type' => 'dialog',

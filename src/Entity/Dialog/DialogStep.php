@@ -50,6 +50,7 @@ class DialogStep
      * @var Collection<int, DialogReply>
      */
     #[ORM\OneToMany(targetEntity: DialogReply::class, mappedBy: 'dialogStep', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $dialogReplies;
 
     public function __construct()

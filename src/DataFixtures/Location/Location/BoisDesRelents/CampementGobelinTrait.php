@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures\Location\Location\Plouc\BoisDesRelents;
+namespace App\DataFixtures\Location\Location\BoisDesRelents;
 
 trait CampementGobelinTrait
 {

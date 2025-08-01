@@ -2,6 +2,9 @@
 
 namespace App\DataFixtures\Location;
 
+use App\DataFixtures\Location\Location\BoisDesRelents\BoisDesRelentsTrait;
+use App\DataFixtures\Location\Location\BoisDesRelents\CampementGobelinTrait;
+use App\DataFixtures\Location\Location\BoisDesRelents\OreeDuBoisTrait;
 use App\DataFixtures\Location\Location\BoisDuPendu\BoisDuPenduTrait;
 use App\DataFixtures\Location\Location\BoisDuPendu\BosquetDesDruidesTrait;
 use App\DataFixtures\Location\Location\BoisDuPendu\ClairiereDeLOublieTrait;
@@ -22,9 +25,6 @@ use App\DataFixtures\Location\Location\MontsTerribles\GrotteDesEchosTrait;
 use App\DataFixtures\Location\Location\MontsTerribles\MontsTerriblesTrait;
 use App\DataFixtures\Location\Location\MontsTerribles\RefugeDuBoucBoiteuxTrait;
 use App\DataFixtures\Location\Location\MontsTerribles\RocherDuDragonTrait;
-use App\DataFixtures\Location\Location\Plouc\BoisDesRelents\BoisDesRelentsTrait;
-use App\DataFixtures\Location\Location\Plouc\BoisDesRelents\CampementGobelinTrait;
-use App\DataFixtures\Location\Location\Plouc\BoisDesRelents\OreeDuBoisTrait;
 use App\DataFixtures\Location\Location\Plouc\PloucTrait;
 use App\DataFixtures\Location\Location\PortSaintDoux\AnciensDocksTrait;
 use App\DataFixtures\Location\Location\PortSaintDoux\DocksDeLOuestTrait;

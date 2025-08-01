@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures\Dialog\DialogStep\Plouc;
+namespace App\DataFixtures\Dialog\DialogStep\BoisDesRelents;
 
 trait ChefGobelinTrait
 {

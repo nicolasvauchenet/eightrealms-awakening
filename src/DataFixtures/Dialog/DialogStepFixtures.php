@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures\Dialog;
 
+use App\DataFixtures\Dialog\DialogStep\BoisDesRelents\ChefGobelinTrait;
 use App\DataFixtures\Dialog\DialogStep\BoisDuPendu\GeromeLePenduTrait;
 use App\DataFixtures\Dialog\DialogStep\BoisDuPendu\GrandDruideTrait;
 use App\DataFixtures\Dialog\DialogStep\BoisDuPendu\TheobaldGrisMurmureTrait;
 use App\DataFixtures\Dialog\DialogStep\MontsTerribles\TharolLeSilencieuxTrait;
-use App\DataFixtures\Dialog\DialogStep\Plouc\ChefGobelinTrait;
 use App\DataFixtures\Dialog\DialogStep\Plouc\GerardLePecheurTrait;
 use App\DataFixtures\Dialog\DialogStep\PortSaintDoux\BiloLePassantTrait;
 use App\DataFixtures\Dialog\DialogStep\PortSaintDoux\GardeDuPalaisTrait;

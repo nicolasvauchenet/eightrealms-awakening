@@ -1,6 +1,14 @@
+# Les Huit Royaumes - Chapitre I : L'Éveil
+
+![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+
+---
+
 # 🏰 Fiche Royaume : L'Île du Nord
 
-![royaume-de-lile-du-nord.webp](../../assets/img/chapter1/location/royaume-de-lile-du-nord.webp)
+![royaume-de-lile-du-nord.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/royaume-de-lile-du-nord.webp)
+
+## Informations :
 
 **Type de lieu** : Royaume  
 **Localisation** : Les Huit Royaumes  
@@ -9,13 +17,17 @@
 > trouve des ports commerçants, des montagnes oubliées, des déserts hantés, et même un donjon légendaire. De nombreuses
 > rumeurs circulent sur son passé, ses rois, et les mystères qui s’y cachent encore.
 
-![royaume-de-l-ile-du-nord.png](../../assets/img/chapter1/map/royaume-de-l-ile-du-nord.png)
+## Carte :
+
+![royaume-de-l-ile-du-nord.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/royaume-de-l-ile-du-nord.png)
 
 ---
 
 ## 🗺️ Port Saint-Doux
 
-![port-saint-doux.webp](../../assets/img/chapter1/location/port-saint-doux.webp)
+![port-saint-doux.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/port-saint-doux.webp)
+
+## Informations :
 
 **Type de lieu** : Ville  
 **Localisation** : Royaume de l’Île du Nord  
@@ -34,11 +46,17 @@
 | Quartier des Chauves | Palais Royal, Hôtel de Ville                        | Garde du Quartier des Chauves, Garde du Palais, Servante, Maire de Port Saint-Doux |
 | Nouvelle Ville       | *(Aucun)*                                           | *(Aucun)*                                                                          |
 
+## Carte :
+
+![royaume-de-l-ile-du-nord.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/port-saint-doux.png)
+
 ---
 
 ## 🗺️ Plouc
 
-![plouc.webp](../../assets/img/chapter1/location/plouc.webp)
+![plouc.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/plouc.webp)
+
+## Informations :
 
 **Type de lieu** : Village  
 **Localisation** : Royaume de l’Île du Nord  
@@ -49,15 +67,21 @@
 > pêche.  
 > Les villageois vous regardent d'un air méfiant, et s'en remettent à leurs occupations.
 
-| Quartiers | Bâtiments                   | PNJs/Créatures présents |
-|-----------|-----------------------------|-------------------------|  
-| *(Aucun)* | Maison de Gérard le Pêcheur | Gérard le Pêcheur       |
+| Quartiers | Bâtiments                   | PNJs/Créatures présents                          |
+|-----------|-----------------------------|--------------------------------------------------|  
+| *(Aucun)* | Maison de Gérard le Pêcheur | Gérard le Pêcheur, *(Conditionnel)* Chef Gobelin |
+
+## Carte :
+
+![royaume-de-l-ile-du-nord.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/plouc.png)
 
 ---
 
 ## 🗺️ Bois des Relents
 
-![bois-des-relents.webp](../../assets/img/chapter1/location/bois-des-relents.webp)
+![bois-des-relents.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/bois-des-relents.webp)
+
+## Informations :
 
 **Type de lieu** : Forêt  
 **Localisation** : Royaume de l’Île du Nord  
@@ -74,11 +98,17 @@
 | Orée du Bois      | *(Aucun)* | Éclaireurs Gobelins              |
 | Campement Gobelin | *(Aucun)* | Guerriers Gobelins, Chef Gobelin |
 
+## Carte :
+
+*(Aucune)*
+
 ---
 
 ## 🗺️ Bois du Pendu
 
-![bois-du-pendu.webp](../../assets/img/chapter1/location/bois-du-pendu.webp)
+![bois-du-pendu.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/bois-du-pendu.webp)
+
+## Informations :
 
 **Type de lieu** : Forêt  
 **Localisation** : Royaume de l’Île du Nord  
@@ -94,11 +124,17 @@
 | Crique du Pendu       | *(Aucun)* | Gérôme le Pendu                |
 | Bosquet des Druides   | *(Aucun)* | Grand Druide                   |
 
+## Carte :
+
+![royaume-de-l-ile-du-nord.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/bois-du-pendu.png)
+
 ---
 
 ## 🗺️ Sables Chauds
 
-![sables-chauds.webp](../../assets/img/chapter1/location/sables-chauds.webp)
+![sables-chauds.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/sables-chauds.webp)
+
+## Informations :
 
 **Type de lieu** : Désert  
 **Localisation** : Royaume de l’Île du Nord  
@@ -115,11 +151,17 @@
 | Oasis Sans Nom     | *(Aucun)* | Le Faux Djinn                                   |
 | Plage de la Sirène | *(Aucun)* | Squelette d'Eryl le Traître, Squelette de Marin |
 
+## Carte :
+
+![royaume-de-l-ile-du-nord.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/sables-chauds.png)
+
 ---
 
 ## 🗺️ Monts Terribles
 
-![monts-terribles.webp](../../assets/img/chapter1/location/monts-terribles.webp)
+![monts-terribles.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/monts-terribles.webp)
+
+## Informations :
 
 **Type de lieu** : Montagnes  
 **Localisation** : Royaume de l’Île du Nord  
@@ -137,11 +179,17 @@
 | Gouffre d'Askalor      | Le Gouffre | Nains du Culte de l'Âtre Souverain     |
 | Rocher du Dragon       | *(Aucun)*  | *(Aucun)*                              |
 
+## Carte :
+
+![royaume-de-l-ile-du-nord.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/monts-terribles.png)
+
 ---
 
 ## 🗺️ Donjon de l'Âme
 
-![donjon-de-l-ame.webp](../../assets/img/chapter1/location/donjon-de-l-ame.webp)
+![donjon-de-l-ame.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/donjon-de-l-ame.webp)
+
+## Informations :
 
 **Type de lieu** : Donjon  
 **Localisation** : Royaume de l’Île du Nord  
@@ -163,3 +211,7 @@
 | Crypte Inversée        | *(Aucun)* | *(Aucun)*               |
 | Antichambre du Roi     | *(Aucun)* | Alaric                  |
 | Tombeau de Galdric 1er | *(Aucun)* | Nashoré                 |
+
+## Carte :
+
+![royaume-de-l-ile-du-nord.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/donjon-de-lame.png)

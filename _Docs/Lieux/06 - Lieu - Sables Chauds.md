@@ -1,6 +1,14 @@
+# Les Huit Royaumes - Chapitre I : L'Éveil
+
+![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+
+---
+
 # 📍 Fiche Lieu : Sables Chauds
 
-![sables-chauds.webp](../../assets/img/chapter1/location/sables-chauds.webp)
+![sables-chauds.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/sables-chauds.webp)
+
+## Informations :
 
 **Type de lieu** : Désert  
 **Localisation** : Royaume de l’Île du Nord  
@@ -11,13 +19,23 @@
 > s’effacent presque aussitôt. C’est un lieu oublié des cartes et des hommes, où les légendes se cachent dans les grains
 > brûlants.
 
-![sables-chauds.png](../../assets/img/chapter1/map/sables-chauds.png)
+| Zones              | Bâtiments | PNJs/Créatures présents                         |
+|--------------------|-----------|-------------------------------------------------|  
+| Camp Abandonné     | *(Aucun)* | Farouk le Nomade                                |
+| Oasis Sans Nom     | *(Aucun)* | Le Faux Djinn                                   |
+| Plage de la Sirène | *(Aucun)* | Squelette d'Eryl le Traître, Squelette de Marin |
+
+## Carte :
+
+![sables-chauds.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/sables-chauds.png)
 
 ---
 
 ## 🗺️ Camp Abandonné
 
-![camp-abandonne.webp](../../assets/img/chapter1/location/camp-abandonne.webp)
+![camp-abandonne.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/camp-abandonne.webp)
+
+## Informations :
 
 **Type de lieu** : Zone  
 **Localisation** : Sables Chauds  
@@ -34,7 +52,9 @@
 
 ## 🗺️ Oasis Sans Nom
 
-![oasis-sans-nom.webp](../../assets/img/chapter1/location/oasis-sans-nom.webp)
+![oasis-sans-nom.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/oasis-sans-nom.webp)
+
+## Informations :
 
 **Type de lieu** : Zone  
 **Localisation** : Sables Chauds  
@@ -51,7 +71,9 @@
 
 ## 🗺️ Plage de la Sirène
 
-![plage-de-la-sirene.webp](../../assets/img/chapter1/location/plage-de-la-sirene.webp)
+![plage-de-la-sirene.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/plage-de-la-sirene.webp)
+
+## Informations :
 
 **Type de lieu** : Zone  
 **Localisation** : Sables Chauds  

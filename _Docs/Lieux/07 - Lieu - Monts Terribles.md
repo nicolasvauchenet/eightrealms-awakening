@@ -1,6 +1,14 @@
+# Les Huit Royaumes - Chapitre I : L'Éveil
+
+![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+
+---
+
 # 📍 Fiche Lieu : Monts Terribles
 
-![monts-terribles.webp](../../assets/img/chapter1/location/monts-terribles.webp)
+![monts-terribles.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/monts-terribles.webp)
+
+## Informations :
 
 **Type de lieu** : Montagnes  
 **Localisation** : Royaume de l’Île du Nord  
@@ -10,13 +18,25 @@
 > éboulis traîtres. Autrefois, les nains y extrayaient de précieux minerais, mais leurs mines ont été abandonnées, et
 > nul ne sait vraiment pourquoi. On raconte que les pierres elles-mêmes hurlent lorsque le vent se lève…
 
-![monts-terribles.png](../../assets/img/chapter1/map/monts-terribles.png)
+| Zones                  | Bâtiments  | PNJs/Créatures présents                |
+|------------------------|------------|----------------------------------------|  
+| Col du Vent Noir       | *(Aucun)*  | *(Aucun)*                              |
+| Grotte des Échos       | La Grotte  | Bardin l'Exhumé                        |
+| Refuge du Bouc Boiteux | Le Refuge  | Tharôl le Silencieux, Bouquetin Féroce |
+| Gouffre d'Askalor      | Le Gouffre | Nains du Culte de l'Âtre Souverain     |
+| Rocher du Dragon       | *(Aucun)*  | *(Aucun)*                              |
+
+## Carte :
+
+![monts-terribles.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/monts-terribles.png)
 
 ---
 
 ## 🗺️ Col du Vent Noir
 
-![col-du-vent-noir.webp](../../assets/img/chapter1/location/col-du-vent-noir.webp)
+![col-du-vent-noir.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/col-du-vent-noir.webp)
+
+## Informations :
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  
@@ -34,7 +54,9 @@
 
 ## 🗺️ Grotte des Échos
 
-![grotte-des-echos.webp](../../assets/img/chapter1/location/grotte-des-echos.webp)
+![grotte-des-echos.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/grotte-des-echos.webp)
+
+## Informations :
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  
@@ -49,10 +71,12 @@
 
 ### 🏛️ La Grotte
 
-![la-grotte.webp](../../assets/img/chapter1/location/la-grotte.webp)
+![la-grotte.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/la-grotte.webp)
+
+## Informations :
 
 **Type de lieu** : Bâtiment  
-**Localisation** : Grotte des Échos  
+**Localisation** : Monts Terribles - Grotte des Échos  
 **Description** :
 > Une vaste caverne aux parois noires, où la lumière peine à percer. Des stalactites pendent comme des crocs menaçants,
 > et le sol est jonché de débris minéraux. Au centre, un feu de camp éteint, entouré de quelques outils rouillés et
@@ -65,10 +89,12 @@
 
 #### 🧱 Le Tunnel de Bardin
 
-![le-tunnel-de-bardin.webp](../../assets/img/chapter1/location/le-tunnel-de-bardin.webp)
+![le-tunnel-de-bardin.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/le-tunnel-de-bardin.webp)
+
+## Informations :
 
 **Type de lieu** : Pièce  
-**Localisation** : La Grotte  
+**Localisation** : Monts Terribles - Grotte des Échos - La Grotte  
 **Description** :
 > Un tunnel étroit creusé à la hâte, avec des marques de pioche récentes sur les parois. Le sol est jonché de
 > débris minéraux et de morceaux de bois. Au fond du tunnel, un nain solitaire creuse, le visage marqué par
@@ -83,7 +109,9 @@
 
 ## 🗺️ Refuge du Bouc Boiteux
 
-![refuge-du-bouc-boiteux.webp](../../assets/img/chapter1/location/refuge-du-bouc-boiteux.webp)
+![refuge-du-bouc-boiteux.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/refuge-du-bouc-boiteux.webp)
+
+## Informations :
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  
@@ -99,10 +127,12 @@
 
 ### 🏛️ Le Refuge
 
-![le-refuge.webp](../../assets/img/chapter1/location/le-refuge.webp)
+![le-refuge.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/le-refuge.webp)
+
+## Informations :
 
 **Type de lieu** : Bâtiment  
-**Localisation** : Refuge du Bouc Boiteux  
+**Localisation** : Monts Terribles - Refuge du Bouc Boiteux  
 **Description** :
 > Une unique pièce, simple et austère. Lit de bois contre le mur, table centrale avec une assiette sale, un bol fendu,
 > une cuillère tordue. Au fond, un foyer de pierres noircies abrite des braises presque mortes. L’air sent le bois brûlé
@@ -117,7 +147,9 @@
 
 ## 🗺️ Gouffre d’Askalor
 
-![gouffre-daskalor.webp](../../assets/img/chapter1/location/gouffre-daskalor.webp)
+![gouffre-daskalor.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/gouffre-daskalor.webp)
+
+## Informations :
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  
@@ -133,10 +165,12 @@
 
 ### 🏛️ Le Gouffre
 
-![le-gouffre.webp](../../assets/img/chapter1/location/le-gouffre.webp)
+![le-gouffre.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/le-gouffre.webp)
+
+## Informations :
 
 **Type de lieu** : Bâtiment  
-**Localisation** : Gouffre d’Askalor  
+**Localisation** : Monts Terribles - Gouffre d’Askalor  
 **Description** :
 > Une vaste caverne circulaire, aux parois lisses et sombres, où la lumière peine à atteindre les bords. Au fond, un
 > tunnel qui ne semble pas très profond, d'où émane une chaleur étrange. Des traces de rituels anciens sont visibles sur
@@ -148,10 +182,12 @@
 
 #### 🧱 La Chambre du Rituel
 
-![la-chambre-du-rituel.webp](../../assets/img/chapter1/location/la-chambre-du-rituel.webp)
+![la-chambre-du-rituel.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/la-chambre-du-rituel.webp)
+
+## Informations :
 
 **Type de lieu** : Pièce  
-**Localisation** : Le Gouffre  
+**Localisation** : Monts Terribles - Gouffre d'Askalor - Le Gouffre  
 **Description** :
 > Une petite alcôve au fond du gouffre, où les murs sont couverts de symboles étranges et de runes anciennes. Au centre,
 > un autel de pierre noircie par le temps, entouré de bougies allumées, sur lequel repose un nain gros et gras. Il
@@ -171,7 +207,9 @@
 
 ## 🗺️ Rocher du Dragon
 
-![rocher-du-dragon.webp](../../assets/img/chapter1/location/rocher-du-dragon.webp)
+![rocher-du-dragon.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/rocher-du-dragon.webp)
+
+## Informations :
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  

@@ -1,6 +1,6 @@
 # Les Huit Royaumes - Chapitre I : L'Éveil
 
-![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/logo_small.png)
 
 ---
 

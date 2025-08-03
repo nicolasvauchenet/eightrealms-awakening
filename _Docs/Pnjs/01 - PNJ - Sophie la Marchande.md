@@ -1,6 +1,14 @@
+# Les Huit Royaumes - Chapitre I : L'Éveil
+
+![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+
+---
+
 # 🧍‍♀️ Fiche PNJ : Sophie la Marchande
 
-![sophie-la-marchande.png](../../assets/img/chapter1/npc/sophie-la-marchande.png)
+![sophie-la-marchande.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/sophie-la-marchande.png)
+
+## Informations :
 
 **Type de PNJ** : Marchande  
 **Localisation** : Port Saint-Doux – Quartier du Marché  
@@ -15,7 +23,7 @@
 
 ---
 
-## 💬 Interactions
+## 💬 Interactions :
 
 | Interaction                           | Rôle        |
 |---------------------------------------|-------------|
@@ -24,7 +32,7 @@
 
 ---
 
-## 📜 Quêtes associées
+## 📜 Quêtes associées :
 
 | Quête      | Rôle      |
 |------------|-----------|

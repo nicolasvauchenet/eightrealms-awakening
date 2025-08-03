@@ -1,6 +1,8 @@
-# 🗺️ Fiche Quête Secondaire — *La Fiole Perdue*
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
+
+# 🗺️ Fiche Quête Secondaire — *La Fiole Perdue*
 
 ## 🧾 Informations Générales
 
@@ -31,13 +33,13 @@
 
 ## 🪜 Étapes Narratives
 
-| Pos. | ID Technique                           | Titre / Moment clé                    | Type d’étape / branche narrative      |
-|------|----------------------------------------|---------------------------------------|---------------------------------------|
-| 1    | quest_secondary_la_fiole_perdue_step_1 | Wilbert annonce le vol                | Déclencheur / exposition              |
-| 2    | quest_secondary_la_fiole_perdue_step_2 | Témoignage dans le désert             | Recherche / indice narratif           |
-| 3    | quest_secondary_la_fiole_perdue_step_3 | Combat contre le faux Djinn à l’Oasis | Boss / point culminant                |
-| 4    | quest_secondary_la_fiole_perdue_step_4 | Retour à Wilbert                      | Retour au donneur de quête            |
-| 5    | quest_secondary_la_fiole_perdue_step_5 | Clôture et récompense                 | Fin + gain de réputation avec Wilbert |
+| N° Étape | Titre / Moment clé                    | Type d’étape / branche narrative      |
+|----------|---------------------------------------|---------------------------------------|
+| 1        | Wilbert annonce le vol                | Déclencheur / exposition              |
+| 2        | Témoignage dans le désert             | Recherche / indice narratif           |
+| 3        | Combat contre le faux Djinn à l’Oasis | Boss / point culminant                |
+| 4        | Retour à Wilbert                      | Retour au donneur de quête            |
+| 5        | Clôture et récompense                 | Fin + gain de réputation avec Wilbert |
 
 ---
 

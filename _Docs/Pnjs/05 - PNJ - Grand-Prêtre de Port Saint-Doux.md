@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Grand Prêtre de Port Saint-Doux
 
-![grand-pretre-de-port-saint-doux.png](../../assets/img/chapter1/npc/grand-pretre-de-port-saint-doux.png)
+![grand-pretre-de-port-saint-doux.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/grand-pretre-de-port-saint-doux.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Prêtre  
 **Localisation** : Port Saint-Doux – Vieille Ville - Temple  

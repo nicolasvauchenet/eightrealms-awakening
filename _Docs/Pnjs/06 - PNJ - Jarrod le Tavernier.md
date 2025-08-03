@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Jarrod le Tavernier
 
-![jarrod-le-tavernier.png](../../assets/img/chapter1/npc/jarrod-le-tavernier.png)
+![jarrod-le-tavernier.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/jarrod-le-tavernier.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Tavernier  
 **Localisation** : Port Saint-Doux – Docks de l'Ouest - Taverne de la Flûte Moisie  

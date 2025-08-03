@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Gérome le Pendu
 
-![gerome-le-pendu.png](../../assets/img/chapter1/creature/gerome-le-pendu.png)
+![gerome-le-pendu.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/creature/gerome-le-pendu.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Créature - Fantôme  
 **Localisation** : Bois du Pendu – Crique du Pendu  

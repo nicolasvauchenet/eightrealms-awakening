@@ -1,6 +1,8 @@
-# 🗺️ Fiche Quête Secondaire — *Le Banquet Inaugural*
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
+
+# 🗺️ Fiche Quête Secondaire — *Le Banquet Inaugural*
 
 ## 🧾 Informations Générales
 
@@ -28,11 +30,11 @@
 
 ## 🪜 Étapes Narratives
 
-| Pos. | ID Technique                             | Titre / Moment clé                      | Type d’étape              |
-|------|------------------------------------------|-----------------------------------------|---------------------------|
-| 1    | quest_secondary_banquet_inaugural_step_1 | Annonce du banquet                      | Introduction / rumeur     |
-| 2    | quest_secondary_banquet_inaugural_step_2 | Observation du Maire et de son amulette | Interaction / curiosité   |
-| 3    | quest_secondary_banquet_inaugural_step_3 | Discussion avec le Maire                | Fausse piste / conclusion |
+| N° Étape | Titre / Moment clé                      | Type d’étape              |
+|----------|-----------------------------------------|---------------------------|
+| 1        | Annonce du banquet                      | Introduction / rumeur     |
+| 2        | Observation du Maire et de son amulette | Interaction / curiosité   |
+| 3        | Discussion avec le Maire                | Fausse piste / conclusion |
 
 ---
 

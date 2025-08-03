@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Chef Gobelin
 
-![gobelin-chef.png](../../assets/img/core/creature/gobelin-chef.png)
+![gobelin-chef.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/creature/gobelin-chef.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Créature humanoïde - Gobelin  
 **Localisation** : Bois des Relents – Campement Gobelin  

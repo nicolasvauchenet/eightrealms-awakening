@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Garde du Quartier des Chauves
 
-![garde-du-quartier-des-chauves.png](../../assets/img/chapter1/npc/garde-du-quartier-des-chauves.png)
+![garde-du-quartier-des-chauves.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/garde-du-quartier-des-chauves.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Garde  
 **Localisation** : Port Saint-Doux – Quartier des Chauves  

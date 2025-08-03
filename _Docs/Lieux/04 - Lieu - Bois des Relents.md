@@ -1,6 +1,4 @@
-# Les Huit Royaumes - Chapitre I : L'Éveil
-
-![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
 
@@ -8,7 +6,7 @@
 
 ![bois-des-relents.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/bois-des-relents.webp)
 
-## Informations :
+## 🧾 Informations Générales
 
 **Type de lieu** : Forêt  
 **Localisation** : Royaume de l’Île du Nord  
@@ -25,7 +23,7 @@
 | Orée du Bois      | *(Aucun)* | Éclaireurs Gobelins              |
 | Campement Gobelin | *(Aucun)* | Guerriers Gobelins, Chef Gobelin |
 
-## Carte :
+## 🧭 Carte
 
 *(Aucune)*
 
@@ -35,7 +33,7 @@
 
 ![oree-du-bois.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/oree-du-bois.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Bois des Relents  
@@ -57,7 +55,7 @@
 
 ![campement-gobelin.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/campement-gobelin.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Bois des Relents  

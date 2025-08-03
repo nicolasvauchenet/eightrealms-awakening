@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Grand Druide
 
-![grand-druide.png](../../assets/img/core/npc/grand-druide.png)
+![grand-druide.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/npc/grand-druide.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Chef spirituel druidique  
 **Localisation** : Bois du Pendu – Bosquet des Druides  

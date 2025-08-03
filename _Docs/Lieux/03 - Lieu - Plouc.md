@@ -1,6 +1,4 @@
-# Les Huit Royaumes - Chapitre I : L'Éveil
-
-![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
 
@@ -8,7 +6,7 @@
 
 ![plouc.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/plouc.webp)
 
-## Informations :
+## 🧾 Informations Générales
 
 **Type de lieu** : Village  
 **Localisation** : Royaume de l’Île du Nord  
@@ -23,7 +21,7 @@
 |-----------|-----------------------------|--------------------------------------------------|  
 | *(Aucun)* | Maison de Gérard le Pêcheur | Gérard le Pêcheur, *(Conditionnel)* Chef Gobelin |
 
-## Carte :
+## 🧭 Carte
 
 ![plouc.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/plouc.png)
 
@@ -31,7 +29,7 @@
 
 ![maison-de-gerard-le-pecheur.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/maison-de-gerard-le-pecheur.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Plouc  

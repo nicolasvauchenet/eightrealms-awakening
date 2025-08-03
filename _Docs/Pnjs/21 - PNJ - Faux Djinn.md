@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Faux Djinn
 
-![faux-djinn.png](../../assets/img/chapter1/npc/faux-djinn.png)
+![faux-djinn.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/faux-djinn.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Ensorceleur  
 **Localisation** : Sables Chauds – Oasis Sans Nom  

@@ -1,6 +1,8 @@
-# 🗺️ Fiche Quête Secondaire — *Le Gardien du Refuge*
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
+
+# 🗺️ Fiche Quête Secondaire — *Le Gardien du Refuge*
 
 ## 🧾 Informations Générales
 
@@ -30,23 +32,23 @@
 
 ## 🪜 Étapes Narratives
 
-| Pos. | ID Technique                                 | Titre / Moment clé                      | Type d’étape                  |
-|------|----------------------------------------------|-----------------------------------------|-------------------------------|
-| 1    | quest_secondary_le_gardien_du_refuge_step_1  | Découverte du refuge                    | Introduction / exploration    |
-| 2    | quest_secondary_le_gardien_du_refuge_step_2  | Lecture du journal de Tharôl            | Investigation                 |
-| 3    | quest_secondary_le_gardien_du_refuge_step_3  | Première nuit sur place                 | Pause / attente               |
-| 4    | quest_secondary_le_gardien_du_refuge_step_4  | Combat contre le bouquetin              | Combat                        |
-| 5    | quest_secondary_le_gardien_du_refuge_step_5  | Rencontre avec Tharôl                   | Énigme / tension              |
-| 6    | quest_secondary_le_gardien_du_refuge_step_6  | Deuxième nuit sur place                 | Pause / attente               |
-| 7    | quest_secondary_le_gardien_du_refuge_step_7  | Retour de la bête                       | Révélation dramatique         |
-| 8    | quest_secondary_le_gardien_du_refuge_step_8  | Aveux de Tharôl                         | Révélation                    |
-| 9    | quest_secondary_le_gardien_du_refuge_step_9  | Piste vers un rituel interdit           | Ouverture vers autre lieu     |
-| 10   | quest_secondary_le_gardien_du_refuge_step_10 | Recherche infructueuse                  | Échec intermédiaire           |
-| 11   | quest_secondary_le_gardien_du_refuge_step_11 | Lecture du manuscrit "Serments Brisés"  | Trouvaille capitale           |
-| 12   | quest_secondary_le_gardien_du_refuge_step_12 | Échec du rituel                         | Fin dramatique possible       |
-| 13   | quest_secondary_le_gardien_du_refuge_step_13 | Réussite du rituel                      | Libération / clôture possible |
-| 14   | quest_secondary_le_gardien_du_refuge_step_14 | Combat final contre Tharôl pour l’Épine | Fin alternative violente      |
-| 15   | quest_secondary_le_gardien_du_refuge_step_15 | Départ avec l’Épine du Roi              | Conclusion / fardeau hérité   |
+| N° Étape | Titre / Moment clé                      | Type d’étape                  |
+|----------|-----------------------------------------|-------------------------------|
+| 1        | Découverte du refuge                    | Introduction / exploration    |
+| 2        | Lecture du journal de Tharôl            | Investigation                 |
+| 3        | Première nuit sur place                 | Pause / attente               |
+| 4        | Combat contre le bouquetin              | Combat                        |
+| 5        | Rencontre avec Tharôl                   | Énigme / tension              |
+| 6        | Deuxième nuit sur place                 | Pause / attente               |
+| 7        | Retour de la bête                       | Révélation dramatique         |
+| 8        | Aveux de Tharôl                         | Révélation                    |
+| 9        | Piste vers un rituel interdit           | Ouverture vers autre lieu     |
+| 10       | Recherche infructueuse                  | Échec intermédiaire           |
+| 11       | Lecture du manuscrit "Serments Brisés"  | Trouvaille capitale           |
+| 12       | Échec du rituel                         | Fin dramatique possible       |
+| 13       | Réussite du rituel                      | Libération / clôture possible |
+| 14       | Combat final contre Tharôl pour l’Épine | Fin alternative violente      |
+| 15       | Départ avec l’Épine du Roi              | Conclusion / fardeau hérité   |
 
 ---
 

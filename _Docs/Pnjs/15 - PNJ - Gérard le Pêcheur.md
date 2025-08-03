@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Gérard le Pêcheur
 
-![gerard-le-pecheur.png](../../assets/img/chapter1/npc/gerard-le-pecheur.png)
+![gerard-le-pecheur.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/gerard-le-pecheur.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Pêcheur  
 **Localisation** : Plouc – Bord de Mer  

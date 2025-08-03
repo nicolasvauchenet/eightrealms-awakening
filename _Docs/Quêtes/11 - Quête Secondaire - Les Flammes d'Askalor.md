@@ -1,6 +1,8 @@
-# 🗺️ Fiche Quête Secondaire — *Les Flammes d’Askalor*
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
+
+# 🗺️ Fiche Quête Secondaire — *Les Flammes d’Askalor*
 
 ## 🧾 Informations Générales
 
@@ -32,17 +34,17 @@
 
 ## 🪜 Étapes Narratives
 
-| Pos. | ID Technique                           | Titre / Moment clé                            | Type d’étape                  |
-|------|----------------------------------------|-----------------------------------------------|-------------------------------|
-| 1    | quest_secondary_flames_askalor_step_1  | Murmures au Col du Vent Noir                  | Déclencheur / ambiance        |
-| 2    | quest_secondary_flames_askalor_step_2  | Rencontre avec un Nain rongé de fièvre        | Rencontre / exposition        |
-| 3    | quest_secondary_flames_askalor_step_3  | La galerie maudite de Bardin                  | Exploration / dilemme         |
-| 4    | quest_secondary_flames_askalor_step_4  | Hallucinations dans la pierre                 | Hallucinations / choix        |
-| 5    | quest_secondary_flames_askalor_step_5  | Le Culte de l’Âtre Souverain                  | Infiltration / confrontation  |
-| 6    | quest_secondary_flames_askalor_step_6  | Le Rituel commence                            | Compte à rebours / urgence    |
-| 7a   | quest_secondary_flames_askalor_step_7a | Briser le rituel : le Croc surgit des cendres | Réussite dramatique / gain    |
-| 7b   | quest_secondary_flames_askalor_step_7b | Laisser faire : vision d’un monde consumé     | Échec volontaire / révélation |
-| 8    | quest_secondary_flames_askalor_step_8  | Retour à Bardin (ou ce qu’il en reste)        | Clôture morale / malaise      |
+| N° Étape | Titre / Moment clé                            | Type d’étape                  |
+|----------|-----------------------------------------------|-------------------------------|
+| 1        | Murmures au Col du Vent Noir                  | Déclencheur / ambiance        |
+| 2        | Rencontre avec un Nain rongé de fièvre        | Rencontre / exposition        |
+| 3        | La galerie maudite de Bardin                  | Exploration / dilemme         |
+| 4        | Hallucinations dans la pierre                 | Hallucinations / choix        |
+| 5        | Le Culte de l’Âtre Souverain                  | Infiltration / confrontation  |
+| 6        | Le Rituel commence                            | Compte à rebours / urgence    |
+| 7a       | Briser le rituel : le Croc surgit des cendres | Réussite dramatique / gain    |
+| 7b       | Laisser faire : vision d’un monde consumé     | Échec volontaire / révélation |
+| 8        | Retour à Bardin (ou ce qu’il en reste)        | Clôture morale / malaise      |
 
 ---
 

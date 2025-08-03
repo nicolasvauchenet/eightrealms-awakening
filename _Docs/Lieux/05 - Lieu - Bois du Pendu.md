@@ -1,6 +1,4 @@
-# Les Huit Royaumes - Chapitre I : L'Éveil
-
-![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
 
@@ -8,7 +6,7 @@
 
 ![bois-du-pendu.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/bois-du-pendu.webp)
 
-## Informations :
+## 🧾 Informations Générales
 
 **Type de lieu** : Forêt  
 **Localisation** : Royaume de l’Île du Nord  
@@ -24,7 +22,7 @@
 | Crique du Pendu       | *(Aucun)* | Gérôme le Pendu                |
 | Bosquet des Druides   | *(Aucun)* | Grand Druide                   |
 
-## Carte :
+## 🧭 Carte
 
 ![bois-du-pendu.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/bois-du-pendu.png)
 
@@ -34,7 +32,7 @@
 
 ![clairiere-de-loublie.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/clairiere-de-loublie.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Bois du Pendu  
@@ -54,7 +52,7 @@
 
 ![crique-du-pendu.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/crique-du-pendu.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Bois du Pendu  
@@ -73,7 +71,7 @@
 
 ![bosquet-des-druides.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/bosquet-des-druides.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Bois du Pendu  

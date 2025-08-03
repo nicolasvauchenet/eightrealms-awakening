@@ -1,6 +1,8 @@
-# 🗺️ Fiche Quête Secondaire — *Un Cadeau pour la Servante*
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
+
+# 🗺️ Fiche Quête Secondaire — *Un Cadeau pour la Servante*
 
 ## 🧾 Informations Générales
 
@@ -13,8 +15,8 @@
 > l’inciter à détourner l’attention des gardes.  
 > Grâce à cette diversion, le joueur accède aux appartements privés de Galdric III. Il y découvre des notes anciennes :
 > Galdric Ier aurait scellé un pacte démoniaque à l’origine de la malédiction. Plus important encore, le second fragment
-> du **Sceau du Tombeau**, **l’Épine du Roi**, aurait été confié à un ancien conseiller loyal nommé **Tharôl**, exilé dans
-> les **Monts Terribles**.
+> du **Sceau du Tombeau**, **l’Épine du Roi**, aurait été confié à un ancien conseiller loyal nommé **Tharôl**, exilé
+> dans les **Monts Terribles**.
 
 ---
 
@@ -31,13 +33,13 @@
 
 ## 🪜 Étapes Narratives
 
-| Pos. | ID Technique                                      | Titre / Moment clé                        | Type d’étape               |
-|------|---------------------------------------------------|-------------------------------------------|----------------------------|
-| 1    | quest_secondary_un_cadeau_pour_la_servante_step_1 | Tentative d’accès refusée par les gardes  | Déclencheur / obstacle     |
-| 2    | quest_secondary_un_cadeau_pour_la_servante_step_2 | Discussion avec la servante               | Interaction / dialogue     |
-| 3    | quest_secondary_un_cadeau_pour_la_servante_step_3 | Offrir un cadeau et obtenir une diversion | Transaction / infiltration |
-| 4    | quest_secondary_un_cadeau_pour_la_servante_step_4 | Lecture des notes de Galdric III          | Révélation / exposition    |
-| 5    | quest_secondary_un_cadeau_pour_la_servante_step_5 | Découverte du nom de Tharôl et de l’Épine | Lien avec quête principale |
+| N° Étape | Titre / Moment clé                        | Type d’étape               |
+|----------|-------------------------------------------|----------------------------|
+| 1        | Tentative d’accès refusée par les gardes  | Déclencheur / obstacle     |
+| 2        | Discussion avec la servante               | Interaction / dialogue     |
+| 3        | Offrir un cadeau et obtenir une diversion | Transaction / infiltration |
+| 4        | Lecture des notes de Galdric III          | Révélation / exposition    |
+| 5        | Découverte du nom de Tharôl et de l’Épine | Lien avec quête principale |
 
 ---
 

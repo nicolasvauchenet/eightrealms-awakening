@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♀️ Fiche PNJ : Myra la Vieille
 
-![myra-la-vieille.png](../../assets/img/chapter1/npc/myra-la-vieille.png)
+![myra-la-vieille.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/myra-la-vieille.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Devineresse  
 **Localisation** : Port Saint-Doux – Docks de l'Ouest - Taverne de La Flûte Moisie  

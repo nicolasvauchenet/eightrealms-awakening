@@ -1,6 +1,8 @@
-# 🗺️ Fiche Quête Secondaire — *Des Rats sur les Docks*
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
+
+# 🗺️ Fiche Quête Secondaire — *Des Rats sur les Docks*
 
 ## 🧾 Informations Générales
 
@@ -28,11 +30,11 @@
 
 ## 🪜 Étapes Narratives
 
-| Pos. | ID Technique                                  | Titre / Moment clé                       | Type d’étape                 |
-|------|-----------------------------------------------|------------------------------------------|------------------------------|
-| 1    | quest_secondary_des_rats_sur_les_docks_step_1 | Rencontre de Bilo sur la Place du Marché | Déclencheur / introduction   |
-| 2    | quest_secondary_des_rats_sur_les_docks_step_2 | Combat contre les rats aux Docks         | Combat / action principale   |
-| 3    | quest_secondary_des_rats_sur_les_docks_step_3 | Récompense et remerciements              | Clôture / gain de réputation |
+| N° Étape | Titre / Moment clé                       | Type d’étape                 |
+|----------|------------------------------------------|------------------------------|
+| 1        | Rencontre de Bilo sur la Place du Marché | Déclencheur / introduction   |
+| 2        | Combat contre les rats aux Docks         | Combat / action principale   |
+| 3        | Récompense et remerciements              | Clôture / gain de réputation |
 
 ---
 

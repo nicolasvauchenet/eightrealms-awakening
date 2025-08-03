@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Robert le Garde
 
-![robert-le-garde.png](../../assets/img/chapter1/npc/robert-le-garde.png)
+![robert-le-garde.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/robert-le-garde.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Garde  
 **Localisation** : Port Saint-Doux – Quartier du Marché  

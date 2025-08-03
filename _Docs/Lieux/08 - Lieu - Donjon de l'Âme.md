@@ -1,6 +1,4 @@
-# Les Huit Royaumes - Chapitre I : L'Éveil
-
-![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
 
@@ -8,7 +6,7 @@
 
 ![donjon-de-l-ame.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/donjon-de-l-ame.webp)
 
-## Informations :
+## 🧾 Informations Générales
 
 **Type de lieu** : Donjon  
 **Localisation** : Royaume de l’Île du Nord  
@@ -31,7 +29,7 @@
 | Antichambre du Roi     | *(Aucun)* | Alaric                  |
 | Tombeau de Galdric 1er | *(Aucun)* | Nashoré                 |
 
-## Carte :
+## 🧭 Carte
 
 ![donjon-de-lame.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/donjon-de-lame.png)
 
@@ -47,7 +45,7 @@
 
 ![entree-du-donjon_alt.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/entree-du-donjon_alt.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Donjon de l'Âme  
@@ -66,7 +64,7 @@
 
 ![hall-dentree.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/hall-dentree.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Donjon de l'Âme  
@@ -86,7 +84,7 @@
 
 ![salle-des-chaines.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/salle-des-chaines.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Donjon de l'Âme  
@@ -105,7 +103,7 @@
 
 ![salle-du-miroir.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/salle-du-miroir.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Donjon de l'Âme  
@@ -124,7 +122,7 @@
 
 ![salle-des-murmures.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/salle-des-murmures.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Donjon de l'Âme  
@@ -144,7 +142,7 @@
 
 ![crypte-inversee.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/crypte-inversee.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Donjon de l'Âme  
@@ -164,7 +162,7 @@
 
 ![antichambre-du-roi.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/antichambre-du-roi.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Donjon de l'Âme  
@@ -183,7 +181,7 @@
 
 ![tombeau-de-galdric-premier.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/tombeau-de-galdric-premier.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Donjon de l'Âme  

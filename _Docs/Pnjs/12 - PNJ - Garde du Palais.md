@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Garde du Palais
 
-![garde-du-palais.png](../../assets/img/chapter1/npc/garde-du-palais.png)
+![garde-du-palais.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/garde-du-palais.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Garde  
 **Localisation** : Port Saint-Doux – Quartier des Chauves - Palais Royal  

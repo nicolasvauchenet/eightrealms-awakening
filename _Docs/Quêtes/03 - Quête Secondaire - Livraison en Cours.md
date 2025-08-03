@@ -1,6 +1,8 @@
-# 🗺️ Fiche Quête Secondaire — *Livraison en cours*
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
+
+# 🗺️ Fiche Quête Secondaire — *Livraison en cours*
 
 ## 🧾 Informations Générales
 
@@ -32,17 +34,17 @@
 
 ## 🪜 Étapes Narratives
 
-| Pos. | ID Technique                                 | Titre / Moment clé                              | Type d’étape / branche narrative   |
-|------|----------------------------------------------|-------------------------------------------------|------------------------------------|
-| 1    | quest_secondary_livraison_en_cours_step_1    | Gart confie la livraison                        | Déclencheur                        |
-| 2    | quest_secondary_livraison_en_cours_step_2    | Livraison réussie à Gérard                      | Avancée simple                     |
-| 3/4  | quest_secondary_livraison_en_cours_step_3/4  | Gérard révèle son intention contre les gobelins | Découverte du dilemme              |
-| 5    | quest_secondary_livraison_en_cours_step_5    | Rencontre des gobelins, choix à venir           | Point de bascule                   |
-| 6    | quest_secondary_livraison_en_cours_step_6    | Campement éliminé                               | Résolution violente                |
-| 7-10 | quest_secondary_livraison_en_cours_step_7–10 | Négociation, dialogue, retour vers gobelins     | Résolution diplomatique (variable) |
-| 9    | quest_secondary_livraison_en_cours_step_9    | Refus de Gérard                                 | Abandon de la résolution pacifique |
-| 11   | quest_secondary_livraison_en_cours_step_11   | Retour à Gart                                   | Clôture                            |
-| 12   | quest_secondary_livraison_en_cours_step_12   | Remerciements et récompense                     | Fin de la quête                    |
+| N° Étape | Titre / Moment clé                              | Type d’étape / branche narrative   |
+|----------|-------------------------------------------------|------------------------------------|
+| 1        | Gart confie la livraison                        | Déclencheur                        |
+| 2        | Livraison réussie à Gérard                      | Avancée simple                     |
+| 3/4      | Gérard révèle son intention contre les gobelins | Découverte du dilemme              |
+| 5        | Rencontre des gobelins, choix à venir           | Point de bascule                   |
+| 6        | Campement éliminé                               | Résolution violente                |
+| 7-10     | Négociation, dialogue, retour vers gobelins     | Résolution diplomatique (variable) |
+| 9        | Refus de Gérard                                 | Abandon de la résolution pacifique |
+| 11       | Retour à Gart                                   | Clôture                            |
+| 12       | Remerciements et récompense                     | Fin de la quête                    |
 
 ---
 

@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♀️ Fiche PNJ : Servante du Palais
 
-![servante-du-palais.png](../../assets/img/chapter1/npc/servante-du-palais.png)
+![servante-du-palais.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/servante-du-palais.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Servante  
 **Localisation** : Port Saint-Doux - Quartier des Chauves - Palais Royal  

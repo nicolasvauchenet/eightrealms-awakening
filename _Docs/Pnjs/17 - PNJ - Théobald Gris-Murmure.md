@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Théobald le Gris-Murmure
 
-![theobald-le-gris-murmure.png](../../assets/img/chapter1/npc/theobald-le-gris-murmure.png)
+![theobald-le-gris-murmure.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/theobald-le-gris-murmure.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Druide exilé  
 **Localisation** : Bois du Pendu – Clairière de l'Oublié  

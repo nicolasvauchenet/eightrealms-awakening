@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Gart le Forgeron
 
-![gart-le-forgeron.png](../../assets/img/chapter1/npc/gart-le-forgeron.png)
+![gart-le-forgeron.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/gart-le-forgeron.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Forgeron  
 **Localisation** : Port Saint-Doux – Vieille Ville - Forge  

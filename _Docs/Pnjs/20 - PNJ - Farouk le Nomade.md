@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Farouk le Nomade
 
-![farouk-le-nomade.png](../../assets/img/chapter1/npc/farouk-le-nomade.png)
+![farouk-le-nomade.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/farouk-le-nomade.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Marchand errant  
 **Localisation** : Sables Chauds – Camp Abandonné  
@@ -27,6 +33,7 @@
 | Fait des commentaires en cours de quête   | Suivi       |
 | Partage une rumeur sur la Crique du Pendu | Exploration |
 | Évoque un passé trouble avec un miroir    | Ambiguïté   |
+| Achète et vend des objets rares           | Commerçant  |
 
 ---
 

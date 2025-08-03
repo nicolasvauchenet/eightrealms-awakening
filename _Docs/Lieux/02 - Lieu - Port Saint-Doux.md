@@ -1,6 +1,4 @@
-# Les Huit Royaumes - Chapitre I : L'Éveil
-
-![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
 
@@ -8,7 +6,7 @@
 
 ![port-saint-doux.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/port-saint-doux.webp)
 
-## Informations :
+## 🧾 Informations Générales
 
 **Type de lieu** : Ville  
 **Localisation** : Royaume de l’Île du Nord  
@@ -27,7 +25,7 @@
 | Quartier des Chauves | Palais Royal, Hôtel de Ville                        | Garde du Quartier des Chauves, Garde du Palais, Servante, Maire de Port Saint-Doux |
 | Nouvelle Ville       | *(Aucun)*                                           | *(Aucun)*                                                                          |
 
-## Carte :
+## 🧭 Carte
 
 ![port-saint-doux.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/port-saint-doux.png)
 
@@ -37,7 +35,7 @@
 
 ![quartier-du-marche.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/quartier-du-marche.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Quartier  
 **Localisation** : Port Saint-Doux  
@@ -56,7 +54,7 @@
 
 ![anciens-docks.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/anciens-docks.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Quartier  
 **Localisation** : Port Saint-Doux  
@@ -73,7 +71,7 @@
 
 ![vieille-ville.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/vieille-ville.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Quartier  
 **Localisation** : Port Saint-Doux  
@@ -89,7 +87,7 @@
 
 ![forge-de-port-saint-doux.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/forge-de-port-saint-doux.webp)
 
-## Informations :
+#### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Port Saint-Doux - Vieille Ville  
@@ -104,7 +102,7 @@
 
 ![temple-de-port-saint-doux.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/temple-de-port-saint-doux.webp)
 
-## Informations :
+#### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Port Saint-Doux - Vieille Ville  
@@ -121,7 +119,7 @@
 
 ![docks-de-louest.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/docks-de-louest.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Quartier  
 **Localisation** : Port Saint-Doux  
@@ -136,7 +134,7 @@
 
 ![taverne-de-la-flute-moisie.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/taverne-de-la-flute-moisie.webp)
 
-## Informations :
+#### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Port Saint-Doux - Docks de l’Ouest  
@@ -154,7 +152,7 @@
 
 ![quartier-des-ploucs.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/quartier-des-ploucs.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Quartier  
 **Localisation** : Port Saint-Doux  
@@ -169,7 +167,7 @@
 
 ![arcanes-de-port-saint-doux.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/arcanes-de-port-saint-doux.webp)
 
-## Informations :
+#### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Port Saint-Doux - Quartier des Ploucs  
@@ -186,7 +184,7 @@
 
 ![quartier-des-chauves.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/quartier-des-chauves.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Quartier  
 **Localisation** : Port Saint-Doux  
@@ -202,7 +200,7 @@
 
 ![palais-royal.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/palais-royal.webp)
 
-## Informations :
+#### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Port Saint-Doux - Quartier des Chauves  
@@ -218,7 +216,7 @@
 
 ![appartements-royaux.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/appartements-royaux.webp)
 
-## Informations :
+##### 🧾 Informations Générales
 
 **Type de lieu** : Pièce  
 **Localisation** : Port Saint-Doux - Quartier des Chauves - Palais Royal  
@@ -233,7 +231,7 @@
 
 ![hotel-de-ville.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/hotel-de-ville.webp)
 
-## Informations :
+#### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Port Saint-Doux - Quartier des Chauves  
@@ -248,7 +246,7 @@
 
 ![jardins-de-la-mairie.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/jardins-de-la-mairie.webp)
 
-## Informations :
+##### 🧾 Informations Générales
 
 **Type de lieu** : Pièce  
 **Localisation** : Port Saint-Doux - Quartier des Chauves - Hôtel de Ville  
@@ -267,7 +265,7 @@
 
 ![nouvelle-ville.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/nouvelle-ville.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Quartier (en construction)  
 **Localisation** : Port Saint-Doux  

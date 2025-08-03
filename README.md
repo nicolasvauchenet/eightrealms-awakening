@@ -1,13 +1,18 @@
-# Eight Realms – Awakening
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
+# Les Huit Royaumes - Chapitre I : L'Éveil
 
 ## Présentation générale
 
-*Eight Realms – Awakening* est un jeu de rôle narratif à l’ancienne, inspiré des livres dont vous êtes le héros et des
-jeux de rôles papier. Le joueur incarne un aventurier débutant, propulsé dans un royaume humain au bord du chaos.
+*Les Huit Royaumes* est un jeu de rôle narratif à l’ancienne, inspiré des livres dont vous êtes le héros et des
+jeux de rôles sur table. Le joueur incarne un aventurier débutant, propulsé dans un royaume humain au bord du chaos.
 
-Le gameplay est centré sur une progression **écran par écran**, avec **exploration**, **combats au tour par tour**, *
-*rencontres scénarisées** et **choix de dialogues à conséquences modérées**. L’univers est riche, cohérent, accessible,
-et mêle **heroic fantasy**, **légendes locales**, **pointes d’humour**, **romance**, et **danger**.
+Le gameplay est centré sur une progression **écran par écran**, avec **exploration**, **combats au tour par tour**,
+**énigmes à résoudre**, **rencontres scénarisées** et **choix de dialogues à conséquences modérées**. L’univers est
+riche, cohérent, accessible, et mêle **heroic fantasy**, **légendes locales**, **pointes d’humour**, **romance**, et
+**danger**.
 
 Le jeu se veut **immersif et stimulant**, avec une narration ramifiée, une liberté d’exploration maîtrisée, et un
 système de quêtes dynamiques.
@@ -16,12 +21,11 @@ système de quêtes dynamiques.
 
 ## Contexte
 
-Le Royaume de l’Île du Nord est en émoi : le prince Alaric, puis le roi Galdric III, ont disparu en explorant le
-mystérieux Donjon de l’Âme. Les rumeurs enflent à Port Saint-Doux, la capitale portuaire du royaume. On parle d’un mal
-ancien, réveillé par imprudence.
-
-Le joueur commence son aventure dans le Quartier du Marché de la capitale, au milieu des marchands, des bavards… et des
-premiers indices.
+> Le Royaume de l’Île du Nord est en émoi : le prince Alaric, puis le roi Galdric III, ont disparu en explorant le
+> mystérieux Donjon de l’Âme. Les rumeurs enflent à Port Saint-Doux, la capitale portuaire du royaume. On parle d’un mal
+> ancien, réveillé par imprudence.
+> Le joueur commence son aventure dans le Quartier du Marché de la capitale, au milieu des marchands, des bavards… et
+> des premiers indices.
 
 ---
 
@@ -60,7 +64,7 @@ Le chapitre 1 se déroule dans le **Royaume de l’Île du Nord**, un territoire
 - **Sables Chauds** : désert mythique bordé par la mer, théâtre de mystères anciens et de mirages envoûtants.
 - **Monts Terribles** : massif abandonné, hostile et chargé de légendes naines et draconiques.
 
-Chaque zone propose des quêtes, des combats, des fouilles, des PNJ et des secrets propres.
+Chaque zone propose des quêtes, des combats, des fouilles, des énigmes, des PNJ et des secrets propres.
 
 ---
 
@@ -75,10 +79,21 @@ Chaque zone propose des quêtes, des combats, des fouilles, des PNJ et des secre
 
 ## État du projet
 
-- Moteur : Symfony + LiveComponents (prototype jouable en développement)
-- Combat, exploration, dialogues, objets, réputation, conditions d’apparition : **fonctionnels**
-- Écriture : 1er chapitre terminé à 70% (zones, PNJ, quêtes)
-- Prochaine étape : finalisation de l’histoire principale et test de la boucle gameplay
+- **Phase en cours :** prototype jouable
+- **Moteur :** Symfony + Symfony UX
+- **Fonctionnalités** : Combat, exploration, dialogues, objets, réputation, conditions d’apparition, énigmes
+- **Écriture :** 1er chapitre terminé (zones, PNJ, quêtes)
+- **Prochaines étapes :**
+    - Finalisation de l’intégration de l'histoire et test de la boucle gameplay
+    - Optimisation des combats
+    - Ajout de la musique et des effets sonores
+    - Tests utilisateurs pour affiner l’expérience
+    - Préparation de la campagne de financement participatif
+    - Lancement de la version alpha fermée
+    - Lancement de la campagne de financement participatif
+    - Développement de la version bêta ouverte (application mobile)
+    - Lancement de la version 1.0
+    - Développement des chapitres suivants
 
 ---
 
@@ -93,6 +108,6 @@ Chaque zone propose des quêtes, des combats, des fouilles, des PNJ et des secre
 
 ## Contact
 
-Développement : Nicolas Vauché  
+Conception & Développement : Nicolas Vauché  
 Contact : hello@nicolasvauche.net  
-Titre du prototype : *Eight Realms – Awakening – Chapitre 1 : L'Éveil*
+Titre du prototype : *Eight Realms – Awakening*

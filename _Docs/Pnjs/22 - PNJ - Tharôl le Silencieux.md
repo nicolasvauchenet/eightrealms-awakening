@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Tharôl le Silencieux
 
-![tharol-le-silencieux.png](../../assets/img/chapter1/npc/tharol-le-silencieux.png)
+![tharol-le-silencieux.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/tharol-le-silencieux.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Ermite  
 **Localisation** : Monts Terribles – Refuge du Bouc Boiteux - Le Refuge  

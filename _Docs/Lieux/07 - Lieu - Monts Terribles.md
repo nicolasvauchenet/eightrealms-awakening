@@ -1,6 +1,4 @@
-# Les Huit Royaumes - Chapitre I : L'Éveil
-
-![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
 
@@ -8,7 +6,7 @@
 
 ![monts-terribles.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/monts-terribles.webp)
 
-## Informations :
+## 🧾 Informations Générales
 
 **Type de lieu** : Montagnes  
 **Localisation** : Royaume de l’Île du Nord  
@@ -26,7 +24,7 @@
 | Gouffre d'Askalor      | Le Gouffre | Nains du Culte de l'Âtre Souverain     |
 | Rocher du Dragon       | *(Aucun)*  | *(Aucun)*                              |
 
-## Carte :
+## 🧭 Carte
 
 ![monts-terribles.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/monts-terribles.png)
 
@@ -36,7 +34,7 @@
 
 ![col-du-vent-noir.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/col-du-vent-noir.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  
@@ -56,7 +54,7 @@
 
 ![grotte-des-echos.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/grotte-des-echos.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  
@@ -73,7 +71,7 @@
 
 ![la-grotte.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/la-grotte.webp)
 
-## Informations :
+#### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Monts Terribles - Grotte des Échos  
@@ -91,7 +89,7 @@
 
 ![le-tunnel-de-bardin.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/le-tunnel-de-bardin.webp)
 
-## Informations :
+##### 🧾 Informations Générales
 
 **Type de lieu** : Pièce  
 **Localisation** : Monts Terribles - Grotte des Échos - La Grotte  
@@ -111,7 +109,7 @@
 
 ![refuge-du-bouc-boiteux.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/refuge-du-bouc-boiteux.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  
@@ -129,7 +127,7 @@
 
 ![le-refuge.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/le-refuge.webp)
 
-## Informations :
+#### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Monts Terribles - Refuge du Bouc Boiteux  
@@ -149,7 +147,7 @@
 
 ![gouffre-daskalor.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/gouffre-daskalor.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  
@@ -167,7 +165,7 @@
 
 ![le-gouffre.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/le-gouffre.webp)
 
-## Informations :
+#### 🧾 Informations Générales
 
 **Type de lieu** : Bâtiment  
 **Localisation** : Monts Terribles - Gouffre d’Askalor  
@@ -184,7 +182,7 @@
 
 ![la-chambre-du-rituel.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/la-chambre-du-rituel.webp)
 
-## Informations :
+##### 🧾 Informations Générales
 
 **Type de lieu** : Pièce  
 **Localisation** : Monts Terribles - Gouffre d'Askalor - Le Gouffre  
@@ -209,7 +207,7 @@
 
 ![rocher-du-dragon.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/rocher-du-dragon.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Monts Terribles  

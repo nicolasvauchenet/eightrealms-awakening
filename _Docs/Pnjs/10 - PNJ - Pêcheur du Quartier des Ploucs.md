@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Pêcheur du Quartier des Ploucs
 
-![pecheur-du-quartier-des-ploucs.png](../../assets/img/chapter1/npc/pecheur-du-quartier-des-ploucs.png)
+![pecheur-du-quartier-des-ploucs.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/pecheur-du-quartier-des-ploucs.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Pêcheur  
 **Localisation** : Port Saint-Doux – Quartier des Ploucs  

@@ -1,6 +1,8 @@
-# 🗺️ Fiche Quête Secondaire — *Le Jugement du Cercle*
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
+
+# 🗺️ Fiche Quête Secondaire — *Le Jugement du Cercle*
 
 ## 🧾 Informations Générales
 
@@ -31,12 +33,12 @@
 
 ## 🪜 Étapes Narratives
 
-| Pos. | ID Technique                                 | Titre / Moment clé                       | Type d’étape / branche                    |
-|------|----------------------------------------------|------------------------------------------|-------------------------------------------|
-| 1    | quest_secondary_le_jugement_du_cercle_step_1 | Rencontre de Farouk et instructions      | Déclenchement / mystère initial           |
-| 2    | quest_secondary_le_jugement_du_cercle_step_2 | Apparition du fantôme au sol             | Point de bascule / manifestation          |
-| 3    | quest_secondary_le_jugement_du_cercle_step_3 | Réponses réussies : le souvenir retrouvé | Résolution pacifique / gain spirituel     |
-| 4    | quest_secondary_le_jugement_du_cercle_step_4 | Échec : le fantôme attaque               | Résolution par combat / ambiance tragique |
+| N° Étape | Titre / Moment clé                       | Type d’étape / branche                    |
+|----------|------------------------------------------|-------------------------------------------|
+| 1        | Rencontre de Farouk et instructions      | Déclenchement / mystère initial           |
+| 2        | Apparition du fantôme au sol             | Point de bascule / manifestation          |
+| 3        | Réponses réussies : le souvenir retrouvé | Résolution pacifique / gain spirituel     |
+| 4        | Échec : le fantôme attaque               | Résolution par combat / ambiance tragique |
 
 ---
 

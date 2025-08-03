@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧙‍♂️ Fiche PNJ : Wilbert l’Arcaniste
 
-![wilbert-larcaniste.png](../../assets/img/chapter1/npc/wilbert-larcaniste.png)
+![wilbert-larcaniste.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/wilbert-larcaniste.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Arcaniste  
 **Localisation** : Port Saint-Doux – Quartier des Ploucs - Arcanes  

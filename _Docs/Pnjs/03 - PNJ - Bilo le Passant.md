@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Bilo le Passant
 
-![bilo-le-passant.png](../../assets/img/chapter1/npc/bilo-le-passant.png)
+![bilo-le-passant.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/bilo-le-passant.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Passant  
 **Localisation** : Port Saint-Doux – Quartier du Marché  

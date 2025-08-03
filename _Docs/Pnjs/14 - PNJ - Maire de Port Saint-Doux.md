@@ -1,6 +1,12 @@
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
+
+---
+
 # 🧍‍♂️ Fiche PNJ : Maire de Port Saint-Doux
 
-![maire-de-port-saint-doux.png](../../assets/img/chapter1/npc/maire-de-port-saint-doux.png)
+![maire-de-port-saint-doux.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/npc/maire-de-port-saint-doux.png)
+
+## 🧾 Informations Générales
 
 **Type de PNJ** : Notable  
 **Localisation** : Port Saint-Doux – Quartier des Chauves  

@@ -1,6 +1,4 @@
-# Les Huit Royaumes - Chapitre I : L'Éveil
-
-![cover.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover.webp)
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
 
@@ -8,7 +6,7 @@
 
 ![sables-chauds.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/sables-chauds.webp)
 
-## Informations :
+## 🧾 Informations Générales
 
 **Type de lieu** : Désert  
 **Localisation** : Royaume de l’Île du Nord  
@@ -25,7 +23,7 @@
 | Oasis Sans Nom     | *(Aucun)* | Le Faux Djinn                                   |
 | Plage de la Sirène | *(Aucun)* | Squelette d'Eryl le Traître, Squelette de Marin |
 
-## Carte :
+## 🧭 Carte
 
 ![sables-chauds.png](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/map/sables-chauds.png)
 
@@ -35,7 +33,7 @@
 
 ![camp-abandonne.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/camp-abandonne.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Sables Chauds  
@@ -54,7 +52,7 @@
 
 ![oasis-sans-nom.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/oasis-sans-nom.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Sables Chauds  
@@ -73,7 +71,7 @@
 
 ![plage-de-la-sirene.webp](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/chapter1/location/plage-de-la-sirene.webp)
 
-## Informations :
+### 🧾 Informations Générales
 
 **Type de lieu** : Zone  
 **Localisation** : Sables Chauds  

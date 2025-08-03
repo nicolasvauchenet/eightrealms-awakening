@@ -1,6 +1,8 @@
-# 🗺️ Fiche Quête Secondaire — *La Sirène et le Marin*
+![Cover](https://raw.githubusercontent.com/nicolasvauchenet/eightrealms-awakening/refs/heads/main/assets/img/core/cover_documentation.png)
 
 ---
+
+# 🗺️ Fiche Quête Secondaire — *La Sirène et le Marin*
 
 ## 🧾 Informations Générales
 
@@ -30,16 +32,16 @@
 
 ## 🪜 Étapes Narratives
 
-| Pos. | ID Technique                                 | Titre / Moment clé                           | Type d’étape               |
-|------|----------------------------------------------|----------------------------------------------|----------------------------|
-| 1    | quest_secondary_la_sirene_et_le_marin_step_1 | Rencontre avec Myra et ballade oubliée       | Déclencheur / introduction |
-| 2    | quest_secondary_la_sirene_et_le_marin_step_2 | Apparition et combat contre la Sirène        | Combat / action principale |
-| 3    | quest_secondary_la_sirene_et_le_marin_step_3 | Révélation d’un lieu oublié                  | Transition / exploration   |
-| 4    | quest_secondary_la_sirene_et_le_marin_step_4 | Combat sur la Plage et découverte du journal | Combat / révélation        |
-| 5    | quest_secondary_la_sirene_et_le_marin_step_5 | Vérité révélée à la Sirène                   | Choix narratif (vérité)    |
-| 6    | quest_secondary_la_sirene_et_le_marin_step_6 | Mensonge réconfortant à la Sirène            | Choix narratif (mensonge)  |
-| 7    | quest_secondary_la_sirene_et_le_marin_step_7 | Retour auprès de Myra (après vérité)         | Clôture                    |
-| 8    | quest_secondary_la_sirene_et_le_marin_step_8 | Retour auprès de Myra (après mensonge)       | Clôture                    |
+| N° Étape | Titre / Moment clé                           | Type d’étape               |
+|----------|----------------------------------------------|----------------------------|
+| 1        | Rencontre avec Myra et ballade oubliée       | Déclencheur / introduction |
+| 2        | Apparition et combat contre la Sirène        | Combat / action principale |
+| 3        | Révélation d’un lieu oublié                  | Transition / exploration   |
+| 4        | Combat sur la Plage et découverte du journal | Combat / révélation        |
+| 5        | Vérité révélée à la Sirène                   | Choix narratif (vérité)    |
+| 6        | Mensonge réconfortant à la Sirène            | Choix narratif (mensonge)  |
+| 7        | Retour auprès de Myra (après vérité)         | Clôture                    |
+| 8        | Retour auprès de Myra (après mensonge)       | Clôture                    |
 
 ---
 

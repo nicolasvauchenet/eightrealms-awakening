@@ -1,8 +1,15 @@
 # 🏰 Fiche Royaume : L'Île du Nord
 
-| Informations                                                                                                                                                                                                                                                                                                                                                                                                  | Image                                                                                            | Carte                                                                                       |
-|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| **Type de lieu** : Royaume  **Localisation** : Les Huit Royaumes  **Description** : Le Royaume de l’Île du Nord est un territoire vaste et ancien, composé de lieux aussi variés que dangereux. On y trouve des ports commerçants, des montagnes oubliées, des déserts hantés, et même un donjon légendaire. De nombreuses rumeurs circulent sur son passé, ses rois, et les mystères qui s’y cachent encore. | ![royaume-de-lile-du-nord.webp](../../assets/img/chapter1/location/royaume-de-lile-du-nord.webp) | ![royaume-de-l-ile-du-nord.png](../../assets/img/chapter1/map/royaume-de-l-ile-du-nord.png) |
+![royaume-de-lile-du-nord.webp](../../assets/img/chapter1/location/royaume-de-lile-du-nord.webp)
+
+**Type de lieu** : Royaume  
+**Localisation** : Les Huit Royaumes  
+**Description** :
+> Le Royaume de l’Île du Nord est un territoire vaste et ancien, composé de lieux aussi variés que dangereux. On y
+> trouve des ports commerçants, des montagnes oubliées, des déserts hantés, et même un donjon légendaire. De nombreuses
+> rumeurs circulent sur son passé, ses rois, et les mystères qui s’y cachent encore.
+
+![royaume-de-l-ile-du-nord.png](../../assets/img/chapter1/map/royaume-de-l-ile-du-nord.png)
 
 ---
 

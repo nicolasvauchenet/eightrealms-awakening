@@ -30,6 +30,7 @@ class Dialog
      * @var Collection<int, DialogStep>
      */
     #[ORM\OneToMany(targetEntity: DialogStep::class, mappedBy: 'dialog', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $dialogSteps;
 
     public function __construct()

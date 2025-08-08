@@ -100,18 +100,21 @@ abstract class Character
      * @var Collection<int, CharacterItem>
      */
     #[ORM\OneToMany(targetEntity: CharacterItem::class, mappedBy: 'character', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $characterItems;
 
     /**
      * @var Collection<int, CharacterSpell>
      */
     #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'character', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $characterSpells;
 
     /**
      * @var Collection<int, CharacterLocation>
      */
     #[ORM\OneToMany(targetEntity: CharacterLocation::class, mappedBy: 'character', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $characterLocations;
 
     #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]
@@ -124,24 +127,28 @@ abstract class Character
      * @var Collection<int, Dialog>
      */
     #[ORM\OneToMany(targetEntity: Dialog::class, mappedBy: 'character', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $dialogs;
 
     /**
      * @var Collection<int, CombatEnemy>
      */
     #[ORM\OneToMany(targetEntity: CombatEnemy::class, mappedBy: 'enemy', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $combatEnemies;
 
     /**
      * @var Collection<int, Quest>
      */
     #[ORM\OneToMany(targetEntity: Quest::class, mappedBy: 'giver')]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $quests;
 
     /**
      * @var Collection<int, QuestStep>
      */
     #[ORM\OneToMany(targetEntity: QuestStep::class, mappedBy: 'giver')]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $questSteps;
 
     #[ORM\OneToOne(mappedBy: 'character', cascade: ['persist', 'remove'])]

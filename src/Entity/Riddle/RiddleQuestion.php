@@ -33,6 +33,7 @@ class RiddleQuestion
      * @var Collection<int, RiddleChoice>
      */
     #[ORM\OneToMany(targetEntity: RiddleChoice::class, mappedBy: 'riddleQuestion', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $riddleChoices;
 
     public function __construct()

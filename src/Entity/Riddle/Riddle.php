@@ -78,6 +78,7 @@ class Riddle
      * @var Collection<int, RiddleQuestion>
      */
     #[ORM\OneToMany(targetEntity: RiddleQuestion::class, mappedBy: 'riddle', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $riddleQuestions;
 
     #[ORM\ManyToOne]

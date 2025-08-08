@@ -66,22 +66,21 @@ class CombatComponent extends AbstractController
     public array $defenseBonus = [];
 
     public function __construct(
-        private readonly EntityManagerInterface     $entityManager,
-        private readonly InitiativeService          $initiativeService,
-        private readonly FleeService                $fleeService,
-        private readonly PlayerAttackService        $playerAttackService,
-        private readonly EnemyAttackService         $enemyAttackService,
-        private readonly CastSpellService           $castSpellService,
-        private readonly UseItemService             $useItemService,
-        private readonly CharacterItemService       $characterItemService,
-        private readonly CombatEffectService        $combatEffectService,
-        private readonly CharacterBonusService      $characterBonusService,
-        private readonly CinematicScreenService     $cinematicScreenService,
-        private readonly QuestSelectorService       $questService,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly InitiativeService $initiativeService,
+        private readonly FleeService $fleeService,
+        private readonly PlayerAttackService $playerAttackService,
+        private readonly EnemyAttackService $enemyAttackService,
+        private readonly CastSpellService $castSpellService,
+        private readonly UseItemService $useItemService,
+        private readonly CharacterItemService $characterItemService,
+        private readonly CombatEffectService $combatEffectService,
+        private readonly CharacterBonusService $characterBonusService,
+        private readonly CinematicScreenService $cinematicScreenService,
+        private readonly QuestSelectorService $questService,
         private readonly CharacterReputationService $characterReputationService,
-        private readonly QuestProgressionService    $questProgressionService,
-    )
-    {
+        private readonly QuestProgressionService $questProgressionService,
+    ) {
     }
 
     #[PreDehydrate]
@@ -101,7 +100,7 @@ class CombatComponent extends AbstractController
         ]);
         $this->entityManager->refresh($this->playerCombat);
 
-        if(!$this->playerCombat->getTurnOrder()) {
+        if (!$this->playerCombat->getTurnOrder()) {
             $order = $this->initiativeService->getTurnOrder($this->playerCombat);
             $this->playerCombat
                 ->setTurnOrder($order)
@@ -114,7 +113,7 @@ class CombatComponent extends AbstractController
 
         $this->updateBonuses();
 
-        $this->intro = $this->screen->getCombat()->getDescription() . "\n";
+        $this->intro = $this->screen->getCombat()->getDescription()."\n";
         $this->generateDescription();
 
         $this->advanceUntilPlayerTurn();
@@ -122,18 +121,20 @@ class CombatComponent extends AbstractController
 
     #[LiveAction]
     public function doCombatAction(
-        #[LiveArg] string  $combatAction,
-        #[LiveArg] int     $enemyId,
+        #[LiveArg] string $combatAction,
+        #[LiveArg] int $enemyId,
         #[LiveArg] ?string $mode = null,
-        #[LiveArg] ?int    $characterSpellId = null,
-    ): ?RedirectResponse
-    {
+        #[LiveArg] ?int $characterSpellId = null,
+    ): ?RedirectResponse {
         $turnOrder = $this->playerCombat->getTurnOrder();
         $currentTurn = $this->playerCombat->getCurrentTurn();
         $currentEntity = $turnOrder[$currentTurn] ?? null;
         $playerEffects = $this->combatEffectService->getActiveBonusesForTarget($this->playerCombat, $this->character);
-        if(!empty($playerEffects['charmed'])) {
-            $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Vous êtes sous l’effet d’un charme mental et ne pouvez pas agir ce tour-ci.</strong><br/>");
+        if (!empty($playerEffects['charmed'])) {
+            $this->addLog(
+                $this->playerCombat->getCurrentRound(),
+                "<strong class='text-warning'>Vous êtes sous l’effet d’un charme mental et ne pouvez pas agir ce tour-ci.</strong><br/>"
+            );
 
             $this->playerCombat->setCurrentTurn($currentTurn + 1);
             $this->entityManager->persist($this->playerCombat);
@@ -142,18 +143,31 @@ class CombatComponent extends AbstractController
             return $this->advanceUntilPlayerTurn();
         }
 
-        if(!$currentEntity || $currentEntity['type'] !== 'player' || $currentEntity['id'] !== $this->character->getId()) {
+        if (!$currentEntity || $currentEntity['type'] !== 'player' || $currentEntity['id'] !== $this->character->getId(
+            )) {
             $this->addLog($this->playerCombat->getCurrentRound(), "<em>Ce n’est pas votre tour&nbsp;!</em>");
 
             return null;
         }
 
-        if($combatAction === 'player_attack') {
-            $log = $this->playerAttackService->playerAttack($this->character, $this->screen->getCombat(), $enemyId, $mode);
+        if ($combatAction === 'player_attack') {
+            $log = $this->playerAttackService->playerAttack(
+                $this->character,
+                $this->screen->getCombat(),
+                $enemyId,
+                $mode
+            );
             $this->addLog($this->playerCombat->getCurrentRound(), $log);
-        } else if($combatAction === 'cast_spell') {
-            $log = $this->castSpellService->cast($this->character, $this->screen->getCombat(), $enemyId, $characterSpellId);
-            $this->addLog($this->playerCombat->getCurrentRound(), $log);
+        } else {
+            if ($combatAction === 'cast_spell') {
+                $log = $this->castSpellService->cast(
+                    $this->character,
+                    $this->screen->getCombat(),
+                    $enemyId,
+                    $characterSpellId
+                );
+                $this->addLog($this->playerCombat->getCurrentRound(), $log);
+            }
         }
 
         $this->playerCombat->setCurrentTurn($currentTurn + 1);
@@ -170,7 +184,8 @@ class CombatComponent extends AbstractController
         $currentTurn = $this->playerCombat->getCurrentTurn();
         $currentEntity = $turnOrder[$currentTurn] ?? null;
 
-        if(!$currentEntity || $currentEntity['type'] !== 'player' || $currentEntity['id'] !== $this->character->getId()) {
+        if (!$currentEntity || $currentEntity['type'] !== 'player' || $currentEntity['id'] !== $this->character->getId(
+            )) {
             $this->addLog($this->playerCombat->getCurrentRound(), "<em>Ce n’est pas votre tour&nbsp;!</em>");
 
             return null;
@@ -179,8 +194,11 @@ class CombatComponent extends AbstractController
         $characterItem = $this->entityManager->getRepository(CharacterItem::class)->find($characterItemId);
         $enemy = $enemyId ? $this->entityManager->getRepository(PlayerCombatEnemy::class)->find($enemyId) : null;
 
-        if(!$characterItem || !$characterItem->getItem()) {
-            $this->addLog($this->playerCombat->getCurrentRound(), "<span class='text-danger'>Objet introuvable.</span>");
+        if (!$characterItem || !$characterItem->getItem()) {
+            $this->addLog(
+                $this->playerCombat->getCurrentRound(),
+                "<span class='text-danger'>Objet introuvable.</span>"
+            );
 
             return null;
         }
@@ -198,7 +216,7 @@ class CombatComponent extends AbstractController
     #[LiveAction]
     public function flee(): ?RedirectResponse
     {
-        if($this->fleeService->flee($this->playerCombat)) {
+        if ($this->fleeService->flee($this->playerCombat)) {
             return $this->redirectToRoute('app_game_screen_location', [
                 'slug' => $this->character->getCurrentLocation()->getSlug(),
             ]);
@@ -208,7 +226,10 @@ class CombatComponent extends AbstractController
         $this->entityManager->persist($this->playerCombat);
         $this->entityManager->flush();
 
-        $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Votre tentative de fuite a échoué&nbsp;!</strong><br/>");
+        $this->addLog(
+            $this->playerCombat->getCurrentRound(),
+            "<strong class='text-warning'>Votre tentative de fuite a échoué&nbsp;!</strong><br/>"
+        );
         $this->advanceUntilPlayerTurn();
 
         return $this->advanceUntilPlayerTurn();
@@ -229,18 +250,26 @@ class CombatComponent extends AbstractController
             'extra' => $activeBonuses['defense'] > 0,
         ];
 
-        $damageBonusItem = $this->characterBonusService->getDamage($this->character, $this->playerCombat, $this->screen->getType());
+        $damageBonusItem = $this->characterBonusService->getDamage(
+            $this->character,
+            $this->playerCombat,
+            $this->screen->getType()
+        );
         $this->damageBonus['amount'] += $damageBonusItem['amount'];
         $this->damageBonus['extra'] = $damageBonusItem['extra'];
 
-        $defenseBonusItem = $this->characterBonusService->getDefense($this->character, $this->playerCombat, $this->screen->getType());
+        $defenseBonusItem = $this->characterBonusService->getDefense(
+            $this->character,
+            $this->playerCombat,
+            $this->screen->getType()
+        );
         $this->defenseBonus['amount'] += $defenseBonusItem['amount'];
         $this->defenseBonus['extra'] = $defenseBonusItem['extra'];
     }
 
     private function addLog(int $round, string $message): void
     {
-        if(!isset($this->roundLogs[$round - 1])) {
+        if (!isset($this->roundLogs[$round - 1])) {
             $this->roundLogs[$round - 1] = [];
         }
 
@@ -252,12 +281,14 @@ class CombatComponent extends AbstractController
     {
         $html = $this->intro;
 
-        foreach($this->roundLogs as $index => $messages) {
-            if(empty($messages)) continue;
+        foreach ($this->roundLogs as $index => $messages) {
+            if (empty($messages)) {
+                continue;
+            }
 
-            $html .= "<h2>Round " . ($index + 1) . "</h2>\n<p>\n";
-            foreach($messages as $message) {
-                $html .= $message . "\n";
+            $html .= "<h2>Round ".($index + 1)."</h2>\n<p>\n";
+            foreach ($messages as $message) {
+                $html .= $message."\n";
             }
             $html .= "</p>\n";
         }
@@ -270,39 +301,50 @@ class CombatComponent extends AbstractController
         $turnOrder = $this->playerCombat->getTurnOrder();
         $turnCount = count($turnOrder);
 
-        while($this->playerCombat->getCurrentTurn() < $turnCount) {
+        while ($this->playerCombat->getCurrentTurn() < $turnCount) {
             $currentEntity = $turnOrder[$this->playerCombat->getCurrentTurn()];
 
-            if($currentEntity['type'] === 'enemy') {
+            if ($currentEntity['type'] === 'enemy') {
                 $enemyId = $currentEntity['id'];
                 $log = $this->enemyAttackService->enemyAttack($this->playerCombat, $enemyId);
                 $this->addLog($this->playerCombat->getCurrentRound(), $log);
                 $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
-            } else if($currentEntity['type'] === 'player' && $currentEntity['id'] === $this->character->getId()) {
-                $playerEffects = $this->combatEffectService->getActiveBonusesForTarget($this->playerCombat, $this->character);
-                if(!empty($playerEffects['charmed'])) {
-                    $this->addLog($this->playerCombat->getCurrentRound(), "<strong class='text-warning'>Vous êtes sous l’emprise d’un charme et perdez votre tour.</strong><br/>");
-                    $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
-                    continue;
-                }
-
-                $this->addLog($this->playerCombat->getCurrentRound(), "<strong>C’est votre tour d'agir…</strong><br/>");
-                break;
             } else {
-                $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
+                if ($currentEntity['type'] === 'player' && $currentEntity['id'] === $this->character->getId()) {
+                    $playerEffects = $this->combatEffectService->getActiveBonusesForTarget(
+                        $this->playerCombat,
+                        $this->character
+                    );
+                    if (!empty($playerEffects['charmed'])) {
+                        $this->addLog(
+                            $this->playerCombat->getCurrentRound(),
+                            "<strong class='text-warning'>Vous êtes sous l’emprise d’un charme et perdez votre tour.</strong><br/>"
+                        );
+                        $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
+                        continue;
+                    }
+
+                    $this->addLog(
+                        $this->playerCombat->getCurrentRound(),
+                        "<strong>C’est votre tour d'agir…</strong><br/>"
+                    );
+                    break;
+                } else {
+                    $this->playerCombat->setCurrentTurn($this->playerCombat->getCurrentTurn() + 1);
+                }
             }
         }
 
-        if($this->playerCombat->getCurrentTurn() >= $turnCount) {
+        if ($this->playerCombat->getCurrentTurn() >= $turnCount) {
             $redirect = $this->isCombatFinished();
-            if($redirect) {
+            if ($redirect) {
                 return $redirect;
             }
 
             $this->combatEffectService->tickEffects($this->playerCombat);
 
             $expiredLogs = $this->combatEffectService->removeExpiredEffects($this->playerCombat);
-            foreach($expiredLogs as $log) {
+            foreach ($expiredLogs as $log) {
                 $this->addLog($this->playerCombat->getCurrentRound(), $log);
             }
 
@@ -324,11 +366,11 @@ class CombatComponent extends AbstractController
 
     private function isCombatFinished(): ?RedirectResponse
     {
-        if($this->areAllEnemiesDead()) {
+        if ($this->areAllEnemiesDead()) {
             return $this->handleCombatVictory();
         }
 
-        if($this->character->getHealth() <= 0) {
+        if ($this->character->getHealth() <= 0) {
             return $this->handleCombatDefeat();
         }
 
@@ -347,7 +389,7 @@ class CombatComponent extends AbstractController
         $this->entityManager->persist($this->playerCombat);
 
         $questStep = $this->screen->getCombat()->getQuestStep();
-        if($questStep) {
+        if ($questStep) {
             $stepsToUnlock = $this->buildQuestStepsToUnlock($questStep);
             $this->questProgressionService->editQuestStepStatus($this->character, $stepsToUnlock);
         }
@@ -366,18 +408,20 @@ class CombatComponent extends AbstractController
 
     private function buildQuestStepsToUnlock(QuestStep $questStep): array
     {
-        $steps = [[
-            'quest' => $questStep->getQuest()->getSlug(),
-            'quest_step' => $questStep->getPosition(),
-            'status' => 'completed',
-        ]];
+        $steps = [
+            [
+                'quest' => $questStep->getQuest()->getSlug(),
+                'quest_step' => $questStep->getPosition(),
+                'status' => 'completed',
+            ],
+        ];
 
         $nextStep = $this->questService->getNextQuestStep($questStep);
-        while($nextStep) {
+        while ($nextStep) {
             $playerStep = $this->entityManager->getRepository(PlayerQuestStep::class)
                 ->findOneBy(['player' => $this->character, 'questStep' => $nextStep]);
 
-            if(!$playerStep) {
+            if (!$playerStep) {
                 $steps[] = [
                     'quest' => $questStep->getQuest()->getSlug(),
                     'quest_step' => $nextStep->getPosition(),
@@ -386,7 +430,7 @@ class CombatComponent extends AbstractController
                 break;
             }
 
-            if($playerStep->getStatus() !== 'skipped') {
+            if ($playerStep->getStatus() !== 'skipped') {
                 break;
             }
 
@@ -398,12 +442,16 @@ class CombatComponent extends AbstractController
 
     private function handleCombatDefeat(): RedirectResponse
     {
-        if($this->character->getFortune() >= 50) {
+        if ($this->character->getFortune() >= 50) {
             $this->character->setFortune($this->character->getFortune() - 50);
             $this->character->setHealth($this->character->getHealthMax());
             $this->character->setMana($this->character->getManaMax());
-            $this->entityManager->persist($this->character);
+        } else {
+            $this->character->setFortune(0);
+            $this->character->setHealth(1);
+            $this->character->setMana(0);
         }
+        $this->entityManager->persist($this->character);
 
         $this->playerCombat->setStatus('defeat');
         $this->entityManager->persist($this->playerCombat);

@@ -8,15 +8,17 @@ use App\Service\Character\DeleteCharacterService;
 
 readonly class DeleteUserService
 {
-    public function __construct(private EntityManagerInterface $entityManager,
-                                private DeleteCharacterService $deleteCharacterService)
-    {
-
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private DeleteCharacterService $deleteCharacterService
+    ) {
     }
 
     public function deleteUser(User $user): void
     {
-        $this->deleteCharacterService->deleteCharacter($user->getPlayer());
+        if ($user->getPlayer()) {
+            $this->deleteCharacterService->deleteCharacter($user->getPlayer());
+        }
 
         $this->entityManager->remove($user);
         $this->entityManager->flush();

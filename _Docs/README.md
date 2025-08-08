@@ -32,11 +32,12 @@ système de quêtes dynamiques.
 ## Caractéristiques principales
 
 - 🧭 **Exploration écran par écran**  
-  Chaque lieu est représenté par un écran fixe contenant des zones interactives, des PNJ et des événements contextuels.
+  Chaque lieu est représenté par un écran fixe contenant des boutons d'interactions, des PNJ et des événements
+  contextuels.
 
 - ⚔️ **Combats au tour par tour**  
   Inspirés des classiques du genre, avec initiative, sorts, objets, buffs/débuffs, armes magiques et stratégies de
-  positionnement.
+  positionnement (à venir).
 
 - 📜 **Système de quêtes**  
   Une quête principale narrative (chapitres) + des quêtes secondaires interconnectées, avec dialogues à choix multiples
@@ -46,8 +47,8 @@ système de quêtes dynamiques.
   Chaque PNJ a sa personnalité, son utilité, et peut influencer le monde ou le joueur selon ses interactions.
 
 - 🌍 **Univers cohérent et modulaire**  
-  Le premier chapitre se déroule sur une île complète, divisée en zones aux ambiances variées : port, désert, montagnes,
-  forêt, etc.
+  Le premier chapitre se déroule sur une île complète, divisée en zones aux ambiances variées : ville, campagne, désert,
+  montagnes, forêt, etc.
 
 - 💬 **Narration immersive**  
   Chaque interaction est scénarisée, avec des descriptions soignées et une tonalité "conte pour aventuriers adultes".
@@ -56,13 +57,16 @@ système de quêtes dynamiques.
 
 ## Zones et ambiance
 
-Le chapitre 1 se déroule dans le **Royaume de l’Île du Nord**, un territoire humain divisé en cinq régions majeures :
+Le chapitre 1 se déroule dans le **Royaume de l’Île du Nord**, un territoire humain divisé en sept régions majeures :
 
 - **Port Saint-Doux** : ville portuaire animée, centre névralgique du commerce et des intrigues.
 - **Plouc** : village côtier rustique, isolé et méfiant.
-- **Bois du Pendu** : forêt étrange et hantée, peuplée de rumeurs et de druides secrets.
+- **Bois des Relents** : petit bois mystérieux, où se cachent des créatures étranges et des secrets oubliés.
+- **Bois du Pendu** : forêt étrange et hantée, peuplée de rumeurs, de fantômes et de druides secrets.
 - **Sables Chauds** : désert mythique bordé par la mer, théâtre de mystères anciens et de mirages envoûtants.
 - **Monts Terribles** : massif abandonné, hostile et chargé de légendes naines et draconiques.
+- **Donjon de l'Âme** : lieu central de l’intrigue, un donjon mystérieux et dangereux, source de tous les maux du
+  royaume.
 
 Chaque zone propose des quêtes, des combats, des fouilles, des énigmes, des PNJ et des secrets propres.
 

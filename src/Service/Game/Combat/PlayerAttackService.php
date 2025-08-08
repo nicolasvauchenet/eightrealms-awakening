@@ -31,6 +31,9 @@ readonly class PlayerAttackService
     {
     }
 
+    /**
+     * @throws RandomException
+     */
     public function playerAttack(Player $player, Combat $combat, int $enemyId, string $mode): string
     {
         $playerCombat = $this->getPlayerCombat($player, $combat);

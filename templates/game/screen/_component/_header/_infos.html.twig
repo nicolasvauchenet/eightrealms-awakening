@@ -24,8 +24,8 @@
 
     <div class="right">
         {% set bonus = app_characterBonusService.defense(this.character) %}
-        <div class="header-info {% if bonus['extra'] %}text-success{% endif %}">
-            {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon text-primary'}) }}
+        <div class="header-info {% if bonus['extra'] %}text-success{% endif %}{% if bonus.amount == 0 %}text-danger{% endif %}">
+            {{ ux_icon('game-icons:checked-shield', {'class': 'app-icon ' ~ (bonus.amount == 0 ? 'text-danger' : 'text-primary')}) }}
             {% if bonus.amount < 0 %}
                 -{{ bonus.amount }}
             {% elseif bonus.amount > 0 %}
@@ -36,11 +36,11 @@
         </div>
 
         {% set bonus = app_characterBonusService.damage(this.character) %}
-        <div class="header-info {% if bonus['extra'] %}text-success{% endif %}">
+        <div class="header-info {% if bonus['extra'] %}text-success{% endif %}{% if bonus.amount == 0 %}text-danger{% endif %}">
             {% if bonus.magical %}
                 {{ ux_icon('game-icons:sabers-choc', {'class': 'app-icon text-fifth'}) }}
             {% else %}
-                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon text-primary'}) }}
+                {{ ux_icon('game-icons:crossed-swords', {'class': 'app-icon ' ~ (bonus.amount == 0 ? 'text-danger' : 'text-primary')}) }}
             {% endif %}
             {% if bonus.amount < 0 %}
                 -{{ bonus.amount }}

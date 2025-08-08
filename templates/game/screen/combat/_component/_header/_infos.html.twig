@@ -86,6 +86,9 @@
 
             {% if app_characterItemService.equippedItems(this.character).righthand %}
                 {% set characterItem = app_characterItemService.equippedItems(this.character).righthand %}
+                {% if not app_characterItemService.equippedItems(this.character).lefthand and not app_characterItemService.equippedItems(this.character).shield %}
+                    &nbsp;
+                {% endif %}
                 <div class="header-info" data-controller="tooltip">
                     <a data-action="click->tooltip#open">
                         <img src="{{ asset('img/core/item/weapon/' ~ characterItem.item.picture) }}"

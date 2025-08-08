@@ -58,7 +58,7 @@
             {% endif %}
         </h3>
 
-        {% if characterItem.item.requiredLevel is defined and this.character.level < characterItem.item.requiredLevel %}
+        {% if characterItem.item.requiredLevel is defined and this.character.level is defined and this.character.level < characterItem.item.requiredLevel %}
             <h3 class="tooltip-subtitle">
                 Niveau requis&nbsp;:&nbsp;{{ characterItem.item.requiredLevel }}
             </h3>

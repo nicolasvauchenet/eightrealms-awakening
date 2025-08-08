@@ -54,6 +54,18 @@
                 </button>
             {% endif %}
 
+            {% if not app_characterItemService.equippedItems(this.character).bow and not app_characterItemService.equippedItems(this.character).righthand and not app_characterItemService.equippedItems(this.character).lefthand %}
+                <button class="app-button cta"
+                        title="Attaquer avec vos poings"
+                        {{ live_action('doCombatAction', {
+                            combatAction: 'player_attack',
+                            enemyId: combatEnemy.id,
+                            mode: 'fist'
+                        }) }}>
+                    <img src="{{ asset('img/core/action/fist.png') }}" alt="Mains nues"/>
+                </button>
+            {% endif %}
+
             {% if app_characterSpellService.castableSpells(this.character) | length > 0 %}
                 <div class="spell-action" data-controller="popup">
                     <button class="app-button cta" title="Lancer un sortilège" data-action="click->popup#open">
@@ -69,18 +81,6 @@
                         title="Lire votre {{ characterItem.item.name }}"
                         {{ live_action('useItem', {characterItemId: characterItem.id, enemyId: combatEnemy.id}) }}>
                     <img src="{{ asset('img/core/item/scroll/' ~ characterItem.item.picture) }}" alt="Lire votre {{ characterItem.item.name }}"/>
-                </button>
-            {% endif %}
-
-            {% if not app_characterItemService.equippedItems(this.character).bow and not app_characterItemService.equippedItems(this.character).righthand and not app_characterItemService.equippedItems(this.character).lefthand and app_characterSpellService.castableSpells(this.character) | length <= 0 and not app_characterItemService.equippedItems(this.character).scroll %}
-                <button class="app-button cta"
-                        title="Attaquer avec vos poings"
-                        {{ live_action('doCombatAction', {
-                            combatAction: 'player_attack',
-                            enemyId: combatEnemy.id,
-                            mode: 'fist'
-                        }) }}>
-                    <img src="{{ asset('img/core/action/fist.png') }}" alt="Mains nues"/>
                 </button>
             {% endif %}
         </div>

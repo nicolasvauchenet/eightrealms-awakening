@@ -19,17 +19,16 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 readonly class CreateCharacterService
 {
-    public function __construct(
-        private EntityManagerInterface $entityManager,
-        private FileUploaderService $fileUploaderService,
-        private SluggerInterface $slugger
-    ) {
+    public function __construct(private EntityManagerInterface $entityManager,
+                                private FileUploaderService    $fileUploaderService,
+                                private SluggerInterface       $slugger)
+    {
+
     }
 
-    public function createCharacter(
-        PreGenerated $preGenerated,
-        UserInterface $owner
-    ): Player {
+    public function createCharacter(PreGenerated  $preGenerated,
+                                    UserInterface $owner): Player
+    {
         $character = new Player();
         $character = $this->initCharacterStats($preGenerated, $owner, $character);
         $character = $this->initCharacterItems($preGenerated, $character);
@@ -40,40 +39,27 @@ readonly class CreateCharacterService
         return $character;
     }
 
-    public function saveCharacter(
-        Player $character,
-        PreGenerated $preGenerated,
-        ?UploadedFile $pictureFile = null
-    ): void {
-        if ($pictureFile) {
-            if ($character->getPicture()) {
+    public function saveCharacter(Player $character, PreGenerated $preGenerated, ?UploadedFile $pictureFile = null): void
+    {
+        if($pictureFile) {
+            if($character->getPicture()) {
                 $this->fileUploaderService->remove('character', $character->getPicture());
             }
-            $pictureFileName = $this->fileUploaderService->upload(
-                $pictureFile,
-                'character',
-                strtolower($this->slugger->slug($character->getName()))
-            );
+            $pictureFileName = $this->fileUploaderService->upload($pictureFile, 'character', strtolower($this->slugger->slug($character->getName())));
         } else {
-            $pictureFileName = $this->fileUploaderService->copyFile(
-                'core/pregenerated',
-                $preGenerated->getPicture(),
-                'character',
-                strtolower($this->slugger->slug($character->getName()))
-            );
+            $pictureFileName = $this->fileUploaderService->copyFile('core/pregenerated', $preGenerated->getPicture(), 'character', strtolower($this->slugger->slug($character->getName())));
         }
         $character->setPicture($pictureFileName)
-            ->setDescription('<p>'.$character->getDescription().'</p>');
+            ->setDescription('<p>' . $character->getDescription() . '</p>');
 
         $this->entityManager->persist($character);
         $this->entityManager->flush();
     }
 
-    private function initCharacterStats(
-        PreGenerated $preGenerated,
-        UserInterface $owner,
-        Player $character
-    ): Player {
+    private function initCharacterStats(PreGenerated  $preGenerated,
+                                        UserInterface $owner,
+                                        Player        $character): Player
+    {
         $character->setOwner($this->entityManager->getRepository(User::class)->find($owner->getId()))
             ->setRace($preGenerated->getRace())
             ->setProfession($preGenerated->getProfession())
@@ -97,16 +83,15 @@ readonly class CreateCharacterService
         return $character;
     }
 
-    private function initCharacterItems(
-        PreGenerated $preGenerated,
-        Player $character
-    ): Player {
-        foreach ($preGenerated->getCharacterItems() as $preGeneratedItem) {
+    private function initCharacterItems(PreGenerated $preGenerated,
+                                        Player       $character): Player
+    {
+        foreach($preGenerated->getCharacterItems() as $preGeneratedItem) {
             $characterItem = (new CharacterItem())
                 ->setCharacter($character)
                 ->setItem($preGeneratedItem->getItem())
-                ->setEquipped($preGeneratedItem->isEquipped())
-                ->setSlot($preGeneratedItem->getSlot())
+                ->setEquipped(false)
+                ->setSlot(null)
                 ->setHealth($preGeneratedItem->getHealth() ?? null)
                 ->setCharge($preGeneratedItem->getCharge() ?? null)
                 ->setQuestItem(false);
@@ -116,11 +101,10 @@ readonly class CreateCharacterService
         return $character;
     }
 
-    private function initCharacterSpells(
-        PreGenerated $preGenerated,
-        Player $character
-    ): Player {
-        foreach ($preGenerated->getCharacterSpells() as $characterSpell) {
+    private function initCharacterSpells(PreGenerated $preGenerated,
+                                         Player       $character): Player
+    {
+        foreach($preGenerated->getCharacterSpells() as $characterSpell) {
             $newCharacterSpell = (new CharacterSpell())
                 ->setCharacter($character)
                 ->setSpell($characterSpell->getSpell())

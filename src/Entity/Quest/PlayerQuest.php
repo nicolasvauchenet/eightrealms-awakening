@@ -31,7 +31,7 @@ class PlayerQuest
      * @var Collection<int, PlayerQuestStep>
      */
     #[ORM\OneToMany(targetEntity: PlayerQuestStep::class, mappedBy: 'playerQuest', orphanRemoval: true)]
-    #[Orm\OrderBy(['position' => 'ASC'])]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerQuestSteps;
 
     public function __construct()

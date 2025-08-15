@@ -63,6 +63,7 @@ class Location
      * @var Collection<int, CharacterLocation>
      */
     #[ORM\OneToMany(targetEntity: CharacterLocation::class, mappedBy: 'location', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $characterLocations;
 
     #[ORM\OneToOne(mappedBy: 'location', cascade: ['persist', 'remove'])]
@@ -72,6 +73,7 @@ class Location
      * @var Collection<int, Combat>
      */
     #[ORM\OneToMany(targetEntity: Combat::class, mappedBy: 'location', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $combats;
 
     public function __construct()

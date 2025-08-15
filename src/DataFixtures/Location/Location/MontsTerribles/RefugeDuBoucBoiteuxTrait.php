@@ -21,7 +21,7 @@ trait RefugeDuBoucBoiteuxTrait
             'picture' => 'img/chapter1/location/le-refuge.webp',
             'description' => "<p>Une unique pièce, simple et austère. Lit de bois contre le mur, table centrale avec une assiette sale, un bol fendu, une cuillère tordue. Au fond, un foyer de pierres noircies abrite des braises presque mortes. L’air sent le bois brûlé et l’oubli. Sur une chaise, un vieux manteau. Et sur la table, un carnet froissé, griffonné de mots confus.</p><p>Tout semble prêt à accueillir un voyageur… ou à témoigner d’un départ qu’on n’a jamais vraiment osé prendre.</p>",
             'type' => 'building',
-            'thumbnail' => 'img/core/location/maison_thumb.png',
+            'thumbnail' => 'img/core/location/maison_thumb.webp',
             'parent' => 'location_zone_refuge_du_bouc_boiteux',
             'reference' => 'location_building_le_refuge',
         ],

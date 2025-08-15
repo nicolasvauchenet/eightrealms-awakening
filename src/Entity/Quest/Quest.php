@@ -32,7 +32,7 @@ class Quest
      * @var Collection<int, QuestStep>
      */
     #[ORM\OneToMany(targetEntity: QuestStep::class, mappedBy: 'quest', orphanRemoval: true)]
-    #[Orm\OrderBy(['id' => 'ASC'])]
+    #[Orm\OrderBy(['position' => 'ASC'])]
     private Collection $questSteps;
 
     #[ORM\ManyToOne]

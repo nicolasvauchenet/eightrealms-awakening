@@ -66,12 +66,14 @@ class Riddle
      * @var Collection<int, RiddleTrigger>
      */
     #[ORM\OneToMany(targetEntity: RiddleTrigger::class, mappedBy: 'riddle', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $riddleTriggers;
 
     /**
      * @var Collection<int, PlayerRiddle>
      */
     #[ORM\OneToMany(targetEntity: PlayerRiddle::class, mappedBy: 'riddle', orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $playerRiddles;
 
     /**

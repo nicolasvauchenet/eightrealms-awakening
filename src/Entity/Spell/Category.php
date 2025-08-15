@@ -34,6 +34,7 @@ class Category
      * @var Collection<int, Spell>
      */
     #[ORM\OneToMany(targetEntity: Spell::class, mappedBy: 'category', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $spells;
 
     public function __construct()

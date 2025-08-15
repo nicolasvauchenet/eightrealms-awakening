@@ -41,6 +41,7 @@ class QuestStep
      * @var Collection<int, QuestStepTrigger>
      */
     #[ORM\OneToMany(targetEntity: QuestStepTrigger::class, mappedBy: 'questStep', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $questStepTriggers;
 
     public function __construct()

@@ -38,6 +38,7 @@ class Player extends Character
      * @var Collection<int, PlayerCharacter>
      */
     #[ORM\OneToMany(targetEntity: PlayerCharacter::class, mappedBy: 'player', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerCharacters;
 
     #[ORM\ManyToOne]
@@ -47,12 +48,14 @@ class Player extends Character
      * @var Collection<int, PlayerQuest>
      */
     #[ORM\OneToMany(targetEntity: PlayerQuest::class, mappedBy: 'player', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerQuests;
 
     /**
      * @var Collection<int, PlayerQuestStep>
      */
     #[ORM\OneToMany(targetEntity: PlayerQuestStep::class, mappedBy: 'player', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerQuestSteps;
 
     #[ORM\ManyToOne]
@@ -62,12 +65,14 @@ class Player extends Character
      * @var Collection<int, PlayerCombat>
      */
     #[ORM\OneToMany(targetEntity: PlayerCombat::class, mappedBy: 'player', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerCombats;
 
     /**
      * @var Collection<int, PlayerRiddle>
      */
     #[ORM\OneToMany(targetEntity: PlayerRiddle::class, mappedBy: 'player', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerRiddles;
 
     #[ORM\OneToOne(mappedBy: 'player', cascade: ['persist', 'remove'])]

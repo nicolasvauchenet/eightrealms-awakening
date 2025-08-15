@@ -29,18 +29,21 @@ class Reward
      * @var Collection<int, PlayerReward>
      */
     #[ORM\OneToMany(targetEntity: PlayerReward::class, mappedBy: 'reward', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerRewards;
 
     /**
      * @var Collection<int, RewardItem>
      */
     #[ORM\OneToMany(targetEntity: RewardItem::class, mappedBy: 'reward', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $rewardItems;
 
     /**
      * @var Collection<int, RewardLocation>
      */
     #[ORM\OneToMany(targetEntity: RewardLocation::class, mappedBy: 'reward', orphanRemoval: true)]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $rewardLocations;
 
     public function __construct()

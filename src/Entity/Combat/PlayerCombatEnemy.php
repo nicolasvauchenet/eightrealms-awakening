@@ -37,6 +37,7 @@ class PlayerCombatEnemy
      * @var Collection<int, PlayerCombatEffect>
      */
     #[ORM\OneToMany(targetEntity: PlayerCombatEffect::class, mappedBy: 'playerCombatEnemy')]
+    #[Orm\OrderBy(['id' => 'ASC'])]
     private Collection $playerCombatEffects;
 
     public function __construct()
